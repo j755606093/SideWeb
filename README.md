@@ -19,3 +19,12 @@
 | api | 参数 | 返回值 | 说明 |
 | ---- | ---- | ----| ---- |
 | getAllApi | null | Object | 获取所有的可用api. |
+
+## 后台服务器接口
+
+| 链接 | 参数 | 说明 | 其它 |
+| ---- | ---- | ----| ---- |
+| `http://192.168.31.86/swagger/ui/index.html` | null | APP调用接口文档 | 无 |
+| `http://192.168.31.86:8888/swagger/ui/index.html` | null | 后台管理调用接口文档 | 无 |
+| `http://gogs-30ff57b9eb.daocloudapp.com/user/login` | null | 内部git外网访问地址 | 无 |
+| `http://nginx-app-2fa8b9f5a6.daocloudapp.com` | null | App端API外网访问地址 | 无 |
