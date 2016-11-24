@@ -1,0 +1,43 @@
+@charset "UTF-8";
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #03a9f4; }
+
+.font-gray {
+  color: #565656; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #d5d5d5; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a, input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/ }

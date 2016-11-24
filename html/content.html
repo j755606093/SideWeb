@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+	<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+	<title>片段</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			-moz-box-sizing:border-box; /* Firefox */
+			-webkit-box-sizing:border-box; /* Safari */
+		}
+		#root{
+			width:100%;
+			background-color: #fff;
+			display: flex;
+			flex-direction: row;
+			height:80px;
+			/*justify-content: center;*/
+			align-items: center;
+		}
+		.content{
+			flex:1;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.picture{
+			display: inline-block;
+			width:20px;
+			height: 20px;
+		}
+		.title{
+			height:30px;
+			text-align: center;
+		}
+		.title-blue{
+			color:#6ccfb9;
+
+		}
+		.title-orange{
+			color:orange;
+		}
+		.font-gray{
+			color:#999;
+			font-size: 12px;
+		}
+	</style>
+</head>
+<body>
+	<div id="root" oncontextmenu="return false" onselectstart="return false">
+		<div class="content">
+			<div class="title">
+				<img class="picture" src="picture/ic_gzhao@3x.png">
+				<span class="title-blue">公众号</span>
+			</div>
+			<p class="font-gray">本地热门公众号大全</p>
+		</div>
+		<div class="content">
+			<div class="title">
+				<img class="picture" src="picture/ic_qiand2@3x.png">
+				<span class="title-orange">有奖签到</span>
+			</div>
+			<p class="font-gray">积分免费换奖品</p>
+		</div>
+		<div class="content">
+			<div class="title">
+				<img class="picture" src="picture/ic_qiand2@3x.png">
+				<span class="title-orange">我要爆料</span>
+			</div>
+			<p class="font-gray">积分免费换奖品</p>
+		</div>
+	</div>
+<script>
+	function Platform(){
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf("iphone")>-1){
+			return "iphone";
+		}
+		else{
+			if(agent.indexOf("android")>-1){
+				return "android"
+			}
+			else{
+				return "pc"
+			}
+		}
+	}
+	function getDeviceApi(){
+		var agent = Platform();
+		if(agent==="iphone"){
+			return getAllApi();
+		}
+		else{
+			if(agent==="android"){
+				return window.side.getAllApi();
+			}
+		}
+	}
+</script>
+</body>
+</html>

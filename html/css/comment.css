@@ -1,0 +1,140 @@
+@charset "UTF-8";
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a, input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/ }
+
+section {
+  background-color: #eaeaea;
+  padding-top: 20px; }
+  section > .list {
+    background-color: #fff;
+    padding: 5px 0;
+    border-top: 1px solid #dddddd; }
+    section > .list .header {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      padding: 5px 0; }
+      section > .list .header .header-left {
+        -ms-flex: 0.6;
+            flex: 0.6;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+        section > .list .header .header-left .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%; }
+        section > .list .header .header-left .other-info {
+          margin-left: 10px; }
+          section > .list .header .header-left .other-info > .author-name {
+            color: #353535;
+            font-size: 1.3rem; }
+          section > .list .header .header-left .other-info > .publish-time {
+            color: #AAAAAA;
+            font-size: 1.1rem; }
+          section > .list .header .header-left .other-info > p {
+            height: 20px;
+            line-height: 20px; }
+      section > .list .header .header-right {
+        -ms-flex: 0.4;
+            flex: 0.4;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+        section > .list .header .header-right span {
+          color: #AAAAAA;
+          margin-right: 10px;
+          font-size: 1.2rem; }
+    section > .list .content {
+      margin-left: 50px;
+      margin-right: 10px;
+      font-size: 1.2rem; }
+      section > .list .content .comment {
+        color: #353535; }
+      section > .list .content .replay {
+        background-color: #f7f7f7;
+        color: #AAAAAA;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding: 5px 5px; }
+        section > .list .content .replay p {
+          padding-top: 2px; }
+    section > .list .operate {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      padding: 5px 5px; }
+      section > .list .operate p {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex: 1;
+            flex: 1;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+        section > .list .operate p button {
+          padding: 2px 5px;
+          font-size: 1.2rem;
+          background-color: #fff;
+          border: 0;
+          outline: none; }
+      section > .list .operate p:first-child {
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+        section > .list .operate p:first-child button {
+          color: #AAAAAA; }
+      section > .list .operate p:last-child {
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+        section > .list .operate p:last-child button {
+          color: #0074D9; }
+  section > .list:last-child {
+    border-bottom: 1px solid #dddddd; }

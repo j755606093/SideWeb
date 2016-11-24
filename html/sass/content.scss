@@ -1,0 +1,29 @@
+@import "./utils.scss";
+
+article{
+	padding:10px 5px;
+	>.title{
+		width:100%;
+		font-size:1.8rem;
+		text-align: center;
+	}
+	>.content{
+		font-size:1.2rem;
+		padding:10px 0;
+		line-height:25px;
+		letter-spacing:1px;
+		text-indent:2em;
+	}
+	>.other{
+		display:flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		.other-info{
+			padding:0 5px;
+			color:darken($gray, 20%);
+			span{
+				color:$gray;
+			}
+		}
+	}
+}

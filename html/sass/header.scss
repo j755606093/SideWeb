@@ -1,0 +1,53 @@
+@import "./utils.scss";
+
+header{
+	width:100%;
+	padding:5px 5px;
+	>.header{
+		display:flex;
+		flex-direction:row;
+		.header-left{
+			flex:0.7;
+			display:flex;
+			flex-direction:row;
+			justify-content: flex-start;
+			.avatar{
+				width:40px;
+				height:40px;
+				border-radius: 50%;
+			}
+			.other-info{
+				margin-left:10px;
+				>.author-name{
+					color:$black;
+					font-size:1.3rem;
+				}
+				>.publish-time{
+					color:$gray;
+					font-size:1.1rem;
+				}
+				>p{
+					height:20px;
+					line-height:20px;
+				}
+			}
+		}
+		.header-right{
+			flex:0.3;
+			display:flex;
+			justify-content: flex-end;
+			.concern{
+				background-color: $white;
+				border:1px solid $blue;
+				outline: none;
+				padding:0 15px;
+				height:26px;
+				color:$blue;
+				border-radius: 10px;
+				font-size:1.2rem;
+				margin-top:7px;
+				margin-right:5px;
+			}
+		}
+	}
+}

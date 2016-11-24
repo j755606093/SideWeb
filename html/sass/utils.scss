@@ -1,0 +1,63 @@
+$white:#fff;
+$red:#db3652;
+$gray:#AAAAAA;
+$blue:#0074D9;
+$black:#111111;
+$teal:#0074D9;
+$silver:#DDDDDD;
+$orange:#FF851B;
+$navy:#001f3f;
+$purple:#B10DC9;
+$meBlack:#353535;
+
+@mixin text_nowrap{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.font-red{
+	color:$red;
+}
+.font-blue{
+	color:$blue;
+}
+.font-gray{
+	color:darken($gray,50%);
+}
+.font-small{
+	font-size:12px;
+}
+.bg-gray{
+	background-color:$gray;
+}
+.nowrap{
+	@include text_nowrap;
+}
+.btn{
+	border:0;
+	outline:none;
+}
+button:active{
+	outline:none;
+	border:0;
+}
+a,input{
+	text-decoration:none;
+	outline:none;
+	-webkit-tap-highlight-color:transparent;
+}
+a:focus{
+	text-decoration: none;
+}
+html{
+	font-size:12px;
+}
+*{
+	box-sizing:border-box;
+	margin:0;
+	padding:0;
+	// user-select: none; 
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	/*禁止选中*/
+}
