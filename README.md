@@ -1,0 +1,21 @@
+# SideWeb
+
+## 启动服务
+
+> 暂时未开启生产服务器.
+
+输入命令启动测试服务器:`npm start`.
+
+## APP中的web页面(测试)
+
+| 链接 | 参数 | 说明 | 其它 |
+| ---- | ---- | ----| ---- |
+| `http://192.168.31.116:3000/getHomeContent` | null | APP首页内容 | 无 |
+| `http://192.168.31.116:3000/getTopic?uniqueId=a9fc5fb8b7e2748f0954f27bc8703bd1` | uniqueId | APP分享微信公众号文章页测试地址 | uniqueId是公众号文章id |
+| `http://192.168.31.116:3000/getCustomPage?page=postdetail&postid=1` | postdetail,postid | APP分享文章页测试 | postdetail:页面名;postid:文章id |
+
+## APP提交接口列表
+
+| api | 参数 | 返回值 | 说明 |
+| ---- | ---- | ----| ---- |
+| getAllApi | null | Object | 获取所有的可用api. |
