@@ -9,6 +9,9 @@
  * @return {[type]}      [时间字符串]
  */
 let formatDate = (date) =>{
+	if(!date){
+		return 0;
+	}
 	const old = new Date(date);//转换为DATE对象
 	const now = Date.now();
 	let result = "";//存储结果
@@ -50,6 +53,9 @@ let formatDate = (date) =>{
  * @return {[type]}      [description]
  */
 let formatTime = (date)=>{
+	if(!date){
+		return 0;
+	}
 	const formatDate = new Date(date);//转换为DATE对象
 
 	const year = formatDate.getYear()-100+2000;//2016
