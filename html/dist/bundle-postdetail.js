@@ -10300,6 +10300,9 @@
 	});
 
 	var formatDate = function formatDate(date) {
+		if (!date) {
+			return 0;
+		}
 		var old = new Date(date);
 		var now = Date.now();
 		var result = "";
@@ -10330,6 +10333,9 @@
 	};
 
 	var formatTime = function formatTime(date) {
+		if (!date) {
+			return 0;
+		}
 		var formatDate = new Date(date);
 
 		var year = formatDate.getYear() - 100 + 2000;
