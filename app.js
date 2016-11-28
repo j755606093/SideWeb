@@ -23,7 +23,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'html')));
-
+app.use((req,res,next)=>{
+	res.set({
+		"Access-Control-Allow-Origin":"*",
+		"Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
+		"Access-Control-Allow-Methods":"PUT,POST,GET,DELETE,OPTIONS"
+	});
+	next();
+})
 // app.use('/', routes);
 // app.use('/users', users);
 
@@ -85,8 +92,23 @@ app.get("/getCustomPage",(req,res)=>{
 	})
 });
 
+// app.all("*",(req,res)=>{
+// 	res.set({
+// 		"Access-Control-Allow-Origin":"*",
+// 		"Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
+// 		"Access-Control-Allow-Methods":"PUT,POST,GET,DELETE,OPTIONS"
+// 	});
+// 	console.log(req.get("Authorization"));
+// 	res.send({result:1});
+// })
+
 app.post("/test",(req,res)=>{
-	console.log(req.get("auto"));
+	res.set({
+		"Access-Control-Allow-Origin":"*",
+		"Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
+		"Access-Control-Allow-Methods":"PUT,POST,GET,DELETE,OPTIONS"
+	});
+	console.log(req.get("Authorization"));
 	res.send({result:1});
 })
 

@@ -42,7 +42,9 @@ export default {
 		}
 	},
 	created(){
-		this.$http.get("http://192.168.31.86/api/Post/GetDetail/"+Utils.getQueryString("postid")).then((res)=>{
+		let postid = Utils.getQueryString("postid")||this.$route.params.postid;//也许是router进入的
+		
+		this.$http.get("http://192.168.31.86/api/Post/GetDetail/"+postid).then((res)=>{
 			if(res.data.Code!==200){
 				return;
 			}

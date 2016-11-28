@@ -1,0 +1,124 @@
+@charset "UTF-8";
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a, input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/ }
+
+.ticketbody {
+  width: 96%;
+  margin: 0 2%; }
+  .ticketbody .block {
+    width: 100%;
+    height: 60px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    border-bottom: 1px solid #AAAAAA; }
+    .ticketbody .block span {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-align: center;
+          align-items: center;
+      font-size: 1.4rem;
+      color: #111111; }
+      .ticketbody .block span i {
+        margin-right: 5px; }
+    .ticketbody .block span:first-child {
+      -ms-flex: 0.3;
+          flex: 0.3;
+      color: #AAAAAA; }
+    .ticketbody .block span:last-child {
+      -ms-flex: 0.7;
+          flex: 0.7;
+      font-size: 1.8rem;
+      font-weight: 900; }
+  .ticketbody .data {
+    width: 100%;
+    height: 60px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    border-bottom: 1px solid #AAAAAA; }
+    .ticketbody .data span {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-align: center;
+          align-items: center;
+      -ms-flex: 0.5;
+          flex: 0.5;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #111111; }
+      .ticketbody .data span i {
+        margin-right: 5px; }
+    .ticketbody .data span:first-child {
+      -ms-flex: 0.3;
+          flex: 0.3;
+      color: #AAAAAA;
+      font-size: 1.4rem;
+      font-weight: 400; }
+    .ticketbody .data span:last-child {
+      -ms-flex: 0.2;
+          flex: 0.2;
+      font-size: 1.4rem;
+      font-weight: 400; }
+  .ticketbody .query {
+    width: 100%; }
+    .ticketbody .query button {
+      width: 100%;
+      background-color: #ff7f66;
+      height: 50px;
+      color: #fff;
+      font-size: 1.6rem;
+      margin-top: 10px; }
