@@ -4,11 +4,11 @@
 			<span>身边订票</span>
 		</div>
 		<div class="other" v-else>
-			<div class="left">
+			<div @click="GoBack" class="left">
 				<i class="fa fa-angle-left"></i>
 			</div>
 			<div class="center">
-				<span>其他页面</span>
+				<span>{{getHeaderTitle}}</span>
 			</div>
 		</div>
 	</header>
@@ -67,12 +67,19 @@ export default {
 	computed:{
 		getHeaderState(){
 			return this.$store.state.tickets.HeaderIsHome;
+		},
+		getHeaderTitle(){
+			return this.$store.state.tickets.HeaderTitle;
 		}
 	},
 	methods:{
 		downloadapp(){
 			//跳转下载地址
 			// window.location.href = "";
+		},
+		GoBack(){
+			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
+			this.$router.go(-1);
 		}
 	}
 }

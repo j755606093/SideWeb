@@ -1,23 +1,11 @@
 <template>
 	<div id="ticket">
 		<side-header></side-header>
-		<ticket-body></ticket-body>
-		<mt-index-list>
-		  <mt-index-section index="A">
-		    <mt-cell title="Aaron"></mt-cell>
-		    <mt-cell title="Alden"></mt-cell>
-		    <mt-cell title="Austin"></mt-cell>
-		  </mt-index-section>
-		  <mt-index-section index="B">
-		    <mt-cell title="Baldwin"></mt-cell>
-		    <mt-cell title="Braden"></mt-cell>
-		  </mt-index-section>
-		  ...
-		  <mt-index-section index="Z">
-		    <mt-cell title="Zack"></mt-cell>
-		    <mt-cell title="Zane"></mt-cell>
-		  </mt-index-section>
-		</mt-index-list>
+		<transition 
+		enter-active-class="fadeRight-in"
+		leave-active-class="fadeLeft-out">
+			<router-view></router-view>
+		</transition>
 	</div>
 </template>
 
@@ -28,7 +16,6 @@
 <script type="text/babel">
 import Utils from "./Utils/utils";
 import SideHeader from "./components/SideHeader.vue";
-import TicketBody from "./components/TicketBody.vue";
 
 export default {
 	data () {
@@ -44,9 +31,13 @@ export default {
 			return Utils.formatTime(date);
 		}
 	},
+	computed:{
+		getHeaderState(){
+			return this.$store.state.tickets.HeaderIsHome;
+		}
+	},
 	components:{
 		"side-header":SideHeader,
-		"ticket-body":TicketBody
 	}
 }
 </script>

@@ -12,11 +12,36 @@ Vue.use(VueRouter);
 
 import Ticket from "../Ticket.vue";
 import DownloadApp from "../components/DownloadApp.vue";
+import TicketBody from "../components/TicketBody.vue";
+import TicketStartCity from "../components/TicketStartCity.vue";
+import TicketEndCity from "../components/TicketEndCity.vue";
 
 const routes = [{
-	path: '/home',
+	path: '/',
 	name:"home",
-	component: Ticket
+	component: Ticket,
+	children:[
+		{
+			path:"",
+			name:"ticketbody",
+			component:TicketBody
+		},
+		{
+			path:"/startcity",
+			name:"ticketstartcity",
+			component:TicketStartCity
+		},
+		{
+			path:"/endcity",
+			name:"ticketendcity",
+			component:TicketEndCity
+		},
+		{
+			path:"*",
+			name:"*ticketbody",
+			component:TicketBody
+		}
+	]
 },
 {
 	path: '/other',
@@ -25,7 +50,7 @@ const routes = [{
 },{
 	path:"*",
 	name:"all",
-	component:Ticket
+	redirect:"/home",
 }
 ];
 
@@ -34,6 +59,18 @@ const routes = [{
 const router = new VueRouter({
   routes // （缩写）相当于 routes: routes
 });
+
+// router.beforeEach((to, from, next) => {
+// 	if(from.name==="home"){
+// 		store.commit("CHANGE_HEADER",false);
+// 	}
+// 	else{
+// 		store.commit("CHANGE_HEADER",true);
+// 	}
+//   console.log("to",to);
+//   console.log("from",from);
+//   next();
+// })
 
 // 4. 创建和挂载根实例。
 // 记得要通过 router 配置参数注入路由，

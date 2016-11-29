@@ -1,7 +1,8 @@
 import types from './Type';
 
-export const ChangeHeaderState = ({ commit }, status) => {
+export const ChangeHeaderState = ({ commit }, data) => {
   commit(types.CHANGE_HEADER, {
-    HeaderIsHome: status
+    HeaderIsHome: data.isHome,
+    HeaderTitle: data.Title
   })
 }

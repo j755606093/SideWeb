@@ -59,13 +59,25 @@ let formatTime = (date)=>{
 	const formatDate = new Date(date);//转换为DATE对象
 
 	const year = formatDate.getYear()-100+2000;//2016
-	const month = formatDate.getMonth();//10
-	const day = formatDate.getDay()>9?formatDate.getDay():"0"+formatDate.getDay();//04
+	const month = formatDate.getMonth()+1;//10
+	const day = formatDate.getDate()>9?formatDate.getDate():"0"+formatDate.getDate();//04
 	const hours = formatDate.getHours();//16
 	const minute = formatDate.getMinutes()>9?formatDate.getMinutes():"0"+formatDate.getMinutes();//03
 	const milliseconds = formatDate.getMilliseconds();//450
+	
+	const week = formatDate.getDay();//获取星期,1
 
 	return month+"-"+day+" "+hours+":"+minute;
+}
+
+/**
+ * 获取当前星期
+ * @param  {[type]} date [日期对象]
+ * @return {[type]}      [周一]
+ */
+let formatWeek = date =>{
+	let week = ["一","二","三","四","五","六","日"];
+	return "周"+week[date.getDay()];
 }
 
 /**
@@ -85,5 +97,6 @@ let getQueryString = (name)=>{
 export default {
 	formatDate:formatDate,
 	formatTime:formatTime,
-	getQueryString:getQueryString
+	getQueryString:getQueryString,
+	formatWeek:formatWeek
 }
