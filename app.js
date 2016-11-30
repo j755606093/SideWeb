@@ -110,7 +110,8 @@ app.post("/test",(req,res)=>{
 	});
 	console.log(req.get("Authorization"));
 	res.send({result:1});
-})
+});
+
 
 //加密
 // function encodeLogin(data){

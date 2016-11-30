@@ -88,6 +88,10 @@
 
 	var _TicketEndCity2 = _interopRequireDefault(_TicketEndCity);
 
+	var _TicketResult = __webpack_require__(173);
+
+	var _TicketResult2 = _interopRequireDefault(_TicketResult);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
@@ -112,6 +116,10 @@
 			path: "/endcity",
 			name: "ticketendcity",
 			component: _TicketEndCity2.default
+		}, {
+			path: "/result",
+			name: "ticketresult",
+			component: _TicketResult2.default
 		}, {
 			path: "*",
 			name: "*ticketbody",
@@ -11045,7 +11053,10 @@
 		CHANGE_HEADER: "CHANGE_HEADER", //改变页面header
 		SET_STARTCITY: "SET_STARTCITY", //设置出发城市名
 		SET_ENDCITY: "SET_ENDCITY", //设置到达城市
-		SET_STARTDATE: "SET_STARTDATE" };
+		SET_STARTDATE: "SET_STARTDATE", //设置开始出发时间
+		SET_STARTCITYLIST: "SET_STARTCITYLIST", //设置出发城市的列表
+		SET_ENDCITYLIST: "SET_ENDCITYLIST", //设置出发地址的列表,
+		SET_RESULTLIST: "SET_RESULTLIST" };
 
 /***/ },
 /* 8 */
@@ -11067,97 +11078,188 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _defineProperty2 = __webpack_require__(10);
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-	var _mutations;
+	var _promise = __webpack_require__(156);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	var _mutations; //数据类型
+
 
 	var _Type = __webpack_require__(7);
 
 	var _Type2 = _interopRequireDefault(_Type);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	__webpack_require__(172);
 
-	//数据类型
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// initial state
 	// shape: [{ id, quantity }]
 	var state = {
-	  HeaderIsHome: true,
-	  HeaderTitle: "身边订票",
+		HeaderIsHome: true,
+		HeaderTitle: "身边订票",
 
-	  startCity: "", //出发地
-	  endCity: "", //到达地
+		startCity: {
+			Code: "110000",
+			Name: "北京市"
+		}, //出发地
+		endCity: {
+			Code: "310000",
+			Name: "上海市"
+		}, //到达地
 
-	  startDate: "" };
+		startDate: {
+			date: "",
+			week: ""
+		}, //出发日期
 
-	// getters,获取HeaderIsHome
+		startCityList: null, //开始出发的城市列表
+		endCityList: null, //到达的城市列表
+
+		resultList: null };
+
+	// getters,获取数据
 	var getters = {
-	  getHeaderState: function getHeaderState(state) {
-	    return state.HeaderIsHome;
-	  },
-	  getHeaderTitle: function getHeaderTitle(state) {
-	    return state.HeaderTitle;
-	  },
-	  getInfo: function getInfo(state) {
-	    return {
-	      startCity: state.startCity,
-	      endCity: state.endCity,
-	      startDate: state.startDate
-	    };
-	  }
+		getHeaderState: function getHeaderState(state) {
+			return state.HeaderIsHome;
+		},
+		getHeaderTitle: function getHeaderTitle(state) {
+			return state.HeaderTitle;
+		},
+		getInfo: function getInfo(state) {
+			return {
+				startCity: state.startCity,
+				endCity: state.endCity,
+				startDate: state.startDate
+			};
+		},
+		getCityList: function getCityList(state) {
+			return {
+				startCityList: state.startCityList,
+				endCityList: state.endCityList
+			};
+		},
+		getResultList: function getResultList(state) {
+			return state.resultList;
+		}
+	};
+
+	var getData = function getData(url, callback) {
+		return fetch(url, { method: "POST" }).then(function (result) {
+			return result.json();
+		}).then(function (result) {
+			callback(result.Data);
+			_promise2.default.resolve(result.Data);
+		}).catch(function (error) {
+			console.log("error:", error);
+		});
 	};
 
 	// actions
 	var actions = {
-	  ChangeHeader: function ChangeHeader(_ref, data) {
-	    var commit = _ref.commit,
-	        state = _ref.state;
+		ChangeHeader: function ChangeHeader(_ref, data) {
+			var commit = _ref.commit,
+			    state = _ref.state;
 
-	    commit(_Type2.default.CHANGE_HEADER, data);
-	  },
-	  setStartCity: function setStartCity(_ref2, data) {
-	    var commit = _ref2.commit,
-	        state = _ref2.state;
+			commit(_Type2.default.CHANGE_HEADER, data);
+		},
+		setStartCity: function setStartCity(_ref2, data) {
+			var commit = _ref2.commit,
+			    state = _ref2.state;
 
-	    commit(_Type2.default.SET_STARTCITY, data);
-	  },
-	  setEndCity: function setEndCity(_ref3, data) {
-	    var commit = _ref3.commit,
-	        state = _ref3.state;
+			commit(_Type2.default.SET_STARTCITY, data);
+		},
+		setEndCity: function setEndCity(_ref3, data) {
+			var commit = _ref3.commit,
+			    state = _ref3.state;
 
-	    commit(_Type2.default.SET_ENDCITY, data);
-	  },
-	  setStartDate: function setStartDate(_ref4, data) {
-	    var commit = _ref4.commit,
-	        state = _ref4.state;
+			commit(_Type2.default.SET_ENDCITY, data);
+		},
+		setStartDate: function setStartDate(_ref4, data) {
+			var commit = _ref4.commit,
+			    state = _ref4.state;
 
-	    commit(_Type2.default.SET_STARTDATE, data);
-	  }
+			commit(_Type2.default.SET_STARTDATE, data);
+		},
+		setStartCityList: function setStartCityList(_ref5) {
+			var commit = _ref5.commit,
+			    state = _ref5.state;
+
+			if (state.startCityList) {
+				// 列表空
+				return new _promise2.default(function (reslove, reject) {
+					reslove();
+				});
+			}
+			return getData("http://192.168.31.86/api/Busticket/GetStart", function (data) {
+				commit(_Type2.default.SET_STARTCITYLIST, data);
+			});
+		},
+		setEndCityList: function setEndCityList(_ref6) {
+			var commit = _ref6.commit,
+			    state = _ref6.state;
+
+			if (state.endCityList) {
+				// 列表空
+				return new _promise2.default(function (reslove, reject) {
+					reslove();
+				});
+			} else {
+				return getData("http://192.168.31.86/api/Busticket/GetStart", function (data) {
+					commit(_Type2.default.SET_ENDCITYLIST, data);
+				});
+			}
+		},
+		setResultList: function setResultList(_ref7) {
+			var commit = _ref7.commit,
+			    state = _ref7.state;
+
+			if (state.resultList) {
+				// 列表空
+				return new _promise2.default(function (reslove, reject) {
+					reslove();
+				});
+			} else {
+				return fetch("http://192.168.31.116:12580/activeity").then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					commit(_Type2.default.SET_RESULTLIST, result.return);
+				});
+			}
+		}
 	};
 
 	// mutations
 	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, _Type2.default.CHANGE_HEADER, function (state, data) {
-	  // 设置头部状态显示
-	  state.HeaderIsHome = data.isHome;
-	  state.HeaderTitle = data.Title;
+		// 设置头部状态显示
+		state.HeaderIsHome = data.isHome;
+		state.HeaderTitle = data.Title;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTCITY, function (state, data) {
-	  state.startCity = data;
+		state.startCity = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_ENDCITY, function (state, data) {
-	  state.endCity = data;
+		state.endCity = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTDATE, function (state, data) {
-	  state.startDate = data;
+		state.startDate = data;
+	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTCITYLIST, function (state, data) {
+		state.startCityList = data;
+	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_ENDCITYLIST, function (state, data) {
+		state.endCityList = data;
+	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_RESULTLIST, function (state, data) {
+		state.resultList = data;
 	}), _mutations);
 
 	exports.default = {
-	  state: state,
-	  getters: getters,
-	  actions: actions,
-	  mutations: mutations
+		state: state,
+		getters: getters,
+		actions: actions,
+		mutations: mutations
 	};
 
 /***/ },
@@ -27334,12 +27436,8 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
-
-	var _promise = __webpack_require__(156);
-
-	var _promise2 = _interopRequireDefault(_promise);
 
 	var _utils = __webpack_require__(117);
 
@@ -27347,111 +27445,150 @@
 
 	var _mintUi = __webpack_require__(29);
 
+	__webpack_require__(172);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
 	exports.default = {
-	  data: function data() {
-	    return {
-	      nowDate: new Date(),
-	      endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 2), //两个月
-	      pickerValue: null,
-	      showTime: "", //几号
-	      showWeek: "" };
-	  },
-	  created: function created() {
-	    this.showTime = this.formatNow(new Date());
-	    this.showWeek = _utils2.default.formatWeek(new Date());
-	  },
+		data: function data() {
+			return {
+				nowDate: new Date(),
+				endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 2), //两个月
+				pickerValue: null,
+				showTime: "", //几号
+				showWeek: "", //星期几,
+				startCity: null,
+				endCity: null
+			};
+		},
+		created: function created() {
+			// 设置初始时间
+			this.handleConfirm(new Date());
+		},
 
-	  filters: {},
-	  computed: {},
-	  methods: {
-	    formatDate: function formatDate(data) {
-	      return _utils2.default.formatDate(data);
-	    },
-	    GoStartCity: function GoStartCity() {
-	      this.$router.push({ name: "ticketstartcity" });
-	    },
-	    GoEndCity: function GoEndCity() {
-	      this.$router.push({ name: "ticketendcity" });
-	    },
-	    openPicker: function openPicker() {
-	      this.$refs.picker.open();
-	    },
-	    handleConfirm: function handleConfirm(date) {
-	      this.showTime = this.formatNow(date);
-	      this.showWeek = _utils2.default.formatWeek(date);
-	    },
-	    formatNow: function formatNow(date) {
-	      var month = date.getMonth() + 1;
-	      var day = date.getDate();
+		filters: {},
+		computed: {
+			getStartCity: function getStartCity() {
+				this.startCity = this.$store.state.tickets.startCity;
+				return this.$store.getters.getInfo.startCity.Name;
+			},
+			getEndCity: function getEndCity() {
+				this.endCity = this.$store.state.tickets.endCity;
+				return this.$store.getters.getInfo.endCity.Name;
+			}
+		},
+		methods: {
+			formatDate: function formatDate(data) {
+				return _utils2.default.formatDate(data);
+			},
+			GoStartCity: function GoStartCity() {
+				var _this = this;
 
-	      return month + "月" + day + "日";
-	    },
-	    query: function query() {
-	      (0, _mintUi.Toast)({
-	        message: '提示',
-	        position: 'bottom',
-	        duration: 3000
-	      });
-	      _mintUi.Indicator.open({
-	        text: '加载中...',
-	        spinnerType: 'double-bounce'
-	      });
-	      this.submit().then(function (result) {
-	        console.log(result);
-	        _mintUi.Indicator.close();
-	      });
-	    },
-	    submit: function submit() {
-	      return new _promise2.default(function (resolve, rejcet) {
-	        setTimeout(function () {
-	          resolve(1);
-	        }, 2000);
-	      });
-	    }
-	  }
-	};
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setStartCityList").then(function (data) {
+					_mintUi.Indicator.close();
+					_this.$router.push({ name: "ticketstartcity" });
+				});
+			},
+			GoEndCity: function GoEndCity() {
+				var _this2 = this;
+
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setEndCityList").then(function (data) {
+					_mintUi.Indicator.close();
+					_this2.$router.push({ name: "ticketendcity" });
+				});
+			},
+			openPicker: function openPicker() {
+				this.$refs.picker.open();
+			},
+			handleConfirm: function handleConfirm(date) {
+				this.showTime = this.formatNow(date);
+				this.showWeek = _utils2.default.formatWeek(date);
+				//记录选取的时间
+				this.$store.dispatch("setStartDate", {
+					date: this.showTime,
+					week: this.showWeek
+				});
+			},
+			formatNow: function formatNow(date) {
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+
+				return month + "月" + day + "日";
+			},
+			query: function query() {
+				var _this3 = this;
+
+				// 	Indicator.open({
+				//   text: '加载中...',
+				//   spinnerType: 'double-bounce'
+				// });
+				// this.submit().then((result)=>{
+				// 	console.log(result)
+				// 	Indicator.close();
+				// })
+				console.log(this.startCity, this.endCity);
+				console.log(this.pickerValue);
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setResultList").then(function (data) {
+					_mintUi.Indicator.close();
+					_this3.$router.push({ name: "ticketresult" });
+				});
+			},
+			submit: function submit() {}
+		}
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 128 */
@@ -27465,12 +27602,20 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["上海"])]), " ", _vm._h('div', {
+	  }, [_vm._m(0), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.getStartCity)
+	    }
+	  }, ["上海"])]), " ", _vm._h('div', {
 	    staticClass: "to block",
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
-	  }, [_vm._m(1), " ", _vm._h('span', ["北京"])]), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.getEndCity)
+	    }
+	  })]), " ", _vm._h('div', {
 	    staticClass: "data",
 	    on: {
 	      "click": _vm.openPicker
@@ -29187,7 +29332,7 @@
 /* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29199,45 +29344,60 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _mintUi = __webpack_require__(29);
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				setStartCityList: null
+			};
 		},
 		created: function created() {
 			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
+
+			if (!this.$store.state.tickets.startCityList) {
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setStartCityList").then(function (data) {
+					_mintUi.Indicator.close();
+				});
+			}
 		},
 
-		computed: {},
-		methods: {}
-	};
+		computed: {
+			setStartCityList: function setStartCityList() {
+				return this.$store.state.tickets.startCityList;
+			}
+		},
+		methods: {
+			getStartCity: function getStartCity(code, name) {
+				this.$store.dispatch("setStartCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
+			}
+		}
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 150 */
@@ -29246,47 +29406,24 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('mt-index-list', {
 	    staticClass: "absolute"
-	  }, [_vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "A"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Aaron"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Alden"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Austin"
-	    }
-	  })]), " ", _vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "B"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Baldwin"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Braden"
-	    }
-	  })]), " ", _vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "Z"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Zack"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Zane"
-	    }
-	  })])])
+	  }, [_vm._l((_vm.setStartCityList), function(list) {
+	    return _vm._h('mt-index-section', {
+	      attrs: {
+	        "index": list.ShortKey
+	      }
+	    }, [_vm._l((list.Content), function(item) {
+	      return _vm._h('mt-cell', {
+	        attrs: {
+	          "title": item.Name
+	        },
+	        nativeOn: {
+	          "click": function($event) {
+	            _vm.getStartCity(item.Code, item.Name)
+	          }
+	        }
+	      })
+	    })])
+	  })])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -29402,7 +29539,7 @@
 /* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29414,45 +29551,60 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _mintUi = __webpack_require__(29);
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				setEndCityList: null
+			};
 		},
 		created: function created() {
 			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择到达地" });
+
+			if (!this.$store.state.tickets.endCityList) {
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setEndCityList").then(function (data) {
+					_mintUi.Indicator.close();
+				});
+			}
 		},
 
-		computed: {},
-		methods: {}
-	};
+		computed: {
+			setEndCityList: function setEndCityList() {
+				return this.$store.state.tickets.endCityList;
+			}
+		},
+		methods: {
+			getEndCity: function getEndCity(code, name) {
+				this.$store.dispatch("setEndCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
+			}
+		}
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 155 */
@@ -29461,47 +29613,24 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('mt-index-list', {
 	    staticClass: "absolute"
-	  }, [_vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "A"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Aaron"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Alden"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Austin"
-	    }
-	  })]), " ", _vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "B"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Baldwin"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Braden"
-	    }
-	  })]), " ", _vm._h('mt-index-section', {
-	    attrs: {
-	      "index": "Z"
-	    }
-	  }, [_vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Zack"
-	    }
-	  }), " ", _vm._h('mt-cell', {
-	    attrs: {
-	      "title": "Zane"
-	    }
-	  })])])
+	  }, [_vm._l((_vm.setEndCityList), function(list) {
+	    return _vm._h('mt-index-section', {
+	      attrs: {
+	        "index": list.ShortKey
+	      }
+	    }, [_vm._l((list.Content), function(item) {
+	      return _vm._h('mt-cell', {
+	        attrs: {
+	          "title": item.Name
+	        },
+	        nativeOn: {
+	          "click": function($event) {
+	            _vm.getEndCity(item.Code, item.Name)
+	          }
+	        }
+	      })
+	    })])
+	  })])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -30184,6 +30313,769 @@
 	  } catch(e){ /* empty */ }
 	  return safe;
 	};
+
+/***/ },
+/* 172 */
+/***/ function(module, exports) {
+
+	(function(self) {
+	  'use strict';
+
+	  if (self.fetch) {
+	    return
+	  }
+
+	  var support = {
+	    searchParams: 'URLSearchParams' in self,
+	    iterable: 'Symbol' in self && 'iterator' in Symbol,
+	    blob: 'FileReader' in self && 'Blob' in self && (function() {
+	      try {
+	        new Blob()
+	        return true
+	      } catch(e) {
+	        return false
+	      }
+	    })(),
+	    formData: 'FormData' in self,
+	    arrayBuffer: 'ArrayBuffer' in self
+	  }
+
+	  if (support.arrayBuffer) {
+	    var viewClasses = [
+	      '[object Int8Array]',
+	      '[object Uint8Array]',
+	      '[object Uint8ClampedArray]',
+	      '[object Int16Array]',
+	      '[object Uint16Array]',
+	      '[object Int32Array]',
+	      '[object Uint32Array]',
+	      '[object Float32Array]',
+	      '[object Float64Array]'
+	    ]
+
+	    var isDataView = function(obj) {
+	      return obj && DataView.prototype.isPrototypeOf(obj)
+	    }
+
+	    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
+	      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
+	    }
+	  }
+
+	  function normalizeName(name) {
+	    if (typeof name !== 'string') {
+	      name = String(name)
+	    }
+	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+	      throw new TypeError('Invalid character in header field name')
+	    }
+	    return name.toLowerCase()
+	  }
+
+	  function normalizeValue(value) {
+	    if (typeof value !== 'string') {
+	      value = String(value)
+	    }
+	    return value
+	  }
+
+	  // Build a destructive iterator for the value list
+	  function iteratorFor(items) {
+	    var iterator = {
+	      next: function() {
+	        var value = items.shift()
+	        return {done: value === undefined, value: value}
+	      }
+	    }
+
+	    if (support.iterable) {
+	      iterator[Symbol.iterator] = function() {
+	        return iterator
+	      }
+	    }
+
+	    return iterator
+	  }
+
+	  function Headers(headers) {
+	    this.map = {}
+
+	    if (headers instanceof Headers) {
+	      headers.forEach(function(value, name) {
+	        this.append(name, value)
+	      }, this)
+
+	    } else if (headers) {
+	      Object.getOwnPropertyNames(headers).forEach(function(name) {
+	        this.append(name, headers[name])
+	      }, this)
+	    }
+	  }
+
+	  Headers.prototype.append = function(name, value) {
+	    name = normalizeName(name)
+	    value = normalizeValue(value)
+	    var oldValue = this.map[name]
+	    this.map[name] = oldValue ? oldValue+','+value : value
+	  }
+
+	  Headers.prototype['delete'] = function(name) {
+	    delete this.map[normalizeName(name)]
+	  }
+
+	  Headers.prototype.get = function(name) {
+	    name = normalizeName(name)
+	    return this.has(name) ? this.map[name] : null
+	  }
+
+	  Headers.prototype.has = function(name) {
+	    return this.map.hasOwnProperty(normalizeName(name))
+	  }
+
+	  Headers.prototype.set = function(name, value) {
+	    this.map[normalizeName(name)] = normalizeValue(value)
+	  }
+
+	  Headers.prototype.forEach = function(callback, thisArg) {
+	    for (var name in this.map) {
+	      if (this.map.hasOwnProperty(name)) {
+	        callback.call(thisArg, this.map[name], name, this)
+	      }
+	    }
+	  }
+
+	  Headers.prototype.keys = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push(name) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.values = function() {
+	    var items = []
+	    this.forEach(function(value) { items.push(value) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.entries = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push([name, value]) })
+	    return iteratorFor(items)
+	  }
+
+	  if (support.iterable) {
+	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+	  }
+
+	  function consumed(body) {
+	    if (body.bodyUsed) {
+	      return Promise.reject(new TypeError('Already read'))
+	    }
+	    body.bodyUsed = true
+	  }
+
+	  function fileReaderReady(reader) {
+	    return new Promise(function(resolve, reject) {
+	      reader.onload = function() {
+	        resolve(reader.result)
+	      }
+	      reader.onerror = function() {
+	        reject(reader.error)
+	      }
+	    })
+	  }
+
+	  function readBlobAsArrayBuffer(blob) {
+	    var reader = new FileReader()
+	    var promise = fileReaderReady(reader)
+	    reader.readAsArrayBuffer(blob)
+	    return promise
+	  }
+
+	  function readBlobAsText(blob) {
+	    var reader = new FileReader()
+	    var promise = fileReaderReady(reader)
+	    reader.readAsText(blob)
+	    return promise
+	  }
+
+	  function readArrayBufferAsText(buf) {
+	    var view = new Uint8Array(buf)
+	    var chars = new Array(view.length)
+
+	    for (var i = 0; i < view.length; i++) {
+	      chars[i] = String.fromCharCode(view[i])
+	    }
+	    return chars.join('')
+	  }
+
+	  function bufferClone(buf) {
+	    if (buf.slice) {
+	      return buf.slice(0)
+	    } else {
+	      var view = new Uint8Array(buf.byteLength)
+	      view.set(new Uint8Array(buf))
+	      return view.buffer
+	    }
+	  }
+
+	  function Body() {
+	    this.bodyUsed = false
+
+	    this._initBody = function(body) {
+	      this._bodyInit = body
+	      if (!body) {
+	        this._bodyText = ''
+	      } else if (typeof body === 'string') {
+	        this._bodyText = body
+	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+	        this._bodyBlob = body
+	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+	        this._bodyFormData = body
+	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	        this._bodyText = body.toString()
+	      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+	        this._bodyArrayBuffer = bufferClone(body.buffer)
+	        // IE 10-11 can't handle a DataView body.
+	        this._bodyInit = new Blob([this._bodyArrayBuffer])
+	      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+	        this._bodyArrayBuffer = bufferClone(body)
+	      } else {
+	        throw new Error('unsupported BodyInit type')
+	      }
+
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+	        }
+	      }
+	    }
+
+	    if (support.blob) {
+	      this.blob = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return Promise.resolve(this._bodyBlob)
+	        } else if (this._bodyArrayBuffer) {
+	          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as blob')
+	        } else {
+	          return Promise.resolve(new Blob([this._bodyText]))
+	        }
+	      }
+
+	      this.arrayBuffer = function() {
+	        if (this._bodyArrayBuffer) {
+	          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+	        } else {
+	          return this.blob().then(readBlobAsArrayBuffer)
+	        }
+	      }
+	    }
+
+	    this.text = function() {
+	      var rejected = consumed(this)
+	      if (rejected) {
+	        return rejected
+	      }
+
+	      if (this._bodyBlob) {
+	        return readBlobAsText(this._bodyBlob)
+	      } else if (this._bodyArrayBuffer) {
+	        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
+	      } else if (this._bodyFormData) {
+	        throw new Error('could not read FormData body as text')
+	      } else {
+	        return Promise.resolve(this._bodyText)
+	      }
+	    }
+
+	    if (support.formData) {
+	      this.formData = function() {
+	        return this.text().then(decode)
+	      }
+	    }
+
+	    this.json = function() {
+	      return this.text().then(JSON.parse)
+	    }
+
+	    return this
+	  }
+
+	  // HTTP methods whose capitalization should be normalized
+	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+	  function normalizeMethod(method) {
+	    var upcased = method.toUpperCase()
+	    return (methods.indexOf(upcased) > -1) ? upcased : method
+	  }
+
+	  function Request(input, options) {
+	    options = options || {}
+	    var body = options.body
+
+	    if (typeof input === 'string') {
+	      this.url = input
+	    } else {
+	      if (input.bodyUsed) {
+	        throw new TypeError('Already read')
+	      }
+	      this.url = input.url
+	      this.credentials = input.credentials
+	      if (!options.headers) {
+	        this.headers = new Headers(input.headers)
+	      }
+	      this.method = input.method
+	      this.mode = input.mode
+	      if (!body && input._bodyInit != null) {
+	        body = input._bodyInit
+	        input.bodyUsed = true
+	      }
+	    }
+
+	    this.credentials = options.credentials || this.credentials || 'omit'
+	    if (options.headers || !this.headers) {
+	      this.headers = new Headers(options.headers)
+	    }
+	    this.method = normalizeMethod(options.method || this.method || 'GET')
+	    this.mode = options.mode || this.mode || null
+	    this.referrer = null
+
+	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+	      throw new TypeError('Body not allowed for GET or HEAD requests')
+	    }
+	    this._initBody(body)
+	  }
+
+	  Request.prototype.clone = function() {
+	    return new Request(this, { body: this._bodyInit })
+	  }
+
+	  function decode(body) {
+	    var form = new FormData()
+	    body.trim().split('&').forEach(function(bytes) {
+	      if (bytes) {
+	        var split = bytes.split('=')
+	        var name = split.shift().replace(/\+/g, ' ')
+	        var value = split.join('=').replace(/\+/g, ' ')
+	        form.append(decodeURIComponent(name), decodeURIComponent(value))
+	      }
+	    })
+	    return form
+	  }
+
+	  function parseHeaders(rawHeaders) {
+	    var headers = new Headers()
+	    rawHeaders.split('\r\n').forEach(function(line) {
+	      var parts = line.split(':')
+	      var key = parts.shift().trim()
+	      if (key) {
+	        var value = parts.join(':').trim()
+	        headers.append(key, value)
+	      }
+	    })
+	    return headers
+	  }
+
+	  Body.call(Request.prototype)
+
+	  function Response(bodyInit, options) {
+	    if (!options) {
+	      options = {}
+	    }
+
+	    this.type = 'default'
+	    this.status = 'status' in options ? options.status : 200
+	    this.ok = this.status >= 200 && this.status < 300
+	    this.statusText = 'statusText' in options ? options.statusText : 'OK'
+	    this.headers = new Headers(options.headers)
+	    this.url = options.url || ''
+	    this._initBody(bodyInit)
+	  }
+
+	  Body.call(Response.prototype)
+
+	  Response.prototype.clone = function() {
+	    return new Response(this._bodyInit, {
+	      status: this.status,
+	      statusText: this.statusText,
+	      headers: new Headers(this.headers),
+	      url: this.url
+	    })
+	  }
+
+	  Response.error = function() {
+	    var response = new Response(null, {status: 0, statusText: ''})
+	    response.type = 'error'
+	    return response
+	  }
+
+	  var redirectStatuses = [301, 302, 303, 307, 308]
+
+	  Response.redirect = function(url, status) {
+	    if (redirectStatuses.indexOf(status) === -1) {
+	      throw new RangeError('Invalid status code')
+	    }
+
+	    return new Response(null, {status: status, headers: {location: url}})
+	  }
+
+	  self.Headers = Headers
+	  self.Request = Request
+	  self.Response = Response
+
+	  self.fetch = function(input, init) {
+	    return new Promise(function(resolve, reject) {
+	      var request = new Request(input, init)
+	      var xhr = new XMLHttpRequest()
+
+	      xhr.onload = function() {
+	        var options = {
+	          status: xhr.status,
+	          statusText: xhr.statusText,
+	          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+	        }
+	        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
+	        var body = 'response' in xhr ? xhr.response : xhr.responseText
+	        resolve(new Response(body, options))
+	      }
+
+	      xhr.onerror = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.ontimeout = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.open(request.method, request.url, true)
+
+	      if (request.credentials === 'include') {
+	        xhr.withCredentials = true
+	      }
+
+	      if ('responseType' in xhr && support.blob) {
+	        xhr.responseType = 'blob'
+	      }
+
+	      request.headers.forEach(function(value, name) {
+	        xhr.setRequestHeader(name, value)
+	      })
+
+	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+	    })
+	  }
+	  self.fetch.polyfill = true
+	})(typeof self !== 'undefined' ? self : this);
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(55);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(75);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(174);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(176);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(177);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketResult.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-07fa1da4", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-07fa1da4", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketResult.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(175);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(115)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(33)();
+	// imports
+	exports.i(__webpack_require__(178), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(117);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				startCity: "",
+				endCity: "",
+				startDate: this.$store.getters.getInfo.startDate
+			};
+		},
+		created: function created() {
+			this.startCity = this.$store.state.tickets.startCity;
+			this.endCity = this.$store.state.tickets.endCity;
+			// console.log(this.getResultList)
+			//设置头部标题
+			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " 到 " + this.endCity.Name });
+		},
+
+		computed: {
+			getStartCity: function getStartCity() {
+				return this.$store.getters.getInfo.startCity.Name;
+			},
+			getEndCity: function getEndCity() {
+				return this.$store.getters.getInfo.endCity.Name;
+			},
+			getResultList: function getResultList() {
+				return this.$store.getters.getResultList;
+			}
+		},
+		methods: {
+			setTime: function setTime() {
+				this.isShowList = !this.isShowList;
+			}
+		}
+	};
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "result"
+	  }, [_vm._h('div', {
+	    staticClass: "date-control"
+	  }, [_vm._h('span', {
+	    staticClass: "font-blue"
+	  }, ["前一天"]), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.startDate.date + ' ' + _vm.startDate.week)
+	    }
+	  }), " ", _vm._h('span', {
+	    staticClass: "font-blue"
+	  }, ["后一天"])]), " ", " ", _vm._m(0), " ", _vm._h('div', {
+	    staticClass: "result-list"
+	  }, [_vm._h('div', {
+	    staticClass: "lists"
+	  }, [_vm._l((_vm.getResultList), function(item) {
+	    return _vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('span', {
+	      staticClass: "data",
+	      domProps: {
+	        "textContent": _vm._s(item.fromTime)
+	      }
+	    }), " ", _vm._h('div', {
+	      staticClass: "car-position"
+	    }, [_vm._h('p', [_vm._h('span', {
+	      staticClass: "brand"
+	    }, ["始"]), _vm._s(item.fromStationName) + "\n\t\t\t\t\t"]), " ", _vm._h('p', [_vm._h('span', {
+	      staticClass: "brand"
+	    }, ["终"]), _vm._s(item.fromStationName) + "\n\t\t\t\t\t"])]), " ", _vm._h('div', {
+	      staticClass: "ticket-type"
+	    }, [_vm._h('p', {
+	      staticClass: "money",
+	      domProps: {
+	        "textContent": _vm._s(item.fullPrice + '元')
+	      }
+	    }), " ", _vm._h('p', {
+	      staticClass: "number",
+	      domProps: {
+	        "textContent": _vm._s(item.showTicketInfo)
+	      }
+	    }), " ", _vm._h('p', {
+	      staticClass: "type",
+	      domProps: {
+	        "textContent": _vm._s(item.busType)
+	      }
+	    })])])
+	  })]), " ", " ", _vm._m(1)])])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "data-set"
+	  }, [_vm._h('span', {
+	    staticClass: "set"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-glass"
+	  }), "时段"]), " ", _vm._h('span', {
+	    staticClass: "set"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-car"
+	  }), "车站"]), " ", _vm._h('span', {
+	    staticClass: "set active"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-caret-down"
+	  }), "出发时间"])])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "change-set"
+	  }, [_vm._h('p', ["你好"])])
+	}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-07fa1da4", module.exports)
+	  }
+	}
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(33)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/ }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  background-color: #f7f7f7;\n  height: 40px;\n  position: absolute; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #c4c4c4;\n    text-align: center; }\n    .result .date-control span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center; }\n    .result .date-control span:first-child, .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #dddddd;\n    background-color: #f7f7f7; }\n    .result .data-set span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #5e5e5e; }\n      .result .data-set span i {\n        height: 40px;\n        line-height: 40px;\n        font-size: 14px;\n        margin-right: 5px; }\n    .result .data-set span.active {\n      color: #0074D9; }\n  .result .result-list {\n    position: relative; }\n    .result .result-list .list {\n      height: 70px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .result .result-list .list > .data {\n        color: #0074D9;\n        font-size: 1.5rem;\n        width: 30%;\n        text-align: left;\n        line-height: 70px;\n        padding-left: 20px;\n        font-weight: 900; }\n      .result .result-list .list > .car-position {\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        margin: 5px 0; }\n        .result .result-list .list > .car-position p {\n          height: 30px;\n          line-height: 30px;\n          font-size: 1.3rem;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n          color: #444444; }\n          .result .result-list .list > .car-position p span.brand {\n            border: 1px solid #FF851B;\n            padding: 0 2px;\n            color: #FF851B;\n            font-size: 1.1rem;\n            margin-right: 5px; }\n      .result .result-list .list > .ticket-type {\n        margin: 5px 0;\n        width: 30%;\n        text-align: right;\n        margin-right: 10px;\n        font-size: 1.3rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n        .result .result-list .list > .ticket-type .money {\n          color: #FF851B;\n          -ms-flex: 1;\n              flex: 1; }\n        .result .result-list .list > .ticket-type .number, .result .result-list .list > .ticket-type .type {\n          font-size: 1.1rem;\n          color: #AAAAAA;\n          -ms-flex: 1;\n              flex: 1; }\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

@@ -15,6 +15,7 @@ import DownloadApp from "../components/DownloadApp.vue";
 import TicketBody from "../components/TicketBody.vue";
 import TicketStartCity from "../components/TicketStartCity.vue";
 import TicketEndCity from "../components/TicketEndCity.vue";
+import TicketResult from "../components/TicketResult.vue";
 
 const routes = [{
 	path: '/',
@@ -35,6 +36,11 @@ const routes = [{
 			path:"/endcity",
 			name:"ticketendcity",
 			component:TicketEndCity
+		},
+		{
+			path:"/result",
+			name:"ticketresult",
+			component:TicketResult
 		},
 		{
 			path:"*",
