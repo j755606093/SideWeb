@@ -1,16 +1,21 @@
 <template>
 	<div id="ticket">
 		<side-header></side-header>
-		<transition 
-		enter-active-class="fadeRight-in"
-		leave-active-class="fadeLeft-out">
-			<router-view></router-view>
-		</transition>
+		<div class="body">
+			<transition 
+			enter-active-class="fadeIn"
+			leave-active-class="fadeOut">
+				<router-view></router-view>
+			</transition>
+		</div>
 	</div>
 </template>
 
 <style lang="css">
 	@import "./css/ticket.css";
+	.body{
+		margin-top:50px;
+	}
 </style>
 
 <script type="text/babel">
@@ -34,7 +39,23 @@ export default {
 	computed:{
 		getHeaderState(){
 			return this.$store.state.tickets.HeaderIsHome;
-		}
+		},
+		// enterPage(){
+		// 	if(this.getHeaderState){
+		// 		return "fadeRight-in";
+		// 	}
+		// 	else{
+		// 		return "fadeRight-out";
+		// 	}
+		// },
+		// leavePage(){
+		// 	if(this.getHeaderState){
+		// 		return "fadeLeft-out";
+		// 	}
+		// 	else{
+		// 		return "fadeLeft-in";
+		// 	}
+		// }
 	},
 	components:{
 		"side-header":SideHeader,

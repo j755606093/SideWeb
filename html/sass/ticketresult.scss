@@ -103,7 +103,16 @@
 			}
 		}
 		.change-set{
-			
+			.btn{
+				background-color: $blue;
+				width:90%;
+				margin:0 5%;
+				padding:10px 0;
+				border-radius: 10px;
+				color:$white;
+				font-size:1.5rem;
+				margin-top:10px;
+			}
 		}
 	}
 }

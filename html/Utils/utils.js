@@ -76,7 +76,7 @@ let formatTime = (date)=>{
  * @return {[type]}      [周一]
  */
 let formatWeek = date =>{
-	let week = ["一","二","三","四","五","六","日"];
+	let week = ["日","一","二","三","四","五","六"];
 	return "周"+week[date.getDay()];
 }
 
@@ -94,9 +94,19 @@ let getQueryString = (name)=>{
 	return null; 
 }
 
+/**
+ * 格式化vue中的变量成JSON数据
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+let formatJsonData = data => {
+	return JSON.parse(JSON.stringify(data));
+}
+
 export default {
 	formatDate:formatDate,
 	formatTime:formatTime,
 	getQueryString:getQueryString,
-	formatWeek:formatWeek
+	formatWeek:formatWeek,
+	formatJsonData:formatJsonData
 }

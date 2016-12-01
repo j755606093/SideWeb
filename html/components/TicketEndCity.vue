@@ -1,5 +1,5 @@
 <template>
-	<mt-index-list class="absolute">
+	<mt-index-list class="fixed">
 	  <mt-index-section v-for="list in setEndCityList" :index="list.ShortKey">
 	    <mt-cell v-for="item in list.Content" @click.native="getEndCity(item.Code,item.Name)" :title="item.Name"></mt-cell>
 	  </mt-index-section>
@@ -8,8 +8,9 @@
 
 <style lang="sass">
 @import "../sass/utils.scss";
-.absolute{
-	position:absolute;
+.fixed{
+	position:fixed;
+	z-index:10000;
 }
 </style>
 

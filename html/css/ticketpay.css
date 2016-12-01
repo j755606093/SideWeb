@@ -1,0 +1,223 @@
+@charset "UTF-8";
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a, input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/ }
+
+@keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+    transform: none; }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); } }
+
+.fadeLeft-out {
+  animation-name: fadeOutLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeLeft-in {
+  animation-name: fadeInLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeRight-in {
+  animation-name: fadeInRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 0;
+    transform: none; }
+  to {
+    opacity: 1;
+    transform: translate3d(100%, 0, 0); } }
+
+.fadeRight-out {
+  animation-name: fadeOutRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+.position {
+  position: absolute;
+  width: 100%;
+  background-color: #eaeaea; }
+
+.ticket-info {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 5px;
+  padding-bottom: 10px; }
+  .ticket-info .header {
+    width: 92%;
+    margin: 5px 4%;
+    border-bottom: 1px solid #dddddd;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row; }
+    .ticket-info .header span {
+      -ms-flex: 1;
+          flex: 1;
+      height: 40px;
+      font-size: 1.3rem;
+      line-height: 40px;
+      display: inline-block; }
+    .ticket-info .header span:first-child {
+      text-align: left; }
+    .ticket-info .header span:last-child {
+      text-align: right; }
+  .ticket-info .address-info {
+    width: 92%;
+    margin: 10px 4%;
+    height: 80px;
+    font-size: 1.2rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row; }
+    .ticket-info .address-info .box {
+      -ms-flex: 1;
+          flex: 1;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+    .ticket-info .address-info .start {
+      -ms-flex-align: start;
+          align-items: flex-start; }
+      .ticket-info .address-info .start p {
+        font-size: 1.6rem; }
+        .ticket-info .address-info .start p:first-child {
+          color: #AAAAAA;
+          font-size: 1.3rem; }
+        .ticket-info .address-info .start p:last-child {
+          color: #AAAAAA;
+          font-size: 1.2rem; }
+    .ticket-info .address-info .center {
+      font-size: 1.5rem; }
+      .ticket-info .address-info .center p {
+        color: #111111;
+        position: relative; }
+        .ticket-info .address-info .center p::after {
+          width: 80%;
+          height: 10px;
+          background-color: #0074D9;
+          position: absolute;
+          left: 0;
+          bottom: -20px;
+          content: ""; }
+        .ticket-info .address-info .center p::before {
+          width: 0;
+          height: 0;
+          border: 10px solid #0074D9;
+          position: absolute;
+          right: 0;
+          bottom: -20px;
+          content: "";
+          border: 10px solid #0074D9;
+          border-color: transparent transparent #0074D9 #0074D9; }
+    .ticket-info .address-info .end {
+      -ms-flex-align: end;
+          align-items: flex-end; }
+      .ticket-info .address-info .end p {
+        color: #AAAAAA; }
+        .ticket-info .address-info .end p:first-child {
+          font-size: 1.6rem; }
+  .ticket-info .tip-info {
+    width: 92%;
+    margin: 0px 4%;
+    height: 30px;
+    line-height: 30px;
+    background-color: #d9edff;
+    font-size: 1.2rem; }
+    .ticket-info .tip-info p {
+      padding: 0 5px;
+      color: #777777; }
+      .ticket-info .tip-info p i {
+        margin-left: 5px; }

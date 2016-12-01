@@ -1,0 +1,114 @@
+@import "./utils.scss";
+
+.position{
+	position:absolute;
+	width:100%;
+	background-color:lighten($gray, 25%);
+}
+
+.ticket-info{
+	width:100%;
+	background-color:$white;
+	margin-bottom:5px;
+	padding-bottom:10px;
+	.header{
+		width:92%;
+		margin:5px 4%;
+		border-bottom:1px solid lighten($gray, 20%);
+		display:flex;
+		flex-direction: row;
+		span{
+			flex:1;
+			height:40px;
+			font-size:1.3rem;
+			line-height:40px;
+			display:inline-block;
+		}
+		span:first-child{
+			text-align:left;
+		}
+		span:last-child{
+			text-align:right;
+		}
+	}
+	.address-info{
+		width:92%;
+		margin:10px 4%;
+		height:80px;
+		font-size:1.2rem;
+		display:flex;
+		flex-direction: row;
+		.box{
+			flex:1;
+			display:flex;
+			flex-direction:column;
+			justify-content: center;
+			align-items: center;
+		}
+		.start{
+			align-items: flex-start;
+			p{
+				font-size:1.6rem;
+				&:first-child{
+					color:$gray;
+					font-size:1.3rem;
+				}
+				&:last-child{
+					color:$gray;
+					font-size:1.2rem;
+				}
+			}
+		}
+		.center{
+			font-size:1.5rem;
+			p{
+				color:$black;
+				position:relative;
+				&::after{
+					width:80%;
+					height:10px;
+					background-color: $blue;
+					position:absolute;
+					left:0;
+					bottom:-20px;
+					content:"",
+				}
+				&::before{
+					width:0;
+					height:0;
+					border:10px solid $blue;
+					position:absolute;
+					right:0;
+					bottom:-20px;
+					content:"";
+					border: 10px solid $blue;
+					border-color: transparent transparent $blue $blue;
+				}
+			}
+		}
+		.end{
+			align-items: flex-end;
+			p{
+				color:$gray;
+				&:first-child{
+					font-size:1.6rem;
+				}
+			}
+		}
+	}
+	.tip-info{
+		width:92%;
+		margin:0px 4%;
+		height:30px;
+		line-height:30px;
+		background-color: lighten($blue, 50%);
+		font-size:1.2rem;
+		p{
+			padding:0 5px;
+			color:darken($gray,20%);
+			i{
+				margin-left:5px;
+			}
+		}
+	}
+}

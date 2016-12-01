@@ -55,6 +55,7 @@ export default {
 		}
 	},
 	created(){
+		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 		// 设置初始时间
 		this.handleConfirm(new Date());
 	},

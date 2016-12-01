@@ -25,6 +25,8 @@ const state = {
 	endCityList:null,//到达的城市列表
 
 	resultList:null,//结果
+
+	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据
 }
 
 // getters,获取数据
@@ -44,7 +46,8 @@ const getters = {
 			endCityList:state.endCityList,
 		}
 	},
-	getResultList:state=>state.resultList
+	getResultList:state=>state.resultList,
+	getBusInfo:state=>state.busInfo
 }
 
 let getData = (url,callback)=>{
@@ -111,6 +114,9 @@ const actions = {
 				commit(types.SET_RESULTLIST,result.return);
 			})
 		}
+	},
+	setBusInfo({commit,state},data){
+		commit(types.SET_BUSINFO,data);
 	}
 }
 
@@ -129,18 +135,18 @@ const mutations = {
 	},
 	[types.SET_STARTDATE] (state,data){
 		state.startDate = data;
-	}
-	,
+	},
 	[types.SET_STARTCITYLIST] (state,data){
 		state.startCityList = data;
-	}
-	,
+	},
 	[types.SET_ENDCITYLIST] (state,data){
 		state.endCityList = data;
-	}
-	,
+	},
 	[types.SET_RESULTLIST] (state,data){
 		state.resultList = data;
+	},
+	[types.SET_BUSINFO] (state,data){
+		state.busInfo = data;
 	}
 }
 

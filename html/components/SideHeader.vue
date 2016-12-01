@@ -21,16 +21,22 @@ header{
 	background-color:#14d67c;
 	color:$white;
 	font-size:1.5rem;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	z-index:1000;
 	.home{
 		text-align:center;
 		line-height:50px;
 		font-size:1.8rem;
+		font-weight:900;
 	}
 	.other{
 		text-align:center;
 		.left{
 			height:50px;
-			font-size:1.8rem;
+			font-size:1.5rem;
 			position:absolute;
 			top:0;
 			left:0;
