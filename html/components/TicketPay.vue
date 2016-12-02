@@ -24,11 +24,28 @@
 				<p>查看取票,退票说明,预订须知<i class="fa fa-caret-down"></i></p>
 			</div>
 		</div>
+		<div class="people-info">
+			<div class="info-head">
+				<span>乘客信息</span>
+				<span>一张订单最多可代购3张票</span>
+			</div>
+			<div class="info-man">
+				<div class="info-man-name">
+					<span>乘客姓名</span>
+					<input type="text" placeholder="请填写真实姓名以免取不出票">
+				</div>
+				<div class="info-man-card">
+					<span>身份证</span>
+					<input type="text" placeholder="请填写证件号码">
+				</div>
+				<button>确定添加</button>
+			</div>
+		</div>
 		<div class="pay-people">
 			<input placeholder="输入code..." class="input" type="text" v-model="Code">
 			<button class="btn" @click="postCode">提交</button>
 		</div>
-		<!-- <button class="btn" @click="pay">点击支付</button> -->
+		
 		<mt-popup
 		  v-model="popupVisible"
 		  position="top"

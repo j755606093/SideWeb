@@ -221,3 +221,50 @@ html {
       color: #777777; }
       .ticket-info .tip-info p i {
         margin-left: 5px; }
+
+.people-info {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 5px;
+  padding-bottom: 10px; }
+  .people-info .info-head {
+    width: 96%;
+    margin: 0 2%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #dddddd; }
+    .people-info .info-head span {
+      font-size: 1.4rem; }
+    .people-info .info-head span:first-child {
+      -ms-flex: 0.3;
+          flex: 0.3; }
+    .people-info .info-head span:last-child {
+      -ms-flex: 0.7;
+          flex: 0.7; }
+  .people-info .info-man {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column; }
+    .people-info .info-man .info-man-name {
+      height: 40px;
+      line-height: 40px;
+      -ms-flex: 1;
+          flex: 1;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+    .people-info .info-man .info-man-card {
+      height: 40px;
+      line-height: 40px;
+      -ms-flex: 1;
+          flex: 1;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row; }
