@@ -10,6 +10,22 @@ $navy:#001f3f;
 $purple:#B10DC9;
 $meBlack:#353535;
 
+$width-iphone5:  320px;
+$width-iphone6: 375px;
+$width-iphone6p: 414px;
+
+@mixin responsive($name) {
+  @if $name == 'iphone5' {
+    @media (max-width: $width-iphone5) { @content; }
+  }
+  @else if $name == 'iphone6' {
+    @media (max-width: $width-iphone6) { @content; }
+  }
+  @else if $name == 'iphone6p' {
+    @media (max-width: $width-iphone6p) { @content; }
+  }
+}
+
 @mixin text_nowrap{
 	overflow: hidden;
 	white-space: nowrap;

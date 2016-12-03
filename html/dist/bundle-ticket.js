@@ -28253,12 +28253,62 @@
 		return JSON.parse((0, _stringify2.default)(data));
 	};
 
+	/**
+	 * 身份证验证
+	 * @param  {[type]} code [description]
+	 * @return {[type]}      [description]
+	 */
+	var IdentityCodeValid = function IdentityCodeValid(code) {
+		var city = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外 " };
+
+		if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+			return false;
+		} else {
+			if (!city[code.substr(0, 2)]) {
+				return false;
+			} else {
+				//验证身份证最后一位
+				code = code.split('');
+				//∑(ai×Wi)(mod 11)
+				//加权因子
+				var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+				//校验位
+				var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+				var sum = 0;
+				var ai = 0;
+				var wi = 0;
+				for (var i = 0; i < 17; i++) {
+					ai = code[i];
+					wi = factor[i];
+					sum += ai * wi;
+				}
+				var last = parity[sum % 11];
+				if (parity[sum % 11] != code[17]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	};
+
+	/**
+	 * 检查是否中文名
+	 * @param  {[type]} name [description]
+	 * @return {[type]}      [description]
+	 */
+	var isChinaName = function isChinaName(name) {
+		return (/^[\u4e00-\u9fa5]+$/i.test(name)
+		);
+	};
+
 	exports.default = {
 		formatDate: formatDate,
 		formatTime: formatTime,
 		getQueryString: getQueryString,
 		formatWeek: formatWeek,
-		formatJsonData: formatJsonData
+		formatJsonData: formatJsonData,
+		IdentityCodeValid: IdentityCodeValid,
+		isChinaName: isChinaName
 	};
 
 /***/ },
@@ -31715,7 +31765,7 @@
 	exports.i(__webpack_require__(174), "");
 
 	// module
-	exports.push([module.id, "\nbutton {\n  padding: 10px 0;\n  width: 90%;\n  margin: 0 5%;\n}\n.root-popup {\n  width: 100%;\n}\n.popup {\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  text-align: center;\n  color: #fff;\n  background-color: rgba(0, 0, 0, 0.6);\n  font-size: 1.2rem;\n}\n.input {\n  width: 100%;\n  height: 30px;\n  line-height: 30px;\n  font-size: 1.3rem;\n}\n.btn {\n  background-color: #001f3f;\n  padding: 10px 0;\n  color: #fff;\n  font-size: 1.3rem;\n}\n", ""]);
+	exports.push([module.id, "\n", ""]);
 
 	// exports
 
@@ -31729,7 +31779,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/ }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #eaeaea; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.6rem; }\n        .ticket-info .address-info .start p:first-child {\n          color: #AAAAAA;\n          font-size: 1.3rem; }\n        .ticket-info .address-info .start p:last-child {\n          color: #AAAAAA;\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem; }\n      .ticket-info .address-info .center p {\n        color: #111111;\n        position: relative; }\n        .ticket-info .address-info .center p::after {\n          width: 80%;\n          height: 10px;\n          background-color: #0074D9;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #0074D9;\n          position: absolute;\n          right: 0;\n          bottom: -20px;\n          content: \"\";\n          border: 10px solid #0074D9;\n          border-color: transparent transparent #0074D9 #0074D9; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #AAAAAA; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.6rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background-color: #d9edff;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #777777; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .people-info .info-head {\n    width: 96%;\n    margin: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info-man-name {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row; }\n    .people-info .info-man .info-man-card {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/ }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.6rem; }\n        .ticket-info .address-info .start p:first-child {\n          color: #AAAAAA;\n          font-size: 1.3rem; }\n        .ticket-info .address-info .start p:last-child {\n          color: #AAAAAA;\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem; }\n      .ticket-info .address-info .center p {\n        color: #111111;\n        position: relative; }\n        .ticket-info .address-info .center p::after {\n          width: 80%;\n          height: 10px;\n          background-color: #0074D9;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #0074D9;\n          position: absolute;\n          right: 0;\n          bottom: -20px;\n          content: \"\";\n          border: 10px solid #0074D9;\n          border-color: transparent transparent #0074D9 #0074D9; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #AAAAAA; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.6rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background-color: #d9edff;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #777777; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 20px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 20px;\n          line-height: 20px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n      .people-info .info-list .list .list-body .list-bottom {\n        height: 20px; }\n        .people-info .info-list .list .list-body .list-bottom p {\n          height: 20px;\n          line-height: 20px;\n          color: #AAAAAA; }\n          .people-info .info-list .list .list-body .list-bottom p span {\n            color: #AAAAAA;\n            margin-left: 5px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px; }\n    .people-info .click-append > button {\n      background-color: #0074D9;\n      padding: 0 10px;\n      width: 100px;\n      height: 30px;\n      border-radius: 20px;\n      outline: none;\n      border: 0;\n      color: #fff;\n      font-size: 1.3rem;\n      float: right;\n      margin-top: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 50px 2%; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
 
 	// exports
 
@@ -31738,7 +31788,7 @@
 /* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -31758,6 +31808,197 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	var _ = __webpack_require__(169);
 	exports.default = {
 		data: function data() {
 			return {
@@ -31765,8 +32006,43 @@
 				endCity: "",
 				busInfo: null,
 				popupVisible: false, //提示框是否显示
+				tipPopupVisible: false, //取票信息说明
 				popupText: "我是提示框", //提示框文字
-				Code: "" };
+				Code: "", //微信code
+				isInsure: true,
+				fareName: "", //输入的乘客名
+				certificate: "", //输入的乘客凭证,身份证这类
+				AllFare: [{
+					name: "周岳谢",
+					code: "440802199406011519",
+					active: false,
+					isGetTicket: false
+				}, {
+					name: "周周周",
+					code: "440802199406011519",
+					active: true,
+					isGetTicket: false
+				}, {
+					name: "舟舟周",
+					code: "440802199406011519",
+					active: false,
+					isGetTicket: false
+				}, {
+					name: "粥粥周",
+					code: "440802199406011519",
+					active: true,
+					isGetTicket: false
+				}], //所有的乘客信息
+				isHaveGetTicketMan: false, //是否有取票人信息
+
+				//订单信息
+				payInfoData: {
+					passenger: null, //乘客
+					inSureMoney: 15, //单笔保险费
+					getTicketMan: null, //取票人信息
+					Allinsure: 0, //保险费用(总共)
+					ticketMoney: 143, //票的单价
+					payMoney: 0 } };
 		},
 		created: function created() {
 			// if(this.$store.getters.getBusInfo===null){
@@ -31778,149 +32054,241 @@
 			this.endCity = this.$store.state.tickets.endCity;
 
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " - " + this.endCity.Name });
+
+			this.computeAll();
 		},
 
 		computed: {},
 		methods: {
+			/**
+	   * 格式化vue数据
+	   * @param  {[type]} data [description]
+	   * @return {[type]}      [description]
+	   */
 			formatData: function formatData(data) {
 				return JSON.parse((0, _stringify2.default)(data));
 			},
-			pay: function pay() {
-				console.log(this.formatData(this.busInfo));
-			},
+
+			// pay(){
+			// 	console.log(this.formatData(this.busInfo))
+			// },
+			/**
+	   * 提示框里的信息
+	   * @param  {[type]} text [description]
+	   * @return {[type]}      [description]
+	   */
 			popupMessage: function popupMessage(text) {
 				this.popupText = text;
 				this.popupVisible = true;
 			},
-			postCode: function postCode() {
+
+			// postCode(){
+			// 	// 提示加载中
+			// 	Indicator.open({
+			// 		text: '加载中...',
+			// 		spinnerType: 'double-bounce'
+			// 	});
+			// 	this.$http.post("http://wx.1yhp.net/api/Order/WxPay",{Code:this.Code}).then(res=>{
+			// 		Indicator.close();
+			// 		if(res.data.Status===0){
+			// 			this.popupMessage(res.data.Message);
+			// 		}
+			// 		else{
+			// 			this.popupMessage(JSON.stringify(res.data));
+			// 			this.payMoney(res.data.Data);
+			// 		}
+			// 	}).catch(error=>{
+			// 		this.popupMessage(error);
+			// 	})
+			// },
+			// payMoney(paydata){
+			// 	window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+			// 		if(r.err_msg==="get_brand_wcpay_request:ok"){
+			// 			// 支付成功
+			// 			// 再根据小票拿数据
+			// 			// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
+			// 			Indicator.open({
+			// 				text: '支付成功...',
+			// 				spinnerType: 'double-bounce'
+			// 			});
+			// 			setTimeout(()=>{
+			// 				Indicator.close();
+			// 			},3000);
+			// 		}
+			// 	});
+			// },
+			/**
+	   * 查看取票退票说明
+	   * @return {[type]} [description]
+	   */
+			openTip: function openTip() {
+				this.tipPopupVisible = true;
+			},
+
+			/**
+	   * 获取所有的乘客数组
+	   * @return {[type]} [description]
+	   */
+			getAllFare: function getAllFare() {
+				var data = _.filter(this.AllFare, function (item) {
+					return item.active;
+				});
+
+				this.payInfoData.passenger = data;
+				return data;
+			},
+
+			/**
+	   * 计算所有的乘客的钱
+	   * @return {[type]} [description]
+	   */
+			computeTicketMoney: function computeTicketMoney() {
+				this.payInfoData.payMoney = this.payInfoData.ticketMoney * this.getAllFare().length;
+			},
+
+			/**
+	   * 计算保险费
+	   * @return {[type]} [description]
+	   */
+			computeInsureMoney: function computeInsureMoney() {
+				if (this.isInsure) {
+					// 设置了保险
+					this.payInfoData.Allinsure = this.payInfoData.inSureMoney * this.getAllFare().length;
+				} else {
+					this.payInfoData.Allinsure = 0;
+				}
+			},
+			computeAll: function computeAll() {
+				this.computeTicketMoney();
+				this.computeInsureMoney();
+			},
+
+			/**
+	   * 获取取票人信息
+	   * @return {[type]} [description]
+	   */
+			getGetTicketMan: function getGetTicketMan() {
+				var data = _.filter(this.AllFare, function (item) {
+					return item.isGetTicket;
+				});
+
+				this.payInfoData.getTicketMan = data;
+				return data;
+			},
+
+			/**
+	   * 提交订单
+	   * @return {[type]} [description]
+	   */
+			submitOrder: function submitOrder() {
+				if (this.getAllFare().length === 0) {
+					this.popupMessage("请先添加或者选择乘客!");
+					return;
+				} else {
+					if (this.getGetTicketMan().length === 0) {
+						this.popupMessage("请设置一个取票人!");
+						return;
+					} else {
+						this.computeAll();
+					}
+				}
+			},
+
+			/**
+	   * 退出提示框提示页(关闭)
+	   * @return {[type]} [description]
+	   */
+			backTip: function backTip() {
+				// 退出tip
+				this.tipPopupVisible = false;
+				this.popupVisible = false;
+			},
+
+			/**
+	   * 添加乘客信息
+	   * @return {[type]} [description]
+	   */
+			append: function append() {
+				// 添加乘客至AllFare
+				// 首先检查输入是否正确
+				if (_utils2.default.isChinaName(this.fareName)) {
+					// 是中文
+					if (_utils2.default.IdentityCodeValid(this.certificate)) {
+						// 身份证号码正确
+						this.AllFare.push({
+							name: this.fareName,
+							code: this.certificate,
+							active: true,
+							isGetTicket: false
+						});
+						// 清空输入的信息
+						this.fareName = "";
+						this.certificate = "";
+
+						this.popupMessage("添加成功!");
+						this.computeAll();
+					} else {
+						this.popupMessage("请输入正确的身份证号码!");
+					}
+				} else {
+					this.popupMessage("请输入正确的姓名!");
+				}
+			},
+
+			/**
+	   * 选择乘客check按钮
+	   * @param {[type]} index [description]
+	   */
+			setFare: function setFare(index) {
+				// 若没有选中,那么设置为乘客
+				if (this.getAllFare().length >= 3 && !this.AllFare[index].active) {
+					// 选中的已经超过3个人
+					this.popupMessage("乘客数已经超过3人!");
+				} else {
+					this.AllFare[index].active = !this.AllFare[index].active;
+					this.computeAll();
+				}
+			},
+
+			/**
+	   * 删除乘客信息
+	   * @param  {[type]} index [description]
+	   * @return {[type]}       [description]
+	   */
+			trashMan: function trashMan(index) {
 				var _this = this;
 
-				// 提示加载中
-				_mintUi.Indicator.open({
-					text: '加载中...',
-					spinnerType: 'double-bounce'
-				});
-				this.$http.post("http://wx.1yhp.net/api/Order/WxPay", { Code: this.Code }).then(function (res) {
-					_mintUi.Indicator.close();
-					if (res.data.Status === 0) {
-						_this.popupMessage(res.data.Message);
-					} else {
-						_this.popupMessage((0, _stringify2.default)(res.data));
-						_this.payMoney(res.data.Data);
-					}
+				var array = this.formatData(this.AllFare);
+
+				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
+					_this.AllFare = array.splice(0, index).concat(array.splice(index + 1));
+					_this.computeAll();
 				}).catch(function (error) {
-					_this.popupMessage(error);
+					// error=cancel
+					console.log(error);
 				});
 			},
-			payMoney: function payMoney(paydata) {
-				window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
-					if (r.err_msg === "get_brand_wcpay_request:ok") {
-						// 支付成功
-						// 再根据小票拿数据
-						// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-						_mintUi.Indicator.open({
-							text: '支付成功...',
-							spinnerType: 'double-bounce'
-						});
-						setTimeout(function () {
-							_mintUi.Indicator.close();
-						}, 3000);
-					}
+
+			/**
+	   * 设置汽车保险
+	   */
+			GetInSure: function GetInSure() {
+				this.isInsure = !this.isInsure;
+				this.computeAll();
+			},
+
+			/**
+	   * 设置取票人
+	   * @param {[type]} index [description]
+	   */
+			setGetTicketMan: function setGetTicketMan(index) {
+				_.map(this.AllFare, function (item) {
+					item.isGetTicket = false;
 				});
+				this.AllFare[index].isGetTicket = true;
 			}
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 176 */
@@ -31932,42 +32300,190 @@
 	    attrs: {
 	      "id": "pay"
 	    }
+	  }, [_vm._h('div', {
+	    staticClass: "ticket-info"
 	  }, [_vm._m(0), " ", _vm._m(1), " ", _vm._h('div', {
-	    staticClass: "pay-people"
-	  }, [_vm._h('input', {
+	    staticClass: "tip-info",
+	    on: {
+	      "click": _vm.openTip
+	    }
+	  }, [_vm._m(2)])]), " ", " ", _vm._h('div', {
+	    staticClass: "people-info"
+	  }, [_vm._m(3), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
+	    staticClass: "info-list"
+	  }, [_vm._l((_vm.AllFare), function(item, index) {
+	    return _vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('div', {
+	      staticClass: "check",
+	      on: {
+	        "click": function($event) {
+	          _vm.setFare(index)
+	        }
+	      }
+	    }, [_vm._h('span', {
+	      class: [item.active ? 'active' : '']
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-check"
+	    })])]), " ", _vm._h('div', {
+	      staticClass: "list-body"
+	    }, [_vm._h('div', {
+	      staticClass: "list-top"
+	    }, [_vm._h('span', {
+	      staticClass: "name",
+	      domProps: {
+	        "textContent": _vm._s(item.name)
+	      }
+	    }), " ", _vm._h('span', {
+	      staticClass: "type"
+	    }, ["成人票"]), " ", (item.isGetTicket) ? _vm._h('span', {
+	      staticClass: "get-ticket"
+	    }, ["取票人"]) : _vm._h('span', {
+	      staticClass: "set-ticket",
+	      on: {
+	        "click": function($event) {
+	          _vm.setGetTicketMan(index)
+	        }
+	      }
+	    }, ["设为取票人"]), " "]), " ", _vm._h('div', {
+	      staticClass: "list-bottom"
+	    }, [_vm._h('p', ["身份证", _vm._h('span', {
+	      domProps: {
+	        "textContent": _vm._s(item.code)
+	      }
+	    })])])]), " ", _vm._h('span', {
+	      on: {
+	        "click": function($event) {
+	          _vm.trashMan(index)
+	        }
+	      }
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-trash"
+	    })])])
+	  })]) : _vm._e(), " ", " ", _vm._h('div', {
+	    staticClass: "info-man"
+	  }, [_vm._h('div', {
+	    staticClass: "info-man-name info"
+	  }, [_vm._h('span', ["乘客姓名"]), " ", _vm._h('input', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.Code),
-	      expression: "Code"
+	      value: (_vm.fareName),
+	      expression: "fareName"
 	    }],
-	    staticClass: "input",
 	    attrs: {
-	      "placeholder": "输入code...",
-	      "type": "text"
+	      "type": "text",
+	      "placeholder": "请填写真实姓名以免取不出票"
 	    },
 	    domProps: {
-	      "value": _vm._s(_vm.Code)
+	      "value": _vm._s(_vm.fareName)
 	    },
 	    on: {
 	      "input": function($event) {
 	        if ($event.target.composing) { return; }
-	        _vm.Code = $event.target.value
+	        _vm.fareName = $event.target.value
 	      }
 	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
+	  })]), " ", _vm._h('div', {
+	    staticClass: "info-man-card info"
+	  }, [_vm._h('span', ["身份证"]), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.certificate),
+	      expression: "certificate"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "placeholder": "请填写证件号码"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.certificate)
+	    },
 	    on: {
-	      "click": _vm.postCode
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.certificate = $event.target.value
+	      }
 	    }
-	  }, ["提交"])]), " ", _vm._h('mt-popup', {
+	  })])]), " ", _vm._h('div', {
+	    staticClass: "click-append"
+	  }, [_vm._h('button', {
+	    on: {
+	      "click": _vm.append
+	    }
+	  }, ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._m(4), " ", " ", _vm._h('div', {
+	    staticClass: "other-info"
+	  }, [_vm._h('div', {
+	    staticClass: "info"
+	  }, [_vm._h('span', {
+	    staticClass: "first"
+	  }, ["汽车乘意险"]), " ", _vm._h('span', {
+	    staticClass: "center"
+	  }, ["15元/份"]), " ", _vm._h('div', {
+	    staticClass: "last"
+	  }, [_vm._h('span', {
+	    class: [_vm.isInsure ? 'active' : ''],
+	    on: {
+	      "click": _vm.GetInSure
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-check"
+	  })])]), " "])]), " ", " ", _vm._m(5), " ", " ", " ", _vm._h('div', {
+	    staticClass: "submit-box"
+	  }, [_vm._h('div', {
+	    staticClass: "order-info"
+	  }, [_vm._h('p', ["订单总额", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.payInfoData.payMoney)
+	    }
+	  })]), " ", _vm._h('p', [_vm._h('span', ["票价", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.payInfoData.ticketMoney)
+	    }
+	  })]), " ", _vm._h('span', ["保险费", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.payInfoData.Allinsure)
+	    }
+	  })])])]), " ", _vm._h('div', {
+	    staticClass: "submit-order"
+	  }, [_vm._h('button', {
+	    on: {
+	      "click": _vm.submitOrder
+	    }
+	  }, ["同意并提交"])])]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.tipPopupVisible),
+	      expression: "tipPopupVisible"
+	    }],
+	    staticClass: "tip-popup-visible",
+	    attrs: {
+	      "position": "right"
+	    },
+	    domProps: {
+	      "value": (_vm.tipPopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.tipPopupVisible = $event
+	      }
+	    }
+	  }, [_vm._t("default", [_vm._h('div', {
+	    staticClass: "body"
+	  }, [_vm._h('h3', ["声明:"]), " ", _vm._h('p', ["1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。"]), " ", _vm._h('p', ["2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。"]), " ", _vm._h('p', ["3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。"]), " ", _vm._h('h3', ["取票说明"]), " ", _vm._h('p', ["提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票"]), " ", _vm._h('h3', ["退票、改签说明："]), " ", _vm._h('p', ["2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理。"]), " ", _vm._h('button', {
+	    on: {
+	      "click": _vm.backTip
+	    }
+	  }, ["返回"])])])]), " ", " ", _vm._h('mt-popup', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
 	      value: (_vm.popupVisible),
 	      expression: "popupVisible"
 	    }],
-	    staticClass: "root-popup",
+	    staticClass: "message-popup-visible",
 	    attrs: {
 	      "position": "top"
 	    },
@@ -31987,12 +32503,12 @@
 	  })])])])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "ticket-info"
-	  }, [_vm._h('div', {
 	    staticClass: "header"
 	  }, [_vm._h('span', ["大型高一"]), " ", _vm._h('span', {
 	    staticClass: "font-red"
-	  }, ["¥143"])]), " ", _vm._h('div', {
+	  }, ["¥143"])])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
 	    staticClass: "address-info"
 	  }, [_vm._h('div', {
 	    staticClass: "start box"
@@ -32000,33 +32516,32 @@
 	    staticClass: "center box"
 	  }, [_vm._h('p', ["12-03 周六"])]), " ", _vm._h('div', {
 	    staticClass: "end box"
-	  }, [_vm._h('p', ["宁波"]), " ", _vm._h('p', ["宁波"])])]), " ", _vm._h('div', {
-	    staticClass: "tip-info"
-	  }, [_vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
+	  }, [_vm._h('p', ["宁波"]), " ", _vm._h('p', ["宁波"])])])
+	},function (){var _vm=this;
+	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
 	    staticClass: "fa fa-caret-down"
-	  })])])])
+	  })])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "people-info"
-	  }, [_vm._h('div', {
 	    staticClass: "info-head"
-	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["一张订单最多可代购3张票"])]), " ", _vm._h('div', {
-	    staticClass: "info-man"
+	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["一张订单最多可代购3张票"])])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "contact-info"
 	  }, [_vm._h('div', {
-	    staticClass: "info-man-name"
-	  }, [_vm._h('span', ["乘客姓名"]), " ", _vm._h('input', {
+	    staticClass: "info"
+	  }, [_vm._h('span', ["联系手机"]), " ", _vm._h('input', {
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "请填写真实姓名以免取不出票"
+	      "placeholder": "用于接收通知短信"
 	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "info-man-card"
-	  }, [_vm._h('span', ["身份证"]), " ", _vm._h('input', {
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "请填写证件号码"
-	    }
-	  })]), " ", _vm._h('button', ["确定添加"])])])
+	  })])])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "root-tip-info"
+	  }, [_vm._h('div', {
+	    staticClass: "text"
+	  }, [_vm._h('p', ["友情提示:"]), " ", _vm._h('p', ["*自助取票请提前到出发车站取票。"]), " ", _vm._h('p', ["*乘客信息需为实际乘车人，否则影响保险保障的权益哦。"])])])
 	}]}
 	if (false) {
 	  module.hot.accept()
