@@ -3,21 +3,21 @@
 		<!-- 车票信息 -->
 		<div class="ticket-info">
 			<div class="header">
-				<span>大型高一</span>
-				<span class="font-red">¥143</span>
+				<span v-text="busInfo.busType"></span>
+				<span class="font-red" v-text="'¥'+busInfo.fullPrice"></span>
 			</div>
 			<div class="address-info">
 				<div class="start box">
-					<p>镇江</p>
-					<p>08:15</p>
-					<p>南门客运站</p>
+					<p v-text="busInfo.fromCityName"></p>
+					<p v-text="busInfo.fromTime">08:15</p>
+					<p v-text="busInfo.fromStationAddress">南门客运站</p>
 				</div>
 				<div class="center box">
-					<p>12-03 周六</p>
+					<p v-text="startDate"></p>
 				</div>
 				<div class="end box">
-					<p>宁波</p>
-					<p>宁波</p>
+					<p v-text="busInfo.toCityName">宁波</p>
+					<p v-text="busInfo.toCityName">宁波</p>
 				</div>
 			</div>
 			<div class="tip-info" @click="openTip">
@@ -111,7 +111,7 @@
 		<div class="contact-info">
 			<div class="info">
 				<span>联系手机</span>
-				<input type="text" placeholder="用于接收通知短信">
+				<input type="text" placeholder="用于接收通知短信" v-model="payInfoData.contactPhone">
 			</div>
 		</div>
 		<!-- 其他信息 -->
@@ -198,7 +198,7 @@ export default {
 		return {
 			startCity:"",
 			endCity:"",
-			busInfo:null,
+			busInfo:{},
 			popupVisible:false,//提示框是否显示
 			tipPopupVisible:false,//取票信息说明
 			popupText:"我是提示框",//提示框文字
@@ -240,26 +240,33 @@ export default {
 				inSureMoney:15,//单笔保险费
 				getTicketMan:null,//取票人信息
 				Allinsure:0,//保险费用(总共)
-				ticketMoney:143,//票的单价
+				ticketMoney:this.$store.getters.getBusInfo.fullPrice,//票的单价
 				payMoney:0,//总共支付的钱
+				contactPhone:""
 			},//订单信息
 		}
 	},
 	created(){
-		// if(this.$store.getters.getBusInfo===null){
-		// 	//数据为空,一般是直接进入这个页面才会这样
-		// 	this.$router.replace({path:"/home/ticketbody"})
-		// }
-		this.busInfo = this.$store.getters.getBusInfo;
-		this.startCity = this.$store.state.tickets.startCity;
-		this.endCity = this.$store.state.tickets.endCity;
+		if(this.$store.getters.getBusInfo===null){
+			//数据为空,一般是直接进入这个页面才会这样
+			this.$router.replace({path:"/home/ticketbody"});
+			return;
+		}
+		else{
+			this.busInfo = this.$store.getters.getBusInfo;
+			this.startCity = this.$store.state.tickets.startCity;
+			this.endCity = this.$store.state.tickets.endCity;
 
-		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" - "+this.endCity.Name});
+			this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" - "+this.endCity.Name});
 
-		this.computeAll();
+			this.computeAll();
+			console.log(this.formatData(this.busInfo))
+		}
 	},
 	computed:{
-		
+		startDate(){
+			return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
+		}
 	},
 	methods:{
 		/**
@@ -341,7 +348,8 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		computeTicketMoney(){
-			this.payInfoData.payMoney = this.payInfoData.ticketMoney*this.getAllFare().length;
+			let len = this.getAllFare().length;
+			this.payInfoData.payMoney = this.payInfoData.ticketMoney*len + this.payInfoData.Allinsure;
 		},
 		/**
 		 * 计算保险费
@@ -357,8 +365,8 @@ export default {
 			}
 		},
 		computeAll(){
-			this.computeTicketMoney();
 			this.computeInsureMoney();
+			this.computeTicketMoney();
 		},
 		/**
 		 * 获取取票人信息
@@ -387,15 +395,20 @@ export default {
 					return;
 				}
 				else{
-					this.computeAll();
-					Indicator.open({
-						text: '加载中...',
-						spinnerType: 'double-bounce'
-					});
-					setTimeout(()=>{
-						Indicator.close();
-						this.popupMessage("支付失败,请稍后再试!");
-					},2000)
+					if(this.inspectPhone()){
+						this.computeAll();
+						Indicator.open({
+							text: '加载中...',
+							spinnerType: 'double-bounce'
+						});
+						setTimeout(()=>{
+							Indicator.close();
+							this.popupMessage("支付失败,请稍后再试!");
+						},2000)
+					}
+					else{
+						this.popupMessage("请填写正确的联系手机号!");
+					}
 				}
 			}
 		},
@@ -407,6 +420,13 @@ export default {
 			// 退出tip
 			this.tipPopupVisible = false;
 			this.popupVisible = false;
+		},
+		/**
+		 * 检查手机号
+		 * @return {[type]} [description]
+		 */
+		inspectPhone(){
+			return /^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone);
 		},
 		/**
 		 * 添加乘客信息

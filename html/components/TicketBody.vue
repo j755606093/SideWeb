@@ -125,8 +125,8 @@ export default {
 			// 	console.log(result)
 			// 	Indicator.close();
 			// })
-			console.log(this.startCity,this.endCity);
-			console.log(this.pickerValue);
+			// console.log(this.startCity,this.endCity);
+			// console.log(this.pickerValue);
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
@@ -136,9 +136,6 @@ export default {
 				Indicator.close();
 				this.$router.push({name:"ticketresult"});
 			});
-		},
-		submit(){
-			
 		}
 	}
 }

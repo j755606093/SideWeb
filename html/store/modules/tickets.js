@@ -111,7 +111,7 @@ const actions = {
 			return fetch("http://192.168.31.116:12580/activeity")
 			.then(result=>result.json())
 			.then(result=>{
-				commit(types.SET_RESULTLIST,result.return);
+				commit(types.SET_RESULTLIST,result.Data);
 			})
 		}
 	},

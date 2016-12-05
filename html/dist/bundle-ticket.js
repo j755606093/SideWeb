@@ -11240,7 +11240,7 @@
 				return fetch("http://192.168.31.116:12580/activeity").then(function (result) {
 					return result.json();
 				}).then(function (result) {
-					commit(_Type2.default.SET_RESULTLIST, result.return);
+					commit(_Type2.default.SET_RESULTLIST, result.Data);
 				});
 			}
 		},
@@ -29007,8 +29007,8 @@
 				// 	console.log(result)
 				// 	Indicator.close();
 				// })
-				console.log(this.startCity, this.endCity);
-				console.log(this.pickerValue);
+				// console.log(this.startCity,this.endCity);
+				// console.log(this.pickerValue);
 				// 提示加载中
 				_mintUi.Indicator.open({
 					text: '加载中...',
@@ -29018,8 +29018,7 @@
 					_mintUi.Indicator.close();
 					_this3.$router.push({ name: "ticketresult" });
 				});
-			},
-			submit: function submit() {}
+			}
 		}
 	}; //
 	//
@@ -29913,7 +29912,7 @@
 			},
 			queryTime: function queryTime() {
 				//查找特定时间的车
-				console.log(this.TimeOptionsValue);
+				// console.log(this.TimeOptionsValue);
 				// 如果this.TimeOptionsValue长度超过1位,那就需要去掉'不限'
 				this.HideAll();
 				this.isShowList = true; //显示列表
@@ -32004,7 +32003,7 @@
 			return {
 				startCity: "",
 				endCity: "",
-				busInfo: null,
+				busInfo: {},
 				popupVisible: false, //提示框是否显示
 				tipPopupVisible: false, //取票信息说明
 				popupText: "我是提示框", //提示框文字
@@ -32041,24 +32040,33 @@
 					inSureMoney: 15, //单笔保险费
 					getTicketMan: null, //取票人信息
 					Allinsure: 0, //保险费用(总共)
-					ticketMoney: 143, //票的单价
-					payMoney: 0 } };
+					ticketMoney: this.$store.getters.getBusInfo.fullPrice, //票的单价
+					payMoney: 0, //总共支付的钱
+					contactPhone: ""
+				} };
 		},
 		created: function created() {
-			// if(this.$store.getters.getBusInfo===null){
-			// 	//数据为空,一般是直接进入这个页面才会这样
-			// 	this.$router.replace({path:"/home/ticketbody"})
-			// }
-			this.busInfo = this.$store.getters.getBusInfo;
-			this.startCity = this.$store.state.tickets.startCity;
-			this.endCity = this.$store.state.tickets.endCity;
+			if (this.$store.getters.getBusInfo === null) {
+				//数据为空,一般是直接进入这个页面才会这样
+				this.$router.replace({ path: "/home/ticketbody" });
+				return;
+			} else {
+				this.busInfo = this.$store.getters.getBusInfo;
+				this.startCity = this.$store.state.tickets.startCity;
+				this.endCity = this.$store.state.tickets.endCity;
 
-			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " - " + this.endCity.Name });
+				this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " - " + this.endCity.Name });
 
-			this.computeAll();
+				this.computeAll();
+				console.log(this.formatData(this.busInfo));
+			}
 		},
 
-		computed: {},
+		computed: {
+			startDate: function startDate() {
+				return this.$store.getters.getInfo.startDate.date + this.$store.getters.getInfo.startDate.week;
+			}
+		},
 		methods: {
 			/**
 	   * 格式化vue数据
@@ -32143,7 +32151,8 @@
 	   * @return {[type]} [description]
 	   */
 			computeTicketMoney: function computeTicketMoney() {
-				this.payInfoData.payMoney = this.payInfoData.ticketMoney * this.getAllFare().length;
+				var len = this.getAllFare().length;
+				this.payInfoData.payMoney = this.payInfoData.ticketMoney * len + this.payInfoData.Allinsure;
 			},
 
 			/**
@@ -32159,8 +32168,8 @@
 				}
 			},
 			computeAll: function computeAll() {
-				this.computeTicketMoney();
 				this.computeInsureMoney();
+				this.computeTicketMoney();
 			},
 
 			/**
@@ -32191,15 +32200,19 @@
 						this.popupMessage("请设置一个取票人!");
 						return;
 					} else {
-						this.computeAll();
-						_mintUi.Indicator.open({
-							text: '加载中...',
-							spinnerType: 'double-bounce'
-						});
-						setTimeout(function () {
-							_mintUi.Indicator.close();
-							_this.popupMessage("支付失败,请稍后再试!");
-						}, 2000);
+						if (this.inspectPhone()) {
+							this.computeAll();
+							_mintUi.Indicator.open({
+								text: '加载中...',
+								spinnerType: 'double-bounce'
+							});
+							setTimeout(function () {
+								_mintUi.Indicator.close();
+								_this.popupMessage("支付失败,请稍后再试!");
+							}, 2000);
+						} else {
+							this.popupMessage("请填写正确的联系手机号!");
+						}
 					}
 				}
 			},
@@ -32212,6 +32225,15 @@
 				// 退出tip
 				this.tipPopupVisible = false;
 				this.popupVisible = false;
+			},
+
+			/**
+	   * 检查手机号
+	   * @return {[type]} [description]
+	   */
+			inspectPhone: function inspectPhone() {
+				return (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)
+				);
 			},
 
 			/**
@@ -32312,14 +32334,57 @@
 	    }
 	  }, [_vm._h('div', {
 	    staticClass: "ticket-info"
-	  }, [_vm._m(0), " ", _vm._m(1), " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "header"
+	  }, [_vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.busType)
+	    }
+	  }), " ", _vm._h('span', {
+	    staticClass: "font-red",
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.busInfo.fullPrice)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "address-info"
+	  }, [_vm._h('div', {
+	    staticClass: "start box"
+	  }, [_vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.fromCityName)
+	    }
+	  }), " ", _vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.fromTime)
+	    }
+	  }, ["08:15"]), " ", _vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.fromStationAddress)
+	    }
+	  }, ["南门客运站"])]), " ", _vm._h('div', {
+	    staticClass: "center box"
+	  }, [_vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.startDate)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "end box"
+	  }, [_vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.toCityName)
+	    }
+	  }, ["宁波"]), " ", _vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.toCityName)
+	    }
+	  }, ["宁波"])])]), " ", _vm._h('div', {
 	    staticClass: "tip-info",
 	    on: {
 	      "click": _vm.openTip
 	    }
-	  }, [_vm._m(2)])]), " ", " ", _vm._h('div', {
+	  }, [_vm._m(0)])]), " ", " ", _vm._h('div', {
 	    staticClass: "people-info"
-	  }, [_vm._m(3), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
+	  }, [_vm._m(1), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
 	    staticClass: "info-list"
 	  }, [_vm._l((_vm.AllFare), function(item, index) {
 	    return _vm._h('div', {
@@ -32422,7 +32487,31 @@
 	    on: {
 	      "click": _vm.append
 	    }
-	  }, ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._m(4), " ", " ", _vm._h('div', {
+	  }, ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
+	    staticClass: "contact-info"
+	  }, [_vm._h('div', {
+	    staticClass: "info"
+	  }, [_vm._h('span', ["联系手机"]), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.payInfoData.contactPhone),
+	      expression: "payInfoData.contactPhone"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "placeholder": "用于接收通知短信"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.payInfoData.contactPhone)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.payInfoData.contactPhone = $event.target.value
+	      }
+	    }
+	  })])]), " ", " ", _vm._h('div', {
 	    staticClass: "other-info"
 	  }, [_vm._h('div', {
 	    staticClass: "info"
@@ -32439,7 +32528,7 @@
 	    }
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-check"
-	  })])]), " "])]), " ", " ", _vm._m(5), " ", " ", " ", _vm._h('div', {
+	  })])]), " "])]), " ", " ", _vm._m(2), " ", " ", " ", _vm._h('div', {
 	    staticClass: "submit-box"
 	  }, [_vm._h('div', {
 	    staticClass: "order-info"
@@ -32512,22 +32601,6 @@
 	    }
 	  })])])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "header"
-	  }, [_vm._h('span', ["大型高一"]), " ", _vm._h('span', {
-	    staticClass: "font-red"
-	  }, ["¥143"])])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "address-info"
-	  }, [_vm._h('div', {
-	    staticClass: "start box"
-	  }, [_vm._h('p', ["镇江"]), " ", _vm._h('p', ["08:15"]), " ", _vm._h('p', ["南门客运站"])]), " ", _vm._h('div', {
-	    staticClass: "center box"
-	  }, [_vm._h('p', ["12-03 周六"])]), " ", _vm._h('div', {
-	    staticClass: "end box"
-	  }, [_vm._h('p', ["宁波"]), " ", _vm._h('p', ["宁波"])])])
-	},function (){var _vm=this;
 	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
 	    staticClass: "fa fa-caret-down"
 	  })])
@@ -32535,17 +32608,6 @@
 	  return _vm._h('div', {
 	    staticClass: "info-head"
 	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["一张订单最多可代购3张票"])])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "contact-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', ["联系手机"]), " ", _vm._h('input', {
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "用于接收通知短信"
-	    }
-	  })])])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "root-tip-info"
