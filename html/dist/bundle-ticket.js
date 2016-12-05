@@ -32181,6 +32181,8 @@
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
+				var _this = this;
+
 				if (this.getAllFare().length === 0) {
 					this.popupMessage("请先添加或者选择乘客!");
 					return;
@@ -32190,6 +32192,14 @@
 						return;
 					} else {
 						this.computeAll();
+						_mintUi.Indicator.open({
+							text: '加载中...',
+							spinnerType: 'double-bounce'
+						});
+						setTimeout(function () {
+							_mintUi.Indicator.close();
+							_this.popupMessage("支付失败,请稍后再试!");
+						}, 2000);
 					}
 				}
 			},
@@ -32256,13 +32266,13 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this = this;
+				var _this2 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
-					_this.AllFare = array.splice(0, index).concat(array.splice(index + 1));
-					_this.computeAll();
+					_this2.AllFare = array.splice(0, index).concat(array.splice(index + 1));
+					_this2.computeAll();
 				}).catch(function (error) {
 					// error=cancel
 					console.log(error);

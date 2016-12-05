@@ -388,6 +388,14 @@ export default {
 				}
 				else{
 					this.computeAll();
+					Indicator.open({
+						text: '加载中...',
+						spinnerType: 'double-bounce'
+					});
+					setTimeout(()=>{
+						Indicator.close();
+						this.popupMessage("支付失败,请稍后再试!");
+					},2000)
 				}
 			}
 		},
