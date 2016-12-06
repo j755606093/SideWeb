@@ -481,7 +481,8 @@ export default {
 			let array = this.formatData(this.AllFare);
 
 			MessageBox.confirm('确定删除'+array[index].name+'?').then(action => {
-				this.AllFare = array.slice(0,index).concat(array.slice(index+1));
+				// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
+				this.AllFare.splice(index,1);
 				this.computeAll();
 			}).catch(error=>{
 				// error=cancel

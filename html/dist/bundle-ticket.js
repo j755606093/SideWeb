@@ -32292,7 +32292,8 @@
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
-					_this2.AllFare = array.slice(0, index).concat(array.slice(index + 1));
+					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
+					_this2.AllFare.splice(index, 1);
 					_this2.computeAll();
 				}).catch(function (error) {
 					// error=cancel
