@@ -5,7 +5,10 @@
 	width:100%;
 	background-color:lighten($gray, 30%);
 }
-
+#id input{
+	border:0;
+	outline:none;
+}
 .ticket-info{
 	width:100%;
 	background-color:$white;
@@ -189,10 +192,10 @@
 				height:40px;
 				margin:5px 0;
 				.list-top{
-					height: 20px;
+					height: 40px;
 					>span{
-						height: 20px;
-						line-height:20px;
+						height: 40px;
+						line-height:40px;
 						font-size:1.1rem;
 					}
 					span.name{
@@ -212,18 +215,18 @@
 						color:$blue;
 					}
 				}
-				.list-bottom{
-					height: 20px;
-					p{
-						height: 20px;
-						line-height:20px;
-						color:$gray;
-						span{
-							color:$gray;
-							margin-left:5px;
-						}
-					}
-				}
+				// .list-bottom{
+				// 	height: 20px;
+				// 	p{
+				// 		height: 20px;
+				// 		line-height:20px;
+				// 		color:$gray;
+				// 		span{
+				// 			color:$gray;
+				// 			margin-left:5px;
+				// 		}
+				// 	}
+				// }
 			}
 		}
 	}
@@ -432,6 +435,8 @@
 		text-align: center;
 		width:96%;
 		margin:50px 2%;
+		overflow-y:auto;
+		height:90%;
 		@include responsive('iphone5'){
 			margin:0px 2%;
 		}

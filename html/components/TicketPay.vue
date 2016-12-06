@@ -28,7 +28,7 @@
 		<div class="people-info">
 			<div class="info-head">
 				<span>乘客信息</span>
-				<span>一张订单最多可代购3张票</span>
+				<span>还剩余票{{busInfo.showTicketInfo}}</span>
 			</div>
 			<!-- 列出乘客信息 -->
 			<div class="info-list" v-if="AllFare.length!==0">
@@ -43,9 +43,9 @@
 							<span class="get-ticket" v-if="item.isGetTicket" >取票人</span>
 							<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span>
 						</div>
-						<div class="list-bottom">
+						<!-- <div class="list-bottom">
 							<p>身份证<span v-text="item.code"></span></p>
-						</div>
+						</div> -->
 					</div>
 					<span @click="trashMan(index)"><i class="fa fa-trash"></i></span>
 				</div>
@@ -56,10 +56,10 @@
 					<span>乘客姓名</span>
 					<input type="text" placeholder="请填写真实姓名以免取不出票" v-model="fareName">
 				</div>
-				<div class="info-man-card info">
+				<!-- <div class="info-man-card info">
 					<span>身份证</span>
 					<input type="text" placeholder="请填写证件号码" v-model="certificate">
-				</div>
+				</div> -->
 			</div>
 			<div class="click-append">
 				<button @click="append">确定添加</button>
@@ -202,32 +202,32 @@ export default {
 			popupVisible:false,//提示框是否显示
 			tipPopupVisible:false,//取票信息说明
 			popupText:"我是提示框",//提示框文字
-			Code:"",//微信code
+			// Code:"",//微信code
 			isInsure:true,
 			fareName:"",//输入的乘客名
 			certificate:"",//输入的乘客凭证,身份证这类
 			AllFare:[
 				{
 					name:"周岳谢",
-					code:"440802199406011519",
+					// code:"440802199406011519",
 					active:false,
 					isGetTicket:false
 				},
 				{
 					name:"周周周",
-					code:"440802199406011519",
+					// code:"440802199406011519",
 					active:true,
 					isGetTicket:false
 				},
 				{
 					name:"舟舟周",
-					code:"440802199406011519",
+					// code:"440802199406011519",
 					active:false,
 					isGetTicket:false
 				},
 				{
 					name:"粥粥周",
-					code:"440802199406011519",
+					// code:"440802199406011519",
 					active:true,
 					isGetTicket:false
 				}
@@ -246,22 +246,22 @@ export default {
 			},//订单信息
 		}
 	},
-	created(){
+	beforeCreate(){
 		if(this.$store.getters.getBusInfo===null){
 			//数据为空,一般是直接进入这个页面才会这样
 			this.$router.replace({path:"/home/ticketbody"});
 			return;
 		}
-		else{
-			this.busInfo = this.$store.getters.getBusInfo;
-			this.startCity = this.$store.state.tickets.startCity;
-			this.endCity = this.$store.state.tickets.endCity;
+	},
+	created(){
+		this.busInfo = this.$store.getters.getBusInfo;
+		this.startCity = this.$store.state.tickets.startCity;
+		this.endCity = this.$store.state.tickets.endCity;
 
-			this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" - "+this.endCity.Name});
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" - "+this.endCity.Name});
 
-			this.computeAll();
-			console.log(this.formatData(this.busInfo))
-		}
+		this.computeAll();
+		console.log(this.formatData(this.busInfo))
 	},
 	computed:{
 		startDate(){
@@ -437,24 +437,18 @@ export default {
 			// 首先检查输入是否正确
 			if(Utils.isChinaName(this.fareName)){
 				// 是中文
-				if(Utils.IdentityCodeValid(this.certificate)){
-					// 身份证号码正确
-					this.AllFare.push({
-						name:this.fareName,
-						code:this.certificate,
-						active:true,
-						isGetTicket:false
-					});
-					// 清空输入的信息
-					this.fareName = "";
-					this.certificate = "";
+				this.AllFare.push({
+					name:this.fareName,
+					// code:this.certificate,
+					active:true,
+					isGetTicket:false
+				});
+				// 清空输入的信息
+				this.fareName = "";
+				this.certificate = "";
 
-					this.popupMessage("添加成功!");
-					this.computeAll();
-				}
-				else{
-					this.popupMessage("请输入正确的身份证号码!");
-				}
+				this.popupMessage("添加成功!");
+				this.computeAll();
 			}
 			else{
 				this.popupMessage("请输入正确的姓名!");
@@ -466,9 +460,12 @@ export default {
 		 */
 		setFare(index){
 			// 若没有选中,那么设置为乘客
-			if(this.getAllFare().length>=3 && !this.AllFare[index].active){
+			// 添加的乘客不允许大于余票
+			let lastTicket = parseInt(this.busInfo.showTicketInfo);
+
+			if(this.getAllFare().length>lastTicket && !this.AllFare[index].active){
 				// 选中的已经超过3个人
-				this.popupMessage("乘客数已经超过3人!");
+				this.popupMessage("乘客数已经超过余票数!");
 			}
 			else{
 				this.AllFare[index].active = !this.AllFare[index].active;
@@ -484,7 +481,7 @@ export default {
 			let array = this.formatData(this.AllFare);
 
 			MessageBox.confirm('确定删除'+array[index].name+'?').then(action => {
-				this.AllFare = array.splice(0,index).concat(array.splice(index+1));
+				this.AllFare = array.slice(0,index).concat(array.slice(index+1));
 				this.computeAll();
 			}).catch(error=>{
 				// error=cancel

@@ -124,6 +124,10 @@ html {
   width: 100%;
   background-color: #f7f7f7; }
 
+#id input {
+  border: 0;
+  outline: none; }
+
 .ticket-info {
   width: 100%;
   background-color: #fff;
@@ -298,10 +302,10 @@ html {
       height: 40px;
       margin: 5px 0; }
       .people-info .info-list .list .list-body .list-top {
-        height: 20px; }
+        height: 40px; }
         .people-info .info-list .list .list-body .list-top > span {
-          height: 20px;
-          line-height: 20px;
+          height: 40px;
+          line-height: 40px;
           font-size: 1.1rem; }
         .people-info .info-list .list .list-body .list-top span.name {
           font-size: 1.4rem; }
@@ -315,15 +319,6 @@ html {
           padding: 2px; }
         .people-info .info-list .list .list-body .list-top span.get-ticket {
           color: #0074D9; }
-      .people-info .info-list .list .list-body .list-bottom {
-        height: 20px; }
-        .people-info .info-list .list .list-body .list-bottom p {
-          height: 20px;
-          line-height: 20px;
-          color: #AAAAAA; }
-          .people-info .info-list .list .list-body .list-bottom p span {
-            color: #AAAAAA;
-            margin-left: 5px; }
   .people-info .info-man {
     display: -ms-flexbox;
     display: flex;
@@ -525,7 +520,9 @@ html {
   .tip-popup-visible .body {
     text-align: center;
     width: 96%;
-    margin: 50px 2%; }
+    margin: 50px 2%;
+    overflow-y: auto;
+    height: 90%; }
     @media (max-width: 320px) {
       .tip-popup-visible .body {
         margin: 0px 2%; } }
