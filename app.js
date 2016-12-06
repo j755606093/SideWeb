@@ -10,6 +10,7 @@ var fs = require("fs")
 // var users = require('./routes/users');
 
 var app = express();
+app.locals.pages = {};//设置一个缓存
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -82,15 +83,24 @@ app.get("/getCustomPage",(req,res)=>{
 	var page = req.query.page;//获取指定的页面
 	var realPath = "html/"+page+".html";
 
-	fs.readFile(realPath,"utf-8",(error,file)=>{
-		if(error){
-			res.send({status:500,error:"没有这个文件!"});
-		}
-		else{
-			res.set('Content-Type', 'text/html');
-			res.send(file);
-		}
-	})
+	if(app.locals.pages[page]){
+		// 如果缓存有这个页面,就直接返回
+		res.set('Content-Type', 'text/html');
+		res.send(app.locals.pages[page]);
+		return;
+	}
+	else{
+		fs.readFile(realPath,"utf-8",(error,file)=>{
+			if(error){
+				res.send({status:500,error:"没有这个文件!"});
+			}
+			else{
+				res.set('Content-Type', 'text/html');
+				app.locals.pages[page] = file;//缓存这个文件
+				res.send(file);
+			}
+		})
+	}
 });
 
 // app.all("*",(req,res)=>{
