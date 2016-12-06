@@ -55,8 +55,9 @@ function insertCss(data){
 
 app.get("/getTopic",(req,res)=>{
 	var uniqueId = req.query.uniqueId;
-	rp("http://192.168.31.86/api/Topic/GetSource/"+uniqueId).then((response)=>{
-		var data = response;
+	rp("http://192.168.31.86/api/Topic/Getdetail/"+uniqueId).then((response)=>{
+		var data = JSON.parse(response).Data;
+		// console.log(data)
 		// res.type('html');
 		res.set('Content-Type', 'text/html');
 		res.send(insertScript(data));
