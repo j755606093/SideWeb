@@ -1,10 +1,11 @@
 //app.js
 App({
+  globalData:{
+    userInfo:null,
+  },
+  //监听页面加载
   onLaunch() {
-    //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    
   },
   getUserInfo(cb){
     var that = this
@@ -23,8 +24,5 @@ App({
         }
       })
     }
-  },
-  globalData:{
-    userInfo:null
   }
 })

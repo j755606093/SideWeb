@@ -1,10 +1,79 @@
 <!--index.wxml-->
-<view class="container">
-  <view  bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+<scroll-view scroll-y="true" class="root">
+  <!--搜索,签到-->
+  <view class="search-sign">
+    <view class="search">
+      <text>搜索</text>
+    </view>
+    <view class="sign">
+      <text>签到</text>
+    </view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <!--轮播图-->
+  <swiper indicator-dots="{{true}}"
+    autoplay="{{true}}" interval="{{3000}}" duration="{{500}}">
+    <block wx:for="{{Carousels}}" wx:for-item="item" wx:key="item.Id">
+      <swiper-item>
+        <image src="{{item.PUrl}}" class="slide-image"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!--菜单栏-->
+  <view class="navs">
+    <view class="nav-line">
+      <view class="nav" wx:for="{{NavsTop}}" wx:for-item="item" wx:key="item.Id">
+        <image class="nav-img" src="{{item.Purl}}"></image>
+        <text class="nav-text">{{item.Title}}</text>
+      </view>
+    </view>
+    <view class="nav-line">
+      <view class="nav" wx:for="{{NavsBottom}}" wx:for-item="item" wx:key="item.Id">
+        <image class="nav-img" src="{{item.Purl}}"></image>
+        <text class="nav-text">{{item.Title}}</text>
+      </view>
+    </view>
   </view>
-</view>
+  <!--热门视频-->
+  <view class="root-viedo">
+    <!--标题-->
+    <view class="viedo-header">
+      <text class="header-left">热门视频</text>
+      <text class="header-right">更多</text>
+    </view>
+    <!--视频块-->
+    <scroll-view scroll-x="true" style="width:100%;">
+      <view class="videos">
+        <view class="video" wx:for="{{Videos}}" wx:for-item="item" wx:key="item.Id">
+          <image class="video-img" mode="aspectFill" src="{{item.Avatar}}"></image>
+          <text class="video-text">{{item.Title}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!--热门公众号文章,viewtype 1：文字;2:单图 3：图片（多图） 4：广告 5：视频-->
+  <view class="root-post">
+    <!--标题-->
+    <view class="post-header">
+      <text class="header-left">热门公众号文章</text>
+    </view>
+    <!--文章块-->
+    <view class="posts">
+      <!--类型为2-->
+      <view class="post-two" wx:for="{{Docs}}" wx:for-item="item" wx:key="item.Id">
+        <!--文章左边的信息-->
+        <view class="post-two-left">
+          <!--文章标题-->
+          <text>{{item.Title}}</text>
+          <view>
+            <!--文章信息-->
+            <text>{{item.Author}}</text><text>{{item.CTime}}</text><text>{{item.ReadCount}}</text>
+          </view>
+        </view>
+        <!--文章右边的信息(图)-->
+        <view class="post-two-right">
+          <image src="{{item.PUrl[0]}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
