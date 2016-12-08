@@ -68,7 +68,7 @@ Page({
           Docs: this.formatTime(Data.Docs),
           NavsTop : Data.Navs.slice(0,5),
           NavsBottom:Data.Navs.slice(5,10),
-          News:Data.News,
+          News:this.formatTime(Data.News),
           SectionPage : Data.SectionPage,
           Videos : this.formatTitle(Data.Videos)
         })

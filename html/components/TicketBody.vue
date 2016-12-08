@@ -16,6 +16,23 @@
 		<div class="query">
 			<button @click="query" class="btn">查询</button>
 		</div>
+		<!-- 出发地址 -->
+		<mt-popup
+		  v-model="startpopupVisible"
+		  position="bottom"
+		  class="popup-visible">
+		  <mt-picker :slots="startCitySlots" @change="onStartValuesChange"></mt-picker>
+		</mt-popup>
+		
+		<!-- 到底地址 -->
+		<mt-popup
+		  v-model="endpopupVisible"
+		  position="bottom"
+		  class="popup-visible">
+		  <mt-picker :slots="endCitySlots" @change="onEndValuesChange"></mt-picker>
+		</mt-popup>
+		
+		<!-- 日期选择 -->
 		<mt-datetime-picker
 			ref="picker"
 			type="date"
@@ -35,6 +52,9 @@
 .ticketbody{
 	position:absolute;
 }
+.popup-visible{
+	width:100%;
+}
 </style>
 
 <script type="text/babel">
@@ -51,7 +71,19 @@ export default {
 			showTime:"",//几号
 			showWeek:"",//星期几,
 			startCity:null,
-			endCity:null
+			endCity:null,
+			startpopupVisible:false,//显示出发选择
+			endpopupVisible:false,//显示到达选择
+			startCitySlots: [{
+				flex: 1,
+				values: [],
+				className: 'startcity'
+			}],
+			endCitySlots: [{
+				flex: 1,
+				values: [],
+				className: 'endcity'
+			}],
 		}
 	},
 	created(){
@@ -77,25 +109,51 @@ export default {
 			return Utils.formatDate(data);
 		},
 		GoStartCity(){
+			// if(this.$store.getters.getCityList.startCityList){
+			// 	this.startpopupVisible = true;
+			// 	return;
+			// }
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
 				spinnerType: 'double-bounce'
 			});
+
 			this.$store.dispatch("setStartCityList").then((data)=>{
 				Indicator.close();
+				Indicator.close();
 				this.$router.push({name:"ticketstartcity"});
+				// this.$store.getters.getCityList.startCityList.map((item,index)=>{
+				// 	item.Content.map(content=>{
+				// 		this.startCitySlots[0].values.push(content.Name)
+				// 	});
+				// });
+				// Indicator.close();
+				// this.startpopupVisible = true;
 			});
 		},
 		GoEndCity(){
+			// if(this.$store.getters.getCityList.endCityList){
+			// 	this.startpopupVisible = true;
+			// 	return;
+			// }
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
 				spinnerType: 'double-bounce'
 			});
+
 			this.$store.dispatch("setEndCityList").then((data)=>{
 				Indicator.close();
 				this.$router.push({name:"ticketendcity"});
+				// this.$store.getters.getCityList.endCityList.map((item,index)=>{
+				// 	item.Content.map(content=>{
+				// 		this.endCitySlots[0].values.push(content.Name)
+				// 	});
+				// });
+				// Indicator.close();
+				// this.endpopupVisible = true;
+				// this.$router.push({name:"ticketendcity"});
 			});
 		},
 		openPicker() {
@@ -117,25 +175,31 @@ export default {
 			return month+"月"+day+"日";
 		},
 		query(){
-		// 	Indicator.open({
-			//   text: '加载中...',
-			//   spinnerType: 'double-bounce'
-			// });
-			// this.submit().then((result)=>{
-			// 	console.log(result)
-			// 	Indicator.close();
-			// })
-			// console.log(this.startCity,this.endCity);
-			// console.log(this.pickerValue);
+			if(this.startCity.Name===this.endCity.Name){
+				// 地点相同
+				Toast({
+				  message: '出发城市不能和到达城市相同,请修改!',
+				  position: 'bottom',
+				  duration: 3000
+				});
+				return ;
+			}
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
 				spinnerType: 'double-bounce'
 			});
+
 			this.$store.dispatch("setResultList").then((data)=>{
 				Indicator.close();
 				this.$router.push({name:"ticketresult"});
 			});
+		},
+		onStartValuesChange(picker, values){
+			this.$store.dispatch("setStartCity",{Code:"00000",Name:values[0]});
+		},
+		onEndValuesChange(picker, values){
+			this.$store.dispatch("setEndCity",{Code:"00000",Name:values[0]});
 		}
 	}
 }

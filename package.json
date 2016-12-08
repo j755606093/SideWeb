@@ -41,6 +41,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "async": "^2.1.4",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",

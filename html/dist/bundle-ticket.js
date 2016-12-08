@@ -11113,11 +11113,11 @@
 
 		startCity: {
 			Code: "110000",
-			Name: "北京市"
+			Name: "揭阳"
 		}, //出发地
 		endCity: {
 			Code: "310000",
-			Name: "上海市"
+			Name: "广州"
 		}, //到达地
 
 		startDate: {
@@ -11208,8 +11208,11 @@
 					reslove();
 				});
 			}
-			return getData("http://192.168.31.86/api/Busticket/GetStart", function (data) {
-				commit(_Type2.default.SET_STARTCITYLIST, data);
+			return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				commit(_Type2.default.SET_STARTCITYLIST, result.Data);
+				return result.Data;
 			});
 		},
 		setEndCityList: function setEndCityList(_ref6) {
@@ -11222,8 +11225,11 @@
 					reslove();
 				});
 			} else {
-				return getData("http://192.168.31.86/api/Busticket/GetStart", function (data) {
-					commit(_Type2.default.SET_ENDCITYLIST, data);
+				return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					commit(_Type2.default.SET_ENDCITYLIST, result.Data);
+					return result.Data;
 				});
 			}
 		},
@@ -28880,7 +28886,7 @@
 	exports.i(__webpack_require__(151), "");
 
 	// module
-	exports.push([module.id, "\n.ticketbody{\n\tposition:absolute;\n}\n", ""]);
+	exports.push([module.id, "\n.ticketbody{\n\tposition:absolute;\n}\n.popup-visible{\n\twidth:100%;\n}\n", ""]);
 
 	// exports
 
@@ -28928,7 +28934,19 @@
 				showTime: "", //几号
 				showWeek: "", //星期几,
 				startCity: null,
-				endCity: null
+				endCity: null,
+				startpopupVisible: false, //显示出发选择
+				endpopupVisible: false, //显示到达选择
+				startCitySlots: [{
+					flex: 1,
+					values: [],
+					className: 'startcity'
+				}],
+				endCitySlots: [{
+					flex: 1,
+					values: [],
+					className: 'endcity'
+				}]
 			};
 		},
 		created: function created() {
@@ -28955,27 +28973,53 @@
 			GoStartCity: function GoStartCity() {
 				var _this = this;
 
+				// if(this.$store.getters.getCityList.startCityList){
+				// 	this.startpopupVisible = true;
+				// 	return;
+				// }
 				// 提示加载中
 				_mintUi.Indicator.open({
 					text: '加载中...',
 					spinnerType: 'double-bounce'
 				});
+
 				this.$store.dispatch("setStartCityList").then(function (data) {
 					_mintUi.Indicator.close();
+					_mintUi.Indicator.close();
 					_this.$router.push({ name: "ticketstartcity" });
+					// this.$store.getters.getCityList.startCityList.map((item,index)=>{
+					// 	item.Content.map(content=>{
+					// 		this.startCitySlots[0].values.push(content.Name)
+					// 	});
+					// });
+					// Indicator.close();
+					// this.startpopupVisible = true;
 				});
 			},
 			GoEndCity: function GoEndCity() {
 				var _this2 = this;
 
+				// if(this.$store.getters.getCityList.endCityList){
+				// 	this.startpopupVisible = true;
+				// 	return;
+				// }
 				// 提示加载中
 				_mintUi.Indicator.open({
 					text: '加载中...',
 					spinnerType: 'double-bounce'
 				});
+
 				this.$store.dispatch("setEndCityList").then(function (data) {
 					_mintUi.Indicator.close();
 					_this2.$router.push({ name: "ticketendcity" });
+					// this.$store.getters.getCityList.endCityList.map((item,index)=>{
+					// 	item.Content.map(content=>{
+					// 		this.endCitySlots[0].values.push(content.Name)
+					// 	});
+					// });
+					// Indicator.close();
+					// this.endpopupVisible = true;
+					// this.$router.push({name:"ticketendcity"});
 				});
 			},
 			openPicker: function openPicker() {
@@ -28999,28 +29043,54 @@
 			query: function query() {
 				var _this3 = this;
 
-				// 	Indicator.open({
-				//   text: '加载中...',
-				//   spinnerType: 'double-bounce'
-				// });
-				// this.submit().then((result)=>{
-				// 	console.log(result)
-				// 	Indicator.close();
-				// })
-				// console.log(this.startCity,this.endCity);
-				// console.log(this.pickerValue);
+				if (this.startCity.Name === this.endCity.Name) {
+					// 地点相同
+					(0, _mintUi.Toast)({
+						message: '出发城市不能和到达城市相同,请修改!',
+						position: 'bottom',
+						duration: 3000
+					});
+					return;
+				}
 				// 提示加载中
 				_mintUi.Indicator.open({
 					text: '加载中...',
 					spinnerType: 'double-bounce'
 				});
+
 				this.$store.dispatch("setResultList").then(function (data) {
 					_mintUi.Indicator.close();
 					_this3.$router.push({ name: "ticketresult" });
 				});
+			},
+			onStartValuesChange: function onStartValuesChange(picker, values) {
+				this.$store.dispatch("setStartCity", { Code: "00000", Name: values[0] });
+			},
+			onEndValuesChange: function onEndValuesChange(picker, values) {
+				this.$store.dispatch("setEndCity", { Code: "00000", Name: values[0] });
 			}
 		}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -29105,7 +29175,59 @@
 	    on: {
 	      "click": _vm.query
 	    }
-	  }, ["查询"])]), " ", _vm._h('mt-datetime-picker', {
+	  }, ["查询"])]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.startpopupVisible),
+	      expression: "startpopupVisible"
+	    }],
+	    staticClass: "popup-visible",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.startpopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.startpopupVisible = $event
+	      }
+	    }
+	  }, [_vm._h('mt-picker', {
+	    attrs: {
+	      "slots": _vm.startCitySlots
+	    },
+	    on: {
+	      "change": _vm.onStartValuesChange
+	    }
+	  })]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.endpopupVisible),
+	      expression: "endpopupVisible"
+	    }],
+	    staticClass: "popup-visible",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.endpopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.endpopupVisible = $event
+	      }
+	    }
+	  }, [_vm._h('mt-picker', {
+	    attrs: {
+	      "slots": _vm.endCitySlots
+	    },
+	    on: {
+	      "change": _vm.onEndValuesChange
+	    }
+	  })]), " ", " ", _vm._h('mt-datetime-picker', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",

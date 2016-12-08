@@ -9,11 +9,11 @@ const state = {
 
 	startCity:{
 		Code:"110000",
-		Name:"北京市"
+		Name:"揭阳"
 	},//出发地
 	endCity:{
 		Code:"310000",
-		Name:"上海市"
+		Name:"广州"
 	},//到达地
 
 	startDate:{
@@ -83,9 +83,11 @@ const actions = {
 				reslove();
 			})
 		}
-		return getData("http://192.168.31.86/api/Busticket/GetStart",(data)=>{
-			commit(types.SET_STARTCITYLIST,data);
-		})
+		return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
+			.then(result=>{
+				commit(types.SET_STARTCITYLIST,result.Data);
+				return result.Data;
+			})
 	},
 	setEndCityList({commit,state}){
 		if(state.endCityList){
@@ -95,8 +97,10 @@ const actions = {
 			})
 		}
 		else{
-			return getData("http://192.168.31.86/api/Busticket/GetStart",(data)=>{
-				commit(types.SET_ENDCITYLIST,data);
+			return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
+			.then(result=>{
+				commit(types.SET_ENDCITYLIST,result.Data);
+				return result.Data;
 			})
 		}
 	},
