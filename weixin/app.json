@@ -5,8 +5,8 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "身边",
-    "navigationBarTextStyle":"black"
+    "navigationBarBackgroundColor": "#0074D9",
+    "navigationBarTitleText": "身边社区",
+    "navigationBarTextStyle":"white"
   }
 }

@@ -1,6 +1,7 @@
 //index.js
+let {formatDate} = require("../../utils/util.js");
 //获取应用实例
-var app = getApp()
+let app = getApp();
 Page({
   data: {
     motto: 'Hello World',
@@ -64,7 +65,7 @@ Page({
         let Data = result.data.Data;
         this.setData({
           Carousels:Data.Carousels,
-          Docs: Data.Docs,
+          Docs: this.formatTime(Data.Docs),
           NavsTop : Data.Navs.slice(0,5),
           NavsBottom:Data.Navs.slice(5,10),
           News:Data.News,
@@ -86,6 +87,13 @@ Page({
   formatTitle(data){
     for(let i =0;i<data.length;i++){
       data[i].Title = data[i].Title.slice(0,8)+"...";
+    }
+    return data;
+  },
+  formatTime(data){
+    // 格式化时间
+    for(let i=0;i<data.length;i++){
+      data[i].CTime = formatDate(data[i].CTime);
     }
     return data;
   }
