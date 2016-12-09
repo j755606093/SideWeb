@@ -11113,11 +11113,13 @@
 
 		startCity: {
 			Code: "110000",
-			Name: "揭阳"
+			Name: "揭阳",
+			Station: ""
 		}, //出发地
 		endCity: {
 			Code: "310000",
-			Name: "广州"
+			Name: "广州",
+			Station: ""
 		}, //到达地
 
 		startDate: {
@@ -28900,7 +28902,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900; }\n  .ticketbody .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .data span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody .data span i {\n        margin-right: 5px; }\n    .ticketbody .data span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody .data span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      font-size: 1.4rem;\n      font-weight: 400; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #ff7f66;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900; }\n    .ticketbody .block span.station {\n      margin-left: 10px;\n      font-size: 1.4rem;\n      height: 1.8rem; }\n  .ticketbody .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .data span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody .data span i {\n        margin-right: 5px; }\n    .ticketbody .data span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody .data span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      font-size: 1.4rem;\n      font-weight: 400; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #ff7f66;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px; }\n", ""]);
 
 	// exports
 
@@ -28959,11 +28961,25 @@
 		computed: {
 			getStartCity: function getStartCity() {
 				this.startCity = this.$store.state.tickets.startCity;
-				return this.$store.getters.getInfo.startCity.Name;
+				return this.startCity.Name;
+			},
+			getStartCityStation: function getStartCityStation() {
+				if (this.startCity.Station !== "") {
+					return this.startCity.Station;
+				} else {
+					return "无站台";
+				}
 			},
 			getEndCity: function getEndCity() {
 				this.endCity = this.$store.state.tickets.endCity;
-				return this.$store.getters.getInfo.endCity.Name;
+				return this.endCity.Name;
+			},
+			getEndCityStation: function getEndCityStation() {
+				if (this.endCity.Station !== "") {
+					return this.endCity.Station;
+				} else {
+					return "无站台";
+				}
 			}
 		},
 		methods: {
@@ -28984,7 +29000,6 @@
 				});
 
 				this.$store.dispatch("setStartCityList").then(function (data) {
-					_mintUi.Indicator.close();
 					_mintUi.Indicator.close();
 					_this.$router.push({ name: "ticketstartcity" });
 					// this.$store.getters.getCityList.startCityList.map((item,index)=>{
@@ -29129,6 +29144,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 
 /***/ },
 /* 153 */
@@ -29142,20 +29160,16 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._m(0), " ", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.getStartCity)
-	    }
-	  }, ["上海"])]), " ", _vm._h('div', {
+	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t", _vm._h('span', {
+	    staticClass: "station"
+	  }, [_vm._s(_vm.getStartCityStation)])])]), " ", _vm._h('div', {
 	    staticClass: "to block",
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
-	  }, [_vm._m(1), " ", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.getEndCity)
-	    }
-	  })]), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity), _vm._h('span', {
+	    staticClass: "station"
+	  }, [_vm._s(_vm.getEndCityStation)])])]), " ", _vm._h('div', {
 	    staticClass: "data",
 	    on: {
 	      "click": _vm.openPicker
@@ -29175,59 +29189,7 @@
 	    on: {
 	      "click": _vm.query
 	    }
-	  }, ["查询"])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.startpopupVisible),
-	      expression: "startpopupVisible"
-	    }],
-	    staticClass: "popup-visible",
-	    attrs: {
-	      "position": "bottom"
-	    },
-	    domProps: {
-	      "value": (_vm.startpopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.startpopupVisible = $event
-	      }
-	    }
-	  }, [_vm._h('mt-picker', {
-	    attrs: {
-	      "slots": _vm.startCitySlots
-	    },
-	    on: {
-	      "change": _vm.onStartValuesChange
-	    }
-	  })]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.endpopupVisible),
-	      expression: "endpopupVisible"
-	    }],
-	    staticClass: "popup-visible",
-	    attrs: {
-	      "position": "bottom"
-	    },
-	    domProps: {
-	      "value": (_vm.endpopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.endpopupVisible = $event
-	      }
-	    }
-	  }, [_vm._h('mt-picker', {
-	    attrs: {
-	      "slots": _vm.endCitySlots
-	    },
-	    on: {
-	      "change": _vm.onEndValuesChange
-	    }
-	  })]), " ", " ", _vm._h('mt-datetime-picker', {
+	  }, ["查询"])]), " ", " ", " ", " ", " ", " ", _vm._h('mt-datetime-picker', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -29256,11 +29218,11 @@
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('span', [_vm._h('i', {
 	    staticClass: "fa fa-location-arrow"
-	  }), "出发城市"])
+	  }), "出发点"])
 	},function (){var _vm=this;
 	  return _vm._h('span', [_vm._h('i', {
 	    staticClass: "fa fa-location-arrow"
-	  }), "到达城市"])
+	  }), "到达点"])
 	},function (){var _vm=this;
 	  return _vm._h('span', [_vm._h('i', {
 	    staticClass: "fa fa-calendar"
@@ -29371,7 +29333,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-status {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-status button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
 
 	// exports
 
@@ -29396,10 +29358,67 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _ = __webpack_require__(169); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
 	exports.default = {
 		data: function data() {
 			return {
-				setStartCityList: null
+				startcity: "",
+				setStartCityList: null,
+				startpopupVisible: false, //显示出发选择
+				startCitySlots: [{
+					flex: 1,
+					values: [1, 2, 3, 4, 5],
+					className: 'startcity'
+				}]
 			};
 		},
 		created: function created() {
@@ -29422,38 +29441,53 @@
 				return this.$store.state.tickets.startCityList;
 			}
 		},
+		watch: {
+			// startpopupVisible(status){
+			// 	if(status===false){
+			// 		// 说明已经选择完了
+			// 		this.$router.go(-1);
+			// 	}
+			// }
+		},
 		methods: {
-			getStartCity: function getStartCity(code, name) {
-				this.$store.dispatch("setStartCity", {
-					Code: code,
-					Name: name
-				});
+			getStartCity: function getStartCity(code, name, station) {
+				this.startcity = name;
+				if (station.length === 0) {
+					this.$store.dispatch("setStartCity", {
+						Code: code,
+						Name: name,
+						Station: "" });
+					this.$router.go(-1);
+				} else {
+					this.startCitySlots[0].values = _.map(station, function (item) {
+						return item.Name;
+					});
+
+					this.startpopupVisible = true;
+				}
+			},
+			onStartValuesChange: function onStartValuesChange(picker, values) {
+				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
+			},
+			noData: function noData() {
+				this.startpopupVisible = false;
+			},
+			yesData: function yesData() {
 				this.$router.go(-1);
 			}
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._h('mt-index-list', {
+	  return _vm._h('div', {
+	    attrs: {
+	      "id": "startcity"
+	    }
+	  }, [_vm._h('mt-index-list', {
 	    staticClass: "fixed"
 	  }, [_vm._l((_vm.setStartCityList), function(list) {
 	    return _vm._h('mt-index-section', {
@@ -29467,12 +29501,48 @@
 	        },
 	        nativeOn: {
 	          "click": function($event) {
-	            _vm.getStartCity(item.Code, item.Name)
+	            _vm.getStartCity(item.Id, item.Name, item.Stations)
 	          }
 	        }
 	      })
 	    })])
-	  })])
+	  })]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.startpopupVisible),
+	      expression: "startpopupVisible"
+	    }],
+	    staticClass: "popup-visible",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.startpopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.startpopupVisible = $event
+	      }
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "query-status"
+	  }, [_vm._h('button', {
+	    on: {
+	      "click": _vm.noData
+	    }
+	  }, ["取消"]), " ", _vm._h('button', {
+	    on: {
+	      "click": _vm.yesData
+	    }
+	  }, ["确定"])]), " ", _vm._h('mt-picker', {
+	    attrs: {
+	      "slots": _vm.startCitySlots
+	    },
+	    on: {
+	      "change": _vm.onStartValuesChange
+	    }
+	  })])])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -29579,7 +29649,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 10000;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
 
 	// exports
 
@@ -29604,10 +29674,67 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _ = __webpack_require__(169); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
 	exports.default = {
 		data: function data() {
 			return {
-				setEndCityList: null
+				endcity: "",
+				setEndCityList: null,
+				endpopupVisible: false, //显示到达选择
+				endCitySlots: [{
+					flex: 1,
+					values: [],
+					className: 'endcity'
+				}]
 			};
 		},
 		created: function created() {
@@ -29630,38 +29757,53 @@
 				return this.$store.state.tickets.endCityList;
 			}
 		},
+		watch: {
+			// endpopupVisible(status){
+			// 	if(status===false){
+			// 		// 说明已经选择完了
+			// 		this.$router.go(-1);
+			// 	}
+			// }
+		},
 		methods: {
-			getEndCity: function getEndCity(code, name) {
-				this.$store.dispatch("setEndCity", {
-					Code: code,
-					Name: name
-				});
+			getEndCity: function getEndCity(code, name, station) {
+				this.endcity = name;
+				if (station.length === 0) {
+					this.$store.dispatch("setEndCity", {
+						Code: code,
+						Name: name,
+						Station: "" });
+					this.$router.go(-1);
+				} else {
+					this.endCitySlots[0].values = _.map(station, function (item) {
+						return item.Name;
+					});
+
+					this.endpopupVisible = true;
+				}
+			},
+			onEndValuesChange: function onEndValuesChange(picker, values) {
+				this.$store.dispatch("setEndCity", { Code: "00000", Name: this.endcity, Station: values[0] });
+			},
+			noData: function noData() {
+				this.endpopupVisible = false;
+			},
+			yesData: function yesData() {
 				this.$router.go(-1);
 			}
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._h('mt-index-list', {
+	  return _vm._h('div', {
+	    attrs: {
+	      "id": "endcity"
+	    }
+	  }, [_vm._h('mt-index-list', {
 	    staticClass: "fixed"
 	  }, [_vm._l((_vm.setEndCityList), function(list) {
 	    return _vm._h('mt-index-section', {
@@ -29675,12 +29817,48 @@
 	        },
 	        nativeOn: {
 	          "click": function($event) {
-	            _vm.getEndCity(item.Code, item.Name)
+	            _vm.getEndCity(item.Id, item.Name, item.Stations)
 	          }
 	        }
 	      })
 	    })])
-	  })])
+	  })]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.endpopupVisible),
+	      expression: "endpopupVisible"
+	    }],
+	    staticClass: "popup-visible",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.endpopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.endpopupVisible = $event
+	      }
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "query-start"
+	  }, [_vm._h('button', {
+	    on: {
+	      "click": _vm.noData
+	    }
+	  }, ["取消"]), " ", _vm._h('button', {
+	    on: {
+	      "click": _vm.yesData
+	    }
+	  }, ["确定"])]), " ", _vm._h('mt-picker', {
+	    attrs: {
+	      "slots": _vm.endCitySlots
+	    },
+	    on: {
+	      "change": _vm.onEndValuesChange
+	    }
+	  })])])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()

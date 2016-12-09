@@ -80,6 +80,13 @@ Page({
         // wx.setStoreagesSync("SectionPage",Data.SectionPage);
         // wx.setStoreagesSync("Videos",Data.Videos);
         console.log(Data);
+      },
+      fail:(error)=>{
+        console.log("失败:",error);
+        wx.showToast({
+          title: '网络环境不佳,请稍后重试...',
+          duration: 2000
+        })
       }
     })
   },

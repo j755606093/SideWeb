@@ -9,11 +9,13 @@ const state = {
 
 	startCity:{
 		Code:"110000",
-		Name:"揭阳"
+		Name:"揭阳",
+		Station:""
 	},//出发地
 	endCity:{
 		Code:"310000",
-		Name:"广州"
+		Name:"广州",
+		Station:""
 	},//到达地
 
 	startDate:{

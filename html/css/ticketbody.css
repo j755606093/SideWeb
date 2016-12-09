@@ -159,6 +159,10 @@ html {
           flex: 0.7;
       font-size: 1.8rem;
       font-weight: 900; }
+    .ticketbody .block span.station {
+      margin-left: 10px;
+      font-size: 1.4rem;
+      height: 1.8rem; }
   .ticketbody .data {
     width: 100%;
     height: 60px;

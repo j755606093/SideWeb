@@ -1,12 +1,15 @@
 <template>
 	<div class="ticketbody">
 		<div @click="GoStartCity" class="go block">
-			<span><i class="fa fa-location-arrow"></i>出发城市</span>
-			<span v-text="getStartCity">上海</span>
+			<span><i class="fa fa-location-arrow"></i>出发点</span>
+			<span>
+				{{getStartCity}}
+				<span class="station">{{getStartCityStation}}</span>
+			</span>
 		</div>
 		<div @click="GoEndCity" class="to block">
-			<span><i class="fa fa-location-arrow"></i>到达城市</span>
-			<span v-text="getEndCity"></span>
+			<span><i class="fa fa-location-arrow"></i>到达点</span>
+			<span>{{getEndCity}}<span class="station">{{getEndCityStation}}</span></span>
 		</div>
 		<div @click="openPicker" class="data">
 			<span><i class="fa fa-calendar"></i>出发日期</span>
@@ -17,20 +20,20 @@
 			<button @click="query" class="btn">查询</button>
 		</div>
 		<!-- 出发地址 -->
-		<mt-popup
+		<!-- <mt-popup
 		  v-model="startpopupVisible"
 		  position="bottom"
 		  class="popup-visible">
 		  <mt-picker :slots="startCitySlots" @change="onStartValuesChange"></mt-picker>
-		</mt-popup>
+		</mt-popup> -->
 		
 		<!-- 到底地址 -->
-		<mt-popup
+	<!-- 	<mt-popup
 		  v-model="endpopupVisible"
 		  position="bottom"
 		  class="popup-visible">
 		  <mt-picker :slots="endCitySlots" @change="onEndValuesChange"></mt-picker>
-		</mt-popup>
+		</mt-popup> -->
 		
 		<!-- 日期选择 -->
 		<mt-datetime-picker
@@ -97,12 +100,28 @@ export default {
 	computed:{
 		getStartCity(){
 			this.startCity = this.$store.state.tickets.startCity;
-			return this.$store.getters.getInfo.startCity.Name;
+			return this.startCity.Name;
+		},
+		getStartCityStation(){
+			if(this.startCity.Station!==""){
+				return this.startCity.Station;
+			}
+			else{
+				return "无站台";
+			}
 		},
 		getEndCity(){
 			this.endCity = this.$store.state.tickets.endCity;
-			return this.$store.getters.getInfo.endCity.Name;
-		}
+			return this.endCity.Name;
+		},
+		getEndCityStation(){
+			if(this.endCity.Station!==""){
+				return this.endCity.Station;
+			}
+			else{
+				return "无站台";
+			}
+		},
 	},
 	methods:{
 		formatDate(data){
@@ -120,7 +139,6 @@ export default {
 			});
 
 			this.$store.dispatch("setStartCityList").then((data)=>{
-				Indicator.close();
 				Indicator.close();
 				this.$router.push({name:"ticketstartcity"});
 				// this.$store.getters.getCityList.startCityList.map((item,index)=>{
