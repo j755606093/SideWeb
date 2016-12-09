@@ -185,31 +185,31 @@ html {
       .ticket-info .address-info .start p {
         font-size: 1.6rem; }
         .ticket-info .address-info .start p:first-child {
-          color: #AAAAAA;
-          font-size: 1.3rem; }
+          color: #919191;
+          font-size: 1.6rem; }
         .ticket-info .address-info .start p:last-child {
           color: #AAAAAA;
-          font-size: 1.2rem; }
+          font-size: 1.6rem; }
     .ticket-info .address-info .center {
       font-size: 1.5rem; }
-      .ticket-info .address-info .center p {
+      .ticket-info .address-info .center p.row {
         color: #111111;
         position: relative; }
-        .ticket-info .address-info .center p::after {
+        .ticket-info .address-info .center p.row::after {
           width: 80%;
           height: 10px;
           background-color: #0074D9;
           position: absolute;
           left: 0;
-          bottom: -20px;
+          bottom: -35px;
           content: ""; }
-        .ticket-info .address-info .center p::before {
+        .ticket-info .address-info .center p.row::before {
           width: 0;
           height: 0;
           border: 10px solid #0074D9;
           position: absolute;
           right: 0;
-          bottom: -20px;
+          bottom: -35px;
           content: "";
           border: 10px solid #0074D9;
           border-color: transparent transparent #0074D9 #0074D9; }
@@ -217,7 +217,7 @@ html {
       -ms-flex-align: end;
           align-items: flex-end; }
       .ticket-info .address-info .end p {
-        color: #AAAAAA; }
+        color: #919191; }
         .ticket-info .address-info .end p:first-child {
           font-size: 1.6rem; }
   .ticket-info .tip-info {

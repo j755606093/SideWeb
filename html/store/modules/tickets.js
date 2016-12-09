@@ -8,19 +8,18 @@ const state = {
 	HeaderTitle:"身边订票",
 
 	startCity:{
-		Code:"110000",
-		Name:"揭阳",
-		Station:""
+		Code:"3385295",
+		Name:"布吉",
 	},//出发地
 	endCity:{
-		Code:"310000",
-		Name:"广州",
-		Station:""
+		Code:"3385285",
+		Name:"黄木岗",
 	},//到达地
 
 	startDate:{
 		date:"",
-		week:""
+		week:"",
+		server:null
 	},//出发日期
 
 	startCityList:null,//开始出发的城市列表
@@ -88,6 +87,7 @@ const actions = {
 		return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_STARTCITYLIST,result.Data);
+				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
 			})
 	},
@@ -102,6 +102,7 @@ const actions = {
 			return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
+				commit(types.SET_STARTCITYLIST,result.Data);
 				return result.Data;
 			})
 		}
@@ -114,7 +115,19 @@ const actions = {
 			})
 		}
 		else{
-			return fetch("http://192.168.31.116:12580/activeity")
+			return fetch("http://wx.1yhp.net/api/Transport/GetLines",{
+				method: 'POST',
+				headers: {
+			    'Content-Type': 'application/json'
+			  },
+				body:JSON.stringify({
+					SPointId:"3385299",
+					EPointId:"3385291",
+					// SPointId:state.startCity.Code,
+					// EPointId:state.endCity.Code,
+					Date:state.startDate.server
+				})
+			})
 			.then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_RESULTLIST,result.Data);

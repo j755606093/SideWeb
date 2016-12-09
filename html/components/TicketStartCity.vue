@@ -2,7 +2,7 @@
 	<div id="startcity">
 		<mt-index-list class="fixed">
 		  <mt-index-section v-for="list in setStartCityList" :index="list.ShortKey">
-		    <mt-cell v-for="item in list.Content" @click.native="getStartCity(item.Id,item.Name,item.Stations)" :title="item.Name"></mt-cell>
+		    <mt-cell v-for="item in list.Content" @click.native="getStartCity(item.Id,item.Name)" :title="item.Name"></mt-cell>
 		  </mt-index-section>
 		</mt-index-list>
 		<!-- 出发地址 -->
@@ -10,7 +10,7 @@
 		  v-model="startpopupVisible"
 		  position="bottom"
 		  class="popup-visible">
-		  <div class="query-status">
+		  <div class="query-start">
 		  	<button @click="noData">取消</button>
 		  	<button @click="yesData">确定</button>
 		  </div>
@@ -30,7 +30,7 @@
 	z-index:1001;
 	position:fixed;
 }
-.query-status{
+.query-start{
 	display:flex;
 	flex-dirction:row;
 	height:40px;
@@ -94,23 +94,28 @@ export default {
 		// }
 	},
 	methods:{
-		getStartCity(code,name,station){
+		getStartCity(code,name){
 			this.startcity = name;
-			if(station.length===0){
-				this.$store.dispatch("setStartCity",{
-					Code:code,
-					Name:name,
-					Station:"",//空的站台
-				});
-				this.$router.go(-1);
-			}
-			else{
-				this.startCitySlots[0].values = _.map(station,(item)=>{
-					return item.Name;
-				});
+			// if(station.length===0){
+			// 	this.$store.dispatch("setStartCity",{
+			// 		Code:code,
+			// 		Name:name,
+			// 		Station:"",//空的站台
+			// 	});
+			// 	this.$router.go(-1);
+			// }
+			// else{
+			// 	this.startCitySlots[0].values = _.map(station,(item)=>{
+			// 		return item.Name;
+			// 	});
 				
-				this.startpopupVisible = true;
-			}
+			// 	this.startpopupVisible = true;
+			// }
+			this.$store.dispatch("setStartCity",{
+				Code:code,
+				Name:name,
+			});
+			this.$router.go(-1);
 		},
 		onStartValuesChange(picker, values){
 			this.$store.dispatch("setStartCity",{Code:"00000",Name:this.startcity,Station:values[0]});

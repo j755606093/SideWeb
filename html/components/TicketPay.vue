@@ -3,20 +3,23 @@
 		<!-- 车票信息 -->
 		<div class="ticket-info">
 			<div class="header">
-				<span v-text="busInfo.busType"></span>
-				<span class="font-red" v-text="'¥'+busInfo.fullPrice"></span>
+				<span v-text="busInfo.Route"></span>
+				<span class="font-red" v-text="'¥'+busInfo.Price"></span>
 			</div>
 			<div class="address-info">
 				<div class="start box">
-					<p v-text="busInfo.fromCityName"></p>
-					<p v-text="busInfo.fromTime">08:15</p>
-					<p v-text="busInfo.fromStationAddress">南门客运站</p>
+					<p v-text="busInfo.StartPoint"></p>
+					<!-- <p v-text="busInfo.StartTime">08:15</p> -->
+					<!-- <p v-text="busInfo.ShiftNum"></p> -->
 				</div>
 				<div class="center box">
-					<p v-text="startDate"></p>
+					<p class="row">
+						{{startDate}}
+						<p v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
+					</p>
 				</div>
 				<div class="end box">
-					<p v-text="busInfo.toCityName">宁波</p>
+					<p v-text="busInfo.EndPoint">宁波</p>
 					<p v-text="busInfo.toCityName">宁波</p>
 				</div>
 			</div>
@@ -28,7 +31,7 @@
 		<div class="people-info">
 			<div class="info-head">
 				<span>乘客信息</span>
-				<span>还剩余票{{busInfo.showTicketInfo}}</span>
+				<span>还剩余票{{busInfo.TicketNum}}</span>
 			</div>
 			<!-- 列出乘客信息 -->
 			<div class="info-list" v-if="AllFare.length!==0">
@@ -207,30 +210,30 @@ export default {
 			fareName:"",//输入的乘客名
 			certificate:"",//输入的乘客凭证,身份证这类
 			AllFare:[
-				{
-					name:"周岳谢",
-					// code:"440802199406011519",
-					active:false,
-					isGetTicket:false
-				},
-				{
-					name:"周周周",
-					// code:"440802199406011519",
-					active:true,
-					isGetTicket:false
-				},
-				{
-					name:"舟舟周",
-					// code:"440802199406011519",
-					active:false,
-					isGetTicket:false
-				},
-				{
-					name:"粥粥周",
-					// code:"440802199406011519",
-					active:true,
-					isGetTicket:false
-				}
+				// {
+				// 	name:"周岳谢",
+				// 	// code:"440802199406011519",
+				// 	active:false,
+				// 	isGetTicket:false
+				// },
+				// {
+				// 	name:"周周周",
+				// 	// code:"440802199406011519",
+				// 	active:true,
+				// 	isGetTicket:false
+				// },
+				// {
+				// 	name:"舟舟周",
+				// 	// code:"440802199406011519",
+				// 	active:false,
+				// 	isGetTicket:false
+				// },
+				// {
+				// 	name:"粥粥周",
+				// 	// code:"440802199406011519",
+				// 	active:true,
+				// 	isGetTicket:false
+				// }
 			],//所有的乘客信息
 			isHaveGetTicketMan:false,//是否有取票人信息
 			
@@ -240,7 +243,7 @@ export default {
 				inSureMoney:15,//单笔保险费
 				getTicketMan:null,//取票人信息
 				Allinsure:0,//保险费用(总共)
-				ticketMoney:this.$store.getters.getBusInfo.fullPrice,//票的单价
+				ticketMoney:this.$store.getters.getBusInfo.Price,//票的单价
 				payMoney:0,//总共支付的钱
 				contactPhone:""
 			},//订单信息

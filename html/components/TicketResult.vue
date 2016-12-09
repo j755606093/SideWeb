@@ -17,19 +17,19 @@
 			<transition-group name="list-complete" tag="div" class="lists" v-show="isShowList">
 				<!-- 循环显示列表 -->
 				<div class="list list-complete-item" @click="GoToPay(index)" v-for="(item,index) in getResultList" v-bind:key="index">
-					<span class="data" v-text="item.fromTime"></span>
+					<span class="data" v-text="item.StartTime.slice(0,item.StartTime.length-3)"></span>
 					<div class="car-position">
 						<p>
-							<span class="brand">始</span>{{item.fromStationName}}
+							<span class="brand">始</span>{{item.StartPoint}}
 						</p>
 						<p>
-							<span class="brand">终</span>{{item.fromStationName}}
+							<span class="brand">终</span>{{item.EndPoint}}
 						</p>
 					</div>
 					<div class="ticket-type">
-						<p class="money" v-text="item.fullPrice+'元'"></p>
-						<p class="number" v-text="item.showTicketInfo"></p>
-						<p class="type" v-text="item.busType"></p>
+						<p class="money" v-text="item.Price+'元'"></p>
+						<p class="number" v-text="item.Route"></p>
+						<p class="type" v-text="item.CoName"></p>
 					</div>
 				</div>
 			</transition-group>

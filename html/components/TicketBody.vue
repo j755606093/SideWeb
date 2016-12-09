@@ -4,12 +4,14 @@
 			<span><i class="fa fa-location-arrow"></i>出发点</span>
 			<span>
 				{{getStartCity}}
-				<span class="station">{{getStartCityStation}}</span>
+				<!-- <span class="station">{{getStartCityStation}}</span> -->
 			</span>
 		</div>
 		<div @click="GoEndCity" class="to block">
 			<span><i class="fa fa-location-arrow"></i>到达点</span>
-			<span>{{getEndCity}}<span class="station">{{getEndCityStation}}</span></span>
+			<span>{{getEndCity}}
+			<!-- <span class="station">{{getEndCityStation}}</span> -->
+			</span>
 		</div>
 		<div @click="openPicker" class="data">
 			<span><i class="fa fa-calendar"></i>出发日期</span>
@@ -77,16 +79,16 @@ export default {
 			endCity:null,
 			startpopupVisible:false,//显示出发选择
 			endpopupVisible:false,//显示到达选择
-			startCitySlots: [{
-				flex: 1,
-				values: [],
-				className: 'startcity'
-			}],
-			endCitySlots: [{
-				flex: 1,
-				values: [],
-				className: 'endcity'
-			}],
+			// startCitySlots: [{
+			// 	flex: 1,
+			// 	values: [],
+			// 	className: 'startcity'
+			// }],
+			// endCitySlots: [{
+			// 	flex: 1,
+			// 	values: [],
+			// 	className: 'endcity'
+			// }],
 		}
 	},
 	created(){
@@ -102,26 +104,26 @@ export default {
 			this.startCity = this.$store.state.tickets.startCity;
 			return this.startCity.Name;
 		},
-		getStartCityStation(){
-			if(this.startCity.Station!==""){
-				return this.startCity.Station;
-			}
-			else{
-				return "无站台";
-			}
-		},
+		// getStartCityStation(){
+		// 	if(this.startCity.Station!==""){
+		// 		return this.startCity.Station;
+		// 	}
+		// 	else{
+		// 		return "无站台";
+		// 	}
+		// },
 		getEndCity(){
 			this.endCity = this.$store.state.tickets.endCity;
 			return this.endCity.Name;
 		},
-		getEndCityStation(){
-			if(this.endCity.Station!==""){
-				return this.endCity.Station;
-			}
-			else{
-				return "无站台";
-			}
-		},
+		// getEndCityStation(){
+		// 	if(this.endCity.Station!==""){
+		// 		return this.endCity.Station;
+		// 	}
+		// 	else{
+		// 		return "无站台";
+		// 	}
+		// },
 	},
 	methods:{
 		formatDate(data){
@@ -183,7 +185,8 @@ export default {
 			//记录选取的时间
 			this.$store.dispatch("setStartDate",{
 				date:this.showTime,
-				week:this.showWeek
+				week:this.showWeek,
+				server:date
 			});
 		},
 		formatNow(date){
@@ -196,7 +199,7 @@ export default {
 			if(this.startCity.Name===this.endCity.Name){
 				// 地点相同
 				Toast({
-				  message: '出发城市不能和到达城市相同,请修改!',
+				  message: '出发点不能和到达点相同,请修改!',
 				  position: 'bottom',
 				  duration: 3000
 				});
@@ -207,10 +210,17 @@ export default {
 				text: '加载中...',
 				spinnerType: 'double-bounce'
 			});
-
+			
 			this.$store.dispatch("setResultList").then((data)=>{
 				Indicator.close();
 				this.$router.push({name:"ticketresult"});
+			}).catch(error=>{
+				Indicator.close();
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
 			});
 		},
 		onStartValuesChange(picker, values){

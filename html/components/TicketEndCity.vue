@@ -2,7 +2,7 @@
 	<div id="endcity">
 		<mt-index-list class="fixed">
 		  <mt-index-section v-for="list in setEndCityList" :index="list.ShortKey">
-		    <mt-cell v-for="item in list.Content" @click.native="getEndCity(item.Id,item.Name,item.Stations)" :title="item.Name"></mt-cell>
+		    <mt-cell v-for="item in list.Content" @click.native="getEndCity(item.Id,item.Name)" :title="item.Name"></mt-cell>
 		  </mt-index-section>
 		</mt-index-list>
 		<!-- 到底地址 -->
@@ -96,21 +96,26 @@ export default {
 	methods:{
 		getEndCity(code,name,station){
 			this.endcity = name;
-			if(station.length===0){
-				this.$store.dispatch("setEndCity",{
-					Code:code,
-					Name:name,
-					Station:"",//空的站台
-				});
-				this.$router.go(-1);
-			}
-			else{
-				this.endCitySlots[0].values = _.map(station,(item)=>{
-					return item.Name;
-				});
+			// if(station.length===0){
+			// 	this.$store.dispatch("setEndCity",{
+			// 		Code:code,
+			// 		Name:name,
+			// 		Station:"",//空的站台
+			// 	});
+			// 	this.$router.go(-1);
+			// }
+			// else{
+			// 	this.endCitySlots[0].values = _.map(station,(item)=>{
+			// 		return item.Name;
+			// 	});
 				
-				this.endpopupVisible = true;
-			}
+			// 	this.endpopupVisible = true;
+			// }
+			this.$store.dispatch("setEndCity",{
+				Code:code,
+				Name:name,
+			});
+			this.$router.go(-1);
 		},
 		onEndValuesChange(picker, values){
 			this.$store.dispatch("setEndCity",{Code:"00000",Name:this.endcity,Station:values[0]});

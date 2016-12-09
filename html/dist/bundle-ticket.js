@@ -11090,6 +11090,10 @@
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+	var _stringify = __webpack_require__(135);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
 	var _promise = __webpack_require__(29);
 
 	var _promise2 = _interopRequireDefault(_promise);
@@ -11112,19 +11116,18 @@
 		HeaderTitle: "身边订票",
 
 		startCity: {
-			Code: "110000",
-			Name: "揭阳",
-			Station: ""
+			Code: "3385295",
+			Name: "布吉"
 		}, //出发地
 		endCity: {
-			Code: "310000",
-			Name: "广州",
-			Station: ""
+			Code: "3385285",
+			Name: "黄木岗"
 		}, //到达地
 
 		startDate: {
 			date: "",
-			week: ""
+			week: "",
+			server: null
 		}, //出发日期
 
 		startCityList: null, //开始出发的城市列表
@@ -11214,6 +11217,7 @@
 				return result.json();
 			}).then(function (result) {
 				commit(_Type2.default.SET_STARTCITYLIST, result.Data);
+				commit(_Type2.default.SET_ENDCITYLIST, result.Data);
 				return result.Data;
 			});
 		},
@@ -11231,6 +11235,7 @@
 					return result.json();
 				}).then(function (result) {
 					commit(_Type2.default.SET_ENDCITYLIST, result.Data);
+					commit(_Type2.default.SET_STARTCITYLIST, result.Data);
 					return result.Data;
 				});
 			}
@@ -11245,7 +11250,19 @@
 					reslove();
 				});
 			} else {
-				return fetch("http://192.168.31.116:12580/activeity").then(function (result) {
+				return fetch("http://wx.1yhp.net/api/Transport/GetLines", {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: (0, _stringify2.default)({
+						SPointId: "3385299",
+						EPointId: "3385291",
+						// SPointId:state.startCity.Code,
+						// EPointId:state.endCity.Code,
+						Date: state.startDate.server
+					})
+				}).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					commit(_Type2.default.SET_RESULTLIST, result.Data);
@@ -28938,18 +28955,7 @@
 				startCity: null,
 				endCity: null,
 				startpopupVisible: false, //显示出发选择
-				endpopupVisible: false, //显示到达选择
-				startCitySlots: [{
-					flex: 1,
-					values: [],
-					className: 'startcity'
-				}],
-				endCitySlots: [{
-					flex: 1,
-					values: [],
-					className: 'endcity'
-				}]
-			};
+				endpopupVisible: false };
 		},
 		created: function created() {
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
@@ -28963,23 +28969,18 @@
 				this.startCity = this.$store.state.tickets.startCity;
 				return this.startCity.Name;
 			},
-			getStartCityStation: function getStartCityStation() {
-				if (this.startCity.Station !== "") {
-					return this.startCity.Station;
-				} else {
-					return "无站台";
-				}
-			},
+
+			// getStartCityStation(){
+			// 	if(this.startCity.Station!==""){
+			// 		return this.startCity.Station;
+			// 	}
+			// 	else{
+			// 		return "无站台";
+			// 	}
+			// },
 			getEndCity: function getEndCity() {
 				this.endCity = this.$store.state.tickets.endCity;
 				return this.endCity.Name;
-			},
-			getEndCityStation: function getEndCityStation() {
-				if (this.endCity.Station !== "") {
-					return this.endCity.Station;
-				} else {
-					return "无站台";
-				}
 			}
 		},
 		methods: {
@@ -29046,7 +29047,8 @@
 				//记录选取的时间
 				this.$store.dispatch("setStartDate", {
 					date: this.showTime,
-					week: this.showWeek
+					week: this.showWeek,
+					server: date
 				});
 			},
 			formatNow: function formatNow(date) {
@@ -29061,7 +29063,7 @@
 				if (this.startCity.Name === this.endCity.Name) {
 					// 地点相同
 					(0, _mintUi.Toast)({
-						message: '出发城市不能和到达城市相同,请修改!',
+						message: '出发点不能和到达点相同,请修改!',
 						position: 'bottom',
 						duration: 3000
 					});
@@ -29076,6 +29078,13 @@
 				this.$store.dispatch("setResultList").then(function (data) {
 					_mintUi.Indicator.close();
 					_this3.$router.push({ name: "ticketresult" });
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
+					(0, _mintUi.Toast)({
+						message: "服务器错误,请稍后重试...",
+						position: 'bottom',
+						duration: 3000
+					});
 				});
 			},
 			onStartValuesChange: function onStartValuesChange(picker, values) {
@@ -29086,6 +29095,8 @@
 			}
 		}
 	}; //
+	//
+	//
 	//
 	//
 	//
@@ -29160,16 +29171,12 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t", _vm._h('span', {
-	    staticClass: "station"
-	  }, [_vm._s(_vm.getStartCityStation)])])]), " ", _vm._h('div', {
+	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
 	    staticClass: "to block",
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
-	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity), _vm._h('span', {
-	    staticClass: "station"
-	  }, [_vm._s(_vm.getEndCityStation)])])]), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
 	    staticClass: "data",
 	    on: {
 	      "click": _vm.openPicker
@@ -29333,7 +29340,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-status {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-status button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
 
 	// exports
 
@@ -29450,21 +29457,28 @@
 			// }
 		},
 		methods: {
-			getStartCity: function getStartCity(code, name, station) {
+			getStartCity: function getStartCity(code, name) {
 				this.startcity = name;
-				if (station.length === 0) {
-					this.$store.dispatch("setStartCity", {
-						Code: code,
-						Name: name,
-						Station: "" });
-					this.$router.go(-1);
-				} else {
-					this.startCitySlots[0].values = _.map(station, function (item) {
-						return item.Name;
-					});
+				// if(station.length===0){
+				// 	this.$store.dispatch("setStartCity",{
+				// 		Code:code,
+				// 		Name:name,
+				// 		Station:"",//空的站台
+				// 	});
+				// 	this.$router.go(-1);
+				// }
+				// else{
+				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
+				// 		return item.Name;
+				// 	});
 
-					this.startpopupVisible = true;
-				}
+				// 	this.startpopupVisible = true;
+				// }
+				this.$store.dispatch("setStartCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
 			},
 			onStartValuesChange: function onStartValuesChange(picker, values) {
 				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
@@ -29501,7 +29515,7 @@
 	        },
 	        nativeOn: {
 	          "click": function($event) {
-	            _vm.getStartCity(item.Id, item.Name, item.Stations)
+	            _vm.getStartCity(item.Id, item.Name)
 	          }
 	        }
 	      })
@@ -29526,7 +29540,7 @@
 	      }
 	    }
 	  }, [_vm._h('div', {
-	    staticClass: "query-status"
+	    staticClass: "query-start"
 	  }, [_vm._h('button', {
 	    on: {
 	      "click": _vm.noData
@@ -29768,19 +29782,26 @@
 		methods: {
 			getEndCity: function getEndCity(code, name, station) {
 				this.endcity = name;
-				if (station.length === 0) {
-					this.$store.dispatch("setEndCity", {
-						Code: code,
-						Name: name,
-						Station: "" });
-					this.$router.go(-1);
-				} else {
-					this.endCitySlots[0].values = _.map(station, function (item) {
-						return item.Name;
-					});
+				// if(station.length===0){
+				// 	this.$store.dispatch("setEndCity",{
+				// 		Code:code,
+				// 		Name:name,
+				// 		Station:"",//空的站台
+				// 	});
+				// 	this.$router.go(-1);
+				// }
+				// else{
+				// 	this.endCitySlots[0].values = _.map(station,(item)=>{
+				// 		return item.Name;
+				// 	});
 
-					this.endpopupVisible = true;
-				}
+				// 	this.endpopupVisible = true;
+				// }
+				this.$store.dispatch("setEndCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
 			},
 			onEndValuesChange: function onEndValuesChange(picker, values) {
 				this.$store.dispatch("setEndCity", { Code: "00000", Name: this.endcity, Station: values[0] });
@@ -29817,7 +29838,7 @@
 	        },
 	        nativeOn: {
 	          "click": function($event) {
-	            _vm.getEndCity(item.Id, item.Name, item.Stations)
+	            _vm.getEndCity(item.Id, item.Name)
 	          }
 	        }
 	      })
@@ -31861,30 +31882,30 @@
 	    }, [_vm._h('span', {
 	      staticClass: "data",
 	      domProps: {
-	        "textContent": _vm._s(item.fromTime)
+	        "textContent": _vm._s(item.StartTime.slice(0, item.StartTime.length - 3))
 	      }
 	    }), " ", _vm._h('div', {
 	      staticClass: "car-position"
 	    }, [_vm._h('p', [_vm._h('span', {
 	      staticClass: "brand"
-	    }, ["始"]), _vm._s(item.fromStationName) + "\n\t\t\t\t\t"]), " ", _vm._h('p', [_vm._h('span', {
+	    }, ["始"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", _vm._h('p', [_vm._h('span', {
 	      staticClass: "brand"
-	    }, ["终"]), _vm._s(item.fromStationName) + "\n\t\t\t\t\t"])]), " ", _vm._h('div', {
+	    }, ["终"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"])]), " ", _vm._h('div', {
 	      staticClass: "ticket-type"
 	    }, [_vm._h('p', {
 	      staticClass: "money",
 	      domProps: {
-	        "textContent": _vm._s(item.fullPrice + '元')
+	        "textContent": _vm._s(item.Price + '元')
 	      }
 	    }), " ", _vm._h('p', {
 	      staticClass: "number",
 	      domProps: {
-	        "textContent": _vm._s(item.showTicketInfo)
+	        "textContent": _vm._s(item.Route)
 	      }
 	    }), " ", _vm._h('p', {
 	      staticClass: "type",
 	      domProps: {
-	        "textContent": _vm._s(item.busType)
+	        "textContent": _vm._s(item.CoName)
 	      }
 	    })])])
 	  })]), " ", " ", _vm._h('div', {
@@ -32078,7 +32099,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#id input {\n  border: 0;\n  outline: none; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.6rem; }\n        .ticket-info .address-info .start p:first-child {\n          color: #AAAAAA;\n          font-size: 1.3rem; }\n        .ticket-info .address-info .start p:last-child {\n          color: #AAAAAA;\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem; }\n      .ticket-info .address-info .center p {\n        color: #111111;\n        position: relative; }\n        .ticket-info .address-info .center p::after {\n          width: 80%;\n          height: 10px;\n          background-color: #0074D9;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #0074D9;\n          position: absolute;\n          right: 0;\n          bottom: -20px;\n          content: \"\";\n          border: 10px solid #0074D9;\n          border-color: transparent transparent #0074D9 #0074D9; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #AAAAAA; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.6rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background-color: #d9edff;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #777777; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px; }\n    .people-info .click-append > button {\n      background-color: #0074D9;\n      padding: 0 10px;\n      width: 100px;\n      height: 30px;\n      border-radius: 20px;\n      outline: none;\n      border: 0;\n      color: #fff;\n      font-size: 1.3rem;\n      float: right;\n      margin-top: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 50px 2%;\n    overflow-y: auto;\n    height: 90%; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#id input {\n  border: 0;\n  outline: none; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.6rem; }\n        .ticket-info .address-info .start p:first-child {\n          color: #919191;\n          font-size: 1.6rem; }\n        .ticket-info .address-info .start p:last-child {\n          color: #AAAAAA;\n          font-size: 1.6rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem; }\n      .ticket-info .address-info .center p.row {\n        color: #111111;\n        position: relative; }\n        .ticket-info .address-info .center p.row::after {\n          width: 80%;\n          height: 10px;\n          background-color: #0074D9;\n          position: absolute;\n          left: 0;\n          bottom: -35px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.row::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #0074D9;\n          position: absolute;\n          right: 0;\n          bottom: -35px;\n          content: \"\";\n          border: 10px solid #0074D9;\n          border-color: transparent transparent #0074D9 #0074D9; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #919191; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.6rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background-color: #d9edff;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #777777; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px; }\n    .people-info .click-append > button {\n      background-color: #0074D9;\n      padding: 0 10px;\n      width: 100px;\n      height: 30px;\n      border-radius: 20px;\n      outline: none;\n      border: 0;\n      color: #fff;\n      font-size: 1.3rem;\n      float: right;\n      margin-top: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 50px 2%;\n    overflow-y: auto;\n    height: 90%; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
 
 	// exports
 
@@ -32296,6 +32317,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 
 	var _ = __webpack_require__(169);
 	exports.default = {
@@ -32311,27 +32335,32 @@
 				isInsure: true,
 				fareName: "", //输入的乘客名
 				certificate: "", //输入的乘客凭证,身份证这类
-				AllFare: [{
-					name: "周岳谢",
-					// code:"440802199406011519",
-					active: false,
-					isGetTicket: false
-				}, {
-					name: "周周周",
-					// code:"440802199406011519",
-					active: true,
-					isGetTicket: false
-				}, {
-					name: "舟舟周",
-					// code:"440802199406011519",
-					active: false,
-					isGetTicket: false
-				}, {
-					name: "粥粥周",
-					// code:"440802199406011519",
-					active: true,
-					isGetTicket: false
-				}], //所有的乘客信息
+				AllFare: [
+					// {
+					// 	name:"周岳谢",
+					// 	// code:"440802199406011519",
+					// 	active:false,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"周周周",
+					// 	// code:"440802199406011519",
+					// 	active:true,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"舟舟周",
+					// 	// code:"440802199406011519",
+					// 	active:false,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"粥粥周",
+					// 	// code:"440802199406011519",
+					// 	active:true,
+					// 	isGetTicket:false
+					// }
+				], //所有的乘客信息
 				isHaveGetTicketMan: false, //是否有取票人信息
 
 				//订单信息
@@ -32340,7 +32369,7 @@
 					inSureMoney: 15, //单笔保险费
 					getTicketMan: null, //取票人信息
 					Allinsure: 0, //保险费用(总共)
-					ticketMoney: this.$store.getters.getBusInfo.fullPrice, //票的单价
+					ticketMoney: this.$store.getters.getBusInfo.Price, //票的单价
 					payMoney: 0, //总共支付的钱
 					contactPhone: ""
 				} };
@@ -32638,12 +32667,12 @@
 	    staticClass: "header"
 	  }, [_vm._h('span', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.busType)
+	      "textContent": _vm._s(_vm.busInfo.Route)
 	    }
 	  }), " ", _vm._h('span', {
 	    staticClass: "font-red",
 	    domProps: {
-	      "textContent": _vm._s('¥' + _vm.busInfo.fullPrice)
+	      "textContent": _vm._s('¥' + _vm.busInfo.Price)
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "address-info"
@@ -32651,27 +32680,21 @@
 	    staticClass: "start box"
 	  }, [_vm._h('p', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.fromCityName)
+	      "textContent": _vm._s(_vm.busInfo.StartPoint)
 	    }
-	  }), " ", _vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.fromTime)
-	    }
-	  }, ["08:15"]), " ", _vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.fromStationAddress)
-	    }
-	  }, ["南门客运站"])]), " ", _vm._h('div', {
+	  }), " ", " "]), " ", _vm._h('div', {
 	    staticClass: "center box"
 	  }, [_vm._h('p', {
+	    staticClass: "row"
+	  }, ["\n\t\t\t\t\t" + _vm._s(_vm.startDate) + "\n\t\t\t\t\t"]), _vm._h('p', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.startDate)
+	      "textContent": _vm._s(_vm.busInfo.StartTime.slice(0, _vm.busInfo.StartTime.length - 3))
 	    }
-	  })]), " ", _vm._h('div', {
+	  }), " ", _vm._h('p')]), " ", _vm._h('div', {
 	    staticClass: "end box"
 	  }, [_vm._h('p', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.toCityName)
+	      "textContent": _vm._s(_vm.busInfo.EndPoint)
 	    }
 	  }, ["宁波"]), " ", _vm._h('p', {
 	    domProps: {
@@ -32686,7 +32709,7 @@
 	    staticClass: "people-info"
 	  }, [_vm._h('div', {
 	    staticClass: "info-head"
-	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["还剩余票" + _vm._s(_vm.busInfo.showTicketInfo)])]), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
+	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["还剩余票" + _vm._s(_vm.busInfo.TicketNum)])]), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
 	    staticClass: "info-list"
 	  }, [_vm._l((_vm.AllFare), function(item, index) {
 	    return _vm._h('div', {
