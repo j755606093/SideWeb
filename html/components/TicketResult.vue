@@ -50,6 +50,10 @@
 					<button class="btn" @click="queryPosition">确定</button>
 				</div>
 			</div>
+			<!-- 没有更多数据 -->
+			<div class="no-data" v-if="showNoData">
+				<p>没有更多数据...</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -84,6 +88,7 @@ export default {
 			isShowList:true,
 			isShowTime:false,
 			isShowPosition:false,
+			showNoData:false,
 			TimeOptions:[
 				{
 			    label: '不限时间段',
@@ -142,6 +147,14 @@ export default {
 		// console.log(this.getResultList)
 		//设置头部标题
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
+		
+		if(this.$store.getters.getResultList.length===0){
+			// 没有数据
+			this.showNoData = true;
+		}
+		else{
+			this.showNoData = false;
+		}
 	},
 	computed:{
 		getStartCity(){

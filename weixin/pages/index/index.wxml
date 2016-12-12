@@ -34,7 +34,7 @@
     </view>
   </view>
   <!--热门视频-->
-  <view class="root-viedo">
+  <view class="root-viedo" wx:if="{{Videos.length!==0}}">
     <!--标题-->
     <view class="viedo-header">
       <text class="header-left">热门视频</text>
@@ -51,14 +51,14 @@
     </scroll-view>
   </view>
   <!--热门公众号文章,viewtype 1：文字;2:单图 3：图片（多图） 4：广告 5：视频-->
-  <view class="root-post">
+  <view class="root-post" wx:if="{{false}}">
     <!--标题-->
     <view class="post-header">
       <text class="header-left">热门公众号文章</text>
     </view>
     <!--文章块-->
     <view class="posts">
-      <view class="post" wx:for="{{Docs}}" wx:for-item="item" wx:key="item.Id">
+      <view class="post" bindtap="ToPostsPage" wx:for="{{Docs}}" wx:for-item="item" wx:key="item.Id">
         <!--类型为2-->
         <!--文章左边的信息-->
         <view class="post-two-left">
@@ -86,7 +86,7 @@
     </view>
     <!--文章块-->
     <view class="news">
-      <view class="new" wx:for="{{News}}" wx:for-item="item" wx:key="item.Id">
+      <view class="new" bindtap="ToNewsPage" data-type="2" wx:for="{{News}}" wx:for-item="item" wx:key="item.Id">
         <!--类型为2-->
         <block wx:if="{{item.ViewType===2}}">
           <!--文章左边的信息-->
@@ -106,7 +106,7 @@
           </view>
         </block>
         <!--类型3-->
-        <view wx:if="{{item.ViewType===3}}" class="new-three">
+        <view wx:if="{{item.ViewType===3}}" bindtap="ToNewsPage" data-type="3" class="new-three">
           <!--文章标题-->
           <text class="new-three-header">{{item.Title}}</text>
           <!--文章(图)-->

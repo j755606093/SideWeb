@@ -118,16 +118,15 @@
 			</div>
 		</div>
 		<!-- 其他信息 -->
-		<div class="other-info">
+		<!-- <div class="other-info">
 			<div class="info">
 				<span class="first">汽车乘意险</span>
 				<span class="center">15元/份</span>
 				<div class="last">
 					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
 				</div>
-				<!-- <span class="last"><i class="fa fa-check"></i></span> -->
 			</div>
-		</div>
+		</div> -->
 		<!-- 提示信息 -->
 		<div class="root-tip-info">
 			<div class="text">
@@ -147,7 +146,7 @@
 				<p>订单总额<span v-text="'¥'+payInfoData.payMoney"></span></p>
 				<p>
 					<span>票价<span v-text="'¥'+payInfoData.ticketMoney"></span></span>
-					<span>保险费<span v-text="'¥'+payInfoData.Allinsure"></span></span>
+					<!-- <span>保险费<span v-text="'¥'+payInfoData.Allinsure"></span></span> -->
 				</p>
 			</div>
 			<div class="submit-order">
@@ -240,7 +239,7 @@ export default {
 			//订单信息
 			payInfoData:{
 				passenger:null,//乘客
-				inSureMoney:15,//单笔保险费
+				inSureMoney:0,//单笔保险费
 				getTicketMan:null,//取票人信息
 				Allinsure:0,//保险费用(总共)
 				ticketMoney:this.$store.getters.getBusInfo.Price,//票的单价
@@ -404,10 +403,26 @@ export default {
 							text: '加载中...',
 							spinnerType: 'double-bounce'
 						});
-						setTimeout(()=>{
+
+						// 获取乘客名字,逗号相连
+						let arrayData = "";
+						for(let i=0;i<this.payInfoData.passenger.length;i++){
+							arrayData = arrayData+","+this.AllFare.name;
+						}
+
+						this.$store.dispatch("payMoney",{
+							UsrId:"",
+							Name:arrayData,
+							Mobile:this.payInfoData.contactPhone
+						}).then(result=>{
+							console.log(result);
 							Indicator.close();
 							this.popupMessage("支付失败,请稍后再试!");
-						},2000)
+						})
+						// setTimeout(()=>{
+						// 	Indicator.close();
+						// 	this.popupMessage("支付失败,请稍后再试!");
+						// },2000)
 					}
 					else{
 						this.popupMessage("请填写正确的联系手机号!");
@@ -438,20 +453,26 @@ export default {
 		append(){
 			// 添加乘客至AllFare
 			// 首先检查输入是否正确
-			if(Utils.isChinaName(this.fareName)){
+			if(Utils.isChinaName(this.fareName)&&this.fareName.length>=2){
 				// 是中文
-				this.AllFare.push({
-					name:this.fareName,
-					// code:this.certificate,
-					active:true,
-					isGetTicket:false
-				});
-				// 清空输入的信息
-				this.fareName = "";
-				this.certificate = "";
+				if(this.AllFare.length>this.busInfo.TicketNum){
+					// 如果添加人数大于剩余票数
+					this.popupMessage("乘客数不允许大于余票数!");
+				}
+				else{
+					this.AllFare.push({
+						name:this.fareName,
+						// code:this.certificate,
+						active:true,
+						isGetTicket:false
+					});
+					// 清空输入的信息
+					this.fareName = "";
+					this.certificate = "";
 
-				this.popupMessage("添加成功!");
-				this.computeAll();
+					this.popupMessage("添加成功!");
+					this.computeAll();
+				}
 			}
 			else{
 				this.popupMessage("请输入正确的姓名!");

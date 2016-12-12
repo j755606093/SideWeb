@@ -40,6 +40,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding:10px 0;
 }
 .nav-line{
   display:flex;
@@ -48,7 +49,6 @@
   align-items: center;
   width:96%;
   margin:0 2%;
-  margin-top:10px;
 }
 .nav{
   flex:0.2;
@@ -118,14 +118,15 @@
 .root-post{
   display:flex;
   flex-direction: column;
-  padding:10px 0;
-  border-bottom:10px solid #f7f7f7;
 }
 .post-header{
   flex:1;
   display:flex;
   flex-direction: row;
   margin:0 5px;
+  border-bottom:1px solid #f7f7f7;
+  border-top: 1px solid #f7f7f7;
+  padding:10px 0;
 }
 .posts{
   width:96%;

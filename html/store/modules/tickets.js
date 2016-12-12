@@ -122,7 +122,7 @@ const actions = {
 			  },
 				body:JSON.stringify({
 					SPointId:"3385299",
-					EPointId:"3385291",
+					EPointId:"3385290",
 					// SPointId:state.startCity.Code,
 					// EPointId:state.endCity.Code,
 					Date:state.startDate.server
@@ -130,12 +130,36 @@ const actions = {
 			})
 			.then(result=>result.json())
 			.then(result=>{
+				if(result.Code===204){
+					// 没有更多数据
+					commit(types.SET_RESULTLIST,[]);
+					return;
+				}
 				commit(types.SET_RESULTLIST,result.Data);
 			})
 		}
 	},
 	setBusInfo({commit,state},data){
 		commit(types.SET_BUSINFO,data);
+	},
+	payMoney({commit,state},data){
+		// 微信付款
+		return fetch("http://wx.1yhp.net/api/Transport/GenerateOrderInfo",{
+			method: 'POST',
+			headers: {
+		    'Content-Type': 'application/json'
+		  },
+			body:JSON.stringify({
+				UsrId:data.UsrId,
+				Name:data.Name,//使用点号链接
+				Mobile:data.Mobile,
+				LineId:state.busInfo.LineId,
+				SPointId:state.busInfo.StartPointId,
+				EPointId:state.busInfo.EndPointId,
+				Date:state.startDate.server
+			})
+		})
+		.then(result=>result.json())
 	}
 }
 

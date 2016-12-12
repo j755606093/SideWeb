@@ -208,7 +208,7 @@ html {
           height: 0;
           border: 10px solid #0074D9;
           position: absolute;
-          right: 0;
+          right: 5px;
           bottom: -35px;
           content: "";
           border: 10px solid #0074D9;

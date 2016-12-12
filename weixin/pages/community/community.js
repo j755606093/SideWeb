@@ -1,4 +1,4 @@
-//index.js
+//community.js
 let {formatDate} = require("../../utils/util.js");
 //获取应用实例
 let app = getApp();
@@ -38,17 +38,11 @@ Page({
   onPullDownRefresh(){
 
   },
-  ToNewsPage(){
-    wx.setStorage({
-      key:"Posts",
-      data:"code",
-      success(){
-        // 跳转页面
-        wx.navigateTo({
-          url: '../news/news'
-        })
-      }
-    });
+  //事件处理函数
+  bindViewTap() {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
   },
   onLoad () {
     //获取首页数据

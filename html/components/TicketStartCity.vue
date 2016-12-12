@@ -2,11 +2,13 @@
 	<div id="startcity">
 		<mt-index-list class="fixed">
 		  <mt-index-section v-for="list in setStartCityList" :index="list.ShortKey">
-		    <mt-cell v-for="item in list.Content" @click.native="getStartCity(item.Id,item.Name)" :title="item.Name"></mt-cell>
+		  	<!-- <template v-for="station in list.Content"> -->
+		   	 <mt-cell v-for="item in list.Content" @click.native="getStartCity(item.Id,item.Name)" :title="item.Name"></mt-cell>
+		    <!-- </template> -->
 		  </mt-index-section>
 		</mt-index-list>
 		<!-- 出发地址 -->
-		<mt-popup
+		<!-- <mt-popup
 		  v-model="startpopupVisible"
 		  position="bottom"
 		  class="popup-visible">
@@ -15,7 +17,7 @@
 		  	<button @click="yesData">确定</button>
 		  </div>
 		  <mt-picker :slots="startCitySlots" @change="onStartValuesChange"></mt-picker>
-		</mt-popup>
+		</mt-popup> -->
 	</div>
 </template>
 
