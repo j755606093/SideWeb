@@ -140,7 +140,7 @@ input {
   outline: none; }
 
 #pay {
-  margin-top: -5px;
+  margin-top: -10px;
   padding: 0; }
 
 .ticket-info {
@@ -191,13 +191,13 @@ input {
       -ms-flex-align: start;
           align-items: flex-start; }
       .ticket-info .address-info .start p {
-        font-size: 1.6rem; }
+        font-size: 1.8rem;
+        color: #fff;
+        line-height: 25px; }
         .ticket-info .address-info .start p:first-child {
-          color: #fff;
-          font-size: 1.6rem; }
+          font-size: 1.2rem; }
         .ticket-info .address-info .start p:last-child {
-          color: #fff;
-          font-size: 1.6rem; }
+          font-size: 1.2rem; }
     .ticket-info .address-info .center {
       font-size: 1.5rem;
       -ms-flex-align: center;
@@ -227,24 +227,25 @@ input {
           border: 10px solid #fff;
           border-color: transparent transparent #fff #fff; }
       .ticket-info .address-info .center p.arrow-message {
-        color: #fff; }
+        color: #fff;
+        margin-top: -10px; }
     .ticket-info .address-info .end {
       -ms-flex-align: end;
           align-items: flex-end; }
       .ticket-info .address-info .end p {
         color: #fff; }
         .ticket-info .address-info .end p:first-child {
-          font-size: 1.6rem; }
+          font-size: 1.8rem; }
   .ticket-info .tip-info {
     width: 92%;
     margin: 0px 4%;
     height: 30px;
     line-height: 30px;
-    background-color: #d9edff;
+    background: transparent;
     font-size: 1.2rem; }
     .ticket-info .tip-info p {
       padding: 0 5px;
-      color: #777777; }
+      color: #eaeaea; }
       .ticket-info .tip-info p i {
         margin-left: 5px; }
 
@@ -369,19 +370,20 @@ input {
   .people-info .click-append {
     width: 96%;
     margin: 0 2%;
-    height: 40px; }
+    height: 40px;
+    text-align: center; }
     .people-info .click-append > button {
-      background-color: #0074D9;
-      padding: 0 10px;
-      width: 100px;
       height: 30px;
-      border-radius: 20px;
       outline: none;
       border: 0;
-      color: #fff;
+      color: #0074D9;
       font-size: 1.3rem;
-      float: right;
+      background: transparent;
       margin-top: 5px; }
+    .people-info .click-append > i {
+      color: #0074D9;
+      font-size: 1.3rem;
+      margin-right: 5px; }
 
 .contact-info {
   width: 100%;
@@ -460,6 +462,11 @@ input {
           color: #fff; }
       .other-info .info .last span.active {
         background-color: #0074D9; }
+      .other-info .info .last span.right {
+        border: none; }
+        .other-info .info .last span.right > i {
+          color: #AAAAAA;
+          font-size: 1.8rem; }
 
 .root-tip-info {
   width: 100%;
@@ -542,9 +549,10 @@ input {
   .tip-popup-visible .body {
     text-align: center;
     width: 96%;
-    margin: 50px 2%;
+    margin: 10px 2%;
     overflow-y: auto;
-    height: 90%; }
+    height: 100%;
+    padding-top: 0; }
     @media (max-width: 320px) {
       .tip-popup-visible .body {
         margin: 0px 2%; } }

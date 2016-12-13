@@ -2,15 +2,15 @@
 	<div id="pay" class="position">
 		<!-- 车票信息 -->
 		<div class="ticket-info">
-			<div class="header">
+			<!-- <div class="header">
 				<span v-text="busInfo.Route"></span>
 				<span class="font-red" v-text="'¥'+busInfo.Price"></span>
-			</div>
+			</div> -->
 			<div class="address-info">
 				<div class="start box">
+					<p v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
 					<p v-text="busInfo.StartPoint"></p>
-					<!-- <p v-text="busInfo.StartTime">08:15</p> -->
-					<!-- <p v-text="busInfo.ShiftNum"></p> -->
+					<p v-text="busInfo.ShiftNum"></p>
 				</div>
 				<div class="center box">
 
@@ -65,8 +65,9 @@
 					<input type="text" placeholder="请填写证件号码" v-model="certificate">
 				</div> -->
 			</div>
-			<div class="click-append">
-				<button @click="append">确定添加</button>
+			<div class="click-append" @click="append">
+				<i class="fa fa-plus-circle"></i>
+				<button>确定添加</button>
 			</div>
 		</div>
 
@@ -122,13 +123,13 @@
 		<div class="other-info">
 			<div class="info">
 				<span class="first">优惠券</span>
-				<span class="center">15元/份</span>
+				<span class="center">没有优惠券</span>
 				<div class="last">
-					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
+					<span @click="GetDiscount" class="right"><i class="fa fa-angle-right"></i></span>
 				</div>
 			</div>
 		</div>
-		<div class="other-info">
+		<!-- <div class="other-info">
 			<div class="info">
 				<span class="first">汽车乘意险</span>
 				<span class="center">15元/份</span>
@@ -136,7 +137,7 @@
 					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 提示信息 -->
 		<div class="root-tip-info">
 			<div class="text">
@@ -425,9 +426,9 @@ export default {
 						}
 
 						this.$store.dispatch("payMoney",{
-							UsrId:"",
 							Name:arrayData,
-							Mobile:this.payInfoData.contactPhone
+							Mobile:this.payInfoData.contactPhone,
+							Num:arrayData.length
 						}).then(result=>{
 							console.log(result);
 							Indicator.close();
@@ -544,6 +545,9 @@ export default {
 			})
 			this.AllFare[index].isGetTicket = true;
 		},
+		GetDiscount(){
+			// 查看选取优惠券
+		}
 	}
 }
 </script>

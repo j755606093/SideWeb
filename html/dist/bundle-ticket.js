@@ -11285,13 +11285,13 @@
 					'Content-Type': 'application/json'
 				},
 				body: (0, _stringify2.default)({
-					UsrId: data.UsrId,
 					Name: data.Name, //使用点号链接
 					Mobile: data.Mobile,
 					LineId: state.busInfo.LineId,
 					SPointId: state.busInfo.StartPointId,
 					EPointId: state.busInfo.EndPointId,
-					Date: state.startDate.server
+					Date: state.startDate.server,
+					Num: data.Num
 				})
 			}).then(function (result) {
 				return result.json();
@@ -31811,8 +31811,13 @@
 							this.TimeOptionsValue = value;
 							this.TimeOptions[0].disabled = true;
 						} else {
-							this.TimeOptionsValue = value;
-							this.TimeOptions[0].disabled = false;
+							if (value.length < this.TimeOptionsValue.length) {
+								// 设置的值小于原来的值
+								this.TimeOptionsValue = ["不限"];
+							} else {
+								this.TimeOptionsValue = value;
+								this.TimeOptions[0].disabled = false;
+							}
 						}
 						if (value.length === this.TimeOptions.length) {
 							this.TimeOptions[0].disabled = false;
@@ -31833,8 +31838,13 @@
 							this.PositionOptionsValue = value;
 							this.PositionOptions[0].disabled = true;
 						} else {
-							this.PositionOptionsValue = value;
-							this.PositionOptions[0].disabled = false;
+							if (value.length < this.PositionOptionsValue.length) {
+								// 设置的值小于原来的值
+								this.PositionOptionsValue = ["不限"];
+							} else {
+								this.PositionOptionsValue = value;
+								this.PositionOptions[0].disabled = false;
+							}
 						}
 						if (value.length === this.PositionOptions.length) {
 							this.PositionOptions[0].disabled = false;
@@ -32287,7 +32297,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -5px;\n  padding: 0; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.6rem; }\n        .ticket-info .address-info .start p:first-child {\n          color: #fff;\n          font-size: 1.6rem; }\n        .ticket-info .address-info .start p:last-child {\n          color: #fff;\n          font-size: 1.6rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -35px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -35px;\n          content: \"\";\n          border: 10px solid #fff;\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #fff; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.6rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background-color: #d9edff;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #777777; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px; }\n    .people-info .click-append > button {\n      background-color: #0074D9;\n      padding: 0 10px;\n      width: 100px;\n      height: 30px;\n      border-radius: 20px;\n      outline: none;\n      border: 0;\n      color: #fff;\n      font-size: 1.3rem;\n      float: right;\n      margin-top: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 50px 2%;\n    overflow-y: auto;\n    height: 90%; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff;\n        line-height: 25px; }\n        .ticket-info .address-info .start p:first-child {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p:last-child {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -35px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -35px;\n          content: \"\";\n          border: 10px solid #fff;\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff;\n        margin-top: -10px; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #fff; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
 
 	// exports
 
@@ -32316,6 +32326,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
 	//
 	//
 	//
@@ -32745,9 +32756,9 @@
 							}
 
 							this.$store.dispatch("payMoney", {
-								UsrId: "",
 								Name: arrayData,
-								Mobile: this.payInfoData.contactPhone
+								Mobile: this.payInfoData.contactPhone,
+								Num: arrayData.length
 							}).then(function (result) {
 								console.log(result);
 								_mintUi.Indicator.close();
@@ -32869,6 +32880,9 @@
 					item.isGetTicket = false;
 				});
 				this.AllFare[index].isGetTicket = true;
+			},
+			GetDiscount: function GetDiscount() {
+				// 查看选取优惠券
 			}
 		}
 	};
@@ -32886,25 +32900,22 @@
 	  }, [_vm._h('div', {
 	    staticClass: "ticket-info"
 	  }, [_vm._h('div', {
-	    staticClass: "header"
-	  }, [_vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.Route)
-	    }
-	  }), " ", _vm._h('span', {
-	    staticClass: "font-red",
-	    domProps: {
-	      "textContent": _vm._s('¥' + _vm.busInfo.Price)
-	    }
-	  })]), " ", _vm._h('div', {
 	    staticClass: "address-info"
 	  }, [_vm._h('div', {
 	    staticClass: "start box"
 	  }, [_vm._h('p', {
 	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.StartTime.slice(0, _vm.busInfo.StartTime.length - 3))
+	    }
+	  }), " ", _vm._h('p', {
+	    domProps: {
 	      "textContent": _vm._s(_vm.busInfo.StartPoint)
 	    }
-	  }), " ", " "]), " ", _vm._h('div', {
+	  }), " ", _vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.ShiftNum)
+	    }
+	  })]), " ", _vm._h('div', {
 	    staticClass: "center box"
 	  }, [_vm._m(0), _vm._h('p', {
 	    staticClass: "arrow-message",
@@ -32996,12 +33007,13 @@
 	      }
 	    }
 	  })]), " "]), " ", _vm._h('div', {
-	    staticClass: "click-append"
-	  }, [_vm._h('button', {
+	    staticClass: "click-append",
 	    on: {
 	      "click": _vm.append
 	    }
-	  }, ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-plus-circle"
+	  }), " ", _vm._h('button', ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
 	    staticClass: "contact-info"
 	  }, [_vm._h('div', {
 	    staticClass: "info"
@@ -33033,33 +33045,16 @@
 	    staticClass: "first"
 	  }, ["优惠券"]), " ", _vm._h('span', {
 	    staticClass: "center"
-	  }, ["15元/份"]), " ", _vm._h('div', {
+	  }, ["没有优惠券"]), " ", _vm._h('div', {
 	    staticClass: "last"
 	  }, [_vm._h('span', {
-	    class: [_vm.isInsure ? 'active' : ''],
+	    staticClass: "right",
 	    on: {
-	      "click": _vm.GetInSure
+	      "click": _vm.GetDiscount
 	    }
 	  }, [_vm._h('i', {
-	    staticClass: "fa fa-check"
-	  })])])])]), " ", _vm._h('div', {
-	    staticClass: "other-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', {
-	    staticClass: "first"
-	  }, ["汽车乘意险"]), " ", _vm._h('span', {
-	    staticClass: "center"
-	  }, ["15元/份"]), " ", _vm._h('div', {
-	    staticClass: "last"
-	  }, [_vm._h('span', {
-	    class: [_vm.isInsure ? 'active' : ''],
-	    on: {
-	      "click": _vm.GetInSure
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-check"
-	  })])])])]), " ", " ", _vm._m(2), " ", " ", " ", _vm._h('div', {
+	    staticClass: "fa fa-angle-right"
+	  })])])])]), " ", " ", " ", _vm._m(2), " ", " ", " ", _vm._h('div', {
 	    staticClass: "submit-box"
 	  }, [_vm._h('div', {
 	    staticClass: "order-info"

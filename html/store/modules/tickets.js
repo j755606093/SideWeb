@@ -141,13 +141,13 @@ const actions = {
 		    'Content-Type': 'application/json'
 		  },
 			body:JSON.stringify({
-				UsrId:data.UsrId,
 				Name:data.Name,//使用点号链接
 				Mobile:data.Mobile,
 				LineId:state.busInfo.LineId,
 				SPointId:state.busInfo.StartPointId,
 				EPointId:state.busInfo.EndPointId,
-				Date:state.startDate.server
+				Date:state.startDate.server,
+				Num:data.Num
 			})
 		})
 		.then(result=>result.json())

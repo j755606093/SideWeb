@@ -204,8 +204,14 @@ export default {
 						this.TimeOptions[0].disabled = true;
 					}
 					else{
-						this.TimeOptionsValue = value;
-						this.TimeOptions[0].disabled = false;
+						if(value.length<this.TimeOptionsValue.length){
+							// 设置的值小于原来的值
+							this.TimeOptionsValue = ["不限"];
+						}
+						else{
+							this.TimeOptionsValue = value;
+							this.TimeOptions[0].disabled = false;
+						}
 					}
 					if(value.length===this.TimeOptions.length){
 						this.TimeOptions[0].disabled = false;
@@ -228,8 +234,14 @@ export default {
 						this.PositionOptions[0].disabled = true;
 					}
 					else{
-						this.PositionOptionsValue = value;
-						this.PositionOptions[0].disabled = false;
+						if(value.length<this.PositionOptionsValue.length){
+							// 设置的值小于原来的值
+							this.PositionOptionsValue = ["不限"];
+						}
+						else{
+							this.PositionOptionsValue = value;
+							this.PositionOptions[0].disabled = false;
+						}
 					}
 					if(value.length===this.PositionOptions.length){
 						this.PositionOptions[0].disabled = false;
