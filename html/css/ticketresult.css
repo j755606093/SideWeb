@@ -44,6 +44,10 @@ a:focus {
 html {
   font-size: 12px; }
 
+input {
+  outline: none;
+  border: none; }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -164,8 +168,8 @@ html {
     .result .data-set span {
       height: 40px;
       line-height: 40px;
-      -ms-flex: 1;
-          flex: 1;
+      -ms-flex: 0.5;
+          flex: 0.5;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-pack: center;
@@ -176,12 +180,24 @@ html {
         line-height: 40px;
         font-size: 14px;
         margin-right: 5px; }
+    .result .data-set span:first-child {
+      -ms-flex: 0.25;
+          flex: 0.25;
+      border-right-width: 1px;
+      border-right-color: #777777;
+      border-right-style: solid; }
+    .result .data-set span:last-child {
+      -ms-flex: 0.25;
+          flex: 0.25;
+      border-left-width: 1px;
+      border-left-color: #777777;
+      border-left-style: solid; }
     .result .data-set span.active {
       color: #0074D9; }
   .result .result-list {
     position: relative; }
     .result .result-list .list {
-      height: 70px;
+      height: 100px;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
@@ -209,13 +225,25 @@ html {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          color: #444444; }
+          color: #111111; }
           .result .result-list .list > .car-position p span.brand {
             border: 1px solid #FF851B;
+            background-color: #FF851B;
             padding: 0 2px;
-            color: #FF851B;
+            color: #fff;
             font-size: 1.1rem;
+            margin-right: 5px;
+            border-radius: 10px; }
+        .result .result-list .list > .car-position p.type {
+          color: #919191; }
+          .result .result-list .list > .car-position p.type > i.fa-bus {
+            color: #AAAAAA;
+            padding: 0 2px;
             margin-right: 5px; }
+          .result .result-list .list > .car-position p.type > i.fa-caret-down {
+            float: right;
+            height: 30px;
+            line-height: 30px; }
       .result .result-list .list > .ticket-type {
         margin: 5px 0;
         width: 30%;
@@ -226,6 +254,9 @@ html {
         display: flex;
         -ms-flex-direction: column;
             flex-direction: column; }
+        .result .result-list .list > .ticket-type > p {
+          heihgt: 30px;
+          line-height: 30px; }
         .result .result-list .list > .ticket-type .money {
           color: #FF851B;
           -ms-flex: 1;
@@ -250,3 +281,17 @@ html {
       .result .result-list .no-data p {
         color: #999;
         font-size: 1.8rem; }
+    .result .result-list .popup-visible {
+      width: 60%;
+      height: 40%;
+      border-radius: 10px; }
+      .result .result-list .popup-visible .popup-header {
+        height: 40px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.8rem;
+        line-height: 40px;
+        background-color: #009688;
+        color: #fff; }

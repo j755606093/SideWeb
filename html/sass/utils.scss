@@ -76,6 +76,10 @@ a:focus{
 html{
 	font-size:12px;
 }
+input{
+	outline:none;
+	border:none;
+}
 *{
 	box-sizing:border-box;
 	margin:0;
@@ -86,6 +90,8 @@ html{
 	
 	//让页面里的字体变清晰，变细用CSS
 	-webkit-font-smoothing: antialiased;
+	// 点击不显示高亮
+	// -webkit-tap-highlight-color:transparent;
 }
 
 @keyframes fadeOutLeft {

@@ -86,7 +86,7 @@
     </view>
     <!--文章块-->
     <view class="news">
-      <view class="new" bindtap="ToNewsPage" data-type="2" wx:for="{{News}}" wx:for-item="item" wx:key="item.Id">
+      <view class="new" wx:for="{{News}}" bindtap="ToNewsPage" data-Url="{{item.Url}}" wx:for-item="item" wx:key="item.Id">
         <!--类型为2-->
         <block wx:if="{{item.ViewType===2}}">
           <!--文章左边的信息-->
@@ -106,7 +106,7 @@
           </view>
         </block>
         <!--类型3-->
-        <view wx:if="{{item.ViewType===3}}" bindtap="ToNewsPage" data-type="3" class="new-three">
+        <view wx:if="{{item.ViewType===3}}" class="new-three">
           <!--文章标题-->
           <text class="new-three-header">{{item.Title}}</text>
           <!--文章(图)-->

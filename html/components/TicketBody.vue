@@ -15,8 +15,10 @@
 		</div>
 		<div @click="openPicker" class="data">
 			<span><i class="fa fa-calendar"></i>出发日期</span>
-			<span v-text="showTime"></span>
+			<!-- <span v-text="showTime"></span> -->
+			<date-picker :date="startTime" :option="option" :limit="limit"></date-picker>
 			<span v-text="showWeek"></span>
+			
 		</div>
 		<div class="query">
 			<button @click="query" class="btn">查询</button>
@@ -38,7 +40,7 @@
 		</mt-popup> -->
 		
 		<!-- 日期选择 -->
-		<mt-datetime-picker
+		<!-- <mt-datetime-picker
 			ref="picker"
 			type="date"
 			:start-date="nowDate"
@@ -48,7 +50,7 @@
 			date-format="{value} 日"
 			v-model="pickerValue"
 			@confirm="handleConfirm">
-		</mt-datetime-picker>
+		</mt-datetime-picker> -->
 	</div>
 </template>
 
@@ -64,6 +66,7 @@
 
 <script type="text/babel">
 import Utils from "../Utils/utils";
+import DatePicker from 'vue-datepicker'
 import { Indicator,Toast } from 'mint-ui';
 import "whatwg-fetch";
 
@@ -89,15 +92,90 @@ export default {
 			// 	values: [],
 			// 	className: 'endcity'
 			// }],
+			// for Vue 2.0
+      startTime: {
+        time: ""
+      },
+
+      option: {
+        type: 'day',
+        week: ['一', '二', '三', '四', '五', '六','日'],
+        month: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        format: 'YYYY-MM-DD',
+        placeholder: '选择日期',
+        inputStyle: {
+          'display': 'inline-block',
+          'line-height': '60px',
+          'height':"60px",
+          'font-size': '1.8rem',
+          "background-color":"transparent",
+          'color': '#5F5F5F'
+        },
+        color: {
+          header: '#009688',
+          headerText: '#fff'
+        },
+        buttons: {
+          ok: '确定',
+          cancel: '取消'
+        },
+        overlayOpacity: 0.5, // 0.5 as default
+        dismissible: true // as true as default
+      },
+      // timeoption: {
+      //   type: 'min',
+      //   week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+      //   month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      //   format: 'YYYY-MM-DD HH:mm'
+      // },
+      // multiOption: {
+      //   type: 'multi-day',
+      //   week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+      //   month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      //   format:"YYYY-MM-DD HH:mm"
+      // },
+      limit: [{
+        type: 'weekday',
+        available: [1, 2, 3, 4, 5,6,7]
+      },
+      // {
+      //   type: 'fromto',
+      //   from: '2016-02-01',
+      //   to: '2016-02-20'
+      // }
+      ]
 		}
 	},
 	created(){
 		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 		// 设置初始时间
 		this.handleConfirm(new Date());
+		if(this.$store.getters.getInfo.startDate.server){
+			// 之前查过
+			this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server)
+		}
+		else{
+			this.startTime.time = this.formatNow(new Date())
+		}
 	},
 	filters:{
 		
+	},
+	watch:{
+		startTime:{
+			handler:function(newValue,oldValue){
+				let date = new Date(newValue.time);
+				this.showTime = this.formatNow(date);
+				this.showWeek = Utils.formatWeek(date);
+				//记录选取的时间
+				this.$store.dispatch("setStartDate",{
+					date:this.showTime,
+					week:this.showWeek,
+					server:date
+				});
+			},
+			deep: true
+		}
 	},
 	computed:{
 		getStartCity(){
@@ -150,6 +228,13 @@ export default {
 				// });
 				// Indicator.close();
 				// this.startpopupVisible = true;
+			}).catch(error=>{
+				Indicator.close();
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
 			});
 		},
 		GoEndCity(){
@@ -174,6 +259,13 @@ export default {
 				// Indicator.close();
 				// this.endpopupVisible = true;
 				// this.$router.push({name:"ticketendcity"});
+			}).catch(error=>{
+				Indicator.close();
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
 			});
 		},
 		openPicker() {
@@ -190,10 +282,15 @@ export default {
 			});
 		},
 		formatNow(date){
+			if(typeof date==="string"){
+				date = new Date(date);
+			}
+			let year = date.getYear()-100+2000;
 			let month = date.getMonth()+1;
 			let day = date.getDate();
 
-			return month+"月"+day+"日";
+			// return month+"月"+day+"日";
+			return year+"-"+month+"-"+(day>9?day:"0"+day)
 		},
 		query(){
 			if(this.startCity.Name===this.endCity.Name){
@@ -229,6 +326,9 @@ export default {
 		onEndValuesChange(picker, values){
 			this.$store.dispatch("setEndCity",{Code:"00000",Name:values[0]});
 		}
-	}
+	},
+	components: {
+    'date-picker': DatePicker
+  }
 }
 </script>

@@ -9,8 +9,8 @@
 		<!-- 列表头部 -->
 		<div class="data-set">
 			<span :class="{'set':true,active:isShowTime}" @click="setShowTime"><i class="fa fa-glass"></i>时段</span>
-			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-car"></i>车站</span>
-			<span :class="{'set':true,active:isShowList}" @click="sortTime"><i class="fa fa-caret-down"></i>出发时间</span>
+			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-bus"></i>运输公司</span>
+			<span :class="{'set':true,active:isShowList}" @click="sortTime"><i :class="['fa',arrow]"></i>票价</span>
 		</div>
 		<div class="result-list">
 			<!-- 列表数据 -->
@@ -22,6 +22,10 @@
 						<p>
 							<span class="brand">始</span>{{item.StartPoint}}
 						</p>
+						<p class="type" v-on:click.stop="showCompanyDeatil(index,$event)">
+							<i class="fa fa-bus"></i>{{item.CoName}}
+							<i class="fa fa-caret-down"></i>
+						</p>
 						<p>
 							<span class="brand">终</span>{{item.EndPoint}}
 						</p>
@@ -29,12 +33,21 @@
 					<div class="ticket-type">
 						<p class="money" v-text="item.Price+'元'"></p>
 						<p class="number" v-text="item.Route"></p>
-						<p class="type" v-text="item.CoName"></p>
+						<p class="type" v-text="item.TicketNum+'张余票'"></p>
 					</div>
 				</div>
 			</transition-group>
+			<!-- 提示公司详情 -->
+			<mt-popup
+			  v-model="companyDetailShow"
+			  class="popup-visible"
+			  popup-transition="popup-fade">
+			  <p class="popup-header">{{showCompanyInfo.CoName}}</p>
+
+			</mt-popup>
 			<!-- 刷选列表数据 -->
 			<div class="change-set" v-show="!isShowList">
+				<!-- 时间段 -->
 				<div class="set-time" v-show="isShowTime">
 					<mt-checklist
 					  v-model="getTimeOptionsValue"
@@ -42,6 +55,7 @@
 					</mt-checklist>
 					<button class="btn" @click="queryTime">确定</button>
 				</div>
+				<!-- 运输公司 -->
 				<div class="set-position" v-show="isShowPosition">
 					<mt-checklist
 					  v-model="getPositionOptionsValue"
@@ -85,10 +99,14 @@ export default {
 			endCity:"",
 			startDate:this.$store.getters.getInfo.startDate,
 			getResultList:this.$store.getters.getResultList,
+			ResultBackUp:this.$store.getters.getResultList,//列表备份
 			isShowList:true,
 			isShowTime:false,
 			isShowPosition:false,
 			showNoData:false,
+			companyDetailShow:false,//显示公司信息
+			showCompanyInfo:{},//显示的公司信息
+			arrow:"fa-caret-down",//默认票价排序图标
 			TimeOptions:[
 				{
 			    label: '不限时间段',
@@ -97,22 +115,22 @@ export default {
 			  },
 			  {
 			    label: '早上(00:00-06:00)',
-			    value: '早上',
+			    value: 6,
 			    disabled: false
 			  },
 			  {
 			    label: '上午(06:00-12:00)',
-			    value: '上午',
+			    value: 12,
 			    disabled: false
 			  },
 			  {
 			    label: '下午(12:00-18:00)',
-			    value: '下午',
+			    value: 18,
 			    disabled: false
 			  },
 			  {
 			    label: '晚上(18:00-24:00)',
-			    value: '晚上',
+			    value: 24,
 			    disabled: false
 			  },
 			],
@@ -122,16 +140,16 @@ export default {
 			    value: '不限',
 			    disabled: false
 				},
-				{
-					label:"镇江汽车站",
-					value:"镇江汽车站",
-					disabled:false
-				},
-				{
-					label:"其它汽车站",
-					value:"其它汽车站",
-					disabled:false
-				}
+				// {
+				// 	label:"镇江汽车站",
+				// 	value:"镇江汽车站",
+				// 	disabled:false
+				// },
+				// {
+				// 	label:"其它汽车站",
+				// 	value:"其它汽车站",
+				// 	disabled:false
+				// }
 			],
 			TimeOptionsValue:["不限"],//结果
 			PositionOptionsValue:["不限"],//结果
@@ -154,6 +172,14 @@ export default {
 		}
 		else{
 			this.showNoData = false;
+			// 准备运输公司信息
+			this.getResultList.map((item)=>{
+				this.PositionOptions.push({
+					label:item.CoName,
+					value:item.CoName,
+					disabled:false
+				})
+			})
 		}
 	},
 	computed:{
@@ -240,12 +266,66 @@ export default {
 			// 如果this.TimeOptionsValue长度超过1位,那就需要去掉'不限'
 			this.HideAll();
 			this.isShowList = true;//显示列表
+			
+			let filter = this.TimeOptionsValue.slice(1);
+			this.getResultList = _.filter(this.ResultBackUp,(item)=>{
+				let hour =parseInt(item.StartTime.split(":")[0]);
+				
+				let n = false;
+				for(let i=0;i<filter.length;i++){
+					switch(filter[i]){
+						case 6:
+							if(hour<=6&&hour>=0){
+								n = true;
+							}
+							break;
+						case 12:
+							if(hour<=12&&hour>6){
+								n = true;
+							}
+							break;
+						case 18:
+							if(hour<=18&&hour>12){
+								n = true;
+							}
+							break;
+						case 24:
+							if(hour<=24&&hour>18){
+								n = true;
+							}
+							break;
+					}
+				}
+				return n;
+			});
+			
+			// 最后判断是否值选择了一个不限
+			if(this.TimeOptionsValue.length===1&&this.getResultList.length===0){
+				// 长度为一
+				this.getResultList = this.ResultBackUp;
+			}
 		},
 		queryPosition(){
 			// 查找查找
 			// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
 			this.HideAll();
 			this.isShowList = true;//显示列表
+
+			let filter = this.PositionOptionsValue.slice(1);
+			this.getResultList = _.filter(this.ResultBackUp,(item)=>{
+				let n =false;
+				for(let i=0;i<filter.length;i++){
+					if(item.CoName===filter[i]){
+						n=true;
+					}
+				}
+				return n;
+			});
+
+			if(this.PositionOptionsValue.length===1&&this.getResultList.length===0){
+				// 长度为一
+				this.getResultList = this.ResultBackUp;
+			}
 		},
 		GoToPay(index){
 			// 存储用户点击的列表
@@ -254,7 +334,27 @@ export default {
 			this.$router.push({name:"ticketpay"});
 		},
 		sortTime(){
-			this.getResultList = _.shuffle(this.getResultList);
+			let data = Utils.formatJsonData(this.getResultList);
+			if(this.arrow==="fa-caret-down"){
+				data.sort((a,b)=>{
+					return b.Price-a.Price;
+				});
+				this.arrow = "fa-caret-up";
+			}
+			else{
+				data.sort((a,b)=>{
+					return a.Price-b.Price;
+				});
+				this.arrow = "fa-caret-down";
+			}
+
+			this.getResultList = data;
+		},
+		showCompanyDeatil(index,event){
+			//显示公司详情
+			this.companyDetailShow = true;
+			this.showCompanyInfo = this.getResultList[index];
+			// console.log(index)
 		}
 	}
 }

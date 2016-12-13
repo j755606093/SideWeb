@@ -32,7 +32,7 @@
 		span{
 			height:40px;
 			line-height:40px;
-			flex:1;
+			flex:0.5;
 			display:flex;
 			justify-content:center;
 			color:darken($gray,30%);
@@ -43,6 +43,18 @@
 				margin-right:5px;
 			}
 		}
+		span:first-child{
+			flex:0.25;
+			border-right-width: 1px;
+			border-right-color: darken($gray,20%);
+			border-right-style: solid;
+		}
+		span:last-child{
+			flex:0.25;
+			border-left-width: 1px;
+			border-left-color: darken($gray,20%);
+			border-left-style: solid;
+		}
 		span.active{
 			color:$blue;
 		}
@@ -50,7 +62,7 @@
 	.result-list{
 		position:relative;
 		.list{
-			height:70px;
+			height:100px;
 			display:flex;
 			flex-direction: row;
 			border-bottom:1px solid lighten($gray,20%);
@@ -73,13 +85,28 @@
 					line-height: 30px;
 					font-size:1.3rem;
 					@include text_nowrap;
-					color:darken($gray, 40%);
+					color:darken($gray, 60%);
 					span.brand{
 						border:1px solid $orange;
+						background-color: $orange;
 						padding:0 2px;
-						color:$orange;
+						color:$white;
 						font-size:1.1rem;
 						margin-right:5px;
+						border-radius: 10px;
+					}
+				}
+				p.type{
+					color:darken($gray,10%);
+					>i.fa-bus{
+						color:$gray;
+						padding:0 2px;
+						margin-right:5px;
+					}
+					>i.fa-caret-down{
+						float:right;
+						height:30px;
+						line-height:30px;
 					}
 				}
 			}
@@ -91,6 +118,10 @@
 				font-size:1.3rem;
 				display:flex;
 				flex-direction: column;
+				>p{
+					heihgt:30px;
+					line-height:30px;
+				}
 				.money{
 					color:$orange;
 					flex:1;
@@ -120,6 +151,22 @@
 			p{
 				color:#999;
 				font-size:1.8rem;
+			}
+		}
+		.popup-visible{
+			width:60%;
+			height:40%;
+			border-radius:10px;
+			.popup-header{
+				height:40px;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+				width:100%;
+				text-align: center;
+				font-size:1.8rem;
+				line-height:40px;
+				background-color: #009688;
+				color:$white;
 			}
 		}
 	}

@@ -44,6 +44,10 @@ a:focus {
 html {
   font-size: 12px; }
 
+input {
+  outline: none;
+  border: none; }
+
 * {
   box-sizing: border-box;
   margin: 0;

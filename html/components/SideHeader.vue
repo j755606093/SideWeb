@@ -18,14 +18,18 @@
 @import "../sass/utils.scss";
 header{
 	height:50px;
-	background-color:#14d67c;
+	// background-color:#14d67c;
+	background-color:#2196F3;
 	color:$white;
 	font-size:1.5rem;
 	position:fixed;
 	top:0;
 	left:0;
 	width:100%;
-	z-index:1000;
+	z-index:100;
+	padding:0;
+	margin:0;
+	// color:#000;
 	.home{
 		text-align:center;
 		line-height:50px;
@@ -72,6 +76,7 @@ export default {
 	},
 	computed:{
 		getHeaderState(){
+			console.log(this.formatData(this.$store.getters.Development));//测试
 			return this.$store.state.tickets.HeaderIsHome;
 		},
 		getHeaderTitle(){
@@ -79,14 +84,13 @@ export default {
 		}
 	},
 	methods:{
-		downloadapp(){
-			//跳转下载地址
-			// window.location.href = "";
-		},
 		GoBack(){
 			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 			this.$router.go(-1);
-		}
+		},
+		formatData(data){
+			return JSON.parse(JSON.stringify(data));
+		},
 	}
 }
 </script>

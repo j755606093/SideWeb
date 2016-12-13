@@ -38,10 +38,10 @@ Page({
   onPullDownRefresh(){
 
   },
-  ToNewsPage(){
+  ToNewsPage(event){
     wx.setStorage({
-      key:"Posts",
-      data:"code",
+      key:"News",
+      data:event.currentTarget.dataset.url,
       success(){
         // 跳转页面
         wx.navigateTo({

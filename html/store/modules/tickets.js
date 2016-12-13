@@ -8,12 +8,12 @@ const state = {
 	HeaderTitle:"身边订票",
 
 	startCity:{
-		Code:"3385295",
-		Name:"布吉",
+		Code:"3385299",
+		Name:"五经富",
 	},//出发地
 	endCity:{
-		Code:"3385285",
-		Name:"黄木岗",
+		Code:"3385290",
+		Name:"深圳罗湖",
 	},//到达地
 
 	startDate:{
@@ -48,7 +48,8 @@ const getters = {
 		}
 	},
 	getResultList:state=>state.resultList,
-	getBusInfo:state=>state.busInfo
+	getBusInfo:state=>state.busInfo,
+	Development:state=>state
 }
 
 let getData = (url,callback)=>{
@@ -84,10 +85,9 @@ const actions = {
 				reslove();
 			})
 		}
-		return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
+		return fetch("http://wx.1yhp.net/api/Transport/GetPoints/1").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_STARTCITYLIST,result.Data);
-				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
 			})
 	},
@@ -99,45 +99,36 @@ const actions = {
 			})
 		}
 		else{
-			return fetch("http://wx.1yhp.net/api/Transport/GetPoints").then(result=>result.json())
+			return fetch("http://wx.1yhp.net/api/Transport/GetPoints/2").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
-				commit(types.SET_STARTCITYLIST,result.Data);
 				return result.Data;
 			})
 		}
 	},
 	setResultList({commit,state}){
-		if(state.resultList){
-			// 列表空
-			return new Promise((reslove,reject)=>{
-				reslove();
+		return fetch("http://wx.1yhp.net/api/Transport/GetLines",{
+			method: 'POST',
+			headers: {
+		    'Content-Type': 'application/json'
+		  },
+			body:JSON.stringify({
+				SPointId:state.startCity.Code,
+				EPointId:state.endCity.Code,
+				// SPointId:state.startCity.Code,
+				// EPointId:state.endCity.Code,
+				Date:state.startDate.server
 			})
-		}
-		else{
-			return fetch("http://wx.1yhp.net/api/Transport/GetLines",{
-				method: 'POST',
-				headers: {
-			    'Content-Type': 'application/json'
-			  },
-				body:JSON.stringify({
-					SPointId:"3385299",
-					EPointId:"3385290",
-					// SPointId:state.startCity.Code,
-					// EPointId:state.endCity.Code,
-					Date:state.startDate.server
-				})
-			})
-			.then(result=>result.json())
-			.then(result=>{
-				if(result.Code===204){
-					// 没有更多数据
-					commit(types.SET_RESULTLIST,[]);
-					return;
-				}
-				commit(types.SET_RESULTLIST,result.Data);
-			})
-		}
+		})
+		.then(result=>result.json())
+		.then(result=>{
+			if(result.Code===204){
+				// 没有更多数据
+				commit(types.SET_RESULTLIST,[]);
+				return;
+			}
+			commit(types.SET_RESULTLIST,result.Data);
+		})
 	},
 	setBusInfo({commit,state},data){
 		commit(types.SET_BUSINFO,data);

@@ -1,2 +1,3 @@
 <!--pages/news/news.wxml-->
-<text>pages/news/news.wxml</text>
+<import src="../../wxParse/wxParse.wxml" />
+<template is="wxParse" data="{{wxParseData:html.nodes}}"/>

@@ -13,14 +13,15 @@
 					<!-- <p v-text="busInfo.ShiftNum"></p> -->
 				</div>
 				<div class="center box">
-					<p class="row">
-						{{startDate}}
-						<p v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
+
+					<p class="arrow">
+						<br/>
+						<p class="arrow-message" v-text="busInfo.Route"></p>
 					</p>
 				</div>
 				<div class="end box">
-					<p v-text="busInfo.EndPoint">宁波</p>
-					<p v-text="busInfo.toCityName">宁波</p>
+					<p v-text="busInfo.EndPoint"></p>
+					<!-- <p v-text="busInfo.toCityName"></p> -->
 				</div>
 			</div>
 			<div class="tip-info" @click="openTip">
@@ -118,7 +119,16 @@
 			</div>
 		</div>
 		<!-- 其他信息 -->
-		<!-- <div class="other-info">
+		<div class="other-info">
+			<div class="info">
+				<span class="first">优惠券</span>
+				<span class="center">15元/份</span>
+				<div class="last">
+					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
+				</div>
+			</div>
+		</div>
+		<div class="other-info">
 			<div class="info">
 				<span class="first">汽车乘意险</span>
 				<span class="center">15元/份</span>
@@ -126,7 +136,7 @@
 					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<!-- 提示信息 -->
 		<div class="root-tip-info">
 			<div class="text">
@@ -259,11 +269,15 @@ export default {
 		this.busInfo = this.$store.getters.getBusInfo;
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
-
-		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" - "+this.endCity.Name});
+		
+		let startDate = this.$store.getters.getInfo.startDate;
+		this.$store.commit("CHANGE_HEADER",{
+			isHome:false,
+			Title:startDate.date+" "+startDate.week
+		});
 
 		this.computeAll();
-		console.log(this.formatData(this.busInfo))
+		// console.log(this.formatData(this.busInfo))
 	},
 	computed:{
 		startDate(){
