@@ -76,7 +76,9 @@ export default {
 	},
 	computed:{
 		getHeaderState(){
-			console.log(this.formatData(this.$store.getters.Development));//测试
+			if(this.$store.getters.Development.serverUrl!==""){
+				console.log(this.formatData(this.$store.getters.Development));//测试
+			}
 			return this.$store.state.tickets.HeaderIsHome;
 		},
 		getHeaderTitle(){

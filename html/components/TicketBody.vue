@@ -51,6 +51,15 @@
 			v-model="pickerValue"
 			@confirm="handleConfirm">
 		</mt-datetime-picker> -->
+		<!-- 查询记录 -->
+		<div class="search-record" v-if="localStorage.length!==0">
+			<p>历史搜索</p>
+			<div class="list" v-for="(list,index) in localStorage" v-bind:key="index">
+				<span class="first">{{list.startCity}}</span>
+				<span>{{list.endCity}}</span>
+				<i @click="queryRecord(index)" class="fa fa-search">查询</i>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -82,6 +91,7 @@ export default {
 			endCity:null,
 			startpopupVisible:false,//显示出发选择
 			endpopupVisible:false,//显示到达选择
+			localStorage:null,//本地搜索记录
 			// startCitySlots: [{
 			// 	flex: 1,
 			// 	values: [],
@@ -157,6 +167,12 @@ export default {
 		else{
 			this.startTime.time = this.formatNow(new Date())
 		}
+		
+		// 获取本地数据
+		this.localStorage = this.getLocalStore();
+
+		// 获取位置
+		navigator.geolocation.getCurrentPosition(this.showPosition);
 	},
 	filters:{
 		
@@ -206,6 +222,15 @@ export default {
 	methods:{
 		formatDate(data){
 			return Utils.formatDate(data);
+		},
+		showPosition(position){
+			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
+			Toast({
+				  message: longitude+":"+latitude,
+				  position: 'bottom',
+				  duration: 10000
+				});
+			console.log(position);
 		},
 		GoStartCity(){
 			// if(this.$store.getters.getCityList.startCityList){
@@ -309,6 +334,7 @@ export default {
 			});
 			
 			this.$store.dispatch("setResultList").then((data)=>{
+				this.localStore(this.startCity,this.endCity)
 				Indicator.close();
 				this.$router.push({name:"ticketresult"});
 			}).catch(error=>{
@@ -319,6 +345,53 @@ export default {
 				  duration: 3000
 				});
 			});
+		},
+		// 通过本地的搜索记录查询
+		queryRecord(index){
+			let data = this.getLocalStore()[index];
+
+			this.$store.dispatch("setStartCity",{
+				Name:data.startCity,
+				Code:data.startCode
+			});
+			this.$store.dispatch("setEndCity",{
+				Name:data.endCity,
+				Code:data.endCode
+			});
+			this.query();
+		},
+		//获取储存的搜索数据
+		getLocalStore(){
+			if(window.localStorage.getItem("City")!==null){
+				//之前有数据
+				let oldValue = JSON.parse(window.localStorage.getItem("City"));//获取数据
+				return oldValue;
+			}
+			else{
+				// 第一次储存
+				return [];
+			}
+		},
+		//存储搜索记录
+		localStore(city1,city2){
+			let json = {
+				startCity:city1.Name,
+				startCode:city1.Code,
+				endCity:city2.Name,
+				endCode:city2.Code
+			}
+			let data = this.getLocalStore();
+
+			// 检测是否已有相同的数据路线
+			for(let i=0;i<data.length;i++){
+				if(data[i].startCode===json.startCode 
+					&& data[i].endCode===json.endCode){
+					return ;
+				}
+			}
+			data.push(json);
+
+			window.localStorage.setItem("City",JSON.stringify(data));
 		},
 		onStartValuesChange(picker, values){
 			this.$store.dispatch("setStartCity",{Code:"00000",Name:values[0]});
