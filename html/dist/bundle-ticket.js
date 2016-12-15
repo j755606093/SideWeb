@@ -11222,7 +11222,7 @@
 					reslove();
 				});
 			}
-			return fetch(state.serverUrl + "/api/Transport/GetPoints/1").then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/GetStartPoints").then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				commit(_Type2.default.SET_STARTCITYLIST, result.Data);
@@ -11239,7 +11239,7 @@
 					reslove();
 				});
 			} else {
-				return fetch(state.serverUrl + "/api/Transport/GetPoints/2").then(function (result) {
+				return fetch(state.serverUrl + "/api/Transport/GetEndPoints/" + state.startCity.Code).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					commit(_Type2.default.SET_ENDCITYLIST, result.Data);

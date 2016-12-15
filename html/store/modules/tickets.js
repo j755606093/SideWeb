@@ -87,7 +87,7 @@ const actions = {
 				reslove();
 			})
 		}
-		return fetch(state.serverUrl+"/api/Transport/GetPoints/1").then(result=>result.json())
+		return fetch(state.serverUrl+"/api/Transport/GetStartPoints").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_STARTCITYLIST,result.Data);
 				return result.Data;
@@ -101,7 +101,7 @@ const actions = {
 			})
 		}
 		else{
-			return fetch(state.serverUrl+"/api/Transport/GetPoints/2").then(result=>result.json())
+			return fetch(state.serverUrl+"/api/Transport/GetEndPoints/"+state.startCity.Code).then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
