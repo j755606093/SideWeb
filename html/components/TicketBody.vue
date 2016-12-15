@@ -243,6 +243,12 @@ export default {
 				latitude:latitude,
 				longitude:longitude
 			}).then(data=>{
+				if(!data.Data){
+					//没有数据
+					this.locationLoad = false;//停止界面加载提示
+					this.locationName = "你的附近没有上车点";
+					return ;
+				}
 				this.locationName = data.Data.Name;
 				this.$store.dispatch("setStartCity",{
 					Code:data.Data.Id,
