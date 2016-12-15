@@ -48,6 +48,23 @@ let formatDate = (date) =>{
 }
 
 /**
+ * 返回2016-05-05格式
+ * @param  {[type]} date [description]
+ * @return {[type]}      [description]
+ */
+let formatDateTypeOne = date =>{
+	if(typeof date==="string"){
+		date = new Date(date);
+	}
+	let year = date.getYear()-100+2000;
+	let month = date.getMonth()+1;
+	let day = date.getDate();
+
+	// return month+"月"+day+"日";
+	return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)
+}
+
+/**
  * 格式化日期格式:10-07 13:25
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
@@ -159,5 +176,6 @@ export default {
 	formatWeek:formatWeek,
 	formatJsonData:formatJsonData,
 	IdentityCodeValid:IdentityCodeValid,
-	isChinaName:isChinaName
+	isChinaName:isChinaName,
+	formatDateTypeOne:formatDateTypeOne
 }

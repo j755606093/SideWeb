@@ -192,11 +192,13 @@ input {
           align-items: flex-start; }
       .ticket-info .address-info .start p {
         font-size: 1.8rem;
-        color: #fff;
-        line-height: 25px; }
-        .ticket-info .address-info .start p:first-child {
+        color: #fff; }
+        .ticket-info .address-info .start p.first {
           font-size: 1.2rem; }
-        .ticket-info .address-info .start p:last-child {
+        .ticket-info .address-info .start p.center {
+          font-size: 1.8rem;
+          width: 100%; }
+        .ticket-info .address-info .start p.last {
           font-size: 1.2rem; }
     .ticket-info .address-info .center {
       font-size: 1.5rem;
@@ -207,14 +209,15 @@ input {
         color: #111111;
         position: relative;
         width: 100%;
-        height: 0; }
+        height: 0;
+        line-height: 0; }
         .ticket-info .address-info .center p.arrow::after {
           width: 80%;
           height: 10px;
           background-color: #fff;
           position: absolute;
           left: 0;
-          bottom: -35px;
+          bottom: -20px;
           content: ""; }
         .ticket-info .address-info .center p.arrow::before {
           width: 0;
@@ -222,18 +225,22 @@ input {
           border: 10px solid #fff;
           position: absolute;
           right: 5px;
-          bottom: -35px;
+          bottom: -20px;
           content: "";
           border: 10px solid #fff;
           border-color: transparent transparent #fff #fff; }
       .ticket-info .address-info .center p.arrow-message {
-        color: #fff;
-        margin-top: -10px; }
+        color: #fff; }
+      .ticket-info .address-info .center p.first {
+        color: #fff; }
     .ticket-info .address-info .end {
       -ms-flex-align: end;
-          align-items: flex-end; }
+          align-items: flex-end;
+      -ms-flex-pack: center;
+          justify-content: center; }
       .ticket-info .address-info .end p {
-        color: #fff; }
+        color: #fff;
+        font-size: 1.2rem; }
         .ticket-info .address-info .end p:first-child {
           font-size: 1.8rem; }
   .ticket-info .tip-info {
@@ -245,9 +252,13 @@ input {
     font-size: 1.2rem; }
     .ticket-info .tip-info p {
       padding: 0 5px;
+      display: inline-block;
       color: #eaeaea; }
       .ticket-info .tip-info p i {
         margin-left: 5px; }
+    .ticket-info .tip-info span {
+      float: right;
+      color: #fff; }
 
 .people-info {
   width: 100%;
@@ -269,7 +280,8 @@ input {
       color: #5e5e5e; }
     .people-info .info-head span:first-child {
       -ms-flex: 0.3;
-          flex: 0.3; }
+          flex: 0.3;
+      font-size: 1.4rem; }
     .people-info .info-head span:last-child {
       -ms-flex: 0.7;
           flex: 0.7;

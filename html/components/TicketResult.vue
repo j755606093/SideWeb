@@ -2,14 +2,14 @@
 	<div class="result">
 		<!-- 时间显示 -->
 		<div class="date-control">
-			<span class="font-blue">前一天</span>
+			<span class="font-blue" @click="gobackdate">前一天</span>
 			<span v-text="startDate.date+' '+startDate.week"></span>
-			<span class="font-blue">后一天</span>
+			<span class="font-blue"@click="gofrontdate">后一天</span>
 		</div>
 		<!-- 列表头部 -->
 		<div class="data-set">
 			<span :class="{'set':true,active:isShowTime}" @click="setShowTime"><i class="fa fa-glass"></i>时段</span>
-			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-bus"></i>运输公司</span>
+			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-bus"></i>路线信息</span>
 			<span :class="{'set':true,active:isShowList}" @click="sortTime"><i :class="['fa',arrow]"></i>票价</span>
 		</div>
 		<div class="result-list">
@@ -22,29 +22,38 @@
 						<p>
 							<span class="brand">始</span>{{item.StartPoint}}
 						</p>
+						<!-- 点击查看路线 -->
 						<p class="type" v-on:click.stop="showCompanyDeatil(index,$event)">
-							<i class="fa fa-bus"></i>{{item.CoName}}
+							<i class="fa fa-location-arrow"></i>{{item.Route}}
 							<i class="fa fa-caret-down"></i>
 						</p>
+						<div class="show-router" v-show="routerDetailShow===index">
+							<ul class="router">
+								<span>始点:</span>
+								<li :class="{active:list.NodeType===1}" v-for="list in item.SPoint" v-bind:key="index">{{list.Point}}</li>
+								<span>终点:</span>
+								<li :class="{active:list.NodeType===2}" v-for="list in item.EPoint" v-bind:key="index">{{list.Point}}</li>
+							</ul>
+						</div>
 						<p>
 							<span class="brand">终</span>{{item.EndPoint}}
 						</p>
 					</div>
 					<div class="ticket-type">
 						<p class="money" v-text="item.Price+'元'"></p>
-						<p class="number" v-text="item.Route"></p>
+						<p class="number" v-text="item.CoName"></p>
 						<p class="type" v-text="item.TicketNum+'张余票'"></p>
 					</div>
 				</div>
 			</transition-group>
 			<!-- 提示公司详情 -->
-			<mt-popup
+			<!-- <mt-popup
 			  v-model="companyDetailShow"
 			  class="popup-visible"
 			  popup-transition="popup-fade">
 			  <p class="popup-header">{{showCompanyInfo.CoName}}</p>
 
-			</mt-popup>
+			</mt-popup> -->
 			<!-- 刷选列表数据 -->
 			<div class="change-set" v-show="!isShowList">
 				<!-- 时间段 -->
@@ -90,6 +99,7 @@
 <script type="text/babel">
 import { mapGetters } from 'vuex'
 import Utils from "../Utils/utils";
+import { Indicator,Toast } from 'mint-ui';
 const _ = require("underscore");
 
 export default {
@@ -97,14 +107,12 @@ export default {
 		return {
 			startCity:"",
 			endCity:"",
-			startDate:this.$store.getters.getInfo.startDate,
-			getResultList:this.$store.getters.getResultList,
-			ResultBackUp:this.$store.getters.getResultList,//列表备份
+			getResultList:this.$store.getters.getResultList,//列表备份
 			isShowList:true,
 			isShowTime:false,
 			isShowPosition:false,
 			showNoData:false,
-			companyDetailShow:false,//显示公司信息
+			routerDetailShow:false,//显示公司信息
 			showCompanyInfo:{},//显示的公司信息
 			arrow:"fa-caret-down",//默认票价排序图标
 			TimeOptions:[
@@ -166,21 +174,7 @@ export default {
 		//设置头部标题
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
 		
-		if(this.$store.getters.getResultList.length===0){
-			// 没有数据
-			this.showNoData = true;
-		}
-		else{
-			this.showNoData = false;
-			// 准备运输公司信息
-			this.getResultList.map((item)=>{
-				this.PositionOptions.push({
-					label:item.CoName,
-					value:item.CoName,
-					disabled:false
-				})
-			})
-		}
+		this.refresh();
 	},
 	computed:{
 		getStartCity(){
@@ -251,6 +245,12 @@ export default {
 			get(){
 				return this.PositionOptionsValue;
 			}
+		},
+		startDate(){
+			return this.$store.getters.getInfo.startDate;
+		},
+		ResultBackUp(){
+			return this.$store.getters.getResultList;
 		}
 	},
 	methods:{
@@ -271,6 +271,29 @@ export default {
 		setShowPosition(){
 			this.HideAll();
 			this.isShowPosition = true;
+		},
+		refresh(){
+			if(this.$store.getters.getResultList.length===0){
+				// 没有数据
+				this.showNoData = true;
+				this.getResultList = [];
+			}
+			else{
+				this.showNoData = false;
+				this.PositionOptions = [{
+					label: '不限',
+			    value: '不限',
+			    disabled: false
+				}];//清空先
+				// 准备运输公司信息
+				this.getResultList.map((item)=>{
+					this.PositionOptions.push({
+						label:item.CoName,
+						value:item.CoName,
+						disabled:false
+					})
+				})
+			}
 		},
 		queryTime(){
 			//查找特定时间的车
@@ -322,7 +345,7 @@ export default {
 			// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
 			this.HideAll();
 			this.isShowList = true;//显示列表
-
+			// console.log(this.getResultList)
 			let filter = this.PositionOptionsValue.slice(1);
 			this.getResultList = _.filter(this.ResultBackUp,(item)=>{
 				let n =false;
@@ -363,10 +386,83 @@ export default {
 			this.getResultList = data;
 		},
 		showCompanyDeatil(index,event){
-			//显示公司详情
-			this.companyDetailShow = true;
-			this.showCompanyInfo = this.getResultList[index];
+			//显示路线详情
+			if(index===this.routerDetailShow){
+				this.routerDetailShow = -1;
+			}
+			else{
+				this.routerDetailShow = index;
+			}
+			
+			// this.showCompanyInfo = this.getResultList[index];
 			// console.log(index)
+		},
+		gobackdate(){
+			//前一天的车票信息
+			let now =new Date(this.$store.getters.getInfo.startDate.server).getTime();
+			let back = new Date(now - 1000*60*60*24);//昨天
+			// 检查日期
+			if(Date.now()>now){
+				// 当前日期大于昨天的日期(不允许查过期的车票)
+				Toast({
+				  message: "无法查询过期的信息...",
+				  position: 'bottom',
+				  duration: 3000
+				});
+				return;
+			}
+			//开始加载数据
+			Indicator.open({
+				text: '加载中...',
+				spinnerType: 'double-bounce'
+			});
+
+			this.$store.dispatch("setStartDate",{
+				date:Utils.formatDateTypeOne(back),
+				week:Utils.formatWeek(back),
+				server:back,//设置时间为昨天
+			});
+
+			this.$store.dispatch("setResultList").then((data)=>{
+				Indicator.close();
+				this.getResultList = data;
+				this.refresh();
+			}).catch(error=>{
+				Indicator.close();
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
+			});
+		},
+		gofrontdate(){
+			//后一天的车票信息
+			Indicator.open({
+				text: '加载中...',
+				spinnerType: 'double-bounce'
+			});
+
+			let now =new Date(this.$store.getters.getInfo.startDate.server).getTime();
+			let back = new Date(now + 1000*60*60*24);//昨天
+			this.$store.dispatch("setStartDate",{
+				date:Utils.formatDateTypeOne(back),
+				week:Utils.formatWeek(back),
+				server:back,//设置时间为昨天
+			});
+
+			this.$store.dispatch("setResultList").then((data)=>{
+				Indicator.close();
+				this.getResultList = data;
+				this.refresh();
+			}).catch(error=>{
+				Indicator.close();
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
+			});
 		}
 	}
 }

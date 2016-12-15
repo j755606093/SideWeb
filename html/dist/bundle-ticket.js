@@ -80,19 +80,19 @@
 
 	var _TicketBody2 = _interopRequireDefault(_TicketBody);
 
-	var _TicketStartCity = __webpack_require__(154);
+	var _TicketStartCity = __webpack_require__(274);
 
 	var _TicketStartCity2 = _interopRequireDefault(_TicketStartCity);
 
-	var _TicketEndCity = __webpack_require__(160);
+	var _TicketEndCity = __webpack_require__(280);
 
 	var _TicketEndCity2 = _interopRequireDefault(_TicketEndCity);
 
-	var _TicketResult = __webpack_require__(165);
+	var _TicketResult = __webpack_require__(285);
 
 	var _TicketResult2 = _interopRequireDefault(_TicketResult);
 
-	var _TicketPay = __webpack_require__(171);
+	var _TicketPay = __webpack_require__(291);
 
 	var _TicketPay2 = _interopRequireDefault(_TicketPay);
 
@@ -101,7 +101,7 @@
 	//导入状态库
 	_vue2.default.use(_mintUi2.default);
 	_vue2.default.use(_vuex2.default);
-	_vue2.default.use(__webpack_require__(177)); //引用ajax库
+	_vue2.default.use(__webpack_require__(297)); //引用ajax库
 	_vue2.default.use(_vueRouter2.default);
 
 	var routes = [{
@@ -11090,6 +11090,10 @@
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+	var _assign = __webpack_require__(298);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
 	var _stringify = __webpack_require__(29);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
@@ -11135,7 +11139,8 @@
 
 		resultList: null, //结果
 
-		busInfo: null };
+		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
+		serverUrl: "http://wx.1yhp.net" };
 
 	// getters,获取数据
 	var getters = {
@@ -11216,7 +11221,7 @@
 					reslove();
 				});
 			}
-			return fetch("http://wx.1yhp.net/api/Transport/GetPoints/1").then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/GetPoints/1").then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				commit(_Type2.default.SET_STARTCITYLIST, result.Data);
@@ -11233,7 +11238,7 @@
 					reslove();
 				});
 			} else {
-				return fetch("http://wx.1yhp.net/api/Transport/GetPoints/2").then(function (result) {
+				return fetch(state.serverUrl + "/api/Transport/GetPoints/2").then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					commit(_Type2.default.SET_ENDCITYLIST, result.Data);
@@ -11245,7 +11250,7 @@
 			var commit = _ref7.commit,
 			    state = _ref7.state;
 
-			return fetch("http://wx.1yhp.net/api/Transport/GetLines", {
+			return fetch(state.serverUrl + "/api/Transport/GetLines", {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -11263,9 +11268,10 @@
 				if (result.Code === 204) {
 					// 没有更多数据
 					commit(_Type2.default.SET_RESULTLIST, []);
-					return;
+					return [];
 				}
 				commit(_Type2.default.SET_RESULTLIST, result.Data);
+				return result.Data;
 			});
 		},
 		setBusInfo: function setBusInfo(_ref8, data) {
@@ -11279,7 +11285,7 @@
 			    state = _ref9.state;
 
 			// 微信付款
-			return fetch("http://wx.1yhp.net/api/Transport/GenerateOrderInfo", {
+			return fetch(state.serverUrl + "/api/Transport/GenerateOrderInfo", {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -11309,7 +11315,8 @@
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_ENDCITY, function (state, data) {
 		state.endCity = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTDATE, function (state, data) {
-		state.startDate = data;
+		var newData = (0, _assign2.default)({}, state.startDate, data);
+		state.startDate = newData;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTCITYLIST, function (state, data) {
 		state.startCityList = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_ENDCITYLIST, function (state, data) {
@@ -28261,6 +28268,23 @@
 	};
 
 	/**
+	 * 返回2016-05-05格式
+	 * @param  {[type]} date [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatDateTypeOne = function formatDateTypeOne(date) {
+		if (typeof date === "string") {
+			date = new Date(date);
+		}
+		var year = date.getYear() - 100 + 2000;
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+
+		// return month+"月"+day+"日";
+		return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
+	};
+
+	/**
 	 * 格式化日期格式:10-07 13:25
 	 * @param  {[type]} data [description]
 	 * @return {[type]}      [description]
@@ -28371,7 +28395,8 @@
 		formatWeek: formatWeek,
 		formatJsonData: formatJsonData,
 		IdentityCodeValid: IdentityCodeValid,
-		isChinaName: isChinaName
+		isChinaName: isChinaName,
+		formatDateTypeOne: formatDateTypeOne
 	};
 
 /***/ },
@@ -28863,7 +28888,7 @@
 	__vue_exports__ = __webpack_require__(152);
 
 	/* template */
-	var __vue_template__ = __webpack_require__(153);
+	var __vue_template__ = __webpack_require__(273);
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
 	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
 	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
@@ -28968,7 +28993,7 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _vueDatepicker = __webpack_require__(178);
+	var _vueDatepicker = __webpack_require__(153);
 
 	var _vueDatepicker2 = _interopRequireDefault(_vueDatepicker);
 
@@ -29254,7 +29279,7 @@
 				var day = date.getDate();
 
 				// return month+"月"+day+"日";
-				return year + "-" + month + "-" + (day > 9 ? day : "0" + day);
+				return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
 			},
 			query: function query() {
 				var _this3 = this;
@@ -29302,5180 +29327,17 @@
 /* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "ticketbody"
-	  }, [_vm._h('div', {
-	    staticClass: "go block",
-	    on: {
-	      "click": _vm.GoStartCity
-	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
-	    staticClass: "to block",
-	    on: {
-	      "click": _vm.GoEndCity
-	    }
-	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
-	    staticClass: "data",
-	    on: {
-	      "click": _vm.openPicker
-	    }
-	  }, [_vm._m(2), " ", " ", _vm._h('date-picker', {
-	    attrs: {
-	      "date": _vm.startTime,
-	      "option": _vm.option,
-	      "limit": _vm.limit
-	    }
-	  }), " ", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.showWeek)
-	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "query"
-	  }, [_vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.query
-	    }
-	  }, ["查询"])]), " ", " ", " ", " ", " ", " "])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-location-arrow"
-	  }), "出发点"])
-	},function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-location-arrow"
-	  }), "到达点"])
-	},function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-calendar"
-	  }), "出发日期"])
-	}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-17660273", module.exports)
-	  }
-	}
-
-/***/ },
-/* 154 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _keys = __webpack_require__(108);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	var _typeof2 = __webpack_require__(112);
-
-	var _typeof3 = _interopRequireDefault(_typeof2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var __vue_exports__, __vue_options__;
-	var __vue_styles__ = {};
-
-	/* styles */
-	__webpack_require__(155);
-
-	/* script */
-	__vue_exports__ = __webpack_require__(157);
-
-	/* template */
-	var __vue_template__ = __webpack_require__(159);
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
-	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
-	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
-	    return key !== "default" && key !== "__esModule";
-	  })) {
-	    console.error("named exports are not supported in *.vue files.");
-	  }
-	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options;
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketStartCity.vue";
-	__vue_options__.render = __vue_template__.render;
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
-
-	/* hot reload */
-	if (false) {
-	  (function () {
-	    var hotAPI = require("vue-hot-reload-api");
-	    hotAPI.install(require("vue"), false);
-	    if (!hotAPI.compatible) return;
-	    module.hot.accept();
-	    if (!module.hot.data) {
-	      hotAPI.createRecord("data-v-55a7ad28", __vue_options__);
-	    } else {
-	      hotAPI.reload("data-v-55a7ad28", __vue_options__);
-	    }
-	  })();
-	}
-	if (__vue_options__.functional) {
-	  console.error("[vue-loader] TicketStartCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
-	}
-
-	module.exports = __vue_exports__;
-
-/***/ },
-/* 155 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(156);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(134)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 156 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 157 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _vuex = __webpack_require__(3);
-
-	var _utils = __webpack_require__(136);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _mintUi = __webpack_require__(82);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ = __webpack_require__(158); //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-		data: function data() {
-			return {
-				startcity: "",
-				setStartCityList: null,
-				startpopupVisible: false, //显示出发选择
-				startCitySlots: [{
-					flex: 1,
-					values: [1, 2, 3, 4, 5],
-					className: 'startcity'
-				}]
-			};
-		},
-		created: function created() {
-			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
-
-			if (!this.$store.state.tickets.startCityList) {
-				// 提示加载中
-				_mintUi.Indicator.open({
-					text: '加载中...',
-					spinnerType: 'double-bounce'
-				});
-				this.$store.dispatch("setStartCityList").then(function (data) {
-					_mintUi.Indicator.close();
-				});
-			}
-		},
-
-		computed: {
-			setStartCityList: function setStartCityList() {
-				return this.$store.state.tickets.startCityList;
-			}
-		},
-		watch: {
-			// startpopupVisible(status){
-			// 	if(status===false){
-			// 		// 说明已经选择完了
-			// 		this.$router.go(-1);
-			// 	}
-			// }
-		},
-		methods: {
-			getStartCity: function getStartCity(code, name) {
-				this.startcity = name;
-				// if(station.length===0){
-				// 	this.$store.dispatch("setStartCity",{
-				// 		Code:code,
-				// 		Name:name,
-				// 		Station:"",//空的站台
-				// 	});
-				// 	this.$router.go(-1);
-				// }
-				// else{
-				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
-				// 		return item.Name;
-				// 	});
-
-				// 	this.startpopupVisible = true;
-				// }
-				this.$store.dispatch("setStartCity", {
-					Code: code,
-					Name: name
-				});
-				this.$router.go(-1);
-			},
-			onStartValuesChange: function onStartValuesChange(picker, values) {
-				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
-			},
-			noData: function noData() {
-				this.startpopupVisible = false;
-			},
-			yesData: function yesData() {
-				this.$router.go(-1);
-			}
-		}
-	};
-
-/***/ },
-/* 158 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
-	//     http://underscorejs.org
-	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	//     Underscore may be freely distributed under the MIT license.
-
-	(function() {
-
-	  // Baseline setup
-	  // --------------
-
-	  // Establish the root object, `window` in the browser, or `exports` on the server.
-	  var root = this;
-
-	  // Save the previous value of the `_` variable.
-	  var previousUnderscore = root._;
-
-	  // Save bytes in the minified (but not gzipped) version:
-	  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
-
-	  // Create quick reference variables for speed access to core prototypes.
-	  var
-	    push             = ArrayProto.push,
-	    slice            = ArrayProto.slice,
-	    toString         = ObjProto.toString,
-	    hasOwnProperty   = ObjProto.hasOwnProperty;
-
-	  // All **ECMAScript 5** native function implementations that we hope to use
-	  // are declared here.
-	  var
-	    nativeIsArray      = Array.isArray,
-	    nativeKeys         = Object.keys,
-	    nativeBind         = FuncProto.bind,
-	    nativeCreate       = Object.create;
-
-	  // Naked function reference for surrogate-prototype-swapping.
-	  var Ctor = function(){};
-
-	  // Create a safe reference to the Underscore object for use below.
-	  var _ = function(obj) {
-	    if (obj instanceof _) return obj;
-	    if (!(this instanceof _)) return new _(obj);
-	    this._wrapped = obj;
-	  };
-
-	  // Export the Underscore object for **Node.js**, with
-	  // backwards-compatibility for the old `require()` API. If we're in
-	  // the browser, add `_` as a global object.
-	  if (true) {
-	    if (typeof module !== 'undefined' && module.exports) {
-	      exports = module.exports = _;
-	    }
-	    exports._ = _;
-	  } else {
-	    root._ = _;
-	  }
-
-	  // Current version.
-	  _.VERSION = '1.8.3';
-
-	  // Internal function that returns an efficient (for current engines) version
-	  // of the passed-in callback, to be repeatedly applied in other Underscore
-	  // functions.
-	  var optimizeCb = function(func, context, argCount) {
-	    if (context === void 0) return func;
-	    switch (argCount == null ? 3 : argCount) {
-	      case 1: return function(value) {
-	        return func.call(context, value);
-	      };
-	      case 2: return function(value, other) {
-	        return func.call(context, value, other);
-	      };
-	      case 3: return function(value, index, collection) {
-	        return func.call(context, value, index, collection);
-	      };
-	      case 4: return function(accumulator, value, index, collection) {
-	        return func.call(context, accumulator, value, index, collection);
-	      };
-	    }
-	    return function() {
-	      return func.apply(context, arguments);
-	    };
-	  };
-
-	  // A mostly-internal function to generate callbacks that can be applied
-	  // to each element in a collection, returning the desired result — either
-	  // identity, an arbitrary callback, a property matcher, or a property accessor.
-	  var cb = function(value, context, argCount) {
-	    if (value == null) return _.identity;
-	    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-	    if (_.isObject(value)) return _.matcher(value);
-	    return _.property(value);
-	  };
-	  _.iteratee = function(value, context) {
-	    return cb(value, context, Infinity);
-	  };
-
-	  // An internal function for creating assigner functions.
-	  var createAssigner = function(keysFunc, undefinedOnly) {
-	    return function(obj) {
-	      var length = arguments.length;
-	      if (length < 2 || obj == null) return obj;
-	      for (var index = 1; index < length; index++) {
-	        var source = arguments[index],
-	            keys = keysFunc(source),
-	            l = keys.length;
-	        for (var i = 0; i < l; i++) {
-	          var key = keys[i];
-	          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
-	        }
-	      }
-	      return obj;
-	    };
-	  };
-
-	  // An internal function for creating a new object that inherits from another.
-	  var baseCreate = function(prototype) {
-	    if (!_.isObject(prototype)) return {};
-	    if (nativeCreate) return nativeCreate(prototype);
-	    Ctor.prototype = prototype;
-	    var result = new Ctor;
-	    Ctor.prototype = null;
-	    return result;
-	  };
-
-	  var property = function(key) {
-	    return function(obj) {
-	      return obj == null ? void 0 : obj[key];
-	    };
-	  };
-
-	  // Helper for collection methods to determine whether a collection
-	  // should be iterated as an array or as an object
-	  // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
-	  // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
-	  var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-	  var getLength = property('length');
-	  var isArrayLike = function(collection) {
-	    var length = getLength(collection);
-	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-	  };
-
-	  // Collection Functions
-	  // --------------------
-
-	  // The cornerstone, an `each` implementation, aka `forEach`.
-	  // Handles raw objects in addition to array-likes. Treats all
-	  // sparse array-likes as if they were dense.
-	  _.each = _.forEach = function(obj, iteratee, context) {
-	    iteratee = optimizeCb(iteratee, context);
-	    var i, length;
-	    if (isArrayLike(obj)) {
-	      for (i = 0, length = obj.length; i < length; i++) {
-	        iteratee(obj[i], i, obj);
-	      }
-	    } else {
-	      var keys = _.keys(obj);
-	      for (i = 0, length = keys.length; i < length; i++) {
-	        iteratee(obj[keys[i]], keys[i], obj);
-	      }
-	    }
-	    return obj;
-	  };
-
-	  // Return the results of applying the iteratee to each element.
-	  _.map = _.collect = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length,
-	        results = Array(length);
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      results[index] = iteratee(obj[currentKey], currentKey, obj);
-	    }
-	    return results;
-	  };
-
-	  // Create a reducing function iterating left or right.
-	  function createReduce(dir) {
-	    // Optimized iterator function as using arguments.length
-	    // in the main function will deoptimize the, see #1991.
-	    function iterator(obj, iteratee, memo, keys, index, length) {
-	      for (; index >= 0 && index < length; index += dir) {
-	        var currentKey = keys ? keys[index] : index;
-	        memo = iteratee(memo, obj[currentKey], currentKey, obj);
-	      }
-	      return memo;
-	    }
-
-	    return function(obj, iteratee, memo, context) {
-	      iteratee = optimizeCb(iteratee, context, 4);
-	      var keys = !isArrayLike(obj) && _.keys(obj),
-	          length = (keys || obj).length,
-	          index = dir > 0 ? 0 : length - 1;
-	      // Determine the initial value if none is provided.
-	      if (arguments.length < 3) {
-	        memo = obj[keys ? keys[index] : index];
-	        index += dir;
-	      }
-	      return iterator(obj, iteratee, memo, keys, index, length);
-	    };
-	  }
-
-	  // **Reduce** builds up a single result from a list of values, aka `inject`,
-	  // or `foldl`.
-	  _.reduce = _.foldl = _.inject = createReduce(1);
-
-	  // The right-associative version of reduce, also known as `foldr`.
-	  _.reduceRight = _.foldr = createReduce(-1);
-
-	  // Return the first value which passes a truth test. Aliased as `detect`.
-	  _.find = _.detect = function(obj, predicate, context) {
-	    var key;
-	    if (isArrayLike(obj)) {
-	      key = _.findIndex(obj, predicate, context);
-	    } else {
-	      key = _.findKey(obj, predicate, context);
-	    }
-	    if (key !== void 0 && key !== -1) return obj[key];
-	  };
-
-	  // Return all the elements that pass a truth test.
-	  // Aliased as `select`.
-	  _.filter = _.select = function(obj, predicate, context) {
-	    var results = [];
-	    predicate = cb(predicate, context);
-	    _.each(obj, function(value, index, list) {
-	      if (predicate(value, index, list)) results.push(value);
-	    });
-	    return results;
-	  };
-
-	  // Return all the elements for which a truth test fails.
-	  _.reject = function(obj, predicate, context) {
-	    return _.filter(obj, _.negate(cb(predicate)), context);
-	  };
-
-	  // Determine whether all of the elements match a truth test.
-	  // Aliased as `all`.
-	  _.every = _.all = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (!predicate(obj[currentKey], currentKey, obj)) return false;
-	    }
-	    return true;
-	  };
-
-	  // Determine if at least one element in the object matches a truth test.
-	  // Aliased as `any`.
-	  _.some = _.any = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (predicate(obj[currentKey], currentKey, obj)) return true;
-	    }
-	    return false;
-	  };
-
-	  // Determine if the array or object contains a given item (using `===`).
-	  // Aliased as `includes` and `include`.
-	  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
-	    if (!isArrayLike(obj)) obj = _.values(obj);
-	    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
-	    return _.indexOf(obj, item, fromIndex) >= 0;
-	  };
-
-	  // Invoke a method (with arguments) on every item in a collection.
-	  _.invoke = function(obj, method) {
-	    var args = slice.call(arguments, 2);
-	    var isFunc = _.isFunction(method);
-	    return _.map(obj, function(value) {
-	      var func = isFunc ? method : value[method];
-	      return func == null ? func : func.apply(value, args);
-	    });
-	  };
-
-	  // Convenience version of a common use case of `map`: fetching a property.
-	  _.pluck = function(obj, key) {
-	    return _.map(obj, _.property(key));
-	  };
-
-	  // Convenience version of a common use case of `filter`: selecting only objects
-	  // containing specific `key:value` pairs.
-	  _.where = function(obj, attrs) {
-	    return _.filter(obj, _.matcher(attrs));
-	  };
-
-	  // Convenience version of a common use case of `find`: getting the first object
-	  // containing specific `key:value` pairs.
-	  _.findWhere = function(obj, attrs) {
-	    return _.find(obj, _.matcher(attrs));
-	  };
-
-	  // Return the maximum element (or element-based computation).
-	  _.max = function(obj, iteratee, context) {
-	    var result = -Infinity, lastComputed = -Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value > result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-
-	  // Return the minimum element (or element-based computation).
-	  _.min = function(obj, iteratee, context) {
-	    var result = Infinity, lastComputed = Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value < result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed < lastComputed || computed === Infinity && result === Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-
-	  // Shuffle a collection, using the modern version of the
-	  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
-	  _.shuffle = function(obj) {
-	    var set = isArrayLike(obj) ? obj : _.values(obj);
-	    var length = set.length;
-	    var shuffled = Array(length);
-	    for (var index = 0, rand; index < length; index++) {
-	      rand = _.random(0, index);
-	      if (rand !== index) shuffled[index] = shuffled[rand];
-	      shuffled[rand] = set[index];
-	    }
-	    return shuffled;
-	  };
-
-	  // Sample **n** random values from a collection.
-	  // If **n** is not specified, returns a single random element.
-	  // The internal `guard` argument allows it to work with `map`.
-	  _.sample = function(obj, n, guard) {
-	    if (n == null || guard) {
-	      if (!isArrayLike(obj)) obj = _.values(obj);
-	      return obj[_.random(obj.length - 1)];
-	    }
-	    return _.shuffle(obj).slice(0, Math.max(0, n));
-	  };
-
-	  // Sort the object's values by a criterion produced by an iteratee.
-	  _.sortBy = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    return _.pluck(_.map(obj, function(value, index, list) {
-	      return {
-	        value: value,
-	        index: index,
-	        criteria: iteratee(value, index, list)
-	      };
-	    }).sort(function(left, right) {
-	      var a = left.criteria;
-	      var b = right.criteria;
-	      if (a !== b) {
-	        if (a > b || a === void 0) return 1;
-	        if (a < b || b === void 0) return -1;
-	      }
-	      return left.index - right.index;
-	    }), 'value');
-	  };
-
-	  // An internal function used for aggregate "group by" operations.
-	  var group = function(behavior) {
-	    return function(obj, iteratee, context) {
-	      var result = {};
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index) {
-	        var key = iteratee(value, index, obj);
-	        behavior(result, value, key);
-	      });
-	      return result;
-	    };
-	  };
-
-	  // Groups the object's values by a criterion. Pass either a string attribute
-	  // to group by, or a function that returns the criterion.
-	  _.groupBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
-	  });
-
-	  // Indexes the object's values by a criterion, similar to `groupBy`, but for
-	  // when you know that your index values will be unique.
-	  _.indexBy = group(function(result, value, key) {
-	    result[key] = value;
-	  });
-
-	  // Counts instances of an object that group by a certain criterion. Pass
-	  // either a string attribute to count by, or a function that returns the
-	  // criterion.
-	  _.countBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key]++; else result[key] = 1;
-	  });
-
-	  // Safely create a real, live array from anything iterable.
-	  _.toArray = function(obj) {
-	    if (!obj) return [];
-	    if (_.isArray(obj)) return slice.call(obj);
-	    if (isArrayLike(obj)) return _.map(obj, _.identity);
-	    return _.values(obj);
-	  };
-
-	  // Return the number of elements in an object.
-	  _.size = function(obj) {
-	    if (obj == null) return 0;
-	    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
-	  };
-
-	  // Split a collection into two arrays: one whose elements all satisfy the given
-	  // predicate, and one whose elements all do not satisfy the predicate.
-	  _.partition = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var pass = [], fail = [];
-	    _.each(obj, function(value, key, obj) {
-	      (predicate(value, key, obj) ? pass : fail).push(value);
-	    });
-	    return [pass, fail];
-	  };
-
-	  // Array Functions
-	  // ---------------
-
-	  // Get the first element of an array. Passing **n** will return the first N
-	  // values in the array. Aliased as `head` and `take`. The **guard** check
-	  // allows it to work with `_.map`.
-	  _.first = _.head = _.take = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[0];
-	    return _.initial(array, array.length - n);
-	  };
-
-	  // Returns everything but the last entry of the array. Especially useful on
-	  // the arguments object. Passing **n** will return all the values in
-	  // the array, excluding the last N.
-	  _.initial = function(array, n, guard) {
-	    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
-	  };
-
-	  // Get the last element of an array. Passing **n** will return the last N
-	  // values in the array.
-	  _.last = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[array.length - 1];
-	    return _.rest(array, Math.max(0, array.length - n));
-	  };
-
-	  // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
-	  // Especially useful on the arguments object. Passing an **n** will return
-	  // the rest N values in the array.
-	  _.rest = _.tail = _.drop = function(array, n, guard) {
-	    return slice.call(array, n == null || guard ? 1 : n);
-	  };
-
-	  // Trim out all falsy values from an array.
-	  _.compact = function(array) {
-	    return _.filter(array, _.identity);
-	  };
-
-	  // Internal implementation of a recursive `flatten` function.
-	  var flatten = function(input, shallow, strict, startIndex) {
-	    var output = [], idx = 0;
-	    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
-	      var value = input[i];
-	      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
-	        //flatten current level of array or arguments object
-	        if (!shallow) value = flatten(value, shallow, strict);
-	        var j = 0, len = value.length;
-	        output.length += len;
-	        while (j < len) {
-	          output[idx++] = value[j++];
-	        }
-	      } else if (!strict) {
-	        output[idx++] = value;
-	      }
-	    }
-	    return output;
-	  };
-
-	  // Flatten out an array, either recursively (by default), or just one level.
-	  _.flatten = function(array, shallow) {
-	    return flatten(array, shallow, false);
-	  };
-
-	  // Return a version of the array that does not contain the specified value(s).
-	  _.without = function(array) {
-	    return _.difference(array, slice.call(arguments, 1));
-	  };
-
-	  // Produce a duplicate-free version of the array. If the array has already
-	  // been sorted, you have the option of using a faster algorithm.
-	  // Aliased as `unique`.
-	  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
-	    if (!_.isBoolean(isSorted)) {
-	      context = iteratee;
-	      iteratee = isSorted;
-	      isSorted = false;
-	    }
-	    if (iteratee != null) iteratee = cb(iteratee, context);
-	    var result = [];
-	    var seen = [];
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var value = array[i],
-	          computed = iteratee ? iteratee(value, i, array) : value;
-	      if (isSorted) {
-	        if (!i || seen !== computed) result.push(value);
-	        seen = computed;
-	      } else if (iteratee) {
-	        if (!_.contains(seen, computed)) {
-	          seen.push(computed);
-	          result.push(value);
-	        }
-	      } else if (!_.contains(result, value)) {
-	        result.push(value);
-	      }
-	    }
-	    return result;
-	  };
-
-	  // Produce an array that contains the union: each distinct element from all of
-	  // the passed-in arrays.
-	  _.union = function() {
-	    return _.uniq(flatten(arguments, true, true));
-	  };
-
-	  // Produce an array that contains every item shared between all the
-	  // passed-in arrays.
-	  _.intersection = function(array) {
-	    var result = [];
-	    var argsLength = arguments.length;
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var item = array[i];
-	      if (_.contains(result, item)) continue;
-	      for (var j = 1; j < argsLength; j++) {
-	        if (!_.contains(arguments[j], item)) break;
-	      }
-	      if (j === argsLength) result.push(item);
-	    }
-	    return result;
-	  };
-
-	  // Take the difference between one array and a number of other arrays.
-	  // Only the elements present in just the first array will remain.
-	  _.difference = function(array) {
-	    var rest = flatten(arguments, true, true, 1);
-	    return _.filter(array, function(value){
-	      return !_.contains(rest, value);
-	    });
-	  };
-
-	  // Zip together multiple lists into a single array -- elements that share
-	  // an index go together.
-	  _.zip = function() {
-	    return _.unzip(arguments);
-	  };
-
-	  // Complement of _.zip. Unzip accepts an array of arrays and groups
-	  // each array's elements on shared indices
-	  _.unzip = function(array) {
-	    var length = array && _.max(array, getLength).length || 0;
-	    var result = Array(length);
-
-	    for (var index = 0; index < length; index++) {
-	      result[index] = _.pluck(array, index);
-	    }
-	    return result;
-	  };
-
-	  // Converts lists into objects. Pass either a single array of `[key, value]`
-	  // pairs, or two parallel arrays of the same length -- one of keys, and one of
-	  // the corresponding values.
-	  _.object = function(list, values) {
-	    var result = {};
-	    for (var i = 0, length = getLength(list); i < length; i++) {
-	      if (values) {
-	        result[list[i]] = values[i];
-	      } else {
-	        result[list[i][0]] = list[i][1];
-	      }
-	    }
-	    return result;
-	  };
-
-	  // Generator function to create the findIndex and findLastIndex functions
-	  function createPredicateIndexFinder(dir) {
-	    return function(array, predicate, context) {
-	      predicate = cb(predicate, context);
-	      var length = getLength(array);
-	      var index = dir > 0 ? 0 : length - 1;
-	      for (; index >= 0 && index < length; index += dir) {
-	        if (predicate(array[index], index, array)) return index;
-	      }
-	      return -1;
-	    };
-	  }
-
-	  // Returns the first index on an array-like that passes a predicate test
-	  _.findIndex = createPredicateIndexFinder(1);
-	  _.findLastIndex = createPredicateIndexFinder(-1);
-
-	  // Use a comparator function to figure out the smallest index at which
-	  // an object should be inserted so as to maintain order. Uses binary search.
-	  _.sortedIndex = function(array, obj, iteratee, context) {
-	    iteratee = cb(iteratee, context, 1);
-	    var value = iteratee(obj);
-	    var low = 0, high = getLength(array);
-	    while (low < high) {
-	      var mid = Math.floor((low + high) / 2);
-	      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
-	    }
-	    return low;
-	  };
-
-	  // Generator function to create the indexOf and lastIndexOf functions
-	  function createIndexFinder(dir, predicateFind, sortedIndex) {
-	    return function(array, item, idx) {
-	      var i = 0, length = getLength(array);
-	      if (typeof idx == 'number') {
-	        if (dir > 0) {
-	            i = idx >= 0 ? idx : Math.max(idx + length, i);
-	        } else {
-	            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
-	        }
-	      } else if (sortedIndex && idx && length) {
-	        idx = sortedIndex(array, item);
-	        return array[idx] === item ? idx : -1;
-	      }
-	      if (item !== item) {
-	        idx = predicateFind(slice.call(array, i, length), _.isNaN);
-	        return idx >= 0 ? idx + i : -1;
-	      }
-	      for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
-	        if (array[idx] === item) return idx;
-	      }
-	      return -1;
-	    };
-	  }
-
-	  // Return the position of the first occurrence of an item in an array,
-	  // or -1 if the item is not included in the array.
-	  // If the array is large and already in sort order, pass `true`
-	  // for **isSorted** to use binary search.
-	  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
-	  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex);
-
-	  // Generate an integer Array containing an arithmetic progression. A port of
-	  // the native Python `range()` function. See
-	  // [the Python documentation](http://docs.python.org/library/functions.html#range).
-	  _.range = function(start, stop, step) {
-	    if (stop == null) {
-	      stop = start || 0;
-	      start = 0;
-	    }
-	    step = step || 1;
-
-	    var length = Math.max(Math.ceil((stop - start) / step), 0);
-	    var range = Array(length);
-
-	    for (var idx = 0; idx < length; idx++, start += step) {
-	      range[idx] = start;
-	    }
-
-	    return range;
-	  };
-
-	  // Function (ahem) Functions
-	  // ------------------
-
-	  // Determines whether to execute a function as a constructor
-	  // or a normal function with the provided arguments
-	  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
-	    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
-	    var self = baseCreate(sourceFunc.prototype);
-	    var result = sourceFunc.apply(self, args);
-	    if (_.isObject(result)) return result;
-	    return self;
-	  };
-
-	  // Create a function bound to a given object (assigning `this`, and arguments,
-	  // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
-	  // available.
-	  _.bind = function(func, context) {
-	    if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
-	    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
-	    var args = slice.call(arguments, 2);
-	    var bound = function() {
-	      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
-	    };
-	    return bound;
-	  };
-
-	  // Partially apply a function by creating a version that has had some of its
-	  // arguments pre-filled, without changing its dynamic `this` context. _ acts
-	  // as a placeholder, allowing any combination of arguments to be pre-filled.
-	  _.partial = function(func) {
-	    var boundArgs = slice.call(arguments, 1);
-	    var bound = function() {
-	      var position = 0, length = boundArgs.length;
-	      var args = Array(length);
-	      for (var i = 0; i < length; i++) {
-	        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
-	      }
-	      while (position < arguments.length) args.push(arguments[position++]);
-	      return executeBound(func, bound, this, this, args);
-	    };
-	    return bound;
-	  };
-
-	  // Bind a number of an object's methods to that object. Remaining arguments
-	  // are the method names to be bound. Useful for ensuring that all callbacks
-	  // defined on an object belong to it.
-	  _.bindAll = function(obj) {
-	    var i, length = arguments.length, key;
-	    if (length <= 1) throw new Error('bindAll must be passed function names');
-	    for (i = 1; i < length; i++) {
-	      key = arguments[i];
-	      obj[key] = _.bind(obj[key], obj);
-	    }
-	    return obj;
-	  };
-
-	  // Memoize an expensive function by storing its results.
-	  _.memoize = function(func, hasher) {
-	    var memoize = function(key) {
-	      var cache = memoize.cache;
-	      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
-	      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
-	      return cache[address];
-	    };
-	    memoize.cache = {};
-	    return memoize;
-	  };
-
-	  // Delays a function for the given number of milliseconds, and then calls
-	  // it with the arguments supplied.
-	  _.delay = function(func, wait) {
-	    var args = slice.call(arguments, 2);
-	    return setTimeout(function(){
-	      return func.apply(null, args);
-	    }, wait);
-	  };
-
-	  // Defers a function, scheduling it to run after the current call stack has
-	  // cleared.
-	  _.defer = _.partial(_.delay, _, 1);
-
-	  // Returns a function, that, when invoked, will only be triggered at most once
-	  // during a given window of time. Normally, the throttled function will run
-	  // as much as it can, without ever going more than once per `wait` duration;
-	  // but if you'd like to disable the execution on the leading edge, pass
-	  // `{leading: false}`. To disable execution on the trailing edge, ditto.
-	  _.throttle = function(func, wait, options) {
-	    var context, args, result;
-	    var timeout = null;
-	    var previous = 0;
-	    if (!options) options = {};
-	    var later = function() {
-	      previous = options.leading === false ? 0 : _.now();
-	      timeout = null;
-	      result = func.apply(context, args);
-	      if (!timeout) context = args = null;
-	    };
-	    return function() {
-	      var now = _.now();
-	      if (!previous && options.leading === false) previous = now;
-	      var remaining = wait - (now - previous);
-	      context = this;
-	      args = arguments;
-	      if (remaining <= 0 || remaining > wait) {
-	        if (timeout) {
-	          clearTimeout(timeout);
-	          timeout = null;
-	        }
-	        previous = now;
-	        result = func.apply(context, args);
-	        if (!timeout) context = args = null;
-	      } else if (!timeout && options.trailing !== false) {
-	        timeout = setTimeout(later, remaining);
-	      }
-	      return result;
-	    };
-	  };
-
-	  // Returns a function, that, as long as it continues to be invoked, will not
-	  // be triggered. The function will be called after it stops being called for
-	  // N milliseconds. If `immediate` is passed, trigger the function on the
-	  // leading edge, instead of the trailing.
-	  _.debounce = function(func, wait, immediate) {
-	    var timeout, args, context, timestamp, result;
-
-	    var later = function() {
-	      var last = _.now() - timestamp;
-
-	      if (last < wait && last >= 0) {
-	        timeout = setTimeout(later, wait - last);
-	      } else {
-	        timeout = null;
-	        if (!immediate) {
-	          result = func.apply(context, args);
-	          if (!timeout) context = args = null;
-	        }
-	      }
-	    };
-
-	    return function() {
-	      context = this;
-	      args = arguments;
-	      timestamp = _.now();
-	      var callNow = immediate && !timeout;
-	      if (!timeout) timeout = setTimeout(later, wait);
-	      if (callNow) {
-	        result = func.apply(context, args);
-	        context = args = null;
-	      }
-
-	      return result;
-	    };
-	  };
-
-	  // Returns the first function passed as an argument to the second,
-	  // allowing you to adjust arguments, run code before and after, and
-	  // conditionally execute the original function.
-	  _.wrap = function(func, wrapper) {
-	    return _.partial(wrapper, func);
-	  };
-
-	  // Returns a negated version of the passed-in predicate.
-	  _.negate = function(predicate) {
-	    return function() {
-	      return !predicate.apply(this, arguments);
-	    };
-	  };
-
-	  // Returns a function that is the composition of a list of functions, each
-	  // consuming the return value of the function that follows.
-	  _.compose = function() {
-	    var args = arguments;
-	    var start = args.length - 1;
-	    return function() {
-	      var i = start;
-	      var result = args[start].apply(this, arguments);
-	      while (i--) result = args[i].call(this, result);
-	      return result;
-	    };
-	  };
-
-	  // Returns a function that will only be executed on and after the Nth call.
-	  _.after = function(times, func) {
-	    return function() {
-	      if (--times < 1) {
-	        return func.apply(this, arguments);
-	      }
-	    };
-	  };
-
-	  // Returns a function that will only be executed up to (but not including) the Nth call.
-	  _.before = function(times, func) {
-	    var memo;
-	    return function() {
-	      if (--times > 0) {
-	        memo = func.apply(this, arguments);
-	      }
-	      if (times <= 1) func = null;
-	      return memo;
-	    };
-	  };
-
-	  // Returns a function that will be executed at most one time, no matter how
-	  // often you call it. Useful for lazy initialization.
-	  _.once = _.partial(_.before, 2);
-
-	  // Object Functions
-	  // ----------------
-
-	  // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-	  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-	  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-	                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
-
-	  function collectNonEnumProps(obj, keys) {
-	    var nonEnumIdx = nonEnumerableProps.length;
-	    var constructor = obj.constructor;
-	    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
-
-	    // Constructor is a special case.
-	    var prop = 'constructor';
-	    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
-
-	    while (nonEnumIdx--) {
-	      prop = nonEnumerableProps[nonEnumIdx];
-	      if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
-	        keys.push(prop);
-	      }
-	    }
-	  }
-
-	  // Retrieve the names of an object's own properties.
-	  // Delegates to **ECMAScript 5**'s native `Object.keys`
-	  _.keys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    if (nativeKeys) return nativeKeys(obj);
-	    var keys = [];
-	    for (var key in obj) if (_.has(obj, key)) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-
-	  // Retrieve all the property names of an object.
-	  _.allKeys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    var keys = [];
-	    for (var key in obj) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-
-	  // Retrieve the values of an object's properties.
-	  _.values = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var values = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      values[i] = obj[keys[i]];
-	    }
-	    return values;
-	  };
-
-	  // Returns the results of applying the iteratee to each element of the object
-	  // In contrast to _.map it returns an object
-	  _.mapObject = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys =  _.keys(obj),
-	          length = keys.length,
-	          results = {},
-	          currentKey;
-	      for (var index = 0; index < length; index++) {
-	        currentKey = keys[index];
-	        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
-	      }
-	      return results;
-	  };
-
-	  // Convert an object into a list of `[key, value]` pairs.
-	  _.pairs = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var pairs = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      pairs[i] = [keys[i], obj[keys[i]]];
-	    }
-	    return pairs;
-	  };
-
-	  // Invert the keys and values of an object. The values must be serializable.
-	  _.invert = function(obj) {
-	    var result = {};
-	    var keys = _.keys(obj);
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      result[obj[keys[i]]] = keys[i];
-	    }
-	    return result;
-	  };
-
-	  // Return a sorted list of the function names available on the object.
-	  // Aliased as `methods`
-	  _.functions = _.methods = function(obj) {
-	    var names = [];
-	    for (var key in obj) {
-	      if (_.isFunction(obj[key])) names.push(key);
-	    }
-	    return names.sort();
-	  };
-
-	  // Extend a given object with all the properties in passed-in object(s).
-	  _.extend = createAssigner(_.allKeys);
-
-	  // Assigns a given object with all the own properties in the passed-in object(s)
-	  // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
-	  _.extendOwn = _.assign = createAssigner(_.keys);
-
-	  // Returns the first key on an object that passes a predicate test
-	  _.findKey = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = _.keys(obj), key;
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      key = keys[i];
-	      if (predicate(obj[key], key, obj)) return key;
-	    }
-	  };
-
-	  // Return a copy of the object only containing the whitelisted properties.
-	  _.pick = function(object, oiteratee, context) {
-	    var result = {}, obj = object, iteratee, keys;
-	    if (obj == null) return result;
-	    if (_.isFunction(oiteratee)) {
-	      keys = _.allKeys(obj);
-	      iteratee = optimizeCb(oiteratee, context);
-	    } else {
-	      keys = flatten(arguments, false, false, 1);
-	      iteratee = function(value, key, obj) { return key in obj; };
-	      obj = Object(obj);
-	    }
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      var key = keys[i];
-	      var value = obj[key];
-	      if (iteratee(value, key, obj)) result[key] = value;
-	    }
-	    return result;
-	  };
-
-	   // Return a copy of the object without the blacklisted properties.
-	  _.omit = function(obj, iteratee, context) {
-	    if (_.isFunction(iteratee)) {
-	      iteratee = _.negate(iteratee);
-	    } else {
-	      var keys = _.map(flatten(arguments, false, false, 1), String);
-	      iteratee = function(value, key) {
-	        return !_.contains(keys, key);
-	      };
-	    }
-	    return _.pick(obj, iteratee, context);
-	  };
-
-	  // Fill in a given object with default properties.
-	  _.defaults = createAssigner(_.allKeys, true);
-
-	  // Creates an object that inherits from the given prototype object.
-	  // If additional properties are provided then they will be added to the
-	  // created object.
-	  _.create = function(prototype, props) {
-	    var result = baseCreate(prototype);
-	    if (props) _.extendOwn(result, props);
-	    return result;
-	  };
-
-	  // Create a (shallow-cloned) duplicate of an object.
-	  _.clone = function(obj) {
-	    if (!_.isObject(obj)) return obj;
-	    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
-	  };
-
-	  // Invokes interceptor with the obj, and then returns obj.
-	  // The primary purpose of this method is to "tap into" a method chain, in
-	  // order to perform operations on intermediate results within the chain.
-	  _.tap = function(obj, interceptor) {
-	    interceptor(obj);
-	    return obj;
-	  };
-
-	  // Returns whether an object has a given set of `key:value` pairs.
-	  _.isMatch = function(object, attrs) {
-	    var keys = _.keys(attrs), length = keys.length;
-	    if (object == null) return !length;
-	    var obj = Object(object);
-	    for (var i = 0; i < length; i++) {
-	      var key = keys[i];
-	      if (attrs[key] !== obj[key] || !(key in obj)) return false;
-	    }
-	    return true;
-	  };
-
-
-	  // Internal recursive comparison function for `isEqual`.
-	  var eq = function(a, b, aStack, bStack) {
-	    // Identical objects are equal. `0 === -0`, but they aren't identical.
-	    // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
-	    if (a === b) return a !== 0 || 1 / a === 1 / b;
-	    // A strict comparison is necessary because `null == undefined`.
-	    if (a == null || b == null) return a === b;
-	    // Unwrap any wrapped objects.
-	    if (a instanceof _) a = a._wrapped;
-	    if (b instanceof _) b = b._wrapped;
-	    // Compare `[[Class]]` names.
-	    var className = toString.call(a);
-	    if (className !== toString.call(b)) return false;
-	    switch (className) {
-	      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
-	      case '[object RegExp]':
-	      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
-	      case '[object String]':
-	        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
-	        // equivalent to `new String("5")`.
-	        return '' + a === '' + b;
-	      case '[object Number]':
-	        // `NaN`s are equivalent, but non-reflexive.
-	        // Object(NaN) is equivalent to NaN
-	        if (+a !== +a) return +b !== +b;
-	        // An `egal` comparison is performed for other numeric values.
-	        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
-	      case '[object Date]':
-	      case '[object Boolean]':
-	        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
-	        // millisecond representations. Note that invalid dates with millisecond representations
-	        // of `NaN` are not equivalent.
-	        return +a === +b;
-	    }
-
-	    var areArrays = className === '[object Array]';
-	    if (!areArrays) {
-	      if (typeof a != 'object' || typeof b != 'object') return false;
-
-	      // Objects with different constructors are not equivalent, but `Object`s or `Array`s
-	      // from different frames are.
-	      var aCtor = a.constructor, bCtor = b.constructor;
-	      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
-	                               _.isFunction(bCtor) && bCtor instanceof bCtor)
-	                          && ('constructor' in a && 'constructor' in b)) {
-	        return false;
-	      }
-	    }
-	    // Assume equality for cyclic structures. The algorithm for detecting cyclic
-	    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
-
-	    // Initializing stack of traversed objects.
-	    // It's done here since we only need them for objects and arrays comparison.
-	    aStack = aStack || [];
-	    bStack = bStack || [];
-	    var length = aStack.length;
-	    while (length--) {
-	      // Linear search. Performance is inversely proportional to the number of
-	      // unique nested structures.
-	      if (aStack[length] === a) return bStack[length] === b;
-	    }
-
-	    // Add the first object to the stack of traversed objects.
-	    aStack.push(a);
-	    bStack.push(b);
-
-	    // Recursively compare objects and arrays.
-	    if (areArrays) {
-	      // Compare array lengths to determine if a deep comparison is necessary.
-	      length = a.length;
-	      if (length !== b.length) return false;
-	      // Deep compare the contents, ignoring non-numeric properties.
-	      while (length--) {
-	        if (!eq(a[length], b[length], aStack, bStack)) return false;
-	      }
-	    } else {
-	      // Deep compare objects.
-	      var keys = _.keys(a), key;
-	      length = keys.length;
-	      // Ensure that both objects contain the same number of properties before comparing deep equality.
-	      if (_.keys(b).length !== length) return false;
-	      while (length--) {
-	        // Deep compare each member
-	        key = keys[length];
-	        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
-	      }
-	    }
-	    // Remove the first object from the stack of traversed objects.
-	    aStack.pop();
-	    bStack.pop();
-	    return true;
-	  };
-
-	  // Perform a deep comparison to check if two objects are equal.
-	  _.isEqual = function(a, b) {
-	    return eq(a, b);
-	  };
-
-	  // Is a given array, string, or object empty?
-	  // An "empty" object has no enumerable own-properties.
-	  _.isEmpty = function(obj) {
-	    if (obj == null) return true;
-	    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
-	    return _.keys(obj).length === 0;
-	  };
-
-	  // Is a given value a DOM element?
-	  _.isElement = function(obj) {
-	    return !!(obj && obj.nodeType === 1);
-	  };
-
-	  // Is a given value an array?
-	  // Delegates to ECMA5's native Array.isArray
-	  _.isArray = nativeIsArray || function(obj) {
-	    return toString.call(obj) === '[object Array]';
-	  };
-
-	  // Is a given variable an object?
-	  _.isObject = function(obj) {
-	    var type = typeof obj;
-	    return type === 'function' || type === 'object' && !!obj;
-	  };
-
-	  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
-	  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
-	    _['is' + name] = function(obj) {
-	      return toString.call(obj) === '[object ' + name + ']';
-	    };
-	  });
-
-	  // Define a fallback version of the method in browsers (ahem, IE < 9), where
-	  // there isn't any inspectable "Arguments" type.
-	  if (!_.isArguments(arguments)) {
-	    _.isArguments = function(obj) {
-	      return _.has(obj, 'callee');
-	    };
-	  }
-
-	  // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
-	  // IE 11 (#1621), and in Safari 8 (#1929).
-	  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
-	    _.isFunction = function(obj) {
-	      return typeof obj == 'function' || false;
-	    };
-	  }
-
-	  // Is a given object a finite number?
-	  _.isFinite = function(obj) {
-	    return isFinite(obj) && !isNaN(parseFloat(obj));
-	  };
-
-	  // Is the given value `NaN`? (NaN is the only number which does not equal itself).
-	  _.isNaN = function(obj) {
-	    return _.isNumber(obj) && obj !== +obj;
-	  };
-
-	  // Is a given value a boolean?
-	  _.isBoolean = function(obj) {
-	    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
-	  };
-
-	  // Is a given value equal to null?
-	  _.isNull = function(obj) {
-	    return obj === null;
-	  };
-
-	  // Is a given variable undefined?
-	  _.isUndefined = function(obj) {
-	    return obj === void 0;
-	  };
-
-	  // Shortcut function for checking if an object has a given property directly
-	  // on itself (in other words, not on a prototype).
-	  _.has = function(obj, key) {
-	    return obj != null && hasOwnProperty.call(obj, key);
-	  };
-
-	  // Utility Functions
-	  // -----------------
-
-	  // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
-	  // previous owner. Returns a reference to the Underscore object.
-	  _.noConflict = function() {
-	    root._ = previousUnderscore;
-	    return this;
-	  };
-
-	  // Keep the identity function around for default iteratees.
-	  _.identity = function(value) {
-	    return value;
-	  };
-
-	  // Predicate-generating functions. Often useful outside of Underscore.
-	  _.constant = function(value) {
-	    return function() {
-	      return value;
-	    };
-	  };
-
-	  _.noop = function(){};
-
-	  _.property = property;
-
-	  // Generates a function for a given object that returns a given property.
-	  _.propertyOf = function(obj) {
-	    return obj == null ? function(){} : function(key) {
-	      return obj[key];
-	    };
-	  };
-
-	  // Returns a predicate for checking whether an object has a given set of
-	  // `key:value` pairs.
-	  _.matcher = _.matches = function(attrs) {
-	    attrs = _.extendOwn({}, attrs);
-	    return function(obj) {
-	      return _.isMatch(obj, attrs);
-	    };
-	  };
-
-	  // Run a function **n** times.
-	  _.times = function(n, iteratee, context) {
-	    var accum = Array(Math.max(0, n));
-	    iteratee = optimizeCb(iteratee, context, 1);
-	    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
-	    return accum;
-	  };
-
-	  // Return a random integer between min and max (inclusive).
-	  _.random = function(min, max) {
-	    if (max == null) {
-	      max = min;
-	      min = 0;
-	    }
-	    return min + Math.floor(Math.random() * (max - min + 1));
-	  };
-
-	  // A (possibly faster) way to get the current timestamp as an integer.
-	  _.now = Date.now || function() {
-	    return new Date().getTime();
-	  };
-
-	   // List of HTML entities for escaping.
-	  var escapeMap = {
-	    '&': '&amp;',
-	    '<': '&lt;',
-	    '>': '&gt;',
-	    '"': '&quot;',
-	    "'": '&#x27;',
-	    '`': '&#x60;'
-	  };
-	  var unescapeMap = _.invert(escapeMap);
-
-	  // Functions for escaping and unescaping strings to/from HTML interpolation.
-	  var createEscaper = function(map) {
-	    var escaper = function(match) {
-	      return map[match];
-	    };
-	    // Regexes for identifying a key that needs to be escaped
-	    var source = '(?:' + _.keys(map).join('|') + ')';
-	    var testRegexp = RegExp(source);
-	    var replaceRegexp = RegExp(source, 'g');
-	    return function(string) {
-	      string = string == null ? '' : '' + string;
-	      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
-	    };
-	  };
-	  _.escape = createEscaper(escapeMap);
-	  _.unescape = createEscaper(unescapeMap);
-
-	  // If the value of the named `property` is a function then invoke it with the
-	  // `object` as context; otherwise, return it.
-	  _.result = function(object, property, fallback) {
-	    var value = object == null ? void 0 : object[property];
-	    if (value === void 0) {
-	      value = fallback;
-	    }
-	    return _.isFunction(value) ? value.call(object) : value;
-	  };
-
-	  // Generate a unique integer id (unique within the entire client session).
-	  // Useful for temporary DOM ids.
-	  var idCounter = 0;
-	  _.uniqueId = function(prefix) {
-	    var id = ++idCounter + '';
-	    return prefix ? prefix + id : id;
-	  };
-
-	  // By default, Underscore uses ERB-style template delimiters, change the
-	  // following template settings to use alternative delimiters.
-	  _.templateSettings = {
-	    evaluate    : /<%([\s\S]+?)%>/g,
-	    interpolate : /<%=([\s\S]+?)%>/g,
-	    escape      : /<%-([\s\S]+?)%>/g
-	  };
-
-	  // When customizing `templateSettings`, if you don't want to define an
-	  // interpolation, evaluation or escaping regex, we need one that is
-	  // guaranteed not to match.
-	  var noMatch = /(.)^/;
-
-	  // Certain characters need to be escaped so that they can be put into a
-	  // string literal.
-	  var escapes = {
-	    "'":      "'",
-	    '\\':     '\\',
-	    '\r':     'r',
-	    '\n':     'n',
-	    '\u2028': 'u2028',
-	    '\u2029': 'u2029'
-	  };
-
-	  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-	  var escapeChar = function(match) {
-	    return '\\' + escapes[match];
-	  };
-
-	  // JavaScript micro-templating, similar to John Resig's implementation.
-	  // Underscore templating handles arbitrary delimiters, preserves whitespace,
-	  // and correctly escapes quotes within interpolated code.
-	  // NB: `oldSettings` only exists for backwards compatibility.
-	  _.template = function(text, settings, oldSettings) {
-	    if (!settings && oldSettings) settings = oldSettings;
-	    settings = _.defaults({}, settings, _.templateSettings);
-
-	    // Combine delimiters into one regular expression via alternation.
-	    var matcher = RegExp([
-	      (settings.escape || noMatch).source,
-	      (settings.interpolate || noMatch).source,
-	      (settings.evaluate || noMatch).source
-	    ].join('|') + '|$', 'g');
-
-	    // Compile the template source, escaping string literals appropriately.
-	    var index = 0;
-	    var source = "__p+='";
-	    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
-	      source += text.slice(index, offset).replace(escaper, escapeChar);
-	      index = offset + match.length;
-
-	      if (escape) {
-	        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
-	      } else if (interpolate) {
-	        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
-	      } else if (evaluate) {
-	        source += "';\n" + evaluate + "\n__p+='";
-	      }
-
-	      // Adobe VMs need the match returned to produce the correct offest.
-	      return match;
-	    });
-	    source += "';\n";
-
-	    // If a variable is not specified, place data values in local scope.
-	    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
-
-	    source = "var __t,__p='',__j=Array.prototype.join," +
-	      "print=function(){__p+=__j.call(arguments,'');};\n" +
-	      source + 'return __p;\n';
-
-	    try {
-	      var render = new Function(settings.variable || 'obj', '_', source);
-	    } catch (e) {
-	      e.source = source;
-	      throw e;
-	    }
-
-	    var template = function(data) {
-	      return render.call(this, data, _);
-	    };
-
-	    // Provide the compiled source as a convenience for precompilation.
-	    var argument = settings.variable || 'obj';
-	    template.source = 'function(' + argument + '){\n' + source + '}';
-
-	    return template;
-	  };
-
-	  // Add a "chain" function. Start chaining a wrapped Underscore object.
-	  _.chain = function(obj) {
-	    var instance = _(obj);
-	    instance._chain = true;
-	    return instance;
-	  };
-
-	  // OOP
-	  // ---------------
-	  // If Underscore is called as a function, it returns a wrapped object that
-	  // can be used OO-style. This wrapper holds altered versions of all the
-	  // underscore functions. Wrapped objects may be chained.
-
-	  // Helper function to continue chaining intermediate results.
-	  var result = function(instance, obj) {
-	    return instance._chain ? _(obj).chain() : obj;
-	  };
-
-	  // Add your own custom functions to the Underscore object.
-	  _.mixin = function(obj) {
-	    _.each(_.functions(obj), function(name) {
-	      var func = _[name] = obj[name];
-	      _.prototype[name] = function() {
-	        var args = [this._wrapped];
-	        push.apply(args, arguments);
-	        return result(this, func.apply(_, args));
-	      };
-	    });
-	  };
-
-	  // Add all of the Underscore functions to the wrapper object.
-	  _.mixin(_);
-
-	  // Add all mutator Array functions to the wrapper.
-	  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      var obj = this._wrapped;
-	      method.apply(obj, arguments);
-	      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
-	      return result(this, obj);
-	    };
-	  });
-
-	  // Add all accessor Array functions to the wrapper.
-	  _.each(['concat', 'join', 'slice'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      return result(this, method.apply(this._wrapped, arguments));
-	    };
-	  });
-
-	  // Extracts the result from a wrapped and chained object.
-	  _.prototype.value = function() {
-	    return this._wrapped;
-	  };
-
-	  // Provide unwrapping proxy for some methods used in engine operations
-	  // such as arithmetic and JSON stringification.
-	  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-
-	  _.prototype.toString = function() {
-	    return '' + this._wrapped;
-	  };
-
-	  // AMD registration happens at the end for compatibility with AMD loaders
-	  // that may not enforce next-turn semantics on modules. Even though general
-	  // practice for AMD registration is to be anonymous, underscore registers
-	  // as a named module because, like jQuery, it is a base library that is
-	  // popular enough to be bundled in a third party lib, but not be part of
-	  // an AMD load request. Those cases could generate an error when an
-	  // anonymous define() is called outside of a loader request.
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
-	      return _;
-	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  }
-	}.call(this));
-
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    attrs: {
-	      "id": "startcity"
-	    }
-	  }, [_vm._h('mt-index-list', {
-	    staticClass: "fixed"
-	  }, [_vm._l((_vm.setStartCityList), function(list) {
-	    return _vm._h('mt-index-section', {
-	      attrs: {
-	        "index": list.ShortKey
-	      }
-	    }, [_vm._l((list.Content), function(item) {
-	      return _vm._h('mt-cell', {
-	        attrs: {
-	          "title": item.Name
-	        },
-	        nativeOn: {
-	          "click": function($event) {
-	            _vm.getStartCity(item.Id, item.Name)
-	          }
-	        }
-	      })
-	    }), " "])
-	  })]), " ", " "])
-	},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-55a7ad28", module.exports)
-	  }
-	}
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _keys = __webpack_require__(108);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	var _typeof2 = __webpack_require__(112);
-
-	var _typeof3 = _interopRequireDefault(_typeof2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var __vue_exports__, __vue_options__;
-	var __vue_styles__ = {};
-
-	/* styles */
-	__webpack_require__(161);
-
-	/* script */
-	__vue_exports__ = __webpack_require__(163);
-
-	/* template */
-	var __vue_template__ = __webpack_require__(164);
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
-	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
-	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
-	    return key !== "default" && key !== "__esModule";
-	  })) {
-	    console.error("named exports are not supported in *.vue files.");
-	  }
-	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options;
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketEndCity.vue";
-	__vue_options__.render = __vue_template__.render;
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
-
-	/* hot reload */
-	if (false) {
-	  (function () {
-	    var hotAPI = require("vue-hot-reload-api");
-	    hotAPI.install(require("vue"), false);
-	    if (!hotAPI.compatible) return;
-	    module.hot.accept();
-	    if (!module.hot.data) {
-	      hotAPI.createRecord("data-v-12b95ab6", __vue_options__);
-	    } else {
-	      hotAPI.reload("data-v-12b95ab6", __vue_options__);
-	    }
-	  })();
-	}
-	if (__vue_options__.functional) {
-	  console.error("[vue-loader] TicketEndCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
-	}
-
-	module.exports = __vue_exports__;
-
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(162);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(134)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 162 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _vuex = __webpack_require__(3);
-
-	var _utils = __webpack_require__(136);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _mintUi = __webpack_require__(82);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ = __webpack_require__(158); //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-		data: function data() {
-			return {
-				endcity: "",
-				setEndCityList: null,
-				endpopupVisible: false, //显示到达选择
-				endCitySlots: [{
-					flex: 1,
-					values: [],
-					className: 'endcity'
-				}]
-			};
-		},
-		created: function created() {
-			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择到达地" });
-
-			if (!this.$store.state.tickets.endCityList) {
-				// 提示加载中
-				_mintUi.Indicator.open({
-					text: '加载中...',
-					spinnerType: 'double-bounce'
-				});
-				this.$store.dispatch("setEndCityList").then(function (data) {
-					_mintUi.Indicator.close();
-				});
-			}
-		},
-
-		computed: {
-			setEndCityList: function setEndCityList() {
-				return this.$store.state.tickets.endCityList;
-			}
-		},
-		watch: {
-			// endpopupVisible(status){
-			// 	if(status===false){
-			// 		// 说明已经选择完了
-			// 		this.$router.go(-1);
-			// 	}
-			// }
-		},
-		methods: {
-			getEndCity: function getEndCity(code, name, station) {
-				this.endcity = name;
-				// if(station.length===0){
-				// 	this.$store.dispatch("setEndCity",{
-				// 		Code:code,
-				// 		Name:name,
-				// 		Station:"",//空的站台
-				// 	});
-				// 	this.$router.go(-1);
-				// }
-				// else{
-				// 	this.endCitySlots[0].values = _.map(station,(item)=>{
-				// 		return item.Name;
-				// 	});
-
-				// 	this.endpopupVisible = true;
-				// }
-				this.$store.dispatch("setEndCity", {
-					Code: code,
-					Name: name
-				});
-				this.$router.go(-1);
-			},
-			onEndValuesChange: function onEndValuesChange(picker, values) {
-				this.$store.dispatch("setEndCity", { Code: "00000", Name: this.endcity, Station: values[0] });
-			},
-			noData: function noData() {
-				this.endpopupVisible = false;
-			},
-			yesData: function yesData() {
-				this.$router.go(-1);
-			}
-		}
-	};
-
-/***/ },
-/* 164 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    attrs: {
-	      "id": "endcity"
-	    }
-	  }, [_vm._h('mt-index-list', {
-	    staticClass: "fixed"
-	  }, [_vm._l((_vm.setEndCityList), function(list) {
-	    return _vm._h('mt-index-section', {
-	      attrs: {
-	        "index": list.ShortKey
-	      }
-	    }, [_vm._l((list.Content), function(item) {
-	      return _vm._h('mt-cell', {
-	        attrs: {
-	          "title": item.Name
-	        },
-	        nativeOn: {
-	          "click": function($event) {
-	            _vm.getEndCity(item.Id, item.Name)
-	          }
-	        }
-	      })
-	    }), " "])
-	  })]), " ", " "])
-	},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-12b95ab6", module.exports)
-	  }
-	}
-
-/***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _keys = __webpack_require__(108);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	var _typeof2 = __webpack_require__(112);
-
-	var _typeof3 = _interopRequireDefault(_typeof2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var __vue_exports__, __vue_options__;
-	var __vue_styles__ = {};
-
-	/* styles */
-	__webpack_require__(166);
-
-	/* script */
-	__vue_exports__ = __webpack_require__(169);
-
-	/* template */
-	var __vue_template__ = __webpack_require__(170);
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
-	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
-	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
-	    return key !== "default" && key !== "__esModule";
-	  })) {
-	    console.error("named exports are not supported in *.vue files.");
-	  }
-	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options;
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketResult.vue";
-	__vue_options__.render = __vue_template__.render;
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
-
-	/* hot reload */
-	if (false) {
-	  (function () {
-	    var hotAPI = require("vue-hot-reload-api");
-	    hotAPI.install(require("vue"), false);
-	    if (!hotAPI.compatible) return;
-	    module.hot.accept();
-	    if (!module.hot.data) {
-	      hotAPI.createRecord("data-v-07fa1da4", __vue_options__);
-	    } else {
-	      hotAPI.reload("data-v-07fa1da4", __vue_options__);
-	    }
-	  })();
-	}
-	if (__vue_options__.functional) {
-	  console.error("[vue-loader] TicketResult.vue: functional components are not supported and should be defined in plain js files using render functions.");
-	}
-
-	module.exports = __vue_exports__;
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(167);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(134)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-	exports.i(__webpack_require__(168), "");
-
-	// module
-	exports.push([module.id, "\n.list-complete-item {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter, .list-complete-leave-active {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active {\n  position: absolute;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  background-color: #f7f7f7;\n  height: 40px;\n  position: absolute; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #c4c4c4;\n    text-align: center; }\n    .result .date-control span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center; }\n    .result .date-control span:first-child, .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #dddddd;\n    background-color: #f7f7f7; }\n    .result .data-set span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #5e5e5e; }\n      .result .data-set span i {\n        height: 40px;\n        line-height: 40px;\n        font-size: 14px;\n        margin-right: 5px; }\n    .result .data-set span:first-child {\n      -ms-flex: 0.25;\n          flex: 0.25;\n      border-right-width: 1px;\n      border-right-color: #777777;\n      border-right-style: solid; }\n    .result .data-set span:last-child {\n      -ms-flex: 0.25;\n          flex: 0.25;\n      border-left-width: 1px;\n      border-left-color: #777777;\n      border-left-style: solid; }\n    .result .data-set span.active {\n      color: #0074D9; }\n  .result .result-list {\n    position: relative; }\n    .result .result-list .list {\n      height: 100px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .result .result-list .list > .data {\n        color: #0074D9;\n        font-size: 1.5rem;\n        width: 30%;\n        text-align: left;\n        line-height: 70px;\n        padding-left: 20px;\n        font-weight: 900; }\n      .result .result-list .list > .car-position {\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        margin: 5px 0; }\n        .result .result-list .list > .car-position p {\n          height: 30px;\n          line-height: 30px;\n          font-size: 1.3rem;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n          color: #111111; }\n          .result .result-list .list > .car-position p span.brand {\n            border: 1px solid #FF851B;\n            background-color: #FF851B;\n            padding: 0 2px;\n            color: #fff;\n            font-size: 1.1rem;\n            margin-right: 5px;\n            border-radius: 10px; }\n        .result .result-list .list > .car-position p.type {\n          color: #919191; }\n          .result .result-list .list > .car-position p.type > i.fa-bus {\n            color: #AAAAAA;\n            padding: 0 2px;\n            margin-right: 5px; }\n          .result .result-list .list > .car-position p.type > i.fa-caret-down {\n            float: right;\n            height: 30px;\n            line-height: 30px; }\n      .result .result-list .list > .ticket-type {\n        margin: 5px 0;\n        width: 30%;\n        text-align: right;\n        margin-right: 10px;\n        font-size: 1.3rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n        .result .result-list .list > .ticket-type > p {\n          heihgt: 30px;\n          line-height: 30px; }\n        .result .result-list .list > .ticket-type .money {\n          color: #FF851B;\n          -ms-flex: 1;\n              flex: 1; }\n        .result .result-list .list > .ticket-type .number, .result .result-list .list > .ticket-type .type {\n          font-size: 1.1rem;\n          color: #AAAAAA;\n          -ms-flex: 1;\n              flex: 1; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 60%;\n      height: 40%;\n      border-radius: 10px; }\n      .result .result-list .popup-visible .popup-header {\n        height: 40px;\n        border-top-left-radius: 10px;\n        border-top-right-radius: 10px;\n        width: 100%;\n        text-align: center;\n        font-size: 1.8rem;\n        line-height: 40px;\n        background-color: #009688;\n        color: #fff; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 169 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _vuex = __webpack_require__(3);
-
-	var _utils = __webpack_require__(136);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	var _ = __webpack_require__(158);
-
-	exports.default = {
-		data: function data() {
-			return {
-				startCity: "",
-				endCity: "",
-				startDate: this.$store.getters.getInfo.startDate,
-				getResultList: this.$store.getters.getResultList,
-				ResultBackUp: this.$store.getters.getResultList, //列表备份
-				isShowList: true,
-				isShowTime: false,
-				isShowPosition: false,
-				showNoData: false,
-				companyDetailShow: false, //显示公司信息
-				showCompanyInfo: {}, //显示的公司信息
-				arrow: "fa-caret-down", //默认票价排序图标
-				TimeOptions: [{
-					label: '不限时间段',
-					value: '不限',
-					disabled: false
-				}, {
-					label: '早上(00:00-06:00)',
-					value: 6,
-					disabled: false
-				}, {
-					label: '上午(06:00-12:00)',
-					value: 12,
-					disabled: false
-				}, {
-					label: '下午(12:00-18:00)',
-					value: 18,
-					disabled: false
-				}, {
-					label: '晚上(18:00-24:00)',
-					value: 24,
-					disabled: false
-				}],
-				PositionOptions: [{
-					label: '不限',
-					value: '不限',
-					disabled: false
-				}],
-				TimeOptionsValue: ["不限"], //结果
-				PositionOptionsValue: ["不限"] };
-		},
-		created: function created() {
-			var _this = this;
-
-			if (this.$store.getters.getResultList === null) {
-				//数据为空,一般是直接进入这个页面才会这样
-				this.$router.replace({ path: "/home/ticketbody" });
-			}
-			this.startCity = this.$store.state.tickets.startCity;
-			this.endCity = this.$store.state.tickets.endCity;
-			// console.log(this.getResultList)
-			//设置头部标题
-			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " 到 " + this.endCity.Name });
-
-			if (this.$store.getters.getResultList.length === 0) {
-				// 没有数据
-				this.showNoData = true;
-			} else {
-				this.showNoData = false;
-				// 准备运输公司信息
-				this.getResultList.map(function (item) {
-					_this.PositionOptions.push({
-						label: item.CoName,
-						value: item.CoName,
-						disabled: false
-					});
-				});
-			}
-		},
-
-		computed: {
-			getStartCity: function getStartCity() {
-				return this.$store.getters.getInfo.startCity.Name;
-			},
-			getEndCity: function getEndCity() {
-				return this.$store.getters.getInfo.endCity.Name;
-			},
-
-			// getResultList(){
-			// 	return this.$store.getters.getResultList;
-			// },
-			getTimeOptionsValue: {
-				set: function set(value) {
-					if (value.length === 0) {
-						this.TimeOptionsValue = ["不限"];
-					} else {
-						if (value.indexOf("不限") > -1 && value.length !== 1) {
-							// 有不止不限的选项
-							this.TimeOptionsValue = value;
-							this.TimeOptions[0].disabled = true;
-						} else {
-							if (value.length < this.TimeOptionsValue.length) {
-								// 设置的值小于原来的值
-								this.TimeOptionsValue = ["不限"];
-							} else {
-								this.TimeOptionsValue = value;
-								this.TimeOptions[0].disabled = false;
-							}
-						}
-						if (value.length === this.TimeOptions.length) {
-							this.TimeOptions[0].disabled = false;
-						}
-					}
-				},
-				get: function get() {
-					return this.TimeOptionsValue;
-				}
-			},
-			getPositionOptionsValue: {
-				set: function set(value) {
-					if (value.length === 0) {
-						this.PositionOptionsValue = ["不限"];
-					} else {
-						if (value.indexOf("不限") > -1 && value.length !== 1) {
-							// 有不止不限的选项
-							this.PositionOptionsValue = value;
-							this.PositionOptions[0].disabled = true;
-						} else {
-							if (value.length < this.PositionOptionsValue.length) {
-								// 设置的值小于原来的值
-								this.PositionOptionsValue = ["不限"];
-							} else {
-								this.PositionOptionsValue = value;
-								this.PositionOptions[0].disabled = false;
-							}
-						}
-						if (value.length === this.PositionOptions.length) {
-							this.PositionOptions[0].disabled = false;
-						}
-					}
-				},
-				get: function get() {
-					return this.PositionOptionsValue;
-				}
-			}
-		},
-		methods: {
-			setList: function setList() {
-				//隐藏显示列表
-				this.isShowList = !this.isShowList;
-			},
-			HideAll: function HideAll() {
-				this.isShowList = false; //隐藏列表
-				//隐藏其他的tab
-				this.isShowTime = false;
-				this.isShowPosition = false;
-			},
-			setShowTime: function setShowTime() {
-				this.HideAll();
-				this.isShowTime = true;
-			},
-			setShowPosition: function setShowPosition() {
-				this.HideAll();
-				this.isShowPosition = true;
-			},
-			queryTime: function queryTime() {
-				//查找特定时间的车
-				// console.log(this.TimeOptionsValue);
-				// 如果this.TimeOptionsValue长度超过1位,那就需要去掉'不限'
-				this.HideAll();
-				this.isShowList = true; //显示列表
-
-				var filter = this.TimeOptionsValue.slice(1);
-				this.getResultList = _.filter(this.ResultBackUp, function (item) {
-					var hour = parseInt(item.StartTime.split(":")[0]);
-
-					var n = false;
-					for (var i = 0; i < filter.length; i++) {
-						switch (filter[i]) {
-							case 6:
-								if (hour <= 6 && hour >= 0) {
-									n = true;
-								}
-								break;
-							case 12:
-								if (hour <= 12 && hour > 6) {
-									n = true;
-								}
-								break;
-							case 18:
-								if (hour <= 18 && hour > 12) {
-									n = true;
-								}
-								break;
-							case 24:
-								if (hour <= 24 && hour > 18) {
-									n = true;
-								}
-								break;
-						}
-					}
-					return n;
-				});
-
-				// 最后判断是否值选择了一个不限
-				if (this.TimeOptionsValue.length === 1 && this.getResultList.length === 0) {
-					// 长度为一
-					this.getResultList = this.ResultBackUp;
-				}
-			},
-			queryPosition: function queryPosition() {
-				// 查找查找
-				// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
-				this.HideAll();
-				this.isShowList = true; //显示列表
-
-				var filter = this.PositionOptionsValue.slice(1);
-				this.getResultList = _.filter(this.ResultBackUp, function (item) {
-					var n = false;
-					for (var i = 0; i < filter.length; i++) {
-						if (item.CoName === filter[i]) {
-							n = true;
-						}
-					}
-					return n;
-				});
-
-				if (this.PositionOptionsValue.length === 1 && this.getResultList.length === 0) {
-					// 长度为一
-					this.getResultList = this.ResultBackUp;
-				}
-			},
-			GoToPay: function GoToPay(index) {
-				// 存储用户点击的列表
-				this.$store.dispatch("setBusInfo", this.getResultList[index]);
-				// 去支付页面
-				this.$router.push({ name: "ticketpay" });
-			},
-			sortTime: function sortTime() {
-				var data = _utils2.default.formatJsonData(this.getResultList);
-				if (this.arrow === "fa-caret-down") {
-					data.sort(function (a, b) {
-						return b.Price - a.Price;
-					});
-					this.arrow = "fa-caret-up";
-				} else {
-					data.sort(function (a, b) {
-						return a.Price - b.Price;
-					});
-					this.arrow = "fa-caret-down";
-				}
-
-				this.getResultList = data;
-			},
-			showCompanyDeatil: function showCompanyDeatil(index, event) {
-				//显示公司详情
-				this.companyDetailShow = true;
-				this.showCompanyInfo = this.getResultList[index];
-				// console.log(index)
-			}
-		}
-	};
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "result"
-	  }, [_vm._h('div', {
-	    staticClass: "date-control"
-	  }, [_vm._h('span', {
-	    staticClass: "font-blue"
-	  }, ["前一天"]), " ", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.startDate.date + ' ' + _vm.startDate.week)
-	    }
-	  }), " ", _vm._h('span', {
-	    staticClass: "font-blue"
-	  }, ["后一天"])]), " ", " ", _vm._h('div', {
-	    staticClass: "data-set"
-	  }, [_vm._h('span', {
-	    class: {
-	      'set': true, active: _vm.isShowTime
-	    },
-	    on: {
-	      "click": _vm.setShowTime
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-glass"
-	  }), "时段"]), " ", _vm._h('span', {
-	    class: {
-	      'set': true, active: _vm.isShowPosition
-	    },
-	    on: {
-	      "click": _vm.setShowPosition
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-bus"
-	  }), "运输公司"]), " ", _vm._h('span', {
-	    class: {
-	      'set': true, active: _vm.isShowList
-	    },
-	    on: {
-	      "click": _vm.sortTime
-	    }
-	  }, [_vm._h('i', {
-	    class: ['fa', _vm.arrow]
-	  }), "票价"])]), " ", _vm._h('div', {
-	    staticClass: "result-list"
-	  }, [_vm._h('transition-group', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.isShowList),
-	      expression: "isShowList"
-	    }],
-	    staticClass: "lists",
-	    attrs: {
-	      "name": "list-complete",
-	      "tag": "div"
-	    }
-	  }, [_vm._l((_vm.getResultList), function(item, index) {
-	    return _vm._h('div', {
-	      key: index,
-	      staticClass: "list list-complete-item",
-	      on: {
-	        "click": function($event) {
-	          _vm.GoToPay(index)
-	        }
-	      }
-	    }, [_vm._h('span', {
-	      staticClass: "data",
-	      domProps: {
-	        "textContent": _vm._s(item.StartTime.slice(0, item.StartTime.length - 3))
-	      }
-	    }), " ", _vm._h('div', {
-	      staticClass: "car-position"
-	    }, [_vm._h('p', [_vm._h('span', {
-	      staticClass: "brand"
-	    }, ["始"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", _vm._h('p', {
-	      staticClass: "type",
-	      on: {
-	        "click": function($event) {
-	          $event.stopPropagation();
-	          _vm.showCompanyDeatil(index, $event)
-	        }
-	      }
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-bus"
-	    }), _vm._s(item.CoName) + "\n\t\t\t\t\t\t", _vm._h('i', {
-	      staticClass: "fa fa-caret-down"
-	    })]), " ", _vm._h('p', [_vm._h('span', {
-	      staticClass: "brand"
-	    }, ["终"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"])]), " ", _vm._h('div', {
-	      staticClass: "ticket-type"
-	    }, [_vm._h('p', {
-	      staticClass: "money",
-	      domProps: {
-	        "textContent": _vm._s(item.Price + '元')
-	      }
-	    }), " ", _vm._h('p', {
-	      staticClass: "number",
-	      domProps: {
-	        "textContent": _vm._s(item.Route)
-	      }
-	    }), " ", _vm._h('p', {
-	      staticClass: "type",
-	      domProps: {
-	        "textContent": _vm._s(item.TicketNum + '张余票')
-	      }
-	    })])])
-	  })]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.companyDetailShow),
-	      expression: "companyDetailShow"
-	    }],
-	    staticClass: "popup-visible",
-	    attrs: {
-	      "popup-transition": "popup-fade"
-	    },
-	    domProps: {
-	      "value": (_vm.companyDetailShow)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.companyDetailShow = $event
-	      }
-	    }
-	  }, [_vm._h('p', {
-	    staticClass: "popup-header"
-	  }, [_vm._s(_vm.showCompanyInfo.CoName)])]), " ", " ", _vm._h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (!_vm.isShowList),
-	      expression: "!isShowList"
-	    }],
-	    staticClass: "change-set"
-	  }, [_vm._h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.isShowTime),
-	      expression: "isShowTime"
-	    }],
-	    staticClass: "set-time"
-	  }, [_vm._h('mt-checklist', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.getTimeOptionsValue),
-	      expression: "getTimeOptionsValue"
-	    }],
-	    attrs: {
-	      "options": _vm.TimeOptions
-	    },
-	    domProps: {
-	      "value": (_vm.getTimeOptionsValue)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.getTimeOptionsValue = $event
-	      }
-	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.queryTime
-	    }
-	  }, ["确定"])]), " ", " ", _vm._h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.isShowPosition),
-	      expression: "isShowPosition"
-	    }],
-	    staticClass: "set-position"
-	  }, [_vm._h('mt-checklist', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.getPositionOptionsValue),
-	      expression: "getPositionOptionsValue"
-	    }],
-	    attrs: {
-	      "options": _vm.PositionOptions
-	    },
-	    domProps: {
-	      "value": (_vm.getPositionOptionsValue)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.getPositionOptionsValue = $event
-	      }
-	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.queryPosition
-	    }
-	  }, ["确定"])])]), " ", " ", (_vm.showNoData) ? _vm._h('div', {
-	    staticClass: "no-data"
-	  }, [_vm._h('p', ["没有更多数据..."])]) : _vm._e()])])
-	},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-07fa1da4", module.exports)
-	  }
-	}
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _keys = __webpack_require__(108);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	var _typeof2 = __webpack_require__(112);
-
-	var _typeof3 = _interopRequireDefault(_typeof2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var __vue_exports__, __vue_options__;
-	var __vue_styles__ = {};
-
-	/* styles */
-	__webpack_require__(172);
-
-	/* script */
-	__vue_exports__ = __webpack_require__(175);
-
-	/* template */
-	var __vue_template__ = __webpack_require__(176);
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
-	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
-	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
-	    return key !== "default" && key !== "__esModule";
-	  })) {
-	    console.error("named exports are not supported in *.vue files.");
-	  }
-	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options;
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketPay.vue";
-	__vue_options__.render = __vue_template__.render;
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
-
-	/* hot reload */
-	if (false) {
-	  (function () {
-	    var hotAPI = require("vue-hot-reload-api");
-	    hotAPI.install(require("vue"), false);
-	    if (!hotAPI.compatible) return;
-	    module.hot.accept();
-	    if (!module.hot.data) {
-	      hotAPI.createRecord("data-v-73a4cce7", __vue_options__);
-	    } else {
-	      hotAPI.reload("data-v-73a4cce7", __vue_options__);
-	    }
-	  })();
-	}
-	if (__vue_options__.functional) {
-	  console.error("[vue-loader] TicketPay.vue: functional components are not supported and should be defined in plain js files using render functions.");
-	}
-
-	module.exports = __vue_exports__;
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(173);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(134)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-	exports.i(__webpack_require__(174), "");
-
-	// module
-	exports.push([module.id, "\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(86)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff;\n        line-height: 25px; }\n        .ticket-info .address-info .start p:first-child {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p:last-child {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -35px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -35px;\n          content: \"\";\n          border: 10px solid #fff;\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff;\n        margin-top: -10px; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end; }\n      .ticket-info .address-info .end p {\n        color: #fff; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _stringify = __webpack_require__(29);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
-	var _vuex = __webpack_require__(3);
-
-	var _utils = __webpack_require__(136);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _mintUi = __webpack_require__(82);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	var _ = __webpack_require__(158);
-	exports.default = {
-		data: function data() {
-			return {
-				startCity: "",
-				endCity: "",
-				busInfo: {},
-				popupVisible: false, //提示框是否显示
-				tipPopupVisible: false, //取票信息说明
-				popupText: "我是提示框", //提示框文字
-				// Code:"",//微信code
-				isInsure: true,
-				fareName: "", //输入的乘客名
-				certificate: "", //输入的乘客凭证,身份证这类
-				AllFare: [
-					// {
-					// 	name:"周岳谢",
-					// 	// code:"440802199406011519",
-					// 	active:false,
-					// 	isGetTicket:false
-					// },
-					// {
-					// 	name:"周周周",
-					// 	// code:"440802199406011519",
-					// 	active:true,
-					// 	isGetTicket:false
-					// },
-					// {
-					// 	name:"舟舟周",
-					// 	// code:"440802199406011519",
-					// 	active:false,
-					// 	isGetTicket:false
-					// },
-					// {
-					// 	name:"粥粥周",
-					// 	// code:"440802199406011519",
-					// 	active:true,
-					// 	isGetTicket:false
-					// }
-				], //所有的乘客信息
-				isHaveGetTicketMan: false, //是否有取票人信息
-
-				//订单信息
-				payInfoData: {
-					passenger: null, //乘客
-					inSureMoney: 0, //单笔保险费
-					getTicketMan: null, //取票人信息
-					Allinsure: 0, //保险费用(总共)
-					ticketMoney: this.$store.getters.getBusInfo.Price, //票的单价
-					payMoney: 0, //总共支付的钱
-					contactPhone: ""
-				} };
-		},
-		beforeCreate: function beforeCreate() {
-			if (this.$store.getters.getBusInfo === null) {
-				//数据为空,一般是直接进入这个页面才会这样
-				this.$router.replace({ path: "/home/ticketbody" });
-				return;
-			}
-		},
-		created: function created() {
-			this.busInfo = this.$store.getters.getBusInfo;
-			this.startCity = this.$store.state.tickets.startCity;
-			this.endCity = this.$store.state.tickets.endCity;
-
-			var startDate = this.$store.getters.getInfo.startDate;
-			this.$store.commit("CHANGE_HEADER", {
-				isHome: false,
-				Title: startDate.date + " " + startDate.week
-			});
-
-			this.computeAll();
-			// console.log(this.formatData(this.busInfo))
-		},
-
-		computed: {
-			startDate: function startDate() {
-				return this.$store.getters.getInfo.startDate.date + this.$store.getters.getInfo.startDate.week;
-			}
-		},
-		methods: {
-			/**
-	   * 格式化vue数据
-	   * @param  {[type]} data [description]
-	   * @return {[type]}      [description]
-	   */
-			formatData: function formatData(data) {
-				return JSON.parse((0, _stringify2.default)(data));
-			},
-
-			// pay(){
-			// 	console.log(this.formatData(this.busInfo))
-			// },
-			/**
-	   * 提示框里的信息
-	   * @param  {[type]} text [description]
-	   * @return {[type]}      [description]
-	   */
-			popupMessage: function popupMessage(text) {
-				this.popupText = text;
-				this.popupVisible = true;
-			},
-
-			// postCode(){
-			// 	// 提示加载中
-			// 	Indicator.open({
-			// 		text: '加载中...',
-			// 		spinnerType: 'double-bounce'
-			// 	});
-			// 	this.$http.post("http://wx.1yhp.net/api/Order/WxPay",{Code:this.Code}).then(res=>{
-			// 		Indicator.close();
-			// 		if(res.data.Status===0){
-			// 			this.popupMessage(res.data.Message);
-			// 		}
-			// 		else{
-			// 			this.popupMessage(JSON.stringify(res.data));
-			// 			this.payMoney(res.data.Data);
-			// 		}
-			// 	}).catch(error=>{
-			// 		this.popupMessage(error);
-			// 	})
-			// },
-			// payMoney(paydata){
-			// 	window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
-			// 		if(r.err_msg==="get_brand_wcpay_request:ok"){
-			// 			// 支付成功
-			// 			// 再根据小票拿数据
-			// 			// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-			// 			Indicator.open({
-			// 				text: '支付成功...',
-			// 				spinnerType: 'double-bounce'
-			// 			});
-			// 			setTimeout(()=>{
-			// 				Indicator.close();
-			// 			},3000);
-			// 		}
-			// 	});
-			// },
-			/**
-	   * 查看取票退票说明
-	   * @return {[type]} [description]
-	   */
-			openTip: function openTip() {
-				this.tipPopupVisible = true;
-			},
-
-			/**
-	   * 获取所有的乘客数组
-	   * @return {[type]} [description]
-	   */
-			getAllFare: function getAllFare() {
-				var data = _.filter(this.AllFare, function (item) {
-					return item.active;
-				});
-
-				this.payInfoData.passenger = data;
-				return data;
-			},
-
-			/**
-	   * 计算所有的乘客的钱
-	   * @return {[type]} [description]
-	   */
-			computeTicketMoney: function computeTicketMoney() {
-				var len = this.getAllFare().length;
-				this.payInfoData.payMoney = this.payInfoData.ticketMoney * len + this.payInfoData.Allinsure;
-			},
-
-			/**
-	   * 计算保险费
-	   * @return {[type]} [description]
-	   */
-			computeInsureMoney: function computeInsureMoney() {
-				if (this.isInsure) {
-					// 设置了保险
-					this.payInfoData.Allinsure = this.payInfoData.inSureMoney * this.getAllFare().length;
-				} else {
-					this.payInfoData.Allinsure = 0;
-				}
-			},
-			computeAll: function computeAll() {
-				this.computeInsureMoney();
-				this.computeTicketMoney();
-			},
-
-			/**
-	   * 获取取票人信息
-	   * @return {[type]} [description]
-	   */
-			getGetTicketMan: function getGetTicketMan() {
-				var data = _.filter(this.AllFare, function (item) {
-					return item.isGetTicket;
-				});
-
-				this.payInfoData.getTicketMan = data;
-				return data;
-			},
-
-			/**
-	   * 提交订单
-	   * @return {[type]} [description]
-	   */
-			submitOrder: function submitOrder() {
-				var _this = this;
-
-				if (this.getAllFare().length === 0) {
-					this.popupMessage("请先添加或者选择乘客!");
-					return;
-				} else {
-					if (this.getGetTicketMan().length === 0) {
-						this.popupMessage("请设置一个取票人!");
-						return;
-					} else {
-						if (this.inspectPhone()) {
-							this.computeAll();
-							_mintUi.Indicator.open({
-								text: '加载中...',
-								spinnerType: 'double-bounce'
-							});
-
-							// 获取乘客名字,逗号相连
-							var arrayData = "";
-							for (var i = 0; i < this.payInfoData.passenger.length; i++) {
-								arrayData = arrayData + "," + this.AllFare.name;
-							}
-
-							this.$store.dispatch("payMoney", {
-								Name: arrayData,
-								Mobile: this.payInfoData.contactPhone,
-								Num: arrayData.length
-							}).then(function (result) {
-								console.log(result);
-								_mintUi.Indicator.close();
-								_this.popupMessage("支付失败,请稍后再试!");
-							});
-							// setTimeout(()=>{
-							// 	Indicator.close();
-							// 	this.popupMessage("支付失败,请稍后再试!");
-							// },2000)
-						} else {
-							this.popupMessage("请填写正确的联系手机号!");
-						}
-					}
-				}
-			},
-
-			/**
-	   * 退出提示框提示页(关闭)
-	   * @return {[type]} [description]
-	   */
-			backTip: function backTip() {
-				// 退出tip
-				this.tipPopupVisible = false;
-				this.popupVisible = false;
-			},
-
-			/**
-	   * 检查手机号
-	   * @return {[type]} [description]
-	   */
-			inspectPhone: function inspectPhone() {
-				return (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)
-				);
-			},
-
-			/**
-	   * 添加乘客信息
-	   * @return {[type]} [description]
-	   */
-			append: function append() {
-				// 添加乘客至AllFare
-				// 首先检查输入是否正确
-				if (_utils2.default.isChinaName(this.fareName) && this.fareName.length >= 2) {
-					// 是中文
-					if (this.AllFare.length > this.busInfo.TicketNum) {
-						// 如果添加人数大于剩余票数
-						this.popupMessage("乘客数不允许大于余票数!");
-					} else {
-						this.AllFare.push({
-							name: this.fareName,
-							// code:this.certificate,
-							active: true,
-							isGetTicket: false
-						});
-						// 清空输入的信息
-						this.fareName = "";
-						this.certificate = "";
-
-						this.popupMessage("添加成功!");
-						this.computeAll();
-					}
-				} else {
-					this.popupMessage("请输入正确的姓名!");
-				}
-			},
-
-			/**
-	   * 选择乘客check按钮
-	   * @param {[type]} index [description]
-	   */
-			setFare: function setFare(index) {
-				// 若没有选中,那么设置为乘客
-				// 添加的乘客不允许大于余票
-				var lastTicket = parseInt(this.busInfo.showTicketInfo);
-
-				if (this.getAllFare().length > lastTicket && !this.AllFare[index].active) {
-					// 选中的已经超过3个人
-					this.popupMessage("乘客数已经超过余票数!");
-				} else {
-					this.AllFare[index].active = !this.AllFare[index].active;
-					this.computeAll();
-				}
-			},
-
-			/**
-	   * 删除乘客信息
-	   * @param  {[type]} index [description]
-	   * @return {[type]}       [description]
-	   */
-			trashMan: function trashMan(index) {
-				var _this2 = this;
-
-				var array = this.formatData(this.AllFare);
-
-				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
-					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
-					_this2.AllFare.splice(index, 1);
-					_this2.computeAll();
-				}).catch(function (error) {
-					// error=cancel
-					console.log(error);
-				});
-			},
-
-			/**
-	   * 设置汽车保险
-	   */
-			GetInSure: function GetInSure() {
-				this.isInsure = !this.isInsure;
-				this.computeAll();
-			},
-
-			/**
-	   * 设置取票人
-	   * @param {[type]} index [description]
-	   */
-			setGetTicketMan: function setGetTicketMan(index) {
-				_.map(this.AllFare, function (item) {
-					item.isGetTicket = false;
-				});
-				this.AllFare[index].isGetTicket = true;
-			},
-			GetDiscount: function GetDiscount() {
-				// 查看选取优惠券
-			}
-		}
-	};
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "position",
-	    attrs: {
-	      "id": "pay"
-	    }
-	  }, [_vm._h('div', {
-	    staticClass: "ticket-info"
-	  }, [_vm._h('div', {
-	    staticClass: "address-info"
-	  }, [_vm._h('div', {
-	    staticClass: "start box"
-	  }, [_vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.StartTime.slice(0, _vm.busInfo.StartTime.length - 3))
-	    }
-	  }), " ", _vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.StartPoint)
-	    }
-	  }), " ", _vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.ShiftNum)
-	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "center box"
-	  }, [_vm._m(0), _vm._h('p', {
-	    staticClass: "arrow-message",
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.Route)
-	    }
-	  }), " ", _vm._h('p')]), " ", _vm._h('div', {
-	    staticClass: "end box"
-	  }, [_vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.EndPoint)
-	    }
-	  }), " "])]), " ", _vm._h('div', {
-	    staticClass: "tip-info",
-	    on: {
-	      "click": _vm.openTip
-	    }
-	  }, [_vm._m(1)])]), " ", " ", _vm._h('div', {
-	    staticClass: "people-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info-head"
-	  }, [_vm._h('span', ["乘客信息"]), " ", _vm._h('span', ["还剩余票" + _vm._s(_vm.busInfo.TicketNum)])]), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
-	    staticClass: "info-list"
-	  }, [_vm._l((_vm.AllFare), function(item, index) {
-	    return _vm._h('div', {
-	      staticClass: "list"
-	    }, [_vm._h('div', {
-	      staticClass: "check",
-	      on: {
-	        "click": function($event) {
-	          _vm.setFare(index)
-	        }
-	      }
-	    }, [_vm._h('span', {
-	      class: [item.active ? 'active' : '']
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-check"
-	    })])]), " ", _vm._h('div', {
-	      staticClass: "list-body"
-	    }, [_vm._h('div', {
-	      staticClass: "list-top"
-	    }, [_vm._h('span', {
-	      staticClass: "name",
-	      domProps: {
-	        "textContent": _vm._s(item.name)
-	      }
-	    }), " ", _vm._h('span', {
-	      staticClass: "type"
-	    }, ["成人票"]), " ", (item.isGetTicket) ? _vm._h('span', {
-	      staticClass: "get-ticket"
-	    }, ["取票人"]) : _vm._h('span', {
-	      staticClass: "set-ticket",
-	      on: {
-	        "click": function($event) {
-	          _vm.setGetTicketMan(index)
-	        }
-	      }
-	    }, ["设为取票人"]), " "]), " "]), " ", _vm._h('span', {
-	      on: {
-	        "click": function($event) {
-	          _vm.trashMan(index)
-	        }
-	      }
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-trash"
-	    })])])
-	  })]) : _vm._e(), " ", " ", _vm._h('div', {
-	    staticClass: "info-man"
-	  }, [_vm._h('div', {
-	    staticClass: "info-man-name info"
-	  }, [_vm._h('span', ["乘客姓名"]), " ", _vm._h('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.fareName),
-	      expression: "fareName"
-	    }],
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "请填写真实姓名以免取不出票"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.fareName)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.fareName = $event.target.value
-	      }
-	    }
-	  })]), " "]), " ", _vm._h('div', {
-	    staticClass: "click-append",
-	    on: {
-	      "click": _vm.append
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-plus-circle"
-	  }), " ", _vm._h('button', ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
-	    staticClass: "contact-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', ["联系手机"]), " ", _vm._h('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.payInfoData.contactPhone),
-	      expression: "payInfoData.contactPhone"
-	    }],
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "用于接收通知短信"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.payInfoData.contactPhone)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.payInfoData.contactPhone = $event.target.value
-	      }
-	    }
-	  })])]), " ", " ", _vm._h('div', {
-	    staticClass: "other-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', {
-	    staticClass: "first"
-	  }, ["优惠券"]), " ", _vm._h('span', {
-	    staticClass: "center"
-	  }, ["没有优惠券"]), " ", _vm._h('div', {
-	    staticClass: "last"
-	  }, [_vm._h('span', {
-	    staticClass: "right",
-	    on: {
-	      "click": _vm.GetDiscount
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-angle-right"
-	  })])])])]), " ", " ", " ", _vm._m(2), " ", " ", " ", _vm._h('div', {
-	    staticClass: "submit-box"
-	  }, [_vm._h('div', {
-	    staticClass: "order-info"
-	  }, [_vm._h('p', ["订单总额", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s('¥' + _vm.payInfoData.payMoney)
-	    }
-	  })]), " ", _vm._h('p', [_vm._h('span', ["票价", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s('¥' + _vm.payInfoData.ticketMoney)
-	    }
-	  })]), " "])]), " ", _vm._h('div', {
-	    staticClass: "submit-order"
-	  }, [_vm._h('button', {
-	    on: {
-	      "click": _vm.submitOrder
-	    }
-	  }, ["同意并提交"])])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.tipPopupVisible),
-	      expression: "tipPopupVisible"
-	    }],
-	    staticClass: "tip-popup-visible",
-	    attrs: {
-	      "position": "right"
-	    },
-	    domProps: {
-	      "value": (_vm.tipPopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.tipPopupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('div', {
-	    staticClass: "body"
-	  }, [_vm._h('h3', ["声明:"]), " ", _vm._h('p', ["1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。"]), " ", _vm._h('p', ["2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。"]), " ", _vm._h('p', ["3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。"]), " ", _vm._h('h3', ["取票说明"]), " ", _vm._h('p', ["提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票"]), " ", _vm._h('h3', ["退票、改签说明："]), " ", _vm._h('p', ["2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理。"]), " ", _vm._h('button', {
-	    on: {
-	      "click": _vm.backTip
-	    }
-	  }, ["返回"])])])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.popupVisible),
-	      expression: "popupVisible"
-	    }],
-	    staticClass: "message-popup-visible",
-	    attrs: {
-	      "position": "top"
-	    },
-	    domProps: {
-	      "value": (_vm.popupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.popupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('p', {
-	    staticClass: "popup",
-	    domProps: {
-	      "textContent": _vm._s(_vm.popupText)
-	    }
-	  })])])])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('p', {
-	    staticClass: "arrow"
-	  }, [_vm._h('br')])
-	},function (){var _vm=this;
-	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
-	    staticClass: "fa fa-caret-down"
-	  })])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "root-tip-info"
-	  }, [_vm._h('div', {
-	    staticClass: "text"
-	  }, [_vm._h('p', ["友情提示:"]), " ", _vm._h('p', ["*自助取票请提前到出发车站取票。"]), " ", _vm._h('p', ["*乘客信息需为实际乘车人，否则影响保险保障的权益哦。"])])])
-	}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-73a4cce7", module.exports)
-	  }
-	}
-
-/***/ },
-/* 177 */
-/***/ function(module, exports) {
-
-	/*!
-	 * vue-resource v0.9.3
-	 * https://github.com/vuejs/vue-resource
-	 * Released under the MIT License.
-	 */
-
-	'use strict';
-
-	/**
-	 * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
-	 */
-
-	var RESOLVED = 0;
-	var REJECTED = 1;
-	var PENDING = 2;
-
-	function Promise$2(executor) {
-
-	    this.state = PENDING;
-	    this.value = undefined;
-	    this.deferred = [];
-
-	    var promise = this;
-
-	    try {
-	        executor(function (x) {
-	            promise.resolve(x);
-	        }, function (r) {
-	            promise.reject(r);
-	        });
-	    } catch (e) {
-	        promise.reject(e);
-	    }
-	}
-
-	Promise$2.reject = function (r) {
-	    return new Promise$2(function (resolve, reject) {
-	        reject(r);
-	    });
-	};
-
-	Promise$2.resolve = function (x) {
-	    return new Promise$2(function (resolve, reject) {
-	        resolve(x);
-	    });
-	};
-
-	Promise$2.all = function all(iterable) {
-	    return new Promise$2(function (resolve, reject) {
-	        var count = 0,
-	            result = [];
-
-	        if (iterable.length === 0) {
-	            resolve(result);
-	        }
-
-	        function resolver(i) {
-	            return function (x) {
-	                result[i] = x;
-	                count += 1;
-
-	                if (count === iterable.length) {
-	                    resolve(result);
-	                }
-	            };
-	        }
-
-	        for (var i = 0; i < iterable.length; i += 1) {
-	            Promise$2.resolve(iterable[i]).then(resolver(i), reject);
-	        }
-	    });
-	};
-
-	Promise$2.race = function race(iterable) {
-	    return new Promise$2(function (resolve, reject) {
-	        for (var i = 0; i < iterable.length; i += 1) {
-	            Promise$2.resolve(iterable[i]).then(resolve, reject);
-	        }
-	    });
-	};
-
-	var p$1 = Promise$2.prototype;
-
-	p$1.resolve = function resolve(x) {
-	    var promise = this;
-
-	    if (promise.state === PENDING) {
-	        if (x === promise) {
-	            throw new TypeError('Promise settled with itself.');
-	        }
-
-	        var called = false;
-
-	        try {
-	            var then = x && x['then'];
-
-	            if (x !== null && typeof x === 'object' && typeof then === 'function') {
-	                then.call(x, function (x) {
-	                    if (!called) {
-	                        promise.resolve(x);
-	                    }
-	                    called = true;
-	                }, function (r) {
-	                    if (!called) {
-	                        promise.reject(r);
-	                    }
-	                    called = true;
-	                });
-	                return;
-	            }
-	        } catch (e) {
-	            if (!called) {
-	                promise.reject(e);
-	            }
-	            return;
-	        }
-
-	        promise.state = RESOLVED;
-	        promise.value = x;
-	        promise.notify();
-	    }
-	};
-
-	p$1.reject = function reject(reason) {
-	    var promise = this;
-
-	    if (promise.state === PENDING) {
-	        if (reason === promise) {
-	            throw new TypeError('Promise settled with itself.');
-	        }
-
-	        promise.state = REJECTED;
-	        promise.value = reason;
-	        promise.notify();
-	    }
-	};
-
-	p$1.notify = function notify() {
-	    var promise = this;
-
-	    nextTick(function () {
-	        if (promise.state !== PENDING) {
-	            while (promise.deferred.length) {
-	                var deferred = promise.deferred.shift(),
-	                    onResolved = deferred[0],
-	                    onRejected = deferred[1],
-	                    resolve = deferred[2],
-	                    reject = deferred[3];
-
-	                try {
-	                    if (promise.state === RESOLVED) {
-	                        if (typeof onResolved === 'function') {
-	                            resolve(onResolved.call(undefined, promise.value));
-	                        } else {
-	                            resolve(promise.value);
-	                        }
-	                    } else if (promise.state === REJECTED) {
-	                        if (typeof onRejected === 'function') {
-	                            resolve(onRejected.call(undefined, promise.value));
-	                        } else {
-	                            reject(promise.value);
-	                        }
-	                    }
-	                } catch (e) {
-	                    reject(e);
-	                }
-	            }
-	        }
-	    });
-	};
-
-	p$1.then = function then(onResolved, onRejected) {
-	    var promise = this;
-
-	    return new Promise$2(function (resolve, reject) {
-	        promise.deferred.push([onResolved, onRejected, resolve, reject]);
-	        promise.notify();
-	    });
-	};
-
-	p$1.catch = function (onRejected) {
-	    return this.then(undefined, onRejected);
-	};
-
-	var PromiseObj = window.Promise || Promise$2;
-
-	function Promise$1(executor, context) {
-
-	    if (executor instanceof PromiseObj) {
-	        this.promise = executor;
-	    } else {
-	        this.promise = new PromiseObj(executor.bind(context));
-	    }
-
-	    this.context = context;
-	}
-
-	Promise$1.all = function (iterable, context) {
-	    return new Promise$1(PromiseObj.all(iterable), context);
-	};
-
-	Promise$1.resolve = function (value, context) {
-	    return new Promise$1(PromiseObj.resolve(value), context);
-	};
-
-	Promise$1.reject = function (reason, context) {
-	    return new Promise$1(PromiseObj.reject(reason), context);
-	};
-
-	Promise$1.race = function (iterable, context) {
-	    return new Promise$1(PromiseObj.race(iterable), context);
-	};
-
-	var p = Promise$1.prototype;
-
-	p.bind = function (context) {
-	    this.context = context;
-	    return this;
-	};
-
-	p.then = function (fulfilled, rejected) {
-
-	    if (fulfilled && fulfilled.bind && this.context) {
-	        fulfilled = fulfilled.bind(this.context);
-	    }
-
-	    if (rejected && rejected.bind && this.context) {
-	        rejected = rejected.bind(this.context);
-	    }
-
-	    return new Promise$1(this.promise.then(fulfilled, rejected), this.context);
-	};
-
-	p.catch = function (rejected) {
-
-	    if (rejected && rejected.bind && this.context) {
-	        rejected = rejected.bind(this.context);
-	    }
-
-	    return new Promise$1(this.promise.catch(rejected), this.context);
-	};
-
-	p.finally = function (callback) {
-
-	    return this.then(function (value) {
-	        callback.call(this);
-	        return value;
-	    }, function (reason) {
-	        callback.call(this);
-	        return PromiseObj.reject(reason);
-	    });
-	};
-
-	var debug = false;
-	var util = {};
-	var array = [];
-	function Util (Vue) {
-	    util = Vue.util;
-	    debug = Vue.config.debug || !Vue.config.silent;
-	}
-
-	function warn(msg) {
-	    if (typeof console !== 'undefined' && debug) {
-	        console.warn('[VueResource warn]: ' + msg);
-	    }
-	}
-
-	function error(msg) {
-	    if (typeof console !== 'undefined') {
-	        console.error(msg);
-	    }
-	}
-
-	function nextTick(cb, ctx) {
-	    return util.nextTick(cb, ctx);
-	}
-
-	function trim(str) {
-	    return str.replace(/^\s*|\s*$/g, '');
-	}
-
-	var isArray = Array.isArray;
-
-	function isString(val) {
-	    return typeof val === 'string';
-	}
-
-	function isBoolean(val) {
-	    return val === true || val === false;
-	}
-
-	function isFunction(val) {
-	    return typeof val === 'function';
-	}
-
-	function isObject(obj) {
-	    return obj !== null && typeof obj === 'object';
-	}
-
-	function isPlainObject(obj) {
-	    return isObject(obj) && Object.getPrototypeOf(obj) == Object.prototype;
-	}
-
-	function isFormData(obj) {
-	    return typeof FormData !== 'undefined' && obj instanceof FormData;
-	}
-
-	function when(value, fulfilled, rejected) {
-
-	    var promise = Promise$1.resolve(value);
-
-	    if (arguments.length < 2) {
-	        return promise;
-	    }
-
-	    return promise.then(fulfilled, rejected);
-	}
-
-	function options(fn, obj, opts) {
-
-	    opts = opts || {};
-
-	    if (isFunction(opts)) {
-	        opts = opts.call(obj);
-	    }
-
-	    return merge(fn.bind({ $vm: obj, $options: opts }), fn, { $options: opts });
-	}
-
-	function each(obj, iterator) {
-
-	    var i, key;
-
-	    if (typeof obj.length == 'number') {
-	        for (i = 0; i < obj.length; i++) {
-	            iterator.call(obj[i], obj[i], i);
-	        }
-	    } else if (isObject(obj)) {
-	        for (key in obj) {
-	            if (obj.hasOwnProperty(key)) {
-	                iterator.call(obj[key], obj[key], key);
-	            }
-	        }
-	    }
-
-	    return obj;
-	}
-
-	var assign = Object.assign || _assign;
-
-	function merge(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-	        _merge(target, source, true);
-	    });
-
-	    return target;
-	}
-
-	function defaults(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-
-	        for (var key in source) {
-	            if (target[key] === undefined) {
-	                target[key] = source[key];
-	            }
-	        }
-	    });
-
-	    return target;
-	}
-
-	function _assign(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-	        _merge(target, source);
-	    });
-
-	    return target;
-	}
-
-	function _merge(target, source, deep) {
-	    for (var key in source) {
-	        if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-	            if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
-	                target[key] = {};
-	            }
-	            if (isArray(source[key]) && !isArray(target[key])) {
-	                target[key] = [];
-	            }
-	            _merge(target[key], source[key], deep);
-	        } else if (source[key] !== undefined) {
-	            target[key] = source[key];
-	        }
-	    }
-	}
-
-	function root (options, next) {
-
-	    var url = next(options);
-
-	    if (isString(options.root) && !url.match(/^(https?:)?\//)) {
-	        url = options.root + '/' + url;
-	    }
-
-	    return url;
-	}
-
-	function query (options, next) {
-
-	    var urlParams = Object.keys(Url.options.params),
-	        query = {},
-	        url = next(options);
-
-	    each(options.params, function (value, key) {
-	        if (urlParams.indexOf(key) === -1) {
-	            query[key] = value;
-	        }
-	    });
-
-	    query = Url.params(query);
-
-	    if (query) {
-	        url += (url.indexOf('?') == -1 ? '?' : '&') + query;
-	    }
-
-	    return url;
-	}
-
-	/**
-	 * URL Template v2.0.6 (https://github.com/bramstein/url-template)
-	 */
-
-	function expand(url, params, variables) {
-
-	    var tmpl = parse(url),
-	        expanded = tmpl.expand(params);
-
-	    if (variables) {
-	        variables.push.apply(variables, tmpl.vars);
-	    }
-
-	    return expanded;
-	}
-
-	function parse(template) {
-
-	    var operators = ['+', '#', '.', '/', ';', '?', '&'],
-	        variables = [];
-
-	    return {
-	        vars: variables,
-	        expand: function (context) {
-	            return template.replace(/\{([^\{\}]+)\}|([^\{\}]+)/g, function (_, expression, literal) {
-	                if (expression) {
-
-	                    var operator = null,
-	                        values = [];
-
-	                    if (operators.indexOf(expression.charAt(0)) !== -1) {
-	                        operator = expression.charAt(0);
-	                        expression = expression.substr(1);
-	                    }
-
-	                    expression.split(/,/g).forEach(function (variable) {
-	                        var tmp = /([^:\*]*)(?::(\d+)|(\*))?/.exec(variable);
-	                        values.push.apply(values, getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
-	                        variables.push(tmp[1]);
-	                    });
-
-	                    if (operator && operator !== '+') {
-
-	                        var separator = ',';
-
-	                        if (operator === '?') {
-	                            separator = '&';
-	                        } else if (operator !== '#') {
-	                            separator = operator;
-	                        }
-
-	                        return (values.length !== 0 ? operator : '') + values.join(separator);
-	                    } else {
-	                        return values.join(',');
-	                    }
-	                } else {
-	                    return encodeReserved(literal);
-	                }
-	            });
-	        }
-	    };
-	}
-
-	function getValues(context, operator, key, modifier) {
-
-	    var value = context[key],
-	        result = [];
-
-	    if (isDefined(value) && value !== '') {
-	        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-	            value = value.toString();
-
-	            if (modifier && modifier !== '*') {
-	                value = value.substring(0, parseInt(modifier, 10));
-	            }
-
-	            result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-	        } else {
-	            if (modifier === '*') {
-	                if (Array.isArray(value)) {
-	                    value.filter(isDefined).forEach(function (value) {
-	                        result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-	                    });
-	                } else {
-	                    Object.keys(value).forEach(function (k) {
-	                        if (isDefined(value[k])) {
-	                            result.push(encodeValue(operator, value[k], k));
-	                        }
-	                    });
-	                }
-	            } else {
-	                var tmp = [];
-
-	                if (Array.isArray(value)) {
-	                    value.filter(isDefined).forEach(function (value) {
-	                        tmp.push(encodeValue(operator, value));
-	                    });
-	                } else {
-	                    Object.keys(value).forEach(function (k) {
-	                        if (isDefined(value[k])) {
-	                            tmp.push(encodeURIComponent(k));
-	                            tmp.push(encodeValue(operator, value[k].toString()));
-	                        }
-	                    });
-	                }
-
-	                if (isKeyOperator(operator)) {
-	                    result.push(encodeURIComponent(key) + '=' + tmp.join(','));
-	                } else if (tmp.length !== 0) {
-	                    result.push(tmp.join(','));
-	                }
-	            }
-	        }
-	    } else {
-	        if (operator === ';') {
-	            result.push(encodeURIComponent(key));
-	        } else if (value === '' && (operator === '&' || operator === '?')) {
-	            result.push(encodeURIComponent(key) + '=');
-	        } else if (value === '') {
-	            result.push('');
-	        }
-	    }
-
-	    return result;
-	}
-
-	function isDefined(value) {
-	    return value !== undefined && value !== null;
-	}
-
-	function isKeyOperator(operator) {
-	    return operator === ';' || operator === '&' || operator === '?';
-	}
-
-	function encodeValue(operator, value, key) {
-
-	    value = operator === '+' || operator === '#' ? encodeReserved(value) : encodeURIComponent(value);
-
-	    if (key) {
-	        return encodeURIComponent(key) + '=' + value;
-	    } else {
-	        return value;
-	    }
-	}
-
-	function encodeReserved(str) {
-	    return str.split(/(%[0-9A-Fa-f]{2})/g).map(function (part) {
-	        if (!/%[0-9A-Fa-f]/.test(part)) {
-	            part = encodeURI(part);
-	        }
-	        return part;
-	    }).join('');
-	}
-
-	function template (options) {
-
-	    var variables = [],
-	        url = expand(options.url, options.params, variables);
-
-	    variables.forEach(function (key) {
-	        delete options.params[key];
-	    });
-
-	    return url;
-	}
-
-	/**
-	 * Service for URL templating.
-	 */
-
-	var ie = document.documentMode;
-	var el = document.createElement('a');
-
-	function Url(url, params) {
-
-	    var self = this || {},
-	        options = url,
-	        transform;
-
-	    if (isString(url)) {
-	        options = { url: url, params: params };
-	    }
-
-	    options = merge({}, Url.options, self.$options, options);
-
-	    Url.transforms.forEach(function (handler) {
-	        transform = factory(handler, transform, self.$vm);
-	    });
-
-	    return transform(options);
-	}
-
-	/**
-	 * Url options.
-	 */
-
-	Url.options = {
-	    url: '',
-	    root: null,
-	    params: {}
-	};
-
-	/**
-	 * Url transforms.
-	 */
-
-	Url.transforms = [template, query, root];
-
-	/**
-	 * Encodes a Url parameter string.
-	 *
-	 * @param {Object} obj
-	 */
-
-	Url.params = function (obj) {
-
-	    var params = [],
-	        escape = encodeURIComponent;
-
-	    params.add = function (key, value) {
-
-	        if (isFunction(value)) {
-	            value = value();
-	        }
-
-	        if (value === null) {
-	            value = '';
-	        }
-
-	        this.push(escape(key) + '=' + escape(value));
-	    };
-
-	    serialize(params, obj);
-
-	    return params.join('&').replace(/%20/g, '+');
-	};
-
-	/**
-	 * Parse a URL and return its components.
-	 *
-	 * @param {String} url
-	 */
-
-	Url.parse = function (url) {
-
-	    if (ie) {
-	        el.href = url;
-	        url = el.href;
-	    }
-
-	    el.href = url;
-
-	    return {
-	        href: el.href,
-	        protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
-	        port: el.port,
-	        host: el.host,
-	        hostname: el.hostname,
-	        pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
-	        search: el.search ? el.search.replace(/^\?/, '') : '',
-	        hash: el.hash ? el.hash.replace(/^#/, '') : ''
-	    };
-	};
-
-	function factory(handler, next, vm) {
-	    return function (options) {
-	        return handler.call(vm, options, next);
-	    };
-	}
-
-	function serialize(params, obj, scope) {
-
-	    var array = isArray(obj),
-	        plain = isPlainObject(obj),
-	        hash;
-
-	    each(obj, function (value, key) {
-
-	        hash = isObject(value) || isArray(value);
-
-	        if (scope) {
-	            key = scope + '[' + (plain || hash ? key : '') + ']';
-	        }
-
-	        if (!scope && array) {
-	            params.add(value.name, value.value);
-	        } else if (hash) {
-	            serialize(params, value, key);
-	        } else {
-	            params.add(key, value);
-	        }
-	    });
-	}
-
-	function xdrClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var xdr = new XDomainRequest(),
-	            handler = function (event) {
-
-	            var response = request.respondWith(xdr.responseText, {
-	                status: xdr.status,
-	                statusText: xdr.statusText
-	            });
-
-	            resolve(response);
-	        };
-
-	        request.abort = function () {
-	            return xdr.abort();
-	        };
-
-	        xdr.open(request.method, request.getUrl(), true);
-	        xdr.timeout = 0;
-	        xdr.onload = handler;
-	        xdr.onerror = handler;
-	        xdr.ontimeout = function () {};
-	        xdr.onprogress = function () {};
-	        xdr.send(request.getBody());
-	    });
-	}
-
-	var ORIGIN_URL = Url.parse(location.href);
-	var SUPPORTS_CORS = 'withCredentials' in new XMLHttpRequest();
-
-	function cors (request, next) {
-
-	    if (!isBoolean(request.crossOrigin) && crossOrigin(request)) {
-	        request.crossOrigin = true;
-	    }
-
-	    if (request.crossOrigin) {
-
-	        if (!SUPPORTS_CORS) {
-	            request.client = xdrClient;
-	        }
-
-	        delete request.emulateHTTP;
-	    }
-
-	    next();
-	}
-
-	function crossOrigin(request) {
-
-	    var requestUrl = Url.parse(Url(request));
-
-	    return requestUrl.protocol !== ORIGIN_URL.protocol || requestUrl.host !== ORIGIN_URL.host;
-	}
-
-	function body (request, next) {
-
-	    if (request.emulateJSON && isPlainObject(request.body)) {
-	        request.body = Url.params(request.body);
-	        request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-	    }
-
-	    if (isFormData(request.body)) {
-	        delete request.headers['Content-Type'];
-	    }
-
-	    if (isPlainObject(request.body)) {
-	        request.body = JSON.stringify(request.body);
-	    }
-
-	    next(function (response) {
-
-	        var contentType = response.headers['Content-Type'];
-
-	        if (isString(contentType) && contentType.indexOf('application/json') === 0) {
-
-	            try {
-	                response.data = response.json();
-	            } catch (e) {
-	                response.data = null;
-	            }
-	        } else {
-	            response.data = response.text();
-	        }
-	    });
-	}
-
-	function jsonpClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var name = request.jsonp || 'callback',
-	            callback = '_jsonp' + Math.random().toString(36).substr(2),
-	            body = null,
-	            handler,
-	            script;
-
-	        handler = function (event) {
-
-	            var status = 0;
-
-	            if (event.type === 'load' && body !== null) {
-	                status = 200;
-	            } else if (event.type === 'error') {
-	                status = 404;
-	            }
-
-	            resolve(request.respondWith(body, { status: status }));
-
-	            delete window[callback];
-	            document.body.removeChild(script);
-	        };
-
-	        request.params[name] = callback;
-
-	        window[callback] = function (result) {
-	            body = JSON.stringify(result);
-	        };
-
-	        script = document.createElement('script');
-	        script.src = request.getUrl();
-	        script.type = 'text/javascript';
-	        script.async = true;
-	        script.onload = handler;
-	        script.onerror = handler;
-
-	        document.body.appendChild(script);
-	    });
-	}
-
-	function jsonp (request, next) {
-
-	    if (request.method == 'JSONP') {
-	        request.client = jsonpClient;
-	    }
-
-	    next(function (response) {
-
-	        if (request.method == 'JSONP') {
-	            response.data = response.json();
-	        }
-	    });
-	}
-
-	function before (request, next) {
-
-	    if (isFunction(request.before)) {
-	        request.before.call(this, request);
-	    }
-
-	    next();
-	}
-
-	/**
-	 * HTTP method override Interceptor.
-	 */
-
-	function method (request, next) {
-
-	    if (request.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(request.method)) {
-	        request.headers['X-HTTP-Method-Override'] = request.method;
-	        request.method = 'POST';
-	    }
-
-	    next();
-	}
-
-	function header (request, next) {
-
-	    request.method = request.method.toUpperCase();
-	    request.headers = assign({}, Http.headers.common, !request.crossOrigin ? Http.headers.custom : {}, Http.headers[request.method.toLowerCase()], request.headers);
-
-	    next();
-	}
-
-	/**
-	 * Timeout Interceptor.
-	 */
-
-	function timeout (request, next) {
-
-	    var timeout;
-
-	    if (request.timeout) {
-	        timeout = setTimeout(function () {
-	            request.abort();
-	        }, request.timeout);
-	    }
-
-	    next(function (response) {
-
-	        clearTimeout(timeout);
-	    });
-	}
-
-	function xhrClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var xhr = new XMLHttpRequest(),
-	            handler = function (event) {
-
-	            var response = request.respondWith('response' in xhr ? xhr.response : xhr.responseText, {
-	                status: xhr.status === 1223 ? 204 : xhr.status, // IE9 status bug
-	                statusText: xhr.status === 1223 ? 'No Content' : trim(xhr.statusText),
-	                headers: parseHeaders(xhr.getAllResponseHeaders())
-	            });
-
-	            resolve(response);
-	        };
-
-	        request.abort = function () {
-	            return xhr.abort();
-	        };
-
-	        xhr.open(request.method, request.getUrl(), true);
-	        xhr.timeout = 0;
-	        xhr.onload = handler;
-	        xhr.onerror = handler;
-
-	        if (request.progress) {
-	            if (request.method === 'GET') {
-	                xhr.addEventListener('progress', request.progress);
-	            } else if (/^(POST|PUT)$/i.test(request.method)) {
-	                xhr.upload.addEventListener('progress', request.progress);
-	            }
-	        }
-
-	        if (request.credentials === true) {
-	            xhr.withCredentials = true;
-	        }
-
-	        each(request.headers || {}, function (value, header) {
-	            xhr.setRequestHeader(header, value);
-	        });
-
-	        xhr.send(request.getBody());
-	    });
-	}
-
-	function parseHeaders(str) {
-
-	    var headers = {},
-	        value,
-	        name,
-	        i;
-
-	    each(trim(str).split('\n'), function (row) {
-
-	        i = row.indexOf(':');
-	        name = trim(row.slice(0, i));
-	        value = trim(row.slice(i + 1));
-
-	        if (headers[name]) {
-
-	            if (isArray(headers[name])) {
-	                headers[name].push(value);
-	            } else {
-	                headers[name] = [headers[name], value];
-	            }
-	        } else {
-
-	            headers[name] = value;
-	        }
-	    });
-
-	    return headers;
-	}
-
-	function Client (context) {
-
-	    var reqHandlers = [sendRequest],
-	        resHandlers = [],
-	        handler;
-
-	    if (!isObject(context)) {
-	        context = null;
-	    }
-
-	    function Client(request) {
-	        return new Promise$1(function (resolve) {
-
-	            function exec() {
-
-	                handler = reqHandlers.pop();
-
-	                if (isFunction(handler)) {
-	                    handler.call(context, request, next);
-	                } else {
-	                    warn('Invalid interceptor of type ' + typeof handler + ', must be a function');
-	                    next();
-	                }
-	            }
-
-	            function next(response) {
-
-	                if (isFunction(response)) {
-
-	                    resHandlers.unshift(response);
-	                } else if (isObject(response)) {
-
-	                    resHandlers.forEach(function (handler) {
-	                        response = when(response, function (response) {
-	                            return handler.call(context, response) || response;
-	                        });
-	                    });
-
-	                    when(response, resolve);
-
-	                    return;
-	                }
-
-	                exec();
-	            }
-
-	            exec();
-	        }, context);
-	    }
-
-	    Client.use = function (handler) {
-	        reqHandlers.push(handler);
-	    };
-
-	    return Client;
-	}
-
-	function sendRequest(request, resolve) {
-
-	    var client = request.client || xhrClient;
-
-	    resolve(client(request));
-	}
-
-	var classCallCheck = function (instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	};
-
-	/**
-	 * HTTP Response.
-	 */
-
-	var Response = function () {
-	    function Response(body, _ref) {
-	        var url = _ref.url;
-	        var headers = _ref.headers;
-	        var status = _ref.status;
-	        var statusText = _ref.statusText;
-	        classCallCheck(this, Response);
-
-
-	        this.url = url;
-	        this.body = body;
-	        this.headers = headers || {};
-	        this.status = status || 0;
-	        this.statusText = statusText || '';
-	        this.ok = status >= 200 && status < 300;
-	    }
-
-	    Response.prototype.text = function text() {
-	        return this.body;
-	    };
-
-	    Response.prototype.blob = function blob() {
-	        return new Blob([this.body]);
-	    };
-
-	    Response.prototype.json = function json() {
-	        return JSON.parse(this.body);
-	    };
-
-	    return Response;
-	}();
-
-	var Request = function () {
-	    function Request(options) {
-	        classCallCheck(this, Request);
-
-
-	        this.method = 'GET';
-	        this.body = null;
-	        this.params = {};
-	        this.headers = {};
-
-	        assign(this, options);
-	    }
-
-	    Request.prototype.getUrl = function getUrl() {
-	        return Url(this);
-	    };
-
-	    Request.prototype.getBody = function getBody() {
-	        return this.body;
-	    };
-
-	    Request.prototype.respondWith = function respondWith(body, options) {
-	        return new Response(body, assign(options || {}, { url: this.getUrl() }));
-	    };
-
-	    return Request;
-	}();
-
-	/**
-	 * Service for sending network requests.
-	 */
-
-	var CUSTOM_HEADERS = { 'X-Requested-With': 'XMLHttpRequest' };
-	var COMMON_HEADERS = { 'Accept': 'application/json, text/plain, */*' };
-	var JSON_CONTENT_TYPE = { 'Content-Type': 'application/json;charset=utf-8' };
-
-	function Http(options) {
-
-	    var self = this || {},
-	        client = Client(self.$vm);
-
-	    defaults(options || {}, self.$options, Http.options);
-
-	    Http.interceptors.forEach(function (handler) {
-	        client.use(handler);
-	    });
-
-	    return client(new Request(options)).then(function (response) {
-
-	        return response.ok ? response : Promise$1.reject(response);
-	    }, function (response) {
-
-	        if (response instanceof Error) {
-	            error(response);
-	        }
-
-	        return Promise$1.reject(response);
-	    });
-	}
-
-	Http.options = {};
-
-	Http.headers = {
-	    put: JSON_CONTENT_TYPE,
-	    post: JSON_CONTENT_TYPE,
-	    patch: JSON_CONTENT_TYPE,
-	    delete: JSON_CONTENT_TYPE,
-	    custom: CUSTOM_HEADERS,
-	    common: COMMON_HEADERS
-	};
-
-	Http.interceptors = [before, timeout, method, body, jsonp, header, cors];
-
-	['get', 'delete', 'head', 'jsonp'].forEach(function (method) {
-
-	    Http[method] = function (url, options) {
-	        return this(assign(options || {}, { url: url, method: method }));
-	    };
-	});
-
-	['post', 'put', 'patch'].forEach(function (method) {
-
-	    Http[method] = function (url, body, options) {
-	        return this(assign(options || {}, { url: url, method: method, body: body }));
-	    };
-	});
-
-	function Resource(url, params, actions, options) {
-
-	    var self = this || {},
-	        resource = {};
-
-	    actions = assign({}, Resource.actions, actions);
-
-	    each(actions, function (action, name) {
-
-	        action = merge({ url: url, params: params || {} }, options, action);
-
-	        resource[name] = function () {
-	            return (self.$http || Http)(opts(action, arguments));
-	        };
-	    });
-
-	    return resource;
-	}
-
-	function opts(action, args) {
-
-	    var options = assign({}, action),
-	        params = {},
-	        body;
-
-	    switch (args.length) {
-
-	        case 2:
-
-	            params = args[0];
-	            body = args[1];
-
-	            break;
-
-	        case 1:
-
-	            if (/^(POST|PUT|PATCH)$/i.test(options.method)) {
-	                body = args[0];
-	            } else {
-	                params = args[0];
-	            }
-
-	            break;
-
-	        case 0:
-
-	            break;
-
-	        default:
-
-	            throw 'Expected up to 4 arguments [params, body], got ' + args.length + ' arguments';
-	    }
-
-	    options.body = body;
-	    options.params = assign({}, options.params, params);
-
-	    return options;
-	}
-
-	Resource.actions = {
-
-	    get: { method: 'GET' },
-	    save: { method: 'POST' },
-	    query: { method: 'GET' },
-	    update: { method: 'PUT' },
-	    remove: { method: 'DELETE' },
-	    delete: { method: 'DELETE' }
-
-	};
-
-	function plugin(Vue) {
-
-	    if (plugin.installed) {
-	        return;
-	    }
-
-	    Util(Vue);
-
-	    Vue.url = Url;
-	    Vue.http = Http;
-	    Vue.resource = Resource;
-	    Vue.Promise = Promise$1;
-
-	    Object.defineProperties(Vue.prototype, {
-
-	        $url: {
-	            get: function () {
-	                return options(Vue.url, this, this.$options.url);
-	            }
-	        },
-
-	        $http: {
-	            get: function () {
-	                return options(Vue.http, this, this.$options.http);
-	            }
-	        },
-
-	        $resource: {
-	            get: function () {
-	                return Vue.resource.bind(this);
-	            }
-	        },
-
-	        $promise: {
-	            get: function () {
-	                var _this = this;
-
-	                return function (executor) {
-	                    return new Vue.Promise(executor, _this);
-	                };
-	            }
-	        }
-
-	    });
-	}
-
-	if (typeof window !== 'undefined' && window.Vue) {
-	    window.Vue.use(plugin);
-	}
-
-	module.exports = plugin;
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(179)
+	__webpack_require__(154)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(181)
+	__vue_exports__ = __webpack_require__(156)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(297)
+	var __vue_template__ = __webpack_require__(272)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -34510,13 +29372,13 @@
 
 
 /***/ },
-/* 179 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(180);
+	var content = __webpack_require__(155);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(134)(content, {});
@@ -34536,7 +29398,7 @@
 	}
 
 /***/ },
-/* 180 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(86)();
@@ -34550,7 +29412,7 @@
 
 
 /***/ },
-/* 181 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//
@@ -34935,7 +29797,7 @@
 
 	var _stringify2 = _interopRequireDefault2(_stringify);
 
-	var _getIterator2 = __webpack_require__(182);
+	var _getIterator2 = __webpack_require__(157);
 
 	var _getIterator3 = _interopRequireDefault2(_getIterator2);
 
@@ -34945,7 +29807,7 @@
 	  value: true
 	});
 
-	var _moment = __webpack_require__(185);
+	var _moment = __webpack_require__(160);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -35395,21 +30257,21 @@
 	};
 
 /***/ },
-/* 182 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(183), __esModule: true };
+	module.exports = { "default": __webpack_require__(158), __esModule: true };
 
 /***/ },
-/* 183 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(63);
 	__webpack_require__(34);
-	module.exports = __webpack_require__(184);
+	module.exports = __webpack_require__(159);
 
 /***/ },
-/* 184 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var anObject = __webpack_require__(21)
@@ -35421,7 +30283,7 @@
 	};
 
 /***/ },
-/* 185 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -37238,7 +32100,7 @@
 	            module && module.exports) {
 	        try {
 	            oldLocale = globalLocale._abbr;
-	            __webpack_require__(187)("./" + name);
+	            __webpack_require__(162)("./" + name);
 	            // because defineLocale currently also sets the global locale, we
 	            // want to undo that for lazy loaded locales
 	            getSetGlobalLocale(oldLocale);
@@ -39726,10 +34588,10 @@
 
 	})));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161)(module)))
 
 /***/ },
-/* 186 */
+/* 161 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -39745,228 +34607,228 @@
 
 
 /***/ },
-/* 187 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 188,
-		"./af.js": 188,
-		"./ar": 189,
-		"./ar-dz": 190,
-		"./ar-dz.js": 190,
-		"./ar-ly": 191,
-		"./ar-ly.js": 191,
-		"./ar-ma": 192,
-		"./ar-ma.js": 192,
-		"./ar-sa": 193,
-		"./ar-sa.js": 193,
-		"./ar-tn": 194,
-		"./ar-tn.js": 194,
-		"./ar.js": 189,
-		"./az": 195,
-		"./az.js": 195,
-		"./be": 196,
-		"./be.js": 196,
-		"./bg": 197,
-		"./bg-x": 198,
-		"./bg-x.js": 198,
-		"./bg.js": 197,
-		"./bn": 199,
-		"./bn.js": 199,
-		"./bo": 200,
-		"./bo.js": 200,
-		"./br": 201,
-		"./br.js": 201,
-		"./bs": 202,
-		"./bs.js": 202,
-		"./ca": 203,
-		"./ca.js": 203,
-		"./cs": 204,
-		"./cs.js": 204,
-		"./cv": 205,
-		"./cv.js": 205,
-		"./cy": 206,
-		"./cy.js": 206,
-		"./da": 207,
-		"./da.js": 207,
-		"./de": 208,
-		"./de-at": 209,
-		"./de-at.js": 209,
-		"./de.js": 208,
-		"./dv": 210,
-		"./dv.js": 210,
-		"./el": 211,
-		"./el.js": 211,
-		"./en-au": 212,
-		"./en-au.js": 212,
-		"./en-ca": 213,
-		"./en-ca.js": 213,
-		"./en-gb": 214,
-		"./en-gb.js": 214,
-		"./en-ie": 215,
-		"./en-ie.js": 215,
-		"./en-nz": 216,
-		"./en-nz.js": 216,
-		"./eo": 217,
-		"./eo.js": 217,
-		"./es": 218,
-		"./es-do": 219,
-		"./es-do.js": 219,
-		"./es.js": 218,
-		"./et": 220,
-		"./et.js": 220,
-		"./eu": 221,
-		"./eu.js": 221,
-		"./fa": 222,
-		"./fa.js": 222,
-		"./fi": 223,
-		"./fi.js": 223,
-		"./fo": 224,
-		"./fo.js": 224,
-		"./fr": 225,
-		"./fr-ca": 226,
-		"./fr-ca.js": 226,
-		"./fr-ch": 227,
-		"./fr-ch.js": 227,
-		"./fr.js": 225,
-		"./fy": 228,
-		"./fy.js": 228,
-		"./gd": 229,
-		"./gd.js": 229,
-		"./gl": 230,
-		"./gl.js": 230,
-		"./he": 231,
-		"./he.js": 231,
-		"./hi": 232,
-		"./hi.js": 232,
-		"./hr": 233,
-		"./hr.js": 233,
-		"./hu": 234,
-		"./hu.js": 234,
-		"./hy-am": 235,
-		"./hy-am.js": 235,
-		"./id": 236,
-		"./id.js": 236,
-		"./is": 237,
-		"./is.js": 237,
-		"./it": 238,
-		"./it.js": 238,
-		"./ja": 239,
-		"./ja.js": 239,
-		"./jv": 240,
-		"./jv.js": 240,
-		"./ka": 241,
-		"./ka.js": 241,
-		"./kk": 242,
-		"./kk.js": 242,
-		"./km": 243,
-		"./km.js": 243,
-		"./ko": 244,
-		"./ko.js": 244,
-		"./ky": 245,
-		"./ky.js": 245,
-		"./lb": 246,
-		"./lb.js": 246,
-		"./lo": 247,
-		"./lo.js": 247,
-		"./lt": 248,
-		"./lt.js": 248,
-		"./lv": 249,
-		"./lv.js": 249,
-		"./me": 250,
-		"./me.js": 250,
-		"./mi": 251,
-		"./mi.js": 251,
-		"./mk": 252,
-		"./mk.js": 252,
-		"./ml": 253,
-		"./ml.js": 253,
-		"./mr": 254,
-		"./mr.js": 254,
-		"./ms": 255,
-		"./ms-my": 256,
-		"./ms-my.js": 256,
-		"./ms.js": 255,
-		"./my": 257,
-		"./my.js": 257,
-		"./nb": 258,
-		"./nb.js": 258,
-		"./ne": 259,
-		"./ne.js": 259,
-		"./nl": 260,
-		"./nl-be": 261,
-		"./nl-be.js": 261,
-		"./nl.js": 260,
-		"./nn": 262,
-		"./nn.js": 262,
-		"./pa-in": 263,
-		"./pa-in.js": 263,
-		"./pl": 264,
-		"./pl.js": 264,
-		"./pt": 265,
-		"./pt-br": 266,
-		"./pt-br.js": 266,
-		"./pt.js": 265,
-		"./ro": 267,
-		"./ro.js": 267,
-		"./ru": 268,
-		"./ru.js": 268,
-		"./se": 269,
-		"./se.js": 269,
-		"./si": 270,
-		"./si.js": 270,
-		"./sk": 271,
-		"./sk.js": 271,
-		"./sl": 272,
-		"./sl.js": 272,
-		"./sq": 273,
-		"./sq.js": 273,
-		"./sr": 274,
-		"./sr-cyrl": 275,
-		"./sr-cyrl.js": 275,
-		"./sr.js": 274,
-		"./ss": 276,
-		"./ss.js": 276,
-		"./sv": 277,
-		"./sv.js": 277,
-		"./sw": 278,
-		"./sw.js": 278,
-		"./ta": 279,
-		"./ta.js": 279,
-		"./te": 280,
-		"./te.js": 280,
-		"./tet": 281,
-		"./tet.js": 281,
-		"./th": 282,
-		"./th.js": 282,
-		"./tl-ph": 283,
-		"./tl-ph.js": 283,
-		"./tlh": 284,
-		"./tlh.js": 284,
-		"./tr": 285,
-		"./tr.js": 285,
-		"./tzl": 286,
-		"./tzl.js": 286,
-		"./tzm": 287,
-		"./tzm-latn": 288,
-		"./tzm-latn.js": 288,
-		"./tzm.js": 287,
-		"./uk": 289,
-		"./uk.js": 289,
-		"./uz": 290,
-		"./uz.js": 290,
-		"./vi": 291,
-		"./vi.js": 291,
-		"./x-pseudo": 292,
-		"./x-pseudo.js": 292,
-		"./yo": 293,
-		"./yo.js": 293,
-		"./zh-cn": 294,
-		"./zh-cn.js": 294,
-		"./zh-hk": 295,
-		"./zh-hk.js": 295,
-		"./zh-tw": 296,
-		"./zh-tw.js": 296
+		"./af": 163,
+		"./af.js": 163,
+		"./ar": 164,
+		"./ar-dz": 165,
+		"./ar-dz.js": 165,
+		"./ar-ly": 166,
+		"./ar-ly.js": 166,
+		"./ar-ma": 167,
+		"./ar-ma.js": 167,
+		"./ar-sa": 168,
+		"./ar-sa.js": 168,
+		"./ar-tn": 169,
+		"./ar-tn.js": 169,
+		"./ar.js": 164,
+		"./az": 170,
+		"./az.js": 170,
+		"./be": 171,
+		"./be.js": 171,
+		"./bg": 172,
+		"./bg-x": 173,
+		"./bg-x.js": 173,
+		"./bg.js": 172,
+		"./bn": 174,
+		"./bn.js": 174,
+		"./bo": 175,
+		"./bo.js": 175,
+		"./br": 176,
+		"./br.js": 176,
+		"./bs": 177,
+		"./bs.js": 177,
+		"./ca": 178,
+		"./ca.js": 178,
+		"./cs": 179,
+		"./cs.js": 179,
+		"./cv": 180,
+		"./cv.js": 180,
+		"./cy": 181,
+		"./cy.js": 181,
+		"./da": 182,
+		"./da.js": 182,
+		"./de": 183,
+		"./de-at": 184,
+		"./de-at.js": 184,
+		"./de.js": 183,
+		"./dv": 185,
+		"./dv.js": 185,
+		"./el": 186,
+		"./el.js": 186,
+		"./en-au": 187,
+		"./en-au.js": 187,
+		"./en-ca": 188,
+		"./en-ca.js": 188,
+		"./en-gb": 189,
+		"./en-gb.js": 189,
+		"./en-ie": 190,
+		"./en-ie.js": 190,
+		"./en-nz": 191,
+		"./en-nz.js": 191,
+		"./eo": 192,
+		"./eo.js": 192,
+		"./es": 193,
+		"./es-do": 194,
+		"./es-do.js": 194,
+		"./es.js": 193,
+		"./et": 195,
+		"./et.js": 195,
+		"./eu": 196,
+		"./eu.js": 196,
+		"./fa": 197,
+		"./fa.js": 197,
+		"./fi": 198,
+		"./fi.js": 198,
+		"./fo": 199,
+		"./fo.js": 199,
+		"./fr": 200,
+		"./fr-ca": 201,
+		"./fr-ca.js": 201,
+		"./fr-ch": 202,
+		"./fr-ch.js": 202,
+		"./fr.js": 200,
+		"./fy": 203,
+		"./fy.js": 203,
+		"./gd": 204,
+		"./gd.js": 204,
+		"./gl": 205,
+		"./gl.js": 205,
+		"./he": 206,
+		"./he.js": 206,
+		"./hi": 207,
+		"./hi.js": 207,
+		"./hr": 208,
+		"./hr.js": 208,
+		"./hu": 209,
+		"./hu.js": 209,
+		"./hy-am": 210,
+		"./hy-am.js": 210,
+		"./id": 211,
+		"./id.js": 211,
+		"./is": 212,
+		"./is.js": 212,
+		"./it": 213,
+		"./it.js": 213,
+		"./ja": 214,
+		"./ja.js": 214,
+		"./jv": 215,
+		"./jv.js": 215,
+		"./ka": 216,
+		"./ka.js": 216,
+		"./kk": 217,
+		"./kk.js": 217,
+		"./km": 218,
+		"./km.js": 218,
+		"./ko": 219,
+		"./ko.js": 219,
+		"./ky": 220,
+		"./ky.js": 220,
+		"./lb": 221,
+		"./lb.js": 221,
+		"./lo": 222,
+		"./lo.js": 222,
+		"./lt": 223,
+		"./lt.js": 223,
+		"./lv": 224,
+		"./lv.js": 224,
+		"./me": 225,
+		"./me.js": 225,
+		"./mi": 226,
+		"./mi.js": 226,
+		"./mk": 227,
+		"./mk.js": 227,
+		"./ml": 228,
+		"./ml.js": 228,
+		"./mr": 229,
+		"./mr.js": 229,
+		"./ms": 230,
+		"./ms-my": 231,
+		"./ms-my.js": 231,
+		"./ms.js": 230,
+		"./my": 232,
+		"./my.js": 232,
+		"./nb": 233,
+		"./nb.js": 233,
+		"./ne": 234,
+		"./ne.js": 234,
+		"./nl": 235,
+		"./nl-be": 236,
+		"./nl-be.js": 236,
+		"./nl.js": 235,
+		"./nn": 237,
+		"./nn.js": 237,
+		"./pa-in": 238,
+		"./pa-in.js": 238,
+		"./pl": 239,
+		"./pl.js": 239,
+		"./pt": 240,
+		"./pt-br": 241,
+		"./pt-br.js": 241,
+		"./pt.js": 240,
+		"./ro": 242,
+		"./ro.js": 242,
+		"./ru": 243,
+		"./ru.js": 243,
+		"./se": 244,
+		"./se.js": 244,
+		"./si": 245,
+		"./si.js": 245,
+		"./sk": 246,
+		"./sk.js": 246,
+		"./sl": 247,
+		"./sl.js": 247,
+		"./sq": 248,
+		"./sq.js": 248,
+		"./sr": 249,
+		"./sr-cyrl": 250,
+		"./sr-cyrl.js": 250,
+		"./sr.js": 249,
+		"./ss": 251,
+		"./ss.js": 251,
+		"./sv": 252,
+		"./sv.js": 252,
+		"./sw": 253,
+		"./sw.js": 253,
+		"./ta": 254,
+		"./ta.js": 254,
+		"./te": 255,
+		"./te.js": 255,
+		"./tet": 256,
+		"./tet.js": 256,
+		"./th": 257,
+		"./th.js": 257,
+		"./tl-ph": 258,
+		"./tl-ph.js": 258,
+		"./tlh": 259,
+		"./tlh.js": 259,
+		"./tr": 260,
+		"./tr.js": 260,
+		"./tzl": 261,
+		"./tzl.js": 261,
+		"./tzm": 262,
+		"./tzm-latn": 263,
+		"./tzm-latn.js": 263,
+		"./tzm.js": 262,
+		"./uk": 264,
+		"./uk.js": 264,
+		"./uz": 265,
+		"./uz.js": 265,
+		"./vi": 266,
+		"./vi.js": 266,
+		"./x-pseudo": 267,
+		"./x-pseudo.js": 267,
+		"./yo": 268,
+		"./yo.js": 268,
+		"./zh-cn": 269,
+		"./zh-cn.js": 269,
+		"./zh-hk": 270,
+		"./zh-hk.js": 270,
+		"./zh-tw": 271,
+		"./zh-tw.js": 271
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -39979,11 +34841,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 187;
+	webpackContext.id = 162;
 
 
 /***/ },
-/* 188 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -39991,7 +34853,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40061,7 +34923,7 @@
 
 
 /***/ },
-/* 189 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40071,7 +34933,7 @@
 	//! author : forabi https://github.com/forabi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40208,7 +35070,7 @@
 
 
 /***/ },
-/* 190 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40216,7 +35078,7 @@
 	//! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40272,7 +35134,7 @@
 
 
 /***/ },
-/* 191 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40280,7 +35142,7 @@
 	//! author : Ali Hmer: https://github.com/kikoanis
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40403,7 +35265,7 @@
 
 
 /***/ },
-/* 192 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40412,7 +35274,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40468,7 +35330,7 @@
 
 
 /***/ },
-/* 193 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40476,7 +35338,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40578,7 +35440,7 @@
 
 
 /***/ },
-/* 194 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40586,7 +35448,7 @@
 	//! author : Nader Toukabri : https://github.com/naderio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40642,7 +35504,7 @@
 
 
 /***/ },
-/* 195 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40650,7 +35512,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40752,7 +35614,7 @@
 
 
 /***/ },
-/* 196 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40762,7 +35624,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40891,7 +35753,7 @@
 
 
 /***/ },
-/* 197 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -40899,7 +35761,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -40986,12 +35848,12 @@
 
 
 /***/ },
-/* 198 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41006,7 +35868,7 @@
 
 
 /***/ },
-/* 199 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41014,7 +35876,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41130,7 +35992,7 @@
 
 
 /***/ },
-/* 200 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41138,7 +36000,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41254,7 +36116,7 @@
 
 
 /***/ },
-/* 201 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41262,7 +36124,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41367,7 +36229,7 @@
 
 
 /***/ },
-/* 202 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41376,7 +36238,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41515,7 +36377,7 @@
 
 
 /***/ },
-/* 203 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41523,7 +36385,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41601,7 +36463,7 @@
 
 
 /***/ },
-/* 204 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41609,7 +36471,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41778,7 +36640,7 @@
 
 
 /***/ },
-/* 205 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41786,7 +36648,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41846,7 +36708,7 @@
 
 
 /***/ },
-/* 206 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41855,7 +36717,7 @@
 	//! author : https://github.com/ryangreaves
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41932,7 +36794,7 @@
 
 
 /***/ },
-/* 207 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41940,7 +36802,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41997,7 +36859,7 @@
 
 
 /***/ },
-/* 208 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42007,7 +36869,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42080,7 +36942,7 @@
 
 
 /***/ },
-/* 209 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42091,7 +36953,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42164,7 +37026,7 @@
 
 
 /***/ },
-/* 210 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42172,7 +37034,7 @@
 	//! author : Jawish Hameed : https://github.com/jawish
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42269,7 +37131,7 @@
 
 
 /***/ },
-/* 211 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42277,7 +37139,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42372,7 +37234,7 @@
 
 
 /***/ },
-/* 212 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42380,7 +37242,7 @@
 	//! author : Jared Morse : https://github.com/jarcoal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42444,7 +37306,7 @@
 
 
 /***/ },
-/* 213 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42452,7 +37314,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42512,7 +37374,7 @@
 
 
 /***/ },
-/* 214 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42520,7 +37382,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42584,7 +37446,7 @@
 
 
 /***/ },
-/* 215 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42592,7 +37454,7 @@
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42656,7 +37518,7 @@
 
 
 /***/ },
-/* 216 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42664,7 +37526,7 @@
 	//! author : Luke McGregor : https://github.com/lukemcgregor
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42728,7 +37590,7 @@
 
 
 /***/ },
-/* 217 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42738,7 +37600,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42806,7 +37668,7 @@
 
 
 /***/ },
-/* 218 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42814,7 +37676,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42892,14 +37754,14 @@
 
 
 /***/ },
-/* 219 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Spanish (Dominican Republic) [es-do]
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42977,7 +37839,7 @@
 
 
 /***/ },
-/* 220 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42986,7 +37848,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43062,7 +37924,7 @@
 
 
 /***/ },
-/* 221 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43070,7 +37932,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43133,7 +37995,7 @@
 
 
 /***/ },
-/* 222 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43141,7 +38003,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43245,7 +38107,7 @@
 
 
 /***/ },
-/* 223 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43253,7 +38115,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43357,7 +38219,7 @@
 
 
 /***/ },
-/* 224 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43365,7 +38227,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43422,7 +38284,7 @@
 
 
 /***/ },
-/* 225 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43430,7 +38292,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43491,7 +38353,7 @@
 
 
 /***/ },
-/* 226 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43499,7 +38361,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43556,7 +38418,7 @@
 
 
 /***/ },
-/* 227 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43564,7 +38426,7 @@
 	//! author : Gaspard Bucher : https://github.com/gaspard
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43625,7 +38487,7 @@
 
 
 /***/ },
-/* 228 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43633,7 +38495,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43703,7 +38565,7 @@
 
 
 /***/ },
-/* 229 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43711,7 +38573,7 @@
 	//! author : Jon Ashdown : https://github.com/jonashdown
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43784,7 +38646,7 @@
 
 
 /***/ },
-/* 230 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43792,7 +38654,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43866,7 +38728,7 @@
 
 
 /***/ },
-/* 231 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43876,7 +38738,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43970,7 +38832,7 @@
 
 
 /***/ },
-/* 232 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -43978,7 +38840,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44099,7 +38961,7 @@
 
 
 /***/ },
-/* 233 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44107,7 +38969,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44249,7 +39111,7 @@
 
 
 /***/ },
-/* 234 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44257,7 +39119,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44363,7 +39225,7 @@
 
 
 /***/ },
-/* 235 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44371,7 +39233,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44463,7 +39325,7 @@
 
 
 /***/ },
-/* 236 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44472,7 +39334,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44551,7 +39413,7 @@
 
 
 /***/ },
-/* 237 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44559,7 +39421,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44683,7 +39545,7 @@
 
 
 /***/ },
-/* 238 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44692,7 +39554,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44758,7 +39620,7 @@
 
 
 /***/ },
-/* 239 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44766,7 +39628,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44839,7 +39701,7 @@
 
 
 /***/ },
-/* 240 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44848,7 +39710,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44927,7 +39789,7 @@
 
 
 /***/ },
-/* 241 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -44935,7 +39797,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45021,7 +39883,7 @@
 
 
 /***/ },
-/* 242 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45029,7 +39891,7 @@
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45113,7 +39975,7 @@
 
 
 /***/ },
-/* 243 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45121,7 +39983,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45176,7 +40038,7 @@
 
 
 /***/ },
-/* 244 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45185,7 +40047,7 @@
 	//! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45246,7 +40108,7 @@
 
 
 /***/ },
-/* 245 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45254,7 +40116,7 @@
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45339,7 +40201,7 @@
 
 
 /***/ },
-/* 246 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45348,7 +40210,7 @@
 	//! author : David Raison : https://github.com/kwisatz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45481,7 +40343,7 @@
 
 
 /***/ },
-/* 247 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45489,7 +40351,7 @@
 	//! author : Ryan Hart : https://github.com/ryanhart2
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45556,7 +40418,7 @@
 
 
 /***/ },
-/* 248 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45564,7 +40426,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45678,7 +40540,7 @@
 
 
 /***/ },
-/* 249 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45687,7 +40549,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45780,7 +40642,7 @@
 
 
 /***/ },
-/* 250 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45788,7 +40650,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45896,7 +40758,7 @@
 
 
 /***/ },
-/* 251 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45904,7 +40766,7 @@
 	//! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45965,7 +40827,7 @@
 
 
 /***/ },
-/* 252 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45973,7 +40835,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46060,7 +40922,7 @@
 
 
 /***/ },
-/* 253 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46068,7 +40930,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46146,7 +41008,7 @@
 
 
 /***/ },
-/* 254 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46155,7 +41017,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46310,7 +41172,7 @@
 
 
 /***/ },
-/* 255 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46318,7 +41180,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46397,7 +41259,7 @@
 
 
 /***/ },
-/* 256 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46406,7 +41268,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46485,7 +41347,7 @@
 
 
 /***/ },
-/* 257 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46495,7 +41357,7 @@
 	//! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46586,7 +41448,7 @@
 
 
 /***/ },
-/* 258 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46595,7 +41457,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46654,7 +41516,7 @@
 
 
 /***/ },
-/* 259 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46662,7 +41524,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46782,7 +41644,7 @@
 
 
 /***/ },
-/* 260 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46791,7 +41653,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46873,7 +41735,7 @@
 
 
 /***/ },
-/* 261 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46882,7 +41744,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46964,7 +41826,7 @@
 
 
 /***/ },
-/* 262 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46972,7 +41834,7 @@
 	//! author : https://github.com/mechuwind
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47029,7 +41891,7 @@
 
 
 /***/ },
-/* 263 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47037,7 +41899,7 @@
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47158,7 +42020,7 @@
 
 
 /***/ },
-/* 264 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47166,7 +42028,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47268,7 +42130,7 @@
 
 
 /***/ },
-/* 265 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47276,7 +42138,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47338,7 +42200,7 @@
 
 
 /***/ },
-/* 266 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47346,7 +42208,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47404,7 +42266,7 @@
 
 
 /***/ },
-/* 267 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47413,7 +42275,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47484,7 +42346,7 @@
 
 
 /***/ },
-/* 268 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47494,7 +42356,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47672,7 +42534,7 @@
 
 
 /***/ },
-/* 269 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47680,7 +42542,7 @@
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47738,7 +42600,7 @@
 
 
 /***/ },
-/* 270 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47746,7 +42608,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47814,7 +42676,7 @@
 
 
 /***/ },
-/* 271 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47823,7 +42685,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47969,7 +42831,7 @@
 
 
 /***/ },
-/* 272 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47977,7 +42839,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48136,7 +42998,7 @@
 
 
 /***/ },
-/* 273 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48146,7 +43008,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48211,7 +43073,7 @@
 
 
 /***/ },
-/* 274 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48219,7 +43081,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48326,7 +43188,7 @@
 
 
 /***/ },
-/* 275 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48334,7 +43196,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48441,7 +43303,7 @@
 
 
 /***/ },
-/* 276 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48449,7 +43311,7 @@
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48535,7 +43397,7 @@
 
 
 /***/ },
-/* 277 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48543,7 +43405,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48609,7 +43471,7 @@
 
 
 /***/ },
-/* 278 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48617,7 +43479,7 @@
 	//! author : Fahad Kassim : https://github.com/fadsel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48673,7 +43535,7 @@
 
 
 /***/ },
-/* 279 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48681,7 +43543,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48808,7 +43670,7 @@
 
 
 /***/ },
-/* 280 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48816,7 +43678,7 @@
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48902,7 +43764,7 @@
 
 
 /***/ },
-/* 281 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48911,7 +43773,7 @@
 	//! author : Onorio De J. Afonso : https://github.com/marobo
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48975,7 +43837,7 @@
 
 
 /***/ },
-/* 282 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48983,7 +43845,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49047,7 +43909,7 @@
 
 
 /***/ },
-/* 283 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49055,7 +43917,7 @@
 	//! author : Dan Hagman : https://github.com/hagmandan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49114,7 +43976,7 @@
 
 
 /***/ },
-/* 284 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49122,7 +43984,7 @@
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49239,7 +44101,7 @@
 
 
 /***/ },
-/* 285 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49248,7 +44110,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49334,7 +44196,7 @@
 
 
 /***/ },
-/* 286 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49343,7 +44205,7 @@
 	//! author : Iustì Canun
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49430,7 +44292,7 @@
 
 
 /***/ },
-/* 287 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49438,7 +44300,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49493,7 +44355,7 @@
 
 
 /***/ },
-/* 288 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49501,7 +44363,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49556,7 +44418,7 @@
 
 
 /***/ },
-/* 289 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49565,7 +44427,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49707,7 +44569,7 @@
 
 
 /***/ },
-/* 290 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49715,7 +44577,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49770,7 +44632,7 @@
 
 
 /***/ },
-/* 291 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49778,7 +44640,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49854,7 +44716,7 @@
 
 
 /***/ },
-/* 292 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49862,7 +44724,7 @@
 	//! author : Andrew Hood : https://github.com/andrewhood125
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49927,7 +44789,7 @@
 
 
 /***/ },
-/* 293 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49935,7 +44797,7 @@
 	//! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49992,7 +44854,7 @@
 
 
 /***/ },
-/* 294 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50001,7 +44863,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50124,7 +44986,7 @@
 
 
 /***/ },
-/* 295 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50134,7 +44996,7 @@
 	//! author : Konstantin : https://github.com/skfd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50234,7 +45096,7 @@
 
 
 /***/ },
-/* 296 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50243,7 +45105,7 @@
 	//! author : Chris Lam : https://github.com/hehachris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(185)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50343,7 +45205,7 @@
 
 
 /***/ },
-/* 297 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -50543,6 +45405,5341 @@
 	     require("vue-hot-reload-api").rerender("data-v-1a4ef95a", module.exports)
 	  }
 	}
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "ticketbody"
+	  }, [_vm._h('div', {
+	    staticClass: "go block",
+	    on: {
+	      "click": _vm.GoStartCity
+	    }
+	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
+	    staticClass: "to block",
+	    on: {
+	      "click": _vm.GoEndCity
+	    }
+	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
+	    staticClass: "data",
+	    on: {
+	      "click": _vm.openPicker
+	    }
+	  }, [_vm._m(2), " ", " ", _vm._h('date-picker', {
+	    attrs: {
+	      "date": _vm.startTime,
+	      "option": _vm.option,
+	      "limit": _vm.limit
+	    }
+	  }), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.showWeek)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "query"
+	  }, [_vm._h('button', {
+	    staticClass: "btn",
+	    on: {
+	      "click": _vm.query
+	    }
+	  }, ["查询"])]), " ", " ", " ", " ", " ", " "])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-location-arrow"
+	  }), "出发点"])
+	},function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-location-arrow"
+	  }), "到达点"])
+	},function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-calendar"
+	  }), "出发日期"])
+	}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-17660273", module.exports)
+	  }
+	}
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(108);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(112);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(275);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(277);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(279);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketStartCity.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-55a7ad28", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-55a7ad28", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketStartCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(276);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(134)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(136);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(82);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _ = __webpack_require__(278); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				startcity: "",
+				setStartCityList: null,
+				startpopupVisible: false, //显示出发选择
+				startCitySlots: [{
+					flex: 1,
+					values: [1, 2, 3, 4, 5],
+					className: 'startcity'
+				}]
+			};
+		},
+		created: function created() {
+			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
+
+			if (!this.$store.state.tickets.startCityList) {
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setStartCityList").then(function (data) {
+					_mintUi.Indicator.close();
+				});
+			}
+		},
+
+		computed: {
+			setStartCityList: function setStartCityList() {
+				return this.$store.state.tickets.startCityList;
+			}
+		},
+		watch: {
+			// startpopupVisible(status){
+			// 	if(status===false){
+			// 		// 说明已经选择完了
+			// 		this.$router.go(-1);
+			// 	}
+			// }
+		},
+		methods: {
+			getStartCity: function getStartCity(code, name) {
+				this.startcity = name;
+				// if(station.length===0){
+				// 	this.$store.dispatch("setStartCity",{
+				// 		Code:code,
+				// 		Name:name,
+				// 		Station:"",//空的站台
+				// 	});
+				// 	this.$router.go(-1);
+				// }
+				// else{
+				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
+				// 		return item.Name;
+				// 	});
+
+				// 	this.startpopupVisible = true;
+				// }
+				this.$store.dispatch("setStartCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
+			},
+			onStartValuesChange: function onStartValuesChange(picker, values) {
+				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
+			},
+			noData: function noData() {
+				this.startpopupVisible = false;
+			},
+			yesData: function yesData() {
+				this.$router.go(-1);
+			}
+		}
+	};
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
+	//     http://underscorejs.org
+	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	//     Underscore may be freely distributed under the MIT license.
+
+	(function() {
+
+	  // Baseline setup
+	  // --------------
+
+	  // Establish the root object, `window` in the browser, or `exports` on the server.
+	  var root = this;
+
+	  // Save the previous value of the `_` variable.
+	  var previousUnderscore = root._;
+
+	  // Save bytes in the minified (but not gzipped) version:
+	  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+
+	  // Create quick reference variables for speed access to core prototypes.
+	  var
+	    push             = ArrayProto.push,
+	    slice            = ArrayProto.slice,
+	    toString         = ObjProto.toString,
+	    hasOwnProperty   = ObjProto.hasOwnProperty;
+
+	  // All **ECMAScript 5** native function implementations that we hope to use
+	  // are declared here.
+	  var
+	    nativeIsArray      = Array.isArray,
+	    nativeKeys         = Object.keys,
+	    nativeBind         = FuncProto.bind,
+	    nativeCreate       = Object.create;
+
+	  // Naked function reference for surrogate-prototype-swapping.
+	  var Ctor = function(){};
+
+	  // Create a safe reference to the Underscore object for use below.
+	  var _ = function(obj) {
+	    if (obj instanceof _) return obj;
+	    if (!(this instanceof _)) return new _(obj);
+	    this._wrapped = obj;
+	  };
+
+	  // Export the Underscore object for **Node.js**, with
+	  // backwards-compatibility for the old `require()` API. If we're in
+	  // the browser, add `_` as a global object.
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = _;
+	    }
+	    exports._ = _;
+	  } else {
+	    root._ = _;
+	  }
+
+	  // Current version.
+	  _.VERSION = '1.8.3';
+
+	  // Internal function that returns an efficient (for current engines) version
+	  // of the passed-in callback, to be repeatedly applied in other Underscore
+	  // functions.
+	  var optimizeCb = function(func, context, argCount) {
+	    if (context === void 0) return func;
+	    switch (argCount == null ? 3 : argCount) {
+	      case 1: return function(value) {
+	        return func.call(context, value);
+	      };
+	      case 2: return function(value, other) {
+	        return func.call(context, value, other);
+	      };
+	      case 3: return function(value, index, collection) {
+	        return func.call(context, value, index, collection);
+	      };
+	      case 4: return function(accumulator, value, index, collection) {
+	        return func.call(context, accumulator, value, index, collection);
+	      };
+	    }
+	    return function() {
+	      return func.apply(context, arguments);
+	    };
+	  };
+
+	  // A mostly-internal function to generate callbacks that can be applied
+	  // to each element in a collection, returning the desired result — either
+	  // identity, an arbitrary callback, a property matcher, or a property accessor.
+	  var cb = function(value, context, argCount) {
+	    if (value == null) return _.identity;
+	    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+	    if (_.isObject(value)) return _.matcher(value);
+	    return _.property(value);
+	  };
+	  _.iteratee = function(value, context) {
+	    return cb(value, context, Infinity);
+	  };
+
+	  // An internal function for creating assigner functions.
+	  var createAssigner = function(keysFunc, undefinedOnly) {
+	    return function(obj) {
+	      var length = arguments.length;
+	      if (length < 2 || obj == null) return obj;
+	      for (var index = 1; index < length; index++) {
+	        var source = arguments[index],
+	            keys = keysFunc(source),
+	            l = keys.length;
+	        for (var i = 0; i < l; i++) {
+	          var key = keys[i];
+	          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
+	        }
+	      }
+	      return obj;
+	    };
+	  };
+
+	  // An internal function for creating a new object that inherits from another.
+	  var baseCreate = function(prototype) {
+	    if (!_.isObject(prototype)) return {};
+	    if (nativeCreate) return nativeCreate(prototype);
+	    Ctor.prototype = prototype;
+	    var result = new Ctor;
+	    Ctor.prototype = null;
+	    return result;
+	  };
+
+	  var property = function(key) {
+	    return function(obj) {
+	      return obj == null ? void 0 : obj[key];
+	    };
+	  };
+
+	  // Helper for collection methods to determine whether a collection
+	  // should be iterated as an array or as an object
+	  // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
+	  // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
+	  var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+	  var getLength = property('length');
+	  var isArrayLike = function(collection) {
+	    var length = getLength(collection);
+	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	  };
+
+	  // Collection Functions
+	  // --------------------
+
+	  // The cornerstone, an `each` implementation, aka `forEach`.
+	  // Handles raw objects in addition to array-likes. Treats all
+	  // sparse array-likes as if they were dense.
+	  _.each = _.forEach = function(obj, iteratee, context) {
+	    iteratee = optimizeCb(iteratee, context);
+	    var i, length;
+	    if (isArrayLike(obj)) {
+	      for (i = 0, length = obj.length; i < length; i++) {
+	        iteratee(obj[i], i, obj);
+	      }
+	    } else {
+	      var keys = _.keys(obj);
+	      for (i = 0, length = keys.length; i < length; i++) {
+	        iteratee(obj[keys[i]], keys[i], obj);
+	      }
+	    }
+	    return obj;
+	  };
+
+	  // Return the results of applying the iteratee to each element.
+	  _.map = _.collect = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length,
+	        results = Array(length);
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      results[index] = iteratee(obj[currentKey], currentKey, obj);
+	    }
+	    return results;
+	  };
+
+	  // Create a reducing function iterating left or right.
+	  function createReduce(dir) {
+	    // Optimized iterator function as using arguments.length
+	    // in the main function will deoptimize the, see #1991.
+	    function iterator(obj, iteratee, memo, keys, index, length) {
+	      for (; index >= 0 && index < length; index += dir) {
+	        var currentKey = keys ? keys[index] : index;
+	        memo = iteratee(memo, obj[currentKey], currentKey, obj);
+	      }
+	      return memo;
+	    }
+
+	    return function(obj, iteratee, memo, context) {
+	      iteratee = optimizeCb(iteratee, context, 4);
+	      var keys = !isArrayLike(obj) && _.keys(obj),
+	          length = (keys || obj).length,
+	          index = dir > 0 ? 0 : length - 1;
+	      // Determine the initial value if none is provided.
+	      if (arguments.length < 3) {
+	        memo = obj[keys ? keys[index] : index];
+	        index += dir;
+	      }
+	      return iterator(obj, iteratee, memo, keys, index, length);
+	    };
+	  }
+
+	  // **Reduce** builds up a single result from a list of values, aka `inject`,
+	  // or `foldl`.
+	  _.reduce = _.foldl = _.inject = createReduce(1);
+
+	  // The right-associative version of reduce, also known as `foldr`.
+	  _.reduceRight = _.foldr = createReduce(-1);
+
+	  // Return the first value which passes a truth test. Aliased as `detect`.
+	  _.find = _.detect = function(obj, predicate, context) {
+	    var key;
+	    if (isArrayLike(obj)) {
+	      key = _.findIndex(obj, predicate, context);
+	    } else {
+	      key = _.findKey(obj, predicate, context);
+	    }
+	    if (key !== void 0 && key !== -1) return obj[key];
+	  };
+
+	  // Return all the elements that pass a truth test.
+	  // Aliased as `select`.
+	  _.filter = _.select = function(obj, predicate, context) {
+	    var results = [];
+	    predicate = cb(predicate, context);
+	    _.each(obj, function(value, index, list) {
+	      if (predicate(value, index, list)) results.push(value);
+	    });
+	    return results;
+	  };
+
+	  // Return all the elements for which a truth test fails.
+	  _.reject = function(obj, predicate, context) {
+	    return _.filter(obj, _.negate(cb(predicate)), context);
+	  };
+
+	  // Determine whether all of the elements match a truth test.
+	  // Aliased as `all`.
+	  _.every = _.all = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length;
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      if (!predicate(obj[currentKey], currentKey, obj)) return false;
+	    }
+	    return true;
+	  };
+
+	  // Determine if at least one element in the object matches a truth test.
+	  // Aliased as `any`.
+	  _.some = _.any = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length;
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      if (predicate(obj[currentKey], currentKey, obj)) return true;
+	    }
+	    return false;
+	  };
+
+	  // Determine if the array or object contains a given item (using `===`).
+	  // Aliased as `includes` and `include`.
+	  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
+	    if (!isArrayLike(obj)) obj = _.values(obj);
+	    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
+	    return _.indexOf(obj, item, fromIndex) >= 0;
+	  };
+
+	  // Invoke a method (with arguments) on every item in a collection.
+	  _.invoke = function(obj, method) {
+	    var args = slice.call(arguments, 2);
+	    var isFunc = _.isFunction(method);
+	    return _.map(obj, function(value) {
+	      var func = isFunc ? method : value[method];
+	      return func == null ? func : func.apply(value, args);
+	    });
+	  };
+
+	  // Convenience version of a common use case of `map`: fetching a property.
+	  _.pluck = function(obj, key) {
+	    return _.map(obj, _.property(key));
+	  };
+
+	  // Convenience version of a common use case of `filter`: selecting only objects
+	  // containing specific `key:value` pairs.
+	  _.where = function(obj, attrs) {
+	    return _.filter(obj, _.matcher(attrs));
+	  };
+
+	  // Convenience version of a common use case of `find`: getting the first object
+	  // containing specific `key:value` pairs.
+	  _.findWhere = function(obj, attrs) {
+	    return _.find(obj, _.matcher(attrs));
+	  };
+
+	  // Return the maximum element (or element-based computation).
+	  _.max = function(obj, iteratee, context) {
+	    var result = -Infinity, lastComputed = -Infinity,
+	        value, computed;
+	    if (iteratee == null && obj != null) {
+	      obj = isArrayLike(obj) ? obj : _.values(obj);
+	      for (var i = 0, length = obj.length; i < length; i++) {
+	        value = obj[i];
+	        if (value > result) {
+	          result = value;
+	        }
+	      }
+	    } else {
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index, list) {
+	        computed = iteratee(value, index, list);
+	        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
+	          result = value;
+	          lastComputed = computed;
+	        }
+	      });
+	    }
+	    return result;
+	  };
+
+	  // Return the minimum element (or element-based computation).
+	  _.min = function(obj, iteratee, context) {
+	    var result = Infinity, lastComputed = Infinity,
+	        value, computed;
+	    if (iteratee == null && obj != null) {
+	      obj = isArrayLike(obj) ? obj : _.values(obj);
+	      for (var i = 0, length = obj.length; i < length; i++) {
+	        value = obj[i];
+	        if (value < result) {
+	          result = value;
+	        }
+	      }
+	    } else {
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index, list) {
+	        computed = iteratee(value, index, list);
+	        if (computed < lastComputed || computed === Infinity && result === Infinity) {
+	          result = value;
+	          lastComputed = computed;
+	        }
+	      });
+	    }
+	    return result;
+	  };
+
+	  // Shuffle a collection, using the modern version of the
+	  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+	  _.shuffle = function(obj) {
+	    var set = isArrayLike(obj) ? obj : _.values(obj);
+	    var length = set.length;
+	    var shuffled = Array(length);
+	    for (var index = 0, rand; index < length; index++) {
+	      rand = _.random(0, index);
+	      if (rand !== index) shuffled[index] = shuffled[rand];
+	      shuffled[rand] = set[index];
+	    }
+	    return shuffled;
+	  };
+
+	  // Sample **n** random values from a collection.
+	  // If **n** is not specified, returns a single random element.
+	  // The internal `guard` argument allows it to work with `map`.
+	  _.sample = function(obj, n, guard) {
+	    if (n == null || guard) {
+	      if (!isArrayLike(obj)) obj = _.values(obj);
+	      return obj[_.random(obj.length - 1)];
+	    }
+	    return _.shuffle(obj).slice(0, Math.max(0, n));
+	  };
+
+	  // Sort the object's values by a criterion produced by an iteratee.
+	  _.sortBy = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    return _.pluck(_.map(obj, function(value, index, list) {
+	      return {
+	        value: value,
+	        index: index,
+	        criteria: iteratee(value, index, list)
+	      };
+	    }).sort(function(left, right) {
+	      var a = left.criteria;
+	      var b = right.criteria;
+	      if (a !== b) {
+	        if (a > b || a === void 0) return 1;
+	        if (a < b || b === void 0) return -1;
+	      }
+	      return left.index - right.index;
+	    }), 'value');
+	  };
+
+	  // An internal function used for aggregate "group by" operations.
+	  var group = function(behavior) {
+	    return function(obj, iteratee, context) {
+	      var result = {};
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index) {
+	        var key = iteratee(value, index, obj);
+	        behavior(result, value, key);
+	      });
+	      return result;
+	    };
+	  };
+
+	  // Groups the object's values by a criterion. Pass either a string attribute
+	  // to group by, or a function that returns the criterion.
+	  _.groupBy = group(function(result, value, key) {
+	    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
+	  });
+
+	  // Indexes the object's values by a criterion, similar to `groupBy`, but for
+	  // when you know that your index values will be unique.
+	  _.indexBy = group(function(result, value, key) {
+	    result[key] = value;
+	  });
+
+	  // Counts instances of an object that group by a certain criterion. Pass
+	  // either a string attribute to count by, or a function that returns the
+	  // criterion.
+	  _.countBy = group(function(result, value, key) {
+	    if (_.has(result, key)) result[key]++; else result[key] = 1;
+	  });
+
+	  // Safely create a real, live array from anything iterable.
+	  _.toArray = function(obj) {
+	    if (!obj) return [];
+	    if (_.isArray(obj)) return slice.call(obj);
+	    if (isArrayLike(obj)) return _.map(obj, _.identity);
+	    return _.values(obj);
+	  };
+
+	  // Return the number of elements in an object.
+	  _.size = function(obj) {
+	    if (obj == null) return 0;
+	    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
+	  };
+
+	  // Split a collection into two arrays: one whose elements all satisfy the given
+	  // predicate, and one whose elements all do not satisfy the predicate.
+	  _.partition = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var pass = [], fail = [];
+	    _.each(obj, function(value, key, obj) {
+	      (predicate(value, key, obj) ? pass : fail).push(value);
+	    });
+	    return [pass, fail];
+	  };
+
+	  // Array Functions
+	  // ---------------
+
+	  // Get the first element of an array. Passing **n** will return the first N
+	  // values in the array. Aliased as `head` and `take`. The **guard** check
+	  // allows it to work with `_.map`.
+	  _.first = _.head = _.take = function(array, n, guard) {
+	    if (array == null) return void 0;
+	    if (n == null || guard) return array[0];
+	    return _.initial(array, array.length - n);
+	  };
+
+	  // Returns everything but the last entry of the array. Especially useful on
+	  // the arguments object. Passing **n** will return all the values in
+	  // the array, excluding the last N.
+	  _.initial = function(array, n, guard) {
+	    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
+	  };
+
+	  // Get the last element of an array. Passing **n** will return the last N
+	  // values in the array.
+	  _.last = function(array, n, guard) {
+	    if (array == null) return void 0;
+	    if (n == null || guard) return array[array.length - 1];
+	    return _.rest(array, Math.max(0, array.length - n));
+	  };
+
+	  // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
+	  // Especially useful on the arguments object. Passing an **n** will return
+	  // the rest N values in the array.
+	  _.rest = _.tail = _.drop = function(array, n, guard) {
+	    return slice.call(array, n == null || guard ? 1 : n);
+	  };
+
+	  // Trim out all falsy values from an array.
+	  _.compact = function(array) {
+	    return _.filter(array, _.identity);
+	  };
+
+	  // Internal implementation of a recursive `flatten` function.
+	  var flatten = function(input, shallow, strict, startIndex) {
+	    var output = [], idx = 0;
+	    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
+	      var value = input[i];
+	      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
+	        //flatten current level of array or arguments object
+	        if (!shallow) value = flatten(value, shallow, strict);
+	        var j = 0, len = value.length;
+	        output.length += len;
+	        while (j < len) {
+	          output[idx++] = value[j++];
+	        }
+	      } else if (!strict) {
+	        output[idx++] = value;
+	      }
+	    }
+	    return output;
+	  };
+
+	  // Flatten out an array, either recursively (by default), or just one level.
+	  _.flatten = function(array, shallow) {
+	    return flatten(array, shallow, false);
+	  };
+
+	  // Return a version of the array that does not contain the specified value(s).
+	  _.without = function(array) {
+	    return _.difference(array, slice.call(arguments, 1));
+	  };
+
+	  // Produce a duplicate-free version of the array. If the array has already
+	  // been sorted, you have the option of using a faster algorithm.
+	  // Aliased as `unique`.
+	  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+	    if (!_.isBoolean(isSorted)) {
+	      context = iteratee;
+	      iteratee = isSorted;
+	      isSorted = false;
+	    }
+	    if (iteratee != null) iteratee = cb(iteratee, context);
+	    var result = [];
+	    var seen = [];
+	    for (var i = 0, length = getLength(array); i < length; i++) {
+	      var value = array[i],
+	          computed = iteratee ? iteratee(value, i, array) : value;
+	      if (isSorted) {
+	        if (!i || seen !== computed) result.push(value);
+	        seen = computed;
+	      } else if (iteratee) {
+	        if (!_.contains(seen, computed)) {
+	          seen.push(computed);
+	          result.push(value);
+	        }
+	      } else if (!_.contains(result, value)) {
+	        result.push(value);
+	      }
+	    }
+	    return result;
+	  };
+
+	  // Produce an array that contains the union: each distinct element from all of
+	  // the passed-in arrays.
+	  _.union = function() {
+	    return _.uniq(flatten(arguments, true, true));
+	  };
+
+	  // Produce an array that contains every item shared between all the
+	  // passed-in arrays.
+	  _.intersection = function(array) {
+	    var result = [];
+	    var argsLength = arguments.length;
+	    for (var i = 0, length = getLength(array); i < length; i++) {
+	      var item = array[i];
+	      if (_.contains(result, item)) continue;
+	      for (var j = 1; j < argsLength; j++) {
+	        if (!_.contains(arguments[j], item)) break;
+	      }
+	      if (j === argsLength) result.push(item);
+	    }
+	    return result;
+	  };
+
+	  // Take the difference between one array and a number of other arrays.
+	  // Only the elements present in just the first array will remain.
+	  _.difference = function(array) {
+	    var rest = flatten(arguments, true, true, 1);
+	    return _.filter(array, function(value){
+	      return !_.contains(rest, value);
+	    });
+	  };
+
+	  // Zip together multiple lists into a single array -- elements that share
+	  // an index go together.
+	  _.zip = function() {
+	    return _.unzip(arguments);
+	  };
+
+	  // Complement of _.zip. Unzip accepts an array of arrays and groups
+	  // each array's elements on shared indices
+	  _.unzip = function(array) {
+	    var length = array && _.max(array, getLength).length || 0;
+	    var result = Array(length);
+
+	    for (var index = 0; index < length; index++) {
+	      result[index] = _.pluck(array, index);
+	    }
+	    return result;
+	  };
+
+	  // Converts lists into objects. Pass either a single array of `[key, value]`
+	  // pairs, or two parallel arrays of the same length -- one of keys, and one of
+	  // the corresponding values.
+	  _.object = function(list, values) {
+	    var result = {};
+	    for (var i = 0, length = getLength(list); i < length; i++) {
+	      if (values) {
+	        result[list[i]] = values[i];
+	      } else {
+	        result[list[i][0]] = list[i][1];
+	      }
+	    }
+	    return result;
+	  };
+
+	  // Generator function to create the findIndex and findLastIndex functions
+	  function createPredicateIndexFinder(dir) {
+	    return function(array, predicate, context) {
+	      predicate = cb(predicate, context);
+	      var length = getLength(array);
+	      var index = dir > 0 ? 0 : length - 1;
+	      for (; index >= 0 && index < length; index += dir) {
+	        if (predicate(array[index], index, array)) return index;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  // Returns the first index on an array-like that passes a predicate test
+	  _.findIndex = createPredicateIndexFinder(1);
+	  _.findLastIndex = createPredicateIndexFinder(-1);
+
+	  // Use a comparator function to figure out the smallest index at which
+	  // an object should be inserted so as to maintain order. Uses binary search.
+	  _.sortedIndex = function(array, obj, iteratee, context) {
+	    iteratee = cb(iteratee, context, 1);
+	    var value = iteratee(obj);
+	    var low = 0, high = getLength(array);
+	    while (low < high) {
+	      var mid = Math.floor((low + high) / 2);
+	      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
+	    }
+	    return low;
+	  };
+
+	  // Generator function to create the indexOf and lastIndexOf functions
+	  function createIndexFinder(dir, predicateFind, sortedIndex) {
+	    return function(array, item, idx) {
+	      var i = 0, length = getLength(array);
+	      if (typeof idx == 'number') {
+	        if (dir > 0) {
+	            i = idx >= 0 ? idx : Math.max(idx + length, i);
+	        } else {
+	            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
+	        }
+	      } else if (sortedIndex && idx && length) {
+	        idx = sortedIndex(array, item);
+	        return array[idx] === item ? idx : -1;
+	      }
+	      if (item !== item) {
+	        idx = predicateFind(slice.call(array, i, length), _.isNaN);
+	        return idx >= 0 ? idx + i : -1;
+	      }
+	      for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
+	        if (array[idx] === item) return idx;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  // Return the position of the first occurrence of an item in an array,
+	  // or -1 if the item is not included in the array.
+	  // If the array is large and already in sort order, pass `true`
+	  // for **isSorted** to use binary search.
+	  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
+	  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex);
+
+	  // Generate an integer Array containing an arithmetic progression. A port of
+	  // the native Python `range()` function. See
+	  // [the Python documentation](http://docs.python.org/library/functions.html#range).
+	  _.range = function(start, stop, step) {
+	    if (stop == null) {
+	      stop = start || 0;
+	      start = 0;
+	    }
+	    step = step || 1;
+
+	    var length = Math.max(Math.ceil((stop - start) / step), 0);
+	    var range = Array(length);
+
+	    for (var idx = 0; idx < length; idx++, start += step) {
+	      range[idx] = start;
+	    }
+
+	    return range;
+	  };
+
+	  // Function (ahem) Functions
+	  // ------------------
+
+	  // Determines whether to execute a function as a constructor
+	  // or a normal function with the provided arguments
+	  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+	    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+	    var self = baseCreate(sourceFunc.prototype);
+	    var result = sourceFunc.apply(self, args);
+	    if (_.isObject(result)) return result;
+	    return self;
+	  };
+
+	  // Create a function bound to a given object (assigning `this`, and arguments,
+	  // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
+	  // available.
+	  _.bind = function(func, context) {
+	    if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
+	    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+	    var args = slice.call(arguments, 2);
+	    var bound = function() {
+	      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
+	    };
+	    return bound;
+	  };
+
+	  // Partially apply a function by creating a version that has had some of its
+	  // arguments pre-filled, without changing its dynamic `this` context. _ acts
+	  // as a placeholder, allowing any combination of arguments to be pre-filled.
+	  _.partial = function(func) {
+	    var boundArgs = slice.call(arguments, 1);
+	    var bound = function() {
+	      var position = 0, length = boundArgs.length;
+	      var args = Array(length);
+	      for (var i = 0; i < length; i++) {
+	        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
+	      }
+	      while (position < arguments.length) args.push(arguments[position++]);
+	      return executeBound(func, bound, this, this, args);
+	    };
+	    return bound;
+	  };
+
+	  // Bind a number of an object's methods to that object. Remaining arguments
+	  // are the method names to be bound. Useful for ensuring that all callbacks
+	  // defined on an object belong to it.
+	  _.bindAll = function(obj) {
+	    var i, length = arguments.length, key;
+	    if (length <= 1) throw new Error('bindAll must be passed function names');
+	    for (i = 1; i < length; i++) {
+	      key = arguments[i];
+	      obj[key] = _.bind(obj[key], obj);
+	    }
+	    return obj;
+	  };
+
+	  // Memoize an expensive function by storing its results.
+	  _.memoize = function(func, hasher) {
+	    var memoize = function(key) {
+	      var cache = memoize.cache;
+	      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+	      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+	      return cache[address];
+	    };
+	    memoize.cache = {};
+	    return memoize;
+	  };
+
+	  // Delays a function for the given number of milliseconds, and then calls
+	  // it with the arguments supplied.
+	  _.delay = function(func, wait) {
+	    var args = slice.call(arguments, 2);
+	    return setTimeout(function(){
+	      return func.apply(null, args);
+	    }, wait);
+	  };
+
+	  // Defers a function, scheduling it to run after the current call stack has
+	  // cleared.
+	  _.defer = _.partial(_.delay, _, 1);
+
+	  // Returns a function, that, when invoked, will only be triggered at most once
+	  // during a given window of time. Normally, the throttled function will run
+	  // as much as it can, without ever going more than once per `wait` duration;
+	  // but if you'd like to disable the execution on the leading edge, pass
+	  // `{leading: false}`. To disable execution on the trailing edge, ditto.
+	  _.throttle = function(func, wait, options) {
+	    var context, args, result;
+	    var timeout = null;
+	    var previous = 0;
+	    if (!options) options = {};
+	    var later = function() {
+	      previous = options.leading === false ? 0 : _.now();
+	      timeout = null;
+	      result = func.apply(context, args);
+	      if (!timeout) context = args = null;
+	    };
+	    return function() {
+	      var now = _.now();
+	      if (!previous && options.leading === false) previous = now;
+	      var remaining = wait - (now - previous);
+	      context = this;
+	      args = arguments;
+	      if (remaining <= 0 || remaining > wait) {
+	        if (timeout) {
+	          clearTimeout(timeout);
+	          timeout = null;
+	        }
+	        previous = now;
+	        result = func.apply(context, args);
+	        if (!timeout) context = args = null;
+	      } else if (!timeout && options.trailing !== false) {
+	        timeout = setTimeout(later, remaining);
+	      }
+	      return result;
+	    };
+	  };
+
+	  // Returns a function, that, as long as it continues to be invoked, will not
+	  // be triggered. The function will be called after it stops being called for
+	  // N milliseconds. If `immediate` is passed, trigger the function on the
+	  // leading edge, instead of the trailing.
+	  _.debounce = function(func, wait, immediate) {
+	    var timeout, args, context, timestamp, result;
+
+	    var later = function() {
+	      var last = _.now() - timestamp;
+
+	      if (last < wait && last >= 0) {
+	        timeout = setTimeout(later, wait - last);
+	      } else {
+	        timeout = null;
+	        if (!immediate) {
+	          result = func.apply(context, args);
+	          if (!timeout) context = args = null;
+	        }
+	      }
+	    };
+
+	    return function() {
+	      context = this;
+	      args = arguments;
+	      timestamp = _.now();
+	      var callNow = immediate && !timeout;
+	      if (!timeout) timeout = setTimeout(later, wait);
+	      if (callNow) {
+	        result = func.apply(context, args);
+	        context = args = null;
+	      }
+
+	      return result;
+	    };
+	  };
+
+	  // Returns the first function passed as an argument to the second,
+	  // allowing you to adjust arguments, run code before and after, and
+	  // conditionally execute the original function.
+	  _.wrap = function(func, wrapper) {
+	    return _.partial(wrapper, func);
+	  };
+
+	  // Returns a negated version of the passed-in predicate.
+	  _.negate = function(predicate) {
+	    return function() {
+	      return !predicate.apply(this, arguments);
+	    };
+	  };
+
+	  // Returns a function that is the composition of a list of functions, each
+	  // consuming the return value of the function that follows.
+	  _.compose = function() {
+	    var args = arguments;
+	    var start = args.length - 1;
+	    return function() {
+	      var i = start;
+	      var result = args[start].apply(this, arguments);
+	      while (i--) result = args[i].call(this, result);
+	      return result;
+	    };
+	  };
+
+	  // Returns a function that will only be executed on and after the Nth call.
+	  _.after = function(times, func) {
+	    return function() {
+	      if (--times < 1) {
+	        return func.apply(this, arguments);
+	      }
+	    };
+	  };
+
+	  // Returns a function that will only be executed up to (but not including) the Nth call.
+	  _.before = function(times, func) {
+	    var memo;
+	    return function() {
+	      if (--times > 0) {
+	        memo = func.apply(this, arguments);
+	      }
+	      if (times <= 1) func = null;
+	      return memo;
+	    };
+	  };
+
+	  // Returns a function that will be executed at most one time, no matter how
+	  // often you call it. Useful for lazy initialization.
+	  _.once = _.partial(_.before, 2);
+
+	  // Object Functions
+	  // ----------------
+
+	  // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
+	  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
+	  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
+	                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+
+	  function collectNonEnumProps(obj, keys) {
+	    var nonEnumIdx = nonEnumerableProps.length;
+	    var constructor = obj.constructor;
+	    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
+
+	    // Constructor is a special case.
+	    var prop = 'constructor';
+	    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+
+	    while (nonEnumIdx--) {
+	      prop = nonEnumerableProps[nonEnumIdx];
+	      if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+	        keys.push(prop);
+	      }
+	    }
+	  }
+
+	  // Retrieve the names of an object's own properties.
+	  // Delegates to **ECMAScript 5**'s native `Object.keys`
+	  _.keys = function(obj) {
+	    if (!_.isObject(obj)) return [];
+	    if (nativeKeys) return nativeKeys(obj);
+	    var keys = [];
+	    for (var key in obj) if (_.has(obj, key)) keys.push(key);
+	    // Ahem, IE < 9.
+	    if (hasEnumBug) collectNonEnumProps(obj, keys);
+	    return keys;
+	  };
+
+	  // Retrieve all the property names of an object.
+	  _.allKeys = function(obj) {
+	    if (!_.isObject(obj)) return [];
+	    var keys = [];
+	    for (var key in obj) keys.push(key);
+	    // Ahem, IE < 9.
+	    if (hasEnumBug) collectNonEnumProps(obj, keys);
+	    return keys;
+	  };
+
+	  // Retrieve the values of an object's properties.
+	  _.values = function(obj) {
+	    var keys = _.keys(obj);
+	    var length = keys.length;
+	    var values = Array(length);
+	    for (var i = 0; i < length; i++) {
+	      values[i] = obj[keys[i]];
+	    }
+	    return values;
+	  };
+
+	  // Returns the results of applying the iteratee to each element of the object
+	  // In contrast to _.map it returns an object
+	  _.mapObject = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    var keys =  _.keys(obj),
+	          length = keys.length,
+	          results = {},
+	          currentKey;
+	      for (var index = 0; index < length; index++) {
+	        currentKey = keys[index];
+	        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
+	      }
+	      return results;
+	  };
+
+	  // Convert an object into a list of `[key, value]` pairs.
+	  _.pairs = function(obj) {
+	    var keys = _.keys(obj);
+	    var length = keys.length;
+	    var pairs = Array(length);
+	    for (var i = 0; i < length; i++) {
+	      pairs[i] = [keys[i], obj[keys[i]]];
+	    }
+	    return pairs;
+	  };
+
+	  // Invert the keys and values of an object. The values must be serializable.
+	  _.invert = function(obj) {
+	    var result = {};
+	    var keys = _.keys(obj);
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      result[obj[keys[i]]] = keys[i];
+	    }
+	    return result;
+	  };
+
+	  // Return a sorted list of the function names available on the object.
+	  // Aliased as `methods`
+	  _.functions = _.methods = function(obj) {
+	    var names = [];
+	    for (var key in obj) {
+	      if (_.isFunction(obj[key])) names.push(key);
+	    }
+	    return names.sort();
+	  };
+
+	  // Extend a given object with all the properties in passed-in object(s).
+	  _.extend = createAssigner(_.allKeys);
+
+	  // Assigns a given object with all the own properties in the passed-in object(s)
+	  // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+	  _.extendOwn = _.assign = createAssigner(_.keys);
+
+	  // Returns the first key on an object that passes a predicate test
+	  _.findKey = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = _.keys(obj), key;
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      key = keys[i];
+	      if (predicate(obj[key], key, obj)) return key;
+	    }
+	  };
+
+	  // Return a copy of the object only containing the whitelisted properties.
+	  _.pick = function(object, oiteratee, context) {
+	    var result = {}, obj = object, iteratee, keys;
+	    if (obj == null) return result;
+	    if (_.isFunction(oiteratee)) {
+	      keys = _.allKeys(obj);
+	      iteratee = optimizeCb(oiteratee, context);
+	    } else {
+	      keys = flatten(arguments, false, false, 1);
+	      iteratee = function(value, key, obj) { return key in obj; };
+	      obj = Object(obj);
+	    }
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      var key = keys[i];
+	      var value = obj[key];
+	      if (iteratee(value, key, obj)) result[key] = value;
+	    }
+	    return result;
+	  };
+
+	   // Return a copy of the object without the blacklisted properties.
+	  _.omit = function(obj, iteratee, context) {
+	    if (_.isFunction(iteratee)) {
+	      iteratee = _.negate(iteratee);
+	    } else {
+	      var keys = _.map(flatten(arguments, false, false, 1), String);
+	      iteratee = function(value, key) {
+	        return !_.contains(keys, key);
+	      };
+	    }
+	    return _.pick(obj, iteratee, context);
+	  };
+
+	  // Fill in a given object with default properties.
+	  _.defaults = createAssigner(_.allKeys, true);
+
+	  // Creates an object that inherits from the given prototype object.
+	  // If additional properties are provided then they will be added to the
+	  // created object.
+	  _.create = function(prototype, props) {
+	    var result = baseCreate(prototype);
+	    if (props) _.extendOwn(result, props);
+	    return result;
+	  };
+
+	  // Create a (shallow-cloned) duplicate of an object.
+	  _.clone = function(obj) {
+	    if (!_.isObject(obj)) return obj;
+	    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
+	  };
+
+	  // Invokes interceptor with the obj, and then returns obj.
+	  // The primary purpose of this method is to "tap into" a method chain, in
+	  // order to perform operations on intermediate results within the chain.
+	  _.tap = function(obj, interceptor) {
+	    interceptor(obj);
+	    return obj;
+	  };
+
+	  // Returns whether an object has a given set of `key:value` pairs.
+	  _.isMatch = function(object, attrs) {
+	    var keys = _.keys(attrs), length = keys.length;
+	    if (object == null) return !length;
+	    var obj = Object(object);
+	    for (var i = 0; i < length; i++) {
+	      var key = keys[i];
+	      if (attrs[key] !== obj[key] || !(key in obj)) return false;
+	    }
+	    return true;
+	  };
+
+
+	  // Internal recursive comparison function for `isEqual`.
+	  var eq = function(a, b, aStack, bStack) {
+	    // Identical objects are equal. `0 === -0`, but they aren't identical.
+	    // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
+	    if (a === b) return a !== 0 || 1 / a === 1 / b;
+	    // A strict comparison is necessary because `null == undefined`.
+	    if (a == null || b == null) return a === b;
+	    // Unwrap any wrapped objects.
+	    if (a instanceof _) a = a._wrapped;
+	    if (b instanceof _) b = b._wrapped;
+	    // Compare `[[Class]]` names.
+	    var className = toString.call(a);
+	    if (className !== toString.call(b)) return false;
+	    switch (className) {
+	      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
+	      case '[object RegExp]':
+	      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+	      case '[object String]':
+	        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
+	        // equivalent to `new String("5")`.
+	        return '' + a === '' + b;
+	      case '[object Number]':
+	        // `NaN`s are equivalent, but non-reflexive.
+	        // Object(NaN) is equivalent to NaN
+	        if (+a !== +a) return +b !== +b;
+	        // An `egal` comparison is performed for other numeric values.
+	        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+	      case '[object Date]':
+	      case '[object Boolean]':
+	        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
+	        // millisecond representations. Note that invalid dates with millisecond representations
+	        // of `NaN` are not equivalent.
+	        return +a === +b;
+	    }
+
+	    var areArrays = className === '[object Array]';
+	    if (!areArrays) {
+	      if (typeof a != 'object' || typeof b != 'object') return false;
+
+	      // Objects with different constructors are not equivalent, but `Object`s or `Array`s
+	      // from different frames are.
+	      var aCtor = a.constructor, bCtor = b.constructor;
+	      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
+	                               _.isFunction(bCtor) && bCtor instanceof bCtor)
+	                          && ('constructor' in a && 'constructor' in b)) {
+	        return false;
+	      }
+	    }
+	    // Assume equality for cyclic structures. The algorithm for detecting cyclic
+	    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
+
+	    // Initializing stack of traversed objects.
+	    // It's done here since we only need them for objects and arrays comparison.
+	    aStack = aStack || [];
+	    bStack = bStack || [];
+	    var length = aStack.length;
+	    while (length--) {
+	      // Linear search. Performance is inversely proportional to the number of
+	      // unique nested structures.
+	      if (aStack[length] === a) return bStack[length] === b;
+	    }
+
+	    // Add the first object to the stack of traversed objects.
+	    aStack.push(a);
+	    bStack.push(b);
+
+	    // Recursively compare objects and arrays.
+	    if (areArrays) {
+	      // Compare array lengths to determine if a deep comparison is necessary.
+	      length = a.length;
+	      if (length !== b.length) return false;
+	      // Deep compare the contents, ignoring non-numeric properties.
+	      while (length--) {
+	        if (!eq(a[length], b[length], aStack, bStack)) return false;
+	      }
+	    } else {
+	      // Deep compare objects.
+	      var keys = _.keys(a), key;
+	      length = keys.length;
+	      // Ensure that both objects contain the same number of properties before comparing deep equality.
+	      if (_.keys(b).length !== length) return false;
+	      while (length--) {
+	        // Deep compare each member
+	        key = keys[length];
+	        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+	      }
+	    }
+	    // Remove the first object from the stack of traversed objects.
+	    aStack.pop();
+	    bStack.pop();
+	    return true;
+	  };
+
+	  // Perform a deep comparison to check if two objects are equal.
+	  _.isEqual = function(a, b) {
+	    return eq(a, b);
+	  };
+
+	  // Is a given array, string, or object empty?
+	  // An "empty" object has no enumerable own-properties.
+	  _.isEmpty = function(obj) {
+	    if (obj == null) return true;
+	    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
+	    return _.keys(obj).length === 0;
+	  };
+
+	  // Is a given value a DOM element?
+	  _.isElement = function(obj) {
+	    return !!(obj && obj.nodeType === 1);
+	  };
+
+	  // Is a given value an array?
+	  // Delegates to ECMA5's native Array.isArray
+	  _.isArray = nativeIsArray || function(obj) {
+	    return toString.call(obj) === '[object Array]';
+	  };
+
+	  // Is a given variable an object?
+	  _.isObject = function(obj) {
+	    var type = typeof obj;
+	    return type === 'function' || type === 'object' && !!obj;
+	  };
+
+	  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
+	  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
+	    _['is' + name] = function(obj) {
+	      return toString.call(obj) === '[object ' + name + ']';
+	    };
+	  });
+
+	  // Define a fallback version of the method in browsers (ahem, IE < 9), where
+	  // there isn't any inspectable "Arguments" type.
+	  if (!_.isArguments(arguments)) {
+	    _.isArguments = function(obj) {
+	      return _.has(obj, 'callee');
+	    };
+	  }
+
+	  // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
+	  // IE 11 (#1621), and in Safari 8 (#1929).
+	  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+	    _.isFunction = function(obj) {
+	      return typeof obj == 'function' || false;
+	    };
+	  }
+
+	  // Is a given object a finite number?
+	  _.isFinite = function(obj) {
+	    return isFinite(obj) && !isNaN(parseFloat(obj));
+	  };
+
+	  // Is the given value `NaN`? (NaN is the only number which does not equal itself).
+	  _.isNaN = function(obj) {
+	    return _.isNumber(obj) && obj !== +obj;
+	  };
+
+	  // Is a given value a boolean?
+	  _.isBoolean = function(obj) {
+	    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+	  };
+
+	  // Is a given value equal to null?
+	  _.isNull = function(obj) {
+	    return obj === null;
+	  };
+
+	  // Is a given variable undefined?
+	  _.isUndefined = function(obj) {
+	    return obj === void 0;
+	  };
+
+	  // Shortcut function for checking if an object has a given property directly
+	  // on itself (in other words, not on a prototype).
+	  _.has = function(obj, key) {
+	    return obj != null && hasOwnProperty.call(obj, key);
+	  };
+
+	  // Utility Functions
+	  // -----------------
+
+	  // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
+	  // previous owner. Returns a reference to the Underscore object.
+	  _.noConflict = function() {
+	    root._ = previousUnderscore;
+	    return this;
+	  };
+
+	  // Keep the identity function around for default iteratees.
+	  _.identity = function(value) {
+	    return value;
+	  };
+
+	  // Predicate-generating functions. Often useful outside of Underscore.
+	  _.constant = function(value) {
+	    return function() {
+	      return value;
+	    };
+	  };
+
+	  _.noop = function(){};
+
+	  _.property = property;
+
+	  // Generates a function for a given object that returns a given property.
+	  _.propertyOf = function(obj) {
+	    return obj == null ? function(){} : function(key) {
+	      return obj[key];
+	    };
+	  };
+
+	  // Returns a predicate for checking whether an object has a given set of
+	  // `key:value` pairs.
+	  _.matcher = _.matches = function(attrs) {
+	    attrs = _.extendOwn({}, attrs);
+	    return function(obj) {
+	      return _.isMatch(obj, attrs);
+	    };
+	  };
+
+	  // Run a function **n** times.
+	  _.times = function(n, iteratee, context) {
+	    var accum = Array(Math.max(0, n));
+	    iteratee = optimizeCb(iteratee, context, 1);
+	    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+	    return accum;
+	  };
+
+	  // Return a random integer between min and max (inclusive).
+	  _.random = function(min, max) {
+	    if (max == null) {
+	      max = min;
+	      min = 0;
+	    }
+	    return min + Math.floor(Math.random() * (max - min + 1));
+	  };
+
+	  // A (possibly faster) way to get the current timestamp as an integer.
+	  _.now = Date.now || function() {
+	    return new Date().getTime();
+	  };
+
+	   // List of HTML entities for escaping.
+	  var escapeMap = {
+	    '&': '&amp;',
+	    '<': '&lt;',
+	    '>': '&gt;',
+	    '"': '&quot;',
+	    "'": '&#x27;',
+	    '`': '&#x60;'
+	  };
+	  var unescapeMap = _.invert(escapeMap);
+
+	  // Functions for escaping and unescaping strings to/from HTML interpolation.
+	  var createEscaper = function(map) {
+	    var escaper = function(match) {
+	      return map[match];
+	    };
+	    // Regexes for identifying a key that needs to be escaped
+	    var source = '(?:' + _.keys(map).join('|') + ')';
+	    var testRegexp = RegExp(source);
+	    var replaceRegexp = RegExp(source, 'g');
+	    return function(string) {
+	      string = string == null ? '' : '' + string;
+	      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+	    };
+	  };
+	  _.escape = createEscaper(escapeMap);
+	  _.unescape = createEscaper(unescapeMap);
+
+	  // If the value of the named `property` is a function then invoke it with the
+	  // `object` as context; otherwise, return it.
+	  _.result = function(object, property, fallback) {
+	    var value = object == null ? void 0 : object[property];
+	    if (value === void 0) {
+	      value = fallback;
+	    }
+	    return _.isFunction(value) ? value.call(object) : value;
+	  };
+
+	  // Generate a unique integer id (unique within the entire client session).
+	  // Useful for temporary DOM ids.
+	  var idCounter = 0;
+	  _.uniqueId = function(prefix) {
+	    var id = ++idCounter + '';
+	    return prefix ? prefix + id : id;
+	  };
+
+	  // By default, Underscore uses ERB-style template delimiters, change the
+	  // following template settings to use alternative delimiters.
+	  _.templateSettings = {
+	    evaluate    : /<%([\s\S]+?)%>/g,
+	    interpolate : /<%=([\s\S]+?)%>/g,
+	    escape      : /<%-([\s\S]+?)%>/g
+	  };
+
+	  // When customizing `templateSettings`, if you don't want to define an
+	  // interpolation, evaluation or escaping regex, we need one that is
+	  // guaranteed not to match.
+	  var noMatch = /(.)^/;
+
+	  // Certain characters need to be escaped so that they can be put into a
+	  // string literal.
+	  var escapes = {
+	    "'":      "'",
+	    '\\':     '\\',
+	    '\r':     'r',
+	    '\n':     'n',
+	    '\u2028': 'u2028',
+	    '\u2029': 'u2029'
+	  };
+
+	  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+	  var escapeChar = function(match) {
+	    return '\\' + escapes[match];
+	  };
+
+	  // JavaScript micro-templating, similar to John Resig's implementation.
+	  // Underscore templating handles arbitrary delimiters, preserves whitespace,
+	  // and correctly escapes quotes within interpolated code.
+	  // NB: `oldSettings` only exists for backwards compatibility.
+	  _.template = function(text, settings, oldSettings) {
+	    if (!settings && oldSettings) settings = oldSettings;
+	    settings = _.defaults({}, settings, _.templateSettings);
+
+	    // Combine delimiters into one regular expression via alternation.
+	    var matcher = RegExp([
+	      (settings.escape || noMatch).source,
+	      (settings.interpolate || noMatch).source,
+	      (settings.evaluate || noMatch).source
+	    ].join('|') + '|$', 'g');
+
+	    // Compile the template source, escaping string literals appropriately.
+	    var index = 0;
+	    var source = "__p+='";
+	    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+	      source += text.slice(index, offset).replace(escaper, escapeChar);
+	      index = offset + match.length;
+
+	      if (escape) {
+	        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+	      } else if (interpolate) {
+	        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+	      } else if (evaluate) {
+	        source += "';\n" + evaluate + "\n__p+='";
+	      }
+
+	      // Adobe VMs need the match returned to produce the correct offest.
+	      return match;
+	    });
+	    source += "';\n";
+
+	    // If a variable is not specified, place data values in local scope.
+	    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+
+	    source = "var __t,__p='',__j=Array.prototype.join," +
+	      "print=function(){__p+=__j.call(arguments,'');};\n" +
+	      source + 'return __p;\n';
+
+	    try {
+	      var render = new Function(settings.variable || 'obj', '_', source);
+	    } catch (e) {
+	      e.source = source;
+	      throw e;
+	    }
+
+	    var template = function(data) {
+	      return render.call(this, data, _);
+	    };
+
+	    // Provide the compiled source as a convenience for precompilation.
+	    var argument = settings.variable || 'obj';
+	    template.source = 'function(' + argument + '){\n' + source + '}';
+
+	    return template;
+	  };
+
+	  // Add a "chain" function. Start chaining a wrapped Underscore object.
+	  _.chain = function(obj) {
+	    var instance = _(obj);
+	    instance._chain = true;
+	    return instance;
+	  };
+
+	  // OOP
+	  // ---------------
+	  // If Underscore is called as a function, it returns a wrapped object that
+	  // can be used OO-style. This wrapper holds altered versions of all the
+	  // underscore functions. Wrapped objects may be chained.
+
+	  // Helper function to continue chaining intermediate results.
+	  var result = function(instance, obj) {
+	    return instance._chain ? _(obj).chain() : obj;
+	  };
+
+	  // Add your own custom functions to the Underscore object.
+	  _.mixin = function(obj) {
+	    _.each(_.functions(obj), function(name) {
+	      var func = _[name] = obj[name];
+	      _.prototype[name] = function() {
+	        var args = [this._wrapped];
+	        push.apply(args, arguments);
+	        return result(this, func.apply(_, args));
+	      };
+	    });
+	  };
+
+	  // Add all of the Underscore functions to the wrapper object.
+	  _.mixin(_);
+
+	  // Add all mutator Array functions to the wrapper.
+	  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+	    var method = ArrayProto[name];
+	    _.prototype[name] = function() {
+	      var obj = this._wrapped;
+	      method.apply(obj, arguments);
+	      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
+	      return result(this, obj);
+	    };
+	  });
+
+	  // Add all accessor Array functions to the wrapper.
+	  _.each(['concat', 'join', 'slice'], function(name) {
+	    var method = ArrayProto[name];
+	    _.prototype[name] = function() {
+	      return result(this, method.apply(this._wrapped, arguments));
+	    };
+	  });
+
+	  // Extracts the result from a wrapped and chained object.
+	  _.prototype.value = function() {
+	    return this._wrapped;
+	  };
+
+	  // Provide unwrapping proxy for some methods used in engine operations
+	  // such as arithmetic and JSON stringification.
+	  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
+
+	  _.prototype.toString = function() {
+	    return '' + this._wrapped;
+	  };
+
+	  // AMD registration happens at the end for compatibility with AMD loaders
+	  // that may not enforce next-turn semantics on modules. Even though general
+	  // practice for AMD registration is to be anonymous, underscore registers
+	  // as a named module because, like jQuery, it is a base library that is
+	  // popular enough to be bundled in a third party lib, but not be part of
+	  // an AMD load request. Those cases could generate an error when an
+	  // anonymous define() is called outside of a loader request.
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	      return _;
+	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  }
+	}.call(this));
+
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    attrs: {
+	      "id": "startcity"
+	    }
+	  }, [_vm._h('mt-index-list', {
+	    staticClass: "fixed"
+	  }, [_vm._l((_vm.setStartCityList), function(list) {
+	    return _vm._h('mt-index-section', {
+	      attrs: {
+	        "index": list.ShortKey
+	      }
+	    }, [_vm._l((list.Content), function(item) {
+	      return _vm._h('mt-cell', {
+	        attrs: {
+	          "title": item.Name
+	        },
+	        nativeOn: {
+	          "click": function($event) {
+	            _vm.getStartCity(item.Id, item.Name)
+	          }
+	        }
+	      })
+	    }), " "])
+	  })]), " ", " "])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-55a7ad28", module.exports)
+	  }
+	}
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(108);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(112);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(281);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(283);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(284);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketEndCity.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-12b95ab6", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-12b95ab6", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketEndCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(282);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(134)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(136);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(82);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _ = __webpack_require__(278); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				endcity: "",
+				setEndCityList: null,
+				endpopupVisible: false, //显示到达选择
+				endCitySlots: [{
+					flex: 1,
+					values: [],
+					className: 'endcity'
+				}]
+			};
+		},
+		created: function created() {
+			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择到达地" });
+
+			if (!this.$store.state.tickets.endCityList) {
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setEndCityList").then(function (data) {
+					_mintUi.Indicator.close();
+				});
+			}
+		},
+
+		computed: {
+			setEndCityList: function setEndCityList() {
+				return this.$store.state.tickets.endCityList;
+			}
+		},
+		watch: {
+			// endpopupVisible(status){
+			// 	if(status===false){
+			// 		// 说明已经选择完了
+			// 		this.$router.go(-1);
+			// 	}
+			// }
+		},
+		methods: {
+			getEndCity: function getEndCity(code, name, station) {
+				this.endcity = name;
+				// if(station.length===0){
+				// 	this.$store.dispatch("setEndCity",{
+				// 		Code:code,
+				// 		Name:name,
+				// 		Station:"",//空的站台
+				// 	});
+				// 	this.$router.go(-1);
+				// }
+				// else{
+				// 	this.endCitySlots[0].values = _.map(station,(item)=>{
+				// 		return item.Name;
+				// 	});
+
+				// 	this.endpopupVisible = true;
+				// }
+				this.$store.dispatch("setEndCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
+			},
+			onEndValuesChange: function onEndValuesChange(picker, values) {
+				this.$store.dispatch("setEndCity", { Code: "00000", Name: this.endcity, Station: values[0] });
+			},
+			noData: function noData() {
+				this.endpopupVisible = false;
+			},
+			yesData: function yesData() {
+				this.$router.go(-1);
+			}
+		}
+	};
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    attrs: {
+	      "id": "endcity"
+	    }
+	  }, [_vm._h('mt-index-list', {
+	    staticClass: "fixed"
+	  }, [_vm._l((_vm.setEndCityList), function(list) {
+	    return _vm._h('mt-index-section', {
+	      attrs: {
+	        "index": list.ShortKey
+	      }
+	    }, [_vm._l((list.Content), function(item) {
+	      return _vm._h('mt-cell', {
+	        attrs: {
+	          "title": item.Name
+	        },
+	        nativeOn: {
+	          "click": function($event) {
+	            _vm.getEndCity(item.Id, item.Name)
+	          }
+	        }
+	      })
+	    }), " "])
+	  })]), " ", " "])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-12b95ab6", module.exports)
+	  }
+	}
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(108);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(112);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(286);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(289);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(290);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketResult.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-07fa1da4", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-07fa1da4", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketResult.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(287);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(134)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+	exports.i(__webpack_require__(288), "");
+
+	// module
+	exports.push([module.id, "\n.list-complete-item {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter, .list-complete-leave-active {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active {\n  position: absolute;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  background-color: #f7f7f7;\n  height: 40px;\n  position: absolute; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #c4c4c4;\n    text-align: center; }\n    .result .date-control span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center; }\n    .result .date-control span:first-child, .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    border-bottom: 1px solid #dddddd;\n    background-color: #f7f7f7; }\n    .result .data-set span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #5e5e5e; }\n      .result .data-set span i {\n        height: 40px;\n        line-height: 40px;\n        font-size: 14px;\n        margin-right: 5px; }\n    .result .data-set span:first-child {\n      -ms-flex: 0.25;\n          flex: 0.25;\n      border-right-width: 1px;\n      border-right-color: #777777;\n      border-right-style: solid; }\n    .result .data-set span:last-child {\n      -ms-flex: 0.25;\n          flex: 0.25;\n      border-left-width: 1px;\n      border-left-color: #777777;\n      border-left-style: solid; }\n    .result .data-set span.active {\n      color: #0074D9; }\n  .result .result-list {\n    position: relative; }\n    .result .result-list .list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .result .result-list .list > .data {\n        color: #0074D9;\n        font-size: 1.5rem;\n        width: 30%;\n        text-align: left;\n        line-height: 70px;\n        padding-left: 20px;\n        font-weight: 900; }\n      .result .result-list .list > .car-position {\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        margin: 5px 0; }\n        .result .result-list .list > .car-position p {\n          height: 30px;\n          line-height: 30px;\n          font-size: 1.3rem;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n          color: #111111; }\n          .result .result-list .list > .car-position p span.brand {\n            border: 1px solid #FF851B;\n            background-color: #FF851B;\n            padding: 0 2px;\n            color: #fff;\n            font-size: 1.1rem;\n            margin-right: 5px;\n            border-radius: 10px; }\n        .result .result-list .list > .car-position p.type {\n          color: #919191; }\n          .result .result-list .list > .car-position p.type > i.fa-location-arrow {\n            color: #AAAAAA;\n            padding: 0 2px;\n            margin-right: 5px; }\n          .result .result-list .list > .car-position p.type > i.fa-caret-down {\n            float: right;\n            height: 30px;\n            line-height: 30px; }\n        .result .result-list .list > .car-position > .show-router ul {\n          list-style: none; }\n          .result .result-list .list > .car-position > .show-router ul li {\n            margin-left: 20px;\n            position: relative;\n            font-size: 1rem;\n            line-height: 24px;\n            height: 24px; }\n            .result .result-list .list > .car-position > .show-router ul li::after {\n              content: \"\";\n              height: 8px;\n              width: 8px;\n              position: absolute;\n              border-radius: 4px;\n              border: 1px solid #AAAAAA;\n              top: 7px;\n              left: -15px; }\n            .result .result-list .list > .car-position > .show-router ul li::before {\n              content: \"\";\n              height: 7px;\n              width: 1px;\n              position: absolute;\n              border: 1px solid #AAAAAA;\n              top: -5px;\n              left: -12px; }\n          .result .result-list .list > .car-position > .show-router ul span + li::before {\n            border: 1px solid #fff; }\n          .result .result-list .list > .car-position > .show-router ul li.active::after {\n            content: \"\";\n            height: 8px;\n            width: 8px;\n            position: absolute;\n            border-radius: 4px;\n            border: 1px solid #FF851B;\n            top: 7px;\n            left: -15px; }\n      .result .result-list .list > .ticket-type {\n        margin: 5px 0;\n        width: 30%;\n        text-align: right;\n        margin-right: 10px;\n        font-size: 1.3rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n        .result .result-list .list > .ticket-type > p {\n          heihgt: 30px;\n          line-height: 30px; }\n        .result .result-list .list > .ticket-type .money {\n          color: #FF851B;\n          -ms-flex: 1;\n              flex: 1; }\n        .result .result-list .list > .ticket-type .number, .result .result-list .list > .ticket-type .type {\n          font-size: 1.1rem;\n          color: #AAAAAA;\n          -ms-flex: 1;\n              flex: 1; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 60%;\n      height: 40%;\n      border-radius: 10px; }\n      .result .result-list .popup-visible .popup-header {\n        height: 40px;\n        border-top-left-radius: 10px;\n        border-top-right-radius: 10px;\n        width: 100%;\n        text-align: center;\n        font-size: 1.8rem;\n        line-height: 40px;\n        background-color: #009688;\n        color: #fff; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(136);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(82);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _ = __webpack_require__(278); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				startCity: "",
+				endCity: "",
+				getResultList: this.$store.getters.getResultList, //列表备份
+				isShowList: true,
+				isShowTime: false,
+				isShowPosition: false,
+				showNoData: false,
+				routerDetailShow: false, //显示公司信息
+				showCompanyInfo: {}, //显示的公司信息
+				arrow: "fa-caret-down", //默认票价排序图标
+				TimeOptions: [{
+					label: '不限时间段',
+					value: '不限',
+					disabled: false
+				}, {
+					label: '早上(00:00-06:00)',
+					value: 6,
+					disabled: false
+				}, {
+					label: '上午(06:00-12:00)',
+					value: 12,
+					disabled: false
+				}, {
+					label: '下午(12:00-18:00)',
+					value: 18,
+					disabled: false
+				}, {
+					label: '晚上(18:00-24:00)',
+					value: 24,
+					disabled: false
+				}],
+				PositionOptions: [{
+					label: '不限',
+					value: '不限',
+					disabled: false
+				}],
+				TimeOptionsValue: ["不限"], //结果
+				PositionOptionsValue: ["不限"] };
+		},
+		created: function created() {
+			if (this.$store.getters.getResultList === null) {
+				//数据为空,一般是直接进入这个页面才会这样
+				this.$router.replace({ path: "/home/ticketbody" });
+			}
+			this.startCity = this.$store.state.tickets.startCity;
+			this.endCity = this.$store.state.tickets.endCity;
+			// console.log(this.getResultList)
+			//设置头部标题
+			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " 到 " + this.endCity.Name });
+
+			this.refresh();
+		},
+
+		computed: {
+			getStartCity: function getStartCity() {
+				return this.$store.getters.getInfo.startCity.Name;
+			},
+			getEndCity: function getEndCity() {
+				return this.$store.getters.getInfo.endCity.Name;
+			},
+
+			// getResultList(){
+			// 	return this.$store.getters.getResultList;
+			// },
+			getTimeOptionsValue: {
+				set: function set(value) {
+					if (value.length === 0) {
+						this.TimeOptionsValue = ["不限"];
+					} else {
+						if (value.indexOf("不限") > -1 && value.length !== 1) {
+							// 有不止不限的选项
+							this.TimeOptionsValue = value;
+							this.TimeOptions[0].disabled = true;
+						} else {
+							if (value.length < this.TimeOptionsValue.length) {
+								// 设置的值小于原来的值
+								this.TimeOptionsValue = ["不限"];
+							} else {
+								this.TimeOptionsValue = value;
+								this.TimeOptions[0].disabled = false;
+							}
+						}
+						if (value.length === this.TimeOptions.length) {
+							this.TimeOptions[0].disabled = false;
+						}
+					}
+				},
+				get: function get() {
+					return this.TimeOptionsValue;
+				}
+			},
+			getPositionOptionsValue: {
+				set: function set(value) {
+					if (value.length === 0) {
+						this.PositionOptionsValue = ["不限"];
+					} else {
+						if (value.indexOf("不限") > -1 && value.length !== 1) {
+							// 有不止不限的选项
+							this.PositionOptionsValue = value;
+							this.PositionOptions[0].disabled = true;
+						} else {
+							if (value.length < this.PositionOptionsValue.length) {
+								// 设置的值小于原来的值
+								this.PositionOptionsValue = ["不限"];
+							} else {
+								this.PositionOptionsValue = value;
+								this.PositionOptions[0].disabled = false;
+							}
+						}
+						if (value.length === this.PositionOptions.length) {
+							this.PositionOptions[0].disabled = false;
+						}
+					}
+				},
+				get: function get() {
+					return this.PositionOptionsValue;
+				}
+			},
+			startDate: function startDate() {
+				return this.$store.getters.getInfo.startDate;
+			},
+			ResultBackUp: function ResultBackUp() {
+				return this.$store.getters.getResultList;
+			}
+		},
+		methods: {
+			setList: function setList() {
+				//隐藏显示列表
+				this.isShowList = !this.isShowList;
+			},
+			HideAll: function HideAll() {
+				this.isShowList = false; //隐藏列表
+				//隐藏其他的tab
+				this.isShowTime = false;
+				this.isShowPosition = false;
+			},
+			setShowTime: function setShowTime() {
+				this.HideAll();
+				this.isShowTime = true;
+			},
+			setShowPosition: function setShowPosition() {
+				this.HideAll();
+				this.isShowPosition = true;
+			},
+			refresh: function refresh() {
+				var _this = this;
+
+				if (this.$store.getters.getResultList.length === 0) {
+					// 没有数据
+					this.showNoData = true;
+					this.getResultList = [];
+				} else {
+					this.showNoData = false;
+					this.PositionOptions = [{
+						label: '不限',
+						value: '不限',
+						disabled: false
+					}]; //清空先
+					// 准备运输公司信息
+					this.getResultList.map(function (item) {
+						_this.PositionOptions.push({
+							label: item.CoName,
+							value: item.CoName,
+							disabled: false
+						});
+					});
+				}
+			},
+			queryTime: function queryTime() {
+				//查找特定时间的车
+				// console.log(this.TimeOptionsValue);
+				// 如果this.TimeOptionsValue长度超过1位,那就需要去掉'不限'
+				this.HideAll();
+				this.isShowList = true; //显示列表
+
+				var filter = this.TimeOptionsValue.slice(1);
+				this.getResultList = _.filter(this.ResultBackUp, function (item) {
+					var hour = parseInt(item.StartTime.split(":")[0]);
+
+					var n = false;
+					for (var i = 0; i < filter.length; i++) {
+						switch (filter[i]) {
+							case 6:
+								if (hour <= 6 && hour >= 0) {
+									n = true;
+								}
+								break;
+							case 12:
+								if (hour <= 12 && hour > 6) {
+									n = true;
+								}
+								break;
+							case 18:
+								if (hour <= 18 && hour > 12) {
+									n = true;
+								}
+								break;
+							case 24:
+								if (hour <= 24 && hour > 18) {
+									n = true;
+								}
+								break;
+						}
+					}
+					return n;
+				});
+
+				// 最后判断是否值选择了一个不限
+				if (this.TimeOptionsValue.length === 1 && this.getResultList.length === 0) {
+					// 长度为一
+					this.getResultList = this.ResultBackUp;
+				}
+			},
+			queryPosition: function queryPosition() {
+				// 查找查找
+				// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
+				this.HideAll();
+				this.isShowList = true; //显示列表
+				// console.log(this.getResultList)
+				var filter = this.PositionOptionsValue.slice(1);
+				this.getResultList = _.filter(this.ResultBackUp, function (item) {
+					var n = false;
+					for (var i = 0; i < filter.length; i++) {
+						if (item.CoName === filter[i]) {
+							n = true;
+						}
+					}
+					return n;
+				});
+
+				if (this.PositionOptionsValue.length === 1 && this.getResultList.length === 0) {
+					// 长度为一
+					this.getResultList = this.ResultBackUp;
+				}
+			},
+			GoToPay: function GoToPay(index) {
+				// 存储用户点击的列表
+				this.$store.dispatch("setBusInfo", this.getResultList[index]);
+				// 去支付页面
+				this.$router.push({ name: "ticketpay" });
+			},
+			sortTime: function sortTime() {
+				var data = _utils2.default.formatJsonData(this.getResultList);
+				if (this.arrow === "fa-caret-down") {
+					data.sort(function (a, b) {
+						return b.Price - a.Price;
+					});
+					this.arrow = "fa-caret-up";
+				} else {
+					data.sort(function (a, b) {
+						return a.Price - b.Price;
+					});
+					this.arrow = "fa-caret-down";
+				}
+
+				this.getResultList = data;
+			},
+			showCompanyDeatil: function showCompanyDeatil(index, event) {
+				//显示路线详情
+				if (index === this.routerDetailShow) {
+					this.routerDetailShow = -1;
+				} else {
+					this.routerDetailShow = index;
+				}
+
+				// this.showCompanyInfo = this.getResultList[index];
+				// console.log(index)
+			},
+			gobackdate: function gobackdate() {
+				var _this2 = this;
+
+				//前一天的车票信息
+				var now = new Date(this.$store.getters.getInfo.startDate.server).getTime();
+				var back = new Date(now - 1000 * 60 * 60 * 24); //昨天
+				// 检查日期
+				if (Date.now() > now) {
+					// 当前日期大于昨天的日期(不允许查过期的车票)
+					(0, _mintUi.Toast)({
+						message: "无法查询过期的信息...",
+						position: 'bottom',
+						duration: 3000
+					});
+					return;
+				}
+				//开始加载数据
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+
+				this.$store.dispatch("setStartDate", {
+					date: _utils2.default.formatDateTypeOne(back),
+					week: _utils2.default.formatWeek(back),
+					server: back });
+
+				this.$store.dispatch("setResultList").then(function (data) {
+					_mintUi.Indicator.close();
+					_this2.getResultList = data;
+					_this2.refresh();
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
+					(0, _mintUi.Toast)({
+						message: "服务器错误,请稍后重试...",
+						position: 'bottom',
+						duration: 3000
+					});
+				});
+			},
+			gofrontdate: function gofrontdate() {
+				var _this3 = this;
+
+				//后一天的车票信息
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+
+				var now = new Date(this.$store.getters.getInfo.startDate.server).getTime();
+				var back = new Date(now + 1000 * 60 * 60 * 24); //昨天
+				this.$store.dispatch("setStartDate", {
+					date: _utils2.default.formatDateTypeOne(back),
+					week: _utils2.default.formatWeek(back),
+					server: back });
+
+				this.$store.dispatch("setResultList").then(function (data) {
+					_mintUi.Indicator.close();
+					_this3.getResultList = data;
+					_this3.refresh();
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
+					(0, _mintUi.Toast)({
+						message: "服务器错误,请稍后重试...",
+						position: 'bottom',
+						duration: 3000
+					});
+				});
+			}
+		}
+	};
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "result"
+	  }, [_vm._h('div', {
+	    staticClass: "date-control"
+	  }, [_vm._h('span', {
+	    staticClass: "font-blue",
+	    on: {
+	      "click": _vm.gobackdate
+	    }
+	  }, ["前一天"]), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.startDate.date + ' ' + _vm.startDate.week)
+	    }
+	  }), " ", _vm._h('span', {
+	    staticClass: "font-blue",
+	    on: {
+	      "click": _vm.gofrontdate
+	    }
+	  }, ["后一天"])]), " ", " ", _vm._h('div', {
+	    staticClass: "data-set"
+	  }, [_vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowTime
+	    },
+	    on: {
+	      "click": _vm.setShowTime
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-glass"
+	  }), "时段"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowPosition
+	    },
+	    on: {
+	      "click": _vm.setShowPosition
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-bus"
+	  }), "路线信息"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowList
+	    },
+	    on: {
+	      "click": _vm.sortTime
+	    }
+	  }, [_vm._h('i', {
+	    class: ['fa', _vm.arrow]
+	  }), "票价"])]), " ", _vm._h('div', {
+	    staticClass: "result-list"
+	  }, [_vm._h('transition-group', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowList),
+	      expression: "isShowList"
+	    }],
+	    staticClass: "lists",
+	    attrs: {
+	      "name": "list-complete",
+	      "tag": "div"
+	    }
+	  }, [_vm._l((_vm.getResultList), function(item, index) {
+	    return _vm._h('div', {
+	      key: index,
+	      staticClass: "list list-complete-item",
+	      on: {
+	        "click": function($event) {
+	          _vm.GoToPay(index)
+	        }
+	      }
+	    }, [_vm._h('span', {
+	      staticClass: "data",
+	      domProps: {
+	        "textContent": _vm._s(item.StartTime.slice(0, item.StartTime.length - 3))
+	      }
+	    }), " ", _vm._h('div', {
+	      staticClass: "car-position"
+	    }, [_vm._h('p', [_vm._h('span', {
+	      staticClass: "brand"
+	    }, ["始"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", " ", _vm._h('p', {
+	      staticClass: "type",
+	      on: {
+	        "click": function($event) {
+	          $event.stopPropagation();
+	          _vm.showCompanyDeatil(index, $event)
+	        }
+	      }
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-location-arrow"
+	    }), _vm._s(item.Route) + "\n\t\t\t\t\t\t", _vm._h('i', {
+	      staticClass: "fa fa-caret-down"
+	    })]), " ", _vm._h('div', {
+	      directives: [{
+	        name: "show",
+	        rawName: "v-show",
+	        value: (_vm.routerDetailShow === index),
+	        expression: "routerDetailShow===index"
+	      }],
+	      staticClass: "show-router"
+	    }, [_vm._h('ul', {
+	      staticClass: "router"
+	    }, [_vm._h('span', ["始点:"]), " ", _vm._l((item.SPoint), function(list) {
+	      return _vm._h('li', {
+	        key: index,
+	        class: {
+	          active: list.NodeType === 1
+	        }
+	      }, [_vm._s(list.Point)])
+	    }), " ", _vm._h('span', ["终点:"]), " ", _vm._l((item.EPoint), function(list) {
+	      return _vm._h('li', {
+	        key: index,
+	        class: {
+	          active: list.NodeType === 2
+	        }
+	      }, [_vm._s(list.Point)])
+	    })])]), " ", _vm._h('p', [_vm._h('span', {
+	      staticClass: "brand"
+	    }, ["终"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"])]), " ", _vm._h('div', {
+	      staticClass: "ticket-type"
+	    }, [_vm._h('p', {
+	      staticClass: "money",
+	      domProps: {
+	        "textContent": _vm._s(item.Price + '元')
+	      }
+	    }), " ", _vm._h('p', {
+	      staticClass: "number",
+	      domProps: {
+	        "textContent": _vm._s(item.CoName)
+	      }
+	    }), " ", _vm._h('p', {
+	      staticClass: "type",
+	      domProps: {
+	        "textContent": _vm._s(item.TicketNum + '张余票')
+	      }
+	    })])])
+	  })]), " ", " ", " ", " ", _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (!_vm.isShowList),
+	      expression: "!isShowList"
+	    }],
+	    staticClass: "change-set"
+	  }, [_vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowTime),
+	      expression: "isShowTime"
+	    }],
+	    staticClass: "set-time"
+	  }, [_vm._h('mt-checklist', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.getTimeOptionsValue),
+	      expression: "getTimeOptionsValue"
+	    }],
+	    attrs: {
+	      "options": _vm.TimeOptions
+	    },
+	    domProps: {
+	      "value": (_vm.getTimeOptionsValue)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.getTimeOptionsValue = $event
+	      }
+	    }
+	  }), " ", _vm._h('button', {
+	    staticClass: "btn",
+	    on: {
+	      "click": _vm.queryTime
+	    }
+	  }, ["确定"])]), " ", " ", _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowPosition),
+	      expression: "isShowPosition"
+	    }],
+	    staticClass: "set-position"
+	  }, [_vm._h('mt-checklist', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.getPositionOptionsValue),
+	      expression: "getPositionOptionsValue"
+	    }],
+	    attrs: {
+	      "options": _vm.PositionOptions
+	    },
+	    domProps: {
+	      "value": (_vm.getPositionOptionsValue)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.getPositionOptionsValue = $event
+	      }
+	    }
+	  }), " ", _vm._h('button', {
+	    staticClass: "btn",
+	    on: {
+	      "click": _vm.queryPosition
+	    }
+	  }, ["确定"])])]), " ", " ", (_vm.showNoData) ? _vm._h('div', {
+	    staticClass: "no-data"
+	  }, [_vm._h('p', ["没有更多数据..."])]) : _vm._e()])])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-07fa1da4", module.exports)
+	  }
+	}
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(108);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(112);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(292);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(295);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(296);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketPay.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-73a4cce7", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-73a4cce7", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketPay.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(293);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(134)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+	exports.i(__webpack_require__(294), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(86)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #f7f7f7; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff; }\n        .ticket-info .address-info .start p.first {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p.center {\n          font-size: 1.8rem;\n          width: 100%; }\n        .ticket-info .address-info .start p.last {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0;\n        line-height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -20px;\n          content: \"\";\n          border: 10px solid #fff;\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff; }\n      .ticket-info .address-info .center p.first {\n        color: #fff; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .address-info .end p {\n        color: #fff;\n        font-size: 1.2rem; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      display: inline-block;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n    .ticket-info .tip-info span {\n      float: right;\n      color: #fff; }\n\n.people-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.1rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .contact-info .info span {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.3rem; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  height: 40px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 40px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 60px;\n  width: 100%;\n  background-color: rgba(17, 17, 17, 0.6);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #dddddd;\n      height: 25px;\n      line-height: 25px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #fff; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _stringify = __webpack_require__(29);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(136);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(82);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	var _ = __webpack_require__(278);
+	exports.default = {
+		data: function data() {
+			return {
+				startCity: "",
+				endCity: "",
+				busInfo: {},
+				popupVisible: false, //提示框是否显示
+				tipPopupVisible: false, //取票信息说明
+				popupText: "我是提示框", //提示框文字
+				// Code:"",//微信code
+				isInsure: true,
+				fareName: "", //输入的乘客名
+				certificate: "", //输入的乘客凭证,身份证这类
+				AllFare: [
+					// {
+					// 	name:"周岳谢",
+					// 	// code:"440802199406011519",
+					// 	active:false,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"周周周",
+					// 	// code:"440802199406011519",
+					// 	active:true,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"舟舟周",
+					// 	// code:"440802199406011519",
+					// 	active:false,
+					// 	isGetTicket:false
+					// },
+					// {
+					// 	name:"粥粥周",
+					// 	// code:"440802199406011519",
+					// 	active:true,
+					// 	isGetTicket:false
+					// }
+				], //所有的乘客信息
+				isHaveGetTicketMan: false, //是否有取票人信息
+
+				//订单信息
+				payInfoData: {
+					passenger: null, //乘客
+					inSureMoney: 0, //单笔保险费
+					getTicketMan: null, //取票人信息
+					Allinsure: 0, //保险费用(总共)
+					ticketMoney: this.$store.getters.getBusInfo.Price, //票的单价
+					payMoney: 0, //总共支付的钱
+					contactPhone: ""
+				} };
+		},
+		beforeCreate: function beforeCreate() {
+			if (this.$store.getters.getBusInfo === null) {
+				//数据为空,一般是直接进入这个页面才会这样
+				this.$router.replace({ path: "/home/ticketbody" });
+				return;
+			}
+		},
+		created: function created() {
+			this.busInfo = this.$store.getters.getBusInfo;
+			this.startCity = this.$store.state.tickets.startCity;
+			this.endCity = this.$store.state.tickets.endCity;
+
+			var startDate = this.$store.getters.getInfo.startDate;
+			this.$store.commit("CHANGE_HEADER", {
+				isHome: false,
+				Title: startDate.date + " " + startDate.week
+			});
+
+			this.computeAll();
+			// console.log(this.formatData(this.busInfo))
+		},
+
+		computed: {
+			startDate: function startDate() {
+				return this.$store.getters.getInfo.startDate.date + this.$store.getters.getInfo.startDate.week;
+			}
+		},
+		methods: {
+			/**
+	   * 格式化vue数据
+	   * @param  {[type]} data [description]
+	   * @return {[type]}      [description]
+	   */
+			formatData: function formatData(data) {
+				return JSON.parse((0, _stringify2.default)(data));
+			},
+
+			// pay(){
+			// 	console.log(this.formatData(this.busInfo))
+			// },
+			/**
+	   * 提示框里的信息
+	   * @param  {[type]} text [description]
+	   * @return {[type]}      [description]
+	   */
+			popupMessage: function popupMessage(text) {
+				(0, _mintUi.Toast)({
+					message: text,
+					position: 'center',
+					duration: 3000
+				});
+				// this.popupText = text;
+				// this.popupVisible = true;
+			},
+
+			// postCode(){
+			// 	// 提示加载中
+			// 	Indicator.open({
+			// 		text: '加载中...',
+			// 		spinnerType: 'double-bounce'
+			// 	});
+			// 	this.$http.post("http://wx.1yhp.net/api/Order/WxPay",{Code:this.Code}).then(res=>{
+			// 		Indicator.close();
+			// 		if(res.data.Status===0){
+			// 			this.popupMessage(res.data.Message);
+			// 		}
+			// 		else{
+			// 			this.popupMessage(JSON.stringify(res.data));
+			// 			this.payMoney(res.data.Data);
+			// 		}
+			// 	}).catch(error=>{
+			// 		this.popupMessage(error);
+			// 	})
+			// },
+			// payMoney(paydata){
+			// 	window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+			// 		if(r.err_msg==="get_brand_wcpay_request:ok"){
+			// 			// 支付成功
+			// 			// 再根据小票拿数据
+			// 			// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
+			// 			Indicator.open({
+			// 				text: '支付成功...',
+			// 				spinnerType: 'double-bounce'
+			// 			});
+			// 			setTimeout(()=>{
+			// 				Indicator.close();
+			// 			},3000);
+			// 		}
+			// 	});
+			// },
+			/**
+	   * 查看取票退票说明
+	   * @return {[type]} [description]
+	   */
+			openTip: function openTip() {
+				this.tipPopupVisible = true;
+			},
+
+			/**
+	   * 获取所有的乘客数组
+	   * @return {[type]} [description]
+	   */
+			getAllFare: function getAllFare() {
+				var data = _.filter(this.AllFare, function (item) {
+					return item.active;
+				});
+
+				this.payInfoData.passenger = data;
+				return data;
+			},
+
+			/**
+	   * 计算所有的乘客的钱
+	   * @return {[type]} [description]
+	   */
+			computeTicketMoney: function computeTicketMoney() {
+				var len = this.getAllFare().length;
+				this.payInfoData.payMoney = this.payInfoData.ticketMoney * len + this.payInfoData.Allinsure;
+			},
+
+			/**
+	   * 计算保险费
+	   * @return {[type]} [description]
+	   */
+			computeInsureMoney: function computeInsureMoney() {
+				if (this.isInsure) {
+					// 设置了保险
+					this.payInfoData.Allinsure = this.payInfoData.inSureMoney * this.getAllFare().length;
+				} else {
+					this.payInfoData.Allinsure = 0;
+				}
+			},
+			computeAll: function computeAll() {
+				this.computeInsureMoney();
+				this.computeTicketMoney();
+			},
+
+			/**
+	   * 获取取票人信息
+	   * @return {[type]} [description]
+	   */
+			getGetTicketMan: function getGetTicketMan() {
+				var data = _.filter(this.AllFare, function (item) {
+					return item.isGetTicket;
+				});
+
+				this.payInfoData.getTicketMan = data;
+				return data;
+			},
+
+			/**
+	   * 提交订单
+	   * @return {[type]} [description]
+	   */
+			submitOrder: function submitOrder() {
+				var _this = this;
+
+				if (this.getAllFare().length === 0) {
+					this.popupMessage("请先添加或者选择乘客!");
+					return;
+				} else {
+					if (this.getGetTicketMan().length === 0) {
+						this.popupMessage("请设置一个取票人!");
+						return;
+					} else {
+						if (this.inspectPhone()) {
+							this.computeAll();
+							_mintUi.Indicator.open({
+								text: '加载中...',
+								spinnerType: 'double-bounce'
+							});
+
+							// 获取乘客名字,逗号相连
+							var arrayData = "";
+							for (var i = 0; i < this.payInfoData.passenger.length; i++) {
+								arrayData = arrayData + "," + this.AllFare.name;
+							}
+
+							this.$store.dispatch("payMoney", {
+								Name: arrayData,
+								Mobile: this.payInfoData.contactPhone,
+								Num: arrayData.length
+							}).then(function (result) {
+								console.log(result);
+								_mintUi.Indicator.close();
+								_this.popupMessage("支付失败,请稍后再试!");
+							});
+							// setTimeout(()=>{
+							// 	Indicator.close();
+							// 	this.popupMessage("支付失败,请稍后再试!");
+							// },2000)
+						} else {
+							this.popupMessage("请填写正确的联系手机号!");
+						}
+					}
+				}
+			},
+
+			/**
+	   * 退出提示框提示页(关闭)
+	   * @return {[type]} [description]
+	   */
+			backTip: function backTip() {
+				// 退出tip
+				this.tipPopupVisible = false;
+				this.popupVisible = false;
+			},
+
+			/**
+	   * 检查手机号
+	   * @return {[type]} [description]
+	   */
+			inspectPhone: function inspectPhone() {
+				return (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)
+				);
+			},
+
+			/**
+	   * 添加乘客信息
+	   * @return {[type]} [description]
+	   */
+			append: function append() {
+				// 添加乘客至AllFare
+				// 首先检查输入是否正确
+				if (_utils2.default.isChinaName(this.fareName) && this.fareName.length >= 2) {
+					// 是中文
+					if (this.AllFare.length > this.busInfo.TicketNum) {
+						// 如果添加人数大于剩余票数
+						this.popupMessage("乘客数不允许大于余票数!");
+					} else {
+						this.AllFare.push({
+							name: this.fareName,
+							// code:this.certificate,
+							active: true,
+							isGetTicket: false
+						});
+						// 清空输入的信息
+						this.fareName = "";
+						this.certificate = "";
+
+						this.popupMessage("添加成功!");
+						this.computeAll();
+					}
+				} else {
+					this.popupMessage("请输入正确的姓名!");
+				}
+			},
+
+			/**
+	   * 选择乘客check按钮
+	   * @param {[type]} index [description]
+	   */
+			setFare: function setFare(index) {
+				// 若没有选中,那么设置为乘客
+				// 添加的乘客不允许大于余票
+				var lastTicket = parseInt(this.busInfo.showTicketInfo);
+
+				if (this.getAllFare().length > lastTicket && !this.AllFare[index].active) {
+					// 选中的已经超过3个人
+					this.popupMessage("乘客数已经超过余票数!");
+				} else {
+					this.AllFare[index].active = !this.AllFare[index].active;
+					this.computeAll();
+				}
+			},
+
+			/**
+	   * 删除乘客信息
+	   * @param  {[type]} index [description]
+	   * @return {[type]}       [description]
+	   */
+			trashMan: function trashMan(index) {
+				var _this2 = this;
+
+				var array = this.formatData(this.AllFare);
+
+				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
+					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
+					_this2.AllFare.splice(index, 1);
+					_this2.computeAll();
+				}).catch(function (error) {
+					// error=cancel
+					console.log(error);
+				});
+			},
+
+			/**
+	   * 设置汽车保险
+	   */
+			GetInSure: function GetInSure() {
+				this.isInsure = !this.isInsure;
+				this.computeAll();
+			},
+
+			/**
+	   * 设置取票人
+	   * @param {[type]} index [description]
+	   */
+			setGetTicketMan: function setGetTicketMan(index) {
+				_.map(this.AllFare, function (item) {
+					item.isGetTicket = false;
+				});
+				this.AllFare[index].isGetTicket = true;
+			},
+			GetDiscount: function GetDiscount() {
+				// 查看选取优惠券
+			}
+		}
+	};
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "position",
+	    attrs: {
+	      "id": "pay"
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "ticket-info"
+	  }, [_vm._h('div', {
+	    staticClass: "address-info"
+	  }, [_vm._h('div', {
+	    staticClass: "start box"
+	  }, [_vm._h('p', {
+	    staticClass: "center",
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.StartPoint)
+	    }
+	  }), " ", _vm._h('p', {
+	    staticClass: "last",
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.StartCity)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "center box"
+	  }, [_vm._h('p', {
+	    staticClass: "first",
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.StartTime.slice(0, _vm.busInfo.StartTime.length - 3))
+	    }
+	  }), " ", _vm._h('p', {
+	    staticClass: "arrow-message",
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.Route)
+	    }
+	  }), " ", _vm._h('p', {
+	    staticClass: "arrow"
+	  })]), " ", _vm._h('div', {
+	    staticClass: "end box"
+	  }, [_vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.EndPoint)
+	    }
+	  }), " ", _vm._h('p', [_vm._s(_vm.busInfo.AcrossCity)])])]), " ", _vm._h('div', {
+	    staticClass: "tip-info",
+	    on: {
+	      "click": _vm.openTip
+	    }
+	  }, [_vm._m(0), " ", _vm._h('span', ["余票" + _vm._s(_vm.busInfo.TicketNum)])])]), " ", " ", _vm._h('div', {
+	    staticClass: "people-info"
+	  }, [_vm._m(1), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
+	    staticClass: "info-list"
+	  }, [_vm._l((_vm.AllFare), function(item, index) {
+	    return _vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('div', {
+	      staticClass: "check",
+	      on: {
+	        "click": function($event) {
+	          _vm.setFare(index)
+	        }
+	      }
+	    }, [_vm._h('span', {
+	      class: [item.active ? 'active' : '']
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-check"
+	    })])]), " ", _vm._h('div', {
+	      staticClass: "list-body"
+	    }, [_vm._h('div', {
+	      staticClass: "list-top"
+	    }, [_vm._h('span', {
+	      staticClass: "name",
+	      domProps: {
+	        "textContent": _vm._s(item.name)
+	      }
+	    }), " ", _vm._h('span', {
+	      staticClass: "type"
+	    }, ["成人票"]), " ", (item.isGetTicket) ? _vm._h('span', {
+	      staticClass: "get-ticket"
+	    }, ["取票人"]) : _vm._h('span', {
+	      staticClass: "set-ticket",
+	      on: {
+	        "click": function($event) {
+	          _vm.setGetTicketMan(index)
+	        }
+	      }
+	    }, ["设为取票人"]), " "]), " "]), " ", _vm._h('span', {
+	      on: {
+	        "click": function($event) {
+	          _vm.trashMan(index)
+	        }
+	      }
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-trash"
+	    })])])
+	  })]) : _vm._e(), " ", " ", _vm._h('div', {
+	    staticClass: "info-man"
+	  }, [_vm._h('div', {
+	    staticClass: "info-man-name info"
+	  }, [_vm._h('span', ["乘客姓名"]), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.fareName),
+	      expression: "fareName"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "placeholder": "请填写真实姓名以免取不出票"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.fareName)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.fareName = $event.target.value
+	      }
+	    }
+	  })]), " "]), " ", _vm._h('div', {
+	    staticClass: "click-append",
+	    on: {
+	      "click": _vm.append
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-plus-circle"
+	  }), " ", _vm._h('button', ["确定添加"])])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
+	    staticClass: "contact-info"
+	  }, [_vm._h('div', {
+	    staticClass: "info"
+	  }, [_vm._h('span', ["联系手机"]), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.payInfoData.contactPhone),
+	      expression: "payInfoData.contactPhone"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "placeholder": "用于接收通知短信"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.payInfoData.contactPhone)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.payInfoData.contactPhone = $event.target.value
+	      }
+	    }
+	  })])]), " ", " ", _vm._h('div', {
+	    staticClass: "other-info"
+	  }, [_vm._h('div', {
+	    staticClass: "info"
+	  }, [_vm._h('span', {
+	    staticClass: "first"
+	  }, ["优惠券"]), " ", _vm._h('span', {
+	    staticClass: "center"
+	  }, ["没有优惠券"]), " ", _vm._h('div', {
+	    staticClass: "last"
+	  }, [_vm._h('span', {
+	    staticClass: "right",
+	    on: {
+	      "click": _vm.GetDiscount
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-angle-right"
+	  })])])])]), " ", " ", " ", _vm._m(2), " ", " ", " ", _vm._h('div', {
+	    staticClass: "submit-box"
+	  }, [_vm._h('div', {
+	    staticClass: "order-info"
+	  }, [_vm._h('p', ["订单总额", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.payInfoData.payMoney)
+	    }
+	  })]), " ", _vm._h('p', [_vm._h('span', ["票价", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.payInfoData.ticketMoney)
+	    }
+	  })]), " "])]), " ", _vm._h('div', {
+	    staticClass: "submit-order"
+	  }, [_vm._h('button', {
+	    on: {
+	      "click": _vm.submitOrder
+	    }
+	  }, ["同意并提交"])])]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.tipPopupVisible),
+	      expression: "tipPopupVisible"
+	    }],
+	    staticClass: "tip-popup-visible",
+	    attrs: {
+	      "position": "right"
+	    },
+	    domProps: {
+	      "value": (_vm.tipPopupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.tipPopupVisible = $event
+	      }
+	    }
+	  }, [_vm._t("default", [_vm._h('div', {
+	    staticClass: "body"
+	  }, [_vm._h('h3', ["声明:"]), " ", _vm._h('p', ["1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。"]), " ", _vm._h('p', ["2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。"]), " ", _vm._h('p', ["3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。"]), " ", _vm._h('h3', ["取票说明"]), " ", _vm._h('p', ["提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票"]), " ", _vm._h('h3', ["退票、改签说明："]), " ", _vm._h('p', ["2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理。"]), " ", _vm._h('button', {
+	    on: {
+	      "click": _vm.backTip
+	    }
+	  }, ["返回"])])])]), " ", " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.popupVisible),
+	      expression: "popupVisible"
+	    }],
+	    staticClass: "message-popup-visible",
+	    attrs: {
+	      "position": "top"
+	    },
+	    domProps: {
+	      "value": (_vm.popupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.popupVisible = $event
+	      }
+	    }
+	  }, [_vm._t("default", [_vm._h('p', {
+	    staticClass: "popup",
+	    domProps: {
+	      "textContent": _vm._s(_vm.popupText)
+	    }
+	  })])])])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
+	    staticClass: "fa fa-caret-down"
+	  })])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "info-head"
+	  }, [_vm._h('span', ["填写乘客信息:"]), " "])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "root-tip-info"
+	  }, [_vm._h('div', {
+	    staticClass: "text"
+	  }, [_vm._h('p', ["友情提示:"]), " ", _vm._h('p', ["*自助取票请提前到出发车站取票。"]), " ", _vm._h('p', ["*乘客信息需为实际乘车人，否则影响保险保障的权益哦。"])])])
+	}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-73a4cce7", module.exports)
+	  }
+	}
+
+/***/ },
+/* 297 */
+/***/ function(module, exports) {
+
+	/*!
+	 * vue-resource v0.9.3
+	 * https://github.com/vuejs/vue-resource
+	 * Released under the MIT License.
+	 */
+
+	'use strict';
+
+	/**
+	 * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
+	 */
+
+	var RESOLVED = 0;
+	var REJECTED = 1;
+	var PENDING = 2;
+
+	function Promise$2(executor) {
+
+	    this.state = PENDING;
+	    this.value = undefined;
+	    this.deferred = [];
+
+	    var promise = this;
+
+	    try {
+	        executor(function (x) {
+	            promise.resolve(x);
+	        }, function (r) {
+	            promise.reject(r);
+	        });
+	    } catch (e) {
+	        promise.reject(e);
+	    }
+	}
+
+	Promise$2.reject = function (r) {
+	    return new Promise$2(function (resolve, reject) {
+	        reject(r);
+	    });
+	};
+
+	Promise$2.resolve = function (x) {
+	    return new Promise$2(function (resolve, reject) {
+	        resolve(x);
+	    });
+	};
+
+	Promise$2.all = function all(iterable) {
+	    return new Promise$2(function (resolve, reject) {
+	        var count = 0,
+	            result = [];
+
+	        if (iterable.length === 0) {
+	            resolve(result);
+	        }
+
+	        function resolver(i) {
+	            return function (x) {
+	                result[i] = x;
+	                count += 1;
+
+	                if (count === iterable.length) {
+	                    resolve(result);
+	                }
+	            };
+	        }
+
+	        for (var i = 0; i < iterable.length; i += 1) {
+	            Promise$2.resolve(iterable[i]).then(resolver(i), reject);
+	        }
+	    });
+	};
+
+	Promise$2.race = function race(iterable) {
+	    return new Promise$2(function (resolve, reject) {
+	        for (var i = 0; i < iterable.length; i += 1) {
+	            Promise$2.resolve(iterable[i]).then(resolve, reject);
+	        }
+	    });
+	};
+
+	var p$1 = Promise$2.prototype;
+
+	p$1.resolve = function resolve(x) {
+	    var promise = this;
+
+	    if (promise.state === PENDING) {
+	        if (x === promise) {
+	            throw new TypeError('Promise settled with itself.');
+	        }
+
+	        var called = false;
+
+	        try {
+	            var then = x && x['then'];
+
+	            if (x !== null && typeof x === 'object' && typeof then === 'function') {
+	                then.call(x, function (x) {
+	                    if (!called) {
+	                        promise.resolve(x);
+	                    }
+	                    called = true;
+	                }, function (r) {
+	                    if (!called) {
+	                        promise.reject(r);
+	                    }
+	                    called = true;
+	                });
+	                return;
+	            }
+	        } catch (e) {
+	            if (!called) {
+	                promise.reject(e);
+	            }
+	            return;
+	        }
+
+	        promise.state = RESOLVED;
+	        promise.value = x;
+	        promise.notify();
+	    }
+	};
+
+	p$1.reject = function reject(reason) {
+	    var promise = this;
+
+	    if (promise.state === PENDING) {
+	        if (reason === promise) {
+	            throw new TypeError('Promise settled with itself.');
+	        }
+
+	        promise.state = REJECTED;
+	        promise.value = reason;
+	        promise.notify();
+	    }
+	};
+
+	p$1.notify = function notify() {
+	    var promise = this;
+
+	    nextTick(function () {
+	        if (promise.state !== PENDING) {
+	            while (promise.deferred.length) {
+	                var deferred = promise.deferred.shift(),
+	                    onResolved = deferred[0],
+	                    onRejected = deferred[1],
+	                    resolve = deferred[2],
+	                    reject = deferred[3];
+
+	                try {
+	                    if (promise.state === RESOLVED) {
+	                        if (typeof onResolved === 'function') {
+	                            resolve(onResolved.call(undefined, promise.value));
+	                        } else {
+	                            resolve(promise.value);
+	                        }
+	                    } else if (promise.state === REJECTED) {
+	                        if (typeof onRejected === 'function') {
+	                            resolve(onRejected.call(undefined, promise.value));
+	                        } else {
+	                            reject(promise.value);
+	                        }
+	                    }
+	                } catch (e) {
+	                    reject(e);
+	                }
+	            }
+	        }
+	    });
+	};
+
+	p$1.then = function then(onResolved, onRejected) {
+	    var promise = this;
+
+	    return new Promise$2(function (resolve, reject) {
+	        promise.deferred.push([onResolved, onRejected, resolve, reject]);
+	        promise.notify();
+	    });
+	};
+
+	p$1.catch = function (onRejected) {
+	    return this.then(undefined, onRejected);
+	};
+
+	var PromiseObj = window.Promise || Promise$2;
+
+	function Promise$1(executor, context) {
+
+	    if (executor instanceof PromiseObj) {
+	        this.promise = executor;
+	    } else {
+	        this.promise = new PromiseObj(executor.bind(context));
+	    }
+
+	    this.context = context;
+	}
+
+	Promise$1.all = function (iterable, context) {
+	    return new Promise$1(PromiseObj.all(iterable), context);
+	};
+
+	Promise$1.resolve = function (value, context) {
+	    return new Promise$1(PromiseObj.resolve(value), context);
+	};
+
+	Promise$1.reject = function (reason, context) {
+	    return new Promise$1(PromiseObj.reject(reason), context);
+	};
+
+	Promise$1.race = function (iterable, context) {
+	    return new Promise$1(PromiseObj.race(iterable), context);
+	};
+
+	var p = Promise$1.prototype;
+
+	p.bind = function (context) {
+	    this.context = context;
+	    return this;
+	};
+
+	p.then = function (fulfilled, rejected) {
+
+	    if (fulfilled && fulfilled.bind && this.context) {
+	        fulfilled = fulfilled.bind(this.context);
+	    }
+
+	    if (rejected && rejected.bind && this.context) {
+	        rejected = rejected.bind(this.context);
+	    }
+
+	    return new Promise$1(this.promise.then(fulfilled, rejected), this.context);
+	};
+
+	p.catch = function (rejected) {
+
+	    if (rejected && rejected.bind && this.context) {
+	        rejected = rejected.bind(this.context);
+	    }
+
+	    return new Promise$1(this.promise.catch(rejected), this.context);
+	};
+
+	p.finally = function (callback) {
+
+	    return this.then(function (value) {
+	        callback.call(this);
+	        return value;
+	    }, function (reason) {
+	        callback.call(this);
+	        return PromiseObj.reject(reason);
+	    });
+	};
+
+	var debug = false;
+	var util = {};
+	var array = [];
+	function Util (Vue) {
+	    util = Vue.util;
+	    debug = Vue.config.debug || !Vue.config.silent;
+	}
+
+	function warn(msg) {
+	    if (typeof console !== 'undefined' && debug) {
+	        console.warn('[VueResource warn]: ' + msg);
+	    }
+	}
+
+	function error(msg) {
+	    if (typeof console !== 'undefined') {
+	        console.error(msg);
+	    }
+	}
+
+	function nextTick(cb, ctx) {
+	    return util.nextTick(cb, ctx);
+	}
+
+	function trim(str) {
+	    return str.replace(/^\s*|\s*$/g, '');
+	}
+
+	var isArray = Array.isArray;
+
+	function isString(val) {
+	    return typeof val === 'string';
+	}
+
+	function isBoolean(val) {
+	    return val === true || val === false;
+	}
+
+	function isFunction(val) {
+	    return typeof val === 'function';
+	}
+
+	function isObject(obj) {
+	    return obj !== null && typeof obj === 'object';
+	}
+
+	function isPlainObject(obj) {
+	    return isObject(obj) && Object.getPrototypeOf(obj) == Object.prototype;
+	}
+
+	function isFormData(obj) {
+	    return typeof FormData !== 'undefined' && obj instanceof FormData;
+	}
+
+	function when(value, fulfilled, rejected) {
+
+	    var promise = Promise$1.resolve(value);
+
+	    if (arguments.length < 2) {
+	        return promise;
+	    }
+
+	    return promise.then(fulfilled, rejected);
+	}
+
+	function options(fn, obj, opts) {
+
+	    opts = opts || {};
+
+	    if (isFunction(opts)) {
+	        opts = opts.call(obj);
+	    }
+
+	    return merge(fn.bind({ $vm: obj, $options: opts }), fn, { $options: opts });
+	}
+
+	function each(obj, iterator) {
+
+	    var i, key;
+
+	    if (typeof obj.length == 'number') {
+	        for (i = 0; i < obj.length; i++) {
+	            iterator.call(obj[i], obj[i], i);
+	        }
+	    } else if (isObject(obj)) {
+	        for (key in obj) {
+	            if (obj.hasOwnProperty(key)) {
+	                iterator.call(obj[key], obj[key], key);
+	            }
+	        }
+	    }
+
+	    return obj;
+	}
+
+	var assign = Object.assign || _assign;
+
+	function merge(target) {
+
+	    var args = array.slice.call(arguments, 1);
+
+	    args.forEach(function (source) {
+	        _merge(target, source, true);
+	    });
+
+	    return target;
+	}
+
+	function defaults(target) {
+
+	    var args = array.slice.call(arguments, 1);
+
+	    args.forEach(function (source) {
+
+	        for (var key in source) {
+	            if (target[key] === undefined) {
+	                target[key] = source[key];
+	            }
+	        }
+	    });
+
+	    return target;
+	}
+
+	function _assign(target) {
+
+	    var args = array.slice.call(arguments, 1);
+
+	    args.forEach(function (source) {
+	        _merge(target, source);
+	    });
+
+	    return target;
+	}
+
+	function _merge(target, source, deep) {
+	    for (var key in source) {
+	        if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+	            if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
+	                target[key] = {};
+	            }
+	            if (isArray(source[key]) && !isArray(target[key])) {
+	                target[key] = [];
+	            }
+	            _merge(target[key], source[key], deep);
+	        } else if (source[key] !== undefined) {
+	            target[key] = source[key];
+	        }
+	    }
+	}
+
+	function root (options, next) {
+
+	    var url = next(options);
+
+	    if (isString(options.root) && !url.match(/^(https?:)?\//)) {
+	        url = options.root + '/' + url;
+	    }
+
+	    return url;
+	}
+
+	function query (options, next) {
+
+	    var urlParams = Object.keys(Url.options.params),
+	        query = {},
+	        url = next(options);
+
+	    each(options.params, function (value, key) {
+	        if (urlParams.indexOf(key) === -1) {
+	            query[key] = value;
+	        }
+	    });
+
+	    query = Url.params(query);
+
+	    if (query) {
+	        url += (url.indexOf('?') == -1 ? '?' : '&') + query;
+	    }
+
+	    return url;
+	}
+
+	/**
+	 * URL Template v2.0.6 (https://github.com/bramstein/url-template)
+	 */
+
+	function expand(url, params, variables) {
+
+	    var tmpl = parse(url),
+	        expanded = tmpl.expand(params);
+
+	    if (variables) {
+	        variables.push.apply(variables, tmpl.vars);
+	    }
+
+	    return expanded;
+	}
+
+	function parse(template) {
+
+	    var operators = ['+', '#', '.', '/', ';', '?', '&'],
+	        variables = [];
+
+	    return {
+	        vars: variables,
+	        expand: function (context) {
+	            return template.replace(/\{([^\{\}]+)\}|([^\{\}]+)/g, function (_, expression, literal) {
+	                if (expression) {
+
+	                    var operator = null,
+	                        values = [];
+
+	                    if (operators.indexOf(expression.charAt(0)) !== -1) {
+	                        operator = expression.charAt(0);
+	                        expression = expression.substr(1);
+	                    }
+
+	                    expression.split(/,/g).forEach(function (variable) {
+	                        var tmp = /([^:\*]*)(?::(\d+)|(\*))?/.exec(variable);
+	                        values.push.apply(values, getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
+	                        variables.push(tmp[1]);
+	                    });
+
+	                    if (operator && operator !== '+') {
+
+	                        var separator = ',';
+
+	                        if (operator === '?') {
+	                            separator = '&';
+	                        } else if (operator !== '#') {
+	                            separator = operator;
+	                        }
+
+	                        return (values.length !== 0 ? operator : '') + values.join(separator);
+	                    } else {
+	                        return values.join(',');
+	                    }
+	                } else {
+	                    return encodeReserved(literal);
+	                }
+	            });
+	        }
+	    };
+	}
+
+	function getValues(context, operator, key, modifier) {
+
+	    var value = context[key],
+	        result = [];
+
+	    if (isDefined(value) && value !== '') {
+	        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+	            value = value.toString();
+
+	            if (modifier && modifier !== '*') {
+	                value = value.substring(0, parseInt(modifier, 10));
+	            }
+
+	            result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
+	        } else {
+	            if (modifier === '*') {
+	                if (Array.isArray(value)) {
+	                    value.filter(isDefined).forEach(function (value) {
+	                        result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
+	                    });
+	                } else {
+	                    Object.keys(value).forEach(function (k) {
+	                        if (isDefined(value[k])) {
+	                            result.push(encodeValue(operator, value[k], k));
+	                        }
+	                    });
+	                }
+	            } else {
+	                var tmp = [];
+
+	                if (Array.isArray(value)) {
+	                    value.filter(isDefined).forEach(function (value) {
+	                        tmp.push(encodeValue(operator, value));
+	                    });
+	                } else {
+	                    Object.keys(value).forEach(function (k) {
+	                        if (isDefined(value[k])) {
+	                            tmp.push(encodeURIComponent(k));
+	                            tmp.push(encodeValue(operator, value[k].toString()));
+	                        }
+	                    });
+	                }
+
+	                if (isKeyOperator(operator)) {
+	                    result.push(encodeURIComponent(key) + '=' + tmp.join(','));
+	                } else if (tmp.length !== 0) {
+	                    result.push(tmp.join(','));
+	                }
+	            }
+	        }
+	    } else {
+	        if (operator === ';') {
+	            result.push(encodeURIComponent(key));
+	        } else if (value === '' && (operator === '&' || operator === '?')) {
+	            result.push(encodeURIComponent(key) + '=');
+	        } else if (value === '') {
+	            result.push('');
+	        }
+	    }
+
+	    return result;
+	}
+
+	function isDefined(value) {
+	    return value !== undefined && value !== null;
+	}
+
+	function isKeyOperator(operator) {
+	    return operator === ';' || operator === '&' || operator === '?';
+	}
+
+	function encodeValue(operator, value, key) {
+
+	    value = operator === '+' || operator === '#' ? encodeReserved(value) : encodeURIComponent(value);
+
+	    if (key) {
+	        return encodeURIComponent(key) + '=' + value;
+	    } else {
+	        return value;
+	    }
+	}
+
+	function encodeReserved(str) {
+	    return str.split(/(%[0-9A-Fa-f]{2})/g).map(function (part) {
+	        if (!/%[0-9A-Fa-f]/.test(part)) {
+	            part = encodeURI(part);
+	        }
+	        return part;
+	    }).join('');
+	}
+
+	function template (options) {
+
+	    var variables = [],
+	        url = expand(options.url, options.params, variables);
+
+	    variables.forEach(function (key) {
+	        delete options.params[key];
+	    });
+
+	    return url;
+	}
+
+	/**
+	 * Service for URL templating.
+	 */
+
+	var ie = document.documentMode;
+	var el = document.createElement('a');
+
+	function Url(url, params) {
+
+	    var self = this || {},
+	        options = url,
+	        transform;
+
+	    if (isString(url)) {
+	        options = { url: url, params: params };
+	    }
+
+	    options = merge({}, Url.options, self.$options, options);
+
+	    Url.transforms.forEach(function (handler) {
+	        transform = factory(handler, transform, self.$vm);
+	    });
+
+	    return transform(options);
+	}
+
+	/**
+	 * Url options.
+	 */
+
+	Url.options = {
+	    url: '',
+	    root: null,
+	    params: {}
+	};
+
+	/**
+	 * Url transforms.
+	 */
+
+	Url.transforms = [template, query, root];
+
+	/**
+	 * Encodes a Url parameter string.
+	 *
+	 * @param {Object} obj
+	 */
+
+	Url.params = function (obj) {
+
+	    var params = [],
+	        escape = encodeURIComponent;
+
+	    params.add = function (key, value) {
+
+	        if (isFunction(value)) {
+	            value = value();
+	        }
+
+	        if (value === null) {
+	            value = '';
+	        }
+
+	        this.push(escape(key) + '=' + escape(value));
+	    };
+
+	    serialize(params, obj);
+
+	    return params.join('&').replace(/%20/g, '+');
+	};
+
+	/**
+	 * Parse a URL and return its components.
+	 *
+	 * @param {String} url
+	 */
+
+	Url.parse = function (url) {
+
+	    if (ie) {
+	        el.href = url;
+	        url = el.href;
+	    }
+
+	    el.href = url;
+
+	    return {
+	        href: el.href,
+	        protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
+	        port: el.port,
+	        host: el.host,
+	        hostname: el.hostname,
+	        pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
+	        search: el.search ? el.search.replace(/^\?/, '') : '',
+	        hash: el.hash ? el.hash.replace(/^#/, '') : ''
+	    };
+	};
+
+	function factory(handler, next, vm) {
+	    return function (options) {
+	        return handler.call(vm, options, next);
+	    };
+	}
+
+	function serialize(params, obj, scope) {
+
+	    var array = isArray(obj),
+	        plain = isPlainObject(obj),
+	        hash;
+
+	    each(obj, function (value, key) {
+
+	        hash = isObject(value) || isArray(value);
+
+	        if (scope) {
+	            key = scope + '[' + (plain || hash ? key : '') + ']';
+	        }
+
+	        if (!scope && array) {
+	            params.add(value.name, value.value);
+	        } else if (hash) {
+	            serialize(params, value, key);
+	        } else {
+	            params.add(key, value);
+	        }
+	    });
+	}
+
+	function xdrClient (request) {
+	    return new Promise$1(function (resolve) {
+
+	        var xdr = new XDomainRequest(),
+	            handler = function (event) {
+
+	            var response = request.respondWith(xdr.responseText, {
+	                status: xdr.status,
+	                statusText: xdr.statusText
+	            });
+
+	            resolve(response);
+	        };
+
+	        request.abort = function () {
+	            return xdr.abort();
+	        };
+
+	        xdr.open(request.method, request.getUrl(), true);
+	        xdr.timeout = 0;
+	        xdr.onload = handler;
+	        xdr.onerror = handler;
+	        xdr.ontimeout = function () {};
+	        xdr.onprogress = function () {};
+	        xdr.send(request.getBody());
+	    });
+	}
+
+	var ORIGIN_URL = Url.parse(location.href);
+	var SUPPORTS_CORS = 'withCredentials' in new XMLHttpRequest();
+
+	function cors (request, next) {
+
+	    if (!isBoolean(request.crossOrigin) && crossOrigin(request)) {
+	        request.crossOrigin = true;
+	    }
+
+	    if (request.crossOrigin) {
+
+	        if (!SUPPORTS_CORS) {
+	            request.client = xdrClient;
+	        }
+
+	        delete request.emulateHTTP;
+	    }
+
+	    next();
+	}
+
+	function crossOrigin(request) {
+
+	    var requestUrl = Url.parse(Url(request));
+
+	    return requestUrl.protocol !== ORIGIN_URL.protocol || requestUrl.host !== ORIGIN_URL.host;
+	}
+
+	function body (request, next) {
+
+	    if (request.emulateJSON && isPlainObject(request.body)) {
+	        request.body = Url.params(request.body);
+	        request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+	    }
+
+	    if (isFormData(request.body)) {
+	        delete request.headers['Content-Type'];
+	    }
+
+	    if (isPlainObject(request.body)) {
+	        request.body = JSON.stringify(request.body);
+	    }
+
+	    next(function (response) {
+
+	        var contentType = response.headers['Content-Type'];
+
+	        if (isString(contentType) && contentType.indexOf('application/json') === 0) {
+
+	            try {
+	                response.data = response.json();
+	            } catch (e) {
+	                response.data = null;
+	            }
+	        } else {
+	            response.data = response.text();
+	        }
+	    });
+	}
+
+	function jsonpClient (request) {
+	    return new Promise$1(function (resolve) {
+
+	        var name = request.jsonp || 'callback',
+	            callback = '_jsonp' + Math.random().toString(36).substr(2),
+	            body = null,
+	            handler,
+	            script;
+
+	        handler = function (event) {
+
+	            var status = 0;
+
+	            if (event.type === 'load' && body !== null) {
+	                status = 200;
+	            } else if (event.type === 'error') {
+	                status = 404;
+	            }
+
+	            resolve(request.respondWith(body, { status: status }));
+
+	            delete window[callback];
+	            document.body.removeChild(script);
+	        };
+
+	        request.params[name] = callback;
+
+	        window[callback] = function (result) {
+	            body = JSON.stringify(result);
+	        };
+
+	        script = document.createElement('script');
+	        script.src = request.getUrl();
+	        script.type = 'text/javascript';
+	        script.async = true;
+	        script.onload = handler;
+	        script.onerror = handler;
+
+	        document.body.appendChild(script);
+	    });
+	}
+
+	function jsonp (request, next) {
+
+	    if (request.method == 'JSONP') {
+	        request.client = jsonpClient;
+	    }
+
+	    next(function (response) {
+
+	        if (request.method == 'JSONP') {
+	            response.data = response.json();
+	        }
+	    });
+	}
+
+	function before (request, next) {
+
+	    if (isFunction(request.before)) {
+	        request.before.call(this, request);
+	    }
+
+	    next();
+	}
+
+	/**
+	 * HTTP method override Interceptor.
+	 */
+
+	function method (request, next) {
+
+	    if (request.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(request.method)) {
+	        request.headers['X-HTTP-Method-Override'] = request.method;
+	        request.method = 'POST';
+	    }
+
+	    next();
+	}
+
+	function header (request, next) {
+
+	    request.method = request.method.toUpperCase();
+	    request.headers = assign({}, Http.headers.common, !request.crossOrigin ? Http.headers.custom : {}, Http.headers[request.method.toLowerCase()], request.headers);
+
+	    next();
+	}
+
+	/**
+	 * Timeout Interceptor.
+	 */
+
+	function timeout (request, next) {
+
+	    var timeout;
+
+	    if (request.timeout) {
+	        timeout = setTimeout(function () {
+	            request.abort();
+	        }, request.timeout);
+	    }
+
+	    next(function (response) {
+
+	        clearTimeout(timeout);
+	    });
+	}
+
+	function xhrClient (request) {
+	    return new Promise$1(function (resolve) {
+
+	        var xhr = new XMLHttpRequest(),
+	            handler = function (event) {
+
+	            var response = request.respondWith('response' in xhr ? xhr.response : xhr.responseText, {
+	                status: xhr.status === 1223 ? 204 : xhr.status, // IE9 status bug
+	                statusText: xhr.status === 1223 ? 'No Content' : trim(xhr.statusText),
+	                headers: parseHeaders(xhr.getAllResponseHeaders())
+	            });
+
+	            resolve(response);
+	        };
+
+	        request.abort = function () {
+	            return xhr.abort();
+	        };
+
+	        xhr.open(request.method, request.getUrl(), true);
+	        xhr.timeout = 0;
+	        xhr.onload = handler;
+	        xhr.onerror = handler;
+
+	        if (request.progress) {
+	            if (request.method === 'GET') {
+	                xhr.addEventListener('progress', request.progress);
+	            } else if (/^(POST|PUT)$/i.test(request.method)) {
+	                xhr.upload.addEventListener('progress', request.progress);
+	            }
+	        }
+
+	        if (request.credentials === true) {
+	            xhr.withCredentials = true;
+	        }
+
+	        each(request.headers || {}, function (value, header) {
+	            xhr.setRequestHeader(header, value);
+	        });
+
+	        xhr.send(request.getBody());
+	    });
+	}
+
+	function parseHeaders(str) {
+
+	    var headers = {},
+	        value,
+	        name,
+	        i;
+
+	    each(trim(str).split('\n'), function (row) {
+
+	        i = row.indexOf(':');
+	        name = trim(row.slice(0, i));
+	        value = trim(row.slice(i + 1));
+
+	        if (headers[name]) {
+
+	            if (isArray(headers[name])) {
+	                headers[name].push(value);
+	            } else {
+	                headers[name] = [headers[name], value];
+	            }
+	        } else {
+
+	            headers[name] = value;
+	        }
+	    });
+
+	    return headers;
+	}
+
+	function Client (context) {
+
+	    var reqHandlers = [sendRequest],
+	        resHandlers = [],
+	        handler;
+
+	    if (!isObject(context)) {
+	        context = null;
+	    }
+
+	    function Client(request) {
+	        return new Promise$1(function (resolve) {
+
+	            function exec() {
+
+	                handler = reqHandlers.pop();
+
+	                if (isFunction(handler)) {
+	                    handler.call(context, request, next);
+	                } else {
+	                    warn('Invalid interceptor of type ' + typeof handler + ', must be a function');
+	                    next();
+	                }
+	            }
+
+	            function next(response) {
+
+	                if (isFunction(response)) {
+
+	                    resHandlers.unshift(response);
+	                } else if (isObject(response)) {
+
+	                    resHandlers.forEach(function (handler) {
+	                        response = when(response, function (response) {
+	                            return handler.call(context, response) || response;
+	                        });
+	                    });
+
+	                    when(response, resolve);
+
+	                    return;
+	                }
+
+	                exec();
+	            }
+
+	            exec();
+	        }, context);
+	    }
+
+	    Client.use = function (handler) {
+	        reqHandlers.push(handler);
+	    };
+
+	    return Client;
+	}
+
+	function sendRequest(request, resolve) {
+
+	    var client = request.client || xhrClient;
+
+	    resolve(client(request));
+	}
+
+	var classCallCheck = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+
+	/**
+	 * HTTP Response.
+	 */
+
+	var Response = function () {
+	    function Response(body, _ref) {
+	        var url = _ref.url;
+	        var headers = _ref.headers;
+	        var status = _ref.status;
+	        var statusText = _ref.statusText;
+	        classCallCheck(this, Response);
+
+
+	        this.url = url;
+	        this.body = body;
+	        this.headers = headers || {};
+	        this.status = status || 0;
+	        this.statusText = statusText || '';
+	        this.ok = status >= 200 && status < 300;
+	    }
+
+	    Response.prototype.text = function text() {
+	        return this.body;
+	    };
+
+	    Response.prototype.blob = function blob() {
+	        return new Blob([this.body]);
+	    };
+
+	    Response.prototype.json = function json() {
+	        return JSON.parse(this.body);
+	    };
+
+	    return Response;
+	}();
+
+	var Request = function () {
+	    function Request(options) {
+	        classCallCheck(this, Request);
+
+
+	        this.method = 'GET';
+	        this.body = null;
+	        this.params = {};
+	        this.headers = {};
+
+	        assign(this, options);
+	    }
+
+	    Request.prototype.getUrl = function getUrl() {
+	        return Url(this);
+	    };
+
+	    Request.prototype.getBody = function getBody() {
+	        return this.body;
+	    };
+
+	    Request.prototype.respondWith = function respondWith(body, options) {
+	        return new Response(body, assign(options || {}, { url: this.getUrl() }));
+	    };
+
+	    return Request;
+	}();
+
+	/**
+	 * Service for sending network requests.
+	 */
+
+	var CUSTOM_HEADERS = { 'X-Requested-With': 'XMLHttpRequest' };
+	var COMMON_HEADERS = { 'Accept': 'application/json, text/plain, */*' };
+	var JSON_CONTENT_TYPE = { 'Content-Type': 'application/json;charset=utf-8' };
+
+	function Http(options) {
+
+	    var self = this || {},
+	        client = Client(self.$vm);
+
+	    defaults(options || {}, self.$options, Http.options);
+
+	    Http.interceptors.forEach(function (handler) {
+	        client.use(handler);
+	    });
+
+	    return client(new Request(options)).then(function (response) {
+
+	        return response.ok ? response : Promise$1.reject(response);
+	    }, function (response) {
+
+	        if (response instanceof Error) {
+	            error(response);
+	        }
+
+	        return Promise$1.reject(response);
+	    });
+	}
+
+	Http.options = {};
+
+	Http.headers = {
+	    put: JSON_CONTENT_TYPE,
+	    post: JSON_CONTENT_TYPE,
+	    patch: JSON_CONTENT_TYPE,
+	    delete: JSON_CONTENT_TYPE,
+	    custom: CUSTOM_HEADERS,
+	    common: COMMON_HEADERS
+	};
+
+	Http.interceptors = [before, timeout, method, body, jsonp, header, cors];
+
+	['get', 'delete', 'head', 'jsonp'].forEach(function (method) {
+
+	    Http[method] = function (url, options) {
+	        return this(assign(options || {}, { url: url, method: method }));
+	    };
+	});
+
+	['post', 'put', 'patch'].forEach(function (method) {
+
+	    Http[method] = function (url, body, options) {
+	        return this(assign(options || {}, { url: url, method: method, body: body }));
+	    };
+	});
+
+	function Resource(url, params, actions, options) {
+
+	    var self = this || {},
+	        resource = {};
+
+	    actions = assign({}, Resource.actions, actions);
+
+	    each(actions, function (action, name) {
+
+	        action = merge({ url: url, params: params || {} }, options, action);
+
+	        resource[name] = function () {
+	            return (self.$http || Http)(opts(action, arguments));
+	        };
+	    });
+
+	    return resource;
+	}
+
+	function opts(action, args) {
+
+	    var options = assign({}, action),
+	        params = {},
+	        body;
+
+	    switch (args.length) {
+
+	        case 2:
+
+	            params = args[0];
+	            body = args[1];
+
+	            break;
+
+	        case 1:
+
+	            if (/^(POST|PUT|PATCH)$/i.test(options.method)) {
+	                body = args[0];
+	            } else {
+	                params = args[0];
+	            }
+
+	            break;
+
+	        case 0:
+
+	            break;
+
+	        default:
+
+	            throw 'Expected up to 4 arguments [params, body], got ' + args.length + ' arguments';
+	    }
+
+	    options.body = body;
+	    options.params = assign({}, options.params, params);
+
+	    return options;
+	}
+
+	Resource.actions = {
+
+	    get: { method: 'GET' },
+	    save: { method: 'POST' },
+	    query: { method: 'GET' },
+	    update: { method: 'PUT' },
+	    remove: { method: 'DELETE' },
+	    delete: { method: 'DELETE' }
+
+	};
+
+	function plugin(Vue) {
+
+	    if (plugin.installed) {
+	        return;
+	    }
+
+	    Util(Vue);
+
+	    Vue.url = Url;
+	    Vue.http = Http;
+	    Vue.resource = Resource;
+	    Vue.Promise = Promise$1;
+
+	    Object.defineProperties(Vue.prototype, {
+
+	        $url: {
+	            get: function () {
+	                return options(Vue.url, this, this.$options.url);
+	            }
+	        },
+
+	        $http: {
+	            get: function () {
+	                return options(Vue.http, this, this.$options.http);
+	            }
+	        },
+
+	        $resource: {
+	            get: function () {
+	                return Vue.resource.bind(this);
+	            }
+	        },
+
+	        $promise: {
+	            get: function () {
+	                var _this = this;
+
+	                return function (executor) {
+	                    return new Vue.Promise(executor, _this);
+	                };
+	            }
+	        }
+
+	    });
+	}
+
+	if (typeof window !== 'undefined' && window.Vue) {
+	    window.Vue.use(plugin);
+	}
+
+	module.exports = plugin;
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(299), __esModule: true };
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(300);
+	module.exports = __webpack_require__(16).Object.assign;
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(14);
+
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(301)});
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(46)
+	  , gOPS     = __webpack_require__(123)
+	  , pIE      = __webpack_require__(124)
+	  , toObject = __webpack_require__(62)
+	  , IObject  = __webpack_require__(49)
+	  , $assign  = Object.assign;
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(25)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
 
 /***/ }
 /******/ ]);

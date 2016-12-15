@@ -290,7 +290,7 @@ export default {
 			let day = date.getDate();
 
 			// return month+"月"+day+"日";
-			return year+"-"+month+"-"+(day>9?day:"0"+day)
+			return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)
 		},
 		query(){
 			if(this.startCity.Name===this.endCity.Name){

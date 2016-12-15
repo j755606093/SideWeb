@@ -8,31 +8,30 @@
 			</div> -->
 			<div class="address-info">
 				<div class="start box">
-					<p v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
-					<p v-text="busInfo.StartPoint"></p>
-					<p v-text="busInfo.ShiftNum"></p>
+					<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
+					<p class="center" v-text="busInfo.StartPoint"></p>
+					<p class="last" v-text="busInfo.StartCity"></p>
 				</div>
 				<div class="center box">
-
-					<p class="arrow">
-						<br/>
-						<p class="arrow-message" v-text="busInfo.Route"></p>
-					</p>
+					<p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
+					<p class="arrow-message" v-text="busInfo.Route"></p>
+					<p class="arrow"></p>
 				</div>
 				<div class="end box">
 					<p v-text="busInfo.EndPoint"></p>
-					<!-- <p v-text="busInfo.toCityName"></p> -->
+					<p>{{busInfo.AcrossCity}}</p>
 				</div>
 			</div>
 			<div class="tip-info" @click="openTip">
 				<p>查看取票,退票说明,预订须知<i class="fa fa-caret-down"></i></p>
+				<span>余票{{busInfo.TicketNum}}</span>
 			</div>
 		</div>
 		<!-- 乘客信息 -->
 		<div class="people-info">
 			<div class="info-head">
-				<span>乘客信息</span>
-				<span>还剩余票{{busInfo.TicketNum}}</span>
+				<span>填写乘客信息:</span>
+				<!-- <span>还剩余票{{busInfo.TicketNum}}</span> -->
 			</div>
 			<!-- 列出乘客信息 -->
 			<div class="info-list" v-if="AllFare.length!==0">
@@ -303,8 +302,13 @@ export default {
 		 * @return {[type]}      [description]
 		 */
 		popupMessage(text){
-			this.popupText = text;
-			this.popupVisible = true;
+			Toast({
+			  message: text,
+			  position: 'center',
+			  duration: 3000
+			});
+			// this.popupText = text;
+			// this.popupVisible = true;
 		},
 		// postCode(){
 		// 	// 提示加载中

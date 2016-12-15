@@ -27,7 +27,8 @@ const state = {
 
 	resultList:null,//结果
 
-	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据
+	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
+	serverUrl:"http://wx.1yhp.net",//服务器地址
 }
 
 // getters,获取数据
@@ -85,7 +86,7 @@ const actions = {
 				reslove();
 			})
 		}
-		return fetch("http://wx.1yhp.net/api/Transport/GetPoints/1").then(result=>result.json())
+		return fetch(state.serverUrl+"/api/Transport/GetPoints/1").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_STARTCITYLIST,result.Data);
 				return result.Data;
@@ -99,7 +100,7 @@ const actions = {
 			})
 		}
 		else{
-			return fetch("http://wx.1yhp.net/api/Transport/GetPoints/2").then(result=>result.json())
+			return fetch(state.serverUrl+"/api/Transport/GetPoints/2").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
@@ -107,7 +108,7 @@ const actions = {
 		}
 	},
 	setResultList({commit,state}){
-		return fetch("http://wx.1yhp.net/api/Transport/GetLines",{
+		return fetch(state.serverUrl+"/api/Transport/GetLines",{
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json'
@@ -125,9 +126,10 @@ const actions = {
 			if(result.Code===204){
 				// 没有更多数据
 				commit(types.SET_RESULTLIST,[]);
-				return;
+				return [];
 			}
 			commit(types.SET_RESULTLIST,result.Data);
+			return result.Data;
 		})
 	},
 	setBusInfo({commit,state},data){
@@ -135,7 +137,7 @@ const actions = {
 	},
 	payMoney({commit,state},data){
 		// 微信付款
-		return fetch("http://wx.1yhp.net/api/Transport/GenerateOrderInfo",{
+		return fetch(state.serverUrl+"/api/Transport/GenerateOrderInfo",{
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json'
@@ -168,7 +170,8 @@ const mutations = {
 		state.endCity = data;
 	},
 	[types.SET_STARTDATE] (state,data){
-		state.startDate = data;
+		let newData = Object.assign({},state.startDate,data);
+		state.startDate = newData;
 	},
 	[types.SET_STARTCITYLIST] (state,data){
 		state.startCityList = data;
