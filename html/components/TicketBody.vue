@@ -66,7 +66,7 @@
 		<!-- 查询记录 -->
 		<div class="search-record" v-if="localStorage.length!==0">
 			<p>历史搜索</p>
-			<div class="list" v-for="(list,index) in localStorage" v-bind:key="index">
+			<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index">
 				<span class="first">{{list.startCity}}</span>
 				<span>{{list.endCity}}</span>
 				<i @click="queryRecord(index)" class="fa fa-search">查询</i>
@@ -183,7 +183,7 @@ export default {
 		}
 		
 		// 获取本地数据
-		this.localStorage = this.getLocalStore();
+		this.localStorage = this.getLocalStore().reverse();
 
 		// 获取位置
 		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
@@ -275,11 +275,11 @@ export default {
 				// 获取位置出错
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "无法获取当前位置";
-				Toast({
-				  message: "无法获取当前位置",
-				  position: 'bottom',
-				  duration: 3000
-				});
+				// Toast({
+				//   message: "无法获取当前位置",
+				//   position: 'bottom',
+				//   duration: 3000
+				// });
 			}
 		},
 		refreshLocation(){
@@ -438,6 +438,10 @@ export default {
 					&& data[i].endCode===json.endCode){
 					return ;
 				}
+			}
+
+			if(data.length===10){
+				data = data.slice(4,10);//删除最早的五个
 			}
 			data.push(json);
 
