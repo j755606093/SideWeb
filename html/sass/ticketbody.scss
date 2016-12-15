@@ -88,7 +88,7 @@
 	.search-record{
 		width:90%;
 		margin:0 5%;
-		margin-top:50px;
+		margin-top:30px;
 		// border-top: 1px solid $gray;
 		padding-top:5px;
 		text-align: center;
@@ -144,6 +144,39 @@
 				color:#2980b9;
 				height:30px;
 				line-height:30px;
+			}
+		}
+	}
+	.location{
+		width:90%;
+		margin:0 5%;
+		margin-top:10px;
+		padding-top:5px;
+		text-align: center;
+		.showload{
+			span{
+				font-size:1.4rem;
+				color:#555;
+			}
+			i{
+				font-size:1.4rem;
+			}
+		}
+		.location-result{
+			span{
+				font-size:1.4rem;
+				// color:$orange;
+
+			}
+			i{
+				font-size:1.4rem;
+			}
+			span.refresh-location{
+				color:$blue;
+				border:1px solid $blue;
+				padding:2px 5px;
+				border-radius:5px;
+				margin-left:10px;
 			}
 		}
 	}

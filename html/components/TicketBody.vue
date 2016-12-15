@@ -51,6 +51,18 @@
 			v-model="pickerValue"
 			@confirm="handleConfirm">
 		</mt-datetime-picker> -->
+		<!-- 定位 -->
+		<div class="location">
+			<div class="showload" v-if="locationLoad">
+				<i class="fa fa-circle-o-notch fa-spin"></i>
+				<span>正在为你定位最近的上车点...</span>
+			</div>
+			<div class="location-result" v-else>
+				<i class="fa fa-map-marker"></i>
+				<span>{{locationName}}</span>
+				<span @click="refreshLocation" class="refresh-location">重新定位</span>
+			</div>
+		</div>
 		<!-- 查询记录 -->
 		<div class="search-record" v-if="localStorage.length!==0">
 			<p>历史搜索</p>
@@ -92,6 +104,8 @@ export default {
 			startpopupVisible:false,//显示出发选择
 			endpopupVisible:false,//显示到达选择
 			localStorage:null,//本地搜索记录
+			locationLoad:true,//是否在加载定位记录
+			locationName:"",//定位最近的车站位置名
 			// startCitySlots: [{
 			// 	flex: 1,
 			// 	values: [],
@@ -172,7 +186,7 @@ export default {
 		this.localStorage = this.getLocalStore();
 
 		// 获取位置
-		navigator.geolocation.getCurrentPosition(this.showPosition);
+		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 	},
 	filters:{
 		
@@ -225,12 +239,33 @@ export default {
 		},
 		showPosition(position){
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
-			Toast({
-				  message: longitude+":"+latitude,
-				  position: 'bottom',
-				  duration: 10000
+			this.$store.dispatch("setLocationResult",{
+				latitude:latitude,
+				longitude:longitude
+			}).then(data=>{
+				this.locationName = data.Data.Name;
+				this.$store.dispatch("setStartCity",{
+					Code:data.Data.Id,
+					Name:data.Data.Name
 				});
-			console.log(position);
+				this.locationLoad = false;//停止界面加载提示
+			})
+		},
+		getPositionError(error){
+			if(error){
+				// 获取位置出错
+				this.locationLoad = false;//停止界面加载提示
+				this.locationName = "无法获取当前位置";
+				Toast({
+				  message: "无法获取当前位置",
+				  position: 'bottom',
+				  duration: 3000
+				});
+			}
+		},
+		refreshLocation(){
+			//重新定位
+			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		},
 		GoStartCity(){
 			// if(this.$store.getters.getCityList.startCityList){

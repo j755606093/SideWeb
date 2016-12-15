@@ -25,7 +25,8 @@ const state = {
 	startCityList:null,//开始出发的城市列表
 	endCityList:null,//到达的城市列表
 
-	resultList:null,//结果
+	resultList:null,//搜索结果
+	locationResutl:null,//搜索用户位置结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址
@@ -51,7 +52,7 @@ const getters = {
 	},
 	getResultList:state=>state.resultList,
 	getBusInfo:state=>state.busInfo,
-	Development:state=>state
+	Development:state=>state,
 }
 
 let getData = (url,callback)=>{
@@ -151,6 +152,19 @@ const actions = {
 				EPointId:state.busInfo.EndPointId,
 				Date:state.startDate.server,
 				Num:data.Num
+			})
+		})
+		.then(result=>result.json())
+	},
+	setLocationResult({commit,state},data){
+		return fetch(state.serverUrl+"/api/Transport/NearestStartPoints",{
+			method: 'POST',
+			headers: {
+		    'Content-Type': 'application/json'
+		  },
+			body:JSON.stringify({
+				Lat:data.latitude,
+				Lng:data.longitude
 			})
 		})
 		.then(result=>result.json())

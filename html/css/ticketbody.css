@@ -216,7 +216,7 @@ input {
   .ticketbody .search-record {
     width: 90%;
     margin: 0 5%;
-    margin-top: 50px;
+    margin-top: 30px;
     padding-top: 5px;
     text-align: center; }
     .ticketbody .search-record p {
@@ -272,3 +272,24 @@ input {
         color: #2980b9;
         height: 30px;
         line-height: 30px; }
+  .ticketbody .location {
+    width: 90%;
+    margin: 0 5%;
+    margin-top: 10px;
+    padding-top: 5px;
+    text-align: center; }
+    .ticketbody .location .showload span {
+      font-size: 1.4rem;
+      color: #555; }
+    .ticketbody .location .showload i {
+      font-size: 1.4rem; }
+    .ticketbody .location .location-result span {
+      font-size: 1.4rem; }
+    .ticketbody .location .location-result i {
+      font-size: 1.4rem; }
+    .ticketbody .location .location-result span.refresh-location {
+      color: #0074D9;
+      border: 1px solid #0074D9;
+      padding: 2px 5px;
+      border-radius: 5px;
+      margin-left: 10px; }
