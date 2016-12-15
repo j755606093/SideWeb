@@ -26,7 +26,6 @@ const state = {
 	endCityList:null,//到达的城市列表
 
 	resultList:null,//搜索结果
-	locationResutl:null,//搜索用户位置结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址

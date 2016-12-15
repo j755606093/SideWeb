@@ -255,7 +255,7 @@ export default {
 				Toast({
 				  message: "服务器错误,请稍后重试...",
 				  position: 'bottom',
-				  duration: 3000
+				  duration: 3000,
 				});
 			})
 		},
@@ -276,10 +276,6 @@ export default {
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		},
 		GoStartCity(){
-			// if(this.$store.getters.getCityList.startCityList){
-			// 	this.startpopupVisible = true;
-			// 	return;
-			// }
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
