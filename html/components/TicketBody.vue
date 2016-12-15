@@ -249,20 +249,25 @@ export default {
 					this.locationName = "你的附近没有上车点";
 					return ;
 				}
-				this.locationName = data.Data.Name;
+				this.locationName = "最近上车点:"+data.Data.Name;
 				this.$store.dispatch("setStartCity",{
 					Code:data.Data.Id,
 					Name:data.Data.Name
+				});
+				Toast({
+				  message: "已为你切换到最近的出发点",
+				  position: 'bottom',
+				  duration: 3000,
 				});
 				this.locationLoad = false;//停止界面加载提示
 			}).catch(error=>{
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "请稍后重试...";
-				Toast({
-				  message: "服务器错误,请稍后重试...",
-				  position: 'bottom',
-				  duration: 3000,
-				});
+				// Toast({
+				//   message: "网络错误,请稍后重试...",
+				//   position: 'bottom',
+				//   duration: 3000,
+				// });
 			})
 		},
 		getPositionError(error){
@@ -301,7 +306,7 @@ export default {
 			}).catch(error=>{
 				Indicator.close();
 				Toast({
-				  message: "服务器错误,请稍后重试...",
+				  message: "网络错误,请稍后重试...",
 				  position: 'bottom',
 				  duration: 3000
 				});
@@ -332,7 +337,7 @@ export default {
 			}).catch(error=>{
 				Indicator.close();
 				Toast({
-				  message: "服务器错误,请稍后重试...",
+				  message: "网络错误,请稍后重试...",
 				  position: 'bottom',
 				  duration: 3000
 				});
@@ -385,7 +390,7 @@ export default {
 			}).catch(error=>{
 				Indicator.close();
 				Toast({
-				  message: "服务器错误,请稍后重试...",
+				  message: "网络错误,请稍后重试...",
 				  position: 'bottom',
 				  duration: 3000
 				});
