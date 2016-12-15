@@ -131,7 +131,7 @@ gulp.task('ticket',['sass'],function() {
 					}
 			},
 		}))
-		.pipe(uglify())//生产的时候再启用压缩
+		// .pipe(uglify())//生产的时候再启用压缩
 		.pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
