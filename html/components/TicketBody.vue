@@ -249,6 +249,14 @@ export default {
 					Name:data.Data.Name
 				});
 				this.locationLoad = false;//停止界面加载提示
+			}).catch(error=>{
+				this.locationLoad = false;//停止界面加载提示
+				this.locationName = "请稍后重试...";
+				Toast({
+				  message: "服务器错误,请稍后重试...",
+				  position: 'bottom',
+				  duration: 3000
+				});
 			})
 		},
 		getPositionError(error){
