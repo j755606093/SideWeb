@@ -28,7 +28,8 @@ const state = {
 	resultList:null,//结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	serverUrl:"http://wx.1yhp.net",//服务器地址
+	// serverUrl:"http://wx.1yhp.net",//服务器地址
+	serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据
