@@ -131,8 +131,10 @@ const actions = {
 				commit(types.SET_RESULTLIST,[]);
 				return [];
 			}
-			commit(types.SET_RESULTLIST,result.Data);
-			return result.Data;
+			else{
+				commit(types.SET_RESULTLIST,result.Data);
+				return result.Data;
+			}
 		})
 	},
 	setBusInfo({commit,state},data){
@@ -175,6 +177,7 @@ const actions = {
 				return data.Data;
 			}
 			else{
+				commit(types.SET_LOCATIONRESULT,[]);
 				return [];//没有找到数据
 			}
 		})

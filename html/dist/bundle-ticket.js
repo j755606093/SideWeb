@@ -11275,9 +11275,10 @@
 					// 没有更多数据
 					commit(_Type2.default.SET_RESULTLIST, []);
 					return [];
+				} else {
+					commit(_Type2.default.SET_RESULTLIST, result.Data);
+					return result.Data;
 				}
-				commit(_Type2.default.SET_RESULTLIST, result.Data);
-				return result.Data;
 			});
 		},
 		setBusInfo: function setBusInfo(_ref8, data) {
@@ -11329,6 +11330,7 @@
 					commit(_Type2.default.SET_LOCATIONRESULT, data.Data);
 					return data.Data;
 				} else {
+					commit(_Type2.default.SET_LOCATIONRESULT, []);
 					return []; //没有找到数据
 				}
 			});
