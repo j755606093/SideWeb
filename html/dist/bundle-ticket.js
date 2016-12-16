@@ -11142,8 +11142,7 @@
 		locationResult: null, //定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -29282,8 +29281,12 @@
 
 			// 获取位置
 			if (this.$store.getters.getLocationResult === null) {
+				console.log("get location");
 				// 还没有获取过,说明第一个打开网页
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
+			} else {
+				this.locationLoad = false;
+				this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
 			}
 		},
 
@@ -29341,25 +29344,26 @@
 					latitude: latitude,
 					longitude: longitude
 				}).then(function (data) {
-					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "object") {
+					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
 						_this.locationLoad = false; //停止界面加载提示
 						_this.locationName = "你的附近没有上车点";
-						_this.showRefresh = false;
-						_promise2.default.resolve();
-						return;
+					} else {
+						_this.locationName = "最近上车点:" + data.Name;
+						_this.$store.dispatch("setStartCity", {
+							Code: data.Id,
+							Name: data.Name
+						});
+						(0, _mintUi.Toast)({
+							message: "已为你切换到最近的出发点",
+							position: 'bottom',
+							duration: 3000
+						});
+						_this.locationLoad = false; //停止界面加载提示
 					}
-					_this.locationName = "最近上车点:" + data.Name;
-					_this.$store.dispatch("setStartCity", {
-						Code: data.Id,
-						Name: data.Name
-					});
-					(0, _mintUi.Toast)({
-						message: "已为你切换到最近的出发点",
-						position: 'bottom',
-						duration: 3000
-					});
-					_this.locationLoad = false; //停止界面加载提示
+
+					_this.showRefresh = false; //正常返回就不要显示重新加载了
+					return _promise2.default.resolve();
 				}).catch(function (error) {
 					_this.locationLoad = false; //停止界面加载提示
 					_this.locationName = "请稍后重试...";
@@ -29372,6 +29376,12 @@
 				});
 			},
 			getPositionError: function getPositionError(error) {
+				// this.showPosition({
+				// 	coords:{
+				// 		latitude:"23.018639699999998",
+				// 		longitude:"113.3086585"
+				// 	}
+				// })
 				if (error) {
 					// 获取位置出错
 					this.locationLoad = false; //停止界面加载提示

@@ -181,8 +181,13 @@ export default {
 
 		// 获取位置
 		if(this.$store.getters.getLocationResult===null){
+			console.log("get location")
 			// 还没有获取过,说明第一个打开网页
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+		}
+		else{
+			this.locationLoad = false;
+			this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
 		}
 	},
 	filters:{
@@ -240,25 +245,27 @@ export default {
 				latitude:latitude,
 				longitude:longitude
 			}).then(data=>{
-				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="object"){
+				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
 					//没有数据
 					this.locationLoad = false;//停止界面加载提示
 					this.locationName = "你的附近没有上车点";
-					this.showRefresh = false;
-					Promise.resolve();
-					return ;
 				}
-				this.locationName = "最近上车点:"+data.Name;
-				this.$store.dispatch("setStartCity",{
-					Code:data.Id,
-					Name:data.Name
-				});
-				Toast({
-				  message: "已为你切换到最近的出发点",
-				  position: 'bottom',
-				  duration: 3000,
-				});
-				this.locationLoad = false;//停止界面加载提示
+				else{
+					this.locationName = "最近上车点:"+data.Name;
+					this.$store.dispatch("setStartCity",{
+						Code:data.Id,
+						Name:data.Name
+					});
+					Toast({
+					  message: "已为你切换到最近的出发点",
+					  position: 'bottom',
+					  duration: 3000,
+					});
+					this.locationLoad = false;//停止界面加载提示
+				}
+
+				this.showRefresh = false;//正常返回就不要显示重新加载了
+				return Promise.resolve();
 			}).catch(error=>{
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "请稍后重试...";
@@ -271,6 +278,12 @@ export default {
 			})
 		},
 		getPositionError(error){
+			// this.showPosition({
+			// 	coords:{
+			// 		latitude:"23.018639699999998",
+			// 		longitude:"113.3086585"
+			// 	}
+			// })
 			if(error){
 				// 获取位置出错
 				this.locationLoad = false;//停止界面加载提示
