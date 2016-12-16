@@ -29283,7 +29283,6 @@
 
 			// 获取位置
 			if (this.$store.getters.getLocationResult === null) {
-				console.log("get location");
 				// 还没有获取过,说明第一个打开网页
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
 			} else {
