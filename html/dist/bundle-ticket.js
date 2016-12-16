@@ -29253,13 +29253,18 @@
 				limit: [{
 					type: 'weekday',
 					available: [1, 2, 3, 4, 5, 6, 7]
+				}, {
+					type: 'fromto',
+					from: '2016-02-01',
+					to: '2016-02-20'
 				}]
 			};
 		},
 		created: function created() {
+			var nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
 			// 设置初始时间
-			this.handleConfirm(new Date());
+			this.handleConfirm(nowDate);
 			if (this.$store.getters.getInfo.startDate.server) {
 				// 之前查过
 				this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server);
@@ -29269,6 +29274,9 @@
 
 			// 获取本地数据
 			this.localStorage = this.getLocalStore().reverse();
+			// 改变限制选择的日期
+			this.limit[1].from = this.formatNow(nowDate);
+			this.limit[1].to = this.formatNow(new Date(nowDate.getTime() + 1000 * 60 * 60 * 24 * 30));
 
 			// 获取位置
 			if (this.$store.getters.getLocationResult === null) {
