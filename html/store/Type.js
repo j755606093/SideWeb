@@ -7,4 +7,5 @@ export default {
 	SET_ENDCITYLIST:"SET_ENDCITYLIST",//设置出发地址的列表,
 	SET_RESULTLIST:"SET_RESULTLIST",//设置结果列表,
 	SET_BUSINFO:"SET_BUSINFO",//设置乘坐车辆信息,提交订单所用
+	SET_LOCATIONRESULT:"SET_LOCATIONRESULT",//设置位置
 }

@@ -11061,7 +11061,8 @@
 		SET_STARTCITYLIST: "SET_STARTCITYLIST", //设置出发城市的列表
 		SET_ENDCITYLIST: "SET_ENDCITYLIST", //设置出发地址的列表,
 		SET_RESULTLIST: "SET_RESULTLIST", //设置结果列表,
-		SET_BUSINFO: "SET_BUSINFO" };
+		SET_BUSINFO: "SET_BUSINFO", //设置乘坐车辆信息,提交订单所用
+		SET_LOCATIONRESULT: "SET_LOCATIONRESULT" };
 
 /***/ },
 /* 8 */
@@ -11138,6 +11139,7 @@
 		endCityList: null, //到达的城市列表
 
 		resultList: null, //搜索结果
+		locationResult: null, //定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		// serverUrl:"http://192.168.31.80",//服务器地址
@@ -11172,6 +11174,9 @@
 		},
 		Development: function Development(state) {
 			return state;
+		},
+		getLocationResult: function getLocationResult(state) {
+			return state.locationResult;
 		}
 	};
 
@@ -11319,6 +11324,13 @@
 				})
 			}).then(function (result) {
 				return result.json();
+			}).then(function (data) {
+				if (data.Data) {
+					commit(_Type2.default.SET_LOCATIONRESULT, data.Data);
+					return data.Data;
+				} else {
+					return []; //没有找到数据
+				}
 			});
 		}
 	};
@@ -11343,6 +11355,8 @@
 		state.resultList = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_BUSINFO, function (state, data) {
 		state.busInfo = data;
+	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_LOCATIONRESULT, function (state, data) {
+		state.locationResult = data;
 	}), _mutations);
 
 	exports.default = {
@@ -29073,6 +29087,10 @@
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
+	var _promise = __webpack_require__(53);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
 	var _utils = __webpack_require__(140);
 
 	var _utils2 = _interopRequireDefault(_utils);
@@ -29190,6 +29208,7 @@
 				localStorage: null, //本地搜索记录
 				locationLoad: true, //是否在加载定位记录
 				locationName: "", //定位最近的车站位置名
+				showRefresh: false, //是否显示刷新地理位置
 				// startCitySlots: [{
 				// 	flex: 1,
 				// 	values: [],
@@ -29263,7 +29282,10 @@
 			this.localStorage = this.getLocalStore().reverse();
 
 			// 获取位置
-			navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
+			if (this.$store.getters.getLocationResult === null) {
+				// 还没有获取过,说明第一个打开网页
+				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
+			}
 		},
 
 		filters: {},
@@ -29320,16 +29342,18 @@
 					latitude: latitude,
 					longitude: longitude
 				}).then(function (data) {
-					if (!data.Data) {
+					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "object") {
 						//没有数据
 						_this.locationLoad = false; //停止界面加载提示
 						_this.locationName = "你的附近没有上车点";
+						_this.showRefresh = false;
+						_promise2.default.resolve();
 						return;
 					}
-					_this.locationName = "最近上车点:" + data.Data.Name;
+					_this.locationName = "最近上车点:" + data.Name;
 					_this.$store.dispatch("setStartCity", {
-						Code: data.Data.Id,
-						Name: data.Data.Name
+						Code: data.Id,
+						Name: data.Name
 					});
 					(0, _mintUi.Toast)({
 						message: "已为你切换到最近的出发点",
@@ -29340,6 +29364,7 @@
 				}).catch(function (error) {
 					_this.locationLoad = false; //停止界面加载提示
 					_this.locationName = "请稍后重试...";
+					_this.showRefresh = true;
 					// Toast({
 					//   message: "网络错误,请稍后重试...",
 					//   position: 'bottom',
@@ -29352,6 +29377,7 @@
 					// 获取位置出错
 					this.locationLoad = false; //停止界面加载提示
 					this.locationName = "无法获取当前位置";
+					this.showRefresh = true;
 					// Toast({
 					//   message: "无法获取当前位置",
 					//   position: 'bottom',
@@ -45675,12 +45701,12 @@
 	    staticClass: "location-result"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-map-marker"
-	  }), " ", _vm._h('span', [_vm._s(_vm.locationName)]), " ", _vm._h('span', {
+	  }), " ", _vm._h('span', [_vm._s(_vm.locationName)]), " ", (_vm.showRefresh) ? _vm._h('span', {
 	    staticClass: "refresh-location",
 	    on: {
 	      "click": _vm.refreshLocation
 	    }
-	  }, ["重新定位"])]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
+	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
 	    staticClass: "search-record"
 	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
 	    return _vm._h('div', {

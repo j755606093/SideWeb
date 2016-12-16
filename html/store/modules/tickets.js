@@ -26,6 +26,7 @@ const state = {
 	endCityList:null,//到达的城市列表
 
 	resultList:null,//搜索结果
+	locationResult:null,//定位结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址
@@ -52,6 +53,7 @@ const getters = {
 	getResultList:state=>state.resultList,
 	getBusInfo:state=>state.busInfo,
 	Development:state=>state,
+	getLocationResult:state=>state.locationResult,
 }
 
 let getData = (url,callback)=>{
@@ -167,6 +169,15 @@ const actions = {
 			})
 		})
 		.then(result=>result.json())
+		.then(data=>{
+			if(data.Data){
+				commit(types.SET_LOCATIONRESULT,data.Data);
+				return data.Data;
+			}
+			else{
+				return [];//没有找到数据
+			}
+		})
 	}
 }
 
@@ -198,6 +209,9 @@ const mutations = {
 	},
 	[types.SET_BUSINFO] (state,data){
 		state.busInfo = data;
+	},
+	[types.SET_LOCATIONRESULT](state,data){
+		state.locationResult = data;
 	}
 }
 

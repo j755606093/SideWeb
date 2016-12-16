@@ -60,7 +60,7 @@
 			<div class="location-result" v-else>
 				<i class="fa fa-map-marker"></i>
 				<span>{{locationName}}</span>
-				<span @click="refreshLocation" class="refresh-location">重新定位</span>
+				<span @click="refreshLocation" v-if="showRefresh" class="refresh-location">重新定位</span>
 			</div>
 		</div>
 		<!-- 查询记录 -->
@@ -106,6 +106,7 @@ export default {
 			localStorage:null,//本地搜索记录
 			locationLoad:true,//是否在加载定位记录
 			locationName:"",//定位最近的车站位置名
+			showRefresh:false,//是否显示刷新地理位置
 			// startCitySlots: [{
 			// 	flex: 1,
 			// 	values: [],
@@ -186,7 +187,10 @@ export default {
 		this.localStorage = this.getLocalStore().reverse();
 
 		// 获取位置
-		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+		if(this.$store.getters.getLocationResult===null){
+			// 还没有获取过,说明第一个打开网页
+			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+		}
 	},
 	filters:{
 		
@@ -243,16 +247,18 @@ export default {
 				latitude:latitude,
 				longitude:longitude
 			}).then(data=>{
-				if(!data.Data){
+				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="object"){
 					//没有数据
 					this.locationLoad = false;//停止界面加载提示
 					this.locationName = "你的附近没有上车点";
+					this.showRefresh = false;
+					Promise.resolve();
 					return ;
 				}
-				this.locationName = "最近上车点:"+data.Data.Name;
+				this.locationName = "最近上车点:"+data.Name;
 				this.$store.dispatch("setStartCity",{
-					Code:data.Data.Id,
-					Name:data.Data.Name
+					Code:data.Id,
+					Name:data.Name
 				});
 				Toast({
 				  message: "已为你切换到最近的出发点",
@@ -263,6 +269,7 @@ export default {
 			}).catch(error=>{
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "请稍后重试...";
+				this.showRefresh = true;
 				// Toast({
 				//   message: "网络错误,请稍后重试...",
 				//   position: 'bottom',
@@ -275,6 +282,7 @@ export default {
 				// 获取位置出错
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "无法获取当前位置";
+				this.showRefresh = true;
 				// Toast({
 				//   message: "无法获取当前位置",
 				//   position: 'bottom',
