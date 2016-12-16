@@ -29209,17 +29209,6 @@
 				locationLoad: true, //是否在加载定位记录
 				locationName: "", //定位最近的车站位置名
 				showRefresh: false, //是否显示刷新地理位置
-				// startCitySlots: [{
-				// 	flex: 1,
-				// 	values: [],
-				// 	className: 'startcity'
-				// }],
-				// endCitySlots: [{
-				// 	flex: 1,
-				// 	values: [],
-				// 	className: 'endcity'
-				// }],
-				// for Vue 2.0
 				startTime: {
 					time: ""
 				},
