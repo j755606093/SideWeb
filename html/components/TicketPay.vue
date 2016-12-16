@@ -304,7 +304,7 @@ export default {
 		popupMessage(text){
 			Toast({
 			  message: text,
-			  position: 'center',
+			  position: 'bottom',
 			  duration: 3000
 			});
 			// this.popupText = text;

@@ -11142,8 +11142,7 @@
 		locationResult: null, //定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -29195,6 +29194,8 @@
 	//
 	//
 
+	var _ = __webpack_require__(282);
+
 	exports.default = {
 		data: function data() {
 			return {
@@ -29377,12 +29378,12 @@
 				});
 			},
 			getPositionError: function getPositionError(error) {
-				// this.showPosition({
-				// 	coords:{
-				// 		latitude:"23.018639699999998",
-				// 		longitude:"113.3086585"
-				// 	}
-				// })
+				this.showPosition({
+					coords: {
+						latitude: "23.018639699999998",
+						longitude: "113.3086585"
+					}
+				});
 				if (error) {
 					// 获取位置出错
 					this.locationLoad = false; //停止界面加载提示
@@ -29518,7 +29519,7 @@
 
 			// 通过本地的搜索记录查询
 			queryRecord: function queryRecord(index) {
-				var data = this.getLocalStore()[index];
+				var data = this.getLocalStore().reverse()[index];
 
 				this.$store.dispatch("setStartCity", {
 					Name: data.startCity,
@@ -29549,23 +29550,26 @@
 					startCity: city1.Name,
 					startCode: city1.Code,
 					endCity: city2.Name,
-					endCode: city2.Code
+					endCode: city2.Code,
+					uniq: city1.Code + city2.Code
 				};
 				var data = this.getLocalStore();
 
-				// 检测是否已有相同的数据路线
+				var newData = [];
+
+				// 检测是否已有相同的数据路线,删除重复的
 				for (var i = 0; i < data.length; i++) {
-					if (data[i].startCode === json.startCode && data[i].endCode === json.endCode) {
-						return;
+					if (data[i].uniq !== json.uniq) {
+						newData.push(data[i]);
 					}
 				}
-
-				if (data.length === 10) {
-					data = data.slice(4, 10); //删除最早的五个
+				newData.push(json); //最后才推入这个
+				//等于10的时候需要截取一部分
+				if (newData.length === 10) {
+					newData.splice(0, 5);
 				}
-				data.push(json);
 
-				window.localStorage.setItem("City", (0, _stringify2.default)(data));
+				window.localStorage.setItem("City", (0, _stringify2.default)(newData));
 			},
 			onStartValuesChange: function onStartValuesChange(picker, values) {
 				this.$store.dispatch("setStartCity", { Code: "00000", Name: values[0] });
@@ -49129,7 +49133,7 @@
 			popupMessage: function popupMessage(text) {
 				(0, _mintUi.Toast)({
 					message: text,
-					position: 'center',
+					position: 'bottom',
 					duration: 3000
 				});
 				// this.popupText = text;
