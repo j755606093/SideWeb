@@ -4,7 +4,7 @@ CACHE MANIFEST
 
 NETWORK
 # never cache this files on follew:
-
+ticket.html
 
 FALLBACK
 # use 404.html replace folder html5 all file.
