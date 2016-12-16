@@ -2,10 +2,10 @@ CACHE MANIFEST
 # 2016-12-16 17:42:25
 /dist/bundle-ticket.js
 
-NETWORK
+NETWORK:
 # never cache this files on follew:
-ticket.html
+*
 
-FALLBACK
+FALLBACK:
 # use 404.html replace folder html5 all file.
 # /html5/ /404.html
