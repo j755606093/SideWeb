@@ -542,7 +542,6 @@ export default {
 				}
 			}
 			newData.push(json);//最后才推入这个
-			//等于10的时候需要截取一部分
 
 			window.localStorage.setItem("Passager",JSON.stringify(newData));
 		},
@@ -575,6 +574,7 @@ export default {
 			MessageBox.confirm('确定删除'+array[index].name+'?').then(action => {
 				// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
 				this.AllFare.splice(index,1);
+				window.localStorage.setItem("Passager",JSON.stringify(this.AllFare));
 				this.computeAll();
 			}).catch(error=>{
 				// error=cancel

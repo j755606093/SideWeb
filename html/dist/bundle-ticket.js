@@ -49391,7 +49391,6 @@
 					}
 				}
 				newData.push(json); //最后才推入这个
-				//等于10的时候需要截取一部分
 
 				window.localStorage.setItem("Passager", (0, _stringify2.default)(newData));
 			},
@@ -49427,6 +49426,7 @@
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
 					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
 					_this2.AllFare.splice(index, 1);
+					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this2.AllFare));
 					_this2.computeAll();
 				}).catch(function (error) {
 					// error=cancel
