@@ -275,6 +275,10 @@ export default {
 			isHome:false,
 			Title:startDate.date+" "+startDate.week
 		});
+		
+		//获取本地的shuju
+		this.getLocalStorePhone();
+		this.AllFare = this.getLocalStorePassager();
 
 		this.computeAll();
 		// console.log(this.formatData(this.busInfo))
@@ -425,12 +429,12 @@ export default {
 
 						// 获取乘客名字,逗号相连
 						let arrayData = "";
-						for(let i=0;i<this.payInfoData.passenger.length;i++){
-							arrayData = arrayData+","+this.AllFare.name;
+						for(let i=0;i<this.AllFare.length;i++){
+							arrayData = this.AllFare[i].name+","+arrayData;
 						}
 
 						this.$store.dispatch("payMoney",{
-							Name:arrayData,
+							Name:arrayData.slice(0,arrayData.length-1),
 							Mobile:this.payInfoData.contactPhone,
 							Num:arrayData.length
 						}).then(result=>{
@@ -463,7 +467,13 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		inspectPhone(){
-			return /^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone);
+			if(/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)){
+				this.setLocalStorePhone(this.payInfoData.contactPhone);
+				return true;
+			}
+			else{
+				return false;
+			}
 		},
 		/**
 		 * 添加乘客信息
@@ -479,12 +489,14 @@ export default {
 					this.popupMessage("乘客数不允许大于余票数!");
 				}
 				else{
-					this.AllFare.push({
+					let json = {
 						name:this.fareName,
 						// code:this.certificate,
 						active:true,
 						isGetTicket:false
-					});
+					}
+					this.AllFare.push(json);
+					this.setLocalStorePassager(json);//存储本地
 					// 清空输入的信息
 					this.fareName = "";
 					this.certificate = "";
@@ -496,6 +508,43 @@ export default {
 			else{
 				this.popupMessage("请输入正确的姓名!");
 			}
+		},
+		//获取储存的数据
+		getLocalStorePassager(){
+			if(window.localStorage.getItem("Passager")!==null){
+				//之前有数据
+				let oldValue = JSON.parse(window.localStorage.getItem("Passager"));//获取数据
+				return oldValue;
+			}
+			else{
+				// 第一次储存
+				return [];
+			}
+		},
+		getLocalStorePhone(){
+			if(window.localStorage.getItem("Phone")!==null){
+				//之前有数据
+				this.payInfoData.contactPhone = window.localStorage.getItem("Phone");
+			}
+		},
+		setLocalStorePhone(phone){
+			window.localStorage.setItem("Phone",phone);
+		},
+		setLocalStorePassager(json){
+			let data = this.getLocalStorePassager();
+
+			let newData = [];
+
+			// 检测是否已有相同的数据路线,删除重复的
+			for(let i=0;i<data.length;i++){
+				if(data[i].name!==json.name){
+					newData.push(data[i])
+				}
+			}
+			newData.push(json);//最后才推入这个
+			//等于10的时候需要截取一部分
+
+			window.localStorage.setItem("Passager",JSON.stringify(newData));
 		},
 		/**
 		 * 选择乘客check按钮

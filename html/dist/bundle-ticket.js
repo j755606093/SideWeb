@@ -11144,8 +11144,7 @@
 		haveLocation: false, //没有定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -49120,6 +49119,10 @@
 				Title: startDate.date + " " + startDate.week
 			});
 
+			//获取本地的shuju
+			this.getLocalStorePhone();
+			this.AllFare = this.getLocalStorePassager();
+
 			this.computeAll();
 			// console.log(this.formatData(this.busInfo))
 		},
@@ -49276,12 +49279,12 @@
 
 							// 获取乘客名字,逗号相连
 							var arrayData = "";
-							for (var i = 0; i < this.payInfoData.passenger.length; i++) {
-								arrayData = arrayData + "," + this.AllFare.name;
+							for (var i = 0; i < this.AllFare.length; i++) {
+								arrayData = this.AllFare[i].name + "," + arrayData;
 							}
 
 							this.$store.dispatch("payMoney", {
-								Name: arrayData,
+								Name: arrayData.slice(0, arrayData.length - 1),
 								Mobile: this.payInfoData.contactPhone,
 								Num: arrayData.length
 							}).then(function (result) {
@@ -49315,8 +49318,12 @@
 	   * @return {[type]} [description]
 	   */
 			inspectPhone: function inspectPhone() {
-				return (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)
-				);
+				if (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)) {
+					this.setLocalStorePhone(this.payInfoData.contactPhone);
+					return true;
+				} else {
+					return false;
+				}
 			},
 
 			/**
@@ -49332,12 +49339,14 @@
 						// 如果添加人数大于剩余票数
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
-						this.AllFare.push({
+						var json = {
 							name: this.fareName,
 							// code:this.certificate,
 							active: true,
 							isGetTicket: false
-						});
+						};
+						this.AllFare.push(json);
+						this.setLocalStorePassager(json); //存储本地
 						// 清空输入的信息
 						this.fareName = "";
 						this.certificate = "";
@@ -49348,6 +49357,43 @@
 				} else {
 					this.popupMessage("请输入正确的姓名!");
 				}
+			},
+
+			//获取储存的数据
+			getLocalStorePassager: function getLocalStorePassager() {
+				if (window.localStorage.getItem("Passager") !== null) {
+					//之前有数据
+					var oldValue = JSON.parse(window.localStorage.getItem("Passager")); //获取数据
+					return oldValue;
+				} else {
+					// 第一次储存
+					return [];
+				}
+			},
+			getLocalStorePhone: function getLocalStorePhone() {
+				if (window.localStorage.getItem("Phone") !== null) {
+					//之前有数据
+					this.payInfoData.contactPhone = window.localStorage.getItem("Phone");
+				}
+			},
+			setLocalStorePhone: function setLocalStorePhone(phone) {
+				window.localStorage.setItem("Phone", phone);
+			},
+			setLocalStorePassager: function setLocalStorePassager(json) {
+				var data = this.getLocalStorePassager();
+
+				var newData = [];
+
+				// 检测是否已有相同的数据路线,删除重复的
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].name !== json.name) {
+						newData.push(data[i]);
+					}
+				}
+				newData.push(json); //最后才推入这个
+				//等于10的时候需要截取一部分
+
+				window.localStorage.setItem("Passager", (0, _stringify2.default)(newData));
 			},
 
 			/**
