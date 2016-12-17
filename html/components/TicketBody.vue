@@ -187,7 +187,12 @@ export default {
 		}
 		else{
 			this.locationLoad = false;
-			this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
+			if(this.$store.getters.getLocationResult.Name){
+				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
+			}
+			else{
+				this.locationName = "你的附近没有上车点";
+			}
 		}
 	},
 	filters:{

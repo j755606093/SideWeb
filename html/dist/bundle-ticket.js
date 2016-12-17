@@ -80,7 +80,7 @@
 
 	var _TicketBody2 = _interopRequireDefault(_TicketBody);
 
-	var _TicketStartCity = __webpack_require__(278);
+	var _TicketStartCity = __webpack_require__(279);
 
 	var _TicketStartCity2 = _interopRequireDefault(_TicketStartCity);
 
@@ -28984,7 +28984,7 @@
 	__vue_exports__ = __webpack_require__(156);
 
 	/* template */
-	var __vue_template__ = __webpack_require__(277);
+	var __vue_template__ = __webpack_require__(278);
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
 	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
 	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
@@ -29195,7 +29195,7 @@
 	//
 	//
 
-	var _ = __webpack_require__(282);
+	var _ = __webpack_require__(277);
 
 	exports.default = {
 		data: function data() {
@@ -29288,7 +29288,11 @@
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
 			} else {
 				this.locationLoad = false;
-				this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
+				if (this.$store.getters.getLocationResult.Name) {
+					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
+				} else {
+					this.locationName = "你的附近没有上车点";
+				}
 			}
 		},
 
@@ -45670,349 +45674,6 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "ticketbody"
-	  }, [_vm._h('div', {
-	    staticClass: "go block",
-	    on: {
-	      "click": _vm.GoStartCity
-	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
-	    staticClass: "to block",
-	    on: {
-	      "click": _vm.GoEndCity
-	    }
-	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
-	    staticClass: "data",
-	    on: {
-	      "click": _vm.openPicker
-	    }
-	  }, [_vm._m(2), " ", " ", _vm._h('date-picker', {
-	    attrs: {
-	      "date": _vm.startTime,
-	      "option": _vm.option,
-	      "limit": _vm.limit
-	    }
-	  }), " ", _vm._h('span', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.showWeek)
-	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "query"
-	  }, [_vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.query
-	    }
-	  }, ["查询"])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
-	    staticClass: "location"
-	  }, [(_vm.locationLoad) ? _vm._h('div', {
-	    staticClass: "showload"
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-circle-o-notch fa-spin"
-	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
-	    staticClass: "location-result"
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-map-marker"
-	  }), " ", _vm._h('span', [_vm._s(_vm.locationName)]), " ", (_vm.showRefresh) ? _vm._h('span', {
-	    staticClass: "refresh-location",
-	    on: {
-	      "click": _vm.refreshLocation
-	    }
-	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
-	    staticClass: "search-record"
-	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
-	    return _vm._h('div', {
-	      key: index,
-	      staticClass: "list"
-	    }, [_vm._h('span', {
-	      staticClass: "first"
-	    }, [_vm._s(list.startCity)]), " ", _vm._h('span', [_vm._s(list.endCity)]), " ", _vm._h('i', {
-	      staticClass: "fa fa-search",
-	      on: {
-	        "click": function($event) {
-	          _vm.queryRecord(index)
-	        }
-	      }
-	    }, ["查询"])])
-	  })]) : _vm._e()])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-location-arrow"
-	  }), "出发点"])
-	},function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-location-arrow"
-	  }), "到达点"])
-	},function (){var _vm=this;
-	  return _vm._h('span', [_vm._h('i', {
-	    staticClass: "fa fa-calendar"
-	  }), "出发日期"])
-	}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-17660273", module.exports)
-	  }
-	}
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _keys = __webpack_require__(114);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	var _typeof2 = __webpack_require__(118);
-
-	var _typeof3 = _interopRequireDefault(_typeof2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var __vue_exports__, __vue_options__;
-	var __vue_styles__ = {};
-
-	/* styles */
-	__webpack_require__(279);
-
-	/* script */
-	__vue_exports__ = __webpack_require__(281);
-
-	/* template */
-	var __vue_template__ = __webpack_require__(283);
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
-	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
-	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
-	    return key !== "default" && key !== "__esModule";
-	  })) {
-	    console.error("named exports are not supported in *.vue files.");
-	  }
-	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options;
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketStartCity.vue";
-	__vue_options__.render = __vue_template__.render;
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
-
-	/* hot reload */
-	if (false) {
-	  (function () {
-	    var hotAPI = require("vue-hot-reload-api");
-	    hotAPI.install(require("vue"), false);
-	    if (!hotAPI.compatible) return;
-	    module.hot.accept();
-	    if (!module.hot.data) {
-	      hotAPI.createRecord("data-v-55a7ad28", __vue_options__);
-	    } else {
-	      hotAPI.reload("data-v-55a7ad28", __vue_options__);
-	    }
-	  })();
-	}
-	if (__vue_options__.functional) {
-	  console.error("[vue-loader] TicketStartCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
-	}
-
-	module.exports = __vue_exports__;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(280);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(138)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _vuex = __webpack_require__(3);
-
-	var _utils = __webpack_require__(140);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _mintUi = __webpack_require__(88);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ = __webpack_require__(282); //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-		data: function data() {
-			return {
-				startcity: "",
-				setStartCityList: null,
-				startpopupVisible: false, //显示出发选择
-				startCitySlots: [{
-					flex: 1,
-					values: [1, 2, 3, 4, 5],
-					className: 'startcity'
-				}]
-			};
-		},
-		created: function created() {
-			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
-
-			if (!this.$store.state.tickets.startCityList) {
-				// 提示加载中
-				_mintUi.Indicator.open({
-					text: '加载中...',
-					spinnerType: 'double-bounce'
-				});
-				this.$store.dispatch("setStartCityList").then(function (data) {
-					_mintUi.Indicator.close();
-				});
-			}
-		},
-
-		computed: {
-			setStartCityList: function setStartCityList() {
-				return this.$store.state.tickets.startCityList;
-			}
-		},
-		watch: {
-			// startpopupVisible(status){
-			// 	if(status===false){
-			// 		// 说明已经选择完了
-			// 		this.$router.go(-1);
-			// 	}
-			// }
-		},
-		methods: {
-			getStartCity: function getStartCity(code, name) {
-				this.startcity = name;
-				// if(station.length===0){
-				// 	this.$store.dispatch("setStartCity",{
-				// 		Code:code,
-				// 		Name:name,
-				// 		Station:"",//空的站台
-				// 	});
-				// 	this.$router.go(-1);
-				// }
-				// else{
-				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
-				// 		return item.Name;
-				// 	});
-
-				// 	this.startpopupVisible = true;
-				// }
-				this.$store.dispatch("setStartCity", {
-					Code: code,
-					Name: name
-				});
-				this.$router.go(-1);
-			},
-			onStartValuesChange: function onStartValuesChange(picker, values) {
-				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
-			},
-			noData: function noData() {
-				this.startpopupVisible = false;
-			},
-			yesData: function yesData() {
-				this.$router.go(-1);
-			}
-		}
-	};
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
 	//     http://underscorejs.org
 	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -47564,6 +47225,349 @@
 
 
 /***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "ticketbody"
+	  }, [_vm._h('div', {
+	    staticClass: "go block",
+	    on: {
+	      "click": _vm.GoStartCity
+	    }
+	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
+	    staticClass: "to block",
+	    on: {
+	      "click": _vm.GoEndCity
+	    }
+	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
+	    staticClass: "data",
+	    on: {
+	      "click": _vm.openPicker
+	    }
+	  }, [_vm._m(2), " ", " ", _vm._h('date-picker', {
+	    attrs: {
+	      "date": _vm.startTime,
+	      "option": _vm.option,
+	      "limit": _vm.limit
+	    }
+	  }), " ", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.showWeek)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "query"
+	  }, [_vm._h('button', {
+	    staticClass: "btn",
+	    on: {
+	      "click": _vm.query
+	    }
+	  }, ["查询"])]), " ", " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
+	    staticClass: "location"
+	  }, [(_vm.locationLoad) ? _vm._h('div', {
+	    staticClass: "showload"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-circle-o-notch fa-spin"
+	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
+	    staticClass: "location-result"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-map-marker"
+	  }), " ", _vm._h('span', [_vm._s(_vm.locationName)]), " ", (_vm.showRefresh) ? _vm._h('span', {
+	    staticClass: "refresh-location",
+	    on: {
+	      "click": _vm.refreshLocation
+	    }
+	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
+	    staticClass: "search-record"
+	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
+	    return _vm._h('div', {
+	      key: index,
+	      staticClass: "list"
+	    }, [_vm._h('span', {
+	      staticClass: "first"
+	    }, [_vm._s(list.startCity)]), " ", _vm._h('span', [_vm._s(list.endCity)]), " ", _vm._h('i', {
+	      staticClass: "fa fa-search",
+	      on: {
+	        "click": function($event) {
+	          _vm.queryRecord(index)
+	        }
+	      }
+	    }, ["查询"])])
+	  })]) : _vm._e()])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-location-arrow"
+	  }), "出发点"])
+	},function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-location-arrow"
+	  }), "到达点"])
+	},function (){var _vm=this;
+	  return _vm._h('span', [_vm._h('i', {
+	    staticClass: "fa fa-calendar"
+	  }), "出发日期"])
+	}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-17660273", module.exports)
+	  }
+	}
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(114);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(118);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(280);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(282);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(283);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketStartCity.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-55a7ad28", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-55a7ad28", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] TicketStartCity.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(281);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(138)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(140);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(88);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _ = __webpack_require__(277); //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				startcity: "",
+				setStartCityList: null,
+				startpopupVisible: false, //显示出发选择
+				startCitySlots: [{
+					flex: 1,
+					values: [1, 2, 3, 4, 5],
+					className: 'startcity'
+				}]
+			};
+		},
+		created: function created() {
+			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
+
+			if (!this.$store.state.tickets.startCityList) {
+				// 提示加载中
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				this.$store.dispatch("setStartCityList").then(function (data) {
+					_mintUi.Indicator.close();
+				});
+			}
+		},
+
+		computed: {
+			setStartCityList: function setStartCityList() {
+				return this.$store.state.tickets.startCityList;
+			}
+		},
+		watch: {
+			// startpopupVisible(status){
+			// 	if(status===false){
+			// 		// 说明已经选择完了
+			// 		this.$router.go(-1);
+			// 	}
+			// }
+		},
+		methods: {
+			getStartCity: function getStartCity(code, name) {
+				this.startcity = name;
+				// if(station.length===0){
+				// 	this.$store.dispatch("setStartCity",{
+				// 		Code:code,
+				// 		Name:name,
+				// 		Station:"",//空的站台
+				// 	});
+				// 	this.$router.go(-1);
+				// }
+				// else{
+				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
+				// 		return item.Name;
+				// 	});
+
+				// 	this.startpopupVisible = true;
+				// }
+				this.$store.dispatch("setStartCity", {
+					Code: code,
+					Name: name
+				});
+				this.$router.go(-1);
+			},
+			onStartValuesChange: function onStartValuesChange(picker, values) {
+				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
+			},
+			noData: function noData() {
+				this.startpopupVisible = false;
+			},
+			yesData: function yesData() {
+				this.$router.go(-1);
+			}
+		}
+	};
+
+/***/ },
 /* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -47723,7 +47727,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _ = __webpack_require__(282); //
+	var _ = __webpack_require__(277); //
 	//
 	//
 	//
@@ -48026,7 +48030,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _ = __webpack_require__(282); //
+	var _ = __webpack_require__(277); //
 	//
 	//
 	//
@@ -49032,7 +49036,7 @@
 	//
 	//
 
-	var _ = __webpack_require__(282);
+	var _ = __webpack_require__(277);
 	exports.default = {
 		data: function data() {
 			return {
