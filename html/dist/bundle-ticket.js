@@ -11145,7 +11145,7 @@
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "http://wx.1yhp.net" };
+		serverUrl: "" };
 
 	// getters,获取数据
 	var getters = {
