@@ -11276,7 +11276,7 @@
 			}).then(function (result) {
 				return result.json();
 			}).then(function (result) {
-				if (result.Code === 204) {
+				if (result.Code !== 200) {
 					// 没有更多数据
 					commit(_Type2.default.SET_RESULTLIST, []);
 					return [];

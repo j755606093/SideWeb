@@ -128,7 +128,7 @@ const actions = {
 		})
 		.then(result=>result.json())
 		.then(result=>{
-			if(result.Code===204){
+			if(result.Code!==200){
 				// 没有更多数据
 				commit(types.SET_RESULTLIST,[]);
 				return [];
