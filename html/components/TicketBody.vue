@@ -181,13 +181,14 @@ export default {
 		this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
 
 		// 获取位置
-		if(this.$store.getters.getLocationResult===null){
+		if(!this.$store.getters.getHaveLocation){
 			// 还没有获取过,说明第一个打开网页
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+			this.$store.dispatch("setHaveLocation",true);
 		}
 		else{
 			this.locationLoad = false;
-			if(this.$store.getters.getLocationResult.Name){
+			if(this.$store.getters.getLocationResult){
 				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
 			}
 			else{
@@ -250,9 +251,9 @@ export default {
 				latitude:latitude,
 				longitude:longitude
 			}).then(data=>{
+				this.locationLoad = false;//停止界面加载提示
 				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
 					//没有数据
-					this.locationLoad = false;//停止界面加载提示
 					this.locationName = "你的附近没有上车点";
 				}
 				else{
@@ -266,7 +267,6 @@ export default {
 					  position: 'bottom',
 					  duration: 3000,
 					});
-					this.locationLoad = false;//停止界面加载提示
 				}
 
 				this.showRefresh = false;//正常返回就不要显示重新加载了
@@ -283,12 +283,12 @@ export default {
 			})
 		},
 		getPositionError(error){
-			this.showPosition({
-				coords:{
-					latitude:"23.018639699999998",
-					longitude:"113.3086585"
-				}
-			})
+			// this.showPosition({
+			// 	coords:{
+			// 		latitude:"23.018639699999998",
+			// 		longitude:"113.3086585"
+			// 	}
+			// })
 			if(error){
 				// 获取位置出错
 				this.locationLoad = false;//停止界面加载提示

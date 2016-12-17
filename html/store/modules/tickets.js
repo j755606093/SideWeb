@@ -27,6 +27,7 @@ const state = {
 
 	resultList:null,//搜索结果
 	locationResult:null,//定位结果
+	haveLocation:false,//没有定位结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址
@@ -54,6 +55,7 @@ const getters = {
 	getBusInfo:state=>state.busInfo,
 	Development:state=>state,
 	getLocationResult:state=>state.locationResult,
+	getHaveLocation:state=>state.haveLocation
 }
 
 let getData = (url,callback)=>{
@@ -181,6 +183,9 @@ const actions = {
 				return [];//没有找到数据
 			}
 		})
+	},
+	setHaveLocation({commit,state},data){
+		commit(types.SET_HAVELOCATION,data);
 	}
 }
 
@@ -215,6 +220,9 @@ const mutations = {
 	},
 	[types.SET_LOCATIONRESULT](state,data){
 		state.locationResult = data;
+	},
+	[types.SET_HAVELOCATION](state,data){
+		state.haveLocation = data;
 	}
 }
 

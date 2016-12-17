@@ -11062,7 +11062,8 @@
 		SET_ENDCITYLIST: "SET_ENDCITYLIST", //设置出发地址的列表,
 		SET_RESULTLIST: "SET_RESULTLIST", //设置结果列表,
 		SET_BUSINFO: "SET_BUSINFO", //设置乘坐车辆信息,提交订单所用
-		SET_LOCATIONRESULT: "SET_LOCATIONRESULT" };
+		SET_LOCATIONRESULT: "SET_LOCATIONRESULT", //设置位置
+		SET_HAVELOCATION: "SET_HAVELOCATION" };
 
 /***/ },
 /* 8 */
@@ -11140,6 +11141,7 @@
 
 		resultList: null, //搜索结果
 		locationResult: null, //定位结果
+		haveLocation: false, //没有定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		// serverUrl:"http://192.168.31.80",//服务器地址
@@ -11177,6 +11179,9 @@
 		},
 		getLocationResult: function getLocationResult(state) {
 			return state.locationResult;
+		},
+		getHaveLocation: function getHaveLocation(state) {
+			return state.haveLocation;
 		}
 	};
 
@@ -11334,6 +11339,12 @@
 					return []; //没有找到数据
 				}
 			});
+		},
+		setHaveLocation: function setHaveLocation(_ref11, data) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
+
+			commit(_Type2.default.SET_HAVELOCATION, data);
 		}
 	};
 
@@ -11359,6 +11370,8 @@
 		state.busInfo = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_LOCATIONRESULT, function (state, data) {
 		state.locationResult = data;
+	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_HAVELOCATION, function (state, data) {
+		state.haveLocation = data;
 	}), _mutations);
 
 	exports.default = {
@@ -29283,12 +29296,13 @@
 			this.limit[1].to = this.formatNow(new Date(nowDate.getTime() + 1000 * 60 * 60 * 24 * 30));
 
 			// 获取位置
-			if (this.$store.getters.getLocationResult === null) {
+			if (!this.$store.getters.getHaveLocation) {
 				// 还没有获取过,说明第一个打开网页
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
+				this.$store.dispatch("setHaveLocation", true);
 			} else {
 				this.locationLoad = false;
-				if (this.$store.getters.getLocationResult.Name) {
+				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
 				} else {
 					this.locationName = "你的附近没有上车点";
@@ -29350,9 +29364,9 @@
 					latitude: latitude,
 					longitude: longitude
 				}).then(function (data) {
+					_this.locationLoad = false; //停止界面加载提示
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
-						_this.locationLoad = false; //停止界面加载提示
 						_this.locationName = "你的附近没有上车点";
 					} else {
 						_this.locationName = "最近上车点:" + data.Name;
@@ -29365,7 +29379,6 @@
 							position: 'bottom',
 							duration: 3000
 						});
-						_this.locationLoad = false; //停止界面加载提示
 					}
 
 					_this.showRefresh = false; //正常返回就不要显示重新加载了
@@ -29382,12 +29395,12 @@
 				});
 			},
 			getPositionError: function getPositionError(error) {
-				this.showPosition({
-					coords: {
-						latitude: "23.018639699999998",
-						longitude: "113.3086585"
-					}
-				});
+				// this.showPosition({
+				// 	coords:{
+				// 		latitude:"23.018639699999998",
+				// 		longitude:"113.3086585"
+				// 	}
+				// })
 				if (error) {
 					// 获取位置出错
 					this.locationLoad = false; //停止界面加载提示
