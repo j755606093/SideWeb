@@ -436,7 +436,7 @@ export default {
 						this.$store.dispatch("payMoney",{
 							Name:arrayData.slice(0,arrayData.length-1),
 							Mobile:this.payInfoData.contactPhone,
-							Num:arrayData.length
+							Num:this.AllFare.length
 						}).then(result=>{
 							console.log(result);
 							Indicator.close();

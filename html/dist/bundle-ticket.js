@@ -49287,7 +49287,7 @@
 							this.$store.dispatch("payMoney", {
 								Name: arrayData.slice(0, arrayData.length - 1),
 								Mobile: this.payInfoData.contactPhone,
-								Num: arrayData.length
+								Num: this.AllFare.length
 							}).then(function (result) {
 								console.log(result);
 								_mintUi.Indicator.close();
