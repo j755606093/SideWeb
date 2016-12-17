@@ -11144,8 +11144,7 @@
 		haveLocation: false, //没有定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -11308,7 +11307,7 @@
 					LineId: state.busInfo.LineId,
 					SPointId: state.busInfo.StartPointId,
 					EPointId: state.busInfo.EndPointId,
-					Date: state.startDate.server,
+					Date: state.startDate.date,
 					Num: data.Num
 				})
 			}).then(function (result) {
