@@ -405,6 +405,7 @@ export default {
 						spinnerType: 'double-bounce'
 					});
 					setTimeout(()=>{
+						this.payInfoPopupVisible = true;
 						Indicator.close();
 					},3000);
 				}
@@ -473,7 +474,6 @@ export default {
 		submitOrder(){
 			// this.$router.replace({name:"payinfo"});
 			// return;
-			this.payInfoPopupVisible = true;
 
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");

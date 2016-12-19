@@ -11153,7 +11153,8 @@
 		haveLocation: false, //没有定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		serverUrl: "http://192.168.31.80" };
+		// serverUrl:"http://192.168.31.80",//服务器地址
+		serverUrl: "" };
 
 	// getters,获取数据
 	var getters = {
@@ -49263,6 +49264,8 @@
 			// },
 			payMoney: function payMoney(paydata) {
 				window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
+					var _this = this;
+
 					if (r.err_msg === "get_brand_wcpay_request:ok") {
 						// 支付成功
 						// 再根据小票拿数据
@@ -49272,6 +49275,7 @@
 							spinnerType: 'double-bounce'
 						});
 						setTimeout(function () {
+							_this.payInfoPopupVisible = true;
 							_mintUi.Indicator.close();
 						}, 3000);
 					}
@@ -49343,11 +49347,10 @@
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
-				var _this = this;
+				var _this2 = this;
 
 				// this.$router.replace({name:"payinfo"});
 				// return;
-				this.payInfoPopupVisible = true;
 
 				if (this.getAllFare().length === 0) {
 					this.popupMessage("请先添加或者选择乘客!");
@@ -49377,7 +49380,7 @@
 							}).then(function (result) {
 								console.log(result);
 								_mintUi.Indicator.close();
-								_this.payMoney(result); //支付
+								_this2.payMoney(result); //支付
 								// this.popupMessage("支付失败,请稍后再试!");
 							});
 							// setTimeout(()=>{
@@ -49507,15 +49510,15 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this2 = this;
+				var _this3 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
 					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
-					_this2.AllFare.splice(index, 1);
-					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this2.AllFare));
-					_this2.computeAll();
+					_this3.AllFare.splice(index, 1);
+					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this3.AllFare));
+					_this3.computeAll();
 				}).catch(function (error) {
 					// error=cancel
 					console.log(error);
