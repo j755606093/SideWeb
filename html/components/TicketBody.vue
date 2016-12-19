@@ -164,6 +164,7 @@ export default {
 	created(){
 		let nowDate = new Date();
 		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
+		this.$store.commit("SET_ISFIRST",false);
 		// 设置初始时间
 		this.handleConfirm(nowDate);
 		if(this.$store.getters.getInfo.startDate.server){

@@ -164,7 +164,7 @@ export default {
 		}
 	},
 	created(){
-		if(this.$store.getters.getResultList===null){
+		if(this.$store.getters.getIsFirst){
 			//数据为空,一般是直接进入这个页面才会这样
 			this.$router.replace({path:"/home/ticketbody"})
 		}

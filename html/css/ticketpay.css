@@ -558,7 +558,7 @@ input {
   width: 100%;
   height: 100%;
   background-color: rgba(17, 17, 17, 0.5); }
-  .tip-popup-visible .body {
+  .tip-popup-visible > .body {
     text-align: center;
     width: 96%;
     margin: 10px 2%;
@@ -566,24 +566,24 @@ input {
     height: 100%;
     padding-top: 0; }
     @media (max-width: 320px) {
-      .tip-popup-visible .body {
+      .tip-popup-visible > .body {
         margin: 0px 2%; } }
-    .tip-popup-visible .body h3 {
+    .tip-popup-visible > .body h3 {
       color: #fff;
       font-size: 1.5rem;
       margin-top: 10px; }
       @media (max-width: 320px) {
-        .tip-popup-visible .body h3 {
+        .tip-popup-visible > .body h3 {
           margin-top: 5px;
           font-size: 1.3rem; } }
-    .tip-popup-visible .body p {
+    .tip-popup-visible > .body p {
       color: #fff;
       font-size: 1.3rem;
       text-align: left; }
       @media (max-width: 320px) {
-        .tip-popup-visible .body p {
+        .tip-popup-visible > .body p {
           font-size: 1.1rem; } }
-    .tip-popup-visible .body button {
+    .tip-popup-visible > .body button {
       background-color: #0074D9;
       color: #fff;
       font-size: 1.3rem;
@@ -593,3 +593,146 @@ input {
       margin-top: 10px;
       border-radius: 5px;
       width: 40%; }
+
+.payinfo-popup-visible {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  position: fixed;
+  left: 0;
+  bottom: 0; }
+  .payinfo-popup-visible .pay-body {
+    width: 100%;
+    height: 100%; }
+  .payinfo-popup-visible .info-body {
+    height: 140px;
+    width: 100%;
+    background-color: #2196F3;
+    color: #fff; }
+    .payinfo-popup-visible .info-body .status {
+      text-align: center;
+      padding-top: 20px; }
+      .payinfo-popup-visible .info-body .status > i.fa {
+        font-size: 4rem;
+        color: #2ecc71; }
+      .payinfo-popup-visible .info-body .status > p {
+        font-size: 1.8rem;
+        color: #fff;
+        margin-top: 10px; }
+  .payinfo-popup-visible .ticket-body {
+    height: 200px;
+    width: 100%; }
+    .payinfo-popup-visible .ticket-body .pay-info {
+      background-color: #fff;
+      width: 100%;
+      padding: 0 3%; }
+      .payinfo-popup-visible .ticket-body .pay-info .address-info {
+        width: 96%;
+        margin: 10px 2%;
+        height: 100px;
+        font-size: 1.2rem;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {
+          -ms-flex: 1;
+              flex: 1;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+              flex-direction: column;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {
+          -ms-flex-align: start;
+              align-items: flex-start; }
+          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {
+            font-size: 1.8rem;
+            color: #111111; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {
+              font-size: 1.2rem; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {
+              font-size: 1.8rem;
+              width: 100%; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {
+              color: #AAAAAA;
+              font-size: 1.2rem; }
+        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {
+          font-size: 1.5rem;
+          -ms-flex-align: center;
+              align-items: center;
+          width: 40%; }
+          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {
+            color: #0074D9;
+            position: relative;
+            width: 100%;
+            height: 0;
+            line-height: 0; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {
+              width: 80%;
+              height: 10px;
+              background-color: #0074D9;
+              position: absolute;
+              left: 0;
+              bottom: -20px;
+              content: ""; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {
+              width: 0;
+              height: 0;
+              border: 10px solid #0074D9;
+              position: absolute;
+              right: 5px;
+              bottom: -20px;
+              content: "";
+              border: 10px solid #fff;
+              border-color: transparent transparent #0074D9 #0074D9; }
+          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {
+            color: #111111;
+            font-size: 1.3rem; }
+          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {
+            color: #111111; }
+        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {
+          -ms-flex-align: end;
+              align-items: flex-end;
+          -ms-flex-pack: center;
+              justify-content: center; }
+          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {
+            font-size: 1.2rem; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {
+              font-size: 1.8rem;
+              color: #111111; }
+            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {
+              color: #919191; }
+      .payinfo-popup-visible .ticket-body .pay-info .info-box {
+        height: 40px;
+        border-top: 1px solid #dddddd; }
+        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {
+          line-height: 40px;
+          height: 40px; }
+          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {
+            font-size: 1.3rem;
+            color: #AAAAAA; }
+          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {
+            width: 50px; }
+          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {
+            color: #111111; }
+  .payinfo-popup-visible .pay-ticket-info {
+    background-color: #fff;
+    width: 100%; }
+    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {
+      padding: 0 3%;
+      border-bottom: 1px solid #dddddd; }
+      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {
+        font-size: 1.4rem;
+        height: 40px;
+        line-height: 40px; }
+    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {
+      padding: 0 3%; }
+      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {
+        font-size: 1.2rem;
+        color: #AAAAAA;
+        height: 30px;
+        line-height: 30px; }

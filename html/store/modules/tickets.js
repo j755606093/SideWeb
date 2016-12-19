@@ -4,6 +4,7 @@ import "whatwg-fetch";
 // initial state
 // shape: [{ id, quantity }]
 const state = {
+	isFirst:true,//第一次启动
 	HeaderIsHome: true,
 	HeaderTitle:"身边订票",
 
@@ -30,12 +31,13 @@ const state = {
 	haveLocation:false,//没有定位结果
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	// serverUrl:"http://192.168.31.80",//服务器地址
-	serverUrl:"",//服务器地址,生产时候需要的
+	serverUrl:"http://192.168.31.80",//服务器地址
+	// serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据
 const getters = {
+	getIsFirst:state=>state.isFirst,
 	getHeaderState: state => state.HeaderIsHome,
 	getHeaderTitle: state => state.HeaderTitle,
 	getInfo: state => {
@@ -186,7 +188,10 @@ const actions = {
 	},
 	setHaveLocation({commit,state},data){
 		commit(types.SET_HAVELOCATION,data);
-	}
+	},
+	setisFirst({commit,state},data){
+		commit("SET_ISFIRST",data);
+	},
 }
 
 // mutations
@@ -223,6 +228,9 @@ const mutations = {
 	},
 	[types.SET_HAVELOCATION](state,data){
 		state.haveLocation = data;
+	},
+	["SET_ISFIRST"](state,data){
+		state.isFirst = data;
 	}
 }
 

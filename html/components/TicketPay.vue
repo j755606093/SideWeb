@@ -168,7 +168,7 @@
 		<!-- 查看取票...信息 -->
 		<mt-popup
 		  v-model="tipPopupVisible"
-		  position="right"
+		  position="top"
 		  class="tip-popup-visible">
 		  <slot>
 		  	<div class="body">
@@ -196,6 +196,64 @@
 		  	<p class="popup" v-text="popupText"></p>
 		  </slot>
 		</mt-popup>
+		<!-- 支付信息 -->
+		<mt-popup
+		  v-model="payInfoPopupVisible"
+		  position="right"
+		  class="payinfo-popup-visible">
+		  <slot>
+		  	<div class="pay-body">
+		  		<div class="info-body">
+		  			<div class="status">
+		  				<i class="fa fa-check-circle"></i>
+		  				<p>生成订单成功!</p>
+		  			</div>
+		  		</div>
+		  		<div class="ticket-body">
+		  			<div class="pay-info">
+		  				<div class="address-info">
+								<div class="start box">
+									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
+									<p class="center" v-text="busInfo.StartPoint"></p>
+									<p class="last" v-text="busInfo.StartCity"></p>
+								</div>
+								<div class="center box">
+									<p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
+									<p class="arrow-message" v-text="busInfo.Route"></p>
+									<p class="arrow"></p>
+								</div>
+								<div class="end box">
+									<p v-text="busInfo.EndPoint"></p>
+									<p>{{busInfo.AcrossCity}}</p>
+								</div>
+							</div>
+							<div class="info-box passager-info">
+								<p>
+									<span class="type">乘客:</span>
+									<span class="name">周岳谢</span>
+								</p>
+							</div>
+							<div class="info-box get-ticket">
+								<p>
+									<span class="type">取票人:</span>
+									<span class="name">周岳谢</span>
+								</p>
+							</div>
+		  			</div>
+		  			<!-- <button @click="outpay">点击退出</button> -->
+		  		</div>
+		  		<div class="pay-ticket-info">
+		  			<div class="pay-ticket-info-header">
+		  				<p>订单信息</p>
+		  			</div>
+		  			<div class="pay-ticket-info-body">
+		  				<p>订单编号:654654687913185</p>
+		  				<p>预订日期:2016-12-19</p>
+		  			</div>
+		  		</div>
+		  	</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -213,6 +271,7 @@ export default {
 			busInfo:{},
 			popupVisible:false,//提示框是否显示
 			tipPopupVisible:false,//取票信息说明
+			payInfoPopupVisible:false,//支付
 			popupText:"我是提示框",//提示框文字
 			// Code:"",//微信code
 			isInsure:true,
@@ -252,23 +311,25 @@ export default {
 				inSureMoney:0,//单笔保险费
 				getTicketMan:null,//取票人信息
 				Allinsure:0,//保险费用(总共)
-				ticketMoney:this.$store.getters.getBusInfo.Price,//票的单价
+				ticketMoney:0,//票的单价
 				payMoney:0,//总共支付的钱
 				contactPhone:""
 			},//订单信息
 		}
 	},
 	beforeCreate(){
-		if(this.$store.getters.getBusInfo===null){
+		if(this.$store.getters.getIsFirst){
 			//数据为空,一般是直接进入这个页面才会这样
 			this.$router.replace({path:"/home/ticketbody"});
-			return;
 		}
 	},
 	created(){
 		this.busInfo = this.$store.getters.getBusInfo;
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
+		if(this.$store.getters.getBusInfo){
+			this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;
+		}
 		
 		let startDate = this.$store.getters.getInfo.startDate;
 		this.$store.commit("CHANGE_HEADER",{
@@ -333,22 +394,22 @@ export default {
 		// 		this.popupMessage(error);
 		// 	})
 		// },
-		// payMoney(paydata){
-		// 	window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
-		// 		if(r.err_msg==="get_brand_wcpay_request:ok"){
-		// 			// 支付成功
-		// 			// 再根据小票拿数据
-		// 			// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-		// 			Indicator.open({
-		// 				text: '支付成功...',
-		// 				spinnerType: 'double-bounce'
-		// 			});
-		// 			setTimeout(()=>{
-		// 				Indicator.close();
-		// 			},3000);
-		// 		}
-		// 	});
-		// },
+		payMoney(paydata){
+			window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+				if(r.err_msg==="get_brand_wcpay_request:ok"){
+					// 支付成功
+					// 再根据小票拿数据
+					// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
+					Indicator.open({
+						text: '支付成功...',
+						spinnerType: 'double-bounce'
+					});
+					setTimeout(()=>{
+						Indicator.close();
+					},3000);
+				}
+			});
+		},
 		/**
 		 * 查看取票退票说明
 		 * @return {[type]} [description]
@@ -410,6 +471,10 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		submitOrder(){
+			// this.$router.replace({name:"payinfo"});
+			// return;
+			this.payInfoPopupVisible = true;
+
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
 				return;
@@ -440,7 +505,8 @@ export default {
 						}).then(result=>{
 							console.log(result);
 							Indicator.close();
-							this.popupMessage("支付失败,请稍后再试!");
+							this.payMoney(result);//支付
+							// this.popupMessage("支付失败,请稍后再试!");
 						})
 						// setTimeout(()=>{
 						// 	Indicator.close();
@@ -600,6 +666,9 @@ export default {
 		},
 		GetDiscount(){
 			// 查看选取优惠券
+		},
+		outpay(){
+			this.payInfoPopupVisible = false;
 		}
 	}
 }
