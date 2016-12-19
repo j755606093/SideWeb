@@ -412,7 +412,7 @@
 	position:fixed;
 	bottom:0;
 	left:0;
-	height:60px;
+	height:50px;
 	width:100%;
 	background-color:rgba($black, 0.6);
 	display:flex;
@@ -425,8 +425,8 @@
 		margin:5px 0;
 		p{
 			color:lighten($gray,20%);
-			height:25px;
-			line-height:25px;
+			height:20px;
+			line-height:20px;
 			font-size:1.1rem;
 			>span{
 				// margin-left:10px;
@@ -452,7 +452,7 @@
 			font-size:1.3rem;
 			outline:none;
 			border:0;
-			height:40px;
+			height:30px;
 			margin-top:10px;
 			border-radius:5px;
 			width:90%;

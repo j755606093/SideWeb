@@ -177,7 +177,7 @@ export default {
 		// 获取本地数据
 		this.localStorage = this.getLocalStore().reverse();
 		// 改变限制选择的日期
-		this.limit[1].from = this.formatNow(nowDate);
+		this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));
 		this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
 
 		// 获取位置
