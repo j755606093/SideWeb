@@ -505,7 +505,7 @@ export default {
 						}).then(result=>{
 							console.log(result);
 							Indicator.close();
-							this.payMoney(result);//支付
+							this.payMoney(result.Data);//支付
 							// this.popupMessage("支付失败,请稍后再试!");
 						})
 						// setTimeout(()=>{

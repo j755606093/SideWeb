@@ -49380,7 +49380,7 @@
 							}).then(function (result) {
 								console.log(result);
 								_mintUi.Indicator.close();
-								_this2.payMoney(result); //支付
+								_this2.payMoney(result.Data); //支付
 								// this.popupMessage("支付失败,请稍后再试!");
 							});
 							// setTimeout(()=>{
