@@ -24,13 +24,13 @@
 						</p>
 						<!-- 点击查看路线 -->
 						<p class="type" v-on:click.stop="showCompanyDeatil(index,$event)">
-							<i class="fa fa-location-arrow"></i>{{item.Route}}
+							<i class="fa fa-location-arrow"></i>途径点
 							<i class="fa fa-caret-down"></i>
 						</p>
 						<div class="show-router" v-show="routerDetailShow===index">
 							<ul class="router">
 								<span>始点:</span>
-								<li :class="{active:list.NodeType===1}" v-for="list in item.SPoint" v-bind:key="index">{{list.Point}}</li>
+								<li :class="{active:list.NodeType===1}" v-for="list in item.SPoint" v-bind:key="index">{{list.Point+" "+list.BoardTime}}</li>
 								<span>终点:</span>
 								<li :class="{active:list.NodeType===2}" v-for="list in item.EPoint" v-bind:key="index">{{list.Point}}</li>
 							</ul>
@@ -38,6 +38,9 @@
 						<p>
 							<span class="brand">终</span>{{item.EndPoint}}
 						</p>
+						<p class="type">
+						<!-- <i class="fa fa-arrow-h"></i> -->
+						{{item.Route}}</p>
 					</div>
 					<div class="ticket-type">
 						<p class="money" v-text="item.Price+'元'"></p>

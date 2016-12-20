@@ -27,6 +27,11 @@
 				<span>余票{{busInfo.TicketNum}}</span>
 			</div>
 		</div>
+		<!-- 车站信息 -->
+		<div class="station-info">
+			<span>乘车地:</span>
+			<span>揭阳五经富人民路80号</span>
+		</div>
 		<!-- 乘客信息 -->
 		<div class="people-info">
 			<div class="info-head">
@@ -42,7 +47,7 @@
 					<div class="list-body">
 						<div class="list-top">
 							<span class="name" v-text="item.name"></span>
-							<span class="type">成人票</span>
+							<!-- <span class="type">成人票</span> -->
 							<span class="get-ticket" v-if="item.isGetTicket" >取票人</span>
 							<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span>
 						</div>
@@ -57,17 +62,18 @@
 			<div class="info-man">
 				<div class="info-man-name info">
 					<span>乘客姓名</span>
-					<input type="text" placeholder="请填写真实姓名以免取不出票" v-model="fareName">
+					<input type="text" placeholder="请填写真实姓名" v-model="fareName">
+					<button @click="append"><i class="fa fa-plus-circle"></i>添加</button>
 				</div>
 				<!-- <div class="info-man-card info">
 					<span>身份证</span>
 					<input type="text" placeholder="请填写证件号码" v-model="certificate">
 				</div> -->
 			</div>
-			<div class="click-append" @click="append">
+			<!-- <div class="click-append" @click="append">
 				<i class="fa fa-plus-circle"></i>
 				<button>确定添加</button>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- 取票人信息 -->
@@ -160,7 +166,7 @@
 				</p>
 			</div>
 			<div class="submit-order">
-				<button @click="submitOrder">同意并提交</button>
+				<button @click="submitOrder">提交订单</button>
 			</div>
 		</div>
 
@@ -207,6 +213,7 @@
 		  			<div class="status">
 		  				<i class="fa fa-check-circle"></i>
 		  				<p>生成订单成功!</p>
+		  				<p class="time">请在半小时之内支付订单 28:32</p>
 		  			</div>
 		  		</div>
 		  		<div class="ticket-body">
@@ -230,13 +237,13 @@
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘客:</span>
-									<span class="name">周岳谢</span>
+									<span class="name">{{concatName}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
 								<p>
 									<span class="type">取票人:</span>
-									<span class="name">周岳谢</span>
+									<span class="name">{{payInfoData.getTicketManName}}</span>
 								</p>
 							</div>
 		  			</div>
@@ -248,8 +255,13 @@
 		  			</div>
 		  			<div class="pay-ticket-info-body">
 		  				<p>订单编号:654654687913185</p>
-		  				<p>预订日期:2016-12-19</p>
+		  				<p>预订日期:{{startDate}}</p>
+		  				<p>总额:{{payInfoData.payMoney}}</p>
 		  			</div>
+		  		</div>
+		  		<!-- 立即支付 -->
+		  		<div class="now-pay">
+		  			<button @click="payMoney">立即支付</button>
 		  		</div>
 		  	</div>
 		  </slot>
@@ -284,24 +296,6 @@ export default {
 				// 	active:false,
 				// 	isGetTicket:false
 				// },
-				// {
-				// 	name:"周周周",
-				// 	// code:"440802199406011519",
-				// 	active:true,
-				// 	isGetTicket:false
-				// },
-				// {
-				// 	name:"舟舟周",
-				// 	// code:"440802199406011519",
-				// 	active:false,
-				// 	isGetTicket:false
-				// },
-				// {
-				// 	name:"粥粥周",
-				// 	// code:"440802199406011519",
-				// 	active:true,
-				// 	isGetTicket:false
-				// }
 			],//所有的乘客信息
 			isHaveGetTicketMan:false,//是否有取票人信息
 			
@@ -310,11 +304,13 @@ export default {
 				passenger:null,//乘客
 				inSureMoney:0,//单笔保险费
 				getTicketMan:null,//取票人信息
+				getTicketManName:"",//取票人名字
 				Allinsure:0,//保险费用(总共)
 				ticketMoney:0,//票的单价
 				payMoney:0,//总共支付的钱
 				contactPhone:""
 			},//订单信息
+			TicketPay:null,//服务器产生的订单信息
 		}
 	},
 	beforeCreate(){
@@ -324,18 +320,19 @@ export default {
 		}
 	},
 	created(){
-		this.busInfo = this.$store.getters.getBusInfo;
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
-		if(this.$store.getters.getBusInfo){
+
+		if(!this.$store.getters.getIsFirst){
+			this.busInfo = this.$store.getters.getBusInfo;
 			this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;
+
+			let startDate = this.$store.getters.getInfo.startDate;
+			this.$store.commit("CHANGE_HEADER",{
+				isHome:false,
+				Title:startDate.date+" "+startDate.week
+			});
 		}
-		
-		let startDate = this.$store.getters.getInfo.startDate;
-		this.$store.commit("CHANGE_HEADER",{
-			isHome:false,
-			Title:startDate.date+" "+startDate.week
-		});
 		
 		//获取本地的shuju
 		this.getLocalStorePhone();
@@ -347,7 +344,16 @@ export default {
 	computed:{
 		startDate(){
 			return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
-		}
+		},
+		concatName(){
+			// 获取乘客名字,逗号相连
+			let arrayData = "";
+			for(let i=0;i<this.AllFare.length;i++){
+				arrayData = this.AllFare[i].name+","+arrayData;
+			}
+
+			return arrayData.split(",")[0];
+		},
 	},
 	methods:{
 		/**
@@ -394,20 +400,20 @@ export default {
 		// 		this.popupMessage(error);
 		// 	})
 		// },
-		payMoney(paydata){
+		payMoney(){
+			let paydata = this.TicketPay;
 			window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
 				if(r.err_msg==="get_brand_wcpay_request:ok"){
 					// 支付成功
 					// 再根据小票拿数据
 					// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
 					Indicator.open({
-						text: '支付成功...',
+						text: '支付成功!',
 						spinnerType: 'double-bounce'
 					});
 					setTimeout(()=>{
-						this.payInfoPopupVisible = true;
 						Indicator.close();
-					},3000);
+					},1000);
 				}
 			});
 		},
@@ -463,10 +469,17 @@ export default {
 			let data = _.filter(this.AllFare,item=>{
 				return item.isGetTicket;
 			});
-
-			this.payInfoData.getTicketMan = data;
+			
+			if(data.length===1){
+				this.payInfoData.getTicketMan = data[0];
+				this.payInfoData.getTicketManName = data[0].name;
+			}
+			else{
+				this.payInfoData.getTicketMan = "";
+			}
 			return data;
 		},
+		
 		/**
 		 * 提交订单
 		 * @return {[type]} [description]
@@ -503,10 +516,14 @@ export default {
 							Mobile:this.payInfoData.contactPhone,
 							Num:this.AllFare.length
 						}).then(result=>{
-							console.log(result);
 							Indicator.close();
-							this.payMoney(result.Data);//支付
-							// this.popupMessage("支付失败,请稍后再试!");
+							if(result.Code!==200){
+								this.popupMessage(result.Message);
+							}
+							else{
+								this.TicketPay = result.Data;
+								this.payInfoPopupVisible = true;
+							}
 						})
 						// setTimeout(()=>{
 						// 	Indicator.close();

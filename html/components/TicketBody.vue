@@ -182,7 +182,7 @@ export default {
 		this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
 
 		// 获取位置
-		if(!this.$store.getters.getHaveLocation){
+		if(this.$store.getters.getIsFirst){
 			// 还没有获取过,说明第一个打开网页
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 			this.$store.dispatch("setHaveLocation",true);

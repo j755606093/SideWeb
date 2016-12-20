@@ -47,6 +47,9 @@
 		background-color:$white;
 	}
 }
+.mint-indexlist-navitem{
+	padding-top:5px;
+}
 </style>
 
 <script type="text/babel">

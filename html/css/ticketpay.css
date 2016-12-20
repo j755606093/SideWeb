@@ -260,6 +260,25 @@ input {
       float: right;
       color: #fff; }
 
+.station-info {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 10px;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 2%; }
+  .station-info span {
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.4rem; }
+  .station-info span:first-child {
+    -ms-flex: 0.2;
+        flex: 0.2;
+    color: #5e5e5e; }
+  .station-info span:last-child {
+    -ms-flex: 0.8;
+        flex: 0.8; }
+
 .people-info {
   width: 100%;
   background-color: #fff;
@@ -285,7 +304,7 @@ input {
     .people-info .info-head span:last-child {
       -ms-flex: 0.7;
           flex: 0.7;
-      font-size: 1.1rem; }
+      font-size: 1.4rem; }
   .people-info .info-list .list {
     display: -ms-flexbox;
     display: flex;
@@ -351,9 +370,11 @@ input {
           color: #0074D9;
           border: 1px solid #0074D9;
           border-radius: 5px;
-          padding: 2px; }
+          padding: 2px;
+          margin-left: 10px; }
         .people-info .info-list .list .list-body .list-top span.get-ticket {
-          color: #0074D9; }
+          color: #0074D9;
+          margin-left: 10px; }
   .people-info .info-man {
     display: -ms-flexbox;
     display: flex;
@@ -376,9 +397,21 @@ input {
             flex: 0.3;
         font-size: 1.3rem; }
       .people-info .info-man .info input {
-        -ms-flex: 0.7;
-            flex: 0.7;
+        -ms-flex: 0.5;
+            flex: 0.5;
         font-size: 1.3rem; }
+      .people-info .info-man .info button {
+        -ms-flex: 0.2;
+            flex: 0.2;
+        height: 40px;
+        outline: none;
+        border: 0;
+        color: #0074D9;
+        font-size: 1.3rem;
+        background: transparent;
+        text-align: right; }
+        .people-info .info-man .info button i {
+          margin-right: 5px; }
   .people-info .click-append {
     width: 96%;
     margin: 0 2%;
@@ -619,6 +652,8 @@ input {
         font-size: 1.8rem;
         color: #fff;
         margin-top: 10px; }
+      .payinfo-popup-visible .info-body .status p.time {
+        font-size: 1.4rem; }
   .payinfo-popup-visible .ticket-body {
     height: 200px;
     width: 100%; }
@@ -736,3 +771,16 @@ input {
         color: #AAAAAA;
         height: 30px;
         line-height: 30px; }
+  .payinfo-popup-visible .now-pay {
+    width: 100%;
+    padding: 0 2%;
+    margin-top: 10px; }
+    .payinfo-popup-visible .now-pay button {
+      outline: none;
+      border: 0;
+      background-color: #FF851B;
+      font-size: 1.5rem;
+      color: #fff;
+      width: 100%;
+      height: 40px;
+      border-radius: 10px; }

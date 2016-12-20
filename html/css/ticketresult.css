@@ -293,14 +293,10 @@ input {
           heihgt: 30px;
           line-height: 30px; }
         .result .result-list .list > .ticket-type .money {
-          color: #FF851B;
-          -ms-flex: 1;
-              flex: 1; }
+          color: #FF851B; }
         .result .result-list .list > .ticket-type .number, .result .result-list .list > .ticket-type .type {
           font-size: 1.1rem;
-          color: #AAAAAA;
-          -ms-flex: 1;
-              flex: 1; }
+          color: #AAAAAA; }
     .result .result-list .change-set .btn {
       background-color: #0074D9;
       width: 90%;
