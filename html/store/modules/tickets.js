@@ -150,7 +150,7 @@ const actions = {
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json',
-		    "Cookies":"access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NzU2ODk0IiwianRpIjoiNjViM2ExYjItMjE1Ni00MDc1LTg2YWQtNmYwNWQ1Mjg4NWViIiwiaWF0IjoxNDgyMTQ1NjYyLCJNZW1iZXIiOiJub3JtYWwiLCJuYmYiOjE0ODIxNDU2NjIsImV4cCI6MTQ4MzM1NTI2Mn0.1S8dIdZwvr0UQLFknk5LrFJjjoM5N80AfS1NZQKTLc4"
+		    // "Cookies":"access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NzU2ODk0IiwianRpIjoiNjViM2ExYjItMjE1Ni00MDc1LTg2YWQtNmYwNWQ1Mjg4NWViIiwiaWF0IjoxNDgyMTQ1NjYyLCJNZW1iZXIiOiJub3JtYWwiLCJuYmYiOjE0ODIxNDU2NjIsImV4cCI6MTQ4MzM1NTI2Mn0.1S8dIdZwvr0UQLFknk5LrFJjjoM5N80AfS1NZQKTLc4"
 		  },
 			body:JSON.stringify({
 				Name:data.Name,//使用点号链接
