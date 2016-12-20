@@ -30,7 +30,7 @@
 		<!-- 车站信息 -->
 		<div class="station-info">
 			<span>乘车地:</span>
-			<span>揭阳五经富人民路80号</span>
+			<span>{{busInfo.StartAddress}}</span>
 		</div>
 		<!-- 乘客信息 -->
 		<div class="people-info">
@@ -127,11 +127,16 @@
 		<!-- 其他信息 -->
 		<div class="other-info">
 			<div class="info">
-				<span class="first">优惠券</span>
-				<span class="center">没有优惠券</span>
-				<div class="last">
-					<span @click="GetDiscount" class="right"><i class="fa fa-angle-right"></i></span>
+				<span class="first">优惠码</span>
+				<span class="center">有优惠码?</span>
+				<div class="last" @click="haveDiscountCode">
+					<span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span>
 				</div>
+			</div>
+			<div class="discount-code" v-if="havediscountcode">
+				<input type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
+				<!-- <i class="fa fa-check"></i>
+				<button>验证状态</button> -->
 			</div>
 		</div>
 		<!-- <div class="other-info">
@@ -308,9 +313,11 @@ export default {
 				Allinsure:0,//保险费用(总共)
 				ticketMoney:0,//票的单价
 				payMoney:0,//总共支付的钱
-				contactPhone:""
+				contactPhone:"",
+				discountcode:"",//优惠码
 			},//订单信息
 			TicketPay:null,//服务器产生的订单信息
+			havediscountcode:false,//是否有优惠码
 		}
 	},
 	beforeCreate(){
@@ -364,6 +371,9 @@ export default {
 		formatData(data){
 			return JSON.parse(JSON.stringify(data));
 		},
+		haveDiscountCode(){
+			this.havediscountcode = !this.havediscountcode;
+		},
 		// pay(){
 		// 	console.log(this.formatData(this.busInfo))
 		// },
@@ -407,13 +417,12 @@ export default {
 					// 支付成功
 					// 再根据小票拿数据
 					// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-					Indicator.open({
-						text: '支付成功!',
-						spinnerType: 'double-bounce'
+					Toast({
+					  message: '支付成功!',
+					  iconClass: 'fa fa-check',
+					  duration:3000,
+					  className:"success"
 					});
-					setTimeout(()=>{
-						Indicator.close();
-					},1000);
 				}
 			});
 		},
@@ -487,7 +496,7 @@ export default {
 		submitOrder(){
 			// this.$router.replace({name:"payinfo"});
 			// return;
-
+			// this.payInfoPopupVisible = true;
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
 				return;
@@ -514,7 +523,8 @@ export default {
 						this.$store.dispatch("payMoney",{
 							Name:arrayData.slice(0,arrayData.length-1),
 							Mobile:this.payInfoData.contactPhone,
-							Num:this.AllFare.length
+							Num:this.AllFare.length,
+							DiscountCode:this.payInfoData.discountcode
 						}).then(result=>{
 							Indicator.close();
 							if(result.Code!==200){

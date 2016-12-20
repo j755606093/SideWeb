@@ -159,7 +159,8 @@ const actions = {
 				SPointId:state.busInfo.StartPointId,
 				EPointId:state.busInfo.EndPointId,
 				Date:state.startDate.date,
-				Num:data.Num
+				Num:data.Num,
+				Coupon:data.DiscountCode
 			})
 		})
 		.then(result=>result.json())
