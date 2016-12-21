@@ -47318,13 +47318,7 @@
 	    staticClass: "showload"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-circle-o-notch fa-spin"
-	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.noShowNo),
-	      expression: "noShowNo"
-	    }],
+	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._e(), " ", (_vm.noShowNo) ? _vm._h('div', {
 	    staticClass: "location-result"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-map-marker"
@@ -47333,7 +47327,7 @@
 	    on: {
 	      "click": _vm.refreshLocation
 	    }
-	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
+	  }, ["重新定位"]) : _vm._e()]) : _vm._e()]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
 	    staticClass: "search-record"
 	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
 	    return _vm._h('div', {
