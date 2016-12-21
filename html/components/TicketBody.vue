@@ -59,8 +59,8 @@
 				<i class="fa fa-circle-o-notch fa-spin"></i>
 				<span>正在为你定位最近的上车点...</span>
 			</div>
-			<div v-if="noShowNo" class="location-result">
-				<i class="fa fa-map-marker"></i>
+			<div class="location-result" v-else>
+				<i class="fa fa-map-marker" :style="{color:locationName===''?'#fff':'#000'}"></i>
 				<span>{{locationName}}</span>
 				<span @click="refreshLocation" v-if="showRefresh" class="refresh-location">重新定位</span>
 			</div>
@@ -110,7 +110,7 @@ export default {
 			locationLoad:true,//是否在加载定位记录
 			locationName:"",//定位最近的车站位置名
 			showRefresh:false,//是否显示刷新地理位置
-			noShowNo:true,//当附近没有上车点的时候不显示
+			Color:"#000",
       startTime: {
         time: ""
       },
@@ -193,12 +193,10 @@ export default {
 		else{
 			this.locationLoad = false;
 			if(this.$store.getters.getLocationResult){
-				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
-				this.noShowNo = true;
+				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
 			}
 			else{
-				this.locationName = "你的附近没有上车点";
-				this.noShowNo = false;
+				this.locationName = "";
 			}
 		}
 	},
@@ -260,8 +258,7 @@ export default {
 				this.locationLoad = false;//停止界面加载提示
 				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
 					//没有数据
-					this.locationName = "你的附近没有上车点";
-					this.noShowNo = false;
+					this.locationName = "";
 				}
 				else{
 					this.locationName = "最近上车点:"+data.Name;
@@ -269,7 +266,6 @@ export default {
 						Code:data.Id,
 						Name:data.Name
 					});
-					this.noShowNo = true;
 					Toast({
 					  message: "已为你切换到最近的出发点",
 					  position: 'bottom',
@@ -283,7 +279,6 @@ export default {
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "请稍后重试...";
 				this.showRefresh = true;
-				this.noShowNo = true;
 				// Toast({
 				//   message: "网络错误,请稍后重试...",
 				//   position: 'bottom',
@@ -303,7 +298,6 @@ export default {
 				this.locationLoad = false;//停止界面加载提示
 				this.locationName = "无法获取当前位置";
 				this.showRefresh = true;
-				this.noShowNo = true;
 				// Toast({
 				//   message: "无法获取当前位置",
 				//   position: 'bottom',
