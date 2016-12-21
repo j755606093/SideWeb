@@ -17,55 +17,49 @@ import TicketStartCity from "../components/TicketStartCity.vue";
 import TicketEndCity from "../components/TicketEndCity.vue";
 import TicketResult from "../components/TicketResult.vue";
 import TicketPay from "../components/TicketPay.vue";
-import TicketInfo from "../components/TicketInfo.vue";
 
 const routes = [{
-	path: '/',
-	name:"home",
-	component: Ticket,
-	children:[
-		{
-			path:"",
-			name:"ticketbody",
-			component:TicketBody
-		},
-		{
-			path:"/startcity",
-			name:"ticketstartcity",
-			component:TicketStartCity
-		},
-		{
-			path:"/endcity",
-			name:"ticketendcity",
-			component:TicketEndCity
-		},
-		{
-			path:"/result",
-			name:"ticketresult",
-			component:TicketResult
-		},
-		{
-			path: '/ticketpay',
-			name:"ticketpay",
-			component: TicketPay
-		},
-		{
-			path:"*",
-			name:"*ticketbody",
-			component:TicketBody
-		}
-	]
-},
-{
-	path:"/payinfo",
-	name:"payinfo",
-	component:TicketInfo
-},
-{
-	path:"*",
-	name:"all",
-	redirect:"/home",
-}
+		path: '/',
+		name:"home",
+		component: Ticket,
+		children:[
+			{
+				path:"",
+				name:"ticketbody",
+				component:TicketBody
+			},
+			{
+				path:"/startcity",
+				name:"ticketstartcity",
+				component:TicketStartCity
+			},
+			{
+				path:"/endcity",
+				name:"ticketendcity",
+				component:TicketEndCity
+			},
+			{
+				path:"/result",
+				name:"ticketresult",
+				component:TicketResult
+			},
+			{
+				path: '/ticketpay',
+				name:"ticketpay",
+				component: TicketPay
+			},
+			{
+				path:"*",
+				name:"*ticketbody",
+				component:TicketBody
+			}
+		]
+	},
+	{
+		path:"*",
+		name:"all",
+		redirect:{name:"home"},
+	}
 ];
 
 // 3. 创建 router 实例，然后传 `routes` 配置

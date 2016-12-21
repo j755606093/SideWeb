@@ -8,6 +8,7 @@
 				<router-view></router-view>
 			</transition>
 		</div>
+		<order-info></order-info>
 	</div>
 </template>
 
@@ -21,6 +22,7 @@
 <script type="text/babel">
 import Utils from "./Utils/utils";
 import SideHeader from "./components/SideHeader.vue";
+import TicketInfo from "./components/TicketInfo.vue";
 
 export default {
 	data () {
@@ -59,6 +61,7 @@ export default {
 	},
 	components:{
 		"side-header":SideHeader,
+		"order-info":TicketInfo
 	}
 }
 </script>

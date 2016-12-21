@@ -166,7 +166,7 @@ export default {
 	created(){
 		let nowDate = new Date();
 		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
-		this.$store.commit("SET_ISFIRST",false);
+		
 		// 设置初始时间
 		this.handleConfirm(nowDate);
 		if(this.$store.getters.getInfo.startDate.server){
@@ -182,10 +182,11 @@ export default {
 		// 改变限制选择的日期
 		this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));
 		this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
-
+		
 		// 获取位置
 		if(this.$store.getters.getIsFirst){
 			// 还没有获取过,说明第一个打开网页
+			this.$store.commit("SET_ISFIRST",false);
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 			this.$store.dispatch("setHaveLocation",true);
 		}
@@ -193,11 +194,6 @@ export default {
 			this.locationLoad = false;
 			if(this.$store.getters.getLocationResult){
 				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
-				Toast({
-					  message: this.locationName,
-					  position: 'bottom',
-					  duration: 3000,
-					});
 			}
 			else{
 				this.locationName = "";
@@ -254,11 +250,6 @@ export default {
 			return Utils.formatDate(data);
 		},
 		showPosition(position){
-			Toast({
-					  message: "获取权限",
-					  position: 'bottom',
-					  duration: 3000,
-					});
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
 			this.$store.dispatch("setLocationResult",{
 				latitude:latitude,

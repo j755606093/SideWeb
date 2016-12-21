@@ -96,10 +96,6 @@
 
 	var _TicketPay2 = _interopRequireDefault(_TicketPay);
 
-	var _TicketInfo = __webpack_require__(301);
-
-	var _TicketInfo2 = _interopRequireDefault(_TicketInfo);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
@@ -138,13 +134,9 @@
 			component: _TicketBody2.default
 		}]
 	}, {
-		path: "/payinfo",
-		name: "payinfo",
-		component: _TicketInfo2.default
-	}, {
 		path: "*",
 		name: "all",
-		redirect: "/home"
+		redirect: { name: "home" }
 	}];
 
 	// 3. 创建 router 实例，然后传 `routes` 配置
@@ -28291,28 +28283,11 @@
 
 	var _SideHeader2 = _interopRequireDefault(_SideHeader);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _TicketInfo = __webpack_require__(301);
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	var _TicketInfo2 = _interopRequireDefault(_TicketInfo);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
 		data: function data() {
@@ -28331,9 +28306,30 @@
 			}
 		},
 		components: {
-			"side-header": _SideHeader2.default
+			"side-header": _SideHeader2.default,
+			"order-info": _TicketInfo2.default
 		}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 140 */
@@ -28790,7 +28786,7 @@
 	      "enter-active-class": "fadeIn",
 	      "leave-active-class": "fadeOut"
 	    }
-	  }, [_vm._h('router-view')])])])
+	  }, [_vm._h('router-view')])]), " ", _vm._h('order-info')])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -29304,7 +29300,7 @@
 		created: function created() {
 			var nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
-			this.$store.commit("SET_ISFIRST", false);
+
 			// 设置初始时间
 			this.handleConfirm(nowDate);
 			if (this.$store.getters.getInfo.startDate.server) {
@@ -29323,17 +29319,13 @@
 			// 获取位置
 			if (this.$store.getters.getIsFirst) {
 				// 还没有获取过,说明第一个打开网页
+				this.$store.commit("SET_ISFIRST", false);
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
 				this.$store.dispatch("setHaveLocation", true);
 			} else {
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
-					(0, _mintUi.Toast)({
-						message: this.locationName,
-						position: 'bottom',
-						duration: 3000
-					});
 				} else {
 					this.locationName = "";
 				}
@@ -29383,11 +29375,6 @@
 			showPosition: function showPosition(position) {
 				var _this = this;
 
-				(0, _mintUi.Toast)({
-					message: "获取权限",
-					position: 'bottom',
-					duration: 3000
-				});
 				var _position$coords = position.coords,
 				    latitude = _position$coords.latitude,
 				    longitude = _position$coords.longitude,
@@ -50178,7 +50165,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticket-info {\n  padding: 0;\n  width: 100%;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .info-header {\n    background-color: #2196F3;\n    height: 180px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.order-info-btn {\n  padding: 0;\n  width: 50px;\n  height: 50px;\n  background-color: #0074D9;\n  border-radius: 25px;\n  position: absolute;\n  bottom: 30px;\n  right: 20px;\n  text-align: center; }\n  .order-info-btn > i {\n    color: #fff;\n    font-size: 1.8rem;\n    height: 50px;\n    line-height: 50px; }\n", ""]);
 
 	// exports
 
@@ -50187,7 +50174,7 @@
 /* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -50197,17 +50184,9 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _vueDatepicker = __webpack_require__(157);
-
-	var _vueDatepicker2 = _interopRequireDefault(_vueDatepicker);
-
-	var _mintUi = __webpack_require__(88);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ = __webpack_require__(277); //
-	//
-	//
 	//
 	//
 	//
@@ -50223,13 +50202,20 @@
 			return {};
 		},
 		created: function created() {
-			var nowDate = new Date();
-			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "订单信息" });
+			// let nowDate = new Date();
+			// this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"订单信息"});
 		},
 
 		filters: {},
 		watch: {},
-		computed: {},
+		computed: {
+			getHeaderTitle: function getHeaderTitle() {
+				return this.$store.state.tickets.HeaderTitle;
+			},
+			getHeaderState: function getHeaderState() {
+				return this.$store.state.tickets.HeaderIsHome;
+			}
+		},
 		methods: {
 			formatDate: function formatDate(data) {
 				return _utils2.default.formatDate(data);
@@ -50242,14 +50228,15 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._m(0)
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "ticket-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info-header"
-	  })])
-	}]}
+	  return (_vm.getHeaderState) ? _vm._h('div', {
+	    staticClass: "order-info-btn",
+	    on: {
+	      "click": function($event) {}
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-sticky-note"
+	  })]) : _vm._e()
+	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {

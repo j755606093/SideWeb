@@ -1,12 +1,19 @@
 @import "./utils.scss";
 
-.ticket-info{
+.order-info-btn{
 	padding:0;
-	width:100%;
-	margin-bottom:5px;
-	padding-bottom:10px;
-	.info-header{
-		background-color:#2196F3;
-		height:180px;
+	width:50px;
+	height:50px;
+	background-color:$blue;
+	border-radius:25px;
+	position:absolute;
+	bottom:30px;
+	right:20px;
+	text-align:center;
+	>i{
+		color:$white;
+		font-size:1.8rem;
+		height:50px;
+		line-height:50px;
 	}
 }
