@@ -434,7 +434,7 @@ export default {
 		// 	})
 		// },
 		payMoney(){
-			let paydata = this.TicketPay;
+			let paydata = this.serverPayInfo.PayInfo;
 			window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
 				if(r.err_msg==="get_brand_wcpay_request:ok"){
 					// 支付成功
@@ -578,9 +578,13 @@ export default {
 							}
 							else{
 								this.CountDown();
-								this.TicketPay = result.Data;
+								this.serverPayInfo = result.Data;
+								// this.TicketPay = result.Data;
 								this.payInfoPopupVisible = true;
 							}
+						}).catch(error=>{
+							Indicator.close();
+							this.popupMessage("服务器繁忙,请稍后再试...");
 						})
 					}
 					else{

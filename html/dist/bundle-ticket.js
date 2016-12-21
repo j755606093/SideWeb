@@ -49338,7 +49338,7 @@
 			// 	})
 			// },
 			payMoney: function payMoney() {
-				var paydata = this.TicketPay;
+				var paydata = this.serverPayInfo.PayInfo;
 				window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
 					if (r.err_msg === "get_brand_wcpay_request:ok") {
 						// 支付成功
@@ -49485,9 +49485,13 @@
 									_this2.popupMessage(result.Message);
 								} else {
 									_this2.CountDown();
-									_this2.TicketPay = result.Data;
+									_this2.serverPayInfo = result.Data;
+									// this.TicketPay = result.Data;
 									_this2.payInfoPopupVisible = true;
 								}
+							}).catch(function (error) {
+								_mintUi.Indicator.close();
+								_this2.popupMessage("服务器繁忙,请稍后再试...");
 							});
 						} else {
 							this.popupMessage("请填写正确的联系手机号!");
