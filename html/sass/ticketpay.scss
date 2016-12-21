@@ -589,9 +589,11 @@
 	position:fixed;
 	left:0;
 	bottom:0;
+
 	.pay-body{
 		width:100%;
 		height:100%;
+		overflow-y:auto;
 	}
 	.info-body{
 		height:160px;
@@ -754,6 +756,10 @@
 				color:darken($gray,10%);
 				height:30px;
 				line-height:30px;
+			}
+			p.all{
+				font-size:1.4rem;
+				text-align: right;
 			}
 		}
 	}

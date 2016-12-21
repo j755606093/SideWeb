@@ -4,8 +4,26 @@
 	</div>
 </template>
 
-<style lang="css">
-@import "../css/ticketinfo.css";
+<style lang="sass">
+@import "../sass/utils.scss";
+
+.order-info-btn{
+	padding:0;
+	width:50px;
+	height:50px;
+	background-color:$blue;
+	border-radius:25px;
+	position:absolute;
+	bottom:30px;
+	right:20px;
+	text-align:center;
+	>i{
+		color:$white;
+		font-size:1.8rem;
+		height:50px;
+		line-height:50px;
+	}
+}
 </style>
 
 <script type="text/babel">

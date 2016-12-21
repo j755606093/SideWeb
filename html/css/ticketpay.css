@@ -663,7 +663,8 @@ input {
   bottom: 0; }
   .payinfo-popup-visible .pay-body {
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    overflow-y: auto; }
   .payinfo-popup-visible .info-body {
     height: 160px;
     width: 100%;
@@ -798,6 +799,9 @@ input {
         color: #919191;
         height: 30px;
         line-height: 30px; }
+      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {
+        font-size: 1.4rem;
+        text-align: right; }
   .payinfo-popup-visible .now-pay {
     width: 100%;
     padding: 0 2%;

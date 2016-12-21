@@ -248,7 +248,13 @@
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车日期:</span>
-									<span class="name">{{serverPayInfo.LineInfo.BoardTime}}</span>
+									<span class="name">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
+								</p>
+							</div>
+							<div class="info-box passager-info">
+								<p>
+									<span class="type">乘车地址:</span>
+									<span class="name">{{serverPayInfo.LineInfo.StartAddress}}</span>
 								</p>
 							</div>
 							<div class="info-box passager-info">
@@ -263,6 +269,12 @@
 									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div>
+							<div class="info-box get-ticket">
+								<p>
+									<span class="type">联系方式:</span>
+									<span class="name">{{serverPayInfo.UsrInfo.Mobile}}</span>
+								</p>
+							</div>
 		  			</div>
 		  			<!-- <button @click="outpay">点击退出</button> -->
 		  		</div>
@@ -272,15 +284,16 @@
 		  			</div>
 		  			<div class="pay-ticket-info-body">
 		  				<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
-		  				<p>下单日期:{{serverPayInfo.LineInfo.Date}}</p>
-		  				<p>总额: <span style="color:red">{{serverPayInfo.OrderInfo.TotalPrice}}</span></p>
+		  				<p>下单日期:{{serverPayInfo.OrderInfo.OrderTime}}</p>
+		  				<p class="all">总额: <span style="color:red">{{serverPayInfo.OrderInfo.TotalPrice+'¥'}}</span></p>
+		  				<span style="clear:both;"></span>
 		  			</div>
 		  		</div>
 		  		<!-- 立即支付 -->
 		  		<div class="now-pay">
 		  			<button @click="payMoney">立即支付</button>
 		  		</div>
-		  		<div class="out-order">
+		  		<div class="out-order" style="margin-top:20px;margin-bottom:20px;">
 		  			<a>取消订单</a>
 		  		</div>
 		  	</div>
