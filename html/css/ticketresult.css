@@ -238,11 +238,15 @@ input {
           .result .result-list .list > .car-position p.type > i.fa-location-arrow {
             color: #AAAAAA;
             padding: 0 2px;
-            margin-right: 5px; }
+            margin-right: 8px; }
           .result .result-list .list > .car-position p.type > i.fa-caret-down {
-            float: right;
             height: 30px;
-            line-height: 30px; }
+            line-height: 30px;
+            margin-left: 5px; }
+        .result .result-list .list > .car-position p.router-type {
+          color: #919191;
+          margin-left: 25px;
+          font-size: 12px; }
         .result .result-list .list > .car-position > .show-router ul {
           list-style: none; }
           .result .result-list .list > .car-position > .show-router ul li {

@@ -146,7 +146,7 @@ const actions = {
 	},
 	payMoney({commit,state},data){
 		// 微信付款
-		return fetch(state.serverUrl+"/api/Transport/GenerateOrderInfo",{
+		return fetch(state.serverUrl+"/api/Order/Create",{
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json',
@@ -160,7 +160,8 @@ const actions = {
 				EPointId:state.busInfo.EndPointId,
 				Date:state.startDate.date,
 				Num:data.Num,
-				Coupon:data.DiscountCode
+				Coupon:data.DiscountCode,
+				TktHolder:data.ContactMan
 			})
 		})
 		.then(result=>result.json())

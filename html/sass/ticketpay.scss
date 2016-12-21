@@ -346,7 +346,7 @@
 .contact-info{
 	width:100%;
 	background-color:$white;
-	margin-bottom:10px;
+	// margin-bottom:10px;
 	padding-bottom:10px;
 	height:40px;
 	position:relative;
@@ -616,7 +616,7 @@
 		}
 	}
 	.ticket-body{
-		height:200px;
+		margin-bottom: 10px;
 		width:100%;
 		.pay-info{
 			background-color: $white;
@@ -751,7 +751,7 @@
 			padding:0 3%;
 			p{
 				font-size:1.2rem;
-				color:$gray;
+				color:darken($gray,10%);
 				height:30px;
 				line-height:30px;
 			}
@@ -771,6 +771,13 @@
 			width:100%;
 			height:40px;
 			border-radius:10px;
+		}
+	}
+	.out-order{
+		width:100%;
+		text-align: center;
+		a{
+			color:$gray;
 		}
 	}
 }

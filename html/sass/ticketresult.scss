@@ -101,13 +101,19 @@
 					>i.fa-location-arrow{
 						color:$gray;
 						padding:0 2px;
-						margin-right:5px;
+						margin-right:8px;
 					}
 					>i.fa-caret-down{
-						float:right;
+						// float:right;
 						height:30px;
 						line-height:30px;
+						margin-left:5px;
 					}
+				}
+				p.router-type{
+					color:darken($gray,10%);
+					margin-left:25px;
+					font-size:12px;
 				}
 				>.show-router{
 					ul{

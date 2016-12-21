@@ -38,7 +38,7 @@
 						<p>
 							<span class="brand">终</span>{{item.EndPoint}}
 						</p>
-						<p class="type">
+						<p class="router-type">
 						<!-- <i class="fa fa-arrow-h"></i> -->
 						{{item.Route}}</p>
 					</div>

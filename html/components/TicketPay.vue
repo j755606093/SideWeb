@@ -35,7 +35,7 @@
 		<!-- 乘客信息 -->
 		<div class="people-info">
 			<div class="info-head">
-				<span>填写乘客信息:</span>
+				<span>乘客信息:</span>
 				<!-- <span>还剩余票{{busInfo.TicketNum}}</span> -->
 			</div>
 			<!-- 列出乘客信息 -->
@@ -49,7 +49,7 @@
 							<span class="name" v-text="item.name"></span>
 							<!-- <span class="type">成人票</span> -->
 							<span class="get-ticket" v-if="item.isGetTicket" >取票人</span>
-							<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span>
+							<!-- <span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span> -->
 						</div>
 						<!-- <div class="list-bottom">
 							<p>身份证<span v-text="item.code"></span></p>
@@ -77,11 +77,11 @@
 		</div>
 
 		<!-- 取票人信息 -->
-		<!-- <div class="people-info">
+		<div class="people-info">
 			<div class="info-head">
-				<span>取票人信息</span>
-				<span>一张订单只需填写一人</span>
-			</div> -->
+				<span>联系信息:</span>
+				<!-- <span>一张订单只需填写一人</span> -->
+			</div>
 			<!-- 列出取票人信息 -->
 			<!-- <div class="info-list" v-if="isHaveGetTicketMan">
 				<div class="list">
@@ -118,6 +118,12 @@
 
 
 		<!-- 联系人信息 -->
+		<div class="contact-info">
+			<div class="info">
+				<span>联系人</span>
+				<input type="text" placeholder="用于取票" v-model="payInfoData.getTicketManName">
+			</div>
+		</div>
 		<div class="contact-info">
 			<div class="info">
 				<span>联系手机</span>
@@ -226,29 +232,35 @@
 		  				<div class="address-info">
 								<div class="start box">
 									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
-									<p class="center" v-text="busInfo.StartPoint"></p>
-									<p class="last" v-text="busInfo.StartCity"></p>
+									<p class="center" v-text="serverPayInfo.LineInfo.StartPoint"></p>
+									<p class="last" v-text="serverPayInfo.LineInfo.StartCity"></p>
 								</div>
 								<div class="center box">
-									<p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
-									<p class="arrow-message" v-text="busInfo.Route"></p>
+									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
+									<p class="arrow-message" v-text="serverPayInfo.LineInfo.Route"></p>
 									<p class="arrow"></p>
 								</div>
 								<div class="end box">
-									<p v-text="busInfo.EndPoint"></p>
-									<p>{{busInfo.AcrossCity}}</p>
+									<p v-text="serverPayInfo.LineInfo.EndPoint"></p>
+									<p>{{serverPayInfo.LineInfo.AcrossCity}}</p>
 								</div>
 							</div>
 							<div class="info-box passager-info">
 								<p>
+									<span class="type">乘车日期:</span>
+									<span class="name">{{serverPayInfo.LineInfo.BoardTime}}</span>
+								</p>
+							</div>
+							<div class="info-box passager-info">
+								<p>
 									<span class="type">乘客:</span>
-									<span class="name">{{concatName}}</span>
+									<span class="name">{{serverPayInfo.UsrInfo.Name}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
 								<p>
 									<span class="type">取票人:</span>
-									<span class="name">{{payInfoData.getTicketManName}}</span>
+									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div>
 		  			</div>
@@ -259,14 +271,17 @@
 		  				<p>订单信息</p>
 		  			</div>
 		  			<div class="pay-ticket-info-body">
-		  				<p>订单编号:654654687913185</p>
-		  				<p>预订日期:{{startDate}}</p>
-		  				<p>总额:{{payInfoData.payMoney}}</p>
+		  				<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
+		  				<p>下单日期:{{serverPayInfo.LineInfo.Date}}</p>
+		  				<p>总额: <span style="color:red">{{serverPayInfo.OrderInfo.TotalPrice}}</span></p>
 		  			</div>
 		  		</div>
 		  		<!-- 立即支付 -->
 		  		<div class="now-pay">
 		  			<button @click="payMoney">立即支付</button>
+		  		</div>
+		  		<div class="out-order">
+		  			<a>取消订单</a>
 		  		</div>
 		  	</div>
 		  </slot>
@@ -308,12 +323,11 @@ export default {
 			payInfoData:{
 				passenger:null,//乘客
 				inSureMoney:0,//单笔保险费
-				getTicketMan:null,//取票人信息
 				getTicketManName:"",//取票人名字
 				Allinsure:0,//保险费用(总共)
 				ticketMoney:0,//票的单价
 				payMoney:0,//总共支付的钱
-				contactPhone:"",
+				contactPhone:"",//取票人手机号
 				discountcode:"",//优惠码
 			},//订单信息
 			TicketPay:null,//服务器产生的订单信息
@@ -321,6 +335,12 @@ export default {
 			countdown:null,//倒计时
 			storeCountTime:null,//记录倒计时数字
 			countdownTime:null,//倒计时文字显示
+			serverPayInfo:{
+				OrderInfo:{},
+				UsrInfo:{},
+				LineInfo:{},
+				PayInfo:{},
+			},//服务器返回的订单信息
 		}
 	},
 	beforeCreate(){
@@ -478,21 +498,17 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		getGetTicketMan(){
-			let data = _.filter(this.AllFare,item=>{
-				return item.isGetTicket;
-			});
-			
-			if(data.length===1){
-				this.payInfoData.getTicketMan = data[0];
-				this.payInfoData.getTicketManName = data[0].name;
+			let name = this.payInfoData.getTicketManName;
+			if(Utils.isChinaName(name)&&name.length>=2){
+				window.localStorage.setItem("GetTicketName",this.payInfoData.getTicketManName);
+				return false;
 			}
 			else{
-				this.payInfoData.getTicketMan = "";
+				return true;
 			}
-			return data;
 		},
 		CountDown(){
-			this.storeCountTime = 60*30;//半个小时
+			this.storeCountTime = 60*30-1;//半个小时
 			this.countdown = setInterval(()=>{
 				if(this.storeCountTime===0){
 					clearInterval(this.countdown);
@@ -509,10 +525,10 @@ export default {
 				}
 
 				if(second<10){
-					this.countdownTime+"0"+second;
+					this.countdownTime = this.countdownTime+"0"+second;
 				}
 				else{
-					this.countdownTime+second;
+					this.countdownTime = this.countdownTime+second;
 				}
 				this.storeCountTime--;
 			},1000)
@@ -522,18 +538,17 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		submitOrder(){
-			// this.$router.replace({name:"payinfo"});
-			// return;
 			this.CountDown();
-								// this.TicketPay = result.Data;
-								this.payInfoPopupVisible = true;
+			this.payInfoPopupVisible = true;
+			return;
+
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
 				return;
 			}
 			else{
-				if(this.getGetTicketMan().length===0){
-					this.popupMessage("请设置一个取票人!");
+				if(this.getGetTicketMan()){
+					this.popupMessage("取票人信息不正确,请检查修改!");
 					return;
 				}
 				else{
@@ -554,6 +569,7 @@ export default {
 							Name:arrayData.slice(0,arrayData.length-1),
 							Mobile:this.payInfoData.contactPhone,
 							Num:this.AllFare.length,
+							ContactMan:this.payInfoData.getTicketManName,
 							DiscountCode:this.payInfoData.discountcode
 						}).then(result=>{
 							Indicator.close();
@@ -566,10 +582,6 @@ export default {
 								this.payInfoPopupVisible = true;
 							}
 						})
-						// setTimeout(()=>{
-						// 	Indicator.close();
-						// 	this.popupMessage("支付失败,请稍后再试!");
-						// },2000)
 					}
 					else{
 						this.popupMessage("请填写正确的联系手机号!");
@@ -649,6 +661,9 @@ export default {
 			if(window.localStorage.getItem("Phone")!==null){
 				//之前有数据
 				this.payInfoData.contactPhone = window.localStorage.getItem("Phone");
+			}
+			if(window.localStorage.getItem("GetTicketName")!==null){
+				this.payInfoData.getTicketManName = window.localStorage.getItem("GetTicketName");
 			}
 		},
 		setLocalStorePhone(phone){
