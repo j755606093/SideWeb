@@ -110,7 +110,6 @@ export default {
 			locationLoad:true,//是否在加载定位记录
 			locationName:"",//定位最近的车站位置名
 			showRefresh:false,//是否显示刷新地理位置
-			Color:"#000",
       startTime: {
         time: ""
       },
@@ -193,7 +192,12 @@ export default {
 		else{
 			this.locationLoad = false;
 			if(this.$store.getters.getLocationResult){
-				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
+				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
+				Toast({
+					  message: this.locationName,
+					  position: 'bottom',
+					  duration: 3000,
+					});
 			}
 			else{
 				this.locationName = "";
@@ -250,6 +254,11 @@ export default {
 			return Utils.formatDate(data);
 		},
 		showPosition(position){
+			Toast({
+					  message: "获取权限",
+					  position: 'bottom',
+					  duration: 3000,
+					});
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
 			this.$store.dispatch("setLocationResult",{
 				latitude:latitude,
@@ -259,6 +268,11 @@ export default {
 				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
 					//没有数据
 					this.locationName = "";
+					Toast({
+					  message: "没有数据",
+					  position: 'bottom',
+					  duration: 3000,
+					});
 				}
 				else{
 					this.locationName = "最近上车点:"+data.Name;

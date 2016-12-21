@@ -29250,7 +29250,6 @@
 				locationLoad: true, //是否在加载定位记录
 				locationName: "", //定位最近的车站位置名
 				showRefresh: false, //是否显示刷新地理位置
-				Color: "#000",
 				startTime: {
 					time: ""
 				},
@@ -29330,6 +29329,11 @@
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
+					(0, _mintUi.Toast)({
+						message: this.locationName,
+						position: 'bottom',
+						duration: 3000
+					});
 				} else {
 					this.locationName = "";
 				}
@@ -29379,6 +29383,11 @@
 			showPosition: function showPosition(position) {
 				var _this = this;
 
+				(0, _mintUi.Toast)({
+					message: "获取权限",
+					position: 'bottom',
+					duration: 3000
+				});
 				var _position$coords = position.coords,
 				    latitude = _position$coords.latitude,
 				    longitude = _position$coords.longitude,
@@ -29394,6 +29403,11 @@
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
 						_this.locationName = "";
+						(0, _mintUi.Toast)({
+							message: "没有数据",
+							position: 'bottom',
+							duration: 3000
+						});
 					} else {
 						_this.locationName = "最近上车点:" + data.Name;
 						_this.$store.dispatch("setStartCity", {
