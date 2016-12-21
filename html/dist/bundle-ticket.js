@@ -29250,6 +29250,7 @@
 				locationLoad: true, //是否在加载定位记录
 				locationName: "", //定位最近的车站位置名
 				showRefresh: false, //是否显示刷新地理位置
+				noShowNo: true, //当附近没有上车点的时候不显示
 				startTime: {
 					time: ""
 				},
@@ -29329,8 +29330,10 @@
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
+					this.noShowNo = true;
 				} else {
-					this.locationName = "";
+					this.locationName = "你的附近没有上车点";
+					this.noShowNo = false;
 				}
 			}
 		},
@@ -29392,13 +29395,15 @@
 					_this.locationLoad = false; //停止界面加载提示
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
-						_this.locationName = "";
+						_this.locationName = "你的附近没有上车点";
+						_this.noShowNo = false;
 					} else {
 						_this.locationName = "最近上车点:" + data.Name;
 						_this.$store.dispatch("setStartCity", {
 							Code: data.Id,
 							Name: data.Name
 						});
+						_this.noShowNo = true;
 						(0, _mintUi.Toast)({
 							message: "已为你切换到最近的出发点",
 							position: 'bottom',
@@ -29412,6 +29417,7 @@
 					_this.locationLoad = false; //停止界面加载提示
 					_this.locationName = "请稍后重试...";
 					_this.showRefresh = true;
+					_this.noShowNo = true;
 					// Toast({
 					//   message: "网络错误,请稍后重试...",
 					//   position: 'bottom',
@@ -29431,6 +29437,7 @@
 					this.locationLoad = false; //停止界面加载提示
 					this.locationName = "无法获取当前位置";
 					this.showRefresh = true;
+					this.noShowNo = true;
 					// Toast({
 					//   message: "无法获取当前位置",
 					//   position: 'bottom',
@@ -47311,7 +47318,13 @@
 	    staticClass: "showload"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-circle-o-notch fa-spin"
-	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._e(), " ", (_vm.locationName) ? _vm._h('div', {
+	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.noShowNo),
+	      expression: "noShowNo"
+	    }],
 	    staticClass: "location-result"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-map-marker"
@@ -47320,7 +47333,7 @@
 	    on: {
 	      "click": _vm.refreshLocation
 	    }
-	  }, ["重新定位"]) : _vm._e()]) : _vm._e()]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
+	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
 	    staticClass: "search-record"
 	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
 	    return _vm._h('div', {
