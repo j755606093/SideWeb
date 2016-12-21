@@ -28,6 +28,13 @@
 			flex:0.7;
 			font-size:1.8rem;
 			font-weight:900;
+			position:relative;
+			>i{
+				position:absolute;
+				top:20px;
+				right:10px;
+				color:$gray;
+			}
 		}
 		span.station{
 			margin-left:10px;

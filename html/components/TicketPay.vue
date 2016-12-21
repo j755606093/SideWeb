@@ -218,7 +218,7 @@
 		  			<div class="status">
 		  				<i class="fa fa-check-circle"></i>
 		  				<p>生成订单成功!</p>
-		  				<p class="time">请在半小时之内支付订单 28:32</p>
+		  				<p class="time">请在半小时之内支付订单 {{countdownTime}}</p>
 		  			</div>
 		  		</div>
 		  		<div class="ticket-body">
@@ -318,6 +318,9 @@ export default {
 			},//订单信息
 			TicketPay:null,//服务器产生的订单信息
 			havediscountcode:false,//是否有优惠码
+			countdown:null,//倒计时
+			storeCountTime:null,//记录倒计时数字
+			countdownTime:null,//倒计时文字显示
 		}
 	},
 	beforeCreate(){
@@ -488,7 +491,32 @@ export default {
 			}
 			return data;
 		},
-		
+		CountDown(){
+			this.storeCountTime = 60*30;//半个小时
+			this.countdown = setInterval(()=>{
+				if(this.storeCountTime===0){
+					clearInterval(this.countdown);
+					this.countdown = null;
+					return;
+				}
+				let minth = parseInt(this.storeCountTime/60);
+				let second = parseInt(this.storeCountTime%60);
+				if(minth<10){
+					this.countdownTime = "0"+minth+":";
+				}
+				else{
+					this.countdownTime = minth+":";
+				}
+
+				if(second<10){
+					this.countdownTime+"0"+second;
+				}
+				else{
+					this.countdownTime+second;
+				}
+				this.storeCountTime--;
+			},1000)
+		},
 		/**
 		 * 提交订单
 		 * @return {[type]} [description]
@@ -496,7 +524,9 @@ export default {
 		submitOrder(){
 			// this.$router.replace({name:"payinfo"});
 			// return;
-			// this.payInfoPopupVisible = true;
+			this.CountDown();
+								// this.TicketPay = result.Data;
+								this.payInfoPopupVisible = true;
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
 				return;
@@ -531,6 +561,7 @@ export default {
 								this.popupMessage(result.Message);
 							}
 							else{
+								this.CountDown();
 								this.TicketPay = result.Data;
 								this.payInfoPopupVisible = true;
 							}

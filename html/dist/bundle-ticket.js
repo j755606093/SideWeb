@@ -29104,7 +29104,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900; }\n    .ticketbody .block span.station {\n      margin-left: 10px;\n      font-size: 1.4rem;\n      height: 1.8rem; }\n  .ticketbody > .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody > .data > span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody > .data > span i {\n        margin-right: 5px; }\n    .ticketbody > .data > span:first-child {\n      width: 30%;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data > span:last-child {\n      width: 30%;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data .cov-vue-date {\n      height: 60px;\n      width: 40%; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #009688;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px; }\n  .ticketbody .search-record {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 30px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .search-record p {\n      font-size: 1.6rem;\n      height: 40px;\n      line-height: 40px;\n      color: #fff;\n      background-color: #2c3e50;\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .ticketbody .search-record .list {\n      width: 100%;\n      padding: 0 5%;\n      height: 30px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #ecf0f1;\n      position: relative; }\n      .ticketbody .search-record .list span {\n        font-size: 1.4rem;\n        line-height: 20px;\n        color: #000;\n        -ms-flex: 0.3;\n            flex: 0.3;\n        display: inline-block;\n        text-align: center;\n        padding: 2px 5px; }\n      .ticketbody .search-record .list span.first::after {\n        content: \"\";\n        height: 3px;\n        width: 8%;\n        position: absolute;\n        top: 14px;\n        left: 27%;\n        background-color: #000; }\n      .ticketbody .search-record .list span.first::before {\n        content: \"\";\n        height: 0;\n        border: 4px solid #000;\n        border-color: transparent transparent #000 #000;\n        width: 0;\n        position: absolute;\n        top: 9px;\n        left: 34%; }\n      .ticketbody .search-record .list i {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        font-size: 1.4rem;\n        color: #2980b9;\n        height: 30px;\n        line-height: 30px; }\n  .ticketbody .location {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .location .showload span {\n      font-size: 1.4rem;\n      color: #555; }\n    .ticketbody .location .showload i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span.refresh-location {\n      color: #0074D9;\n      border: 1px solid #0074D9;\n      padding: 2px 5px;\n      border-radius: 5px;\n      margin-left: 10px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900;\n      position: relative; }\n      .ticketbody .block span:last-child > i {\n        position: absolute;\n        top: 20px;\n        right: 10px;\n        color: #AAAAAA; }\n    .ticketbody .block span.station {\n      margin-left: 10px;\n      font-size: 1.4rem;\n      height: 1.8rem; }\n  .ticketbody > .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #AAAAAA; }\n    .ticketbody > .data > span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody > .data > span i {\n        margin-right: 5px; }\n    .ticketbody > .data > span:first-child {\n      width: 30%;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data > span:last-child {\n      width: 30%;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data .cov-vue-date {\n      height: 60px;\n      width: 40%; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #009688;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px; }\n  .ticketbody .search-record {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 30px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .search-record p {\n      font-size: 1.6rem;\n      height: 40px;\n      line-height: 40px;\n      color: #fff;\n      background-color: #2c3e50;\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .ticketbody .search-record .list {\n      width: 100%;\n      padding: 0 5%;\n      height: 30px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #ecf0f1;\n      position: relative; }\n      .ticketbody .search-record .list span {\n        font-size: 1.4rem;\n        line-height: 20px;\n        color: #000;\n        -ms-flex: 0.3;\n            flex: 0.3;\n        display: inline-block;\n        text-align: center;\n        padding: 2px 5px; }\n      .ticketbody .search-record .list span.first::after {\n        content: \"\";\n        height: 3px;\n        width: 8%;\n        position: absolute;\n        top: 14px;\n        left: 27%;\n        background-color: #000; }\n      .ticketbody .search-record .list span.first::before {\n        content: \"\";\n        height: 0;\n        border: 4px solid #000;\n        border-color: transparent transparent #000 #000;\n        width: 0;\n        position: absolute;\n        top: 9px;\n        left: 34%; }\n      .ticketbody .search-record .list i {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        font-size: 1.4rem;\n        color: #2980b9;\n        height: 30px;\n        line-height: 30px; }\n  .ticketbody .location {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .location .showload span {\n      font-size: 1.4rem;\n      color: #555; }\n    .ticketbody .location .showload i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span.refresh-location {\n      color: #0074D9;\n      border: 1px solid #0074D9;\n      padding: 2px 5px;\n      border-radius: 5px;\n      margin-left: 10px; }\n", ""]);
 
 	// exports
 
@@ -29141,6 +29141,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
 	//
 	//
 	//
@@ -29327,7 +29329,7 @@
 				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
 				} else {
-					this.locationName = "你的附近没有上车点";
+					this.locationName = "";
 				}
 			}
 		},
@@ -29389,7 +29391,7 @@
 					_this.locationLoad = false; //停止界面加载提示
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
-						_this.locationName = "你的附近没有上车点";
+						_this.locationName = "";
 					} else {
 						_this.locationName = "最近上车点:" + data.Name;
 						_this.$store.dispatch("setStartCity", {
@@ -47271,12 +47273,16 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t"])]), " ", _vm._h('div', {
+	  }, [_vm._m(0), " ", _vm._h('span', ["\n\t\t\t" + _vm._s(_vm.getStartCity) + "\n\t\t\t", _vm._h('i', {
+	    staticClass: "fa fa-search"
+	  }), " "])]), " ", _vm._h('div', {
 	    staticClass: "to block",
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
-	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t"])]), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._h('span', [_vm._s(_vm.getEndCity) + "\n\t\t", _vm._h('i', {
+	    staticClass: "fa fa-search"
+	  }), " "])]), " ", _vm._h('div', {
 	    staticClass: "data",
 	    on: {
 	      "click": _vm.openPicker
@@ -47304,7 +47310,7 @@
 	    staticClass: "showload"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-circle-o-notch fa-spin"
-	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
+	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._e(), " ", (_vm.locationName) ? _vm._h('div', {
 	    staticClass: "location-result"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-map-marker"
@@ -47313,7 +47319,7 @@
 	    on: {
 	      "click": _vm.refreshLocation
 	    }
-	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
+	  }, ["重新定位"]) : _vm._e()]) : _vm._e()]), " ", " ", (_vm.localStorage.length !== 0) ? _vm._h('div', {
 	    staticClass: "search-record"
 	  }, [_vm._h('p', ["历史搜索"]), " ", _vm._l((_vm.localStorage.slice(0, 5)), function(list, index) {
 	    return _vm._h('div', {
@@ -49194,7 +49200,10 @@
 					contactPhone: "",
 					discountcode: "" }, //订单信息
 				TicketPay: null, //服务器产生的订单信息
-				havediscountcode: false };
+				havediscountcode: false, //是否有优惠码
+				countdown: null, //倒计时
+				storeCountTime: null, //记录倒计时数字
+				countdownTime: null };
 		},
 		beforeCreate: function beforeCreate() {
 			if (this.$store.getters.getIsFirst) {
@@ -49370,18 +49379,45 @@
 				}
 				return data;
 			},
+			CountDown: function CountDown() {
+				var _this = this;
 
+				this.storeCountTime = 60 * 30; //半个小时
+				this.countdown = setInterval(function () {
+					if (_this.storeCountTime === 0) {
+						clearInterval(_this.countdown);
+						_this.countdown = null;
+						return;
+					}
+					var minth = parseInt(_this.storeCountTime / 60);
+					var second = parseInt(_this.storeCountTime % 60);
+					if (minth < 10) {
+						_this.countdownTime = "0" + minth + ":";
+					} else {
+						_this.countdownTime = minth + ":";
+					}
+
+					if (second < 10) {
+						_this.countdownTime + "0" + second;
+					} else {
+						_this.countdownTime + second;
+					}
+					_this.storeCountTime--;
+				}, 1000);
+			},
 
 			/**
 	   * 提交订单
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
-				var _this = this;
+				var _this2 = this;
 
 				// this.$router.replace({name:"payinfo"});
 				// return;
-				// this.payInfoPopupVisible = true;
+				this.CountDown();
+				// this.TicketPay = result.Data;
+				this.payInfoPopupVisible = true;
 				if (this.getAllFare().length === 0) {
 					this.popupMessage("请先添加或者选择乘客!");
 					return;
@@ -49411,10 +49447,11 @@
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
-									_this.popupMessage(result.Message);
+									_this2.popupMessage(result.Message);
 								} else {
-									_this.TicketPay = result.Data;
-									_this.payInfoPopupVisible = true;
+									_this2.CountDown();
+									_this2.TicketPay = result.Data;
+									_this2.payInfoPopupVisible = true;
 								}
 							});
 							// setTimeout(()=>{
@@ -49544,15 +49581,15 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this2 = this;
+				var _this3 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
 					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
-					_this2.AllFare.splice(index, 1);
-					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this2.AllFare));
-					_this2.computeAll();
+					_this3.AllFare.splice(index, 1);
+					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this3.AllFare));
+					_this3.computeAll();
 				}).catch(function (error) {
 					// error=cancel
 					console.log(error);
@@ -49876,7 +49913,7 @@
 	    staticClass: "fa fa-check-circle"
 	  }), " ", _vm._h('p', ["生成订单成功!"]), " ", _vm._h('p', {
 	    staticClass: "time"
-	  }, ["请在半小时之内支付订单 28:32"])])]), " ", _vm._h('div', {
+	  }, ["请在半小时之内支付订单 " + _vm._s(_vm.countdownTime)])])]), " ", _vm._h('div', {
 	    staticClass: "ticket-body"
 	  }, [_vm._h('div', {
 	    staticClass: "pay-info"

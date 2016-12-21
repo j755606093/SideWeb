@@ -162,7 +162,13 @@ input {
       -ms-flex: 0.7;
           flex: 0.7;
       font-size: 1.8rem;
-      font-weight: 900; }
+      font-weight: 900;
+      position: relative; }
+      .ticketbody .block span:last-child > i {
+        position: absolute;
+        top: 20px;
+        right: 10px;
+        color: #AAAAAA; }
     .ticketbody .block span.station {
       margin-left: 10px;
       font-size: 1.4rem;

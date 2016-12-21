@@ -4,12 +4,14 @@
 			<span><i class="fa fa-location-arrow"></i>出发点</span>
 			<span>
 				{{getStartCity}}
+				<i class="fa fa-search"></i>
 				<!-- <span class="station">{{getStartCityStation}}</span> -->
 			</span>
 		</div>
 		<div @click="GoEndCity" class="to block">
 			<span><i class="fa fa-location-arrow"></i>到达点</span>
 			<span>{{getEndCity}}
+			<i class="fa fa-search"></i>
 			<!-- <span class="station">{{getEndCityStation}}</span> -->
 			</span>
 		</div>
@@ -57,7 +59,7 @@
 				<i class="fa fa-circle-o-notch fa-spin"></i>
 				<span>正在为你定位最近的上车点...</span>
 			</div>
-			<div class="location-result" v-else>
+			<div class="location-result" v-if="locationName">
 				<i class="fa fa-map-marker"></i>
 				<span>{{locationName}}</span>
 				<span @click="refreshLocation" v-if="showRefresh" class="refresh-location">重新定位</span>
@@ -193,7 +195,7 @@ export default {
 				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name
 			}
 			else{
-				this.locationName = "你的附近没有上车点";
+				this.locationName = "";
 			}
 		}
 	},
@@ -255,7 +257,7 @@ export default {
 				this.locationLoad = false;//停止界面加载提示
 				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
 					//没有数据
-					this.locationName = "你的附近没有上车点";
+					this.locationName = "";
 				}
 				else{
 					this.locationName = "最近上车点:"+data.Name;
