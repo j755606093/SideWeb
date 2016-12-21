@@ -538,9 +538,9 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		submitOrder(){
-			this.CountDown();
-			this.payInfoPopupVisible = true;
-			return;
+			// this.CountDown();
+			// this.payInfoPopupVisible = true;
+			// return;
 
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
