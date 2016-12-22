@@ -17,6 +17,7 @@ import TicketStartCity from "../components/TicketStartCity.vue";
 import TicketEndCity from "../components/TicketEndCity.vue";
 import TicketResult from "../components/TicketResult.vue";
 import TicketPay from "../components/TicketPay.vue";
+import TicketOrderList from "../components/TicketOrderList.vue";
 
 const routes = [{
 		path: '/',
@@ -47,6 +48,11 @@ const routes = [{
 				path: '/ticketpay',
 				name:"ticketpay",
 				component: TicketPay
+			},
+			{
+				path:"/ticketorderlist",
+				name:"ticketorderlist",
+				component:TicketOrderList
 			},
 			{
 				path:"*",

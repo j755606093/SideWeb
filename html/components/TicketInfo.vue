@@ -1,5 +1,5 @@
 <template>
-	<div class="order-info-btn" @click="" v-if="getHeaderState">
+	<div class="order-info-btn animated slideInRight" @click="goToOrderList" v-if="getHeaderState">
 		<i class="fa fa-sticky-note"></i>
 	</div>
 </template>
@@ -57,6 +57,9 @@ export default {
 	methods:{
 		formatDate(data){
 			return Utils.formatDate(data);
+		},
+		goToOrderList(){
+			this.$router.push({name:"ticketorderlist"});
 		}
 	}
 }
