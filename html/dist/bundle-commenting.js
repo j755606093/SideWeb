@@ -56,7 +56,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_vue2.default.use(__webpack_require__(82)); //引用ajax库
+	_vue2.default.use(__webpack_require__(85)); //引用ajax库
 
 
 	var comment_app = new _vue2.default({
@@ -8191,7 +8191,7 @@
 	__vue_exports__ = __webpack_require__(79);
 
 	/* template */
-	var __vue_template__ = __webpack_require__(81);
+	var __vue_template__ = __webpack_require__(84);
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
 	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
 	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
@@ -9880,6 +9880,17 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _utils = __webpack_require__(80);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _PostComment = __webpack_require__(86);
+
+	var _PostComment2 = _interopRequireDefault(_PostComment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	//
 	//
 	//
@@ -9889,22 +9900,251 @@
 	//
 	//
 
-	var _ = __webpack_require__(80);
-
+	var _ = __webpack_require__(83);
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				id: "" };
 		},
-		created: function created() {},
+		created: function created() {
+			var _this = this;
+
+			this.id = _utils2.default.getQueryString("id");
+
+			this.$http.get("http://192.168.31.86/api/Post/GetDetail/" + this.id).then(function (res) {
+				if (res.data.Code !== 200) {
+					return;
+				}
+				var acceptData = res.data.Data;
+				console.log(acceptData);
+
+				//Floor
+				_this.floor = acceptData.Floor;
+			}).catch(function (error) {
+				console.log("error:", error);
+			});
+		},
 
 		filters: {},
 		watch: {},
 		computed: {},
-		methods: {}
+		methods: {},
+		components: {
+			"post-comment": _PostComment2.default
+		}
 	};
 
 /***/ },
 /* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _stringify = __webpack_require__(81);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 工具库
+	 * 包含常用的一些函数或者数据
+	 */
+
+	/**
+	 * 格式化时间显示多久之前
+	 * @param  {[type]} data [Date对象]
+	 * @return {[type]}      [时间字符串]
+	 */
+	var formatDate = function formatDate(date) {
+		if (!date) {
+			return 0;
+		}
+		var old = new Date(date); //转换为DATE对象
+		var now = Date.now();
+		var result = ""; //存储结果
+
+		var diffMinute = Math.floor((now - old) / 1000 / 60); //相差的分钟数
+		if (diffMinute < 60) {
+			result = diffMinute + "分钟之前";
+		} else {
+			var diffHour = Math.floor((now - old) / 1000 / 60 / 60); //相差的小时数
+			if (diffHour < 24) {
+				// 小于24小时
+				// let diffHourMinute = Math.floor((now - old)/1000/60%60);//相差的分钟数
+				result = diffHour + "小时之前";
+			} else {
+				var diffDay = Math.floor(diffHour / 24); //相差的天数
+				if (diffDay < 30) {
+					result = diffDay + "天之前";
+				} else {
+					var diffMonth = Math.floor(diffDay / 30); //相差的月数
+					if (diffMonth < 12) {
+						result = diffDay + "个月之前";
+					} else {
+						result = diffDay + "年之前";
+					}
+				}
+			}
+		}
+
+		return result;
+	};
+
+	/**
+	 * 返回2016-05-05格式
+	 * @param  {[type]} date [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatDateTypeOne = function formatDateTypeOne(date) {
+		if (typeof date === "string") {
+			date = new Date(date);
+		}
+		var year = date.getYear() - 100 + 2000;
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+
+		// return month+"月"+day+"日";
+		return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
+	};
+
+	/**
+	 * 格式化日期格式:10-07 13:25
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatTime = function formatTime(date) {
+		if (!date) {
+			return 0;
+		}
+		var formatDate = new Date(date); //转换为DATE对象
+
+		var year = formatDate.getYear() - 100 + 2000; //2016
+		var month = formatDate.getMonth() + 1; //10
+		var day = formatDate.getDate() > 9 ? formatDate.getDate() : "0" + formatDate.getDate(); //04
+		var hours = formatDate.getHours(); //16
+		var minute = formatDate.getMinutes() > 9 ? formatDate.getMinutes() : "0" + formatDate.getMinutes(); //03
+		var milliseconds = formatDate.getMilliseconds(); //450
+
+		var week = formatDate.getDay(); //获取星期,1
+
+		return month + "-" + day + " " + hours + ":" + minute;
+	};
+
+	/**
+	 * 获取当前星期
+	 * @param  {[type]} date [日期对象]
+	 * @return {[type]}      [周一]
+	 */
+	var formatWeek = function formatWeek(date) {
+		var week = ["日", "一", "二", "三", "四", "五", "六"];
+		return "周" + week[date.getDay()];
+	};
+
+	/**
+	 * 获取浏览器中的参数
+	 * @param  {[type]} name [description]
+	 * @return {[type]}      [description]
+	 */
+	var getQueryString = function getQueryString(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = window.location.search.substr(1).match(reg);
+		if (r !== null) {
+			return unescape(r[2]);
+		}
+		return null;
+	};
+
+	/**
+	 * 格式化vue中的变量成JSON数据
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatJsonData = function formatJsonData(data) {
+		return JSON.parse((0, _stringify2.default)(data));
+	};
+
+	/**
+	 * 身份证验证
+	 * @param  {[type]} code [description]
+	 * @return {[type]}      [description]
+	 */
+	var IdentityCodeValid = function IdentityCodeValid(code) {
+		var city = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外 " };
+
+		if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+			return false;
+		} else {
+			if (!city[code.substr(0, 2)]) {
+				return false;
+			} else {
+				//验证身份证最后一位
+				code = code.split('');
+				//∑(ai×Wi)(mod 11)
+				//加权因子
+				var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+				//校验位
+				var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+				var sum = 0;
+				var ai = 0;
+				var wi = 0;
+				for (var i = 0; i < 17; i++) {
+					ai = code[i];
+					wi = factor[i];
+					sum += ai * wi;
+				}
+				var last = parity[sum % 11];
+				if (parity[sum % 11] != code[17]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	};
+
+	/**
+	 * 检查是否中文名
+	 * @param  {[type]} name [description]
+	 * @return {[type]}      [description]
+	 */
+	var isChinaName = function isChinaName(name) {
+		return (/^[\u4e00-\u9fa5]+$/i.test(name)
+		);
+	};
+
+	exports.default = {
+		formatDate: formatDate,
+		formatTime: formatTime,
+		getQueryString: getQueryString,
+		formatWeek: formatWeek,
+		formatJsonData: formatJsonData,
+		IdentityCodeValid: IdentityCodeValid,
+		isChinaName: isChinaName,
+		formatDateTypeOne: formatDateTypeOne
+	};
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(82), __esModule: true };
+
+/***/ },
+/* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(25)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
+
+/***/ },
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -11458,11 +11698,15 @@
 
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._h('p', ["你好世界"])
+	  return _vm._h('post-comment', {
+	    attrs: {
+	      "floor": _vm.floor
+	    }
+	  })
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -11472,7 +11716,7 @@
 	}
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports) {
 
 	/*!
@@ -12787,6 +13031,275 @@
 	}
 
 	module.exports = plugin;
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(3);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(38);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(87);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(90);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(91);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/PostComment.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-cf52db6c", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-cf52db6c", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] PostComment.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(88);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(78)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-cf52db6c!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PostComment.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-cf52db6c!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PostComment.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(77)();
+	// imports
+	exports.i(__webpack_require__(89), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(77)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nsection {\n  background-color: #eaeaea;\n  padding-top: 20px; }\n  section > .list {\n    background-color: #fff;\n    padding: 5px 0;\n    border-top: 1px solid #dddddd; }\n    section > .list .header {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 0; }\n      section > .list .header .header-left {\n        -ms-flex: 0.6;\n            flex: 0.6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .header .header-left .avatar {\n          width: 40px;\n          height: 40px;\n          border-radius: 50%; }\n        section > .list .header .header-left .other-info {\n          margin-left: 10px; }\n          section > .list .header .header-left .other-info > .author-name {\n            color: #353535;\n            font-size: 1.3rem; }\n          section > .list .header .header-left .other-info > .publish-time {\n            color: #AAAAAA;\n            font-size: 1.1rem; }\n          section > .list .header .header-left .other-info > p {\n            height: 20px;\n            line-height: 20px; }\n      section > .list .header .header-right {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        section > .list .header .header-right span {\n          color: #AAAAAA;\n          margin-right: 10px;\n          font-size: 1.2rem; }\n    section > .list .content {\n      margin-left: 50px;\n      margin-right: 10px;\n      font-size: 1.2rem; }\n      section > .list .content .comment {\n        color: #353535; }\n      section > .list .content .replay {\n        background-color: #f7f7f7;\n        color: #AAAAAA;\n        border-top-left-radius: 5px;\n        border-top-right-radius: 5px;\n        padding: 5px 5px; }\n        section > .list .content .replay p {\n          padding-top: 2px; }\n    section > .list .operate {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 5px; }\n      section > .list .operate p {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex: 1;\n            flex: 1;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        section > .list .operate p button {\n          padding: 2px 5px;\n          font-size: 1.2rem;\n          background-color: #fff;\n          border: 0;\n          outline: none; }\n      section > .list .operate p:first-child {\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .operate p:first-child button {\n          color: #AAAAAA; }\n      section > .list .operate p:last-child {\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        section > .list .operate p:last-child button {\n          color: #0074D9; }\n  section > .list:last-child {\n    border-bottom: 1px solid #dddddd; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _utils = __webpack_require__(80);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  props: ["floor"],
+	  data: function data() {
+	    return {
+	      msg: 'Hello from vue-loader!'
+	    };
+	  },
+
+	  methods: {
+	    formatTime: function formatTime(date) {
+	      return _utils2.default.formatTime(date);
+	    },
+	    report: function report(id) {
+	      alert(id);
+	    },
+	    replay: function replay(id) {
+	      alert(id);
+	    }
+	  }
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('section', [_vm._l((_vm.floor), function(item) {
+	    return _vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('div', {
+	      staticClass: "header"
+	    }, [_vm._h('div', {
+	      staticClass: "header-left"
+	    }, [_vm._h('img', {
+	      staticClass: "avatar",
+	      attrs: {
+	        "src": item.Avatar,
+	        "alt": "头像"
+	      }
+	    }), " ", _vm._h('div', {
+	      staticClass: "other-info"
+	    }, [_vm._h('p', {
+	      staticClass: "author-name",
+	      domProps: {
+	        "textContent": _vm._s(item.Nick)
+	      }
+	    }), " ", _vm._h('p', {
+	      staticClass: "publish-time",
+	      domProps: {
+	        "textContent": _vm._s(_vm.formatTime(item.CTime))
+	      }
+	    })])]), " ", _vm._h('div', {
+	      staticClass: "header-right"
+	    }, [_vm._h('span', {
+	      domProps: {
+	        "textContent": _vm._s(item.FloorCount === 1 ? '沙发' : item.FloorCount + '楼')
+	      }
+	    })])]), " ", _vm._h('div', {
+	      staticClass: "content"
+	    }, [(item.SupReplies) ? _vm._h('div', {
+	      staticClass: "replay"
+	    }, [_vm._h('p', [_vm._h('span', ["回复"]), " ", _vm._h('span', {
+	      staticClass: "font-blue",
+	      domProps: {
+	        "textContent": _vm._s(item.SupReplies.Nick)
+	      }
+	    }), " ", _vm._h('span', ["的评论:"])]), " ", _vm._h('p', {
+	      domProps: {
+	        "textContent": _vm._s(item.SupReplies.Content)
+	      }
+	    })]) : _vm._e(), " ", _vm._h('p', {
+	      staticClass: "comment",
+	      domProps: {
+	        "textContent": _vm._s(item.Content)
+	      }
+	    })]), " ", _vm._h('div', {
+	      staticClass: "operate"
+	    }, [_vm._h('p', [_vm._h('button', {
+	      on: {
+	        "click": function($event) {
+	          _vm.report(item.Id)
+	        }
+	      }
+	    }, ["举报"])]), " ", _vm._h('p', [_vm._h('button', {
+	      on: {
+	        "click": function($event) {
+	          _vm.replay(item.Id)
+	        }
+	      }
+	    }, ["回复"])])])])
+	  })])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-cf52db6c", module.exports)
+	  }
+	}
 
 /***/ }
 /******/ ]);

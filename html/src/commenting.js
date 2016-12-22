@@ -11,3 +11,4 @@ const comment_app = new Vue({
 		"comment-app":commentApp
 	}
 });
+

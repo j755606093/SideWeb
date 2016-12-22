@@ -51,7 +51,7 @@ function formatJSON(data=""){
  * @return {[type]}      [description]
  */
 function weixin(data){
-	return insertScript(deleteLinkTag(deleteScriptTag(data)));
+	return insertScript(deleteLinkTag(deleteScriptTag(data)),"bundle-commenting");
 }
 
 /**
