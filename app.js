@@ -51,7 +51,6 @@ app.get("/getCustomPage",(req,res)=>{
 	if(app.locals.pages[page]){
 		// 如果缓存有这个页面,就直接返回
 		res.set('Content-Type', 'text/html');
-		res.set("Cache-Control","no-cache");
 		res.send(app.locals.pages[page]);
 		return;
 	}
@@ -62,7 +61,6 @@ app.get("/getCustomPage",(req,res)=>{
 			}
 			else{
 				res.set('Content-Type', 'text/html');
-				res.set("Cache-Control","no-cache");
 				app.locals.pages[page] = file;//缓存这个文件
 				res.send(file);
 			}

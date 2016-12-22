@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var notify = require('gulp-notify');//通知信息
 var autoprefixer = require('gulp-autoprefixer');
 var html2jade = require('gulp-html2jade');
+var rev = require('gulp-rev');
 
 gulp.task('sass',function(){
 	return gulp.src('./html/sass/*.scss')
@@ -132,6 +133,7 @@ gulp.task('ticket',['sass'],function() {
 			},
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
+		.pipe(rev())
 		.pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
