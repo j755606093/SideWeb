@@ -157,7 +157,7 @@ gulp.task('ticket',['sass'],function() {
 });
 
 gulp.task('app',function() {
-	return gulp.src('./html/js/commenting.js')
+	return gulp.src('./html/src/commenting.js')
 		.pipe(webpack({
 			watch:true,
 			output:{

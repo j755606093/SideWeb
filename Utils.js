@@ -7,8 +7,8 @@ function deleteSecurity(data){
 
 // 插入自己的Script数据
 function insertScript(data,name="test"){
-	let app = "<div id='comment_id'></div>";
-	let insertData = "<script src='/js/"+name+".js'></script>";
+	let app = `<div id='comment_id'><comment-app></comment-app></div>`;
+	let insertData = "<script src='/dist/"+name+".js'></script>";
 	return deleteSecurity(data).replace(/(<\/body>)/gi,app+insertData+"$1");
 }
 
@@ -61,7 +61,7 @@ function weixin(data){
  */
 function news(data){
 	// 不需要删除link标签
-	return insertScript(deleteScriptTag(data));
+	return insertScript(deleteScriptTag(data),"bundle-commenting");
 }
 
 module.exports = {
