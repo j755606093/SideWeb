@@ -8,6 +8,7 @@ var notify = require('gulp-notify');//通知信息
 var autoprefixer = require('gulp-autoprefixer');
 var html2jade = require('gulp-html2jade');
 var rev = require('gulp-rev');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 gulp.task('sass',function(){
 	return gulp.src('./html/sass/*.scss')
@@ -122,6 +123,14 @@ gulp.task('ticket',['sass'],function() {
 							// fallback to file-loader with this naming scheme
 							name: '[name].[ext]?[hash]'
 						}
+					},
+					{
+						test:/\.html$/,
+						loader:"html-loader"
+					},
+					{
+						test:/\.ejs$/,
+						loader:"ejs-loader?variable=data"
 					}
 				]
 			},
@@ -131,9 +140,18 @@ gulp.task('ticket',['sass'],function() {
 							'vue$': 'vue/dist/vue.js'
 					}
 			},
+			plugins:[new HtmlWebpackPlugin({
+				title:"身边订票",
+				filename:"ticket.html",
+				hash:true,
+				template:"!!ejs!html/default.ejs",
+				inject:true
+			})]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
-		.pipe(rev())
+		// .pipe(rev())
 		.pipe(gulp.dest('html/dist/'))
+		// .pipe(rev.manifest())
+		// .pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });

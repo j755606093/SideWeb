@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'html')));
+app.use(express.static(path.join(__dirname, 'html/dist/')));
 app.use((req,res,next)=>{
 	res.set({
 		"Access-Control-Allow-Origin":"*",
@@ -46,7 +46,7 @@ app.use('/api', index);
 
 app.get("/getCustomPage",(req,res)=>{
 	let page = req.query.page;//获取指定的页面
-	let realPath = "html/"+page+".html";
+	let realPath = "html/dist/"+page+".html";
 
 	if(app.locals.pages[page]){
 		// 如果缓存有这个页面,就直接返回
@@ -61,7 +61,7 @@ app.get("/getCustomPage",(req,res)=>{
 			}
 			else{
 				res.set('Content-Type', 'text/html');
-				app.locals.pages[page] = file;//缓存这个文件
+				// app.locals.pages[page] = file;//缓存这个文件
 				res.send(file);
 			}
 		})

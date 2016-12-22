@@ -37,8 +37,7 @@ export default {
 		}
 	},
 	created(){
-		// let nowDate = new Date();
-		// this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"订单信息"});
+		
 	},
 	filters:{
 		

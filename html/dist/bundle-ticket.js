@@ -11153,7 +11153,8 @@
 		haveLocation: false, //没有定位结果
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		serverUrl: "http://192.168.31.80" };
+		// serverUrl:"http://192.168.31.80",//服务器地址
+		serverUrl: "" };
 
 	// getters,获取数据
 	var getters = {
@@ -28929,10 +28930,7 @@
 		data: function data() {
 			return {};
 		},
-		created: function created() {
-			// let nowDate = new Date();
-			// this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"订单信息"});
-		},
+		created: function created() {},
 
 		filters: {},
 		watch: {},
@@ -31068,7 +31066,6 @@
 			} else {
 				this.startTime.time = this.formatNow(new Date());
 			}
-
 			// 获取本地数据
 			this.localStorage = this.getLocalStore().reverse();
 			// 改变限制选择的日期
@@ -31078,9 +31075,9 @@
 			// 获取位置
 			if (this.$store.getters.getIsFirst) {
 				// 还没有获取过,说明第一个打开网页
-				this.$store.commit("SET_ISFIRST", false);
+				this.$store.dispatch("setisFirst", false);
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
-				this.$store.dispatch("setHaveLocation", true);
+				// this.$store.dispatch("setHaveLocation",true);
 			} else {
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
