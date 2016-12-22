@@ -447,20 +447,29 @@ export default {
 		// 	})
 		// },
 		payMoney(){
-			let paydata = this.serverPayInfo.PayInfo;
-			window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
-				if(r.err_msg==="get_brand_wcpay_request:ok"){
-					// 支付成功
-					// 再根据小票拿数据
-					// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-					Toast({
-					  message: '支付成功!',
-					  iconClass: 'fa fa-check',
-					  duration:3000,
-					  className:"success"
+				Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+			let id = this.serverPayInfo.OrderInfo.Id;
+			this.$store.dispatch("showWXpay",id)
+				.then(data=>{
+					Indicator.close();
+					let paydata = data.Data;
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+						if(r.err_msg==="get_brand_wcpay_request:ok"){
+							// 支付成功
+							// 再根据小票拿数据
+							// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
+							Toast({
+							  message: '支付成功!',
+							  iconClass: 'fa fa-check',
+							  duration:3000,
+							  className:"success"
+							});
+						}
 					});
-				}
-			});
+				})
 		},
 		/**
 		 * 查看取票退票说明

@@ -11329,9 +11329,26 @@
 				return result.json();
 			});
 		},
-		setLocationResult: function setLocationResult(_ref10, data) {
+		showWXpay: function showWXpay(_ref10, data) {
 			var commit = _ref10.commit,
 			    state = _ref10.state;
+
+			// 微信付款
+			return fetch(state.serverUrl + "/api/Order/PayOrder", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: (0, _stringify2.default)({
+					OrderId: data
+				})
+			}).then(function (result) {
+				return result.json();
+			});
+		},
+		setLocationResult: function setLocationResult(_ref11, data) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
 
 			return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
@@ -11354,15 +11371,15 @@
 				}
 			});
 		},
-		setHaveLocation: function setHaveLocation(_ref11, data) {
-			var commit = _ref11.commit,
-			    state = _ref11.state;
+		setHaveLocation: function setHaveLocation(_ref12, data) {
+			var commit = _ref12.commit,
+			    state = _ref12.state;
 
 			commit(_Type2.default.SET_HAVELOCATION, data);
 		},
-		setisFirst: function setisFirst(_ref12, data) {
-			var commit = _ref12.commit,
-			    state = _ref12.state;
+		setisFirst: function setisFirst(_ref13, data) {
+			var commit = _ref13.commit,
+			    state = _ref13.state;
 
 			commit("SET_ISFIRST", data);
 		}
@@ -49540,19 +49557,27 @@
 			// 	})
 			// },
 			payMoney: function payMoney() {
-				var paydata = this.serverPayInfo.PayInfo;
-				window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
-					if (r.err_msg === "get_brand_wcpay_request:ok") {
-						// 支付成功
-						// 再根据小票拿数据
-						// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-						(0, _mintUi.Toast)({
-							message: '支付成功!',
-							iconClass: 'fa fa-check',
-							duration: 3000,
-							className: "success"
-						});
-					}
+				_mintUi.Indicator.open({
+					text: '加载中...',
+					spinnerType: 'double-bounce'
+				});
+				var id = this.serverPayInfo.OrderInfo.Id;
+				this.$store.dispatch("showWXpay", id).then(function (data) {
+					_mintUi.Indicator.close();
+					var paydata = data.Data;
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
+						if (r.err_msg === "get_brand_wcpay_request:ok") {
+							// 支付成功
+							// 再根据小票拿数据
+							// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
+							(0, _mintUi.Toast)({
+								message: '支付成功!',
+								iconClass: 'fa fa-check',
+								duration: 3000,
+								className: "success"
+							});
+						}
+					});
 				});
 			},
 

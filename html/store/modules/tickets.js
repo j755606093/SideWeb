@@ -165,6 +165,19 @@ const actions = {
 		})
 		.then(result=>result.json())
 	},
+	showWXpay({commit,state},data){
+		// 微信付款
+		return fetch(state.serverUrl+"/api/Order/PayOrder",{
+			method: 'POST',
+			headers: {
+		    'Content-Type': 'application/json',
+		  },
+			body:JSON.stringify({
+				OrderId:data
+			})
+		})
+		.then(result=>result.json())
+	},
 	setLocationResult({commit,state},data){
 		return fetch(state.serverUrl+"/api/Transport/NearestStartPoints",{
 			method: 'POST',
