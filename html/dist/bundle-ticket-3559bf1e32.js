@@ -31069,7 +31069,6 @@
 			} else {
 				this.startTime.time = this.formatNow(new Date());
 			}
-
 			// 获取本地数据
 			this.localStorage = this.getLocalStore().reverse();
 			// 改变限制选择的日期
@@ -31079,9 +31078,9 @@
 			// 获取位置
 			if (this.$store.getters.getIsFirst) {
 				// 还没有获取过,说明第一个打开网页
-				this.$store.commit("SET_ISFIRST", false);
+				this.$store.dispatch("setisFirst", false);
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
-				this.$store.dispatch("setHaveLocation", true);
+				// this.$store.dispatch("setHaveLocation",true);
 			} else {
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
