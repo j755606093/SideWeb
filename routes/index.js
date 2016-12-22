@@ -4,10 +4,9 @@ const fs = require("fs");
 const rp = require("request-promise");
 const serverUrl = "http://192.168.31.86";
 const {
-	deleteSecurity,
-	insertScript,
-	insertCss,
-	formatJSON
+	weixin,
+	news,
+	formatJSON,
 } = require("../Utils");
 
 /*********************************************/
@@ -22,7 +21,7 @@ router.get("/GetTopic",(req,res)=>{
 			let data = formatJSON(response);
 			if(data.Data){
 				res.set('Content-Type', 'text/html');
-				res.send(insertScript(data.Data));
+				res.send(weixin(data.Data));
 			}
 			else{
 				res.send({error:"404",message:"未找到此数据"})
@@ -42,7 +41,7 @@ router.get("/GetNews",(req,res)=>{
 			let data = formatJSON(response);
 			if(data.Data){
 				res.set('Content-Type', 'text/html');
-				res.send(insertScript(data.Data));
+				res.send(news(data.Data));
 			}
 			else{
 				res.send({error:"404",message:"未找到此数据"})
