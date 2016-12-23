@@ -10,7 +10,7 @@ var html2jade = require('gulp-html2jade');
 var rev = require('gulp-rev');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const module = {
+const modules = {
 	loaders:[
 		{
 			//这是处理es6文件
@@ -49,9 +49,9 @@ gulp.task('sass',function(){
 	return gulp.src('./html/sass/*.scss')
 		.pipe(sass.sync().on('error',sass.logError))
 		.pipe(autoprefixer({
-				browsers: ['last 2 versions','last 3 Safari versions'],
-				cascade: true,
-				remove:true
+			browsers: ['last 2 versions','last 3 Safari versions'],
+			cascade: true,
+			remove:true
 		}))
 		.pipe(gulp.dest('./html/css'));
 });
@@ -74,12 +74,12 @@ gulp.task('postdetail',['sass'],function() {
 			output:{
 				filename:'bundle-postdetail.js'
 			},
-			module:module,
+			module:modules,
 			resolve: {
-					extensions: ['', '.js', '.jsx'],
-					alias: {
-							'vue$': 'vue/dist/vue.js'
-					}
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+						'vue$': 'vue/dist/vue.js'
+				}
 			},
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
@@ -94,12 +94,12 @@ gulp.task('ticket',['sass'],function() {
 			output:{
 				filename:'bundle-ticket.js'
 			},
-			module:module,
+			module:modules,
 			resolve: {
-					extensions: ['', '.js', '.jsx'],
-					alias: {
-							'vue$': 'vue/dist/vue.js'
-					}
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+						'vue$': 'vue/dist/vue.js'
+				}
 			},
 			plugins:[new HtmlWebpackPlugin({
 				title:"身边订票",
@@ -124,15 +124,45 @@ gulp.task('app',function() {
 			output:{
 				filename:'bundle-commenting.js'
 			},
-			module:module,
+			module:modules,
 			resolve: {
-					extensions: ['', '.js', '.jsx'],
-					alias: {
-							'vue$': 'vue/dist/vue.js'
-					}
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+						'vue$': 'vue/dist/vue.js'
+				}
 			},
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		.pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
+gulp.task('checkin',function() {
+	return gulp.src('./html/src/checkin.js')
+		.pipe(webpack({
+			watch:true,
+			output:{
+				filename:'bundle-checkin.js'
+			},
+			module:modules,
+			resolve: {
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+						'vue$': 'vue/dist/vue.js'
+				}
+			},
+			plugins:[new HtmlWebpackPlugin({
+				title:"有奖签到",
+				filename:"checkin.html",
+				hash:true,
+				template:"!!ejs!html/default.ejs",
+				inject:true
+			})]
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		// .pipe(rev())
+		.pipe(gulp.dest('html/dist/'))
+		// .pipe(rev.manifest())
+		// .pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
