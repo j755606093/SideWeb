@@ -2,7 +2,8 @@
 // <meta content="script-src https: 'unsafe-inline' 'unsafe-eval' *.qq.com *.weishi.com 'nonce-836503595'" http-equiv="Content-Security-Policy"/>
 function deleteSecurity(data){
 	let step1 = data.replace(/<iframe.*<\/iframe>/g,"");//去掉iframe框架
-	return step1.replace(/Content-Security-Policy/g,"");
+	let step2 = step1.replace(/!important/gi,"");
+	return step2.replace(/Content-Security-Policy/g,"");
 }
 
 // 插入自己的Script数据
@@ -24,7 +25,7 @@ function deleteScriptTag(data){
 
 // 插入自己的Css数据
 function insertCss(data){
-	let insertData = "<link href='js/test.js' rel='stylesheet'/>";
+	let insertData = `<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>`;
 	return deleteSecurity(data).replace(/(<\/head>)/gi,insertData+"$1");
 }
 
@@ -51,7 +52,7 @@ function formatJSON(data=""){
  * @return {[type]}      [description]
  */
 function weixin(data){
-	return insertScript(deleteLinkTag(deleteScriptTag(data)),"bundle-commenting");
+	return insertCss(insertScript(deleteLinkTag(deleteScriptTag(data)),"bundle-commenting"));
 }
 
 /**
@@ -61,7 +62,7 @@ function weixin(data){
  */
 function news(data){
 	// 不需要删除link标签
-	return insertScript(deleteScriptTag(data),"bundle-commenting");
+	return insertCss(insertScript(deleteScriptTag(data),"bundle-commenting"));
 }
 
 module.exports = {

@@ -144,8 +144,8 @@ section {
           flex-direction: row;
       padding: 5px 0; }
       section > .list .header .header-left {
-        -ms-flex: 0.6;
-            flex: 0.6;
+        -ms-flex: 0.8;
+            flex: 0.8;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
@@ -168,16 +168,23 @@ section {
             height: 20px;
             line-height: 20px; }
       section > .list .header .header-right {
-        -ms-flex: 0.4;
-            flex: 0.4;
+        -ms-flex: 0.2;
+            flex: 0.2;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-pack: end;
-            justify-content: flex-end; }
+            justify-content: flex-end;
+        position: relative; }
         section > .list .header .header-right span {
           color: #AAAAAA;
           margin-right: 10px;
-          font-size: 1.2rem; }
+          font-size: 1.4rem; }
+        section > .list .header .header-right i {
+          font-size: 1.4rem;
+          width: 20px;
+          height: 20px; }
+        section > .list .header .header-right i.fa-thumbs-up {
+          color: #2ecc71; }
     section > .list .content {
       margin-left: 50px;
       margin-right: 10px;

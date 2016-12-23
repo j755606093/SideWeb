@@ -10,7 +10,11 @@
 					</div>
 				</div>
 				<div class="header-right">
-					<span v-text="item.FloorCount===1?'沙发':item.FloorCount+'楼'"></span>
+					<div class="block">
+						<i class="fa fa-thumbs-o-up" v-if="item.LikeStatus===0"></i>
+						<i class="fa fa-thumbs-up" v-else></i>
+						<span v-text="item.LikeCount"></span>
+					</div>
 				</div>
 			</div>
 			<div class="content">

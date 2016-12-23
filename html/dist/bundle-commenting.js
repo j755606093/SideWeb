@@ -9904,31 +9904,55 @@
 	exports.default = {
 		data: function data() {
 			return {
-				id: "" };
+				id: "", //url上的文章id
+				index: 1,
+				size: 10,
+				noComment: false, //没有更多的评论
+				floor: null };
 		},
 		created: function created() {
-			var _this = this;
-
 			this.id = _utils2.default.getQueryString("id");
 
-			this.$http.get("http://192.168.31.86/api/Post/GetDetail/" + this.id).then(function (res) {
-				if (res.data.Code !== 200) {
-					return;
-				}
-				var acceptData = res.data.Data;
-				console.log(acceptData);
-
-				//Floor
-				_this.floor = acceptData.Floor;
-			}).catch(function (error) {
-				console.log("error:", error);
-			});
+			this.getComment();
 		},
 
 		filters: {},
 		watch: {},
 		computed: {},
-		methods: {},
+		methods: {
+			getComment: function getComment() {
+				var _this = this;
+
+				console.log("yes");
+				if (this.noComment) {
+					// 没有更多的数据
+					return;
+				}
+				this.$http.post("http://192.168.31.86/api/Wechat/GetCmts", {
+					Id: this.id,
+					Index: this.index,
+					Size: this.size
+				}).then(function (res) {
+					if (res.data.Code !== 200) {
+						return;
+					}
+					if (res.data.Data.length < 9) {
+						// 说明没有数据了
+						_this.noComment = true;
+					} else {
+						_this.index++; //页数自增
+					}
+
+					var acceptData = res.data.Data;
+					console.log(acceptData);
+
+					//Floor
+					_this.floor = acceptData;
+				}, function (error) {
+					console.log(error);
+				});
+			}
+		},
 		components: {
 			"post-comment": _PostComment2.default
 		}
@@ -13144,7 +13168,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nsection {\n  background-color: #eaeaea;\n  padding-top: 20px; }\n  section > .list {\n    background-color: #fff;\n    padding: 5px 0;\n    border-top: 1px solid #dddddd; }\n    section > .list .header {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 0; }\n      section > .list .header .header-left {\n        -ms-flex: 0.6;\n            flex: 0.6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .header .header-left .avatar {\n          width: 40px;\n          height: 40px;\n          border-radius: 50%; }\n        section > .list .header .header-left .other-info {\n          margin-left: 10px; }\n          section > .list .header .header-left .other-info > .author-name {\n            color: #353535;\n            font-size: 1.3rem; }\n          section > .list .header .header-left .other-info > .publish-time {\n            color: #AAAAAA;\n            font-size: 1.1rem; }\n          section > .list .header .header-left .other-info > p {\n            height: 20px;\n            line-height: 20px; }\n      section > .list .header .header-right {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        section > .list .header .header-right span {\n          color: #AAAAAA;\n          margin-right: 10px;\n          font-size: 1.2rem; }\n    section > .list .content {\n      margin-left: 50px;\n      margin-right: 10px;\n      font-size: 1.2rem; }\n      section > .list .content .comment {\n        color: #353535; }\n      section > .list .content .replay {\n        background-color: #f7f7f7;\n        color: #AAAAAA;\n        border-top-left-radius: 5px;\n        border-top-right-radius: 5px;\n        padding: 5px 5px; }\n        section > .list .content .replay p {\n          padding-top: 2px; }\n    section > .list .operate {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 5px; }\n      section > .list .operate p {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex: 1;\n            flex: 1;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        section > .list .operate p button {\n          padding: 2px 5px;\n          font-size: 1.2rem;\n          background-color: #fff;\n          border: 0;\n          outline: none; }\n      section > .list .operate p:first-child {\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .operate p:first-child button {\n          color: #AAAAAA; }\n      section > .list .operate p:last-child {\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        section > .list .operate p:last-child button {\n          color: #0074D9; }\n  section > .list:last-child {\n    border-bottom: 1px solid #dddddd; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nsection {\n  background-color: #eaeaea;\n  padding-top: 20px; }\n  section > .list {\n    background-color: #fff;\n    padding: 5px 0;\n    border-top: 1px solid #dddddd; }\n    section > .list .header {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 0; }\n      section > .list .header .header-left {\n        -ms-flex: 0.8;\n            flex: 0.8;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .header .header-left .avatar {\n          width: 40px;\n          height: 40px;\n          border-radius: 50%; }\n        section > .list .header .header-left .other-info {\n          margin-left: 10px; }\n          section > .list .header .header-left .other-info > .author-name {\n            color: #353535;\n            font-size: 1.3rem; }\n          section > .list .header .header-left .other-info > .publish-time {\n            color: #AAAAAA;\n            font-size: 1.1rem; }\n          section > .list .header .header-left .other-info > p {\n            height: 20px;\n            line-height: 20px; }\n      section > .list .header .header-right {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n        position: relative; }\n        section > .list .header .header-right span {\n          color: #AAAAAA;\n          margin-right: 10px;\n          font-size: 1.4rem; }\n        section > .list .header .header-right i {\n          font-size: 1.4rem;\n          width: 20px;\n          height: 20px; }\n        section > .list .header .header-right i.fa-thumbs-up {\n          color: #2ecc71; }\n    section > .list .content {\n      margin-left: 50px;\n      margin-right: 10px;\n      font-size: 1.2rem; }\n      section > .list .content .comment {\n        color: #353535; }\n      section > .list .content .replay {\n        background-color: #f7f7f7;\n        color: #AAAAAA;\n        border-top-left-radius: 5px;\n        border-top-right-radius: 5px;\n        padding: 5px 5px; }\n        section > .list .content .replay p {\n          padding-top: 2px; }\n    section > .list .operate {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      padding: 5px 5px; }\n      section > .list .operate p {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex: 1;\n            flex: 1;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        section > .list .operate p button {\n          padding: 2px 5px;\n          font-size: 1.2rem;\n          background-color: #fff;\n          border: 0;\n          outline: none; }\n      section > .list .operate p:first-child {\n        -ms-flex-pack: start;\n            justify-content: flex-start; }\n        section > .list .operate p:first-child button {\n          color: #AAAAAA; }\n      section > .list .operate p:last-child {\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        section > .list .operate p:last-child button {\n          color: #0074D9; }\n  section > .list:last-child {\n    border-bottom: 1px solid #dddddd; }\n", ""]);
 
 	// exports
 
@@ -13222,6 +13246,10 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 91 */
@@ -13255,11 +13283,17 @@
 	      }
 	    })])]), " ", _vm._h('div', {
 	      staticClass: "header-right"
-	    }, [_vm._h('span', {
+	    }, [_vm._h('div', {
+	      staticClass: "block"
+	    }, [(item.LikeStatus === 0) ? _vm._h('i', {
+	      staticClass: "fa fa-thumbs-o-up"
+	    }) : _vm._h('i', {
+	      staticClass: "fa fa-thumbs-up"
+	    }), " ", " ", _vm._h('span', {
 	      domProps: {
-	        "textContent": _vm._s(item.FloorCount === 1 ? '沙发' : item.FloorCount + '楼')
+	        "textContent": _vm._s(item.LikeCount)
 	      }
-	    })])]), " ", _vm._h('div', {
+	    })])])]), " ", _vm._h('div', {
 	      staticClass: "content"
 	    }, [(item.SupReplies) ? _vm._h('div', {
 	      staticClass: "replay"
