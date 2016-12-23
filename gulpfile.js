@@ -8,7 +8,42 @@ var notify = require('gulp-notify');//通知信息
 var autoprefixer = require('gulp-autoprefixer');
 var html2jade = require('gulp-html2jade');
 var rev = require('gulp-rev');
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const module = {
+	loaders:[
+		{
+			//这是处理es6文件
+			test:path.join(__dirname, '/html/'),
+			loader:'babel-loader',
+			exclude: /node_modules/,
+		},
+		{
+			//这是处理scss文件
+			test:/\.scss$/,
+			loader:'style!css!sass'
+		},
+		{
+			test:/\.vue$/,
+			loader:"vue"
+		},
+		{
+		// 这是处理css文件
+			test:/\.css$/,
+			loaders:["style","css"]
+		},
+		{
+			test: /\.(png|jpg|gif)$/,
+			loader: 'url',
+			query: {
+				// inline files smaller then 10kb as base64 dataURL
+				limit: 10000,
+				// fallback to file-loader with this naming scheme
+				name: '[name].[ext]?[hash]'
+			}
+		}
+	]
+}
 
 gulp.task('sass',function(){
 	return gulp.src('./html/sass/*.scss')
@@ -39,40 +74,7 @@ gulp.task('postdetail',['sass'],function() {
 			output:{
 				filename:'bundle-postdetail.js'
 			},
-			module:{
-				loaders:[
-					{
-						//这是处理es6文件
-						test:path.join(__dirname, '/html/'),
-						loader:'babel-loader',
-						exclude: /node_modules/,
-					},
-					{
-						//这是处理scss文件
-						test:/\.scss$/,
-						loader:'style!css!sass'
-					},
-					{
-						test:/\.vue$/,
-						loader:"vue"
-					},
-					{
-					// 这是处理css文件
-						test:/\.css$/,
-						loaders:["style","css"]
-					},
-					{
-						test: /\.(png|jpg|gif)$/,
-						loader: 'url',
-						query: {
-							// inline files smaller then 10kb as base64 dataURL
-							limit: 10000,
-							// fallback to file-loader with this naming scheme
-							name: '[name].[ext]?[hash]'
-						}
-					}
-				]
-			},
+			module:module,
 			resolve: {
 					extensions: ['', '.js', '.jsx'],
 					alias: {
@@ -92,48 +94,7 @@ gulp.task('ticket',['sass'],function() {
 			output:{
 				filename:'bundle-ticket.js'
 			},
-			module:{
-				loaders:[
-					{
-						//这是处理es6文件
-						test:path.join(__dirname, '/html/'),
-						loader:'babel-loader',
-						exclude: /node_modules/,
-					},
-					{
-						//这是处理scss文件
-						test:/\.scss$/,
-						loader:'style!css!sass'
-					},
-					{
-						test:/\.vue$/,
-						loader:"vue"
-					},
-					{
-					// 这是处理css文件
-						test:/\.css$/,
-						loaders:["style","css"]
-					},
-					{
-						test: /\.(png|jpg|gif)$/,
-						loader: 'url',
-						query: {
-							// inline files smaller then 10kb as base64 dataURL
-							limit: 10000,
-							// fallback to file-loader with this naming scheme
-							name: '[name].[ext]?[hash]'
-						}
-					},
-					{
-						test:/\.html$/,
-						loader:"html-loader"
-					},
-					{
-						test:/\.ejs$/,
-						loader:"ejs-loader?variable=data"
-					}
-				]
-			},
+			module:module,
 			resolve: {
 					extensions: ['', '.js', '.jsx'],
 					alias: {
@@ -163,40 +124,7 @@ gulp.task('app',function() {
 			output:{
 				filename:'bundle-commenting.js'
 			},
-			module:{
-				loaders:[
-					{
-						//这是处理es6文件
-						test:path.join(__dirname, '/html/'),
-						loader:'babel-loader',
-						exclude: /node_modules/,
-					},
-					{
-						//这是处理scss文件
-						test:/\.scss$/,
-						loader:'style!css!sass'
-					},
-					{
-						test:/\.vue$/,
-						loader:"vue"
-					},
-					{
-					// 这是处理css文件
-						test:/\.css$/,
-						loaders:["style","css"]
-					},
-					{
-						test: /\.(png|jpg|gif)$/,
-						loader: 'url',
-						query: {
-							// inline files smaller then 10kb as base64 dataURL
-							limit: 10000,
-							// fallback to file-loader with this naming scheme
-							name: '[name].[ext]?[hash]'
-						}
-					}
-				]
-			},
+			module:module,
 			resolve: {
 					extensions: ['', '.js', '.jsx'],
 					alias: {
