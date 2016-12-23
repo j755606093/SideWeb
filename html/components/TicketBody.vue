@@ -188,6 +188,9 @@ export default {
 			this.$store.dispatch("setisFirst",false);
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 			// this.$store.dispatch("setHaveLocation",true);
+			// 获取乘客信息和优惠信息
+			this.$store.dispatch("getPassenger")
+			
 		}
 		else{
 			this.locationLoad = false;

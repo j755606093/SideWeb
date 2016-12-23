@@ -16,7 +16,14 @@ const {
 /** 获取微信号文章 */
 router.get("/GetTopic",(req,res)=>{
 	const id = req.query.id;
-	rp(serverUrl+"/api/Topic/GetTopicDetail/"+id)
+	rp({
+		method:'POST',
+		uri:serverUrl+"/api/Topic/GetTopicDetail/",
+		body:{
+			id:id
+		},
+		json:true
+	})
 		.then((response)=>{
 			let data = formatJSON(response);
 			if(data.Data){
@@ -36,7 +43,14 @@ router.get("/GetTopic",(req,res)=>{
 /** 获取新闻 */
 router.get("/GetNews",(req,res)=>{
 	const id = req.query.id;
-	rp(serverUrl+"/api/News/GetNewsDetail/"+id)
+	rp({
+		method:'POST',
+		uri:serverUrl+"/api/news/GetNewsDetail/",
+		body:{
+			id:id
+		},
+		json:true
+	})
 		.then((response)=>{
 			let data = formatJSON(response);
 			if(data.Data){

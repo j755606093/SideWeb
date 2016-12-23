@@ -11152,9 +11152,11 @@
 		locationResult: null, //定位结果
 		haveLocation: false, //没有定位结果
 
+		passenger: null, //乘客信息
+		rebate: null, //优惠信息
+
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -11194,6 +11196,12 @@
 		},
 		getHaveLocation: function getHaveLocation(state) {
 			return state.haveLocation;
+		},
+		getPassenger: function getPassenger(state) {
+			return state.passenger;
+		},
+		getRebate: function getRebate(state) {
+			return state.rebate;
 		}
 	};
 
@@ -11382,6 +11390,35 @@
 			    state = _ref13.state;
 
 			commit("SET_ISFIRST", data);
+		},
+		getPassenger: function getPassenger(_ref14) {
+			var commit = _ref14.commit,
+			    state = _ref14.state;
+
+			return fetch(state.serverUrl + "/api/Transport/UserRelevant/9264120").then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				commit("SET_PASSENGER", result.Data);
+				return result.Date;
+			});
+		},
+		addPassenger: function addPassenger(_ref15, data) {
+			var commit = _ref15.commit,
+			    state = _ref15.state;
+
+			return fetch(state.serverUrl + "/api/Passenger/Add", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: (0, _stringify2.default)({
+					Name: data.name
+				})
+			}).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				return result.Date;
+			});
 		}
 	};
 
@@ -11411,6 +11448,9 @@
 		state.haveLocation = data;
 	}), (0, _defineProperty3.default)(_mutations, "SET_ISFIRST", function SET_ISFIRST(state, data) {
 		state.isFirst = data;
+	}), (0, _defineProperty3.default)(_mutations, "SET_PASSENGER", function SET_PASSENGER(state, data) {
+		state.passenger = data.Passengers;
+		state.rebate = data.Rebates;
 	}), _mutations);
 
 	exports.default = {
@@ -31095,6 +31135,8 @@
 				this.$store.dispatch("setisFirst", false);
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
 				// this.$store.dispatch("setHaveLocation",true);
+				// 获取乘客信息和优惠信息
+				this.$store.dispatch("getPassenger");
 			} else {
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
@@ -49433,7 +49475,7 @@
 				certificate: "", //输入的乘客凭证,身份证这类
 				AllFare: [
 					// {
-					// 	name:"周岳谢",
+					// 	Name:"周岳谢",
 					// 	// code:"440802199406011519",
 					// 	active:false,
 					// 	isGetTicket:false
@@ -49486,7 +49528,13 @@
 
 			//获取本地的shuju
 			this.getLocalStorePhone();
-			this.AllFare = this.getLocalStorePassager();
+			var passenger = this.$store.getters.getPassenger;
+			var rebate = this.$store.getters.getRebate;
+			for (var i = 0; i < passenger.length; i++) {
+				passenger[i].active = true;
+				this.AllFare.push(passenger[i]);
+			}
+			// this.AllFare = this.getLocalStorePassager();
 
 			this.computeAll();
 			// console.log(this.formatData(this.busInfo))
@@ -49755,6 +49803,8 @@
 	   * @return {[type]} [description]
 	   */
 			append: function append() {
+				var _this3 = this;
+
 				// 添加乘客至AllFare
 				// 首先检查输入是否正确
 				if (_utils2.default.isChinaName(this.fareName) && this.fareName.length >= 2) {
@@ -49763,20 +49813,30 @@
 						// 如果添加人数大于剩余票数
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
-						var json = {
-							name: this.fareName,
-							// code:this.certificate,
-							active: true,
-							isGetTicket: false
-						};
-						this.AllFare.push(json);
-						this.setLocalStorePassager(json); //存储本地
-						// 清空输入的信息
-						this.fareName = "";
-						this.certificate = "";
+						(function () {
+							var json = {
+								name: _this3.fareName,
+								// code:this.certificate,
+								active: true,
+								isGetTicket: false
+							};
+							_mintUi.Indicator.open({
+								text: '加载中...',
+								spinnerType: 'double-bounce'
+							});
+							_this3.$store.dispatch("addPassenger", json).then(function (result) {
+								_mintUi.Indicator.close();
+								json.Id = result.Id;
+								_this3.AllFare.push(json);
+								// this.setLocalStorePassager(json);//存储本地
+								// 清空输入的信息
+								_this3.fareName = "";
+								_this3.certificate = "";
 
-						this.popupMessage("添加成功!");
-						this.computeAll();
+								_this3.popupMessage("添加成功!");
+								_this3.computeAll();
+							});
+						})();
 					}
 				} else {
 					this.popupMessage("请输入正确的姓名!");
@@ -49846,15 +49906,15 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this3 = this;
+				var _this4 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].name + '?').then(function (action) {
 					// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
-					_this3.AllFare.splice(index, 1);
-					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this3.AllFare));
-					_this3.computeAll();
+					_this4.AllFare.splice(index, 1);
+					window.localStorage.setItem("Passager", (0, _stringify2.default)(_this4.AllFare));
+					_this4.computeAll();
 				}).catch(function (error) {
 					// error=cancel
 					console.log(error);
@@ -49966,7 +50026,7 @@
 	    }, [_vm._h('span', {
 	      staticClass: "name",
 	      domProps: {
-	        "textContent": _vm._s(item.name)
+	        "textContent": _vm._s(item.Name)
 	      }
 	    }), " ", " ", (item.isGetTicket) ? _vm._h('span', {
 	      staticClass: "get-ticket"

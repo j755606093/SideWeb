@@ -46,7 +46,7 @@
 					</div>
 					<div class="list-body">
 						<div class="list-top">
-							<span class="name" v-text="item.name"></span>
+							<span class="name" v-text="item.Name"></span>
 							<!-- <span class="type">成人票</span> -->
 							<span class="get-ticket" v-if="item.isGetTicket" >取票人</span>
 							<!-- <span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span> -->
@@ -324,7 +324,7 @@ export default {
 			certificate:"",//输入的乘客凭证,身份证这类
 			AllFare:[
 				// {
-				// 	name:"周岳谢",
+				// 	Name:"周岳谢",
 				// 	// code:"440802199406011519",
 				// 	active:false,
 				// 	isGetTicket:false
@@ -379,7 +379,13 @@ export default {
 		
 		//获取本地的shuju
 		this.getLocalStorePhone();
-		this.AllFare = this.getLocalStorePassager();
+		let passenger = this.$store.getters.getPassenger;
+		let rebate = this.$store.getters.getRebate;
+		for(let i=0;i<passenger.length;i++){
+			passenger[i].active = true;
+			this.AllFare.push(passenger[i]);
+		}
+		// this.AllFare = this.getLocalStorePassager();
 
 		this.computeAll();
 		// console.log(this.formatData(this.busInfo))
@@ -657,14 +663,23 @@ export default {
 						active:true,
 						isGetTicket:false
 					}
-					this.AllFare.push(json);
-					this.setLocalStorePassager(json);//存储本地
-					// 清空输入的信息
-					this.fareName = "";
-					this.certificate = "";
+					Indicator.open({
+						text: '加载中...',
+						spinnerType: 'double-bounce'
+					});
+					this.$store.dispatch("addPassenger",json)
+						.then((result)=>{
+							Indicator.close();
+							json.Id= result.Id; 
+							this.AllFare.push(json);
+							// this.setLocalStorePassager(json);//存储本地
+							// 清空输入的信息
+							this.fareName = "";
+							this.certificate = "";
 
-					this.popupMessage("添加成功!");
-					this.computeAll();
+							this.popupMessage("添加成功!");
+							this.computeAll();
+						})
 				}
 			}
 			else{

@@ -30,9 +30,12 @@ const state = {
 	locationResult:null,//定位结果
 	haveLocation:false,//没有定位结果
 
+	passenger:null,//乘客信息
+	rebate:null,//优惠信息
+
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	// serverUrl:"http://192.168.31.80",//服务器地址
-	serverUrl:"",//服务器地址,生产时候需要的
+	serverUrl:"http://192.168.31.80",//服务器地址
+	// serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据
@@ -57,7 +60,9 @@ const getters = {
 	getBusInfo:state=>state.busInfo,
 	Development:state=>state,
 	getLocationResult:state=>state.locationResult,
-	getHaveLocation:state=>state.haveLocation
+	getHaveLocation:state=>state.haveLocation,
+	getPassenger:state=>state.passenger,
+	getRebate:state=>state.rebate
 }
 
 let getData = (url,callback)=>{
@@ -207,6 +212,29 @@ const actions = {
 	setisFirst({commit,state},data){
 		commit("SET_ISFIRST",data);
 	},
+	getPassenger({commit,state}){
+		return fetch(state.serverUrl+"/api/Transport/UserRelevant/9264120")
+			.then(result=>result.json())
+			.then(result=>{
+				commit("SET_PASSENGER",result.Data);
+				return result.Date;
+			})
+	},
+	addPassenger({commit,state},data){
+		return fetch(state.serverUrl+"/api/Passenger/Add",{
+			method: 'POST',
+			headers: {
+		    'Content-Type': 'application/json'
+		  },
+			body:JSON.stringify({
+				Name:data.name
+			})
+		})
+		.then(result=>result.json())
+		.then(result=>{
+			return result.Date;
+		})
+	}
 }
 
 // mutations
@@ -246,6 +274,10 @@ const mutations = {
 	},
 	["SET_ISFIRST"](state,data){
 		state.isFirst = data;
+	},
+	["SET_PASSENGER"](state,data){
+		state.passenger = data.Passengers;
+		state.rebate = data.Rebates;
 	}
 }
 
