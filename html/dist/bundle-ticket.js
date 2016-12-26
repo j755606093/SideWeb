@@ -11405,7 +11405,7 @@
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch(state.serverUrl + "/api/Transport/UserRelevant/9264120").then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/UserRelevant").then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				var data = result.Data;
@@ -11430,8 +11430,7 @@
 				},
 				body: (0, _stringify2.default)({
 					Name: data.Name,
-					Mobile: data.Mobile,
-					UsrId: "9264120"
+					Mobile: data.Mobile
 				})
 			}).then(function (result) {
 				return result.json();
