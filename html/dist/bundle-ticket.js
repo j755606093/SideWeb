@@ -11159,8 +11159,7 @@
 		rebate: null, //优惠信息
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
-		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "http://192.168.31.80" };
 
 	// getters,获取数据
 	var getters = {
@@ -11405,7 +11404,7 @@
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch(state.serverUrl + "/api/Transport/UserRelevant").then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/UserRelevant/9264120").then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				var data = result.Data;
@@ -11430,7 +11429,8 @@
 				},
 				body: (0, _stringify2.default)({
 					Name: data.Name,
-					Mobile: data.Mobile
+					Mobile: data.Mobile,
+					UsrId: "9264120"
 				})
 			}).then(function (result) {
 				return result.json();
@@ -49299,7 +49299,7 @@
 	var __vue_styles__ = {};
 
 	/* styles */
-	__webpack_require__(306);
+	__webpack_require__(318);
 
 	/* script */
 	__vue_exports__ = __webpack_require__(309);
@@ -49343,46 +49343,8 @@
 	module.exports = __vue_exports__;
 
 /***/ },
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(307);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(139)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 307 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(93)();
-	// imports
-	exports.i(__webpack_require__(308), "");
-
-	// module
-	exports.push([module.id, "\n", ""]);
-
-	// exports
-
-
-/***/ },
+/* 306 */,
+/* 307 */,
 /* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -52182,6 +52144,46 @@
 	}
 
 	module.exports = plugin;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(319);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(139)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(93)();
+	// imports
+	exports.i(__webpack_require__(308), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

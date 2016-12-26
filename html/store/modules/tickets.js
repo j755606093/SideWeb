@@ -36,8 +36,8 @@ const state = {
 	rebate:null,//优惠信息
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	// serverUrl:"http://192.168.31.80",//服务器地址
-	serverUrl:"",//服务器地址,生产时候需要的
+	serverUrl:"http://192.168.31.80",//服务器地址
+	// serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据
@@ -216,7 +216,7 @@ const actions = {
 		commit("SET_ISFIRST",data);
 	},
 	getPassenger({commit,state}){
-		return fetch(state.serverUrl+"/api/Transport/UserRelevant")
+		return fetch(state.serverUrl+"/api/Transport/UserRelevant/9264120")
 			.then(result=>result.json())
 			.then(result=>{
 				let data = result.Data;
@@ -239,7 +239,7 @@ const actions = {
 			body:JSON.stringify({
 				Name:data.Name,
 				Mobile:data.Mobile,
-				// UsrId:"9264120"
+				UsrId:"9264120"
 			})
 		})
 		.then(result=>result.json())

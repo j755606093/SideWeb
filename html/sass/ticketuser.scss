@@ -40,18 +40,7 @@ header{
 		}
 	}
 }
-.body{
-	width:100%;
-	margin-top:50px;
-	.no-data{
-		padding-top:20px;
-		text-align: center;
-		p{
-			color:$gray;
-			font-size:1.8rem;
-		}
-	}
-}
+
 footer{
 	display:flex;
 	flex-direction:row;
