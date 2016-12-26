@@ -1,0 +1,78 @@
+@import "./utils.scss";
+
+header{
+	height:50px;
+	// background-color:#14d67c;
+	background-color:#2196F3;
+	color:$white;
+	font-size:1.5rem;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	z-index:100;
+	padding:0;
+	margin:0;
+	// color:#000;
+	.home{
+		text-align:center;
+		line-height:50px;
+		font-size:1.8rem;
+		font-weight:900;
+	}
+	.other{
+		text-align:center;
+		.left{
+			height:50px;
+			font-size:1.5rem;
+			position:absolute;
+			top:0;
+			left:0;
+			width:50px;
+			i{
+				font-size:3rem;
+				line-height:50px;
+			}
+		}
+		.center{
+			line-height:50px;
+			font-size:1.8rem;
+		}
+	}
+}
+
+footer{
+	display:flex;
+	flex-direction:row;
+	position:absolute;
+	bottom:0;
+	left:0;
+	height:50px;
+	width:100%;
+	justify-content:center;
+	align-items:center;
+	border-top:1px solid $gray;
+	.footer{
+		flex:1;
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+		color:$gray;
+		i{
+			flex:1;
+			font-size:1.8rem;
+		}
+		p{
+			flex:1;
+			font-size:1.4rem;
+			color:$gray;
+		}
+	}
+	.footer.active{
+		color:$blue;
+		p{
+			color:$blue;
+		}
+	}
+}

@@ -4,7 +4,7 @@
 			<i class="fa fa-home"></i>
 			<p>票务</p>
 		</a>
-		<a class="footer">
+		<a href="./getCustomPage?page=TicketOrder" class="footer">
 			<i class="fa fa-sticky-note"></i>
 			<p>订单</p>
 		</a>
