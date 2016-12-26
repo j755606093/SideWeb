@@ -8,7 +8,8 @@
 				<router-view></router-view>
 			</transition>
 		</div>
-		<order-info></order-info>
+		<side-footer></side-footer>
+		<!-- <order-info></order-info> -->
 	</div>
 </template>
 
@@ -23,6 +24,7 @@
 import Utils from "./Utils/utils";
 import SideHeader from "./components/SideHeader.vue";
 import TicketInfo from "./components/TicketInfo.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
 	data () {
@@ -61,7 +63,8 @@ export default {
 	},
 	components:{
 		"side-header":SideHeader,
-		"order-info":TicketInfo
+		"order-info":TicketInfo,
+		"side-footer":Footer
 	}
 }
 </script>

@@ -1,5 +1,6 @@
 import types from '../Type';//数据类型
 import "whatwg-fetch";
+const _ = require("underscore");
 
 // initial state
 // shape: [{ id, quantity }]
@@ -7,6 +8,7 @@ const state = {
 	isFirst:true,//第一次启动
 	HeaderIsHome: true,
 	HeaderTitle:"身边订票",
+	showFooter:true,//显示底部tab
 
 	startCity:{
 		Code:"3385299",
@@ -42,6 +44,7 @@ const state = {
 const getters = {
 	getIsFirst:state=>state.isFirst,
 	getHeaderState: state => state.HeaderIsHome,
+	getFooter:state=>state.showFooter,
 	getHeaderTitle: state => state.HeaderTitle,
 	getInfo: state => {
 		return {
@@ -81,6 +84,9 @@ let getData = (url,callback)=>{
 const actions = {
 	ChangeHeader ({ commit, state }, data) {
 		commit(types.CHANGE_HEADER,data)
+	},
+	ChangeFooter ({ commit, state }, data) {
+		commit("CHANGE_FOOTER",data)
 	},
 	setStartCity({commit,state},data){
 		commit(types.SET_STARTCITY,data)
@@ -157,15 +163,12 @@ const actions = {
 		    'Content-Type': 'application/json',
 		  },
 			body:JSON.stringify({
-				Name:data.Name,//使用点号链接
-				Mobile:data.Mobile,
 				LineId:state.busInfo.LineId,
 				SPointId:state.busInfo.StartPointId,
 				EPointId:state.busInfo.EndPointId,
 				Date:state.startDate.date,
-				Num:data.Num,
-				Coupon:data.DiscountCode,
-				TktHolder:data.ContactMan
+				LinkmanId:data.LinkmanId,
+				PassengerIds:data.PassengerIds
 			})
 		})
 		.then(result=>result.json())
@@ -216,8 +219,15 @@ const actions = {
 		return fetch(state.serverUrl+"/api/Transport/UserRelevant/9264120")
 			.then(result=>result.json())
 			.then(result=>{
-				commit("SET_PASSENGER",result.Data);
-				return result.Date;
+				let data = result.Data;
+				// _.map(data,item=>{
+				// 	if(data.Mobile!==''){
+				// 		item.isGetTicket = false;
+				// 	}
+				// })
+				commit("SET_PASSENGER",data.Passengers);
+				commit("SET_REBATES",data.Rebates)
+				return data;
 			})
 	},
 	addPassenger({commit,state},data){
@@ -227,12 +237,14 @@ const actions = {
 		    'Content-Type': 'application/json'
 		  },
 			body:JSON.stringify({
-				Name:data.name
+				Name:data.Name,
+				Mobile:data.Mobile,
+				UsrId:"9264120"
 			})
 		})
 		.then(result=>result.json())
 		.then(result=>{
-			return result.Date;
+			return result;
 		})
 	}
 }
@@ -243,6 +255,9 @@ const mutations = {
 		// 设置头部状态显示
 		state.HeaderIsHome = data.isHome;
 		state.HeaderTitle = data.Title;
+	},
+	["CHANGE_FOOTER"] (state,data){
+		state.showFooter = data;
 	},
 	[types.SET_STARTCITY] (state,data){
 		state.startCity = data;
@@ -276,8 +291,10 @@ const mutations = {
 		state.isFirst = data;
 	},
 	["SET_PASSENGER"](state,data){
-		state.passenger = data.Passengers;
-		state.rebate = data.Rebates;
+		state.passenger = data;
+	},
+	["SET_REBATES"](state,data){
+		state.rebate = data;
 	}
 }
 

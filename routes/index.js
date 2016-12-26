@@ -23,8 +23,7 @@ router.get("/GetTopic",(req,res)=>{
 			id:id
 		},
 		json:true
-	})
-		.then((response)=>{
+	}).then((response)=>{
 			let data = formatJSON(response);
 			if(data.Data){
 				res.set('Content-Type', 'text/html');

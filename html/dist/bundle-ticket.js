@@ -11123,12 +11123,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _ = __webpack_require__(150);
+
 	// initial state
 	// shape: [{ id, quantity }]
 	var state = {
 		isFirst: true, //第一次启动
 		HeaderIsHome: true,
 		HeaderTitle: "身边订票",
+		showFooter: true, //显示底部tab
 
 		startCity: {
 			Code: "3385299",
@@ -11165,6 +11168,9 @@
 		},
 		getHeaderState: function getHeaderState(state) {
 			return state.HeaderIsHome;
+		},
+		getFooter: function getFooter(state) {
+			return state.showFooter;
 		},
 		getHeaderTitle: function getHeaderTitle(state) {
 			return state.HeaderTitle;
@@ -11224,27 +11230,33 @@
 
 			commit(_Type2.default.CHANGE_HEADER, data);
 		},
-		setStartCity: function setStartCity(_ref2, data) {
+		ChangeFooter: function ChangeFooter(_ref2, data) {
 			var commit = _ref2.commit,
 			    state = _ref2.state;
 
-			commit(_Type2.default.SET_STARTCITY, data);
+			commit("CHANGE_FOOTER", data);
 		},
-		setEndCity: function setEndCity(_ref3, data) {
+		setStartCity: function setStartCity(_ref3, data) {
 			var commit = _ref3.commit,
 			    state = _ref3.state;
 
-			commit(_Type2.default.SET_ENDCITY, data);
+			commit(_Type2.default.SET_STARTCITY, data);
 		},
-		setStartDate: function setStartDate(_ref4, data) {
+		setEndCity: function setEndCity(_ref4, data) {
 			var commit = _ref4.commit,
 			    state = _ref4.state;
 
-			commit(_Type2.default.SET_STARTDATE, data);
+			commit(_Type2.default.SET_ENDCITY, data);
 		},
-		setStartCityList: function setStartCityList(_ref5) {
+		setStartDate: function setStartDate(_ref5, data) {
 			var commit = _ref5.commit,
 			    state = _ref5.state;
+
+			commit(_Type2.default.SET_STARTDATE, data);
+		},
+		setStartCityList: function setStartCityList(_ref6) {
+			var commit = _ref6.commit,
+			    state = _ref6.state;
 
 			if (state.startCityList) {
 				// 列表空
@@ -11259,9 +11271,9 @@
 				return result.Data;
 			});
 		},
-		setEndCityList: function setEndCityList(_ref6) {
-			var commit = _ref6.commit,
-			    state = _ref6.state;
+		setEndCityList: function setEndCityList(_ref7) {
+			var commit = _ref7.commit,
+			    state = _ref7.state;
 
 			if (state.endCityList) {
 				// 列表空
@@ -11277,9 +11289,9 @@
 				});
 			}
 		},
-		setResultList: function setResultList(_ref7) {
-			var commit = _ref7.commit,
-			    state = _ref7.state;
+		setResultList: function setResultList(_ref8) {
+			var commit = _ref8.commit,
+			    state = _ref8.state;
 
 			return fetch(state.serverUrl + "/api/Transport/GetLines", {
 				method: 'POST',
@@ -11306,15 +11318,15 @@
 				}
 			});
 		},
-		setBusInfo: function setBusInfo(_ref8, data) {
-			var commit = _ref8.commit,
-			    state = _ref8.state;
+		setBusInfo: function setBusInfo(_ref9, data) {
+			var commit = _ref9.commit,
+			    state = _ref9.state;
 
 			commit(_Type2.default.SET_BUSINFO, data);
 		},
-		payMoney: function payMoney(_ref9, data) {
-			var commit = _ref9.commit,
-			    state = _ref9.state;
+		payMoney: function payMoney(_ref10, data) {
+			var commit = _ref10.commit,
+			    state = _ref10.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/Create", {
@@ -11323,23 +11335,20 @@
 					'Content-Type': 'application/json'
 				},
 				body: (0, _stringify2.default)({
-					Name: data.Name, //使用点号链接
-					Mobile: data.Mobile,
 					LineId: state.busInfo.LineId,
 					SPointId: state.busInfo.StartPointId,
 					EPointId: state.busInfo.EndPointId,
 					Date: state.startDate.date,
-					Num: data.Num,
-					Coupon: data.DiscountCode,
-					TktHolder: data.ContactMan
+					LinkmanId: data.LinkmanId,
+					PassengerIds: data.PassengerIds
 				})
 			}).then(function (result) {
 				return result.json();
 			});
 		},
-		showWXpay: function showWXpay(_ref10, data) {
-			var commit = _ref10.commit,
-			    state = _ref10.state;
+		showWXpay: function showWXpay(_ref11, data) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/PayOrder", {
@@ -11354,9 +11363,9 @@
 				return result.json();
 			});
 		},
-		setLocationResult: function setLocationResult(_ref11, data) {
-			var commit = _ref11.commit,
-			    state = _ref11.state;
+		setLocationResult: function setLocationResult(_ref12, data) {
+			var commit = _ref12.commit,
+			    state = _ref12.state;
 
 			return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
@@ -11379,32 +11388,39 @@
 				}
 			});
 		},
-		setHaveLocation: function setHaveLocation(_ref12, data) {
-			var commit = _ref12.commit,
-			    state = _ref12.state;
-
-			commit(_Type2.default.SET_HAVELOCATION, data);
-		},
-		setisFirst: function setisFirst(_ref13, data) {
+		setHaveLocation: function setHaveLocation(_ref13, data) {
 			var commit = _ref13.commit,
 			    state = _ref13.state;
 
-			commit("SET_ISFIRST", data);
+			commit(_Type2.default.SET_HAVELOCATION, data);
 		},
-		getPassenger: function getPassenger(_ref14) {
+		setisFirst: function setisFirst(_ref14, data) {
 			var commit = _ref14.commit,
 			    state = _ref14.state;
+
+			commit("SET_ISFIRST", data);
+		},
+		getPassenger: function getPassenger(_ref15) {
+			var commit = _ref15.commit,
+			    state = _ref15.state;
 
 			return fetch(state.serverUrl + "/api/Transport/UserRelevant/9264120").then(function (result) {
 				return result.json();
 			}).then(function (result) {
-				commit("SET_PASSENGER", result.Data);
-				return result.Date;
+				var data = result.Data;
+				// _.map(data,item=>{
+				// 	if(data.Mobile!==''){
+				// 		item.isGetTicket = false;
+				// 	}
+				// })
+				commit("SET_PASSENGER", data.Passengers);
+				commit("SET_REBATES", data.Rebates);
+				return data;
 			});
 		},
-		addPassenger: function addPassenger(_ref15, data) {
-			var commit = _ref15.commit,
-			    state = _ref15.state;
+		addPassenger: function addPassenger(_ref16, data) {
+			var commit = _ref16.commit,
+			    state = _ref16.state;
 
 			return fetch(state.serverUrl + "/api/Passenger/Add", {
 				method: 'POST',
@@ -11412,12 +11428,14 @@
 					'Content-Type': 'application/json'
 				},
 				body: (0, _stringify2.default)({
-					Name: data.name
+					Name: data.Name,
+					Mobile: data.Mobile,
+					UsrId: "9264120"
 				})
 			}).then(function (result) {
 				return result.json();
 			}).then(function (result) {
-				return result.Date;
+				return result;
 			});
 		}
 	};
@@ -11427,6 +11445,8 @@
 		// 设置头部状态显示
 		state.HeaderIsHome = data.isHome;
 		state.HeaderTitle = data.Title;
+	}), (0, _defineProperty3.default)(_mutations, "CHANGE_FOOTER", function CHANGE_FOOTER(state, data) {
+		state.showFooter = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_STARTCITY, function (state, data) {
 		state.startCity = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.SET_ENDCITY, function (state, data) {
@@ -11449,8 +11469,9 @@
 	}), (0, _defineProperty3.default)(_mutations, "SET_ISFIRST", function SET_ISFIRST(state, data) {
 		state.isFirst = data;
 	}), (0, _defineProperty3.default)(_mutations, "SET_PASSENGER", function SET_PASSENGER(state, data) {
-		state.passenger = data.Passengers;
-		state.rebate = data.Rebates;
+		state.passenger = data;
+	}), (0, _defineProperty3.default)(_mutations, "SET_REBATES", function SET_REBATES(state, data) {
+		state.rebate = data;
 	}), _mutations);
 
 	exports.default = {
@@ -28352,7 +28373,34 @@
 
 	var _TicketInfo2 = _interopRequireDefault(_TicketInfo);
 
+	var _Footer = __webpack_require__(313);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -28372,29 +28420,10 @@
 		},
 		components: {
 			"side-header": _SideHeader2.default,
-			"order-info": _TicketInfo2.default
+			"order-info": _TicketInfo2.default,
+			"side-footer": _Footer2.default
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 140 */
@@ -30600,7 +30629,7 @@
 	      "enter-active-class": "fadeIn",
 	      "leave-active-class": "fadeOut"
 	    }
-	  }, [_vm._h('router-view')])]), " ", _vm._h('order-info')])
+	  }, [_vm._h('router-view')])]), " ", _vm._h('side-footer'), " "])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -49139,6 +49168,10 @@
 		value: true
 	});
 
+	var _typeof2 = __webpack_require__(118);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
 	var _stringify = __webpack_require__(51);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
@@ -49153,6 +49186,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -49493,6 +49530,7 @@
 					payMoney: 0, //总共支付的钱
 					contactPhone: "", //取票人手机号
 					discountcode: "" }, //订单信息
+
 				TicketPay: null, //服务器产生的订单信息
 				havediscountcode: false, //是否有优惠码
 				countdown: null, //倒计时
@@ -49526,13 +49564,24 @@
 				});
 			}
 
-			//获取本地的shuju
-			this.getLocalStorePhone();
+			//获取本地的取票人数据....现在冲服务器获取
+			// this.getLocalStorePhone();
+
 			var passenger = this.$store.getters.getPassenger;
-			var rebate = this.$store.getters.getRebate;
+			//获取乘客信息
+			var rebate = this.$store.getters.getRebate; //获取优惠码
 			for (var i = 0; i < passenger.length; i++) {
-				passenger[i].active = true;
+				passenger[i].active = false;
+				passenger[i].isGetTicket = false;
+				// if(passenger[i].Mobile!==''){
+				// 	passenger[i].isGetTicket = false;
+				// }
 				this.AllFare.push(passenger[i]);
+				//如果乘客信息中有默认的取票人
+				if (passenger[i].IsDefault === 1) {
+					this.payInfoData.getTicketManName = passenger[i].Name;
+					this.payInfoData.contactPhone = passenger[i].Mobile;
+				}
 			}
 			// this.AllFare = this.getLocalStorePassager();
 
@@ -49682,8 +49731,9 @@
 	   */
 			getGetTicketMan: function getGetTicketMan() {
 				var name = this.payInfoData.getTicketManName;
-				if (_utils2.default.isChinaName(name) && name.length >= 2) {
-					window.localStorage.setItem("GetTicketName", this.payInfoData.getTicketManName);
+				if (_utils2.default.isChinaName(name) && name.length >= 2 || name === "") {
+					//取票人名字必须是汉字,或者为空
+					// window.localStorage.setItem("GetTicketName",this.payInfoData.getTicketManName);
 					return false;
 				} else {
 					return true;
@@ -49732,7 +49782,7 @@
 					return;
 				} else {
 					if (this.getGetTicketMan()) {
-						this.popupMessage("取票人信息不正确,请检查修改!");
+						this.popupMessage("取票人信息不正确,请设置取票人或检查修改!");
 						return;
 					} else {
 						if (this.inspectPhone()) {
@@ -49742,18 +49792,23 @@
 								spinnerType: 'double-bounce'
 							});
 
-							// 获取乘客名字,逗号相连
-							var arrayData = "";
+							var arrayData = null;
+							var arrayId = [];
 							for (var i = 0; i < this.AllFare.length; i++) {
-								arrayData = this.AllFare[i].name + "," + arrayData;
+								// if(this.AllFare[i].IsDefault===1){
+								// 	//找到取票人
+								// 	arrayData = this.AllFare[i];
+								// }
+								if (this.AllFare[i].active) {
+									//获取乘客id
+									arrayId.push(this.AllFare[i].Id);
+								}
 							}
 
 							this.$store.dispatch("payMoney", {
-								Name: arrayData.slice(0, arrayData.length - 1),
-								Mobile: this.payInfoData.contactPhone,
-								Num: this.AllFare.length,
-								ContactMan: this.payInfoData.getTicketManName,
-								DiscountCode: this.payInfoData.discountcode
+								// LinkmanId:arrayData.Id,
+								LinkmanId: this.payInfoData.contactPhone,
+								PassengerIds: arrayId
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
@@ -49791,7 +49846,7 @@
 	   */
 			inspectPhone: function inspectPhone() {
 				if (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)) {
-					this.setLocalStorePhone(this.payInfoData.contactPhone);
+					// this.setLocalStorePhone(this.payInfoData.contactPhone);
 					return true;
 				} else {
 					return false;
@@ -49813,10 +49868,17 @@
 						// 如果添加人数大于剩余票数
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
-						(function () {
+						var _ret = function () {
+							var check = /^1[23578][0-9]{9}$/.test(_this3.certificate);
+							if (!check && _this3.certificate !== '') {
+								_this3.popupMessage("请填写正确的联系手机号!");
+								return {
+									v: void 0
+								};
+							}
 							var json = {
-								name: _this3.fareName,
-								// code:this.certificate,
+								Name: _this3.fareName,
+								Mobile: _this3.certificate,
 								active: true,
 								isGetTicket: false
 							};
@@ -49826,17 +49888,24 @@
 							});
 							_this3.$store.dispatch("addPassenger", json).then(function (result) {
 								_mintUi.Indicator.close();
-								json.Id = result.Id;
-								_this3.AllFare.push(json);
-								// this.setLocalStorePassager(json);//存储本地
-								// 清空输入的信息
-								_this3.fareName = "";
-								_this3.certificate = "";
+								if (result.Data) {
+									_this3.$store.dispatch("getPassenger");
+									json.Id = result.Data;
+									_this3.AllFare.push(json);
+									// this.setLocalStorePassager(json);//存储本地
+									// 清空输入的信息
+									_this3.fareName = "";
+									_this3.certificate = "";
 
-								_this3.popupMessage("添加成功!");
-								_this3.computeAll();
+									_this3.popupMessage("添加成功!");
+									_this3.computeAll();
+								} else {
+									_this3.popupMessage(result.Message);
+								}
 							});
-						})();
+						}();
+
+						if ((typeof _ret === "undefined" ? "undefined" : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
 					}
 				} else {
 					this.popupMessage("请输入正确的姓名!");
@@ -49934,10 +50003,20 @@
 	   * @param {[type]} index [description]
 	   */
 			setGetTicketMan: function setGetTicketMan(index) {
-				_.map(this.AllFare, function (item) {
-					item.isGetTicket = false;
-				});
-				this.AllFare[index].isGetTicket = true;
+				// if(!this.AllFare[index].active){
+				// 	this.popupMessage("请先选中这个乘客才能设置取票人");
+				// 	return;
+				// }
+				for (var i = 0; i < this.AllFare.length; i++) {
+					this.AllFare[i].isGetTicket = false;
+				}
+				var data = this.AllFare[index];
+				data.isGetTicket = true;
+				this.$set(this.AllFare, index, data);
+
+				// 设置取票人信息
+				this.payInfoData.getTicketManName = data.Name;
+				this.payInfoData.contactPhone = data.Mobile;
 			},
 			GetDiscount: function GetDiscount() {
 				// 查看选取优惠券
@@ -50028,17 +50107,16 @@
 	      domProps: {
 	        "textContent": _vm._s(item.Name)
 	      }
-	    }), " ", " ", (item.isGetTicket) ? _vm._h('span', {
+	    }), " ", " ", (item.Mobile !== '') ? [(item.isGetTicket) ? _vm._h('span', {
 	      staticClass: "get-ticket"
-	    }, ["取票人"]) : _vm._e(), " "]), " "]), " ", _vm._h('span', {
+	    }, ["取票人"]) : _vm._h('span', {
+	      staticClass: "set-ticket",
 	      on: {
 	        "click": function($event) {
-	          _vm.trashMan(index)
+	          _vm.setGetTicketMan(index)
 	        }
 	      }
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-trash"
-	    })])])
+	    }, ["设为取票人"]), " "] : _vm._e()]), " "]), " ", _vm._h('span', [_vm._s(item.Mobile)]), " "])
 	  })]) : _vm._e(), " ", " ", _vm._h('div', {
 	    staticClass: "info-man"
 	  }, [_vm._h('div', {
@@ -50063,39 +50141,37 @@
 	        _vm.fareName = $event.target.value
 	      }
 	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "info-man-card info"
+	  }, [_vm._h('span', ["手机号"]), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.certificate),
+	      expression: "certificate"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "placeholder": "请填写手机号(用于取票)"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.certificate)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.certificate = $event.target.value
+	      }
+	    }
 	  }), " ", _vm._h('button', {
 	    on: {
 	      "click": _vm.append
 	    }
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-plus-circle"
-	  }), "添加"])]), " "]), " "]), " ", " ", _vm._h('div', {
+	  }), "添加"])])]), " "]), " ", " ", _vm._h('div', {
 	    staticClass: "people-info"
-	  }, [_vm._m(2), " ", " ", " ", " ", " ", " ", _vm._h('div', {
-	    staticClass: "contact-info"
-	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', ["联系人"]), " ", _vm._h('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.payInfoData.getTicketManName),
-	      expression: "payInfoData.getTicketManName"
-	    }],
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "用于取票"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.payInfoData.getTicketManName)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.payInfoData.getTicketManName = $event.target.value
-	      }
-	    }
-	  })])]), " ", _vm._h('div', {
+	  }, [_vm._m(2), " ", " ", " ", " ", " ", " ", " ", _vm._h('div', {
 	    staticClass: "contact-info"
 	  }, [_vm._h('div', {
 	    staticClass: "info"
@@ -51868,6 +51944,241 @@
 	}
 
 	module.exports = plugin;
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _keys = __webpack_require__(114);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(118);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var __vue_exports__, __vue_options__;
+	var __vue_styles__ = {};
+
+	/* styles */
+	__webpack_require__(314);
+
+	/* script */
+	__vue_exports__ = __webpack_require__(316);
+
+	/* template */
+	var __vue_template__ = __webpack_require__(317);
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {};
+	if ((0, _typeof3.default)(__vue_exports__.default) === "object" || typeof __vue_exports__.default === "function") {
+	  if ((0, _keys2.default)(__vue_exports__).some(function (key) {
+	    return key !== "default" && key !== "__esModule";
+	  })) {
+	    console.error("named exports are not supported in *.vue files.");
+	  }
+	  __vue_options__ = __vue_exports__ = __vue_exports__.default;
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options;
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/Footer.vue";
+	__vue_options__.render = __vue_template__.render;
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+
+	/* hot reload */
+	if (false) {
+	  (function () {
+	    var hotAPI = require("vue-hot-reload-api");
+	    hotAPI.install(require("vue"), false);
+	    if (!hotAPI.compatible) return;
+	    module.hot.accept();
+	    if (!module.hot.data) {
+	      hotAPI.createRecord("data-v-cdb23580", __vue_options__);
+	    } else {
+	      hotAPI.reload("data-v-cdb23580", __vue_options__);
+	    }
+	  })();
+	}
+	if (__vue_options__.functional) {
+	  console.error("[vue-loader] Footer.vue: functional components are not supported and should be defined in plain js files using render functions.");
+	}
+
+	module.exports = __vue_exports__;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(315);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(138)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-cdb23580!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Footer.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-cdb23580!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Footer.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nfooter {\n  display: flex;\n  flex-direction: row;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  justify-content: center;\n  align-items: center;\n  border-top: 1px solid #AAAAAA;\n}\nfooter .footer {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    color: #AAAAAA;\n}\nfooter .footer i {\n      flex: 1;\n      font-size: 1.8rem;\n}\nfooter .footer p {\n      flex: 1;\n      font-size: 1.4rem;\n      color: #AAAAAA;\n}\nfooter .footer.active {\n    color: #0074D9;\n}\nfooter .footer.active p {\n      color: #0074D9;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _vuex = __webpack_require__(3);
+
+	var _utils = __webpack_require__(140);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {};
+		},
+		created: function created() {},
+
+		computed: {
+			getfooter: function getfooter() {
+				return this.$store.getters.getHeaderState;
+				// return this.$store.getters.getHeaderState;
+			}
+		},
+		methods: {}
+	};
+
+/***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('footer', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.getfooter),
+	      expression: "getfooter"
+	    }]
+	  }, [_vm._m(0), " ", _vm._m(1), " ", _vm._m(2)])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('a', {
+	    staticClass: "footer active",
+	    attrs: {
+	      "href": "./getCustomPage?page=ticket#/home/ticketbody"
+	    }
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-home"
+	  }), " ", _vm._h('p', ["票务"])])
+	},function (){var _vm=this;
+	  return _vm._h('a', {
+	    staticClass: "footer"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-sticky-note"
+	  }), " ", _vm._h('p', ["订单"])])
+	},function (){var _vm=this;
+	  return _vm._h('a', {
+	    staticClass: "footer"
+	  }, [_vm._h('i', {
+	    staticClass: "fa fa-user"
+	  }), " ", _vm._h('p', ["个人中心"])])
+	}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-cdb23580", module.exports)
+	  }
+	}
 
 /***/ }
 /******/ ]);

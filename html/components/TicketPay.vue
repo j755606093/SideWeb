@@ -48,14 +48,17 @@
 						<div class="list-top">
 							<span class="name" v-text="item.Name"></span>
 							<!-- <span class="type">成人票</span> -->
-							<span class="get-ticket" v-if="item.isGetTicket" >取票人</span>
-							<!-- <span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span> -->
+							<template v-if="item.Mobile!==''">
+								<span class="get-ticket" v-if="item.isGetTicket">取票人</span>
+								<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span>
+							</template>
 						</div>
 						<!-- <div class="list-bottom">
 							<p>身份证<span v-text="item.code"></span></p>
 						</div> -->
 					</div>
-					<span @click="trashMan(index)"><i class="fa fa-trash"></i></span>
+					<span>{{item.Mobile}}</span>
+					<!-- <span @click="trashMan(index)"><i class="fa fa-trash"></i></span> -->
 				</div>
 			</div>
 			<!-- 添加乘客 -->
@@ -63,12 +66,13 @@
 				<div class="info-man-name info">
 					<span>乘客姓名</span>
 					<input type="text" placeholder="请填写真实姓名" v-model="fareName">
+					
+				</div>
+				<div class="info-man-card info">
+					<span>手机号</span>
+					<input type="text" placeholder="请填写手机号(用于取票)" v-model="certificate">
 					<button @click="append"><i class="fa fa-plus-circle"></i>添加</button>
 				</div>
-				<!-- <div class="info-man-card info">
-					<span>身份证</span>
-					<input type="text" placeholder="请填写证件号码" v-model="certificate">
-				</div> -->
 			</div>
 			<!-- <div class="click-append" @click="append">
 				<i class="fa fa-plus-circle"></i>
@@ -118,12 +122,12 @@
 
 
 		<!-- 联系人信息 -->
-		<div class="contact-info">
+		<!-- <div class="contact-info">
 			<div class="info">
 				<span>联系人</span>
 				<input type="text" placeholder="用于取票" v-model="payInfoData.getTicketManName">
 			</div>
-		</div>
+		</div> -->
 		<div class="contact-info">
 			<div class="info">
 				<span>联系手机</span>
@@ -343,6 +347,7 @@ export default {
 				contactPhone:"",//取票人手机号
 				discountcode:"",//优惠码
 			},//订单信息
+
 			TicketPay:null,//服务器产生的订单信息
 			havediscountcode:false,//是否有优惠码
 			countdown:null,//倒计时
@@ -377,13 +382,24 @@ export default {
 			});
 		}
 		
-		//获取本地的shuju
-		this.getLocalStorePhone();
+		//获取本地的取票人数据....现在冲服务器获取
+		// this.getLocalStorePhone();
+
 		let passenger = this.$store.getters.getPassenger;
-		let rebate = this.$store.getters.getRebate;
+		//获取乘客信息
+		let rebate = this.$store.getters.getRebate;//获取优惠码
 		for(let i=0;i<passenger.length;i++){
-			passenger[i].active = true;
+			passenger[i].active = false;
+			passenger[i].isGetTicket = false;
+			// if(passenger[i].Mobile!==''){
+			// 	passenger[i].isGetTicket = false;
+			// }
 			this.AllFare.push(passenger[i]);
+			//如果乘客信息中有默认的取票人
+			if(passenger[i].IsDefault===1){
+				this.payInfoData.getTicketManName = passenger[i].Name;
+				this.payInfoData.contactPhone = passenger[i].Mobile;
+			}
 		}
 		// this.AllFare = this.getLocalStorePassager();
 
@@ -527,8 +543,9 @@ export default {
 		 */
 		getGetTicketMan(){
 			let name = this.payInfoData.getTicketManName;
-			if(Utils.isChinaName(name)&&name.length>=2){
-				window.localStorage.setItem("GetTicketName",this.payInfoData.getTicketManName);
+			if(Utils.isChinaName(name)&&name.length>=2||name===""){
+				//取票人名字必须是汉字,或者为空
+				// window.localStorage.setItem("GetTicketName",this.payInfoData.getTicketManName);
 				return false;
 			}
 			else{
@@ -576,7 +593,7 @@ export default {
 			}
 			else{
 				if(this.getGetTicketMan()){
-					this.popupMessage("取票人信息不正确,请检查修改!");
+					this.popupMessage("取票人信息不正确,请设置取票人或检查修改!");
 					return;
 				}
 				else{
@@ -586,19 +603,24 @@ export default {
 							text: '加载中...',
 							spinnerType: 'double-bounce'
 						});
-
-						// 获取乘客名字,逗号相连
-						let arrayData = "";
+											
+						let arrayData = null;
+						let arrayId = [];
 						for(let i=0;i<this.AllFare.length;i++){
-							arrayData = this.AllFare[i].name+","+arrayData;
+							// if(this.AllFare[i].IsDefault===1){
+							// 	//找到取票人
+							// 	arrayData = this.AllFare[i];
+							// }
+							if(this.AllFare[i].active){
+								//获取乘客id
+								arrayId.push(this.AllFare[i].Id)
+							}
 						}
 
 						this.$store.dispatch("payMoney",{
-							Name:arrayData.slice(0,arrayData.length-1),
-							Mobile:this.payInfoData.contactPhone,
-							Num:this.AllFare.length,
-							ContactMan:this.payInfoData.getTicketManName,
-							DiscountCode:this.payInfoData.discountcode
+							// LinkmanId:arrayData.Id,
+							LinkmanId:this.payInfoData.contactPhone,
+							PassengerIds:arrayId
 						}).then(result=>{
 							Indicator.close();
 							if(result.Code!==200){
@@ -636,7 +658,7 @@ export default {
 		 */
 		inspectPhone(){
 			if(/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)){
-				this.setLocalStorePhone(this.payInfoData.contactPhone);
+				// this.setLocalStorePhone(this.payInfoData.contactPhone);
 				return true;
 			}
 			else{
@@ -657,9 +679,14 @@ export default {
 					this.popupMessage("乘客数不允许大于余票数!");
 				}
 				else{
+					let check = /^1[23578][0-9]{9}$/.test(this.certificate);
+					if(!check&&this.certificate!==''){
+						this.popupMessage("请填写正确的联系手机号!");
+						return;
+					}
 					let json = {
-						name:this.fareName,
-						// code:this.certificate,
+						Name:this.fareName,
+						Mobile:this.certificate,
 						active:true,
 						isGetTicket:false
 					}
@@ -670,15 +697,21 @@ export default {
 					this.$store.dispatch("addPassenger",json)
 						.then((result)=>{
 							Indicator.close();
-							json.Id= result.Id; 
-							this.AllFare.push(json);
-							// this.setLocalStorePassager(json);//存储本地
-							// 清空输入的信息
-							this.fareName = "";
-							this.certificate = "";
+							if(result.Data){
+								this.$store.dispatch("getPassenger");
+								json.Id= result.Data;
+								this.AllFare.push(json);
+								// this.setLocalStorePassager(json);//存储本地
+								// 清空输入的信息
+								this.fareName = "";
+								this.certificate = "";
 
-							this.popupMessage("添加成功!");
-							this.computeAll();
+								this.popupMessage("添加成功!");
+								this.computeAll();
+							}
+							else{
+								this.popupMessage(result.Message);
+							}
 						})
 				}
 			}
@@ -773,10 +806,20 @@ export default {
 		 * @param {[type]} index [description]
 		 */
 		setGetTicketMan(index){
-			_.map(this.AllFare,item=>{
-				item.isGetTicket = false;
-			})
-			this.AllFare[index].isGetTicket = true;
+			// if(!this.AllFare[index].active){
+			// 	this.popupMessage("请先选中这个乘客才能设置取票人");
+			// 	return;
+			// }
+			for(let i=0;i<this.AllFare.length;i++){
+				this.AllFare[i].isGetTicket = false;
+			}
+			let data = this.AllFare[index];
+			data.isGetTicket = true;
+			this.$set(this.AllFare,index,data);
+			
+			// 设置取票人信息
+			this.payInfoData.getTicketManName = data.Name;
+			this.payInfoData.contactPhone = data.Mobile;
 		},
 		GetDiscount(){
 			// 查看选取优惠券
