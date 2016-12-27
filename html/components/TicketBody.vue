@@ -66,14 +66,19 @@
 			</div>
 		</div>
 		<!-- 查询记录 -->
-		<div class="search-record" v-if="localStorage.length!==0">
-			<p>历史搜索</p>
-			<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index">
-				<span class="first">{{list.startCity}}</span>
-				<span>{{list.endCity}}</span>
-				<i @click="queryRecord(index)" class="fa fa-search">查询</i>
-			</div>
+		<div class="click-search">
+			<p @click="showSearchRecord">历史查询<i class="fa fa-caret-down"></i></p>
 		</div>
+		<template v-if="searchrecord">
+			<div class="search-record" v-if="localStorage.length!==0">
+				<p>历史查询</p>
+				<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index">
+					<span class="first">{{list.startCity}}</span>
+					<span>{{list.endCity}}</span>
+					<i @click="queryRecord(index)" class="fa fa-search">查询</i>
+				</div>
+			</div>
+		</template>
 	</div>
 </template>
 
@@ -110,6 +115,7 @@ export default {
 			locationLoad:true,//是否在加载定位记录
 			locationName:"",//定位最近的车站位置名
 			showRefresh:false,//是否显示刷新地理位置
+			searchrecord:false,//是否显示历史记录
       startTime: {
         time: ""
       },
@@ -479,6 +485,9 @@ export default {
 		},
 		onEndValuesChange(picker, values){
 			this.$store.dispatch("setEndCity",{Code:"00000",Name:values[0]});
+		},
+		showSearchRecord(){
+			this.searchrecord = !this.searchrecord;
 		}
 	},
 	components: {

@@ -219,10 +219,19 @@ input {
       color: #fff;
       font-size: 1.6rem;
       margin-top: 10px; }
+  .ticketbody .click-search {
+    width: 90%;
+    margin: 0 5%;
+    margin-top: 10px;
+    padding-top: 5px;
+    text-align: right; }
+    .ticketbody .click-search p {
+      font-size: 1.4rem;
+      color: #0074D9; }
   .ticketbody .search-record {
     width: 90%;
     margin: 0 5%;
-    margin-top: 30px;
+    margin-top: 10px;
     padding-top: 5px;
     text-align: center; }
     .ticketbody .search-record p {
@@ -230,7 +239,7 @@ input {
       height: 40px;
       line-height: 40px;
       color: #fff;
-      background-color: #2c3e50;
+      background-color: #73777b;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px; }
     .ticketbody .search-record .list {
