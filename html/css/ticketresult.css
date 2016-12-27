@@ -132,7 +132,6 @@ input {
 
 .result {
   width: 100%;
-  background-color: #f7f7f7;
   height: 40px;
   position: absolute; }
   .result .date-control {
@@ -141,7 +140,7 @@ input {
     -ms-flex-direction: row;
         flex-direction: row;
     font-size: 1.4rem;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid #f7f7f7;
     text-align: center; }
     .result .date-control span {
       height: 40px;
@@ -163,8 +162,7 @@ input {
     -ms-flex-direction: row;
         flex-direction: row;
     font-size: 1.4rem;
-    border-bottom: 1px solid #dddddd;
-    background-color: #f7f7f7; }
+    box-shadow: 0 3px 5px 0px #ececec; }
     .result .data-set span {
       height: 40px;
       line-height: 40px;
@@ -182,16 +180,10 @@ input {
         margin-right: 5px; }
     .result .data-set span:first-child {
       -ms-flex: 0.25;
-          flex: 0.25;
-      border-right-width: 1px;
-      border-right-color: #777777;
-      border-right-style: solid; }
+          flex: 0.25; }
     .result .data-set span:last-child {
       -ms-flex: 0.25;
-          flex: 0.25;
-      border-left-width: 1px;
-      border-left-color: #777777;
-      border-left-style: solid; }
+          flex: 0.25; }
     .result .data-set span.active {
       color: #0074D9; }
   .result .result-list {
@@ -206,10 +198,14 @@ input {
         color: #0074D9;
         font-size: 1.5rem;
         width: 30%;
-        text-align: left;
-        line-height: 70px;
-        padding-left: 20px;
-        font-weight: 900; }
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        font-weight: 900;
+        max-height: 105px; }
       .result .result-list .list > .car-position {
         width: 40%;
         display: -ms-flexbox;
@@ -218,8 +214,8 @@ input {
             flex-direction: column;
         margin: 5px 0; }
         .result .result-list .list > .car-position p {
-          height: 30px;
-          line-height: 30px;
+          height: 25px;
+          line-height: 25px;
           font-size: 1.3rem;
           overflow: hidden;
           white-space: nowrap;
@@ -238,15 +234,21 @@ input {
           .result .result-list .list > .car-position p.type > i.fa-location-arrow {
             color: #AAAAAA;
             padding: 0 2px;
-            margin-right: 8px; }
+            margin-right: 8px;
+            height: 25px;
+            line-height: 25px; }
           .result .result-list .list > .car-position p.type > i.fa-caret-down {
             height: 30px;
             line-height: 30px;
-            margin-left: 5px; }
+            margin-left: 5px;
+            height: 25px;
+            line-height: 25px; }
         .result .result-list .list > .car-position p.router-type {
           color: #919191;
           margin-left: 25px;
-          font-size: 12px; }
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px; }
         .result .result-list .list > .car-position > .show-router ul {
           list-style: none; }
           .result .result-list .list > .car-position > .show-router ul li {

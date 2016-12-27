@@ -160,12 +160,15 @@
 		line-height:40px;
 		font-size:1.4rem;
 	}
+	span.center{
+		flex:0.6;
+	}
 	span:first-child{
 		flex:0.2;
 		color:darken($gray,30%);
 	}
 	span:last-child{
-		flex:0.8;
+		flex:0.2;
 	}
 }
 .people-info{
@@ -363,6 +366,10 @@
 			flex:0.3;
 			font-size:1.3rem;
 		}
+		span.last{
+			flex:0.7;
+			color:$gray;
+		}
 		input{
 			flex:0.7;
 			font-size:1.3rem;
@@ -447,8 +454,8 @@
 		button{
 			outline:none;
 			border:0;
-			background-color: $red;
-			color:$white;
+			background-color: $white;
+			color:$blue;
 			flex:0.25;
 			// margin-top:5px;
 			height:30px;
@@ -523,6 +530,29 @@
 			margin-top:10px;
 			border-radius:5px;
 			width:90%;
+		}
+	}
+}
+.station-popup-visible{
+	width:80%;
+	height:60%;
+	background-color:$white;
+	border-radius:10px;
+	.station{
+		position:relative;
+		border-radius:10px;
+		height:100%;
+		button{
+			width:100%;
+			padding:10px;
+			color:$white;
+			background-color: $blue;
+			font-size:1.6rem;
+			position:absolute;
+			bottom:0px;
+			left:0;
+			border-bottom-right-radius:10px;
+			border-bottom-left-radius: 10px;
 		}
 	}
 }

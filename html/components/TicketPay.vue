@@ -29,8 +29,10 @@
 		</div>
 		<!-- 车站信息 -->
 		<div class="station-info">
-			<span>乘车地:</span>
-			<span>{{busInfo.StartAddress}}</span>
+			<span>乘车点:</span>
+			<span class="center nowrap">{{selectStation}}</span>
+			<span @click="showStation" style="color:#0074D9;text-align:right;">重新选择</span>
+			<!-- <span>{{busInfo.StartAddress}}</span> -->
 		</div>
 		<!-- 乘客信息 -->
 		<div class="people-info">
@@ -48,9 +50,9 @@
 						<div class="list-top">
 							<span class="name" v-text="item.Name"></span>
 							<!-- <span class="type">成人票</span> -->
-							<template v-if="item.Mobile!==''">
-								<span class="get-ticket" v-if="item.isGetTicket">取票人</span>
-								<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为取票人</span>
+							<template v-if="item.Mobile">
+								<span class="get-ticket" v-if="item.isGetTicket">联系人</span>
+								<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为联系人</span>
 							</template>
 						</div>
 						<!-- <div class="list-bottom">
@@ -70,7 +72,7 @@
 				</div>
 				<div class="info-man-card info">
 					<span>手机号</span>
-					<input type="text" placeholder="请填写手机号(用于取票)" v-model="certificate">
+					<input type="text" placeholder="手机号(可用于联系)" v-model="certificate">
 					<button @click="append"><i class="fa fa-plus-circle"></i>添加</button>
 				</div>
 			</div>
@@ -131,7 +133,13 @@
 		<div class="contact-info">
 			<div class="info">
 				<span>联系手机</span>
-				<input type="text" placeholder="用于接收通知短信" v-model="payInfoData.contactPhone">
+				<input type="text" placeholder="用于联系" v-model="payInfoData.contactPhone">
+			</div>
+		</div>
+		<div class="contact-info">
+			<div class="info">
+				<span>优惠券</span>
+				<span @click="showDiscountWindow" class="last">你有2个优惠券</span>
 			</div>
 		</div>
 		<!-- 其他信息 -->
@@ -145,8 +153,8 @@
 			</div>
 			<div class="discount-code" v-if="havediscountcode">
 				<input type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-				<!-- <i class="fa fa-check"></i>
-				<button>验证状态</button> -->
+				<!-- <i class="fa fa-check"></i> -->
+				<button @click="checkCodeStatus">验证状态</button>
 			</div>
 		</div>
 		<!-- <div class="other-info">
@@ -160,11 +168,11 @@
 		</div> -->
 		<!-- 提示信息 -->
 		<div class="root-tip-info">
-			<div class="text">
+			<!-- <div class="text">
 				<p>友情提示:</p>
 				<p>*自助取票请提前到出发车站取票。</p>
 				<p>*乘客信息需为实际乘车人，否则影响保险保障的权益哦。</p>
-			</div>
+			</div> -->
 		</div>
 		<!-- <div class="pay-people">
 			<input placeholder="输入code..." class="input" type="text" v-model="Code">
@@ -185,7 +193,36 @@
 			</div>
 		</div>
 
-
+		<!-- 乘车点 -->
+		<mt-popup
+		  v-model="stationPopupVisible"
+		  class="station-popup-visible">
+		  <slot>
+		  	<div class="station">
+		  		<mt-radio
+					  title="乘车点选择"
+					  v-model="selectStation"
+					  :options="options">
+					</mt-radio>
+					<button @click="checkSelectStation" class="btn">确定</button>
+		  	</div>
+		  </slot>
+		</mt-popup>
+		<!-- 优惠券选择 -->
+		<mt-popup
+		  v-model="discountPopupVisible"
+		  class="station-popup-visible">
+		  <slot>
+		  	<div class="station">
+		  		<mt-radio
+					  title="优惠券选择"
+					  v-model="selectDiscount"
+					  :options="options">
+					</mt-radio>
+					<button @click="checkSelectDiscount" class="btn">确定</button>
+		  	</div>
+		  </slot>
+		</mt-popup>
 		<!-- 查看取票...信息 -->
 		<mt-popup
 		  v-model="tipPopupVisible"
@@ -269,7 +306,7 @@
 							</div>
 							<div class="info-box get-ticket">
 								<p>
-									<span class="type">取票人:</span>
+									<span class="type">联系人:</span>
 									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div>
@@ -335,6 +372,20 @@ export default {
 				// },
 			],//所有的乘客信息
 			isHaveGetTicketMan:false,//是否有取票人信息
+			stationPopupVisible:false,//显示乘车点
+			selectStation:"",//选择的乘车点
+			options:[],//可选择的乘车点列表
+			discountPopupVisible:false,//优惠券选择
+			selectDiscount:"",//选择的优惠券
+			optionsDiscount:[
+				{
+					label:"优惠券",
+					value:1,//减1块,
+					disabled:false,
+					limitMoney:1,//最低1元才能使用
+					isSingle:1,//说明只能单独使用
+				}
+			],//优惠券列表
 			
 			//订单信息
 			payInfoData:{
@@ -381,6 +432,10 @@ export default {
 				Title:startDate.date+" "+startDate.week
 			});
 		}
+
+		//设置乘车点
+		this.selectStation = this.busInfo.StartAddress[0];
+		this.options = this.busInfo.StartAddress;
 		
 		//获取本地的取票人数据....现在冲服务器获取
 		// this.getLocalStorePhone();
@@ -827,11 +882,36 @@ export default {
 		},
 		outpay(){
 			this.payInfoPopupVisible = false;
+		},
+		showStation(){
+			this.stationPopupVisible = true;
+		},
+		showDiscountWindow(){
+			this.discountPopupVisible = true;
+		},
+		checkSelectStation(){
+			if(this.selectStation!==""){
+				this.stationPopupVisible = false;
+			}
+			else{
+				this.popupMessage("你需要选择一个上车点.")
+			}
+		},
+		checkSelectDiscount(){
+			if(this.selectDiscount!==""){
+				this.discountPopupVisible = false;
+			}
+			else{
+				this.popupMessage("你需要选择一个上车点.")
+			}
+		},
+		checkCodeStatus(){
+			let discountcode = this.payInfoData.discountcode;
 		}
 	}
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 @import "../css/ticketpay.css";
 </style>
