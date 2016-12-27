@@ -384,6 +384,7 @@ export default {
 		
 		//获取本地的取票人数据....现在冲服务器获取
 		// this.getLocalStorePhone();
+		this.payInfoData.contactPhone = this.$store.getters.getPhone;//获取服务器上的取票人手机号
 
 		let passenger = this.$store.getters.getPassenger;
 		//获取乘客信息
@@ -396,10 +397,10 @@ export default {
 			// }
 			this.AllFare.push(passenger[i]);
 			//如果乘客信息中有默认的取票人
-			if(passenger[i].IsDefault===1){
-				this.payInfoData.getTicketManName = passenger[i].Name;
-				this.payInfoData.contactPhone = passenger[i].Mobile;
-			}
+			// if(passenger[i].IsDefault===1){
+			// 	this.payInfoData.getTicketManName = passenger[i].Name;
+			// 	this.payInfoData.contactPhone = passenger[i].Mobile;
+			// }
 		}
 		// this.AllFare = this.getLocalStorePassager();
 

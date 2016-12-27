@@ -34,6 +34,7 @@ const state = {
 
 	passenger:null,//乘客信息
 	rebate:null,//优惠信息
+	phone:null,//取票人手机号
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	serverUrl:"http://192.168.31.80",//服务器地址
@@ -65,7 +66,8 @@ const getters = {
 	getLocationResult:state=>state.locationResult,
 	getHaveLocation:state=>state.haveLocation,
 	getPassenger:state=>state.passenger,
-	getRebate:state=>state.rebate
+	getRebate:state=>state.rebate,
+	getPhone:state=>state.phone,
 }
 
 let getData = (url,callback)=>{
@@ -226,7 +228,8 @@ const actions = {
 				// 	}
 				// })
 				commit("SET_PASSENGER",data.Passengers);
-				commit("SET_REBATES",data.Rebates)
+				commit("SET_REBATES",data.Rebates);
+				commit("SET_PHONE",data.Phone?data.Phone:'');
 				return data;
 			})
 	},
@@ -246,6 +249,9 @@ const actions = {
 		.then(result=>{
 			return result;
 		})
+	},
+	setPhone({commit,state},data){
+		commit("SET_PHONE",data);
 	}
 }
 
@@ -295,6 +301,9 @@ const mutations = {
 	},
 	["SET_REBATES"](state,data){
 		state.rebate = data;
+	},
+	["SET_PHONE"](state,data){
+		state.phone = data;
 	}
 }
 

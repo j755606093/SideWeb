@@ -11157,6 +11157,7 @@
 
 		passenger: null, //乘客信息
 		rebate: null, //优惠信息
+		phone: null, //取票人手机号
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		serverUrl: "http://192.168.31.80" };
@@ -11208,6 +11209,9 @@
 		},
 		getRebate: function getRebate(state) {
 			return state.rebate;
+		},
+		getPhone: function getPhone(state) {
+			return state.phone;
 		}
 	};
 
@@ -11415,6 +11419,7 @@
 				// })
 				commit("SET_PASSENGER", data.Passengers);
 				commit("SET_REBATES", data.Rebates);
+				commit("SET_PHONE", data.Phone ? data.Phone : '');
 				return data;
 			});
 		},
@@ -11437,6 +11442,12 @@
 			}).then(function (result) {
 				return result;
 			});
+		},
+		setPhone: function setPhone(_ref17, data) {
+			var commit = _ref17.commit,
+			    state = _ref17.state;
+
+			commit("SET_PHONE", data);
 		}
 	};
 
@@ -11472,6 +11483,8 @@
 		state.passenger = data;
 	}), (0, _defineProperty3.default)(_mutations, "SET_REBATES", function SET_REBATES(state, data) {
 		state.rebate = data;
+	}), (0, _defineProperty3.default)(_mutations, "SET_PHONE", function SET_PHONE(state, data) {
+		state.phone = data;
 	}), _mutations);
 
 	exports.default = {
@@ -31513,13 +31526,8 @@
 				if (error) {
 					// 获取位置出错
 					this.locationLoad = false; //停止界面加载提示
-					this.locationName = "无法获取当前位置";
-					this.showRefresh = true;
-					// Toast({
-					//   message: "无法获取当前位置",
-					//   position: 'bottom',
-					//   duration: 3000
-					// });
+					this.locationName = "";
+					// this.showRefresh = true;
 				}
 			},
 			refreshLocation: function refreshLocation() {
@@ -49299,7 +49307,7 @@
 	var __vue_styles__ = {};
 
 	/* styles */
-	__webpack_require__(318);
+	__webpack_require__(306);
 
 	/* script */
 	__vue_exports__ = __webpack_require__(309);
@@ -49343,8 +49351,46 @@
 	module.exports = __vue_exports__;
 
 /***/ },
-/* 306 */,
-/* 307 */,
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(307);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(139)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(93)();
+	// imports
+	exports.i(__webpack_require__(308), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
 /* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -49766,6 +49812,7 @@
 
 			//获取本地的取票人数据....现在冲服务器获取
 			// this.getLocalStorePhone();
+			this.payInfoData.contactPhone = this.$store.getters.getPhone; //获取服务器上的取票人手机号
 
 			var passenger = this.$store.getters.getPassenger;
 			//获取乘客信息
@@ -49778,10 +49825,10 @@
 				// }
 				this.AllFare.push(passenger[i]);
 				//如果乘客信息中有默认的取票人
-				if (passenger[i].IsDefault === 1) {
-					this.payInfoData.getTicketManName = passenger[i].Name;
-					this.payInfoData.contactPhone = passenger[i].Mobile;
-				}
+				// if(passenger[i].IsDefault===1){
+				// 	this.payInfoData.getTicketManName = passenger[i].Name;
+				// 	this.payInfoData.contactPhone = passenger[i].Mobile;
+				// }
 			}
 			// this.AllFare = this.getLocalStorePassager();
 
@@ -52144,46 +52191,6 @@
 	}
 
 	module.exports = plugin;
-
-/***/ },
-/* 318 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(319);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(139)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(93)();
-	// imports
-	exports.i(__webpack_require__(308), "");
-
-	// module
-	exports.push([module.id, "\n", ""]);
-
-	// exports
-
 
 /***/ }
 /******/ ]);

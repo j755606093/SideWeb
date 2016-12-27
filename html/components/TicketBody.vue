@@ -303,13 +303,8 @@ export default {
 			if(error){
 				// 获取位置出错
 				this.locationLoad = false;//停止界面加载提示
-				this.locationName = "无法获取当前位置";
-				this.showRefresh = true;
-				// Toast({
-				//   message: "无法获取当前位置",
-				//   position: 'bottom',
-				//   duration: 3000
-				// });
+				this.locationName = "";
+				// this.showRefresh = true;
 			}
 		},
 		refreshLocation(){
