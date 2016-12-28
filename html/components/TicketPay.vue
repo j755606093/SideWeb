@@ -31,7 +31,7 @@
 		<div class="station-info">
 			<span>乘车点:</span>
 			<span class="center nowrap">{{selectStation}}</span>
-			<span @click="showStation" style="color:#0074D9;text-align:right;">重新选择</span>
+			<span @click="showStation" style="color:#0074D9;text-align:right;">更多</span>
 			<!-- <span>{{busInfo.StartAddress}}</span> -->
 		</div>
 		<!-- 乘客信息 -->
@@ -49,7 +49,7 @@
 					<div class="list-body">
 						<div class="list-top">
 							<span class="name" v-text="item.Name"></span>
-							<!-- <span class="type">成人票</span> -->
+							<span class="type">{{item.Mobile}}</span>
 							<template v-if="item.Mobile">
 								<span class="get-ticket" v-if="item.isGetTicket">联系人</span>
 								<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为联系人</span>
@@ -59,8 +59,8 @@
 							<p>身份证<span v-text="item.code"></span></p>
 						</div> -->
 					</div>
-					<span>{{item.Mobile}}</span>
-					<!-- <span @click="trashMan(index)"><i class="fa fa-trash"></i></span> -->
+					<!-- <span>{{item.Mobile}}</span> -->
+					<span @click="trashMan(index)"><i class="fa fa-trash"></i></span>
 				</div>
 			</div>
 			<!-- 添加乘客 -->
@@ -132,31 +132,47 @@
 		</div> -->
 		<div class="contact-info">
 			<div class="info">
-				<span>联系手机</span>
-				<input type="text" placeholder="用于联系" v-model="payInfoData.contactPhone">
+				<span>联系人手机</span>
+				<input type="text" placeholder="用于联系(必填)" v-model="payInfoData.contactPhone">
 			</div>
 		</div>
 		<div class="contact-info">
+			<div class="info-head">
+				<span>其它信息:</span>
+				<!-- <span>一张订单只需填写一人</span> -->
+			</div>
 			<div class="info">
 				<span>优惠券</span>
-				<span @click="showDiscountWindow" class="last">你有2个优惠券</span>
+				<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
+				<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
+			</div>
+			<div class="info discount-code">
+				<span class="first">优惠码</span>
+				<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
+				<!-- <span class="center">有优惠码?</span> -->
+				<div class="last" @click="haveDiscountCode">
+					<button class="right" @click="checkCodeStatus">验证状态</button>
+					<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
+				</div>
 			</div>
 		</div>
 		<!-- 其他信息 -->
-		<div class="other-info">
+	<!-- 	<div class="other-info">
 			<div class="info">
 				<span class="first">优惠码</span>
+				<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
 				<span class="center">有优惠码?</span>
 				<div class="last" @click="haveDiscountCode">
+					<button class="right" @click="GetDiscount">验证状态</button>
 					<span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span>
 				</div>
 			</div>
 			<div class="discount-code" v-if="havediscountcode">
 				<input type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-				<!-- <i class="fa fa-check"></i> -->
+				<i class="fa fa-check"></i>
 				<button @click="checkCodeStatus">验证状态</button>
 			</div>
-		</div>
+		</div> -->
 		<!-- <div class="other-info">
 			<div class="info">
 				<span class="first">汽车乘意险</span>
@@ -214,11 +230,11 @@
 		  class="station-popup-visible">
 		  <slot>
 		  	<div class="station">
-		  		<mt-radio
+		  		<mt-checklist
 					  title="优惠券选择"
 					  v-model="selectDiscount"
-					  :options="options">
-					</mt-radio>
+					  :options="optionsDiscount">
+					</mt-checklist>
 					<button @click="checkSelectDiscount" class="btn">确定</button>
 		  	</div>
 		  </slot>
@@ -289,25 +305,25 @@
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车日期:</span>
-									<span class="name">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
+									<span class="name nowrap">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
 								</p>
 							</div>
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车地址:</span>
-									<span class="name">{{serverPayInfo.LineInfo.StartAddress}}</span>
+									<span class="name nowrap">{{serverPayInfo.LineInfo.StartAddress}}</span>
 								</p>
 							</div>
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘客:</span>
-									<span class="name">{{serverPayInfo.UsrInfo.Name}}</span>
+									<span class="name nowrap">{{serverPayInfo.UsrInfo.Name}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
 								<p>
 									<span class="type">联系人:</span>
-									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
+									<span class="name nowrap">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
@@ -376,16 +392,8 @@ export default {
 			selectStation:"",//选择的乘车点
 			options:[],//可选择的乘车点列表
 			discountPopupVisible:false,//优惠券选择
-			selectDiscount:"",//选择的优惠券
-			optionsDiscount:[
-				{
-					label:"优惠券",
-					value:1,//减1块,
-					disabled:false,
-					limitMoney:1,//最低1元才能使用
-					isSingle:1,//说明只能单独使用
-				}
-			],//优惠券列表
+			selectDiscount:[],//选择的优惠券
+			optionsDiscount:[],//优惠券列表
 			
 			//订单信息
 			payInfoData:{
@@ -436,6 +444,19 @@ export default {
 		//设置乘车点
 		this.selectStation = this.busInfo.StartAddress[0];
 		this.options = this.busInfo.StartAddress;
+
+		//设置优惠券
+		if(this.$store.getters.getRebate){
+			let rebate = this.$store.getters.getRebate;
+			_.map(rebate,item=>{
+				let data = item;
+				data.label = `${item.Name} (满${item.LimitMoney}元可用,减${item.Money}元)`;
+				data.value = item.Id;
+				data.disabled = false;
+				this.optionsDiscount.push(data);
+			})
+		}
+		
 		
 		//获取本地的取票人数据....现在冲服务器获取
 		// this.getLocalStorePhone();
@@ -475,6 +496,16 @@ export default {
 
 			return arrayData.split(",")[0];
 		},
+	},
+	watch:{
+		selectDiscount(newval){
+			if(newval.length===0)return;
+			let data = this.optionsDiscount[newval.length-1];
+			if(data.IsSingle===1&&newval.length!==1){
+				//添加的这个是单独使用的
+				this.selectDiscount = [data];//只留自己
+			}	
+		}
 	},
 	methods:{
 		/**
@@ -673,10 +704,16 @@ export default {
 							}
 						}
 
+						let rebateid = "";
+						for(let i=0;i<this.selectDiscount.length;i++){
+							rebateid = this.selectDiscount[i]+",";
+						}
+
 						this.$store.dispatch("payMoney",{
 							// LinkmanId:arrayData.Id,
 							LinkmanId:this.payInfoData.contactPhone,
-							PassengerIds:arrayId
+							PassengerIds:arrayId,
+							RebateId:rebateid.slice(0,rebateid.length-1)
 						}).then(result=>{
 							Indicator.close();
 							if(result.Code!==200){
@@ -840,10 +877,10 @@ export default {
 		trashMan(index){
 			let array = this.formatData(this.AllFare);
 
-			MessageBox.confirm('确定删除'+array[index].name+'?').then(action => {
+			MessageBox.confirm('确定删除'+array[index].Name+'?').then(action => {
 				// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
 				this.AllFare.splice(index,1);
-				window.localStorage.setItem("Passager",JSON.stringify(this.AllFare));
+				// window.localStorage.setItem("Passager",JSON.stringify(this.AllFare));
 				this.computeAll();
 			}).catch(error=>{
 				// error=cancel
@@ -898,15 +935,23 @@ export default {
 			}
 		},
 		checkSelectDiscount(){
-			if(this.selectDiscount!==""){
-				this.discountPopupVisible = false;
-			}
-			else{
-				this.popupMessage("你需要选择一个上车点.")
-			}
+			this.discountPopupVisible = false;
 		},
 		checkCodeStatus(){
 			let discountcode = this.payInfoData.discountcode;
+			if(discountcode===""){
+				this.popupMessage("请输入优惠码!");
+				return;
+			}
+			this.$store.dispatch("checkRebateStatus",discountcode)
+				.then(result=>{
+					if(result.Data){
+						this.popupMessage("优惠码可用");
+					}
+					else{
+						this.popupMessage("优惠码不可用");
+					}
+				})
 		}
 	}
 }

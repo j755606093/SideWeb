@@ -3,7 +3,8 @@
 .position{
 	position:absolute;
 	width:100%;
-	background-color:lighten($gray, 30%);
+	background-color:$white;
+	// background-color:lighten($gray, 30%);
 }
 #pay input{
 	border:0;
@@ -152,9 +153,10 @@
 .station-info{
 	width:100%;
 	background-color:$white;
-	margin-bottom:10px;
+	margin-bottom:15px;
 	display:flex;
 	padding:0 2%;
+	box-shadow:0px 3px 5px 0px #ececec;
 	span{
 		height:40px;
 		line-height:40px;
@@ -174,9 +176,10 @@
 .people-info{
 	width:100%;
 	background-color:$white;
-	margin-bottom:10px;
+	margin-bottom:15px;
 	// height:170px;
 	position:relative;
+	box-shadow:0px 3px 5px 0px #ececec;
 	.info-head{
 		width:100%;
 		padding:0 2%;
@@ -205,7 +208,7 @@
 			height:50px;
 			width:96%;
 			margin:0 2%;
-			border-bottom:1px solid lighten($gray, 20%);
+			border-bottom:1px solid lighten($gray, 30%);
 			.check{
 				flex:0.1;
 				height:50px;
@@ -324,6 +327,12 @@
 				}
 			}
 		}
+		.info-man-name{
+			input{
+				flex:0.7;
+				font-size:1.3rem;
+			}
+		}
 	}
 	.click-append{
 		width:96%;
@@ -349,10 +358,11 @@
 .contact-info{
 	width:100%;
 	background-color:$white;
-	// margin-bottom:10px;
-	padding-bottom:10px;
-	height:40px;
+	margin-bottom:15px;
+	// padding-bottom:10px;
+	// height:40px;
 	position:relative;
+	box-shadow:0px 3px 5px 0px #ececec;
 	.info{
 		height:40px;
 		line-height:40px;
@@ -363,16 +373,55 @@
 		margin:0 2%;
 		border-bottom:1px solid lighten($gray, 20%);
 		span{
-			flex:0.3;
+			// flex:0.3;
+			width:30%;
 			font-size:1.3rem;
 		}
 		span.last{
-			flex:0.7;
+			// flex:0.3;
+			width:30%;
+			text-align: right;
+		}
+		span.center{
+			// flex:0.4;
+			width:40%;
 			color:$gray;
 		}
 		input{
 			flex:0.7;
 			font-size:1.3rem;
+		}
+	}
+	.discount-code{
+		display:flex;
+		flex-direction: row;
+		height:40px;
+		line-height:40px;
+		width:96%;
+		margin:0 2%;
+		padding-top:5px;
+		input,button,i{
+			font-size:1.3rem;
+			height:30px;
+			line-height:30px;
+		}
+		input{
+			flex:1;
+			// flex:0.65;
+		}
+		i{
+			flex:0.1;
+		}
+		button{
+			outline:none;
+			border:0;
+			background-color: $white;
+			color:$blue;
+			flex:0.25;
+			// margin-top:5px;
+			height:30px;
+			line-height:30px;
+			border-radius:10px;
 		}
 	}
 }
@@ -396,9 +445,9 @@
 			height:40px;
 			font-size:1.3rem;
 		}
-		span.center{
+		span.center,input.center{
 			flex:0.5;
-			height:40px;
+			height:39px;
 			font-size:1.3rem;
 			color:$gray;
 		}
@@ -406,9 +455,9 @@
 			flex:0.2;
 			height:40px;
 			font-size:1.3rem;
-			display: flex;
-			align-items:  center;
-			justify-content: center;
+			// display: flex;
+			// align-items:  center;
+			// justify-content: center;
 			span{
 				border:1px solid $blue;
 				padding:0 3px;
@@ -428,6 +477,18 @@
 					color:$gray;
 					font-size:1.8rem;
 				}
+			}
+			button.right{
+				outline:none;
+				border:0;
+				background-color: $white;
+				color:$blue;
+				flex:0.25;
+				font-size:1.3rem;
+				// margin-top:5px;
+				height:30px;
+				line-height:30px;
+				border-radius:10px;
 			}
 		}
 	}

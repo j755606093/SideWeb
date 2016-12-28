@@ -170,7 +170,8 @@ const actions = {
 				EPointId:state.busInfo.EndPointId,
 				Date:state.startDate.date,
 				LinkmanId:data.LinkmanId,
-				PassengerIds:data.PassengerIds
+				PassengerIds:data.PassengerIds,
+				RebateId:data.RebateId
 			})
 		})
 		.then(result=>result.json())
@@ -252,6 +253,13 @@ const actions = {
 	},
 	setPhone({commit,state},data){
 		commit("SET_PHONE",data);
+	},
+	checkRebateStatus({commit,state},data){
+		return fetch(state.serverUrl+"/api/Transport/CheckRebateCode/"+data)
+		.then(result=>result.json())
+		.then(result=>{
+			return result;
+		})
 	}
 }
 
