@@ -272,6 +272,7 @@
 		</mt-popup>
 		<!-- 支付信息 -->
 		<mt-popup
+			v-if="payInfoPopupVisible"
 		  v-model="payInfoPopupVisible"
 		  position="right"
 		  class="payinfo-popup-visible">
@@ -305,25 +306,26 @@
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车日期:</span>
-									<span class="name nowrap">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
+									<span class="name">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
 								</p>
 							</div>
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车地址:</span>
-									<span class="name nowrap">{{serverPayInfo.LineInfo.StartAddress}}</span>
+									<!-- <span class="name"></span> -->
+									{{selectStation}}
 								</p>
 							</div>
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘客:</span>
-									<span class="name nowrap">{{serverPayInfo.UsrInfo.Name}}</span>
+									<span class="name">{{serverPayInfo.UsrInfo.Name.join(',')}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
 								<p>
 									<span class="type">联系人:</span>
-									<span class="name nowrap">{{serverPayInfo.UsrInfo.TktHolder}}</span>
+									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div>
 							<div class="info-box get-ticket">
@@ -878,10 +880,17 @@ export default {
 			let array = this.formatData(this.AllFare);
 
 			MessageBox.confirm('确定删除'+array[index].Name+'?').then(action => {
-				// this.AllFare = array.slice(0,index).concat(array.slice(index+1));
-				this.AllFare.splice(index,1);
-				// window.localStorage.setItem("Passager",JSON.stringify(this.AllFare));
-				this.computeAll();
+				this.$store.dispatch("deletePassenger",array[index].Id)
+					.then(result=>{
+						if(result.Data){
+							this.AllFare.splice(index,1);
+							this.$store.dispatch("setPassenger",this.AllFare);
+							this.computeAll();
+						}
+						else{
+							this.popupMessage(result.Message);
+						}
+					})
 			}).catch(error=>{
 				// error=cancel
 				console.log(error)

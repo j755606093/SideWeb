@@ -549,9 +549,10 @@
 	left:0;
 	height:50px;
 	width:100%;
-	background-color:rgba($black, 0.6);
+	background-color:$white;
 	display:flex;
 	flex-direction:row;
+	box-shadow:3px 0 3px 3px #efeeee;
 	.order-info{
 		flex:0.6;
 		display:flex;
@@ -559,7 +560,8 @@
 		padding:0 10px;
 		margin:5px 0;
 		p{
-			color:lighten($gray,20%);
+			// color:lighten($gray,20%);
+			color:darken($gray,30%);
 			height:20px;
 			line-height:20px;
 			font-size:1.1rem;
@@ -572,7 +574,7 @@
 		}
 		p:first-child{
 			font-size:1.3rem;
-			color:$white;
+			color:darken($gray,30%);
 			>span{
 				margin:10px;
 				color:$orange;
@@ -809,14 +811,15 @@
 				}
 			}
 			.info-box{
-				height:40px;
-				border-top:1px solid lighten($gray,20%);
+				min-height:40px;
+				border-top:1px solid lighten($gray,30%);
 				>p{
-					line-height:40px;
-					height:40px;
+					font-size:1.3rem;
 					span{
 						font-size:1.3rem;
 						color:$gray;
+						line-height:40px;
+						min-height:40px;
 					}
 					span.type{
 						width:50px;

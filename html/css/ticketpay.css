@@ -611,11 +611,12 @@ input {
   left: 0;
   height: 50px;
   width: 100%;
-  background-color: rgba(17, 17, 17, 0.6);
+  background-color: #fff;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
-      flex-direction: row; }
+      flex-direction: row;
+  box-shadow: 3px 0 3px 3px #efeeee; }
   .submit-box .order-info {
     -ms-flex: 0.6;
         flex: 0.6;
@@ -626,7 +627,7 @@ input {
     padding: 0 10px;
     margin: 5px 0; }
     .submit-box .order-info p {
-      color: #dddddd;
+      color: #5e5e5e;
       height: 20px;
       line-height: 20px;
       font-size: 1.1rem; }
@@ -634,7 +635,7 @@ input {
         margin-left: 5px; }
     .submit-box .order-info p:first-child {
       font-size: 1.3rem;
-      color: #fff; }
+      color: #5e5e5e; }
       .submit-box .order-info p:first-child > span {
         margin: 10px;
         color: #FF851B; }
@@ -840,14 +841,15 @@ input {
             .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {
               color: #919191; }
       .payinfo-popup-visible .ticket-body .pay-info .info-box {
-        height: 40px;
-        border-top: 1px solid #dddddd; }
+        min-height: 40px;
+        border-top: 1px solid #f7f7f7; }
         .payinfo-popup-visible .ticket-body .pay-info .info-box > p {
-          line-height: 40px;
-          height: 40px; }
+          font-size: 1.3rem; }
           .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {
             font-size: 1.3rem;
-            color: #AAAAAA; }
+            color: #AAAAAA;
+            line-height: 40px;
+            min-height: 40px; }
           .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {
             width: 50px; }
           .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {

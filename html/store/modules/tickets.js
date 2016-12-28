@@ -37,8 +37,8 @@ const state = {
 	phone:null,//取票人手机号
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	serverUrl:"http://192.168.31.80",//服务器地址
-	// serverUrl:"",//服务器地址,生产时候需要的
+	// serverUrl:"http://192.168.31.80",//服务器地址
+	serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据
@@ -219,7 +219,7 @@ const actions = {
 		commit("SET_ISFIRST",data);
 	},
 	getPassenger({commit,state}){
-		return fetch(state.serverUrl+"/api/Transport/UserRelevant/9264122")
+		return fetch(state.serverUrl+"/api/Transport/UserRelevant")
 			.then(result=>result.json())
 			.then(result=>{
 				let data = result.Data;
@@ -234,6 +234,9 @@ const actions = {
 				return data;
 			})
 	},
+	setPassenger({commit,state},data){
+		commit("SET_PASSENGER",data);
+	},
 	addPassenger({commit,state},data){
 		return fetch(state.serverUrl+"/api/Passenger/Add",{
 			method: 'POST',
@@ -243,7 +246,7 @@ const actions = {
 			body:JSON.stringify({
 				Name:data.Name,
 				Mobile:data.Mobile,
-				UsrId:"9264122"
+				// UsrId:"9264122"
 			})
 		})
 		.then(result=>result.json())
@@ -256,6 +259,13 @@ const actions = {
 	},
 	checkRebateStatus({commit,state},data){
 		return fetch(state.serverUrl+"/api/Transport/CheckRebateCode/"+data)
+		.then(result=>result.json())
+		.then(result=>{
+			return result;
+		})
+	},
+	deletePassenger({commit,state},data){
+		return fetch(state.serverUrl+"/api/Passenger/Delete/"+data)
 		.then(result=>result.json())
 		.then(result=>{
 			return result;

@@ -130,6 +130,9 @@ input {
   animation-duration: 0.5s;
   animation-fill-mode: both; }
 
+body {
+  background-color: #f7f7f7; }
+
 header {
   height: 50px;
   background-color: #2196F3;
@@ -172,6 +175,88 @@ header {
     .body .no-data p {
       color: #AAAAAA;
       font-size: 1.8rem; }
+  .body .order {
+    width: 100%; }
+    .body .order .lists {
+      width: 94%;
+      margin: 0 3%;
+      margin-top: 60px; }
+      .body .order .lists .list {
+        width: 100%;
+        padding: 5px 5px;
+        background-color: #fff;
+        border-radius: 10px;
+        margin-bottom: 10px; }
+        .body .order .lists .list .list-header {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          border-bottom: 1px solid #dddddd;
+          padding: 5px 0; }
+          .body .order .lists .list .list-header span {
+            font-size: 1.4rem; }
+          .body .order .lists .list .list-header span.time {
+            text-align: left;
+            -ms-flex: 0.7;
+                flex: 0.7; }
+          .body .order .lists .list .list-header span.type {
+            text-align: right;
+            -ms-flex: 0.3;
+                flex: 0.3; }
+        .body .order .lists .list .list-center {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          padding: 5px 0;
+          min-height: 50px;
+          -ms-flex-align: center;
+              align-items: center; }
+          .body .order .lists .list .list-center .city {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+                flex-direction: row;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex: 0.7;
+                flex: 0.7; }
+            .body .order .lists .list .list-center .city > span {
+              font-size: 1.6rem;
+              -ms-flex: 1;
+                  flex: 1; }
+          .body .order .lists .list .list-center span.money {
+            font-size: 1.6rem;
+            -ms-flex: 0.3;
+                flex: 0.3;
+            text-align: right; }
+        .body .order .lists .list .list-footer {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          padding: 5px 0;
+          min-height: 30px;
+          -ms-flex-align: center;
+              align-items: center; }
+          .body .order .lists .list .list-footer span {
+            font-size: 1.2rem;
+            -ms-flex: 1;
+                flex: 1; }
+          .body .order .lists .list .list-footer span.name {
+            text-align: left;
+            color: #AAAAAA; }
+          .body .order .lists .list .list-footer span.order-status {
+            text-align: right; }
+          .body .order .lists .list .list-footer span.order-pay {
+            text-align: right; }
 
 footer {
   display: -ms-flexbox;
@@ -187,7 +272,8 @@ footer {
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  border-top: 1px solid #AAAAAA; }
+  border-top: 1px solid #dddddd;
+  background-color: #fff; }
   footer .footer {
     -ms-flex: 1;
         flex: 1;

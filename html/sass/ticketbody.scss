@@ -9,7 +9,7 @@
 		display: flex;
 		flex:1;
 		flex-direction:row;
-		border-bottom:1px solid $gray;
+		border-bottom:1px solid lighten($gray,20%);
 		span{
 			display:flex;
 			flex-direction:row;
@@ -48,7 +48,7 @@
 		display: flex;
 		flex:1;
 		flex-direction:row;
-		border-bottom:1px solid $gray;
+		border-bottom:1px solid lighten($gray,20%);
 		>span{
 			display:flex;
 			flex-direction:row;

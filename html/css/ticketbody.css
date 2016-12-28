@@ -142,7 +142,7 @@ input {
         flex: 1;
     -ms-flex-direction: row;
         flex-direction: row;
-    border-bottom: 1px solid #AAAAAA; }
+    border-bottom: 1px solid #dddddd; }
     .ticketbody .block span {
       display: -ms-flexbox;
       display: flex;
@@ -182,7 +182,7 @@ input {
         flex: 1;
     -ms-flex-direction: row;
         flex-direction: row;
-    border-bottom: 1px solid #AAAAAA; }
+    border-bottom: 1px solid #dddddd; }
     .ticketbody > .data > span {
       display: -ms-flexbox;
       display: flex;
