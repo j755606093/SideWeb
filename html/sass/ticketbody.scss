@@ -85,11 +85,12 @@
 			width:90%;
 			margin:0 5%;
 			// background-color: #ff7f66;
-			background-color: #009688;
+			background-color: #e74c3c;
 			height:50px;
 			color:$white;
 			font-size:1.6rem;
 			margin-top:10px;
+			border-radius:10px;
 		}
 	}
 	.click-search{
@@ -102,6 +103,9 @@
 			font-size:1.4rem;
 			color:$blue;
 		}
+	}
+	.animated{
+		animation-duration: 0.5s;
 	}
 	.search-record{
 		width:90%;
@@ -132,7 +136,7 @@
 				font-size:1.4rem;
 				line-height:20px;
 				color:#000;
-				flex:0.3;
+				flex:0.5;
 				display: inline-block;
 				text-align:center;
 				padding:2px 5px;
@@ -140,10 +144,10 @@
 			span.first::after{
 				content:"";
 				height:3px;
-				width:8%;
+				width:10%;
 				position:absolute;
 				top:14px;
-				left:27%;
+				left:45%;
 				background-color: #000;
 			}
 			span.first::before{
@@ -154,7 +158,7 @@
 				width:0;
 				position:absolute;
 				top:9px;
-				left:34%;
+				left:55%;
 			}
 			i{
 				flex:0.4;

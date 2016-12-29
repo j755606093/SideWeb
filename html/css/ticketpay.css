@@ -5,6 +5,9 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   background-image: none;
   color: black; }
 
+a, img, button, input, textarea, p {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
 .font-red {
   color: #db3652; }
 
@@ -227,7 +230,6 @@ input {
           right: 5px;
           bottom: -20px;
           content: "";
-          border: 10px solid #fff;
           border-color: transparent transparent #fff #fff; }
       .ticket-info .address-info .center p.arrow-message {
         color: #fff; }

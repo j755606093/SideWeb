@@ -70,12 +70,12 @@
 			<p @click="showSearchRecord">历史查询<i class="fa fa-caret-down"></i></p>
 		</div>
 		<template v-if="searchrecord">
-			<div class="search-record" v-if="localStorage.length!==0">
+			<div class="search-record animated fadeInUp" v-if="localStorage.length!==0">
 				<p>历史查询</p>
-				<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index">
+				<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index" @click="queryRecord(index)">
 					<span class="first">{{list.startCity}}</span>
 					<span>{{list.endCity}}</span>
-					<i @click="queryRecord(index)" class="fa fa-search">查询</i>
+					<!-- <i @click="queryRecord(index)" class="fa fa-search">查询</i> -->
 				</div>
 			</div>
 		</template>

@@ -1,15 +1,18 @@
 <template>
 	<footer v-show="getfooter">
 		<a href="./getCustomPage?page=ticket#/home/ticketbody" class="footer active">
-			<i class="fa fa-home"></i>
+			<!-- <i class="fa fa-home"></i> -->
+			<img src="../picture/wxb_home_active.png">
 			<p>票务</p>
 		</a>
 		<a href="./getCustomPage?page=TicketOrder" class="footer">
-			<i class="fa fa-sticky-note"></i>
+			<!-- <i class="fa fa-sticky-note"></i> -->
+			<img src="../picture/cart_order.png">
 			<p>订单</p>
 		</a>
 		<a class="footer">
-			<i class="fa fa-user"></i>
+			<!-- <i class="fa fa-user"></i> -->
+			<img src="../picture/account_user.png">
 			<p>个人中心</p>
 		</a>
 	</footer>
@@ -27,7 +30,8 @@ footer{
 	width:100%;
 	justify-content:center;
 	align-items:center;
-	border-top:1px solid $gray;
+	// border-top:1px solid $gray;
+	box-shadow:3px 0 3px 3px #efeeee;
 	.footer{
 		flex:1;
 		display:flex;
@@ -39,9 +43,14 @@ footer{
 			flex:1;
 			font-size:1.8rem;
 		}
+		img{
+			flex:1;
+			width:26px;
+			height:26px;
+		}
 		p{
 			flex:1;
-			font-size:1.4rem;
+			font-size:1.2rem;
 			color:$gray;
 		}
 	}
@@ -55,7 +64,6 @@ footer{
 </style>
 
 <script type="text/babel">
-import { mapGetters } from 'vuex'
 import Utils from "../Utils/utils";
 
 export default {

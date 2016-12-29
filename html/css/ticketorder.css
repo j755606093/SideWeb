@@ -5,6 +5,9 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   background-image: none;
   color: black; }
 
+a, img, button, input, textarea, p {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
 .font-red {
   color: #db3652; }
 
@@ -224,17 +227,37 @@ header {
                 flex-direction: row;
             -ms-flex-pack: center;
                 justify-content: center;
-            -ms-flex: 0.7;
-                flex: 0.7; }
+            -ms-flex: 0.8;
+                flex: 0.8; }
             .body .order .lists .list .list-center .city > span {
               font-size: 1.6rem;
               -ms-flex: 1;
                   flex: 1; }
+            .body .order .lists .list .list-center .city > span.start {
+              position: relative; }
+              .body .order .lists .list .list-center .city > span.start::before {
+                position: absolute;
+                bottom: 5px;
+                right: 20%;
+                height: 5px;
+                width: 30%;
+                background-color: #0074D9;
+                content: ""; }
+              .body .order .lists .list .list-center .city > span.start::after {
+                position: absolute;
+                bottom: 5px;
+                right: 5%;
+                height: 0;
+                width: 10px;
+                border: 10px solid #fff;
+                border-color: transparent transparent #0074D9 #0074D9;
+                content: ""; }
           .body .order .lists .list .list-center span.money {
             font-size: 1.6rem;
-            -ms-flex: 0.3;
-                flex: 0.3;
-            text-align: right; }
+            -ms-flex: 0.2;
+                flex: 0.2;
+            text-align: right;
+            color: #db3652; }
         .body .order .lists .list .list-footer {
           display: -ms-flexbox;
           display: flex;
@@ -247,12 +270,15 @@ header {
           -ms-flex-align: center;
               align-items: center; }
           .body .order .lists .list .list-footer span {
-            font-size: 1.2rem;
-            -ms-flex: 1;
-                flex: 1; }
+            font-size: 1.2rem; }
           .body .order .lists .list .list-footer span.name {
             text-align: left;
-            color: #AAAAAA; }
+            color: #AAAAAA;
+            -ms-flex: 0.7;
+                flex: 0.7; }
+          .body .order .lists .list .list-footer span.order-pay {
+            -ms-flex: 0.3;
+                flex: 0.3; }
           .body .order .lists .list .list-footer span.order-status {
             text-align: right; }
           .body .order .lists .list .list-footer span.order-pay {
@@ -273,7 +299,8 @@ footer {
   -ms-flex-align: center;
       align-items: center;
   border-top: 1px solid #dddddd;
-  background-color: #fff; }
+  background-color: #fff;
+  z-index: 11; }
   footer .footer {
     -ms-flex: 1;
         flex: 1;
@@ -290,6 +317,11 @@ footer {
       -ms-flex: 1;
           flex: 1;
       font-size: 1.8rem; }
+    footer .footer img {
+      -ms-flex: 1;
+          flex: 1;
+      width: 26px;
+      height: 26px; }
     footer .footer p {
       -ms-flex: 1;
           flex: 1;
@@ -299,3 +331,26 @@ footer {
     color: #0074D9; }
     footer .footer.active p {
       color: #0074D9; }
+
+.mint-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem; }
+  .mint-indicator .mint-indicator-wrapper {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 25px !important; }

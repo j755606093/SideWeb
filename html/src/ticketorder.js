@@ -2,16 +2,21 @@ import Vue from "vue";
 Vue.use(require('vue-resource'));//引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
-import { Toast } from 'mint-ui';
+import { Toast,Indicator } from 'mint-ui';
 
 new Vue({
 	el:"#app",
 	data:{
 		OrderList:[],
+		ready:false,//是否准备显示
 		noDataShow:true,//没有订单数据
 		Passengers:[],//乘客名数据,方便使用
 	},
 	created(){
+		this.ready = true;
+		Indicator.open({
+		  spinnerType: 'fading-circle'
+		});
 		fetch("http://192.168.31.80/api/Order/List",{
 			method:"POST",
 			headers: {
@@ -38,13 +43,15 @@ new Vue({
 					}
 
 					this.noDataShow = false;//显示订单
+					Indicator.close();
 				}
 				else{
-					Toast({
-					  message: result.Message,
-					  position: 'bottom',
-					  duration: 3000
-					});
+					// Toast({
+					//   message: result.Message,
+					//   position: 'bottom',
+					//   duration: 3000
+					// });
+					Indicator.close();
 				}
 			})
 	}

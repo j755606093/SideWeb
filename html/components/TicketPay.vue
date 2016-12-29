@@ -151,7 +151,7 @@
 				<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
 				<!-- <span class="center">有优惠码?</span> -->
 				<div class="last" @click="haveDiscountCode">
-					<button class="right" @click="checkCodeStatus">验证状态</button>
+					<button class="right" @click="checkCodeStatus">验证</button>
 					<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
 				</div>
 			</div>
