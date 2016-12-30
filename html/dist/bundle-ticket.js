@@ -11161,7 +11161,9 @@
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		// serverUrl:"http://192.168.31.80",//服务器地址
-		serverUrl: "" };
+		serverUrl: "", //服务器地址,生产时候需要的,
+		Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g"
+	};
 
 	// getters,获取数据
 	var getters = {
@@ -11337,7 +11339,8 @@
 			return fetch(state.serverUrl + "/api/Order/Create", {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
 				},
 				body: (0, _stringify2.default)({
 					LineId: state.busInfo.LineId,
@@ -11360,7 +11363,8 @@
 			return fetch(state.serverUrl + "/api/Order/PayOrder", {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
 				},
 				body: (0, _stringify2.default)({
 					OrderId: data
@@ -11376,7 +11380,8 @@
 			return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
 				},
 				body: (0, _stringify2.default)({
 					Lat: data.latitude,
@@ -11410,7 +11415,11 @@
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch(state.serverUrl + "/api/Transport/UserRelevant").then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/UserRelevant", {
+				headers: {
+					Authorization: state.Authorization
+				}
+			}).then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				var data = result.Data;
@@ -11438,7 +11447,8 @@
 			return fetch(state.serverUrl + "/api/Passenger/Add", {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
 				},
 				body: (0, _stringify2.default)({
 					Name: data.Name,
@@ -11460,7 +11470,11 @@
 			var commit = _ref19.commit,
 			    state = _ref19.state;
 
-			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data).then(function (result) {
+			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
+				headers: {
+					Authorization: state.Authorization
+				}
+			}).then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				return result;
@@ -11470,7 +11484,11 @@
 			var commit = _ref20.commit,
 			    state = _ref20.state;
 
-			return fetch(state.serverUrl + "/api/Passenger/Delete/" + data).then(function (result) {
+			return fetch(state.serverUrl + "/api/Passenger/Delete/" + data, {
+				headers: {
+					Authorization: state.Authorization
+				}
+			}).then(function (result) {
 				return result.json();
 			}).then(function (result) {
 				return result;
@@ -31153,7 +31171,7 @@
 	var __vue_styles__ = {};
 
 	/* styles */
-	__webpack_require__(167);
+	__webpack_require__(329);
 
 	/* script */
 	__vue_exports__ = __webpack_require__(170);
@@ -31175,6 +31193,7 @@
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketBody.vue";
 	__vue_options__.render = __vue_template__.render;
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+	__vue_options__._scopeId = "data-v-17660273";
 
 	/* hot reload */
 	if (false) {
@@ -31197,46 +31216,8 @@
 	module.exports = __vue_exports__;
 
 /***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(168);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(139)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(93)();
-	// imports
-	exports.i(__webpack_require__(169), "");
-
-	// module
-	exports.push([module.id, "\n.ticketbody{\n\tposition:absolute;\n}\n.popup-visible{\n\twidth:100%;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
+/* 167 */,
+/* 168 */,
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31245,7 +31226,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%;\n  padding-bottom: 100px; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #f1f1f1; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n      .ticketbody .block span img {\n        width: 20px;\n        height: 20px;\n        display: inline-block;\n        margin-right: 5px; }\n      .ticketbody .block span img.right {\n        width: 25px;\n        height: 25px;\n        position: absolute;\n        right: 10px;\n        top: 18px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900;\n      position: relative; }\n      .ticketbody .block span:last-child > i {\n        position: absolute;\n        top: 20px;\n        right: 10px;\n        color: #AAAAAA; }\n    .ticketbody .block span.station {\n      margin-left: 10px;\n      font-size: 1.4rem;\n      height: 1.8rem; }\n  .ticketbody > .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #f1f1f1; }\n    .ticketbody > .data > span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody > .data > span i {\n        margin-right: 5px; }\n      .ticketbody > .data > span img {\n        width: 20px;\n        height: 20px;\n        display: inline-block;\n        margin-right: 5px; }\n    .ticketbody > .data > span:first-child {\n      width: 30%;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data > span:last-child {\n      width: 30%;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data .cov-vue-date {\n      height: 60px;\n      width: 40%; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #e74c3c;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px;\n      border-radius: 10px; }\n  .ticketbody .click-search {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: right; }\n    .ticketbody .click-search p {\n      font-size: 1.4rem;\n      color: #0074D9; }\n  .ticketbody .animated {\n    animation-duration: 0.5s; }\n  .ticketbody .search-record {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .search-record p {\n      font-size: 1.6rem;\n      height: 40px;\n      line-height: 40px;\n      color: #fff;\n      background-color: #73777b;\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .ticketbody .search-record .list {\n      width: 100%;\n      padding: 0 5%;\n      height: 30px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #ecf0f1;\n      position: relative; }\n      .ticketbody .search-record .list span {\n        font-size: 1.4rem;\n        line-height: 20px;\n        color: #000;\n        -ms-flex: 0.5;\n            flex: 0.5;\n        display: inline-block;\n        text-align: center;\n        padding: 2px 5px; }\n      .ticketbody .search-record .list span.first::after {\n        content: \"\";\n        height: 3px;\n        width: 10%;\n        position: absolute;\n        top: 14px;\n        left: 45%;\n        background-color: #000; }\n      .ticketbody .search-record .list span.first::before {\n        content: \"\";\n        height: 0;\n        border: 4px solid #000;\n        border-color: transparent transparent #000 #000;\n        width: 0;\n        position: absolute;\n        top: 9px;\n        left: 55%; }\n      .ticketbody .search-record .list i {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        font-size: 1.4rem;\n        color: #2980b9;\n        height: 30px;\n        line-height: 30px; }\n  .ticketbody .location {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .location .showload span {\n      font-size: 1.4rem;\n      color: #555; }\n    .ticketbody .location .showload i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span.refresh-location {\n      color: #0074D9;\n      border: 1px solid #0074D9;\n      padding: 2px 5px;\n      border-radius: 5px;\n      margin-left: 10px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 96%;\n  margin: 0 2%;\n  padding-bottom: 100px;\n  overflow-x: hidden; }\n  .ticketbody .block {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #f1f1f1; }\n    .ticketbody .block span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 1.4rem;\n      color: #111111; }\n      .ticketbody .block span i {\n        margin-right: 5px; }\n      .ticketbody .block span img {\n        width: 20px;\n        height: 20px;\n        display: inline-block;\n        margin-right: 5px; }\n      .ticketbody .block span img.right {\n        width: 25px;\n        height: 25px;\n        position: absolute;\n        right: 10px;\n        top: 18px; }\n    .ticketbody .block span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      color: #AAAAAA; }\n    .ticketbody .block span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.8rem;\n      font-weight: 900;\n      position: relative; }\n      .ticketbody .block span:last-child > i {\n        position: absolute;\n        top: 20px;\n        right: 10px;\n        color: #AAAAAA; }\n    .ticketbody .block span.station {\n      margin-left: 10px;\n      font-size: 1.4rem;\n      height: 1.8rem; }\n  .ticketbody > .data {\n    width: 100%;\n    height: 60px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    border-bottom: 1px solid #f1f1f1; }\n    .ticketbody > .data > span {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      font-size: 1.8rem;\n      font-weight: 900;\n      color: #111111; }\n      .ticketbody > .data > span i {\n        margin-right: 5px; }\n      .ticketbody > .data > span img {\n        width: 20px;\n        height: 20px;\n        display: inline-block;\n        margin-right: 5px; }\n    .ticketbody > .data > span:first-child {\n      width: 30%;\n      color: #AAAAAA;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data > span:last-child {\n      width: 30%;\n      font-size: 1.4rem;\n      font-weight: 400; }\n    .ticketbody > .data .cov-vue-date {\n      height: 60px;\n      width: 40%; }\n  .ticketbody .query {\n    width: 100%; }\n    .ticketbody .query button {\n      width: 90%;\n      margin: 0 5%;\n      background-color: #e74c3c;\n      height: 50px;\n      color: #fff;\n      font-size: 1.6rem;\n      margin-top: 10px;\n      border-radius: 10px; }\n  .ticketbody .click-search {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: right; }\n    .ticketbody .click-search p {\n      font-size: 1.4rem;\n      color: #0074D9; }\n  .ticketbody .animated {\n    animation-duration: 0.5s; }\n  .ticketbody .search-record {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .search-record p {\n      font-size: 1.6rem;\n      height: 40px;\n      line-height: 40px;\n      color: #fff;\n      background-color: #73777b;\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .ticketbody .search-record .list {\n      width: 100%;\n      padding: 0 5%;\n      height: 30px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #ecf0f1;\n      position: relative; }\n      .ticketbody .search-record .list span {\n        font-size: 1.4rem;\n        line-height: 20px;\n        color: #000;\n        -ms-flex: 0.5;\n            flex: 0.5;\n        display: inline-block;\n        text-align: center;\n        padding: 2px 5px; }\n      .ticketbody .search-record .list span.first::after {\n        content: \"\";\n        height: 3px;\n        width: 10%;\n        position: absolute;\n        top: 14px;\n        left: 45%;\n        background-color: #000; }\n      .ticketbody .search-record .list span.first::before {\n        content: \"\";\n        height: 0;\n        border: 4px solid #000;\n        border-color: transparent transparent #000 #000;\n        width: 0;\n        position: absolute;\n        top: 9px;\n        left: 55%; }\n      .ticketbody .search-record .list i {\n        -ms-flex: 0.4;\n            flex: 0.4;\n        font-size: 1.4rem;\n        color: #2980b9;\n        height: 30px;\n        line-height: 30px; }\n  .ticketbody .location {\n    width: 90%;\n    margin: 0 5%;\n    margin-top: 10px;\n    padding-top: 5px;\n    text-align: center; }\n    .ticketbody .location .showload span {\n      font-size: 1.4rem;\n      color: #555; }\n    .ticketbody .location .showload i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result i {\n      font-size: 1.4rem; }\n    .ticketbody .location .location-result span.refresh-location {\n      color: #0074D9;\n      border: 1px solid #0074D9;\n      padding: 2px 5px;\n      border-radius: 5px;\n      margin-left: 10px; }\n", ""]);
 
 	// exports
 
@@ -48590,7 +48571,7 @@
 	var __vue_styles__ = {};
 
 	/* styles */
-	__webpack_require__(303);
+	__webpack_require__(327);
 
 	/* script */
 	__vue_exports__ = __webpack_require__(306);
@@ -48612,6 +48593,7 @@
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketResult.vue";
 	__vue_options__.render = __vue_template__.render;
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns;
+	__vue_options__._scopeId = "data-v-07fa1da4";
 
 	/* hot reload */
 	if (false) {
@@ -48634,46 +48616,8 @@
 	module.exports = __vue_exports__;
 
 /***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(304);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(139)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 304 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(93)();
-	// imports
-	exports.i(__webpack_require__(305), "");
-
-	// module
-	exports.push([module.id, "\n.list-complete-item {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter, .list-complete-leave-active {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active {\n  position: absolute;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
+/* 303 */,
+/* 304 */,
 /* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -52513,6 +52457,86 @@
 	"use strict";
 
 	module.exports = "data:image/png;base64,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";
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(328);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(139)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 328 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(93)();
+	// imports
+	exports.i(__webpack_require__(305), "");
+
+	// module
+	exports.push([module.id, "\n.list-complete-item[data-v-07fa1da4] {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter[data-v-07fa1da4], .list-complete-leave-active[data-v-07fa1da4] {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active[data-v-07fa1da4] {\n  position: absolute;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(330);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(139)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 330 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(93)();
+	// imports
+	exports.i(__webpack_require__(169), "");
+
+	// module
+	exports.push([module.id, "\n.ticketbody[data-v-17660273]{\n\tposition:absolute;\n}\n.popup-visible[data-v-17660273]{\n\twidth:100%;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

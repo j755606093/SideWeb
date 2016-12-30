@@ -93,7 +93,7 @@
 	</div>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 @import "../css/ticketbody.css";
 .ticketbody{
 	position:absolute;

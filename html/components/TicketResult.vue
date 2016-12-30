@@ -84,7 +84,7 @@
 	</div>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 @import "../css/ticketresult.css";
 .list-complete-item {
   transition: all 1s;

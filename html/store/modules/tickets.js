@@ -38,7 +38,8 @@ const state = {
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址
-	serverUrl:"",//服务器地址,生产时候需要的
+	serverUrl:"",//服务器地址,生产时候需要的,
+	Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g",
 }
 
 // getters,获取数据
@@ -163,6 +164,7 @@ const actions = {
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json',
+		    Authorization:state.Authorization
 		  },
 			body:JSON.stringify({
 				LineId:state.busInfo.LineId,
@@ -182,6 +184,7 @@ const actions = {
 			method: 'POST',
 			headers: {
 		    'Content-Type': 'application/json',
+		    Authorization:state.Authorization
 		  },
 			body:JSON.stringify({
 				OrderId:data
@@ -193,7 +196,8 @@ const actions = {
 		return fetch(state.serverUrl+"/api/Transport/NearestStartPoints",{
 			method: 'POST',
 			headers: {
-		    'Content-Type': 'application/json'
+		    'Content-Type': 'application/json',
+		    Authorization:state.Authorization
 		  },
 			body:JSON.stringify({
 				Lat:data.latitude,
@@ -219,7 +223,11 @@ const actions = {
 		commit("SET_ISFIRST",data);
 	},
 	getPassenger({commit,state}){
-		return fetch(state.serverUrl+"/api/Transport/UserRelevant")
+		return fetch(state.serverUrl+"/api/Transport/UserRelevant",{
+			headers:{
+				Authorization:state.Authorization
+			}
+		})
 			.then(result=>result.json())
 			.then(result=>{
 				let data = result.Data;
@@ -241,7 +249,8 @@ const actions = {
 		return fetch(state.serverUrl+"/api/Passenger/Add",{
 			method: 'POST',
 			headers: {
-		    'Content-Type': 'application/json'
+		    'Content-Type': 'application/json',
+		    Authorization:state.Authorization
 		  },
 			body:JSON.stringify({
 				Name:data.Name,
@@ -258,14 +267,22 @@ const actions = {
 		commit("SET_PHONE",data);
 	},
 	checkRebateStatus({commit,state},data){
-		return fetch(state.serverUrl+"/api/Transport/CheckRebateCode/"+data)
+		return fetch(state.serverUrl+"/api/Transport/CheckRebateCode/"+data,{
+			headers:{
+				Authorization:state.Authorization
+			}
+		})
 		.then(result=>result.json())
 		.then(result=>{
 			return result;
 		})
 	},
 	deletePassenger({commit,state},data){
-		return fetch(state.serverUrl+"/api/Passenger/Delete/"+data)
+		return fetch(state.serverUrl+"/api/Passenger/Delete/"+data,{
+			headers:{
+				Authorization:state.Authorization
+			}
+		})
 		.then(result=>result.json())
 		.then(result=>{
 			return result;
