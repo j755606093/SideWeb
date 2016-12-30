@@ -4,6 +4,12 @@ body{
 	background-color: lighten($gray, 30%);
 }
 
+#app{
+	width:100%;
+	height:100%;
+	position: absolute;
+}
+
 header{
 	height:50px;
 	// background-color:#14d67c;
@@ -46,7 +52,8 @@ header{
 }
 .body{
 	width:100%;
-	margin-top:50px;
+	// margin-top:50px;
+	padding-bottom:50px;
 	.no-data{
 		padding-top:20px;
 		text-align: center;
@@ -77,10 +84,12 @@ header{
 					padding:5px 0;
 					span{
 						font-size:1.4rem;
+						color:darken($gray,40%);
 					}
 					span.time{
 						text-align: left;
 						flex:0.7;
+						font-size:1.2rem;
 					}
 					span.type{
 						text-align: right;
@@ -99,6 +108,7 @@ header{
 						flex-direction:row;
 						justify-content: center;
 						flex:0.8;
+						position:relative;
 						>span{
 							font-size:1.6rem;
 							flex:1;
@@ -117,13 +127,18 @@ header{
 							&::after{
 								position: absolute;
 								bottom:5px;
-								right: 5%;
+								right: 12%;
 								height: 0;
-								width:10px;
-								border:10px solid $white;
+								width:0;
+								border:6px solid $white;
 								border-color:transparent transparent $blue $blue;
 								content:"";
 							}
+						}
+						i{
+							position: absolute;
+							top:0;
+							left:27%;
 						}
 					}
 					span.money{
@@ -146,7 +161,7 @@ header{
 					}
 					span.name{
 						text-align: left;
-						color:$gray;
+						color:darken($gray, 20%);
 						flex:0.7;
 					}
 					span.order-pay{
@@ -163,10 +178,28 @@ header{
 		}
 	}
 }
+.pay-order{
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	height:100%;
+	.pay-lists{
+		background-color:$white;
+		width:100%;
+		height:100%;
+		position:absolute;
+		top:0;
+		left:0;
+		bottom:0;
+		right:0;
+	}
+	
+}
 footer{
 	display:flex;
 	flex-direction:row;
-	position:absolute;
+	position:fixed;
 	bottom:0;
 	left:0;
 	height:50px;
@@ -189,12 +222,12 @@ footer{
 		}
 		img{
 			flex:1;
-			width:26px;
-			height:26px;
+			width:22px;
+			height:22px;
 		}
 		p{
 			flex:1;
-			font-size:1.4rem;
+			font-size:1.2rem;
 			color:$gray;
 		}
 	}

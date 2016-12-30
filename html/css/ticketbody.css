@@ -135,7 +135,8 @@ input {
 
 .ticketbody {
   width: 96%;
-  margin: 0 2%; }
+  margin: 0 2%;
+  padding-bottom: 100px; }
   .ticketbody .block {
     width: 100%;
     height: 60px;
@@ -156,6 +157,11 @@ input {
       font-size: 1.4rem;
       color: #111111; }
       .ticketbody .block span i {
+        margin-right: 5px; }
+      .ticketbody .block span img {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
         margin-right: 5px; }
     .ticketbody .block span:first-child {
       -ms-flex: 0.3;
@@ -199,6 +205,11 @@ input {
       font-weight: 900;
       color: #111111; }
       .ticketbody > .data > span i {
+        margin-right: 5px; }
+      .ticketbody > .data > span img {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
         margin-right: 5px; }
     .ticketbody > .data > span:first-child {
       width: 30%;

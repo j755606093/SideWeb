@@ -2,7 +2,7 @@
 	<footer v-show="getfooter">
 		<a href="./getCustomPage?page=ticket#/home/ticketbody" class="footer active">
 			<!-- <i class="fa fa-home"></i> -->
-			<img src="../picture/wxb_home_active.png">
+			<img src="../picture/ticket_blue.png">
 			<p>票务</p>
 		</a>
 		<a href="./getCustomPage?page=TicketOrder" class="footer">
@@ -12,7 +12,7 @@
 		</a>
 		<a class="footer">
 			<!-- <i class="fa fa-user"></i> -->
-			<img src="../picture/account_user.png">
+			<img src="../picture/user.png">
 			<p>个人中心</p>
 		</a>
 	</footer>
@@ -23,7 +23,7 @@
 footer{
 	display:flex;
 	flex-direction:row;
-	position:absolute;
+	position:fixed;
 	bottom:0;
 	left:0;
 	height:50px;
@@ -31,7 +31,9 @@ footer{
 	justify-content:center;
 	align-items:center;
 	// border-top:1px solid $gray;
+	background-color: $white;
 	box-shadow:3px 0 3px 3px #efeeee;
+	z-index: 100;
 	.footer{
 		flex:1;
 		display:flex;
@@ -45,8 +47,8 @@ footer{
 		}
 		img{
 			flex:1;
-			width:26px;
-			height:26px;
+			width:22px;
+			height:22px;
 		}
 		p{
 			flex:1;

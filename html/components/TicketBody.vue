@@ -1,7 +1,10 @@
 <template>
 	<div class="ticketbody">
 		<div @click="GoStartCity" class="go block">
-			<span><i class="fa fa-location-arrow"></i>出发点</span>
+			<span>
+			<!-- <i class="fa fa-location-arrow"></i> -->
+			<img src="../picture/map_red.png">
+			出发点</span>
 			<span>
 				{{getStartCity}}
 				<i class="fa fa-search"></i>
@@ -9,14 +12,20 @@
 			</span>
 		</div>
 		<div @click="GoEndCity" class="to block">
-			<span><i class="fa fa-location-arrow"></i>到达点</span>
+			<span>
+			<!-- <i class="fa fa-location-arrow"></i> -->
+			<img src="../picture/map_blue.png">
+			到达点</span>
 			<span>{{getEndCity}}
 			<i class="fa fa-search"></i>
 			<!-- <span class="station">{{getEndCityStation}}</span> -->
 			</span>
 		</div>
 		<div @click="openPicker" class="data">
-			<span><i class="fa fa-calendar"></i>出发日期</span>
+			<span>
+			<!-- <i class="fa fa-calendar"></i> -->
+			<img src="../picture/date.png">
+			出发日期</span>
 			<!-- <span v-text="showTime"></span> -->
 			<date-picker :date="startTime" :option="option" :limit="limit"></date-picker>
 			<span v-text="showWeek"></span>
@@ -174,15 +183,15 @@ export default {
 		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 		
 		// 设置初始时间
-		this.handleConfirm(nowDate);
+		this.handleConfirm(new Date(nowDate.getTime()+1000*60*60*24));
 		if(this.$store.getters.getInfo.startDate.server){
 			// 之前查过
-			this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server)
+			this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server);
 		}
 		else{
 			this.startTime.time = this.formatNow(new Date())
 		}
-		// 获取本地数据
+		// 获取本地历史搜索数据
 		this.localStorage = this.getLocalStore().reverse();
 		// 改变限制选择的日期
 		this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));

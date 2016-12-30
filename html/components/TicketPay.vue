@@ -88,91 +88,36 @@
 				<span>联系信息:</span>
 				<!-- <span>一张订单只需填写一人</span> -->
 			</div>
-			<!-- 列出取票人信息 -->
-			<!-- <div class="info-list" v-if="isHaveGetTicketMan">
-				<div class="list">
-					<div class="check">
-						<span><i class="fa fa-check"></i></span>
-					</div>
-					<div class="list-body">
-						<div class="list-top">
-							<span class="name">周周周</span>
-							<span class="type">成人票</span>
-						</div>
-						<div class="list-bottom">
-							<p>身份证<span>440802199406011519</span></p>
-						</div>
-					</div>
-					<span><i class="fa fa-trash"></i></span>
-				</div>
-			</div> -->
-			<!-- 添加乘客 -->
-			<!-- <div class="info-man" v-else>
-				<div class="info-man-name info">
-					<span>乘客姓名</span>
-					<input type="text" placeholder="请填写真实姓名以免取不出票" v-model="fareName">
-				</div>
-				<div class="info-man-card info">
-					<span>身份证</span>
-					<input type="text" placeholder="请填写证件号码" v-model="certificate">
-				</div>
-			</div>
-			<div class="click-append">
-				<button @click="append">确定添加</button>
-			</div>
-		</div> -->
-
-
-		<!-- 联系人信息 -->
-		<!-- <div class="contact-info">
-			<div class="info">
-				<span>联系人</span>
-				<input type="text" placeholder="用于取票" v-model="payInfoData.getTicketManName">
-			</div>
-		</div> -->
-		<div class="contact-info">
-			<div class="info">
-				<span>联系人手机</span>
-				<input type="text" placeholder="用于联系(必填)" v-model="payInfoData.contactPhone">
-			</div>
-		</div>
-		<div class="contact-info">
-			<div class="info-head">
-				<span>其它信息:</span>
-				<!-- <span>一张订单只需填写一人</span> -->
-			</div>
-			<div class="info">
-				<span>优惠券</span>
-				<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
-				<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
-			</div>
-			<div class="info discount-code">
-				<span class="first">优惠码</span>
-				<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-				<!-- <span class="center">有优惠码?</span> -->
-				<div class="last" @click="haveDiscountCode">
-					<button class="right" @click="checkCodeStatus">验证</button>
-					<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
+			<div class="contact-info">
+				<div class="info">
+					<span>联系人手机</span>
+					<input type="text" placeholder="用于联系(必填)" v-model="payInfoData.contactPhone">
 				</div>
 			</div>
 		</div>
 		<!-- 其他信息 -->
-	<!-- 	<div class="other-info">
-			<div class="info">
-				<span class="first">优惠码</span>
-				<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-				<span class="center">有优惠码?</span>
-				<div class="last" @click="haveDiscountCode">
-					<button class="right" @click="GetDiscount">验证状态</button>
-					<span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span>
+		<div class="people-info">
+			<div class="contact-info">
+				<div class="info-head">
+					<span>其它信息:</span>
+					<!-- <span>一张订单只需填写一人</span> -->
+				</div>
+				<div class="info">
+					<span>优惠券</span>
+					<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
+					<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
+				</div>
+				<div class="info discount-code">
+					<span class="first">优惠码</span>
+					<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
+					<!-- <span class="center">有优惠码?</span> -->
+					<div class="last" @click="haveDiscountCode">
+						<button class="right" @click="checkCodeStatus">验证</button>
+						<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
+					</div>
 				</div>
 			</div>
-			<div class="discount-code" v-if="havediscountcode">
-				<input type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-				<i class="fa fa-check"></i>
-				<button @click="checkCodeStatus">验证状态</button>
-			</div>
-		</div> -->
+		</div>
 		<!-- <div class="other-info">
 			<div class="info">
 				<span class="first">汽车乘意险</span>
@@ -322,12 +267,12 @@
 									<span class="name">{{serverPayInfo.UsrInfo.Name.join(',')}}</span>
 								</p>
 							</div>
-							<div class="info-box get-ticket">
+							<!-- <div class="info-box get-ticket">
 								<p>
 									<span class="type">联系人:</span>
 									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
-							</div>
+							</div> -->
 							<div class="info-box get-ticket">
 								<p>
 									<span class="type">联系方式:</span>

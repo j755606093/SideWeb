@@ -37,8 +37,8 @@ const state = {
 	phone:null,//取票人手机号
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
-	serverUrl:"http://192.168.31.80",//服务器地址
-	// serverUrl:"",//服务器地址,生产时候需要的
+	// serverUrl:"http://192.168.31.80",//服务器地址
+	serverUrl:"",//服务器地址,生产时候需要的
 }
 
 // getters,获取数据

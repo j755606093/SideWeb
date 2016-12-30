@@ -144,7 +144,8 @@ input {
 
 #pay {
   margin-top: -10px;
-  padding: 0; }
+  padding: 0;
+  background-color: #f7f7f7; }
 
 .ticket-info {
   width: 100%;
@@ -286,9 +287,11 @@ input {
         flex: 0.2; }
 
 .people-info {
-  width: 100%;
+  width: 96%;
+  margin: 0 2%;
   background-color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  border-radius: 10px;
   position: relative;
   box-shadow: 0px 3px 5px 0px #ececec; }
   .people-info .info-head {
@@ -444,9 +447,10 @@ input {
 .contact-info {
   width: 100%;
   background-color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   position: relative;
-  box-shadow: 0px 3px 5px 0px #ececec; }
+  box-shadow: 0px 3px 5px 0px #ececec;
+  border-radius: 10px; }
   .contact-info .info {
     height: 40px;
     line-height: 40px;
@@ -457,8 +461,7 @@ input {
     -ms-flex-direction: row;
         flex-direction: row;
     width: 96%;
-    margin: 0 2%;
-    border-bottom: 1px solid #dddddd; }
+    margin: 0 2%; }
     .contact-info .info span {
       width: 30%;
       font-size: 1.3rem; }
