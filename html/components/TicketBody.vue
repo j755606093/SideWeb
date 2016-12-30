@@ -7,7 +7,8 @@
 			出发点</span>
 			<span>
 				{{getStartCity}}
-				<i class="fa fa-search"></i>
+				<!-- <i class="fa fa-search"></i> -->
+				<img class="right" src="../picture/search.png">
 				<!-- <span class="station">{{getStartCityStation}}</span> -->
 			</span>
 		</div>
@@ -17,7 +18,8 @@
 			<img src="../picture/map_blue.png">
 			到达点</span>
 			<span>{{getEndCity}}
-			<i class="fa fa-search"></i>
+			<!-- <i class="fa fa-search"></i> -->
+			<img class="right" src="../picture/search.png">
 			<!-- <span class="station">{{getEndCityStation}}</span> -->
 			</span>
 		</div>

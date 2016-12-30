@@ -18,7 +18,7 @@ new Vue({
 		Indicator.open({
 		  spinnerType: 'fading-circle'
 		});
-		fetch("http://192.168.31.80/api/Order/List",{
+		fetch("/api/Order/List",{
 			method:"POST",
 			headers: {
 		    'Content-Type': 'application/json'

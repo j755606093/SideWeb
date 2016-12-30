@@ -10,7 +10,7 @@
 		display: flex;
 		flex:1;
 		flex-direction:row;
-		border-bottom:1px solid lighten($gray,20%);
+		border-bottom:1px solid lighten($gray,28%);
 		span{
 			display:flex;
 			flex-direction:row;
@@ -25,6 +25,13 @@
 				height:20px;
 				display:inline-block;
 				margin-right:5px;
+			}
+			img.right{
+				width:25px;
+				height:25px;
+				position:absolute;
+				right:10px;
+				top:18px;
 			}
 		}
 		span:first-child{
@@ -55,7 +62,7 @@
 		display: flex;
 		flex:1;
 		flex-direction:row;
-		border-bottom:1px solid lighten($gray,20%);
+		border-bottom:1px solid lighten($gray,28%);
 		>span{
 			display:flex;
 			flex-direction:row;

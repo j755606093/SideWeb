@@ -13,7 +13,7 @@
 		<a class="footer">
 			<!-- <i class="fa fa-user"></i> -->
 			<img src="../picture/user.png">
-			<p>个人中心</p>
+			<p>我的</p>
 		</a>
 	</footer>
 </template>

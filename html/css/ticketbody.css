@@ -152,7 +152,7 @@ input {
         flex: 1;
     -ms-flex-direction: row;
         flex-direction: row;
-    border-bottom: 1px solid #dddddd; }
+    border-bottom: 1px solid #f1f1f1; }
     .ticketbody .block span {
       display: -ms-flexbox;
       display: flex;
@@ -169,6 +169,12 @@ input {
         height: 20px;
         display: inline-block;
         margin-right: 5px; }
+      .ticketbody .block span img.right {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        right: 10px;
+        top: 18px; }
     .ticketbody .block span:first-child {
       -ms-flex: 0.3;
           flex: 0.3;
@@ -197,7 +203,7 @@ input {
         flex: 1;
     -ms-flex-direction: row;
         flex-direction: row;
-    border-bottom: 1px solid #dddddd; }
+    border-bottom: 1px solid #f1f1f1; }
     .ticketbody > .data > span {
       display: -ms-flexbox;
       display: flex;
