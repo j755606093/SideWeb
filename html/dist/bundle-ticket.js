@@ -49981,6 +49981,12 @@
 				this.$store.dispatch("showWXpay", id).then(function (data) {
 					_mintUi.Indicator.close();
 					var paydata = data.Data;
+					(0, _mintUi.Toast)({
+						message: (0, _stringify2.default)(data),
+						iconClass: 'fa fa-check',
+						duration: 1000 * 60,
+						className: "success"
+					});
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							// 支付成功

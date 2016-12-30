@@ -512,6 +512,12 @@ export default {
 				.then(data=>{
 					Indicator.close();
 					let paydata = data.Data;
+					Toast({
+						  message: JSON.stringify(data),
+						  iconClass: 'fa fa-check',
+						  duration:1000*60,
+						  className:"success"
+						});
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
 						if(r.err_msg==="get_brand_wcpay_request:ok"){
 							// 支付成功
