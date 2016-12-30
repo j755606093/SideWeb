@@ -49981,6 +49981,7 @@
 				this.$store.dispatch("showWXpay", id).then(function (data) {
 					_mintUi.Indicator.close();
 					var paydata = data.Data;
+					paydata.timestamp = parseInt(paydata.timestamp);
 					(0, _mintUi.Toast)({
 						message: (0, _stringify2.default)(data),
 						iconClass: 'fa fa-check',

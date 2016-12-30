@@ -512,6 +512,7 @@ export default {
 				.then(data=>{
 					Indicator.close();
 					let paydata = data.Data;
+					paydata.timestamp = parseInt(paydata.timestamp);
 					Toast({
 						  message: JSON.stringify(data),
 						  iconClass: 'fa fa-check',
