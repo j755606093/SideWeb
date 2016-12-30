@@ -45,6 +45,20 @@ app.use('/api', index);
 /*****************功能分割线********************/
 /*********************************************/
 
+app.get("/wx/ticket",(req,res)=>{
+	let realPath = "html/dist/ticket.html";
+	fs.readFile(realPath,"utf-8",(error,file)=>{
+		if(error){
+			res.send({status:500,error:"没有这个文件!"});
+		}
+		else{
+			res.set('Content-Type', 'text/html');
+			// app.locals.pages[page] = file;//缓存这个文件
+			res.send(file);
+		}
+	})
+})
+
 app.get("/getCustomPage",(req,res)=>{
 	let page = req.query.page;//获取指定的页面
 	let realPath = "html/dist/"+page+".html";

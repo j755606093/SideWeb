@@ -288,6 +288,21 @@ const actions = {
 		.then(result=>{
 			return result;
 		})
+	},
+	getWXconfig({commit,state}){
+		return fetch(state.serverUrl+"/api/WxBasis/GetJsPackage/",{
+			method:"POST",
+			headers:{
+				Authorization:state.Authorization
+			},
+			body:JSON.stringify({
+				Url:window.location.href.split("#")[0]
+			})
+		})
+		.then(result=>result.json())
+		.then(result=>{
+			return result;
+		})
 	}
 }
 

@@ -428,7 +428,21 @@ export default {
 		// this.AllFare = this.getLocalStorePassager();
 
 		this.computeAll();
-		// console.log(this.formatData(this.busInfo))
+		
+		this.$store.dispatch("getWXconfig")
+			.then(result=>{
+				let data = result.Data;
+				data.debug = true;
+				data.jsApiList = ["chooseWXPay","openLocation","getLocation"];
+				wx.config(data);
+				wx.ready(function(){
+					alert("ready");
+				});
+				wx.error(function(res){
+					alert(res)
+				})
+			})
+		
 	},
 	computed:{
 		startDate(){
@@ -512,33 +526,26 @@ export default {
 				.then(data=>{
 					Indicator.close();
 					let paydata = data.Data;
-					paydata.timestamp = parseInt(paydata.timestamp);
-					Toast({
-						  message: JSON.stringify(data),
-						  iconClass: 'fa fa-check',
-						  duration:1000*60,
-						  className:"success"
-						});
-					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
-						if(r.err_msg==="get_brand_wcpay_request:ok"){
-							// 支付成功
-							// 再根据小票拿数据
-							// 需要延迟2秒以上再去查找订单,否则会出现找不到的情况
-							Toast({
-							  message: '支付成功!',
-							  iconClass: 'fa fa-check',
-							  duration:3000,
-							  className:"success"
-							});
-						}
-						this.serverPayInfo.UsrInfo.Mobile = r;
+
+					paydata.success = function(res){
 						Toast({
-						  message: r.err_msg,
+						  message: '支付成功!',
 						  iconClass: 'fa fa-check',
-						  duration:1000*60,
+						  duration:3000,
 						  className:"success"
 						});
-					});
+					}
+					// window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+					// 	if(r.err_msg==="get_brand_wcpay_request:ok"){
+					// 		Toast({
+					// 		  message: '支付成功!',
+					// 		  iconClass: 'fa fa-check',
+					// 		  duration:3000,
+					// 		  className:"success"
+					// 		});
+					// 	}
+					// });
+					wx.chooseWXPay(paydata)
 				})
 		},
 		/**

@@ -192,7 +192,12 @@ input {
           flex: 0.25; }
     .result .data-set span:last-child {
       -ms-flex: 0.25;
-          flex: 0.25; }
+          flex: 0.25;
+      -ms-flex-align: end;
+          align-items: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+      margin-right: 10px; }
     .result .data-set span.active {
       color: #0074D9; }
   .result .result-list {
@@ -221,7 +226,8 @@ input {
         display: flex;
         -ms-flex-direction: column;
             flex-direction: column;
-        margin: 5px 0; }
+        margin: 5px 0;
+        margin-left: 25px; }
         .result .result-list .list > .car-position p {
           height: 25px;
           line-height: 25px;

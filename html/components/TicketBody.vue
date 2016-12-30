@@ -226,8 +226,18 @@ export default {
 		startTime:{
 			handler:function(newValue,oldValue){
 				let date = new Date(newValue.time);
+				let newDate = new Date();
 				this.showTime = this.formatNow(date);
 				this.showWeek = Utils.formatWeek(date);
+
+				// 显示明天和今天
+				if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()){
+					this.showWeek = "今天";
+				}
+				if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()+1){
+					this.showWeek = "明天";
+				}
+
 				//记录选取的时间
 				this.$store.dispatch("setStartDate",{
 					date:this.showTime,
