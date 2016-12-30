@@ -37,10 +37,12 @@
 		}
 		span:first-child{
 			flex:0.3;
+			width:30%;
 			color:$gray;
 		}
 		span:last-child{
 			flex:0.7;
+			width:70%;
 			font-size:1.8rem;
 			font-weight:900;
 			position:relative;

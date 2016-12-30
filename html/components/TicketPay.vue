@@ -524,6 +524,13 @@ export default {
 							  className:"success"
 							});
 						}
+						this.serverPayInfo.UsrInfo.Mobile = r;
+						Toast({
+						  message: r.err_msg,
+						  iconClass: 'fa fa-check',
+						  duration:1000*60,
+						  className:"success"
+						});
 					});
 				})
 		},
