@@ -22,7 +22,7 @@ new Vue({
 			method:"POST",
 			headers: {
 		    'Content-Type': 'application/json',
-		    Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g"
+		    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g"
 		  },
 			body:JSON.stringify({
 				Index:1,
