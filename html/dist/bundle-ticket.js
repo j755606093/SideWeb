@@ -30870,7 +30870,7 @@
 	  return _vm._h('a', {
 	    staticClass: "footer active",
 	    attrs: {
-	      "href": "./getCustomPage?page=ticket#/home/ticketbody"
+	      "href": "./ticket.html#/home/ticketbody"
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
@@ -30881,7 +30881,7 @@
 	  return _vm._h('a', {
 	    staticClass: "footer",
 	    attrs: {
-	      "href": "./getCustomPage?page=TicketOrder"
+	      "href": "./TicketOrder.html"
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {

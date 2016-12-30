@@ -1,11 +1,11 @@
 <template>
 	<footer v-show="getfooter">
-		<a href="./getCustomPage?page=ticket#/home/ticketbody" class="footer active">
+		<a href="./ticket.html#/home/ticketbody" class="footer active">
 			<!-- <i class="fa fa-home"></i> -->
 			<img src="../picture/ticket_blue.png">
 			<p>票务</p>
 		</a>
-		<a href="./getCustomPage?page=TicketOrder" class="footer">
+		<a href="./TicketOrder.html" class="footer">
 			<!-- <i class="fa fa-sticky-note"></i> -->
 			<img src="../picture/cart_order.png">
 			<p>订单</p>
