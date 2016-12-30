@@ -219,7 +219,7 @@ const actions = {
 		commit("SET_ISFIRST",data);
 	},
 	getPassenger({commit,state}){
-		return fetch(state.serverUrl+"/api/Transport/UserRelevant/9264122")
+		return fetch(state.serverUrl+"/api/Transport/UserRelevant")
 			.then(result=>result.json())
 			.then(result=>{
 				let data = result.Data;
@@ -246,7 +246,7 @@ const actions = {
 			body:JSON.stringify({
 				Name:data.Name,
 				Mobile:data.Mobile,
-				UsrId:"9264122"
+				// UsrId:"9264122"
 			})
 		})
 		.then(result=>result.json())
