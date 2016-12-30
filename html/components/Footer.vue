@@ -27,7 +27,9 @@ footer{
 	bottom:0;
 	left:0;
 	height:50px;
+	line-height: 50px;
 	width:100%;
+	overflow-x: hidden;
 	justify-content:center;
 	align-items:center;
 	// border-top:1px solid $gray;
@@ -40,20 +42,22 @@ footer{
 		flex-direction:column;
 		justify-content:center;
 		align-items:center;
+		width:33.3333%;
 		color:$gray;
+		height: 50px;
+		line-height:50px;
 		i{
-			flex:1;
 			font-size:1.8rem;
 		}
 		img{
-			flex:1;
 			width:22px;
 			height:22px;
 		}
 		p{
-			flex:1;
 			font-size:1.2rem;
 			color:$gray;
+			height:20px;
+			line-height:20px;
 		}
 	}
 	.footer.active{

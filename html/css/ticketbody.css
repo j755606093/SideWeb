@@ -162,7 +162,9 @@ input {
       -ms-flex-align: center;
           align-items: center;
       font-size: 1.4rem;
-      color: #111111; }
+      color: #111111;
+      height: 60px;
+      line-height: 60px; }
       .ticketbody .block span i {
         margin-right: 5px; }
       .ticketbody .block span img {
