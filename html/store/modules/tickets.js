@@ -32,7 +32,7 @@ const state = {
 	locationResult:null,//定位结果
 	haveLocation:false,//没有定位结果
 
-	passenger:null,//乘客信息
+	passenger:[],//乘客信息
 	rebate:null,//优惠信息
 	phone:null,//取票人手机号
 

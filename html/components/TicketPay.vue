@@ -72,7 +72,7 @@
 				</div>
 				<div class="info-man-card info">
 					<span>手机号</span>
-					<input type="text" placeholder="手机号(可用于联系)" v-model="certificate">
+					<input type="text" placeholder="选填(可用于联系)" v-model="certificate">
 					<button @click="append"><i class="fa fa-plus-circle"></i>添加</button>
 				</div>
 			</div>
@@ -91,7 +91,7 @@
 			<div class="contact-info">
 				<div class="info">
 					<span>联系人手机</span>
-					<input type="text" placeholder="用于联系(必填)" v-model="payInfoData.contactPhone">
+					<input type="text" placeholder="必填(用于联系)" v-model="payInfoData.contactPhone">
 				</div>
 			</div>
 		</div>

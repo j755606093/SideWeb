@@ -11155,7 +11155,7 @@
 		locationResult: null, //定位结果
 		haveLocation: false, //没有定位结果
 
-		passenger: null, //乘客信息
+		passenger: [], //乘客信息
 		rebate: null, //优惠信息
 		phone: null, //取票人手机号
 
@@ -50577,7 +50577,7 @@
 	    }],
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "手机号(可用于联系)"
+	      "placeholder": "选填(可用于联系)"
 	    },
 	    domProps: {
 	      "value": _vm._s(_vm.certificate)
@@ -50609,7 +50609,7 @@
 	    }],
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "用于联系(必填)"
+	      "placeholder": "必填(用于联系)"
 	    },
 	    domProps: {
 	      "value": _vm._s(_vm.payInfoData.contactPhone)
