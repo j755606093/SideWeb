@@ -681,7 +681,8 @@ export default {
 							// LinkmanId:arrayData.Id,
 							LinkmanId:this.payInfoData.contactPhone,
 							PassengerIds:arrayId,
-							RebateId:rebateid.slice(0,rebateid.length-1)
+							RebateId:rebateid.slice(0,rebateid.length-1),
+							StartAddress:this.selectStation
 						}).then(result=>{
 							Indicator.close();
 							if(result.Code!==200){
@@ -899,6 +900,9 @@ export default {
 			this.stationPopupVisible = true;
 		},
 		showDiscountWindow(){
+			if(this.optionsDiscount.length===0){
+				return;
+			}
 			this.discountPopupVisible = true;
 		},
 		checkSelectStation(){

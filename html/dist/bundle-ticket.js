@@ -11134,11 +11134,11 @@
 		showFooter: true, //显示底部tab
 
 		startCity: {
-			Code: "3385299",
+			Code: "6449821",
 			Name: "五经富"
 		}, //出发地
 		endCity: {
-			Code: "3385290",
+			Code: "6449833",
 			Name: "深圳罗湖"
 		}, //到达地
 
@@ -11350,7 +11350,8 @@
 					Date: state.startDate.date,
 					LinkmanId: data.LinkmanId,
 					PassengerIds: data.PassengerIds,
-					RebateId: data.RebateId
+					RebateId: data.RebateId,
+					StartAddress: data.StartAddress
 				})
 			}).then(function (result) {
 				return result.json();
@@ -31640,13 +31641,8 @@
 					return _promise2.default.resolve();
 				}).catch(function (error) {
 					_this.locationLoad = false; //停止界面加载提示
-					_this.locationName = "请稍后重试...";
-					_this.showRefresh = true;
-					// Toast({
-					//   message: "网络错误,请稍后重试...",
-					//   position: 'bottom',
-					//   duration: 3000,
-					// });
+					// this.locationName = "请稍后重试...";
+					// this.showRefresh = true;
 				});
 			},
 			getPositionError: function getPositionError(error) {
@@ -50303,7 +50299,8 @@
 								// LinkmanId:arrayData.Id,
 								LinkmanId: this.payInfoData.contactPhone,
 								PassengerIds: arrayId,
-								RebateId: rebateid.slice(0, rebateid.length - 1)
+								RebateId: rebateid.slice(0, rebateid.length - 1),
+								StartAddress: this.selectStation
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
@@ -50528,6 +50525,9 @@
 				this.stationPopupVisible = true;
 			},
 			showDiscountWindow: function showDiscountWindow() {
+				if (this.optionsDiscount.length === 0) {
+					return;
+				}
 				this.discountPopupVisible = true;
 			},
 			checkSelectStation: function checkSelectStation() {

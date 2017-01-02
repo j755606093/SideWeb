@@ -311,13 +311,8 @@ export default {
 				return Promise.resolve();
 			}).catch(error=>{
 				this.locationLoad = false;//停止界面加载提示
-				this.locationName = "请稍后重试...";
-				this.showRefresh = true;
-				// Toast({
-				//   message: "网络错误,请稍后重试...",
-				//   position: 'bottom',
-				//   duration: 3000,
-				// });
+				// this.locationName = "请稍后重试...";
+				// this.showRefresh = true;
 			})
 		},
 		getPositionError(error){

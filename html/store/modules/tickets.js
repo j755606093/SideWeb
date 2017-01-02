@@ -11,11 +11,11 @@ const state = {
 	showFooter:true,//显示底部tab
 
 	startCity:{
-		Code:"3385299",
+		Code:"6449821",
 		Name:"五经富",
 	},//出发地
 	endCity:{
-		Code:"3385290",
+		Code:"6449833",
 		Name:"深圳罗湖",
 	},//到达地
 
@@ -174,7 +174,8 @@ const actions = {
 				Date:state.startDate.date,
 				LinkmanId:data.LinkmanId,
 				PassengerIds:data.PassengerIds,
-				RebateId:data.RebateId
+				RebateId:data.RebateId,
+				StartAddress:data.StartAddress
 			})
 		})
 		.then(result=>result.json())
