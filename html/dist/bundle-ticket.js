@@ -11293,7 +11293,7 @@
 					return { End: false };
 				}
 				commit(_Type2.default.SET_ENDCITY, {
-					Code: data.End.Code,
+					Code: data.End.Id,
 					Name: data.End.Name
 				});
 				return data;

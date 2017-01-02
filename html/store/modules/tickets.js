@@ -130,7 +130,7 @@ const actions = {
 					return {End:false};
 				}
 				commit(types.SET_ENDCITY,{
-					Code:data.End.Code,
+					Code:data.End.Id,
 					Name:data.End.Name
 				});
 				return data;
