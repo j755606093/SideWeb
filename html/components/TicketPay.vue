@@ -48,7 +48,7 @@
 					</div>
 					<div class="list-body">
 						<div class="list-top">
-							<span class="name" v-text="item.Name"></span>
+							<span class="name" @click="setFare(index)" v-text="item.Name"></span>
 							<span class="type">{{item.Mobile}}</span>
 							<template v-if="item.Mobile">
 								<span class="get-ticket" v-if="item.isGetTicket">联系人</span>

@@ -9,23 +9,14 @@ const state = {
 	HeaderIsHome: true,
 	HeaderTitle:"身边订票",
 	showFooter:true,//显示底部tab
-
-	// startCity:{
-	// 	Code:"6449821",
-	// 	Name:"五经富",
-	// },//出发地
-	// endCity:{
-	// 	Code:"6449833",
-	// 	Name:"深圳罗湖",
-	// },//到达地
 	
 	// 正式数据库
 	startCity:{
-		Code:"3906241",
+		Code:"3385299",
 		Name:"五经富",
 	},//出发地
 	endCity:{
-		Code:"3906253",
+		Code:"3385290",
 		Name:"深圳罗湖",
 	},//到达地
 
@@ -49,7 +40,7 @@ const state = {
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
 	// serverUrl:"http://192.168.31.80",//服务器地址
 	serverUrl:"",//服务器地址,生产时候需要的,
-	// Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g",
+	// Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs",
 	Authorization:""
 }
 
@@ -110,6 +101,30 @@ const actions = {
 	},
 	setStartDate({commit,state},data){
 		commit(types.SET_STARTDATE,data)
+	},
+	getCityDefault({commit,state}){
+		return fetch(state.serverUrl+"/api/Transport/Index")
+			.then(result=>result.json())
+			.then(result=>{
+				let data = result.Data;
+				commit(types.SET_STARTCITY,{
+					Code:data.Start.Id,
+					Name:data.Start.Name
+				});
+				if(!data.End){
+					// 如果为空,后台不保证传回来的是真实的数据
+					commit(types.SET_ENDCITY,{
+						Code:"000",
+						Name:"请选择"
+					})
+					return {End:false};
+				}
+				commit(types.SET_ENDCITY,{
+					Code:data.End.Code,
+					Name:data.End.Name
+				});
+				return data;
+			})
 	},
 	setStartCityList({commit,state}){
 		if(state.startCityList){

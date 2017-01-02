@@ -127,6 +127,7 @@ export default {
 			locationName:"",//定位最近的车站位置名
 			showRefresh:false,//是否显示刷新地理位置
 			searchrecord:false,//是否显示历史记录
+			canQuery:false,//是否可以查询
       startTime: {
         time: ""
       },
@@ -203,19 +204,40 @@ export default {
 		if(this.$store.getters.getIsFirst){
 			// 还没有获取过,说明第一个打开网页
 			this.$store.dispatch("setisFirst",false);
+			
+			// 获取默认的出发地址
+			this.$store.dispatch("getCityDefault").then(result=>{
+				if(result.End){
+					// 到达点不为空
+					this.canQuery = true;
+				}
+				else{
+					this.canQuery = false;
+				}
+			})
+
+			// 获取地理位置
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
-			// this.$store.dispatch("setHaveLocation",true);
 			// 获取乘客信息和优惠信息
-			this.$store.dispatch("getPassenger")
+			this.$store.dispatch("getPassenger");
 			
 		}
 		else{
+			// 不需要再次获取地理位置
 			this.locationLoad = false;
 			if(this.$store.getters.getLocationResult){
 				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
 			}
 			else{
 				this.locationName = "";
+			}
+
+			// 查看到达点是否是正确的
+			if(this.getEndCity==="请选择"){
+				this.canQuery = false;
+			}
+			else{
+				this.canQuery = true;
 			}
 		}
 	},

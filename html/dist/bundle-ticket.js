@@ -11133,22 +11133,13 @@
 		HeaderTitle: "身边订票",
 		showFooter: true, //显示底部tab
 
-		// startCity:{
-		// 	Code:"6449821",
-		// 	Name:"五经富",
-		// },//出发地
-		// endCity:{
-		// 	Code:"6449833",
-		// 	Name:"深圳罗湖",
-		// },//到达地
-
 		// 正式数据库
 		startCity: {
-			Code: "3906241",
+			Code: "3385299",
 			Name: "五经富"
 		}, //出发地
 		endCity: {
-			Code: "3906253",
+			Code: "3385290",
 			Name: "深圳罗湖"
 		}, //到达地
 
@@ -11172,7 +11163,7 @@
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		// serverUrl:"http://192.168.31.80",//服务器地址
 		serverUrl: "", //服务器地址,生产时候需要的,
-		// Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mjk0MDYiLCJqdGkiOiJhM2U1YzY2ZS1lNTIzLTRmZWEtOTI5Yy04MjEyMWM0NjBlYzAiLCJpYXQiOjE0ODIxMzgxMTksIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MjEzODExOCwiZXhwIjoxNDgzMzQ3NzE4fQ.ThBporjrCytEUkyxmIj_S4_UNbFa9KyWiGTruEXkB4g",
+		// Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs",
 		Authorization: ""
 	};
 
@@ -11272,9 +11263,36 @@
 
 			commit(_Type2.default.SET_STARTDATE, data);
 		},
-		setStartCityList: function setStartCityList(_ref6) {
+		getCityDefault: function getCityDefault(_ref6) {
 			var commit = _ref6.commit,
 			    state = _ref6.state;
+
+			return fetch(state.serverUrl + "/api/Transport/Index").then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				var data = result.Data;
+				commit(_Type2.default.SET_STARTCITY, {
+					Code: data.Start.Id,
+					Name: data.Start.Name
+				});
+				if (!data.End) {
+					// 如果为空,后台不保证传回来的是真实的数据
+					commit(_Type2.default.SET_ENDCITY, {
+						Code: "000",
+						Name: "请选择"
+					});
+					return { End: false };
+				}
+				commit(_Type2.default.SET_ENDCITY, {
+					Code: data.End.Code,
+					Name: data.End.Name
+				});
+				return data;
+			});
+		},
+		setStartCityList: function setStartCityList(_ref7) {
+			var commit = _ref7.commit,
+			    state = _ref7.state;
 
 			if (state.startCityList) {
 				// 列表空
@@ -11289,9 +11307,9 @@
 				return result.Data;
 			});
 		},
-		setEndCityList: function setEndCityList(_ref7) {
-			var commit = _ref7.commit,
-			    state = _ref7.state;
+		setEndCityList: function setEndCityList(_ref8) {
+			var commit = _ref8.commit,
+			    state = _ref8.state;
 
 			if (state.endCityList) {
 				// 列表空
@@ -11307,9 +11325,9 @@
 				});
 			}
 		},
-		setResultList: function setResultList(_ref8) {
-			var commit = _ref8.commit,
-			    state = _ref8.state;
+		setResultList: function setResultList(_ref9) {
+			var commit = _ref9.commit,
+			    state = _ref9.state;
 
 			return fetch(state.serverUrl + "/api/Transport/GetLines", {
 				method: 'POST',
@@ -11336,15 +11354,15 @@
 				}
 			});
 		},
-		setBusInfo: function setBusInfo(_ref9, data) {
-			var commit = _ref9.commit,
-			    state = _ref9.state;
+		setBusInfo: function setBusInfo(_ref10, data) {
+			var commit = _ref10.commit,
+			    state = _ref10.state;
 
 			commit(_Type2.default.SET_BUSINFO, data);
 		},
-		payMoney: function payMoney(_ref10, data) {
-			var commit = _ref10.commit,
-			    state = _ref10.state;
+		payMoney: function payMoney(_ref11, data) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/Create", {
@@ -11367,9 +11385,9 @@
 				return result.json();
 			});
 		},
-		showWXpay: function showWXpay(_ref11, data) {
-			var commit = _ref11.commit,
-			    state = _ref11.state;
+		showWXpay: function showWXpay(_ref12, data) {
+			var commit = _ref12.commit,
+			    state = _ref12.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/PayOrder", {
@@ -11385,9 +11403,9 @@
 				return result.json();
 			});
 		},
-		setLocationResult: function setLocationResult(_ref12, data) {
-			var commit = _ref12.commit,
-			    state = _ref12.state;
+		setLocationResult: function setLocationResult(_ref13, data) {
+			var commit = _ref13.commit,
+			    state = _ref13.state;
 
 			return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
@@ -11411,21 +11429,21 @@
 				}
 			});
 		},
-		setHaveLocation: function setHaveLocation(_ref13, data) {
-			var commit = _ref13.commit,
-			    state = _ref13.state;
-
-			commit(_Type2.default.SET_HAVELOCATION, data);
-		},
-		setisFirst: function setisFirst(_ref14, data) {
+		setHaveLocation: function setHaveLocation(_ref14, data) {
 			var commit = _ref14.commit,
 			    state = _ref14.state;
 
-			commit("SET_ISFIRST", data);
+			commit(_Type2.default.SET_HAVELOCATION, data);
 		},
-		getPassenger: function getPassenger(_ref15) {
+		setisFirst: function setisFirst(_ref15, data) {
 			var commit = _ref15.commit,
 			    state = _ref15.state;
+
+			commit("SET_ISFIRST", data);
+		},
+		getPassenger: function getPassenger(_ref16) {
+			var commit = _ref16.commit,
+			    state = _ref16.state;
 
 			return fetch(state.serverUrl + "/api/Transport/UserRelevant/0", {
 				headers: {
@@ -11446,15 +11464,15 @@
 				return data;
 			});
 		},
-		setPassenger: function setPassenger(_ref16, data) {
-			var commit = _ref16.commit,
-			    state = _ref16.state;
+		setPassenger: function setPassenger(_ref17, data) {
+			var commit = _ref17.commit,
+			    state = _ref17.state;
 
 			commit("SET_PASSENGER", data);
 		},
-		addPassenger: function addPassenger(_ref17, data) {
-			var commit = _ref17.commit,
-			    state = _ref17.state;
+		addPassenger: function addPassenger(_ref18, data) {
+			var commit = _ref18.commit,
+			    state = _ref18.state;
 
 			return fetch(state.serverUrl + "/api/Passenger/Add", {
 				method: 'POST',
@@ -11472,15 +11490,15 @@
 				return result;
 			});
 		},
-		setPhone: function setPhone(_ref18, data) {
-			var commit = _ref18.commit,
-			    state = _ref18.state;
+		setPhone: function setPhone(_ref19, data) {
+			var commit = _ref19.commit,
+			    state = _ref19.state;
 
 			commit("SET_PHONE", data);
 		},
-		checkRebateStatus: function checkRebateStatus(_ref19, data) {
-			var commit = _ref19.commit,
-			    state = _ref19.state;
+		checkRebateStatus: function checkRebateStatus(_ref20, data) {
+			var commit = _ref20.commit,
+			    state = _ref20.state;
 
 			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
 				headers: {
@@ -11492,9 +11510,9 @@
 				return result;
 			});
 		},
-		deletePassenger: function deletePassenger(_ref20, data) {
-			var commit = _ref20.commit,
-			    state = _ref20.state;
+		deletePassenger: function deletePassenger(_ref21, data) {
+			var commit = _ref21.commit,
+			    state = _ref21.state;
 
 			return fetch(state.serverUrl + "/api/Passenger/Delete/" + data, {
 				headers: {
@@ -11506,9 +11524,9 @@
 				return result;
 			});
 		},
-		getWXconfig: function getWXconfig(_ref21) {
-			var commit = _ref21.commit,
-			    state = _ref21.state;
+		getWXconfig: function getWXconfig(_ref22) {
+			var commit = _ref22.commit,
+			    state = _ref22.state;
 
 			return fetch(state.serverUrl + "/api/WxBasis/GetJsPackage/", {
 				method: "POST",
@@ -31474,6 +31492,7 @@
 				locationName: "", //定位最近的车站位置名
 				showRefresh: false, //是否显示刷新地理位置
 				searchrecord: false, //是否显示历史记录
+				canQuery: false, //是否可以查询
 				startTime: {
 					time: ""
 				},
@@ -31526,6 +31545,8 @@
 			};
 		},
 		created: function created() {
+			var _this = this;
+
 			var nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
 
@@ -31547,16 +31568,35 @@
 			if (this.$store.getters.getIsFirst) {
 				// 还没有获取过,说明第一个打开网页
 				this.$store.dispatch("setisFirst", false);
+
+				// 获取默认的出发地址
+				this.$store.dispatch("getCityDefault").then(function (result) {
+					if (result.End) {
+						// 到达点不为空
+						_this.canQuery = true;
+					} else {
+						_this.canQuery = false;
+					}
+				});
+
+				// 获取地理位置
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
-				// this.$store.dispatch("setHaveLocation",true);
 				// 获取乘客信息和优惠信息
 				this.$store.dispatch("getPassenger");
 			} else {
+				// 不需要再次获取地理位置
 				this.locationLoad = false;
 				if (this.$store.getters.getLocationResult) {
 					this.locationName = "最近上车点:" + this.$store.getters.getLocationResult.Name;
 				} else {
 					this.locationName = "";
+				}
+
+				// 查看到达点是否是正确的
+				if (this.getEndCity === "请选择") {
+					this.canQuery = false;
+				} else {
+					this.canQuery = true;
 				}
 			}
 		},
@@ -31612,7 +31652,7 @@
 				return _utils2.default.formatDate(data);
 			},
 			showPosition: function showPosition(position) {
-				var _this = this;
+				var _this2 = this;
 
 				var _position$coords = position.coords,
 				    latitude = _position$coords.latitude,
@@ -31625,18 +31665,18 @@
 					latitude: latitude,
 					longitude: longitude
 				}).then(function (data) {
-					_this.locationLoad = false; //停止界面加载提示
+					_this2.locationLoad = false; //停止界面加载提示
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
 						//没有数据
-						_this.locationName = "";
+						_this2.locationName = "";
 						(0, _mintUi.Toast)({
 							message: "没有数据",
 							position: 'bottom',
 							duration: 3000
 						});
 					} else {
-						_this.locationName = "最近上车点:" + data.Name;
-						_this.$store.dispatch("setStartCity", {
+						_this2.locationName = "最近上车点:" + data.Name;
+						_this2.$store.dispatch("setStartCity", {
 							Code: data.Id,
 							Name: data.Name
 						});
@@ -31647,10 +31687,10 @@
 						});
 					}
 
-					_this.showRefresh = false; //正常返回就不要显示重新加载了
+					_this2.showRefresh = false; //正常返回就不要显示重新加载了
 					return _promise2.default.resolve();
 				}).catch(function (error) {
-					_this.locationLoad = false; //停止界面加载提示
+					_this2.locationLoad = false; //停止界面加载提示
 					// this.locationName = "请稍后重试...";
 					// this.showRefresh = true;
 				});
@@ -31674,7 +31714,7 @@
 				navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
 			},
 			GoStartCity: function GoStartCity() {
-				var _this2 = this;
+				var _this3 = this;
 
 				// 提示加载中
 				_mintUi.Indicator.open({
@@ -31684,7 +31724,7 @@
 
 				this.$store.dispatch("setStartCityList").then(function (data) {
 					_mintUi.Indicator.close();
-					_this2.$router.push({ name: "ticketstartcity" });
+					_this3.$router.push({ name: "ticketstartcity" });
 					// this.$store.getters.getCityList.startCityList.map((item,index)=>{
 					// 	item.Content.map(content=>{
 					// 		this.startCitySlots[0].values.push(content.Name)
@@ -31702,7 +31742,7 @@
 				});
 			},
 			GoEndCity: function GoEndCity() {
-				var _this3 = this;
+				var _this4 = this;
 
 				// if(this.$store.getters.getCityList.endCityList){
 				// 	this.startpopupVisible = true;
@@ -31716,7 +31756,7 @@
 
 				this.$store.dispatch("setEndCityList").then(function (data) {
 					_mintUi.Indicator.close();
-					_this3.$router.push({ name: "ticketendcity" });
+					_this4.$router.push({ name: "ticketendcity" });
 					// this.$store.getters.getCityList.endCityList.map((item,index)=>{
 					// 	item.Content.map(content=>{
 					// 		this.endCitySlots[0].values.push(content.Name)
@@ -31759,7 +31799,7 @@
 				return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
 			},
 			query: function query() {
-				var _this4 = this;
+				var _this5 = this;
 
 				if (this.startCity.Name === this.endCity.Name) {
 					// 地点相同
@@ -31777,9 +31817,9 @@
 				});
 
 				this.$store.dispatch("setResultList").then(function (data) {
-					_this4.localStore(_this4.startCity, _this4.endCity);
+					_this5.localStore(_this5.startCity, _this5.endCity);
 					_mintUi.Indicator.close();
-					_this4.$router.push({ name: "ticketresult" });
+					_this5.$router.push({ name: "ticketresult" });
 				}).catch(function (error) {
 					_mintUi.Indicator.close();
 					(0, _mintUi.Toast)({
@@ -50658,6 +50698,11 @@
 	      staticClass: "name",
 	      domProps: {
 	        "textContent": _vm._s(item.Name)
+	      },
+	      on: {
+	        "click": function($event) {
+	          _vm.setFare(index)
+	        }
 	      }
 	    }), " ", _vm._h('span', {
 	      staticClass: "type"
