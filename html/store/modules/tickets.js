@@ -10,12 +10,22 @@ const state = {
 	HeaderTitle:"身边订票",
 	showFooter:true,//显示底部tab
 
+	// startCity:{
+	// 	Code:"6449821",
+	// 	Name:"五经富",
+	// },//出发地
+	// endCity:{
+	// 	Code:"6449833",
+	// 	Name:"深圳罗湖",
+	// },//到达地
+	
+	// 正式数据库
 	startCity:{
-		Code:"6449821",
+		Code:"3906241",
 		Name:"五经富",
 	},//出发地
 	endCity:{
-		Code:"6449833",
+		Code:"3906253",
 		Name:"深圳罗湖",
 	},//到达地
 
