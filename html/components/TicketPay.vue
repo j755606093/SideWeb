@@ -105,16 +105,22 @@
 				<div class="info">
 					<span>优惠券</span>
 					<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
-					<span class="last" v-show="rebateid.length!==0">{{`已选${rebateid.length}个`}}</span>
+					<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
 				</div>
 				<div class="info discount-code">
 					<span class="first">优惠码</span>
 					<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
 					<!-- <span class="center">有优惠码?</span> -->
-					<div class="last" @click="haveDiscountCode">
+					<div class="last">
 						<button class="right" @click="checkCodeStatus">验证</button>
 						<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
 					</div>
+				</div>
+				<div class="info show-discount animated fadeInDown" v-if="havediscountcode">
+					<span>优惠码信息:</span>
+					<span class="center">{{discountCode.Name}}</span>
+					<span class="last" v-if="isUseCode" @click="useDiscountCode">已使用</span>
+					<span class="last" v-else @click="useDiscountCode">立即使用</span>
 				</div>
 			</div>
 		</div>
@@ -146,7 +152,7 @@
 				<p>订单总额<span v-text="'¥'+payInfoData.payMoney"></span></p>
 				<p>
 					<span>票价<span v-text="'¥'+payInfoData.ticketMoney"></span></span>
-					<!-- <span>保险费<span v-text="'¥'+payInfoData.Allinsure"></span></span> -->
+					<span>优惠<span v-text="'¥'+discountMoney"></span></span>
 				</p>
 			</div>
 			<div class="submit-order">
@@ -341,7 +347,10 @@ export default {
 			discountPopupVisible:false,//优惠券选择
 			selectDiscount:[],//选择的优惠券
 			optionsDiscount:[],//优惠券列表
-			rebateid:[],//优惠券id列表
+			rebateid:"",//优惠券id列表
+			discountMoney:0,//优惠的钱数
+			discountCode:{},//优惠码信息
+			isUseCode:false,//是否使用优惠码
 			
 			//订单信息
 			payInfoData:{
@@ -461,9 +470,18 @@ export default {
 	},
 	watch:{
 		selectDiscount(newval){
-			console.log(newval)
+			// console.log(newval)
 			let len = newval.length;
-			if(len===0||len===1)return;
+			if(len===0){
+				this.computeAll();
+				return;
+			}
+
+			if(len===1){
+				this.rebateid = newval[0];
+				this.computeAll();
+				return;
+			}
 			
 			let optionsDiscount = this.optionsDiscount;
 			let lastId = newval[len-1];
@@ -475,11 +493,11 @@ export default {
 			
 			//查看最后一个是不是单选
 			if(lastOption&&lastOption.IsSingle===1){
-				this.rebateid = [lastOption.Id];//只留自己
+				this.rebateid = lastOption.Id;//只留自己
 				this.selectDiscount = [lastOption.Id];
 			}
 			else{
-				this.rebateid.push(lastOption.Id);
+				this.rebateid = this.rebateid+","+lastOption.Id;
 			}
 			
 			//筛选所有的IsSingle=1选项
@@ -488,10 +506,12 @@ export default {
 					return item.Id===newval[i]
 				});
 				if(data.IsSingle===1){
-					this.rebateid = [lastOption.Id];//只留自己
+					this.rebateid = lastOption.Id;//只留自己
 					this.selectDiscount = [lastOption.Id];
 				}
 			}
+			this.computeAll();
+			// console.log(this.rebateid)
 		}
 	},
 	methods:{
@@ -503,9 +523,9 @@ export default {
 		formatData(data){
 			return JSON.parse(JSON.stringify(data));
 		},
-		haveDiscountCode(){
-			this.havediscountcode = !this.havediscountcode;
-		},
+		// haveDiscountCode(){
+		// 	this.havediscountcode = !this.havediscountcode;
+		// },
 		// pay(){
 		// 	console.log(this.formatData(this.busInfo))
 		// },
@@ -599,7 +619,14 @@ export default {
 		 */
 		computeTicketMoney(){
 			let len = this.getAllFare().length;
-			this.payInfoData.payMoney = this.payInfoData.ticketMoney*len + this.payInfoData.Allinsure;
+			let money = this.payInfoData.ticketMoney*len + this.payInfoData.Allinsure-this.discountMoney;
+			
+			if(money<0){
+				this.payInfoData.payMoney = 0;
+			}
+			else{
+				this.payInfoData.payMoney = money.toFixed(2);
+			}
 		},
 		/**
 		 * 计算保险费
@@ -614,8 +641,29 @@ export default {
 				this.payInfoData.Allinsure = 0;
 			}
 		},
+		/**
+		 * 计算优惠券和优惠券
+		 * @return {[type]} [description]
+		 */
+		computeDiscound(){
+			let len = this.selectDiscount.length;
+			this.discountMoney = 0;
+			if(len!==0){
+				for(let i=0;i<len;i++){
+					let data = _.find(this.optionsDiscount,(item)=>{
+						return item.Id===this.selectDiscount[i]
+					});
+					this.discountMoney += data.Money;
+				}
+			}
+			// 优惠码
+			if(this.isUseCode){
+				this.discountMoney += this.discountCode.Money;
+			}
+		},
 		computeAll(){
 			this.computeInsureMoney();
+			this.computeDiscound();
 			this.computeTicketMoney();
 		},
 		/**
@@ -697,17 +745,28 @@ export default {
 								arrayId.push(this.AllFare[i].Id)
 							}
 						}
-
+						
+						//获取优惠信息
 						let rebateid = "";
-						for(let i=0;i<this.selectDiscount.length;i++){
-							rebateid = this.selectDiscount[i]+",";
+						if(this.isUseCode){
+							//如果使用了优惠码
+							if(this.rebateid===""){
+								rebateid = this.discountCode.Id;
+							}
+							else{
+								rebateid=== this.rebateid+","+this.discountCode.Id;
+							}
+						}
+						else{
+							//灭有使用优惠码
+							rebateid = this.rebateid;
 						}
 
 						this.$store.dispatch("payMoney",{
 							// LinkmanId:arrayData.Id,
 							LinkmanId:this.payInfoData.contactPhone,
 							PassengerIds:arrayId,
-							RebateId:rebateid.slice(0,rebateid.length-1),
+							RebateId:rebateid,
 							StartAddress:this.selectStation
 						}).then(result=>{
 							Indicator.close();
@@ -946,17 +1005,25 @@ export default {
 			let discountcode = this.payInfoData.discountcode;
 			if(discountcode===""){
 				this.popupMessage("请输入优惠码!");
+				this.havediscountcode = false;
 				return;
 			}
 			this.$store.dispatch("checkRebateStatus",discountcode)
 				.then(result=>{
-					if(result.Data){
+					if(result.Data&&result.Data.IsUse===0){
+						this.discountCode = result.Data;
+						this.havediscountcode = true;
 						this.popupMessage("优惠码可用");
 					}
 					else{
-						this.popupMessage("优惠码不可用");
+						this.havediscountcode = false;
+						this.popupMessage("优惠码不可用或已使用过!");
 					}
 				})
+		},
+		useDiscountCode(){
+			this.isUseCode = !this.isUseCode;
+			this.computeAll();
 		}
 	}
 }

@@ -48937,7 +48937,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #fff; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0;\n  background-color: #f7f7f7; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff; }\n        .ticket-info .address-info .start p.first {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p.center {\n          font-size: 1.8rem;\n          width: 100%; }\n        .ticket-info .address-info .start p.last {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0;\n        line-height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -20px;\n          content: \"\";\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff; }\n      .ticket-info .address-info .center p.first {\n        color: #fff; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .address-info .end p {\n        color: #fff;\n        font-size: 1.2rem; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      display: inline-block;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n    .ticket-info .tip-info span {\n      float: right;\n      color: #fff; }\n\n.station-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 15px;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0 2%;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .station-info span {\n    height: 40px;\n    line-height: 40px;\n    font-size: 1.4rem; }\n  .station-info span.center {\n    -ms-flex: 0.6;\n        flex: 0.6; }\n  .station-info span:first-child {\n    -ms-flex: 0.2;\n        flex: 0.2;\n    color: #5e5e5e; }\n  .station-info span:last-child {\n    -ms-flex: 0.2;\n        flex: 0.2; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .contact-info .discount-code input, .contact-info .discount-code button, .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center, .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input, .other-info .discount-code button, .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #5e5e5e;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 30px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #fff; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0;\n  background-color: #f7f7f7; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff; }\n        .ticket-info .address-info .start p.first {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p.center {\n          font-size: 1.8rem;\n          width: 100%; }\n        .ticket-info .address-info .start p.last {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0;\n        line-height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -20px;\n          content: \"\";\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff; }\n      .ticket-info .address-info .center p.first {\n        color: #fff; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .address-info .end p {\n        color: #fff;\n        font-size: 1.2rem; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      display: inline-block;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n    .ticket-info .tip-info span {\n      float: right;\n      color: #fff; }\n\n.station-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 15px;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0 2%;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .station-info span {\n    height: 40px;\n    line-height: 40px;\n    font-size: 1.4rem; }\n  .station-info span.center {\n    -ms-flex: 0.6;\n        flex: 0.6; }\n  .station-info span:first-child {\n    -ms-flex: 0.2;\n        flex: 0.2;\n    color: #5e5e5e; }\n  .station-info span:last-child {\n    -ms-flex: 0.2;\n        flex: 0.2; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .show-discount span:first-child {\n    color: #AAAAAA; }\n  .contact-info .show-discount span.center {\n    width: 50%; }\n  .contact-info .show-discount span.last {\n    width: 20%;\n    color: #0074D9; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .contact-info .discount-code input, .contact-info .discount-code button, .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center, .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input, .other-info .discount-code button, .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #5e5e5e;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 30px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
 
 	// exports
 
@@ -49278,6 +49278,12 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var _ = __webpack_require__(88);
 	exports.default = {
@@ -49309,7 +49315,10 @@
 				discountPopupVisible: false, //优惠券选择
 				selectDiscount: [], //选择的优惠券
 				optionsDiscount: [], //优惠券列表
-				rebateid: [], //优惠券id列表
+				rebateid: "", //优惠券id列表
+				discountMoney: 0, //优惠的钱数
+				discountCode: {}, //优惠码信息
+				isUseCode: false, //是否使用优惠码
 
 				//订单信息
 				payInfoData: {
@@ -49430,9 +49439,18 @@
 			selectDiscount: function selectDiscount(newval) {
 				var _this2 = this;
 
-				console.log(newval);
+				// console.log(newval)
 				var len = newval.length;
-				if (len === 0 || len === 1) return;
+				if (len === 0) {
+					this.computeAll();
+					return;
+				}
+
+				if (len === 1) {
+					this.rebateid = newval[0];
+					this.computeAll();
+					return;
+				}
 
 				var optionsDiscount = this.optionsDiscount;
 				var lastId = newval[len - 1];
@@ -49444,10 +49462,10 @@
 
 				//查看最后一个是不是单选
 				if (lastOption && lastOption.IsSingle === 1) {
-					this.rebateid = [lastOption.Id]; //只留自己
+					this.rebateid = lastOption.Id; //只留自己
 					this.selectDiscount = [lastOption.Id];
 				} else {
-					this.rebateid.push(lastOption.Id);
+					this.rebateid = this.rebateid + "," + lastOption.Id;
 				}
 
 				//筛选所有的IsSingle=1选项
@@ -49457,7 +49475,7 @@
 						return item.Id === newval[i];
 					});
 					if (data.IsSingle === 1) {
-						_this2.rebateid = [lastOption.Id]; //只留自己
+						_this2.rebateid = lastOption.Id; //只留自己
 						_this2.selectDiscount = [lastOption.Id];
 					}
 				};
@@ -49465,6 +49483,8 @@
 				for (var i = 0; i < len; i++) {
 					_loop(i);
 				}
+				this.computeAll();
+				// console.log(this.rebateid)
 			}
 		},
 		methods: {
@@ -49476,10 +49496,10 @@
 			formatData: function formatData(data) {
 				return JSON.parse((0, _stringify2.default)(data));
 			},
-			haveDiscountCode: function haveDiscountCode() {
-				this.havediscountcode = !this.havediscountcode;
-			},
 
+			// haveDiscountCode(){
+			// 	this.havediscountcode = !this.havediscountcode;
+			// },
 			// pay(){
 			// 	console.log(this.formatData(this.busInfo))
 			// },
@@ -49576,7 +49596,13 @@
 	   */
 			computeTicketMoney: function computeTicketMoney() {
 				var len = this.getAllFare().length;
-				this.payInfoData.payMoney = this.payInfoData.ticketMoney * len + this.payInfoData.Allinsure;
+				var money = this.payInfoData.ticketMoney * len + this.payInfoData.Allinsure - this.discountMoney;
+
+				if (money < 0) {
+					this.payInfoData.payMoney = 0;
+				} else {
+					this.payInfoData.payMoney = money.toFixed(2);
+				}
 			},
 
 			/**
@@ -49591,8 +49617,36 @@
 					this.payInfoData.Allinsure = 0;
 				}
 			},
+
+			/**
+	   * 计算优惠券和优惠券
+	   * @return {[type]} [description]
+	   */
+			computeDiscound: function computeDiscound() {
+				var _this3 = this;
+
+				var len = this.selectDiscount.length;
+				this.discountMoney = 0;
+				if (len !== 0) {
+					var _loop2 = function _loop2(i) {
+						var data = _.find(_this3.optionsDiscount, function (item) {
+							return item.Id === _this3.selectDiscount[i];
+						});
+						_this3.discountMoney += data.Money;
+					};
+
+					for (var i = 0; i < len; i++) {
+						_loop2(i);
+					}
+				}
+				// 优惠码
+				if (this.isUseCode) {
+					this.discountMoney += this.discountCode.Money;
+				}
+			},
 			computeAll: function computeAll() {
 				this.computeInsureMoney();
+				this.computeDiscound();
 				this.computeTicketMoney();
 			},
 
@@ -49611,29 +49665,29 @@
 				}
 			},
 			CountDown: function CountDown() {
-				var _this3 = this;
+				var _this4 = this;
 
 				this.storeCountTime = 60 * 30 - 1; //半个小时
 				this.countdown = setInterval(function () {
-					if (_this3.storeCountTime === 0) {
-						clearInterval(_this3.countdown);
-						_this3.countdown = null;
+					if (_this4.storeCountTime === 0) {
+						clearInterval(_this4.countdown);
+						_this4.countdown = null;
 						return;
 					}
-					var minth = parseInt(_this3.storeCountTime / 60);
-					var second = parseInt(_this3.storeCountTime % 60);
+					var minth = parseInt(_this4.storeCountTime / 60);
+					var second = parseInt(_this4.storeCountTime % 60);
 					if (minth < 10) {
-						_this3.countdownTime = "0" + minth + ":";
+						_this4.countdownTime = "0" + minth + ":";
 					} else {
-						_this3.countdownTime = minth + ":";
+						_this4.countdownTime = minth + ":";
 					}
 
 					if (second < 10) {
-						_this3.countdownTime = _this3.countdownTime + "0" + second;
+						_this4.countdownTime = _this4.countdownTime + "0" + second;
 					} else {
-						_this3.countdownTime = _this3.countdownTime + second;
+						_this4.countdownTime = _this4.countdownTime + second;
 					}
-					_this3.storeCountTime--;
+					_this4.storeCountTime--;
 				}, 1000);
 			},
 
@@ -49642,7 +49696,7 @@
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
-				var _this4 = this;
+				var _this5 = this;
 
 				// this.CountDown();
 				// this.payInfoPopupVisible = true;
@@ -49676,30 +49730,39 @@
 								}
 							}
 
+							//获取优惠信息
 							var rebateid = "";
-							for (var _i = 0; _i < this.selectDiscount.length; _i++) {
-								rebateid = this.selectDiscount[_i] + ",";
+							if (this.isUseCode) {
+								//如果使用了优惠码
+								if (this.rebateid === "") {
+									rebateid = this.discountCode.Id;
+								} else {
+									rebateid === this.rebateid + "," + this.discountCode.Id;
+								}
+							} else {
+								//灭有使用优惠码
+								rebateid = this.rebateid;
 							}
 
 							this.$store.dispatch("payMoney", {
 								// LinkmanId:arrayData.Id,
 								LinkmanId: this.payInfoData.contactPhone,
 								PassengerIds: arrayId,
-								RebateId: rebateid.slice(0, rebateid.length - 1),
+								RebateId: rebateid,
 								StartAddress: this.selectStation
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
-									_this4.popupMessage(result.Message);
+									_this5.popupMessage(result.Message);
 								} else {
-									_this4.CountDown();
-									_this4.serverPayInfo = result.Data;
+									_this5.CountDown();
+									_this5.serverPayInfo = result.Data;
 									// this.TicketPay = result.Data;
-									_this4.payInfoPopupVisible = true;
+									_this5.payInfoPopupVisible = true;
 								}
 							}).catch(function (error) {
 								_mintUi.Indicator.close();
-								_this4.popupMessage("服务器繁忙,请稍后再试...");
+								_this5.popupMessage("服务器繁忙,请稍后再试...");
 							});
 						} else {
 							this.popupMessage("请填写正确的联系手机号!");
@@ -49736,7 +49799,7 @@
 	   * @return {[type]} [description]
 	   */
 			append: function append() {
-				var _this5 = this;
+				var _this6 = this;
 
 				// 添加乘客至AllFare
 				// 首先检查输入是否正确
@@ -49746,17 +49809,17 @@
 						// 如果添加人数大于剩余票数
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
-						var _ret2 = function () {
-							var check = /^1[23578][0-9]{9}$/.test(_this5.certificate);
-							if (!check && _this5.certificate !== '') {
-								_this5.popupMessage("请填写正确的联系手机号!");
+						var _ret3 = function () {
+							var check = /^1[23578][0-9]{9}$/.test(_this6.certificate);
+							if (!check && _this6.certificate !== '') {
+								_this6.popupMessage("请填写正确的联系手机号!");
 								return {
 									v: void 0
 								};
 							}
 							var json = {
-								Name: _this5.fareName,
-								Mobile: _this5.certificate,
+								Name: _this6.fareName,
+								Mobile: _this6.certificate,
 								active: true,
 								isGetTicket: false
 							};
@@ -49764,26 +49827,26 @@
 								text: '加载中...',
 								spinnerType: 'double-bounce'
 							});
-							_this5.$store.dispatch("addPassenger", json).then(function (result) {
+							_this6.$store.dispatch("addPassenger", json).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Data) {
-									_this5.$store.dispatch("getPassenger");
+									_this6.$store.dispatch("getPassenger");
 									json.Id = result.Data;
-									_this5.AllFare.push(json);
+									_this6.AllFare.push(json);
 									// this.setLocalStorePassager(json);//存储本地
 									// 清空输入的信息
-									_this5.fareName = "";
-									_this5.certificate = "";
+									_this6.fareName = "";
+									_this6.certificate = "";
 
-									_this5.popupMessage("添加成功!");
-									_this5.computeAll();
+									_this6.popupMessage("添加成功!");
+									_this6.computeAll();
 								} else {
-									_this5.popupMessage(result.Message);
+									_this6.popupMessage(result.Message);
 								}
 							});
 						}();
 
-						if ((typeof _ret2 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret2)) === "object") return _ret2.v;
+						if ((typeof _ret3 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret3)) === "object") return _ret3.v;
 					}
 				} else {
 					this.popupMessage("请输入正确的姓名!");
@@ -49853,18 +49916,18 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this6 = this;
+				var _this7 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].Name + '?').then(function (action) {
-					_this6.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
+					_this7.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
 						if (result.Data) {
-							_this6.AllFare.splice(index, 1);
-							_this6.$store.dispatch("setPassenger", _this6.AllFare);
-							_this6.computeAll();
+							_this7.AllFare.splice(index, 1);
+							_this7.$store.dispatch("setPassenger", _this7.AllFare);
+							_this7.computeAll();
 						} else {
-							_this6.popupMessage(result.Message);
+							_this7.popupMessage(result.Message);
 						}
 					});
 				}).catch(function (error) {
@@ -49927,20 +49990,28 @@
 				this.discountPopupVisible = false;
 			},
 			checkCodeStatus: function checkCodeStatus() {
-				var _this7 = this;
+				var _this8 = this;
 
 				var discountcode = this.payInfoData.discountcode;
 				if (discountcode === "") {
 					this.popupMessage("请输入优惠码!");
+					this.havediscountcode = false;
 					return;
 				}
 				this.$store.dispatch("checkRebateStatus", discountcode).then(function (result) {
-					if (result.Data) {
-						_this7.popupMessage("优惠码可用");
+					if (result.Data && result.Data.IsUse === 0) {
+						_this8.discountCode = result.Data;
+						_this8.havediscountcode = true;
+						_this8.popupMessage("优惠码可用");
 					} else {
-						_this7.popupMessage("优惠码不可用");
+						_this8.havediscountcode = false;
+						_this8.popupMessage("优惠码不可用或已使用过!");
 					}
 				});
+			},
+			useDiscountCode: function useDiscountCode() {
+				this.isUseCode = !this.isUseCode;
+				this.computeAll();
 			}
 		}
 	};
@@ -50642,11 +50713,11 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (_vm.rebateid.length !== 0),
-	      expression: "rebateid.length!==0"
+	      value: (_vm.selectDiscount.length !== 0),
+	      expression: "selectDiscount.length!==0"
 	    }],
 	    staticClass: "last"
-	  }, [_vm._s(("已选" + (_vm.rebateid.length) + "个"))])]), " ", _vm._h('div', {
+	  }, [_vm._s(("已选" + (_vm.selectDiscount.length) + "个"))])]), " ", _vm._h('div', {
 	    staticClass: "info discount-code"
 	  }, [_vm._h('span', {
 	    staticClass: "first"
@@ -50672,16 +50743,27 @@
 	      }
 	    }
 	  }), " ", " ", _vm._h('div', {
-	    staticClass: "last",
-	    on: {
-	      "click": _vm.haveDiscountCode
-	    }
+	    staticClass: "last"
 	  }, [_vm._h('button', {
 	    staticClass: "right",
 	    on: {
 	      "click": _vm.checkCodeStatus
 	    }
-	  }, ["验证"]), " "])])])]), " ", " ", " ", _vm._h('div', {
+	  }, ["验证"]), " "])]), " ", (_vm.havediscountcode) ? _vm._h('div', {
+	    staticClass: "info show-discount animated fadeInDown"
+	  }, [_vm._h('span', ["优惠码信息:"]), " ", _vm._h('span', {
+	    staticClass: "center"
+	  }, [_vm._s(_vm.discountCode.Name)]), " ", (_vm.isUseCode) ? _vm._h('span', {
+	    staticClass: "last",
+	    on: {
+	      "click": _vm.useDiscountCode
+	    }
+	  }, ["已使用"]) : _vm._h('span', {
+	    staticClass: "last",
+	    on: {
+	      "click": _vm.useDiscountCode
+	    }
+	  }, ["立即使用"]), " "]) : _vm._e()])]), " ", " ", " ", _vm._h('div', {
 	    staticClass: "root-tip-info"
 	  }), " ", " ", " ", _vm._h('div', {
 	    staticClass: "submit-box"
@@ -50695,7 +50777,11 @@
 	    domProps: {
 	      "textContent": _vm._s('¥' + _vm.payInfoData.ticketMoney)
 	    }
-	  })]), " "])]), " ", _vm._h('div', {
+	  })]), " ", _vm._h('span', ["优惠", _vm._h('span', {
+	    domProps: {
+	      "textContent": _vm._s('¥' + _vm.discountMoney)
+	    }
+	  })])])]), " ", _vm._h('div', {
 	    staticClass: "submit-order"
 	  }, [_vm._h('button', {
 	    on: {

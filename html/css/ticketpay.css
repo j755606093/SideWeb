@@ -481,6 +481,13 @@ input {
       -ms-flex: 0.7;
           flex: 0.7;
       font-size: 1.3rem; }
+  .contact-info .show-discount span:first-child {
+    color: #AAAAAA; }
+  .contact-info .show-discount span.center {
+    width: 50%; }
+  .contact-info .show-discount span.last {
+    width: 20%;
+    color: #0074D9; }
   .contact-info .discount-code {
     display: -ms-flexbox;
     display: flex;

@@ -395,6 +395,18 @@
 			font-size:1.3rem;
 		}
 	}
+	.show-discount{
+		span:first-child{
+			color:$gray;
+		}
+		span.center{
+			width:50%;
+		}
+		span.last{
+			width:20%;
+			color:$blue;
+		}
+	}
 	.discount-code{
 		display:flex;
 		flex-direction: row;
