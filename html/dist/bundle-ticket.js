@@ -31056,11 +31056,11 @@
 					} else {
 						//没有数据
 						_this2.locationName = "";
-						(0, _mintUi.Toast)({
-							message: "没有数据",
-							position: 'bottom',
-							duration: 3000
-						});
+						// Toast({
+						//   message: "没有数据",
+						//   position: 'bottom',
+						//   duration: 3000,
+						// });
 					}
 
 					_this2.showRefresh = false; //正常返回就不要显示重新加载了
@@ -49375,7 +49375,7 @@
 				var _rebate = this.$store.getters.getRebate;
 				_.map(_rebate, function (item) {
 					var data = item;
-					data.label = item.Name + " (\u6EE1" + item.LimitMoney + "\u5143\u53EF\u7528,\u51CF" + item.Money + "\u5143)";
+					data.label = item.Name + " (\u6EE1" + item.LimitMoney + "\u5143\u51CF" + item.Money + "\u5143)";
 					data.value = item.Id;
 					data.disabled = false;
 					_this.optionsDiscount.push(data);
@@ -50751,7 +50751,7 @@
 	    }
 	  }, ["验证"]), " "])]), " ", (_vm.havediscountcode) ? _vm._h('div', {
 	    staticClass: "info show-discount animated fadeInDown"
-	  }, [_vm._h('span', ["优惠码信息:"]), " ", _vm._h('span', {
+	  }, [_vm._h('span', ["优惠码信息"]), " ", _vm._h('span', {
 	    staticClass: "center"
 	  }, [_vm._s(_vm.discountCode.Name)]), " ", (_vm.isUseCode) ? _vm._h('span', {
 	    staticClass: "last",
@@ -51040,15 +51040,15 @@
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "info-head"
-	  }, [_vm._h('span', ["乘客信息:"]), " "])
+	  }, [_vm._h('span', ["乘客信息"]), " "])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "info-head"
-	  }, [_vm._h('span', ["联系信息:"]), " "])
+	  }, [_vm._h('span', ["联系信息"]), " "])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "info-head"
-	  }, [_vm._h('span', ["其它信息:"]), " "])
+	  }, [_vm._h('span', ["其它信息"]), " "])
 	}]}
 	if (false) {
 	  module.hot.accept()

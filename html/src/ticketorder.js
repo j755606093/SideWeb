@@ -2,6 +2,7 @@ import Vue from "vue";
 Vue.use(require('vue-resource'));//引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
+const _ = require("underscore");
 import { Toast,Indicator,Popup } from 'mint-ui';
 
 const debug = (function(){
@@ -24,11 +25,13 @@ const config = {
   serverUrl:debug?"http://192.168.31.80":""
 }
 
-new Vue({
+const Vue_Order = new Vue({
 	el:"#app",
 	data:{
 		OrderList:[],
 		index:1,//页数
+		noMoreData:false,//没有更多数据
+		isUse:false,//是否使用中
 		ready:false,//是否准备显示
 		noDataShow:true,//没有订单数据
 		Passengers:[],//乘客名数据,方便使用
@@ -48,6 +51,10 @@ new Vue({
 			});
 		},
 		moreOrderData(){
+			if(this.noMoreData||this.isUse){
+				return;
+			}
+			this.isUse = true;//锁住这个函数
 			this.loading();
 			fetch(config.serverUrl+"/api/Order/List",{
 				method:"POST",
@@ -58,20 +65,27 @@ new Vue({
 					Type:1
 				})
 			})
-				.then(result=>result.json())
-				.then(result=>{
-					if(result.Data){
-						for(let i=0;i<result.Data.length;i++){
-							this.OrderList.push(result.Data[i]);
-						}
-						
-
-						this.noDataShow = false;//显示订单
+			.then(result=>result.json())
+			.then(result=>{
+				if(result.Data){
+					for(let i=0;i<result.Data.length;i++){
+						this.OrderList.push(result.Data[i]);
 					}
-					
-					Indicator.close();
-				})
-			this.index++;
+
+					this.noDataShow = false;//显示订单
+				}
+				else{
+					this.noMoreData = true;
+					Toast({
+					  message: result.Message,
+					  position: 'bottom',
+					  duration: 3000
+					});
+				}
+				this.isUse = false;//释放这个函数
+				this.index++;
+				Indicator.close();
+			})
 		},
 		openOrder(index){
 			this.loading();
@@ -124,9 +138,19 @@ new Vue({
 						}
 					});
 			})
+		},
+		goback(){
+			this.orderVisible = false;
 		}
 	},
 	components:{
 		"mt-popup":Popup
 	}
-})
+});
+
+window.addEventListener('scroll',_.throttle(function(){
+	if(document.getElementById("last").offsetTop-document.body.scrollTop<1000){
+		Vue_Order.moreOrderData();
+		// console.log('yes');
+	}
+},100,{leading: false}));

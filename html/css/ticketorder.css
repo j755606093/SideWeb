@@ -317,7 +317,19 @@ header {
     height: 160px;
     width: 100%;
     background-color: #2196F3;
-    color: #fff; }
+    color: #fff;
+    position: relative; }
+    .pay-order .info-body .head {
+      height: 40px;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 40px;
+      text-align: center; }
+      .pay-order .info-body .head > i {
+        font-size: 20px;
+        line-height: 40px; }
     .pay-order .info-body .status {
       text-align: center;
       padding-top: 20px; }
@@ -520,7 +532,7 @@ footer {
       color: #0074D9; }
 
 .mint-indicator {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

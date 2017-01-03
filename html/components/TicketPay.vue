@@ -37,7 +37,7 @@
 		<!-- 乘客信息 -->
 		<div class="people-info">
 			<div class="info-head">
-				<span>乘客信息:</span>
+				<span>乘客信息</span>
 				<!-- <span>还剩余票{{busInfo.TicketNum}}</span> -->
 			</div>
 			<!-- 列出乘客信息 -->
@@ -85,7 +85,7 @@
 		<!-- 取票人信息 -->
 		<div class="people-info">
 			<div class="info-head">
-				<span>联系信息:</span>
+				<span>联系信息</span>
 				<!-- <span>一张订单只需填写一人</span> -->
 			</div>
 			<div class="contact-info">
@@ -99,7 +99,7 @@
 		<div class="people-info">
 			<div class="contact-info">
 				<div class="info-head">
-					<span>其它信息:</span>
+					<span>其它信息</span>
 					<!-- <span>一张订单只需填写一人</span> -->
 				</div>
 				<div class="info">
@@ -117,7 +117,7 @@
 					</div>
 				</div>
 				<div class="info show-discount animated fadeInDown" v-if="havediscountcode">
-					<span>优惠码信息:</span>
+					<span>优惠码信息</span>
 					<span class="center">{{discountCode.Name}}</span>
 					<span class="last" v-if="isUseCode" @click="useDiscountCode">已使用</span>
 					<span class="last" v-else @click="useDiscountCode">立即使用</span>
@@ -407,7 +407,7 @@ export default {
 			let rebate = this.$store.getters.getRebate;
 			_.map(rebate,item=>{
 				let data = item;
-				data.label = `${item.Name} (满${item.LimitMoney}元可用,减${item.Money}元)`;
+				data.label = `${item.Name} (满${item.LimitMoney}元减${item.Money}元)`;
 				data.value = item.Id;
 				data.disabled = false;
 				this.optionsDiscount.push(data);

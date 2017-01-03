@@ -323,11 +323,11 @@ export default {
 				else{
 					//没有数据
 					this.locationName = "";
-					Toast({
-					  message: "没有数据",
-					  position: 'bottom',
-					  duration: 3000,
-					});
+					// Toast({
+					//   message: "没有数据",
+					//   position: 'bottom',
+					//   duration: 3000,
+					// });
 				}
 
 				this.showRefresh = false;//正常返回就不要显示重新加载了
