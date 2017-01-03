@@ -31043,14 +31043,6 @@
 				}).then(function (data) {
 					_this2.locationLoad = false; //停止界面加载提示
 					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
-						//没有数据
-						_this2.locationName = "";
-						(0, _mintUi.Toast)({
-							message: "没有数据",
-							position: 'bottom',
-							duration: 3000
-						});
-					} else {
 						_this2.locationName = "最近上车点:" + data.Name;
 						_this2.$store.dispatch("setStartCity", {
 							Code: data.Id,
@@ -31058,6 +31050,14 @@
 						});
 						(0, _mintUi.Toast)({
 							message: "已为你切换到最近的出发点",
+							position: 'bottom',
+							duration: 3000
+						});
+					} else {
+						//没有数据
+						_this2.locationName = "";
+						(0, _mintUi.Toast)({
+							message: "没有数据",
 							position: 'bottom',
 							duration: 3000
 						});
