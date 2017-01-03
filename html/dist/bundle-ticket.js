@@ -49428,21 +49428,42 @@
 		},
 		watch: {
 			selectDiscount: function selectDiscount(newval) {
+				var _this2 = this;
+
 				console.log(newval);
-				if (newval.length === 0 || newval.length === 1) return;
+				var len = newval.length;
+				if (len === 0 || len === 1) return;
 
 				var optionsDiscount = this.optionsDiscount;
+				var lastId = newval[len - 1];
 
 				//找到最新加入的一项
 				var lastOption = _.find(optionsDiscount, function (item) {
-					return item.Id === newval[newval.length - 1];
+					return item.Id === lastId;
 				});
 
+				//查看最后一个是不是单选
 				if (lastOption && lastOption.IsSingle === 1) {
 					this.rebateid = [lastOption.Id]; //只留自己
 					this.selectDiscount = [lastOption.Id];
 				} else {
 					this.rebateid.push(lastOption.Id);
+				}
+
+				//筛选所有的IsSingle=1选项
+
+				var _loop = function _loop(i) {
+					var data = _.find(optionsDiscount, function (item) {
+						return item.Id === newval[i];
+					});
+					if (data.IsSingle === 1) {
+						_this2.rebateid = [lastOption.Id]; //只留自己
+						_this2.selectDiscount = [lastOption.Id];
+					}
+				};
+
+				for (var i = 0; i < len; i++) {
+					_loop(i);
 				}
 			}
 		},
@@ -49590,29 +49611,29 @@
 				}
 			},
 			CountDown: function CountDown() {
-				var _this2 = this;
+				var _this3 = this;
 
 				this.storeCountTime = 60 * 30 - 1; //半个小时
 				this.countdown = setInterval(function () {
-					if (_this2.storeCountTime === 0) {
-						clearInterval(_this2.countdown);
-						_this2.countdown = null;
+					if (_this3.storeCountTime === 0) {
+						clearInterval(_this3.countdown);
+						_this3.countdown = null;
 						return;
 					}
-					var minth = parseInt(_this2.storeCountTime / 60);
-					var second = parseInt(_this2.storeCountTime % 60);
+					var minth = parseInt(_this3.storeCountTime / 60);
+					var second = parseInt(_this3.storeCountTime % 60);
 					if (minth < 10) {
-						_this2.countdownTime = "0" + minth + ":";
+						_this3.countdownTime = "0" + minth + ":";
 					} else {
-						_this2.countdownTime = minth + ":";
+						_this3.countdownTime = minth + ":";
 					}
 
 					if (second < 10) {
-						_this2.countdownTime = _this2.countdownTime + "0" + second;
+						_this3.countdownTime = _this3.countdownTime + "0" + second;
 					} else {
-						_this2.countdownTime = _this2.countdownTime + second;
+						_this3.countdownTime = _this3.countdownTime + second;
 					}
-					_this2.storeCountTime--;
+					_this3.storeCountTime--;
 				}, 1000);
 			},
 
@@ -49621,7 +49642,7 @@
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
-				var _this3 = this;
+				var _this4 = this;
 
 				// this.CountDown();
 				// this.payInfoPopupVisible = true;
@@ -49669,16 +49690,16 @@
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
-									_this3.popupMessage(result.Message);
+									_this4.popupMessage(result.Message);
 								} else {
-									_this3.CountDown();
-									_this3.serverPayInfo = result.Data;
+									_this4.CountDown();
+									_this4.serverPayInfo = result.Data;
 									// this.TicketPay = result.Data;
-									_this3.payInfoPopupVisible = true;
+									_this4.payInfoPopupVisible = true;
 								}
 							}).catch(function (error) {
 								_mintUi.Indicator.close();
-								_this3.popupMessage("服务器繁忙,请稍后再试...");
+								_this4.popupMessage("服务器繁忙,请稍后再试...");
 							});
 						} else {
 							this.popupMessage("请填写正确的联系手机号!");
@@ -49715,7 +49736,7 @@
 	   * @return {[type]} [description]
 	   */
 			append: function append() {
-				var _this4 = this;
+				var _this5 = this;
 
 				// 添加乘客至AllFare
 				// 首先检查输入是否正确
@@ -49725,17 +49746,17 @@
 						// 如果添加人数大于剩余票数
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
-						var _ret = function () {
-							var check = /^1[23578][0-9]{9}$/.test(_this4.certificate);
-							if (!check && _this4.certificate !== '') {
-								_this4.popupMessage("请填写正确的联系手机号!");
+						var _ret2 = function () {
+							var check = /^1[23578][0-9]{9}$/.test(_this5.certificate);
+							if (!check && _this5.certificate !== '') {
+								_this5.popupMessage("请填写正确的联系手机号!");
 								return {
 									v: void 0
 								};
 							}
 							var json = {
-								Name: _this4.fareName,
-								Mobile: _this4.certificate,
+								Name: _this5.fareName,
+								Mobile: _this5.certificate,
 								active: true,
 								isGetTicket: false
 							};
@@ -49743,26 +49764,26 @@
 								text: '加载中...',
 								spinnerType: 'double-bounce'
 							});
-							_this4.$store.dispatch("addPassenger", json).then(function (result) {
+							_this5.$store.dispatch("addPassenger", json).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Data) {
-									_this4.$store.dispatch("getPassenger");
+									_this5.$store.dispatch("getPassenger");
 									json.Id = result.Data;
-									_this4.AllFare.push(json);
+									_this5.AllFare.push(json);
 									// this.setLocalStorePassager(json);//存储本地
 									// 清空输入的信息
-									_this4.fareName = "";
-									_this4.certificate = "";
+									_this5.fareName = "";
+									_this5.certificate = "";
 
-									_this4.popupMessage("添加成功!");
-									_this4.computeAll();
+									_this5.popupMessage("添加成功!");
+									_this5.computeAll();
 								} else {
-									_this4.popupMessage(result.Message);
+									_this5.popupMessage(result.Message);
 								}
 							});
 						}();
 
-						if ((typeof _ret === "undefined" ? "undefined" : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+						if ((typeof _ret2 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret2)) === "object") return _ret2.v;
 					}
 				} else {
 					this.popupMessage("请输入正确的姓名!");
@@ -49832,18 +49853,18 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this5 = this;
+				var _this6 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].Name + '?').then(function (action) {
-					_this5.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
+					_this6.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
 						if (result.Data) {
-							_this5.AllFare.splice(index, 1);
-							_this5.$store.dispatch("setPassenger", _this5.AllFare);
-							_this5.computeAll();
+							_this6.AllFare.splice(index, 1);
+							_this6.$store.dispatch("setPassenger", _this6.AllFare);
+							_this6.computeAll();
 						} else {
-							_this5.popupMessage(result.Message);
+							_this6.popupMessage(result.Message);
 						}
 					});
 				}).catch(function (error) {
@@ -49906,7 +49927,7 @@
 				this.discountPopupVisible = false;
 			},
 			checkCodeStatus: function checkCodeStatus() {
-				var _this6 = this;
+				var _this7 = this;
 
 				var discountcode = this.payInfoData.discountcode;
 				if (discountcode === "") {
@@ -49915,9 +49936,9 @@
 				}
 				this.$store.dispatch("checkRebateStatus", discountcode).then(function (result) {
 					if (result.Data) {
-						_this6.popupMessage("优惠码可用");
+						_this7.popupMessage("优惠码可用");
 					} else {
-						_this6.popupMessage("优惠码不可用");
+						_this7.popupMessage("优惠码不可用");
 					}
 				});
 			}
@@ -50621,11 +50642,11 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (_vm.selectDiscount.length !== 0),
-	      expression: "selectDiscount.length!==0"
+	      value: (_vm.rebateid.length !== 0),
+	      expression: "rebateid.length!==0"
 	    }],
 	    staticClass: "last"
-	  }, [_vm._s(("已选" + (_vm.selectDiscount.length) + "个"))])]), " ", _vm._h('div', {
+	  }, [_vm._s(("已选" + (_vm.rebateid.length) + "个"))])]), " ", _vm._h('div', {
 	    staticClass: "info discount-code"
 	  }, [_vm._h('span', {
 	    staticClass: "first"

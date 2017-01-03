@@ -105,7 +105,7 @@
 				<div class="info">
 					<span>优惠券</span>
 					<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
-					<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
+					<span class="last" v-show="rebateid.length!==0">{{`已选${rebateid.length}个`}}</span>
 				</div>
 				<div class="info discount-code">
 					<span class="first">优惠码</span>
@@ -462,21 +462,35 @@ export default {
 	watch:{
 		selectDiscount(newval){
 			console.log(newval)
-			if(newval.length===0||newval.length===1)return;
+			let len = newval.length;
+			if(len===0||len===1)return;
 			
 			let optionsDiscount = this.optionsDiscount;
+			let lastId = newval[len-1];
 			
 			//找到最新加入的一项
 			let lastOption = _.find(optionsDiscount,(item)=>{
-				return item.Id===newval[newval.length-1];
+				return item.Id===lastId;
 			});
-
+			
+			//查看最后一个是不是单选
 			if(lastOption&&lastOption.IsSingle===1){
 				this.rebateid = [lastOption.Id];//只留自己
 				this.selectDiscount = [lastOption.Id];
 			}
 			else{
 				this.rebateid.push(lastOption.Id);
+			}
+			
+			//筛选所有的IsSingle=1选项
+			for(let i=0;i<len;i++){
+				let data = _.find(optionsDiscount,(item)=>{
+					return item.Id===newval[i]
+				});
+				if(data.IsSingle===1){
+					this.rebateid = [lastOption.Id];//只留自己
+					this.selectDiscount = [lastOption.Id];
+				}
 			}
 		}
 	},
