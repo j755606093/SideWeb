@@ -341,6 +341,7 @@ export default {
 			discountPopupVisible:false,//优惠券选择
 			selectDiscount:[],//选择的优惠券
 			optionsDiscount:[],//优惠券列表
+			rebateid:[],//优惠券id列表
 			
 			//订单信息
 			payInfoData:{
@@ -460,12 +461,23 @@ export default {
 	},
 	watch:{
 		selectDiscount(newval){
-			if(newval.length===0)return;
-			let data = this.optionsDiscount[newval.length-1];
-			if(data.IsSingle===1&&newval.length!==1){
-				//添加的这个是单独使用的
-				this.selectDiscount = [data];//只留自己
-			}	
+			console.log(newval)
+			if(newval.length===0||newval.length===1)return;
+			
+			let optionsDiscount = this.optionsDiscount;
+			
+			//找到最新加入的一项
+			let lastOption = _.find(optionsDiscount,(item)=>{
+				return item.Id===newval[newval.length-1];
+			});
+
+			if(lastOption&&lastOption.IsSingle===1){
+				this.rebateid = [lastOption.Id];//只留自己
+				this.selectDiscount = [lastOption.Id];
+			}
+			else{
+				this.rebateid.push(lastOption.Id);
+			}
 		}
 	},
 	methods:{

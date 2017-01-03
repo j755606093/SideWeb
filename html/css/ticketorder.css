@@ -303,20 +303,172 @@ header {
             text-align: right; }
 
 .pay-order {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background-color: #f7f7f7;
+  position: fixed;
+  left: 0;
+  bottom: 0; }
   .pay-order .pay-lists {
-    background-color: #fff;
     width: 100%;
     height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0; }
+    overflow-y: auto; }
+  .pay-order .info-body {
+    height: 160px;
+    width: 100%;
+    background-color: #2196F3;
+    color: #fff; }
+    .pay-order .info-body .status {
+      text-align: center;
+      padding-top: 20px; }
+      .pay-order .info-body .status > i.fa {
+        font-size: 4rem;
+        color: #2ecc71; }
+      .pay-order .info-body .status > p {
+        font-size: 1.8rem;
+        color: #fff;
+        margin-top: 10px; }
+      .pay-order .info-body .status p.time {
+        font-size: 1.4rem; }
+  .pay-order .ticket-body {
+    margin-bottom: 10px;
+    width: 100%; }
+    .pay-order .ticket-body .pay-info {
+      background-color: #fff;
+      width: 100%;
+      padding: 0 3%; }
+      .pay-order .ticket-body .pay-info .address-info {
+        width: 96%;
+        margin: 10px 2%;
+        height: 100px;
+        font-size: 1.2rem;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+        .pay-order .ticket-body .pay-info .address-info .box {
+          -ms-flex: 1;
+              flex: 1;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+              flex-direction: column;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+        .pay-order .ticket-body .pay-info .address-info .start {
+          -ms-flex-align: start;
+              align-items: flex-start; }
+          .pay-order .ticket-body .pay-info .address-info .start p {
+            font-size: 1.8rem;
+            color: #111111; }
+            .pay-order .ticket-body .pay-info .address-info .start p.first {
+              font-size: 1.2rem; }
+            .pay-order .ticket-body .pay-info .address-info .start p.center {
+              font-size: 1.8rem;
+              width: 100%; }
+            .pay-order .ticket-body .pay-info .address-info .start p.last {
+              color: #AAAAAA;
+              font-size: 1.2rem; }
+        .pay-order .ticket-body .pay-info .address-info .center {
+          font-size: 1.5rem;
+          -ms-flex-align: center;
+              align-items: center;
+          width: 40%; }
+          .pay-order .ticket-body .pay-info .address-info .center p.arrow {
+            color: #0074D9;
+            position: relative;
+            width: 100%;
+            height: 0;
+            line-height: 0; }
+            .pay-order .ticket-body .pay-info .address-info .center p.arrow::after {
+              width: 80%;
+              height: 10px;
+              background-color: #0074D9;
+              position: absolute;
+              left: 0;
+              bottom: -20px;
+              content: ""; }
+            .pay-order .ticket-body .pay-info .address-info .center p.arrow::before {
+              width: 0;
+              height: 0;
+              border: 10px solid #0074D9;
+              position: absolute;
+              right: 5px;
+              bottom: -20px;
+              content: "";
+              border: 10px solid #fff;
+              border-color: transparent transparent #0074D9 #0074D9; }
+          .pay-order .ticket-body .pay-info .address-info .center p.arrow-message {
+            color: #111111;
+            font-size: 1.3rem; }
+          .pay-order .ticket-body .pay-info .address-info .center p.first {
+            color: #111111; }
+        .pay-order .ticket-body .pay-info .address-info .end {
+          -ms-flex-align: end;
+              align-items: flex-end;
+          -ms-flex-pack: center;
+              justify-content: center; }
+          .pay-order .ticket-body .pay-info .address-info .end p {
+            font-size: 1.2rem; }
+            .pay-order .ticket-body .pay-info .address-info .end p:first-child {
+              font-size: 1.8rem;
+              color: #111111; }
+            .pay-order .ticket-body .pay-info .address-info .end p:last-child {
+              color: #919191; }
+      .pay-order .ticket-body .pay-info .info-box {
+        min-height: 40px;
+        border-top: 1px solid #f7f7f7; }
+        .pay-order .ticket-body .pay-info .info-box > p {
+          font-size: 1.3rem; }
+          .pay-order .ticket-body .pay-info .info-box > p span {
+            font-size: 1.3rem;
+            color: #AAAAAA;
+            line-height: 40px;
+            min-height: 40px; }
+          .pay-order .ticket-body .pay-info .info-box > p span.type {
+            width: 50px; }
+          .pay-order .ticket-body .pay-info .info-box > p span.name {
+            color: #111111; }
+  .pay-order .pay-ticket-info {
+    background-color: #fff;
+    width: 100%; }
+    .pay-order .pay-ticket-info .pay-ticket-info-header {
+      padding: 0 3%;
+      border-bottom: 1px solid #dddddd; }
+      .pay-order .pay-ticket-info .pay-ticket-info-header p {
+        font-size: 1.4rem;
+        height: 40px;
+        line-height: 40px; }
+    .pay-order .pay-ticket-info .pay-ticket-info-body {
+      padding: 0 3%; }
+      .pay-order .pay-ticket-info .pay-ticket-info-body p {
+        font-size: 1.2rem;
+        color: #919191;
+        height: 30px;
+        line-height: 30px; }
+      .pay-order .pay-ticket-info .pay-ticket-info-body p.all {
+        font-size: 1.4rem;
+        text-align: right; }
+  .pay-order .now-pay {
+    width: 100%;
+    padding: 0 2%;
+    margin-top: 10px; }
+    .pay-order .now-pay button {
+      outline: none;
+      border: 0;
+      background-color: #FF851B;
+      font-size: 1.5rem;
+      color: #fff;
+      width: 100%;
+      height: 40px;
+      border-radius: 10px; }
+  .pay-order .out-order {
+    width: 100%;
+    text-align: center; }
+    .pay-order .out-order a {
+      color: #AAAAAA; }
 
 footer {
   display: -ms-flexbox;

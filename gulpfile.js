@@ -14,9 +14,13 @@ let modules = {
 	loaders:[
 		{
 			//这是处理es6文件
-			test:path.join(__dirname, '/html/'),
+			test:/\.js$/,
 			loader:'babel-loader',
 			exclude: /node_modules/,
+			query: {
+	      presets: ['es2015'],
+	      plugins: ['transform-runtime']
+	    }
 		},
 		{
 			//这是处理scss文件

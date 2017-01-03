@@ -59,7 +59,94 @@
 		  position="right"
 		  class="pay-order">
 		  <div class="pay-lists">
-		  	<p>订单详情</p>
+		  	<div class="pay-body" v-if="orderVisible">
+		  		<div class="info-body">
+		  			<div class="status">
+		  				<template v-if="OrderDetail.Status===1">
+		  					<i class="fa fa-check-circle"></i>
+		  					<template v-if="OrderDetail.IsPay===0">
+		  						<p>订单等待支付!</p>
+		  						<p class="time">请在以下时间内完成支付</p>
+		  					</template>
+		  					<p v-else>订单已支付</p>
+		  				</template>
+		  				<template v-else>
+		  					<i class="fa fa-times-circle"></i>
+		  					<p>订单已经失效!</p>
+		  				</template>
+		  			</div>
+		  		</div>
+		  		<div class="ticket-body">
+		  			<div class="pay-info">
+		  				<div class="address-info">
+								<div class="start box">
+									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
+									<p class="center" v-text="OrderDetail.StartPoint"></p>
+									<p class="last" v-text="OrderDetail.StartCity"></p>
+								</div>
+								<div class="center box">
+									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
+									<p class="arrow-message" v-text="OrderDetail.Route"></p>
+									<p class="arrow"></p>
+								</div>
+								<div class="end box">
+									<p v-text="OrderDetail.EndPoint"></p>
+									<p>{{OrderDetail.AcrossCity}}</p>
+								</div>
+							</div>
+							<div class="info-box passager-info">
+								<p>
+									<span class="type">乘车日期:</span>
+									<span class="name">{{OrderDetail.Boarddate+" "+OrderDetail.BoardTime}}</span>
+								</p>
+							</div>
+							<div class="info-box passager-info">
+								<p>
+									<span class="type">乘车地址:</span>
+									<!-- <span class="name"></span> -->
+									{{OrderDetail.StartAddress}}
+								</p>
+							</div>
+							<div class="info-box passager-info">
+								<p>
+									<span class="type">乘客:</span>
+									<span class="name">{{passenger}}</span>
+								</p>
+							</div>
+							<!-- <div class="info-box get-ticket">
+								<p>
+									<span class="type">联系人:</span>
+									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
+								</p>
+							</div> -->
+							<div class="info-box get-ticket">
+								<p>
+									<span class="type">联系方式:</span>
+									<span class="name">{{OrderDetail.Linkmanid}}</span>
+								</p>
+							</div>
+		  			</div>
+		  			<!-- <button @click="outpay">点击退出</button> -->
+		  		</div>
+		  		<div class="pay-ticket-info">
+		  			<div class="pay-ticket-info-header">
+		  				<p>订单信息</p>
+		  			</div>
+		  			<div class="pay-ticket-info-body">
+		  				<p>订单编号:{{OrderDetail.Id}}</p>
+		  				<p>下单日期:{{OrderDetail.CTime}}</p>
+		  				<p class="all">总额: <span style="color:red">{{OrderDetail.TotalPrice+'¥'}}</span></p>
+		  				<span style="clear:both;"></span>
+		  			</div>
+		  		</div>
+		  		<!-- 立即支付 -->
+		  		<div class="now-pay">
+		  			<button @click="payMoney">立即支付</button>
+		  		</div>
+		  		<div class="out-order" style="margin-top:20px;margin-bottom:20px;">
+		  			<a>取消订单</a>
+		  		</div>
+		  	</div>
 		  </div>
 		</mt-popup>
 		<footer>

@@ -75,64 +75,118 @@
 		return debug;
 	}();
 
+	var config = {
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : ""
+		},
+		serverUrl: debug ? "http://192.168.31.80" : ""
+	};
+
 	new _vue2.default({
 		el: "#app",
 		data: {
 			OrderList: [],
+			index: 1, //页数
 			ready: false, //是否准备显示
 			noDataShow: true, //没有订单数据
 			Passengers: [], //乘客名数据,方便使用
-			orderVisible: false },
+			orderVisible: false,
+
+			OrderDetail: {}, //订单详细信息
+			passenger: "" },
 		created: function created() {
-			var _this = this;
-
 			this.ready = true;
-			_mintUi.Indicator.open({
-				spinnerType: 'fading-circle'
-			});
-			fetch("http://192.168.31.80/api/Order/List", {
-				method: "POST",
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : ""
-				},
-				body: (0, _stringify2.default)({
-					Index: 1,
-					Size: 5,
-					Type: 1
-				})
-			}).then(function (result) {
-				return result.json();
-			}).then(function (result) {
-				if (result.Data) {
-					_this.OrderList = result.Data;
-
-					// for(let i=0;i<this.OrderList.length;i++){
-					// 	let pass = this.OrderList[i].Passengers;
-					// 	let names = "";
-					// 	for(let j=0;j<pass.length;j++){
-					// 		names = names+pass[j].Name+",";
-					// 	}
-					// 	this.Passengers.push(names);
-					// }
-
-					_this.noDataShow = false; //显示订单
-					_mintUi.Indicator.close();
-				} else {
-					// Toast({
-					//   message: result.Message,
-					//   position: 'bottom',
-					//   duration: 3000
-					// });
-					_mintUi.Indicator.close();
-				}
-			});
+			this.moreOrderData();
 		},
 
 		methods: {
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			},
+			moreOrderData: function moreOrderData() {
+				var _this = this;
+
+				this.loading();
+				fetch(config.serverUrl + "/api/Order/List", {
+					method: "POST",
+					headers: config.headers,
+					body: (0, _stringify2.default)({
+						Index: this.index,
+						Size: 5,
+						Type: 1
+					})
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						for (var i = 0; i < result.Data.length; i++) {
+							_this.OrderList.push(result.Data[i]);
+						}
+
+						_this.noDataShow = false; //显示订单
+					}
+
+					_mintUi.Indicator.close();
+				});
+				this.index++;
+			},
 			openOrder: function openOrder(index) {
-				this.orderVisible = true;
-				console.log(index);
+				this.loading();
+				this.getOrderInfo(this.OrderList[index].Id);
+			},
+			getOrderInfo: function getOrderInfo(id) {
+				var _this2 = this;
+
+				return fetch(config.serverUrl + "/api/Order/Get", {
+					method: "POST",
+					headers: config.headers,
+					body: (0, _stringify2.default)({
+						OrderId: id
+					})
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					_this2.OrderDetail = result.Data;
+					_this2.passenger = "";
+					for (var i = 0; i < _this2.OrderDetail.Passengers.length; i++) {
+						_this2.passenger = _this2.passenger + _this2.OrderDetail.Passengers[i].Name + ",";
+					}
+					_this2.passenger = _this2.passenger.slice(0, _this2.passenger.length - 1);
+					_mintUi.Indicator.close();
+					_this2.orderVisible = true;
+				});
+			},
+			payMoney: function payMoney() {
+				this.loading();
+				var id = this.OrderDetail.Id;
+				return fetch(config.serverUrl + "/api/Order/PayOrder", {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: config.Authorization
+					},
+					body: (0, _stringify2.default)({
+						OrderId: id
+					})
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					_mintUi.Indicator.close();
+					var paydata = result.Data;
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
+						if (r.err_msg === "get_brand_wcpay_request:ok") {
+							(0, _mintUi.Toast)({
+								message: '支付成功!',
+								iconClass: 'fa fa-check',
+								duration: 3000,
+								className: "success"
+							});
+						}
+					});
+				});
 			}
 		},
 		components: {
@@ -24130,30 +24184,26 @@
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
 	var content = __webpack_require__(32);
-	if (typeof content === 'string') content = [[module.id, content, '']];
+	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(11)(content, {});
-	if (content.locals) module.exports = content.locals;
+	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
-	if (false) {
+	if(false) {
 		// When the styles change, update the <style> tags
-		if (!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ticketorder.css", function () {
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ticketorder.css", function() {
 				var newContent = require("!!./../../node_modules/css-loader/index.js!./ticketorder.css");
-				if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
 		}
 		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function () {
-			update();
-		});
+		module.hot.dispose(function() { update(); });
 	}
 
 /***/ },
@@ -24165,7 +24215,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7; }\n\n#app {\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%;\n  padding-bottom: 50px; }\n  .body .no-data {\n    padding-top: 100px;\n    text-align: center; }\n    .body .no-data p {\n      color: #AAAAAA;\n      font-size: 1.8rem; }\n  .body .order {\n    width: 100%; }\n    .body .order .lists {\n      width: 94%;\n      margin: 0 3%;\n      margin-top: 60px; }\n      .body .order .lists .list {\n        width: 100%;\n        padding: 5px 5px;\n        background-color: #fff;\n        border-radius: 10px;\n        margin-bottom: 10px; }\n        .body .order .lists .list .list-header {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          border-bottom: 1px solid #dddddd;\n          padding: 5px 0; }\n          .body .order .lists .list .list-header span {\n            font-size: 1.4rem;\n            color: #444444; }\n          .body .order .lists .list .list-header span.time {\n            text-align: left;\n            -ms-flex: 0.7;\n                flex: 0.7;\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-header span.type {\n            text-align: right;\n            -ms-flex: 0.3;\n                flex: 0.3; }\n        .body .order .lists .list .list-center {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 50px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-center .city {\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: row;\n                flex-direction: row;\n            -ms-flex-pack: center;\n                justify-content: center;\n            -ms-flex: 0.8;\n                flex: 0.8;\n            position: relative; }\n            .body .order .lists .list .list-center .city > span {\n              font-size: 1.6rem;\n              -ms-flex: 1;\n                  flex: 1; }\n            .body .order .lists .list .list-center .city > span.start {\n              position: relative; }\n              .body .order .lists .list .list-center .city > span.start::before {\n                position: absolute;\n                bottom: 5px;\n                right: 20%;\n                height: 5px;\n                width: 30%;\n                background-color: #0074D9;\n                content: \"\"; }\n              .body .order .lists .list .list-center .city > span.start::after {\n                position: absolute;\n                bottom: 5px;\n                right: 12%;\n                height: 0;\n                width: 0;\n                border: 6px solid #fff;\n                border-color: transparent transparent #0074D9 #0074D9;\n                content: \"\"; }\n            .body .order .lists .list .list-center .city i {\n              position: absolute;\n              top: 0;\n              left: 27%; }\n          .body .order .lists .list .list-center span.money {\n            font-size: 1.6rem;\n            -ms-flex: 0.2;\n                flex: 0.2;\n            text-align: right;\n            color: #db3652; }\n        .body .order .lists .list .list-footer {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 30px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-footer span {\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-footer span.name {\n            text-align: left;\n            color: #777777;\n            -ms-flex: 0.7;\n                flex: 0.7; }\n          .body .order .lists .list .list-footer span.order-pay {\n            -ms-flex: 0.3;\n                flex: 0.3; }\n          .body .order .lists .list .list-footer span.order-status {\n            text-align: right; }\n          .body .order .lists .list .list-footer span.order-pay {\n            text-align: right; }\n\n.pay-order {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100%; }\n  .pay-order .pay-lists {\n    background-color: #fff;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n\n.mint-indicator {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7; }\n\n#app {\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%;\n  padding-bottom: 50px; }\n  .body .no-data {\n    padding-top: 100px;\n    text-align: center; }\n    .body .no-data p {\n      color: #AAAAAA;\n      font-size: 1.8rem; }\n  .body .order {\n    width: 100%; }\n    .body .order .lists {\n      width: 94%;\n      margin: 0 3%;\n      margin-top: 60px; }\n      .body .order .lists .list {\n        width: 100%;\n        padding: 5px 5px;\n        background-color: #fff;\n        border-radius: 10px;\n        margin-bottom: 10px; }\n        .body .order .lists .list .list-header {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          border-bottom: 1px solid #dddddd;\n          padding: 5px 0; }\n          .body .order .lists .list .list-header span {\n            font-size: 1.4rem;\n            color: #444444; }\n          .body .order .lists .list .list-header span.time {\n            text-align: left;\n            -ms-flex: 0.7;\n                flex: 0.7;\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-header span.type {\n            text-align: right;\n            -ms-flex: 0.3;\n                flex: 0.3; }\n        .body .order .lists .list .list-center {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 50px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-center .city {\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: row;\n                flex-direction: row;\n            -ms-flex-pack: center;\n                justify-content: center;\n            -ms-flex: 0.8;\n                flex: 0.8;\n            position: relative; }\n            .body .order .lists .list .list-center .city > span {\n              font-size: 1.6rem;\n              -ms-flex: 1;\n                  flex: 1; }\n            .body .order .lists .list .list-center .city > span.start {\n              position: relative; }\n              .body .order .lists .list .list-center .city > span.start::before {\n                position: absolute;\n                bottom: 5px;\n                right: 20%;\n                height: 5px;\n                width: 30%;\n                background-color: #0074D9;\n                content: \"\"; }\n              .body .order .lists .list .list-center .city > span.start::after {\n                position: absolute;\n                bottom: 5px;\n                right: 12%;\n                height: 0;\n                width: 0;\n                border: 6px solid #fff;\n                border-color: transparent transparent #0074D9 #0074D9;\n                content: \"\"; }\n            .body .order .lists .list .list-center .city i {\n              position: absolute;\n              top: 0;\n              left: 27%; }\n          .body .order .lists .list .list-center span.money {\n            font-size: 1.6rem;\n            -ms-flex: 0.2;\n                flex: 0.2;\n            text-align: right;\n            color: #db3652; }\n        .body .order .lists .list .list-footer {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 30px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-footer span {\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-footer span.name {\n            text-align: left;\n            color: #777777;\n            -ms-flex: 0.7;\n                flex: 0.7; }\n          .body .order .lists .list .list-footer span.order-pay {\n            -ms-flex: 0.3;\n                flex: 0.3; }\n          .body .order .lists .list .list-footer span.order-status {\n            text-align: right; }\n          .body .order .lists .list .list-footer span.order-pay {\n            text-align: right; }\n\n.pay-order {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .pay-order .pay-lists {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .pay-order .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .pay-order .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .pay-order .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .pay-order .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .pay-order .info-body .status p.time {\n        font-size: 1.4rem; }\n  .pay-order .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .pay-order .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .pay-order .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .pay-order .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .pay-order .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .pay-order .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .pay-order .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .pay-order .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .pay-order .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .pay-order .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .pay-order .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .pay-order .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .pay-order .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .pay-order .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .pay-order .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .pay-order .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .pay-order .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .pay-order .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .pay-order .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .pay-order .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .pay-order .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .pay-order .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .pay-order .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .pay-order .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .pay-order .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .pay-order .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .pay-order .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .pay-order .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .pay-order .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .pay-order .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .pay-order .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .pay-order .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .pay-order .out-order {\n    width: 100%;\n    text-align: center; }\n    .pay-order .out-order a {\n      color: #AAAAAA; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n\n.mint-indicator {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n", ""]);
 
 	// exports
 

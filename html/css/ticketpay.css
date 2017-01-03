@@ -672,14 +672,17 @@ input {
   .station-popup-visible .station {
     position: relative;
     border-radius: 10px;
-    height: 100%; }
+    height: 100%;
+    overflow-y: scroll; }
+    .station-popup-visible .station .mint-checklist {
+      margin-bottom: 50px; }
     .station-popup-visible .station button {
       width: 100%;
       padding: 10px;
       color: #fff;
       background-color: #0074D9;
       font-size: 1.6rem;
-      position: absolute;
+      position: fixed;
       bottom: 0px;
       left: 0;
       border-bottom-right-radius: 10px;

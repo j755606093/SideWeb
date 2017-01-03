@@ -604,17 +604,22 @@
 	height:60%;
 	background-color:$white;
 	border-radius:10px;
+	
 	.station{
 		position:relative;
 		border-radius:10px;
 		height:100%;
+		overflow-y: scroll;
+		.mint-checklist{
+			margin-bottom: 50px;
+		}
 		button{
 			width:100%;
 			padding:10px;
 			color:$white;
 			background-color: $blue;
 			font-size:1.6rem;
-			position:absolute;
+			position:fixed;
 			bottom:0px;
 			left:0;
 			border-bottom-right-radius:10px;

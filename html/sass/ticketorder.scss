@@ -179,22 +179,209 @@ header{
 	}
 }
 .pay-order{
-	position:absolute;
-	bottom:0;
-	left:0;
 	width:100%;
 	height:100%;
+	background-color:lighten($gray, 30%);
+	position:fixed;
+	left:0;
+	bottom:0;
 	.pay-lists{
-		background-color:$white;
 		width:100%;
 		height:100%;
-		position:absolute;
-		top:0;
-		left:0;
-		bottom:0;
-		right:0;
+		overflow-y:auto;
 	}
-	
+	.info-body{
+		height:160px;
+		width:100%;
+		background-color:#2196F3;
+		color:$white;
+		.status{
+			text-align: center;
+			padding-top:20px;
+			>i.fa{
+				font-size:4rem;
+				color:#2ecc71;
+			}
+			>p{
+				font-size:1.8rem;
+				color:$white;
+				margin-top:10px;
+			}
+			p.time{
+				font-size:1.4rem;
+			}
+		}
+	}
+	.ticket-body{
+		margin-bottom: 10px;
+		width:100%;
+		.pay-info{
+			background-color: $white;
+			width:100%;
+			padding:0 3%;
+			.address-info{
+				width:96%;
+				margin:10px 2%;
+				height:100px;
+				font-size:1.2rem;
+				display:flex;
+				flex-direction: row;
+				.box{
+					flex:1;
+					display:flex;
+					flex-direction:column;
+					justify-content: center;
+					align-items: center;
+				}
+				.start{
+					align-items: flex-start;
+					p{
+						font-size:1.8rem;
+						color:$black;
+						// line-height:25px;
+						&.first{
+							// color:darken($gray, 10%);
+							font-size:1.2rem;
+						}
+						&.center{
+							font-size:1.8rem;
+							width:100%;
+						}
+						&.last{
+							color:$gray;
+							font-size:1.2rem;
+						}
+					}
+				}
+				.center{
+					font-size:1.5rem;
+					align-items: center;
+					width:40%;
+					p.arrow{
+						color:$blue;
+						position:relative;
+						width:100%;
+						height:0;
+						line-height:0;
+						&::after{
+							width:80%;
+							height:10px;
+							background-color: $blue;
+							position:absolute;
+							left:0;
+							bottom:-20px;
+							content:"",
+						}
+						&::before{
+							width:0;
+							height:0;
+							border:10px solid $blue;
+							position:absolute;
+							right:5px;
+							bottom:-20px;
+							content:"";
+							border: 10px solid $white;
+							border-color: transparent transparent $blue $blue;
+						}
+					}
+					p.arrow-message{
+						color:$black;
+						font-size:1.3rem;
+						// margin-top: -10px;
+					}
+					p.first{
+						color:$black;
+					}
+				}
+				.end{
+					align-items: flex-end;
+					justify-content: center;
+					p{
+						// color:darken($gray, 10%);
+						// color:$black;
+						font-size:1.2rem;
+						// line-height:25px;
+						// line-height:40px;
+						&:first-child{
+							font-size:1.8rem;
+							color:$black;
+						}
+						&:last-child{
+							color:darken($gray, 10%);
+						}
+					}
+				}
+			}
+			.info-box{
+				min-height:40px;
+				border-top:1px solid lighten($gray,30%);
+				>p{
+					font-size:1.3rem;
+					span{
+						font-size:1.3rem;
+						color:$gray;
+						line-height:40px;
+						min-height:40px;
+					}
+					span.type{
+						width:50px;
+					}
+					span.name{
+						color:$black;
+					}
+				}
+			}
+		}
+	}
+	.pay-ticket-info{
+		background-color: $white;
+		width:100%;
+		.pay-ticket-info-header{
+			padding:0 3%;
+			border-bottom: 1px solid lighten($gray,20%);
+			p{
+				font-size:1.4rem;
+				height:40px;
+				line-height:40px;
+			}
+		}
+		.pay-ticket-info-body{
+			padding:0 3%;
+			p{
+				font-size:1.2rem;
+				color:darken($gray,10%);
+				height:30px;
+				line-height:30px;
+			}
+			p.all{
+				font-size:1.4rem;
+				text-align: right;
+			}
+		}
+	}
+	.now-pay{
+		width:100%;
+		padding:0 2%;
+		margin-top:10px;
+		// background-color: $white;
+		button{
+			outline: none;
+			border:0;
+			background-color: $orange;
+			font-size:1.5rem;
+			color:$white;
+			width:100%;
+			height:40px;
+			border-radius:10px;
+		}
+	}
+	.out-order{
+		width:100%;
+		text-align: center;
+		a{
+			color:$gray;
+		}
+	}
 }
 footer{
 	display:flex;
