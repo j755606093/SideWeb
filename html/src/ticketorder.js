@@ -3,7 +3,13 @@ Vue.use(require('vue-resource'));//引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
-import { Toast,Indicator,Popup } from 'mint-ui';
+import { Toast,Indicator,Popup,Tabbar,Navbar,TabItem,TabContainer, TabContainerItem } from 'mint-ui';
+
+Vue.component(TabContainer.name, TabContainer);
+Vue.component(TabContainerItem.name, TabContainerItem);
+Vue.component(Tabbar.name, Tabbar);
+Vue.component(TabItem.name, TabItem);
+Vue.component(Navbar.name, Navbar);
 
 const debug = (function(){
 	let debug = false;
@@ -32,23 +38,57 @@ const Vue_Order = new Vue({
 		index:1,//页数
 		noMoreData:false,//没有更多数据
 		isUse:false,//是否使用中
-		ready:false,//是否准备显示
 		noDataShow:true,//没有订单数据
+
+		OrderList1:[],
+		index1:1,//页数
+		noMoreData1:false,//没有更多数据
+		isUse1:false,//是否使用中
+		noDataShow1:true,//没有订单数据
+
+		ready:false,//是否准备显示
 		Passengers:[],//乘客名数据,方便使用
 		orderVisible:false,
 
 		OrderDetail:{},//订单详细信息
 		passenger:"",//乘客名
+
+		selected:"1",//默认选择未支付
 	},
 	created(){
 		this.ready = true;
+		if(this.getQueryString("orderid")){
+			// 需要显示订单详细信息
+			this.loading();
+			this.getOrderInfo(this.getQueryString("orderid"))
+		}
 		this.moreOrderData();
+		this.moreOrderData1();
+	},
+	mounted(){
+		// 设置第一个显示
+		// document.getElementsByClassName("mint-tab-container-item")[0].style.display = "block";
+		// document.getElementsByClassName("mint-tab-item")[0].click();
+	},
+	watch:{
+		// 监控tab的变化
+		// selected(val){
+		// 	console.log(val)
+		// }
 	},
 	methods:{
 		loading(){
 			Indicator.open({
 			  spinnerType: 'fading-circle'
 			});
+		},
+		getQueryString(name){
+			let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i'); 
+			let r = window.location.search.substr(1).match(reg); 
+			if (r !== null){ 
+				return unescape(r[2]); 
+			}
+			return null; 
 		},
 		moreOrderData(){
 			if(this.noMoreData||this.isUse){
@@ -61,7 +101,7 @@ const Vue_Order = new Vue({
 				headers: config.headers,
 				body:JSON.stringify({
 					Index:this.index,
-					Size:5,
+					Size:10,
 					Type:1
 				})
 			})
@@ -84,6 +124,43 @@ const Vue_Order = new Vue({
 				}
 				this.isUse = false;//释放这个函数
 				this.index++;
+				Indicator.close();
+			})
+		},
+		moreOrderData1(){
+			if(this.noMoreData1||this.isUse1){
+				return;
+			}
+			this.isUse1 = true;//锁住这个函数
+			this.loading();
+			fetch(config.serverUrl+"/api/Order/List",{
+				method:"POST",
+				headers: config.headers,
+				body:JSON.stringify({
+					Index:this.index1,
+					Size:10,
+					Type:2
+				})
+			})
+			.then(result=>result.json())
+			.then(result=>{
+				if(result.Data){
+					for(let i=0;i<result.Data.length;i++){
+						this.OrderList1.push(result.Data[i]);
+					}
+
+					this.noDataShow1 = false;//显示订单
+				}
+				else{
+					this.noMoreData1 = true;
+					Toast({
+					  message: result.Message,
+					  position: 'bottom',
+					  duration: 3000
+					});
+				}
+				this.isUse1 = false;//释放这个函数
+				this.index1++;
 				Indicator.close();
 			})
 		},
@@ -144,13 +221,21 @@ const Vue_Order = new Vue({
 		}
 	},
 	components:{
-		"mt-popup":Popup
+		"mt-popup":Popup,
 	}
 });
 
 window.addEventListener('scroll',_.throttle(function(){
-	if(document.getElementById("last").offsetTop-document.body.scrollTop<1000){
+	let selected = Vue_Order.selected;
+	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+	if(status<1000 && selected==="1"){
 		Vue_Order.moreOrderData();
+		// console.log('yes');
+	}
+
+	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+	if(status1<1000 && selected==="2"){
+		Vue_Order.moreOrderData1();
 		// console.log('yes');
 	}
 },100,{leading: false}));

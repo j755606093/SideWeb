@@ -49558,11 +49558,14 @@
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							(0, _mintUi.Toast)({
-								message: '支付成功!',
+								message: '支付成功,准备跳转至订单页!',
 								iconClass: 'fa fa-check',
 								duration: 3000,
 								className: "success"
 							});
+							setTimeout(function () {
+								window.location.href = "./TicketOrder.html";
+							}, 2000);
 						}
 					});
 					// wx.chooseWXPay(paydata)
