@@ -49538,6 +49538,8 @@
 			// 	})
 			// },
 			payMoney: function payMoney() {
+				var _this3 = this;
+
 				_mintUi.Indicator.open({
 					text: '加载中...',
 					spinnerType: 'double-bounce'
@@ -49546,6 +49548,11 @@
 				this.$store.dispatch("showWXpay", id).then(function (data) {
 					_mintUi.Indicator.close();
 					var paydata = data.Data;
+
+					if (!paydata) {
+						_this3.popupMessage(data.Message);
+						return;
+					}
 
 					// paydata.success = function(res){
 					// 	Toast({
@@ -49626,16 +49633,16 @@
 	   * @return {[type]} [description]
 	   */
 			computeDiscound: function computeDiscound() {
-				var _this3 = this;
+				var _this4 = this;
 
 				var len = this.selectDiscount.length;
 				this.discountMoney = 0;
 				if (len !== 0) {
 					var _loop2 = function _loop2(i) {
-						var data = _.find(_this3.optionsDiscount, function (item) {
-							return item.Id === _this3.selectDiscount[i];
+						var data = _.find(_this4.optionsDiscount, function (item) {
+							return item.Id === _this4.selectDiscount[i];
 						});
-						_this3.discountMoney += data.Money;
+						_this4.discountMoney += data.Money;
 					};
 
 					for (var i = 0; i < len; i++) {
@@ -49668,29 +49675,29 @@
 				}
 			},
 			CountDown: function CountDown() {
-				var _this4 = this;
+				var _this5 = this;
 
 				this.storeCountTime = 60 * 30 - 1; //半个小时
 				this.countdown = setInterval(function () {
-					if (_this4.storeCountTime === 0) {
-						clearInterval(_this4.countdown);
-						_this4.countdown = null;
+					if (_this5.storeCountTime === 0) {
+						clearInterval(_this5.countdown);
+						_this5.countdown = null;
 						return;
 					}
-					var minth = parseInt(_this4.storeCountTime / 60);
-					var second = parseInt(_this4.storeCountTime % 60);
+					var minth = parseInt(_this5.storeCountTime / 60);
+					var second = parseInt(_this5.storeCountTime % 60);
 					if (minth < 10) {
-						_this4.countdownTime = "0" + minth + ":";
+						_this5.countdownTime = "0" + minth + ":";
 					} else {
-						_this4.countdownTime = minth + ":";
+						_this5.countdownTime = minth + ":";
 					}
 
 					if (second < 10) {
-						_this4.countdownTime = _this4.countdownTime + "0" + second;
+						_this5.countdownTime = _this5.countdownTime + "0" + second;
 					} else {
-						_this4.countdownTime = _this4.countdownTime + second;
+						_this5.countdownTime = _this5.countdownTime + second;
 					}
-					_this4.storeCountTime--;
+					_this5.storeCountTime--;
 				}, 1000);
 			},
 
@@ -49699,7 +49706,7 @@
 	   * @return {[type]} [description]
 	   */
 			submitOrder: function submitOrder() {
-				var _this5 = this;
+				var _this6 = this;
 
 				// this.CountDown();
 				// this.payInfoPopupVisible = true;
@@ -49756,16 +49763,16 @@
 							}).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Code !== 200) {
-									_this5.popupMessage(result.Message);
+									_this6.popupMessage(result.Message);
 								} else {
-									_this5.CountDown();
-									_this5.serverPayInfo = result.Data;
+									_this6.CountDown();
+									_this6.serverPayInfo = result.Data;
 									// this.TicketPay = result.Data;
-									_this5.payInfoPopupVisible = true;
+									_this6.payInfoPopupVisible = true;
 								}
 							}).catch(function (error) {
 								_mintUi.Indicator.close();
-								_this5.popupMessage("服务器繁忙,请稍后再试...");
+								_this6.popupMessage("服务器繁忙,请稍后再试...");
 							});
 						} else {
 							this.popupMessage("请填写正确的联系手机号!");
@@ -49802,7 +49809,7 @@
 	   * @return {[type]} [description]
 	   */
 			append: function append() {
-				var _this6 = this;
+				var _this7 = this;
 
 				// 添加乘客至AllFare
 				// 首先检查输入是否正确
@@ -49813,16 +49820,16 @@
 						this.popupMessage("乘客数不允许大于余票数!");
 					} else {
 						var _ret3 = function () {
-							var check = /^1[23578][0-9]{9}$/.test(_this6.certificate);
-							if (!check && _this6.certificate !== '') {
-								_this6.popupMessage("请填写正确的联系手机号!");
+							var check = /^1[23578][0-9]{9}$/.test(_this7.certificate);
+							if (!check && _this7.certificate !== '') {
+								_this7.popupMessage("请填写正确的联系手机号!");
 								return {
 									v: void 0
 								};
 							}
 							var json = {
-								Name: _this6.fareName,
-								Mobile: _this6.certificate,
+								Name: _this7.fareName,
+								Mobile: _this7.certificate,
 								active: true,
 								isGetTicket: false
 							};
@@ -49830,21 +49837,21 @@
 								text: '加载中...',
 								spinnerType: 'double-bounce'
 							});
-							_this6.$store.dispatch("addPassenger", json).then(function (result) {
+							_this7.$store.dispatch("addPassenger", json).then(function (result) {
 								_mintUi.Indicator.close();
 								if (result.Data) {
-									_this6.$store.dispatch("getPassenger");
+									_this7.$store.dispatch("getPassenger");
 									json.Id = result.Data;
-									_this6.AllFare.push(json);
+									_this7.AllFare.push(json);
 									// this.setLocalStorePassager(json);//存储本地
 									// 清空输入的信息
-									_this6.fareName = "";
-									_this6.certificate = "";
+									_this7.fareName = "";
+									_this7.certificate = "";
 
-									_this6.popupMessage("添加成功!");
-									_this6.computeAll();
+									_this7.popupMessage("添加成功!");
+									_this7.computeAll();
 								} else {
-									_this6.popupMessage(result.Message);
+									_this7.popupMessage(result.Message);
 								}
 							});
 						}();
@@ -49919,18 +49926,18 @@
 	   * @return {[type]}       [description]
 	   */
 			trashMan: function trashMan(index) {
-				var _this7 = this;
+				var _this8 = this;
 
 				var array = this.formatData(this.AllFare);
 
 				_mintUi.MessageBox.confirm('确定删除' + array[index].Name + '?').then(function (action) {
-					_this7.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
+					_this8.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
 						if (result.Data) {
-							_this7.AllFare.splice(index, 1);
-							_this7.$store.dispatch("setPassenger", _this7.AllFare);
-							_this7.computeAll();
+							_this8.AllFare.splice(index, 1);
+							_this8.$store.dispatch("setPassenger", _this8.AllFare);
+							_this8.computeAll();
 						} else {
-							_this7.popupMessage(result.Message);
+							_this8.popupMessage(result.Message);
 						}
 					});
 				}).catch(function (error) {
@@ -49993,7 +50000,7 @@
 				this.discountPopupVisible = false;
 			},
 			checkCodeStatus: function checkCodeStatus() {
-				var _this8 = this;
+				var _this9 = this;
 
 				var discountcode = this.payInfoData.discountcode;
 				if (discountcode === "") {
@@ -50003,12 +50010,12 @@
 				}
 				this.$store.dispatch("checkRebateStatus", discountcode).then(function (result) {
 					if (result.Data && result.Data.IsUse === 0) {
-						_this8.discountCode = result.Data;
-						_this8.havediscountcode = true;
-						_this8.popupMessage("优惠码可用");
+						_this9.discountCode = result.Data;
+						_this9.havediscountcode = true;
+						_this9.popupMessage("优惠码可用");
 					} else {
-						_this8.havediscountcode = false;
-						_this8.popupMessage("优惠码不可用或已使用过!");
+						_this9.havediscountcode = false;
+						_this9.popupMessage("优惠码不可用或已使用过!");
 					}
 				});
 			},

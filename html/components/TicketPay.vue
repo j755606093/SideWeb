@@ -573,6 +573,11 @@ export default {
 					Indicator.close();
 					let paydata = data.Data;
 
+					if(!paydata){
+						this.popupMessage(data.Message);
+						return;
+					}
+
 					// paydata.success = function(res){
 					// 	Toast({
 					// 	  message: '支付成功!',
