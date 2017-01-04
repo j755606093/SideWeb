@@ -201,6 +201,8 @@ header {
         flex: 0.5;
     width: 50%;
     font-size: 1.6rem; }
+  .mint-navbar .is-selected {
+    color: #0074D9; }
 
 .body {
   width: 100%;
@@ -323,6 +325,12 @@ header {
             text-align: right; }
           .body .order .lists .list .list-footer span.order-pay {
             text-align: right; }
+          .body .order .lists .list .list-footer span.order-no {
+            color: #db3652; }
+          .body .order .lists .list .list-footer span.order-paying {
+            color: #0074D9; }
+          .body .order .lists .list .list-footer span.order-payed {
+            color: #2ecc71; }
 
 .pay-order {
   width: 100%;

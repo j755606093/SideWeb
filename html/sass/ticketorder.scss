@@ -69,6 +69,9 @@ header{
 		width:50%;
 		font-size:1.6rem;
 	}
+	.is-selected{
+		color:$blue;
+	}
 }
 .body{
 	width:100%;
@@ -192,6 +195,15 @@ header{
 					}
 					span.order-pay{
 						text-align: right;
+					}
+					span.order-no{
+						color:$red;
+					}
+					span.order-paying{
+						color:$blue;
+					}
+					span.order-payed{
+						color:$green;
 					}
 				}
 			}

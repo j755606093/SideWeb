@@ -108,6 +108,10 @@ const Vue_Order = new Vue({
 			.then(result=>result.json())
 			.then(result=>{
 				if(result.Data){
+					if(result.Data.length<10){
+						// 说明没有跟多数据了
+						this.noMoreData = true;
+					}
 					for(let i=0;i<result.Data.length;i++){
 						this.OrderList.push(result.Data[i]);
 					}
@@ -145,6 +149,10 @@ const Vue_Order = new Vue({
 			.then(result=>result.json())
 			.then(result=>{
 				if(result.Data){
+					if(result.Data.length<10){
+						// 说明没有跟多数据了
+						this.noMoreData1 = true;
+					}
 					for(let i=0;i<result.Data.length;i++){
 						this.OrderList1.push(result.Data[i]);
 					}
@@ -166,7 +174,12 @@ const Vue_Order = new Vue({
 		},
 		openOrder(index){
 			this.loading();
-			this.getOrderInfo(this.OrderList[index].Id)
+			if(this.selected==="1"){
+				this.getOrderInfo(this.OrderList[index].Id)
+			}
+			else{
+				this.getOrderInfo(this.OrderList1[index].Id)
+			}
 		},
 		getOrderInfo(id){
 			return fetch(config.serverUrl+"/api/Order/Get",{

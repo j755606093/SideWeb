@@ -48952,6 +48952,10 @@
 		value: true
 	});
 
+	var _assign = __webpack_require__(29);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
 	var _typeof2 = __webpack_require__(296);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
@@ -49461,6 +49465,7 @@
 				});
 
 				//查看最后一个是不是单选
+				//如果最后一个是单选就只能选择最后点击的那个
 				if (lastOption && lastOption.IsSingle === 1) {
 					this.rebateid = lastOption.Id; //只留自己
 					this.selectDiscount = [lastOption.Id];
@@ -49468,7 +49473,8 @@
 					this.rebateid = this.rebateid + "," + lastOption.Id;
 				}
 
-				//筛选所有的IsSingle=1选项
+				//筛选已选择里所有的IsSingle=1的选项
+				//这一步是防止上一步漏掉之前的单选选项
 
 				var _loop = function _loop(i) {
 					var data = _.find(optionsDiscount, function (item) {
@@ -49984,9 +49990,23 @@
 				this.stationPopupVisible = true;
 			},
 			showDiscountWindow: function showDiscountWindow() {
+				// 如果没有优惠券就不显示
 				if (this.optionsDiscount.length === 0) {
 					return;
 				}
+
+				var money = this.payInfoData.payMoney; //总额
+				//这里禁用所有不可用的优惠券,防止用户选择
+				for (var i = 0; i < this.optionsDiscount.length; i++) {
+					var data = this.optionsDiscount[i];
+					if (money < data.LimitMoney) {
+						// 不能选择这个优惠券
+						this.$set(this.optionsDiscount, i, (0, _assign2.default)({}, this.optionsDiscount[i], { disabled: true }));
+					} else {
+						this.$set(this.optionsDiscount, i, (0, _assign2.default)({}, this.optionsDiscount[i], { disabled: false }));
+					}
+				}
+				// console.log(this.formatData(this.optionsDiscount))
 				this.discountPopupVisible = true;
 			},
 			checkSelectStation: function checkSelectStation() {
@@ -50956,7 +50976,7 @@
 	  }, [_vm._h('div', {
 	    staticClass: "status"
 	  }, [_vm._h('i', {
-	    staticClass: "fa fa-check-circle"
+	    staticClass: "fa fa-clock-o"
 	  }), " ", _vm._h('p', ["生成订单成功!"]), " ", _vm._h('p', {
 	    staticClass: "time"
 	  }, ["请在半小时之内支付订单 " + _vm._s(_vm.countdownTime)])])]), " ", _vm._h('div', {

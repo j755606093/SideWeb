@@ -54,8 +54,7 @@
 								<span class="order-pay order-no">订单失效</span>
 							</template>
 							<template v-else>
-								<span class="order-pay order-paying" v-if="item.IsPay===0">未支付</span>
-								<span class="order-pay order-payed" v-else>已支付</span>
+								<span class="order-pay order-paying">未支付</span>
 							</template>
 						</div>
 					</div>
@@ -119,12 +118,15 @@
 		  			</div>
 		  			<div class="status">
 		  				<template v-if="OrderDetail.Status===1">
-		  					<i class="fa fa-check-circle"></i>
 		  					<template v-if="OrderDetail.IsPay===0">
+		  						<i class="fa fa-clock-o"></i>
 		  						<p>订单等待支付!</p>
 		  						<p class="time">请在以下时间内完成支付</p>
 		  					</template>
-		  					<p v-else>订单已支付</p>
+		  					<template v-else>
+		  						<i class="fa fa-check-circle"></i>
+		  						<p>订单已支付</p>
+		  					</template>
 		  				</template>
 		  				<template v-else>
 		  					<i class="fa fa-times-circle"></i>
@@ -153,7 +155,7 @@
 							<div class="info-box passager-info">
 								<p>
 									<span class="type">乘车日期:</span>
-									<span class="name">{{OrderDetail.Boarddate+" "+OrderDetail.BoardTime}}</span>
+									<span class="name">{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</span>
 								</p>
 							</div>
 							<div class="info-box passager-info">
