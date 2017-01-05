@@ -23,6 +23,19 @@ const debug = (function(){
 	return debug;
 })();
 
+//检查请求返回的状态
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    // var error = new Error(response.statusText)
+    // error.response = response
+    // throw error
+    window.location.href="/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+    return null;
+  }
+}
+
 const config = {
   headers:{
   	'Content-Type': 'application/json',
@@ -109,6 +122,7 @@ const Vue_Order = new Vue({
 					Type:1
 				})
 			})
+			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
 				if(result.Data){
@@ -150,6 +164,7 @@ const Vue_Order = new Vue({
 					Type:2
 				})
 			})
+			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
 				if(result.Data){

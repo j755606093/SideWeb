@@ -11246,7 +11246,7 @@
 	};
 
 	var getData = function getData(url, callback) {
-		return fetch(url, { method: "POST" }).then(function (result) {
+		return fetch(url, { method: "POST" }).then(checkStatus).then(function (result) {
 			return result.json();
 		}).then(function (result) {
 			callback(result.Data);

@@ -83,6 +83,19 @@
 		return debug;
 	}();
 
+	//检查请求返回的状态
+	function checkStatus(response) {
+		if (response.status >= 200 && response.status < 300) {
+			return response;
+		} else {
+			// var error = new Error(response.statusText)
+			// error.response = response
+			// throw error
+			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			return null;
+		}
+	}
+
 	var config = {
 		headers: {
 			'Content-Type': 'application/json',
@@ -170,7 +183,7 @@
 						// Size:10,
 						Type: 1
 					})
-				}).then(function (result) {
+				}).then(checkStatus).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					if (result.Data) {
@@ -212,7 +225,7 @@
 						// Size:10,
 						Type: 2
 					})
-				}).then(function (result) {
+				}).then(checkStatus).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					if (result.Data) {

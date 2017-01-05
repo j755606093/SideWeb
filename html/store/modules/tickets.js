@@ -100,6 +100,7 @@ const getters = {
 
 let getData = (url,callback)=>{
 	return fetch(url,{method:"POST"})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			callback(result.Data);
