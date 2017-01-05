@@ -304,7 +304,7 @@
 		  			<button @click="payMoney">立即支付</button>
 		  		</div>
 		  		<div class="out-order" style="margin-top:20px;margin-bottom:20px;">
-		  			<a>取消订单</a>
+		  			<a @click="cancelOrder">取消订单</a>
 		  		</div>
 		  	</div>
 		  </slot>
@@ -1049,6 +1049,11 @@ export default {
 		useDiscountCode(){
 			this.isUseCode = !this.isUseCode;
 			this.computeAll();
+		},
+		cancelOrder(){
+			this.$store.dispatch("cancelOrder",this.serverPayInfo.OrderInfo.Id).then(result=>{
+				this.popupMessage("取消订单成功!");
+			})
 		}
 	}
 }

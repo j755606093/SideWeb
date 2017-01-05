@@ -11140,10 +11140,12 @@
 		if (response.status >= 200 && response.status < 300) {
 			return response;
 		} else {
+			if (response.status === 401) {
+				window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			}
 			// var error = new Error(response.statusText)
 			// error.response = response
 			// throw error
-			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
 			return null;
 		}
 	}
@@ -11562,6 +11564,25 @@
 				},
 				body: (0, _stringify2.default)({
 					Url: window.location.href.split("#")[0]
+				})
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				return result;
+			});
+		},
+		cancelOrder: function cancelOrder(_ref23, data) {
+			var commit = _ref23.commit,
+			    state = _ref23.state;
+
+			// /api/Order/Cancel
+			return fetch(state.serverUrl + "/api/Order/Cancel", {
+				method: "POST",
+				headers: {
+					Authorization: state.Authorization
+				},
+				body: (0, _stringify2.default)({
+					OrderId: data
 				})
 			}).then(checkStatus).then(function (result) {
 				return result.json();
@@ -49908,6 +49929,13 @@
 			useDiscountCode: function useDiscountCode() {
 				this.isUseCode = !this.isUseCode;
 				this.computeAll();
+			},
+			cancelOrder: function cancelOrder() {
+				var _this10 = this;
+
+				this.$store.dispatch("cancelOrder", this.serverPayInfo.OrderInfo.Id).then(function (result) {
+					_this10.popupMessage("取消订单成功!");
+				});
 			}
 		}
 	};
@@ -50928,7 +50956,11 @@
 	      "margin-top": "20px",
 	      "margin-bottom": "20px"
 	    }
-	  }, [_vm._h('a', ["取消订单"])])])])]) : _vm._e()])
+	  }, [_vm._h('a', {
+	    on: {
+	      "click": _vm.cancelOrder
+	    }
+	  }, ["取消订单"])])])])]) : _vm._e()])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
 	    staticClass: "fa fa-caret-down"

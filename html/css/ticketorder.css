@@ -366,6 +366,8 @@ header {
       .pay-order .info-body .status > i.fa {
         font-size: 4rem;
         color: #2ecc71; }
+      .pay-order .info-body .status > i.fa-times-circle {
+        color: #db3652; }
       .pay-order .info-body .status > p {
         font-size: 1.8rem;
         color: #fff;
@@ -379,6 +381,16 @@ header {
       background-color: #fff;
       width: 100%;
       padding: 0 3%; }
+      .pay-order .ticket-body .pay-info .qr-img {
+        width: 90%;
+        margin: 0 5%;
+        text-align: center; }
+        .pay-order .ticket-body .pay-info .qr-img img {
+          width: 50%;
+          height: 50%;
+          border-radius: 20px; }
+        .pay-order .ticket-body .pay-info .qr-img p {
+          color: #AAAAAA; }
       .pay-order .ticket-body .pay-info .address-info {
         width: 96%;
         margin: 0px 2%;
