@@ -11321,12 +11321,12 @@
 			var commit = _ref7.commit,
 			    state = _ref7.state;
 
-			if (state.startCityList) {
-				// 列表空
-				return new _promise2.default(function (reslove, reject) {
-					reslove();
-				});
-			}
+			// if(state.startCityList){
+			// 	// 列表空
+			// 	return new Promise((reslove,reject)=>{
+			// 		reslove();
+			// 	})
+			// }
 			return fetch(state.serverUrl + "/api/Transport/GetStartPoints").then(function (result) {
 				return result.json();
 			}).then(function (result) {
@@ -11338,19 +11338,18 @@
 			var commit = _ref8.commit,
 			    state = _ref8.state;
 
-			if (state.endCityList) {
-				// 列表空
-				return new _promise2.default(function (reslove, reject) {
-					reslove();
-				});
-			} else {
-				return fetch(state.serverUrl + "/api/Transport/GetEndPoints/" + state.startCity.Code).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					commit(_Type2.default.SET_ENDCITYLIST, result.Data);
-					return result.Data;
-				});
-			}
+			// if(state.endCityList){
+			// 	// 列表空
+			// 	return new Promise((reslove,reject)=>{
+			// 		reslove();
+			// 	})
+			// }
+			return fetch(state.serverUrl + "/api/Transport/GetEndPoints/" + state.startCity.Code).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				commit(_Type2.default.SET_ENDCITYLIST, result.Data);
+				return result.Data;
+			});
 		},
 		setResultList: function setResultList(_ref9) {
 			var commit = _ref9.commit,
@@ -48861,7 +48860,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
 	//
 	//
 	//

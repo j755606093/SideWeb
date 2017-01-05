@@ -156,12 +156,12 @@ const actions = {
 			})
 	},
 	setStartCityList({commit,state}){
-		if(state.startCityList){
-			// 列表空
-			return new Promise((reslove,reject)=>{
-				reslove();
-			})
-		}
+		// if(state.startCityList){
+		// 	// 列表空
+		// 	return new Promise((reslove,reject)=>{
+		// 		reslove();
+		// 	})
+		// }
 		return fetch(state.serverUrl+"/api/Transport/GetStartPoints").then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_STARTCITYLIST,result.Data);
@@ -169,21 +169,19 @@ const actions = {
 			})
 	},
 	setEndCityList({commit,state}){
-		if(state.endCityList){
-			// 列表空
-			return new Promise((reslove,reject)=>{
-				reslove();
-			})
-		}
-		else{
-			return fetch(state.serverUrl+"/api/Transport/GetEndPoints/"+state.startCity.Code)
+		// if(state.endCityList){
+		// 	// 列表空
+		// 	return new Promise((reslove,reject)=>{
+		// 		reslove();
+		// 	})
+		// }
+		return fetch(state.serverUrl+"/api/Transport/GetEndPoints/"+state.startCity.Code)
 			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
 			})
-		}
 	},
 	setResultList({commit,state}){
 		return fetch(state.serverUrl+"/api/Transport/GetLines",{

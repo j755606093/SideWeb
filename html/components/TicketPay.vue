@@ -68,7 +68,6 @@
 				<div class="info-man-name info">
 					<span>乘客姓名</span>
 					<input type="text" placeholder="请填写真实姓名" v-model="fareName">
-					
 				</div>
 				<div class="info-man-card info">
 					<span>手机号</span>
