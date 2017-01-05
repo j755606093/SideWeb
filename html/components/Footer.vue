@@ -5,7 +5,7 @@
 			<img src="../picture/ticket_blue.png">
 			<p>票务</p>
 		</a>
-		<a href="./TicketOrder.html" class="footer">
+		<a href="./TicketOrder.html" :class="['footer',getNoPay>0?nopay:'']">
 			<!-- <i class="fa fa-sticky-note"></i> -->
 			<img src="../picture/cart_order.png">
 			<p>订单</p>
@@ -60,6 +60,19 @@ footer{
 			line-height:20px;
 		}
 	}
+	.footer.nopay{
+		position:relative;
+		p::after{
+			content:"";
+			position:absolute;
+			top:2px;
+			right:35%;
+			height:10px;
+			width:10px;
+			background-color:$red;
+			border-radius: 5px;
+		}
+	}
 	.footer.active{
 		color:$blue;
 		p{
@@ -85,6 +98,9 @@ export default {
 		getfooter(){
 			return this.$store.getters.getHeaderState;
 			// return this.$store.getters.getHeaderState;
+		},
+		getNoPay(){
+			return this.$store.getters.getNoPay;
 		}
 	},
 	methods:{

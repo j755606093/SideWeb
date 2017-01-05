@@ -163,7 +163,7 @@
 					headers: config.headers,
 					body: (0, _stringify2.default)({
 						Index: this.index,
-						Size: 10,
+						// Size:10,
 						Type: 1
 					})
 				}).then(function (result) {
@@ -205,7 +205,7 @@
 					headers: config.headers,
 					body: (0, _stringify2.default)({
 						Index: this.index1,
-						Size: 10,
+						// Size:10,
 						Type: 2
 					})
 				}).then(function (result) {
@@ -302,20 +302,20 @@
 		}
 	});
 
-	window.addEventListener('scroll', _.throttle(function () {
-		var selected = Vue_Order.selected;
-		var status = document.getElementById("last").offsetTop - document.body.scrollTop;
-		if (status < 1000 && selected === "1") {
-			Vue_Order.moreOrderData();
-			// console.log('yes');
-		}
+	// window.addEventListener('scroll',_.throttle(function(){
+	// 	let selected = Vue_Order.selected;
+	// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+	// 	if(status<1000 && selected==="1"){
+	// 		Vue_Order.moreOrderData();
+	// 		// console.log('yes');
+	// 	}
 
-		var status1 = document.getElementById("last1").offsetTop - document.body.scrollTop;
-		if (status1 < 1000 && selected === "2") {
-			Vue_Order.moreOrderData1();
-			// console.log('yes');
-		}
-	}, 100, { leading: false }));
+	// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+	// 	if(status1<1000 && selected==="2"){
+	// 		Vue_Order.moreOrderData1();
+	// 		// console.log('yes');
+	// 	}
+	// },100,{leading: false}));
 
 /***/ },
 /* 1 */

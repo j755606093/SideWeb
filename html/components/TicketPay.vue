@@ -31,7 +31,7 @@
 		<div class="station-info">
 			<span>乘车点:</span>
 			<span class="center nowrap">{{selectStation}}</span>
-			<span @click="showStation" style="color:#0074D9;text-align:right;">更多</span>
+			<span @click="showStation" style="color:#0074D9;text-align:right;">其它</span>
 			<!-- <span>{{busInfo.StartAddress}}</span> -->
 		</div>
 		<!-- 乘客信息 -->

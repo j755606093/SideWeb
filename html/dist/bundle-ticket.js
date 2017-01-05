@@ -11169,6 +11169,7 @@
 
 		passenger: [], //乘客信息
 		rebate: null, //优惠信息
+		nopay: 0, //未支付订单数量
 		phone: null, //取票人手机号
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
@@ -11226,6 +11227,9 @@
 		},
 		getPhone: function getPhone(state) {
 			return state.phone;
+		},
+		getNoPay: function getNoPay(state) {
+			return state.nopay;
 		}
 	};
 
@@ -11469,6 +11473,7 @@
 				// })
 				commit("SET_PASSENGER", data.Passengers);
 				commit("SET_REBATES", data.Rebates);
+				commit("SET_NOPAY", data.NoPay);
 				commit("SET_PHONE", data.Phone ? data.Phone : '');
 				return data;
 			});
@@ -11587,6 +11592,8 @@
 		state.rebate = data;
 	}), (0, _defineProperty3.default)(_mutations, "SET_PHONE", function SET_PHONE(state, data) {
 		state.phone = data;
+	}), (0, _defineProperty3.default)(_mutations, "SET_NOPAY", function SET_NOPAY(state, data) {
+		state.nopay = data;
 	}), _mutations);
 
 	exports.default = {
@@ -30231,7 +30238,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na, img, button, p, span {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nfooter {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  justify-content: center;\n  align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100;\n}\nfooter .footer {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px;\n}\nfooter .footer i {\n      font-size: 1.8rem;\n}\nfooter .footer img {\n      width: 22px;\n      height: 22px;\n}\nfooter .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px;\n}\nfooter .footer.active {\n    color: #0074D9;\n}\nfooter .footer.active p {\n      color: #0074D9;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na, img, button, p, span {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nfooter {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  justify-content: center;\n  align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100;\n}\nfooter .footer {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px;\n}\nfooter .footer i {\n      font-size: 1.8rem;\n}\nfooter .footer img {\n      width: 22px;\n      height: 22px;\n}\nfooter .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px;\n}\nfooter .footer.nopay {\n    position: relative;\n}\nfooter .footer.nopay p::after {\n      content: \"\";\n      position: absolute;\n      top: 2px;\n      right: 35%;\n      height: 10px;\n      width: 10px;\n      background-color: #db3652;\n      border-radius: 5px;\n}\nfooter .footer.active {\n    color: #0074D9;\n}\nfooter .footer.active p {\n      color: #0074D9;\n}\n", ""]);
 
 	// exports
 
@@ -30262,10 +30269,26 @@
 			getfooter: function getfooter() {
 				return this.$store.getters.getHeaderState;
 				// return this.$store.getters.getHeaderState;
+			},
+			getNoPay: function getNoPay() {
+				return this.$store.getters.getNoPay;
 			}
 		},
 		methods: {}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -30349,7 +30372,16 @@
 	      value: (_vm.getfooter),
 	      expression: "getfooter"
 	    }]
-	  }, [_vm._m(0), " ", _vm._m(1), " ", _vm._m(2)])
+	  }, [_vm._m(0), " ", _vm._h('a', {
+	    class: ['footer', _vm.getNoPay > 0 ? _vm.nopay : ''],
+	    attrs: {
+	      "href": "./TicketOrder.html"
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(137)
+	    }
+	  }), " ", _vm._h('p', ["订单"])]), " ", _vm._m(1)])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('a', {
 	    staticClass: "footer active",
@@ -30361,17 +30393,6 @@
 	      "src": __webpack_require__(136)
 	    }
 	  }), " ", _vm._h('p', ["票务"])])
-	},function (){var _vm=this;
-	  return _vm._h('a', {
-	    staticClass: "footer",
-	    attrs: {
-	      "href": "./TicketOrder.html"
-	    }
-	  }, [_vm._h('img', {
-	    attrs: {
-	      "src": __webpack_require__(137)
-	    }
-	  }), " ", _vm._h('p', ["订单"])])
 	},function (){var _vm=this;
 	  return _vm._h('a', {
 	    staticClass: "footer"
@@ -50598,7 +50619,7 @@
 	    on: {
 	      "click": _vm.showStation
 	    }
-	  }, ["更多"]), " "]), " ", " ", _vm._h('div', {
+	  }, ["其它"]), " "]), " ", " ", _vm._h('div', {
 	    staticClass: "people-info"
 	  }, [_vm._m(1), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
 	    staticClass: "info-list"

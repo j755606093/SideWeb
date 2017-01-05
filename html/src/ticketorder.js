@@ -101,7 +101,7 @@ const Vue_Order = new Vue({
 				headers: config.headers,
 				body:JSON.stringify({
 					Index:this.index,
-					Size:10,
+					// Size:10,
 					Type:1
 				})
 			})
@@ -142,7 +142,7 @@ const Vue_Order = new Vue({
 				headers: config.headers,
 				body:JSON.stringify({
 					Index:this.index1,
-					Size:10,
+					// Size:10,
 					Type:2
 				})
 			})
@@ -238,17 +238,17 @@ const Vue_Order = new Vue({
 	}
 });
 
-window.addEventListener('scroll',_.throttle(function(){
-	let selected = Vue_Order.selected;
-	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
-	if(status<1000 && selected==="1"){
-		Vue_Order.moreOrderData();
-		// console.log('yes');
-	}
+// window.addEventListener('scroll',_.throttle(function(){
+// 	let selected = Vue_Order.selected;
+// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+// 	if(status<1000 && selected==="1"){
+// 		Vue_Order.moreOrderData();
+// 		// console.log('yes');
+// 	}
 
-	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
-	if(status1<1000 && selected==="2"){
-		Vue_Order.moreOrderData1();
-		// console.log('yes');
-	}
-},100,{leading: false}));
+// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+// 	if(status1<1000 && selected==="2"){
+// 		Vue_Order.moreOrderData1();
+// 		// console.log('yes');
+// 	}
+// },100,{leading: false}));

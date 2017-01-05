@@ -47,6 +47,7 @@ const state = {
 
 	passenger:[],//乘客信息
 	rebate:null,//优惠信息
+	nopay:0,//未支付订单数量
 	phone:null,//取票人手机号
 
 	busInfo:null,//乘坐车辆的信息,大概都是上面resultList的一个数据,
@@ -81,6 +82,7 @@ const getters = {
 	getPassenger:state=>state.passenger,
 	getRebate:state=>state.rebate,
 	getPhone:state=>state.phone,
+	getNoPay:state=>state.nopay
 }
 
 let getData = (url,callback)=>{
@@ -275,6 +277,7 @@ const actions = {
 				// })
 				commit("SET_PASSENGER",data.Passengers);
 				commit("SET_REBATES",data.Rebates);
+				commit("SET_NOPAY",data.NoPay);
 				commit("SET_PHONE",data.Phone?data.Phone:'');
 				return data;
 			})
@@ -391,7 +394,10 @@ const mutations = {
 	},
 	["SET_PHONE"](state,data){
 		state.phone = data;
-	}
+	},
+	["SET_NOPAY"](state,data){
+		state.nopay = data;
+	},
 }
 
 export default {
