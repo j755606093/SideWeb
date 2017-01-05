@@ -11450,7 +11450,7 @@
 					commit(_Type2.default.SET_LOCATIONRESULT, data.Data);
 					return data.Data;
 				} else {
-					commit(_Type2.default.SET_LOCATIONRESULT, null);
+					commit(_Type2.default.SET_LOCATIONRESULT, []);
 					return null; //没有找到数据
 				}
 			});
@@ -11478,7 +11478,7 @@
 			}).then(checkStatus).then(function (result) {
 				return result.json();
 			}).then(function (result) {
-				console.log(result);
+				// console.log(result)
 				var data = result.Data;
 				// _.map(data,item=>{
 				// 	if(data.Mobile!==''){

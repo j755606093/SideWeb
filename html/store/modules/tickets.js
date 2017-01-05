@@ -271,7 +271,7 @@ const actions = {
 				return data.Data;
 			}
 			else{
-				commit(types.SET_LOCATIONRESULT,null);
+				commit(types.SET_LOCATIONRESULT,[]);
 				return null;//没有找到数据
 			}
 		})
@@ -291,7 +291,7 @@ const actions = {
 			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
-				console.log(result)
+				// console.log(result)
 				let data = result.Data;
 				// _.map(data,item=>{
 				// 	if(data.Mobile!==''){
