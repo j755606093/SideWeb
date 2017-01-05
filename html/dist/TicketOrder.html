@@ -121,7 +121,7 @@
 		  					<template v-if="OrderDetail.IsPay===0">
 		  						<i class="fa fa-clock-o"></i>
 		  						<p>订单等待支付!</p>
-		  						<p class="time">请在以下时间内完成支付</p>
+		  						<p class="time">请在以下时间内完成支付 {{countdownTime}}</p>
 		  					</template>
 		  					<template v-else>
 		  						<i class="fa fa-check-circle"></i>
@@ -136,20 +136,12 @@
 		  		</div>
 		  		<div class="ticket-body">
 		  			<div class="pay-info">
-		  				<div class="address-info">
-								<div class="start box">
-									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
-									<p class="center" v-text="OrderDetail.StartPoint"></p>
-									<p class="last" v-text="OrderDetail.StartCity"></p>
-								</div>
-								<div class="center box">
-									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
-									<p class="arrow-message" v-text="OrderDetail.Route"></p>
-									<p class="arrow"></p>
-								</div>
-								<div class="end box">
-									<p v-text="OrderDetail.EndPoint"></p>
-									<p>{{OrderDetail.AcrossCity}}</p>
+		  				
+							<div class="address-info">
+								<div class="city">
+									<span class="start" v-text="OrderDetail.StartPoint">揭阳</span>
+									<i class="start-time" v-text="OrderDetail.Route">12:50</i>
+									<span class="end"  v-text="OrderDetail.EndPoint">广州</span>
 								</div>
 							</div>
 							<div class="info-box passager-info">

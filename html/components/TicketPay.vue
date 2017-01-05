@@ -399,8 +399,8 @@ export default {
 		}
 
 		//设置乘车点
-		this.selectStation = this.busInfo.StartAddress[0];
-		this.options = this.busInfo.StartAddress;
+		this.selectStation = this.busInfo.StartAddress?this.busInfo.StartAddress[0]:"";
+		this.options = this.busInfo.StartAddress?this.busInfo.StartAddress:[];
 
 		//设置优惠券
 		if(this.$store.getters.getRebate){

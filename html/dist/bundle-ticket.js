@@ -30373,7 +30373,7 @@
 	      expression: "getfooter"
 	    }]
 	  }, [_vm._m(0), " ", _vm._h('a', {
-	    class: ['footer', _vm.getNoPay > 0 ? _vm.nopay : ''],
+	    class: ['footer', _vm.getNoPay > 0 ? 'nopay' : ''],
 	    attrs: {
 	      "href": "./TicketOrder.html"
 	    }
@@ -49392,8 +49392,8 @@
 			}
 
 			//设置乘车点
-			this.selectStation = this.busInfo.StartAddress[0];
-			this.options = this.busInfo.StartAddress;
+			this.selectStation = this.busInfo.StartAddress ? this.busInfo.StartAddress[0] : "";
+			this.options = this.busInfo.StartAddress ? this.busInfo.StartAddress : [];
 
 			//设置优惠券
 			if (this.$store.getters.getRebate) {

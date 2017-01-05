@@ -54,6 +54,10 @@ const Vue_Order = new Vue({
 		passenger:"",//乘客名
 
 		selected:"1",//默认选择未支付
+
+		countdown:null,//倒计时
+		countdownTime:"",//倒计时显示
+		storeCountTime:"",//剩余支付时间
 	},
 	created(){
 		this.ready = true;
@@ -198,6 +202,7 @@ const Vue_Order = new Vue({
 					this.passenger = this.passenger.slice(0,this.passenger.length-1);
 					Indicator.close();
 					this.orderVisible = true;
+					this.CountDown();
 				})
 		},
 		payMoney(){
@@ -229,7 +234,38 @@ const Vue_Order = new Vue({
 					});
 			})
 		},
+		CountDown(){
+			let time = new Date(this.OrderDetail.CTime).getTime()+60*30*1000;
+			let nowTime = Date.now();
+			this.storeCountTime = parseInt((time-nowTime)/1000);
+			// this.storeCountTime = 60*30-1;//半个小时
+			this.countdown = setInterval(()=>{
+				if(this.storeCountTime===0){
+					clearInterval(this.countdown);
+					this.countdown = null;
+					return;
+				}
+				let minth = parseInt(this.storeCountTime/60);
+				let second = parseInt(this.storeCountTime%60);
+				if(minth<10){
+					this.countdownTime = "0"+minth+":";
+				}
+				else{
+					this.countdownTime = minth+":";
+				}
+
+				if(second<10){
+					this.countdownTime = this.countdownTime+"0"+second;
+				}
+				else{
+					this.countdownTime = this.countdownTime+second;
+				}
+				this.storeCountTime--;
+			},1000)
+		},
 		goback(){
+			clearInterval(this.countdown);
+			this.countdown = null;
 			this.orderVisible = false;
 		}
 	},

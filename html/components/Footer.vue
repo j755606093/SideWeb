@@ -5,7 +5,7 @@
 			<img src="../picture/ticket_blue.png">
 			<p>票务</p>
 		</a>
-		<a href="./TicketOrder.html" :class="['footer',getNoPay>0?nopay:'']">
+		<a href="./TicketOrder.html" :class="['footer',getNoPay>0?'nopay':'']">
 			<!-- <i class="fa fa-sticky-note"></i> -->
 			<img src="../picture/cart_order.png">
 			<p>订单</p>
