@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketinfo">
 	<div class="order-info-btn animated slideInRight" @click="goToOrderList" v-if="getHeaderState">
 		<i class="fa fa-sticky-note"></i>
 	</div>

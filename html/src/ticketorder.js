@@ -202,7 +202,10 @@ const Vue_Order = new Vue({
 					this.passenger = this.passenger.slice(0,this.passenger.length-1);
 					Indicator.close();
 					this.orderVisible = true;
-					this.CountDown();
+					if(this.selected==="1"){
+						// 只有未支付的情况下才倒计时
+						this.CountDown();
+					}
 				})
 		},
 		payMoney(){

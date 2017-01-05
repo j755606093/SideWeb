@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketheader">
 	<header>
 		<div class="home" v-if="getHeaderState">
 			<span>身边订票</span>

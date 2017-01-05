@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketresult">
 	<div class="result">
 		<!-- 时间显示 -->
 		<div class="date-control">

@@ -12,7 +12,20 @@ const debug = (function(){
 		debug = true;
 	}
 	return debug;
-})()
+})();
+
+//检查请求返回的状态
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    // var error = new Error(response.statusText)
+    // error.response = response
+    // throw error
+    window.location.href="/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+    return null;
+  }
+}
 
 // initial state
 // shape: [{ id, quantity }]
@@ -38,15 +51,15 @@ const state = {
 		server:null
 	},//出发日期
 
-	startCityList:null,//开始出发的城市列表
-	endCityList:null,//到达的城市列表
+	startCityList:[],//开始出发的城市列表
+	endCityList:[],//到达的城市列表
 
 	resultList:[],//搜索结果
-	locationResult:null,//定位结果
+	locationResult:[],//定位结果
 	haveLocation:false,//没有定位结果
 
 	passenger:[],//乘客信息
-	rebate:null,//优惠信息
+	rebate:[],//优惠信息
 	nopay:0,//未支付订单数量
 	phone:null,//取票人手机号
 
@@ -116,6 +129,7 @@ const actions = {
 	},
 	getCityDefault({commit,state}){
 		return fetch(state.serverUrl+"/api/Transport/Index")
+			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
 				let data = result.Data;
@@ -159,7 +173,9 @@ const actions = {
 			})
 		}
 		else{
-			return fetch(state.serverUrl+"/api/Transport/GetEndPoints/"+state.startCity.Code).then(result=>result.json())
+			return fetch(state.serverUrl+"/api/Transport/GetEndPoints/"+state.startCity.Code)
+			.then(checkStatus)
+			.then(result=>result.json())
 			.then(result=>{
 				commit(types.SET_ENDCITYLIST,result.Data);
 				return result.Data;
@@ -180,6 +196,7 @@ const actions = {
 				Date:state.startDate.server
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			if(result.Code!==200){
@@ -215,6 +232,7 @@ const actions = {
 				StartAddress:data.StartAddress
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 	},
 	showWXpay({commit,state},data){
@@ -229,6 +247,7 @@ const actions = {
 				OrderId:data
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 	},
 	setLocationResult({commit,state},data){
@@ -243,6 +262,7 @@ const actions = {
 				Lng:data.longitude
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(data=>{
 			if(data.Data){
@@ -267,8 +287,10 @@ const actions = {
 				Authorization:state.Authorization
 			}
 		})
+			.then(checkStatus)
 			.then(result=>result.json())
 			.then(result=>{
+				console.log(result)
 				let data = result.Data;
 				// _.map(data,item=>{
 				// 	if(data.Mobile!==''){
@@ -298,6 +320,7 @@ const actions = {
 				// UsrId:"9264122"
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			return result;
@@ -312,6 +335,7 @@ const actions = {
 				Authorization:state.Authorization
 			}
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			return result;
@@ -323,6 +347,7 @@ const actions = {
 				Authorization:state.Authorization
 			}
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			return result;
@@ -338,6 +363,7 @@ const actions = {
 				Url:window.location.href.split("#")[0]
 			})
 		})
+		.then(checkStatus)
 		.then(result=>result.json())
 		.then(result=>{
 			return result;

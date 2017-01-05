@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="TicketEndCity">
 	<div id="endcity">
 		<mt-index-list class="fixed">
 		  <mt-index-section v-for="list in setEndCityList" :index="list.ShortKey">

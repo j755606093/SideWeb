@@ -379,6 +379,58 @@ header {
       background-color: #fff;
       width: 100%;
       padding: 0 3%; }
+      .pay-order .ticket-body .pay-info .address-info {
+        width: 96%;
+        margin: 0px 2%;
+        font-size: 1.2rem;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-align: center;
+            align-items: center;
+        height: 40px; }
+        .pay-order .ticket-body .pay-info .address-info .city {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex: 1;
+              flex: 1;
+          position: relative;
+          justify-content: center;
+          text-align: center; }
+          .pay-order .ticket-body .pay-info .address-info .city > span {
+            font-size: 1.6rem;
+            -ms-flex: 1;
+                flex: 1;
+            height: 40px;
+            line-height: 40px; }
+          .pay-order .ticket-body .pay-info .address-info .city > span.start {
+            position: relative; }
+            .pay-order .ticket-body .pay-info .address-info .city > span.start::before {
+              position: absolute;
+              bottom: 5px;
+              right: -10%;
+              height: 5px;
+              width: 30%;
+              background-color: #0074D9;
+              content: ""; }
+            .pay-order .ticket-body .pay-info .address-info .city > span.start::after {
+              position: absolute;
+              bottom: 5px;
+              right: -15%;
+              height: 0;
+              width: 0;
+              border: 5px solid #fff;
+              border-color: transparent transparent #0074D9 #0074D9;
+              content: ""; }
+          .pay-order .ticket-body .pay-info .address-info .city i {
+            position: absolute;
+            top: 5px;
+            left: 40%; }
       .pay-order .ticket-body .pay-info .info-box {
         min-height: 40px;
         border-top: 1px solid #f7f7f7; }

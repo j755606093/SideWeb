@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketpay">
 	<div id="pay" class="position">
 		<!-- 车票信息 -->
 		<div class="ticket-info">

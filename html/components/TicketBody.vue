@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketbody">
 	<div class="ticketbody">
 		<div @click="GoStartCity" class="go block">
 			<span>
@@ -182,64 +182,69 @@ export default {
 		}
 	},
 	created(){
-		let nowDate = new Date();
-		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
-		
-		// 设置初始时间
-		this.handleConfirm(new Date(nowDate.getTime()+1000*60*60*24));
-		if(this.$store.getters.getInfo.startDate.server){
-			// 之前查过
-			this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server);
-		}
-		else{
-			this.startTime.time = this.formatNow(new Date())
-		}
-		// 获取本地历史搜索数据
-		this.localStorage = this.getLocalStore().reverse();
-		// 改变限制选择的日期
-		this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));
-		this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
-		
-		// 获取位置
-		if(this.$store.getters.getIsFirst){
-			// 还没有获取过,说明第一个打开网页
-			this.$store.dispatch("setisFirst",false);
+		// try{
+			let nowDate = new Date();
+			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 			
-			// 获取默认的出发地址
-			this.$store.dispatch("getCityDefault").then(result=>{
-				if(result.End){
-					// 到达点不为空
-					this.canQuery = true;
+			// 设置初始时间
+			this.handleConfirm(new Date(nowDate.getTime()+1000*60*60*24));
+			if(this.$store.getters.getInfo.startDate.server){
+				// 之前查过
+				this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server);
+			}
+			else{
+				this.startTime.time = this.formatNow(new Date())
+			}
+			// 获取本地历史搜索数据
+			this.localStorage = this.getLocalStore().reverse();
+			// 改变限制选择的日期
+			this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));
+			this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
+			
+			// 获取位置
+			if(this.$store.getters.getIsFirst){
+				// 还没有获取过,说明第一个打开网页
+				this.$store.dispatch("setisFirst",false);
+				
+				// 获取默认的出发地址
+				this.$store.dispatch("getCityDefault").then(result=>{
+					if(result.End){
+						// 到达点不为空
+						this.canQuery = true;
+					}
+					else{
+						this.canQuery = false;
+					}
+				})
+
+				// 获取地理位置
+				navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+				// 获取乘客信息和优惠信息
+				this.$store.dispatch("getPassenger");
+				
+			}
+			else{
+				// 不需要再次获取地理位置
+				this.locationLoad = false;
+				if(this.$store.getters.getLocationResult&&this.$store.getters.getLocationResult.length!==0){
+					this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
 				}
 				else{
+					this.locationName = "";
+				}
+
+				// 查看到达点是否是正确的
+				if(this.getEndCity==="请选择"){
 					this.canQuery = false;
 				}
-			})
-
-			// 获取地理位置
-			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
-			// 获取乘客信息和优惠信息
-			this.$store.dispatch("getPassenger");
-			
-		}
-		else{
-			// 不需要再次获取地理位置
-			this.locationLoad = false;
-			if(this.$store.getters.getLocationResult){
-				this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
+				else{
+					this.canQuery = true;
+				}
 			}
-			else{
-				this.locationName = "";
-			}
-
-			// 查看到达点是否是正确的
-			if(this.getEndCity==="请选择"){
-				this.canQuery = false;
-			}
-			else{
-				this.canQuery = true;
-			}
-		}
+		// }
+		// catch(error){
+		// 	alert(error);
+		// }
 	},
 	filters:{
 		

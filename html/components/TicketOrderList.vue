@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketorderlist">
 	<div class="order-list">
 		<p>订单历史</p>
 	</div>

@@ -1,4 +1,4 @@
-<template>
+<template type="x/template" id="ticketfooter">
 	<footer v-show="getfooter">
 		<a href="./ticket.html#/home/ticketbody" class="footer active">
 			<!-- <i class="fa fa-home"></i> -->
