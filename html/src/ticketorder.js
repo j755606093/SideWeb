@@ -3,7 +3,8 @@ Vue.use(require('vue-resource'));//引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
-import { Toast,Indicator,Popup,Tabbar,Navbar,TabItem,TabContainer, TabContainerItem } from 'mint-ui';
+import { MessageBox,Toast,Indicator,Popup,Tabbar,Navbar,TabItem,TabContainer, TabContainerItem } from 'mint-ui';
+import 'mint-ui/lib/style.css'
 
 Vue.component(TabContainer.name, TabContainer);
 Vue.component(TabContainerItem.name, TabContainerItem);
@@ -248,12 +249,7 @@ const Vue_Order = new Vue({
 				let paydata = result.Data;
 				window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
 						if(r.err_msg==="get_brand_wcpay_request:ok"){
-							Toast({
-							  message: '支付成功!',
-							  iconClass: 'fa fa-check',
-							  duration:3000,
-							  className:"success"
-							});
+							MessageBox('提示', '支付成功');
 						}
 					});
 			})
@@ -291,6 +287,20 @@ const Vue_Order = new Vue({
 			clearInterval(this.countdown);
 			this.countdown = null;
 			this.orderVisible = false;
+		},
+		cancelOrder(){
+			fetch(config.serverUrl+"/api/Order/Cancel",{
+				method:"POST",
+				headers: config.headers,
+				body:JSON.stringify({
+					OrderId:this.OrderDetail.Id
+				})
+			})
+			.then(checkStatus)
+			.then(result=>result.json())
+			.then(result=>{
+				MessageBox('提示', '取消订单成功');
+			})
 		}
 	},
 	components:{
