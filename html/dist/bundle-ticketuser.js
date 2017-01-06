@@ -46,6 +46,10 @@
 
 	"use strict";
 
+	var _stringify = __webpack_require__(33);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
 	var _vue = __webpack_require__(1);
 
 	var _vue2 = _interopRequireDefault(_vue);
@@ -58,7 +62,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_vue2.default.use(__webpack_require__(29)); //引用ajax库
+	// Vue.use(require('vue-resource'));//引用ajax库
 	__webpack_require__(30);
 
 	var _ = __webpack_require__(32);
@@ -92,9 +96,6 @@
 				_mintUi.Indicator.close();
 				alert("服务器繁忙,请稍后再试...");
 			}
-			// var error = new Error(response.statusText)
-			// error.response = response
-			// throw error
 			return response;
 		}
 	}
@@ -107,12 +108,37 @@
 		serverUrl: debug ? "http://192.168.31.80" : ""
 	};
 
-	var Vue_Order = new _vue2.default({
+	var Vue_User = new _vue2.default({
 		el: "#app",
 		data: {
-			ready: false },
+			ready: false, //页面为准备好
+			showHeader: false, //是否显示头部
+			headerTitle: "用户中心", //头部标题
+
+			Passenger: [], //乘客
+			Rebate: [], //优惠券
+			discountVisible: false, //优惠券列表显示
+			isNoPay: 0, //未支付订单个数
+			Order: {
+				OrderList: [], //订单数据
+				noMoreData: false, //是否还有订单数据
+				isUse: false, //刷新函数是否使用中
+				index: 1 }, //订单
+
+			orderVisible: false },
 		created: function created() {
-			this.ready = true;
+			var _this = this;
+
+			this.getUserInfo().then(function (result) {
+				if (result.Passengers) {
+					_this.Passenger = result.Passengers;
+				}
+				if (result.Rebates) {
+					_this.Rebate = result.Rebates;
+				}
+				_this.isNoPay = result.NoPay;
+				_this.ready = true;
+			});
 		},
 		mounted: function mounted() {},
 
@@ -123,6 +149,32 @@
 					spinnerType: 'fading-circle'
 				});
 			},
+			toast: function toast(title) {
+				(0, _mintUi.Toast)({
+					message: title,
+					position: 'bottom',
+					duration: 3000
+				});
+			},
+
+			//回退界面
+			GoBack: function GoBack(event) {
+				var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+				var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "用户中心";
+				var visable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "orderVisible";
+
+				this.controlHeader(status, title);
+				this[visable] = false;
+			},
+
+			//控制头部显示和标题
+			controlHeader: function controlHeader() {
+				var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+				var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "用户中心";
+
+				this.showHeader = status;
+				this.headerTitle = title;
+			},
 			getQueryString: function getQueryString(name) {
 				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 				var r = window.location.search.substr(1).match(reg);
@@ -130,12 +182,101 @@
 					return unescape(r[2]);
 				}
 				return null;
+			},
+
+			// 获取用户信息,乘客信息,优惠券信息,是否有未支付订单的个数信息数据
+			getUserInfo: function getUserInfo() {
+				return fetch(config.serverUrl + "/api/Transport/UserRelevant/0", {
+					headers: config.headers
+				}).then(checkStatus).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					return result.Data;
+				});
+			},
+
+			/**
+	   * 显示订单列表
+	   * @return {[type]} [description]
+	   */
+			showOrderList: function showOrderList() {
+				this.controlHeader(true, "全部订单");
+				if (this.Order.OrderList.length === 0) {
+					// 只有长度为0的时候也就是第一次才加载数据
+					// 否则每次点击都加载一次数据bug了
+					this.getOrderData();
+				}
+				this.orderVisible = true; //显示订单
+			},
+
+			/**
+	   * 显示优惠券列表
+	   * @return {[type]} [description]
+	   */
+			showDiscountList: function showDiscountList() {
+				this.controlHeader(true, "全部订单");
+				this.orderVisible = true; //显示订单
+			},
+
+			/**
+	   * 获取订单数据
+	   * @return {[type]} [description]
+	   */
+			getOrderData: function getOrderData() {
+				var _this2 = this;
+
+				if (this.Order.noMoreData || this.Order.isUse) {
+					return;
+				}
+				this.Order.isUse = true; //锁住这个函数
+				this.loading();
+				fetch(config.serverUrl + "/api/Order/List", {
+					method: "POST",
+					headers: config.headers,
+					body: (0, _stringify2.default)({
+						Index: this.Order.index,
+						Size: 10,
+						Type: 0
+					})
+				}).then(checkStatus).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						if (result.Data.length < 10) {
+							// 说明没有跟多数据了
+							_this2.Order.noMoreData = true;
+							_this2.toast("已经没有的更多数据了...");
+						}
+						for (var i = 0; i < result.Data.length; i++) {
+							_this2.Order.OrderList.push(result.Data[i]);
+						}
+					} else {
+						_this2.Order.noMoreData = true;
+						_this2.toast(result.Message);
+					}
+
+					_this2.Order.isUse = false; //释放这个函数
+					_this2.Order.index++;
+					_mintUi.Indicator.close();
+				});
+			},
+			openOrder: function openOrder(index) {
+				console.log(index);
 			}
 		},
 		components: {
 			"mt-popup": _mintUi.Popup
 		}
 	});
+
+	document.getElementById("order-lists").addEventListener('scroll', _.throttle(function () {
+		var orderVisible = Vue_User.orderVisible;
+		var status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
+
+		if (status < 1000 && orderVisible) {
+			Vue_User.getOrderData();
+		}
+	}, 100, { leading: false }));
 
 /***/ },
 /* 1 */
@@ -22824,1323 +22965,7 @@
 
 
 /***/ },
-/* 29 */
-/***/ function(module, exports) {
-
-	/*!
-	 * vue-resource v0.9.3
-	 * https://github.com/vuejs/vue-resource
-	 * Released under the MIT License.
-	 */
-
-	'use strict';
-
-	/**
-	 * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
-	 */
-
-	var RESOLVED = 0;
-	var REJECTED = 1;
-	var PENDING = 2;
-
-	function Promise$2(executor) {
-
-	    this.state = PENDING;
-	    this.value = undefined;
-	    this.deferred = [];
-
-	    var promise = this;
-
-	    try {
-	        executor(function (x) {
-	            promise.resolve(x);
-	        }, function (r) {
-	            promise.reject(r);
-	        });
-	    } catch (e) {
-	        promise.reject(e);
-	    }
-	}
-
-	Promise$2.reject = function (r) {
-	    return new Promise$2(function (resolve, reject) {
-	        reject(r);
-	    });
-	};
-
-	Promise$2.resolve = function (x) {
-	    return new Promise$2(function (resolve, reject) {
-	        resolve(x);
-	    });
-	};
-
-	Promise$2.all = function all(iterable) {
-	    return new Promise$2(function (resolve, reject) {
-	        var count = 0,
-	            result = [];
-
-	        if (iterable.length === 0) {
-	            resolve(result);
-	        }
-
-	        function resolver(i) {
-	            return function (x) {
-	                result[i] = x;
-	                count += 1;
-
-	                if (count === iterable.length) {
-	                    resolve(result);
-	                }
-	            };
-	        }
-
-	        for (var i = 0; i < iterable.length; i += 1) {
-	            Promise$2.resolve(iterable[i]).then(resolver(i), reject);
-	        }
-	    });
-	};
-
-	Promise$2.race = function race(iterable) {
-	    return new Promise$2(function (resolve, reject) {
-	        for (var i = 0; i < iterable.length; i += 1) {
-	            Promise$2.resolve(iterable[i]).then(resolve, reject);
-	        }
-	    });
-	};
-
-	var p$1 = Promise$2.prototype;
-
-	p$1.resolve = function resolve(x) {
-	    var promise = this;
-
-	    if (promise.state === PENDING) {
-	        if (x === promise) {
-	            throw new TypeError('Promise settled with itself.');
-	        }
-
-	        var called = false;
-
-	        try {
-	            var then = x && x['then'];
-
-	            if (x !== null && typeof x === 'object' && typeof then === 'function') {
-	                then.call(x, function (x) {
-	                    if (!called) {
-	                        promise.resolve(x);
-	                    }
-	                    called = true;
-	                }, function (r) {
-	                    if (!called) {
-	                        promise.reject(r);
-	                    }
-	                    called = true;
-	                });
-	                return;
-	            }
-	        } catch (e) {
-	            if (!called) {
-	                promise.reject(e);
-	            }
-	            return;
-	        }
-
-	        promise.state = RESOLVED;
-	        promise.value = x;
-	        promise.notify();
-	    }
-	};
-
-	p$1.reject = function reject(reason) {
-	    var promise = this;
-
-	    if (promise.state === PENDING) {
-	        if (reason === promise) {
-	            throw new TypeError('Promise settled with itself.');
-	        }
-
-	        promise.state = REJECTED;
-	        promise.value = reason;
-	        promise.notify();
-	    }
-	};
-
-	p$1.notify = function notify() {
-	    var promise = this;
-
-	    nextTick(function () {
-	        if (promise.state !== PENDING) {
-	            while (promise.deferred.length) {
-	                var deferred = promise.deferred.shift(),
-	                    onResolved = deferred[0],
-	                    onRejected = deferred[1],
-	                    resolve = deferred[2],
-	                    reject = deferred[3];
-
-	                try {
-	                    if (promise.state === RESOLVED) {
-	                        if (typeof onResolved === 'function') {
-	                            resolve(onResolved.call(undefined, promise.value));
-	                        } else {
-	                            resolve(promise.value);
-	                        }
-	                    } else if (promise.state === REJECTED) {
-	                        if (typeof onRejected === 'function') {
-	                            resolve(onRejected.call(undefined, promise.value));
-	                        } else {
-	                            reject(promise.value);
-	                        }
-	                    }
-	                } catch (e) {
-	                    reject(e);
-	                }
-	            }
-	        }
-	    });
-	};
-
-	p$1.then = function then(onResolved, onRejected) {
-	    var promise = this;
-
-	    return new Promise$2(function (resolve, reject) {
-	        promise.deferred.push([onResolved, onRejected, resolve, reject]);
-	        promise.notify();
-	    });
-	};
-
-	p$1.catch = function (onRejected) {
-	    return this.then(undefined, onRejected);
-	};
-
-	var PromiseObj = window.Promise || Promise$2;
-
-	function Promise$1(executor, context) {
-
-	    if (executor instanceof PromiseObj) {
-	        this.promise = executor;
-	    } else {
-	        this.promise = new PromiseObj(executor.bind(context));
-	    }
-
-	    this.context = context;
-	}
-
-	Promise$1.all = function (iterable, context) {
-	    return new Promise$1(PromiseObj.all(iterable), context);
-	};
-
-	Promise$1.resolve = function (value, context) {
-	    return new Promise$1(PromiseObj.resolve(value), context);
-	};
-
-	Promise$1.reject = function (reason, context) {
-	    return new Promise$1(PromiseObj.reject(reason), context);
-	};
-
-	Promise$1.race = function (iterable, context) {
-	    return new Promise$1(PromiseObj.race(iterable), context);
-	};
-
-	var p = Promise$1.prototype;
-
-	p.bind = function (context) {
-	    this.context = context;
-	    return this;
-	};
-
-	p.then = function (fulfilled, rejected) {
-
-	    if (fulfilled && fulfilled.bind && this.context) {
-	        fulfilled = fulfilled.bind(this.context);
-	    }
-
-	    if (rejected && rejected.bind && this.context) {
-	        rejected = rejected.bind(this.context);
-	    }
-
-	    return new Promise$1(this.promise.then(fulfilled, rejected), this.context);
-	};
-
-	p.catch = function (rejected) {
-
-	    if (rejected && rejected.bind && this.context) {
-	        rejected = rejected.bind(this.context);
-	    }
-
-	    return new Promise$1(this.promise.catch(rejected), this.context);
-	};
-
-	p.finally = function (callback) {
-
-	    return this.then(function (value) {
-	        callback.call(this);
-	        return value;
-	    }, function (reason) {
-	        callback.call(this);
-	        return PromiseObj.reject(reason);
-	    });
-	};
-
-	var debug = false;
-	var util = {};
-	var array = [];
-	function Util (Vue) {
-	    util = Vue.util;
-	    debug = Vue.config.debug || !Vue.config.silent;
-	}
-
-	function warn(msg) {
-	    if (typeof console !== 'undefined' && debug) {
-	        console.warn('[VueResource warn]: ' + msg);
-	    }
-	}
-
-	function error(msg) {
-	    if (typeof console !== 'undefined') {
-	        console.error(msg);
-	    }
-	}
-
-	function nextTick(cb, ctx) {
-	    return util.nextTick(cb, ctx);
-	}
-
-	function trim(str) {
-	    return str.replace(/^\s*|\s*$/g, '');
-	}
-
-	var isArray = Array.isArray;
-
-	function isString(val) {
-	    return typeof val === 'string';
-	}
-
-	function isBoolean(val) {
-	    return val === true || val === false;
-	}
-
-	function isFunction(val) {
-	    return typeof val === 'function';
-	}
-
-	function isObject(obj) {
-	    return obj !== null && typeof obj === 'object';
-	}
-
-	function isPlainObject(obj) {
-	    return isObject(obj) && Object.getPrototypeOf(obj) == Object.prototype;
-	}
-
-	function isFormData(obj) {
-	    return typeof FormData !== 'undefined' && obj instanceof FormData;
-	}
-
-	function when(value, fulfilled, rejected) {
-
-	    var promise = Promise$1.resolve(value);
-
-	    if (arguments.length < 2) {
-	        return promise;
-	    }
-
-	    return promise.then(fulfilled, rejected);
-	}
-
-	function options(fn, obj, opts) {
-
-	    opts = opts || {};
-
-	    if (isFunction(opts)) {
-	        opts = opts.call(obj);
-	    }
-
-	    return merge(fn.bind({ $vm: obj, $options: opts }), fn, { $options: opts });
-	}
-
-	function each(obj, iterator) {
-
-	    var i, key;
-
-	    if (typeof obj.length == 'number') {
-	        for (i = 0; i < obj.length; i++) {
-	            iterator.call(obj[i], obj[i], i);
-	        }
-	    } else if (isObject(obj)) {
-	        for (key in obj) {
-	            if (obj.hasOwnProperty(key)) {
-	                iterator.call(obj[key], obj[key], key);
-	            }
-	        }
-	    }
-
-	    return obj;
-	}
-
-	var assign = Object.assign || _assign;
-
-	function merge(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-	        _merge(target, source, true);
-	    });
-
-	    return target;
-	}
-
-	function defaults(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-
-	        for (var key in source) {
-	            if (target[key] === undefined) {
-	                target[key] = source[key];
-	            }
-	        }
-	    });
-
-	    return target;
-	}
-
-	function _assign(target) {
-
-	    var args = array.slice.call(arguments, 1);
-
-	    args.forEach(function (source) {
-	        _merge(target, source);
-	    });
-
-	    return target;
-	}
-
-	function _merge(target, source, deep) {
-	    for (var key in source) {
-	        if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-	            if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
-	                target[key] = {};
-	            }
-	            if (isArray(source[key]) && !isArray(target[key])) {
-	                target[key] = [];
-	            }
-	            _merge(target[key], source[key], deep);
-	        } else if (source[key] !== undefined) {
-	            target[key] = source[key];
-	        }
-	    }
-	}
-
-	function root (options, next) {
-
-	    var url = next(options);
-
-	    if (isString(options.root) && !url.match(/^(https?:)?\//)) {
-	        url = options.root + '/' + url;
-	    }
-
-	    return url;
-	}
-
-	function query (options, next) {
-
-	    var urlParams = Object.keys(Url.options.params),
-	        query = {},
-	        url = next(options);
-
-	    each(options.params, function (value, key) {
-	        if (urlParams.indexOf(key) === -1) {
-	            query[key] = value;
-	        }
-	    });
-
-	    query = Url.params(query);
-
-	    if (query) {
-	        url += (url.indexOf('?') == -1 ? '?' : '&') + query;
-	    }
-
-	    return url;
-	}
-
-	/**
-	 * URL Template v2.0.6 (https://github.com/bramstein/url-template)
-	 */
-
-	function expand(url, params, variables) {
-
-	    var tmpl = parse(url),
-	        expanded = tmpl.expand(params);
-
-	    if (variables) {
-	        variables.push.apply(variables, tmpl.vars);
-	    }
-
-	    return expanded;
-	}
-
-	function parse(template) {
-
-	    var operators = ['+', '#', '.', '/', ';', '?', '&'],
-	        variables = [];
-
-	    return {
-	        vars: variables,
-	        expand: function (context) {
-	            return template.replace(/\{([^\{\}]+)\}|([^\{\}]+)/g, function (_, expression, literal) {
-	                if (expression) {
-
-	                    var operator = null,
-	                        values = [];
-
-	                    if (operators.indexOf(expression.charAt(0)) !== -1) {
-	                        operator = expression.charAt(0);
-	                        expression = expression.substr(1);
-	                    }
-
-	                    expression.split(/,/g).forEach(function (variable) {
-	                        var tmp = /([^:\*]*)(?::(\d+)|(\*))?/.exec(variable);
-	                        values.push.apply(values, getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
-	                        variables.push(tmp[1]);
-	                    });
-
-	                    if (operator && operator !== '+') {
-
-	                        var separator = ',';
-
-	                        if (operator === '?') {
-	                            separator = '&';
-	                        } else if (operator !== '#') {
-	                            separator = operator;
-	                        }
-
-	                        return (values.length !== 0 ? operator : '') + values.join(separator);
-	                    } else {
-	                        return values.join(',');
-	                    }
-	                } else {
-	                    return encodeReserved(literal);
-	                }
-	            });
-	        }
-	    };
-	}
-
-	function getValues(context, operator, key, modifier) {
-
-	    var value = context[key],
-	        result = [];
-
-	    if (isDefined(value) && value !== '') {
-	        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-	            value = value.toString();
-
-	            if (modifier && modifier !== '*') {
-	                value = value.substring(0, parseInt(modifier, 10));
-	            }
-
-	            result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-	        } else {
-	            if (modifier === '*') {
-	                if (Array.isArray(value)) {
-	                    value.filter(isDefined).forEach(function (value) {
-	                        result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-	                    });
-	                } else {
-	                    Object.keys(value).forEach(function (k) {
-	                        if (isDefined(value[k])) {
-	                            result.push(encodeValue(operator, value[k], k));
-	                        }
-	                    });
-	                }
-	            } else {
-	                var tmp = [];
-
-	                if (Array.isArray(value)) {
-	                    value.filter(isDefined).forEach(function (value) {
-	                        tmp.push(encodeValue(operator, value));
-	                    });
-	                } else {
-	                    Object.keys(value).forEach(function (k) {
-	                        if (isDefined(value[k])) {
-	                            tmp.push(encodeURIComponent(k));
-	                            tmp.push(encodeValue(operator, value[k].toString()));
-	                        }
-	                    });
-	                }
-
-	                if (isKeyOperator(operator)) {
-	                    result.push(encodeURIComponent(key) + '=' + tmp.join(','));
-	                } else if (tmp.length !== 0) {
-	                    result.push(tmp.join(','));
-	                }
-	            }
-	        }
-	    } else {
-	        if (operator === ';') {
-	            result.push(encodeURIComponent(key));
-	        } else if (value === '' && (operator === '&' || operator === '?')) {
-	            result.push(encodeURIComponent(key) + '=');
-	        } else if (value === '') {
-	            result.push('');
-	        }
-	    }
-
-	    return result;
-	}
-
-	function isDefined(value) {
-	    return value !== undefined && value !== null;
-	}
-
-	function isKeyOperator(operator) {
-	    return operator === ';' || operator === '&' || operator === '?';
-	}
-
-	function encodeValue(operator, value, key) {
-
-	    value = operator === '+' || operator === '#' ? encodeReserved(value) : encodeURIComponent(value);
-
-	    if (key) {
-	        return encodeURIComponent(key) + '=' + value;
-	    } else {
-	        return value;
-	    }
-	}
-
-	function encodeReserved(str) {
-	    return str.split(/(%[0-9A-Fa-f]{2})/g).map(function (part) {
-	        if (!/%[0-9A-Fa-f]/.test(part)) {
-	            part = encodeURI(part);
-	        }
-	        return part;
-	    }).join('');
-	}
-
-	function template (options) {
-
-	    var variables = [],
-	        url = expand(options.url, options.params, variables);
-
-	    variables.forEach(function (key) {
-	        delete options.params[key];
-	    });
-
-	    return url;
-	}
-
-	/**
-	 * Service for URL templating.
-	 */
-
-	var ie = document.documentMode;
-	var el = document.createElement('a');
-
-	function Url(url, params) {
-
-	    var self = this || {},
-	        options = url,
-	        transform;
-
-	    if (isString(url)) {
-	        options = { url: url, params: params };
-	    }
-
-	    options = merge({}, Url.options, self.$options, options);
-
-	    Url.transforms.forEach(function (handler) {
-	        transform = factory(handler, transform, self.$vm);
-	    });
-
-	    return transform(options);
-	}
-
-	/**
-	 * Url options.
-	 */
-
-	Url.options = {
-	    url: '',
-	    root: null,
-	    params: {}
-	};
-
-	/**
-	 * Url transforms.
-	 */
-
-	Url.transforms = [template, query, root];
-
-	/**
-	 * Encodes a Url parameter string.
-	 *
-	 * @param {Object} obj
-	 */
-
-	Url.params = function (obj) {
-
-	    var params = [],
-	        escape = encodeURIComponent;
-
-	    params.add = function (key, value) {
-
-	        if (isFunction(value)) {
-	            value = value();
-	        }
-
-	        if (value === null) {
-	            value = '';
-	        }
-
-	        this.push(escape(key) + '=' + escape(value));
-	    };
-
-	    serialize(params, obj);
-
-	    return params.join('&').replace(/%20/g, '+');
-	};
-
-	/**
-	 * Parse a URL and return its components.
-	 *
-	 * @param {String} url
-	 */
-
-	Url.parse = function (url) {
-
-	    if (ie) {
-	        el.href = url;
-	        url = el.href;
-	    }
-
-	    el.href = url;
-
-	    return {
-	        href: el.href,
-	        protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
-	        port: el.port,
-	        host: el.host,
-	        hostname: el.hostname,
-	        pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
-	        search: el.search ? el.search.replace(/^\?/, '') : '',
-	        hash: el.hash ? el.hash.replace(/^#/, '') : ''
-	    };
-	};
-
-	function factory(handler, next, vm) {
-	    return function (options) {
-	        return handler.call(vm, options, next);
-	    };
-	}
-
-	function serialize(params, obj, scope) {
-
-	    var array = isArray(obj),
-	        plain = isPlainObject(obj),
-	        hash;
-
-	    each(obj, function (value, key) {
-
-	        hash = isObject(value) || isArray(value);
-
-	        if (scope) {
-	            key = scope + '[' + (plain || hash ? key : '') + ']';
-	        }
-
-	        if (!scope && array) {
-	            params.add(value.name, value.value);
-	        } else if (hash) {
-	            serialize(params, value, key);
-	        } else {
-	            params.add(key, value);
-	        }
-	    });
-	}
-
-	function xdrClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var xdr = new XDomainRequest(),
-	            handler = function (event) {
-
-	            var response = request.respondWith(xdr.responseText, {
-	                status: xdr.status,
-	                statusText: xdr.statusText
-	            });
-
-	            resolve(response);
-	        };
-
-	        request.abort = function () {
-	            return xdr.abort();
-	        };
-
-	        xdr.open(request.method, request.getUrl(), true);
-	        xdr.timeout = 0;
-	        xdr.onload = handler;
-	        xdr.onerror = handler;
-	        xdr.ontimeout = function () {};
-	        xdr.onprogress = function () {};
-	        xdr.send(request.getBody());
-	    });
-	}
-
-	var ORIGIN_URL = Url.parse(location.href);
-	var SUPPORTS_CORS = 'withCredentials' in new XMLHttpRequest();
-
-	function cors (request, next) {
-
-	    if (!isBoolean(request.crossOrigin) && crossOrigin(request)) {
-	        request.crossOrigin = true;
-	    }
-
-	    if (request.crossOrigin) {
-
-	        if (!SUPPORTS_CORS) {
-	            request.client = xdrClient;
-	        }
-
-	        delete request.emulateHTTP;
-	    }
-
-	    next();
-	}
-
-	function crossOrigin(request) {
-
-	    var requestUrl = Url.parse(Url(request));
-
-	    return requestUrl.protocol !== ORIGIN_URL.protocol || requestUrl.host !== ORIGIN_URL.host;
-	}
-
-	function body (request, next) {
-
-	    if (request.emulateJSON && isPlainObject(request.body)) {
-	        request.body = Url.params(request.body);
-	        request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-	    }
-
-	    if (isFormData(request.body)) {
-	        delete request.headers['Content-Type'];
-	    }
-
-	    if (isPlainObject(request.body)) {
-	        request.body = JSON.stringify(request.body);
-	    }
-
-	    next(function (response) {
-
-	        var contentType = response.headers['Content-Type'];
-
-	        if (isString(contentType) && contentType.indexOf('application/json') === 0) {
-
-	            try {
-	                response.data = response.json();
-	            } catch (e) {
-	                response.data = null;
-	            }
-	        } else {
-	            response.data = response.text();
-	        }
-	    });
-	}
-
-	function jsonpClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var name = request.jsonp || 'callback',
-	            callback = '_jsonp' + Math.random().toString(36).substr(2),
-	            body = null,
-	            handler,
-	            script;
-
-	        handler = function (event) {
-
-	            var status = 0;
-
-	            if (event.type === 'load' && body !== null) {
-	                status = 200;
-	            } else if (event.type === 'error') {
-	                status = 404;
-	            }
-
-	            resolve(request.respondWith(body, { status: status }));
-
-	            delete window[callback];
-	            document.body.removeChild(script);
-	        };
-
-	        request.params[name] = callback;
-
-	        window[callback] = function (result) {
-	            body = JSON.stringify(result);
-	        };
-
-	        script = document.createElement('script');
-	        script.src = request.getUrl();
-	        script.type = 'text/javascript';
-	        script.async = true;
-	        script.onload = handler;
-	        script.onerror = handler;
-
-	        document.body.appendChild(script);
-	    });
-	}
-
-	function jsonp (request, next) {
-
-	    if (request.method == 'JSONP') {
-	        request.client = jsonpClient;
-	    }
-
-	    next(function (response) {
-
-	        if (request.method == 'JSONP') {
-	            response.data = response.json();
-	        }
-	    });
-	}
-
-	function before (request, next) {
-
-	    if (isFunction(request.before)) {
-	        request.before.call(this, request);
-	    }
-
-	    next();
-	}
-
-	/**
-	 * HTTP method override Interceptor.
-	 */
-
-	function method (request, next) {
-
-	    if (request.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(request.method)) {
-	        request.headers['X-HTTP-Method-Override'] = request.method;
-	        request.method = 'POST';
-	    }
-
-	    next();
-	}
-
-	function header (request, next) {
-
-	    request.method = request.method.toUpperCase();
-	    request.headers = assign({}, Http.headers.common, !request.crossOrigin ? Http.headers.custom : {}, Http.headers[request.method.toLowerCase()], request.headers);
-
-	    next();
-	}
-
-	/**
-	 * Timeout Interceptor.
-	 */
-
-	function timeout (request, next) {
-
-	    var timeout;
-
-	    if (request.timeout) {
-	        timeout = setTimeout(function () {
-	            request.abort();
-	        }, request.timeout);
-	    }
-
-	    next(function (response) {
-
-	        clearTimeout(timeout);
-	    });
-	}
-
-	function xhrClient (request) {
-	    return new Promise$1(function (resolve) {
-
-	        var xhr = new XMLHttpRequest(),
-	            handler = function (event) {
-
-	            var response = request.respondWith('response' in xhr ? xhr.response : xhr.responseText, {
-	                status: xhr.status === 1223 ? 204 : xhr.status, // IE9 status bug
-	                statusText: xhr.status === 1223 ? 'No Content' : trim(xhr.statusText),
-	                headers: parseHeaders(xhr.getAllResponseHeaders())
-	            });
-
-	            resolve(response);
-	        };
-
-	        request.abort = function () {
-	            return xhr.abort();
-	        };
-
-	        xhr.open(request.method, request.getUrl(), true);
-	        xhr.timeout = 0;
-	        xhr.onload = handler;
-	        xhr.onerror = handler;
-
-	        if (request.progress) {
-	            if (request.method === 'GET') {
-	                xhr.addEventListener('progress', request.progress);
-	            } else if (/^(POST|PUT)$/i.test(request.method)) {
-	                xhr.upload.addEventListener('progress', request.progress);
-	            }
-	        }
-
-	        if (request.credentials === true) {
-	            xhr.withCredentials = true;
-	        }
-
-	        each(request.headers || {}, function (value, header) {
-	            xhr.setRequestHeader(header, value);
-	        });
-
-	        xhr.send(request.getBody());
-	    });
-	}
-
-	function parseHeaders(str) {
-
-	    var headers = {},
-	        value,
-	        name,
-	        i;
-
-	    each(trim(str).split('\n'), function (row) {
-
-	        i = row.indexOf(':');
-	        name = trim(row.slice(0, i));
-	        value = trim(row.slice(i + 1));
-
-	        if (headers[name]) {
-
-	            if (isArray(headers[name])) {
-	                headers[name].push(value);
-	            } else {
-	                headers[name] = [headers[name], value];
-	            }
-	        } else {
-
-	            headers[name] = value;
-	        }
-	    });
-
-	    return headers;
-	}
-
-	function Client (context) {
-
-	    var reqHandlers = [sendRequest],
-	        resHandlers = [],
-	        handler;
-
-	    if (!isObject(context)) {
-	        context = null;
-	    }
-
-	    function Client(request) {
-	        return new Promise$1(function (resolve) {
-
-	            function exec() {
-
-	                handler = reqHandlers.pop();
-
-	                if (isFunction(handler)) {
-	                    handler.call(context, request, next);
-	                } else {
-	                    warn('Invalid interceptor of type ' + typeof handler + ', must be a function');
-	                    next();
-	                }
-	            }
-
-	            function next(response) {
-
-	                if (isFunction(response)) {
-
-	                    resHandlers.unshift(response);
-	                } else if (isObject(response)) {
-
-	                    resHandlers.forEach(function (handler) {
-	                        response = when(response, function (response) {
-	                            return handler.call(context, response) || response;
-	                        });
-	                    });
-
-	                    when(response, resolve);
-
-	                    return;
-	                }
-
-	                exec();
-	            }
-
-	            exec();
-	        }, context);
-	    }
-
-	    Client.use = function (handler) {
-	        reqHandlers.push(handler);
-	    };
-
-	    return Client;
-	}
-
-	function sendRequest(request, resolve) {
-
-	    var client = request.client || xhrClient;
-
-	    resolve(client(request));
-	}
-
-	var classCallCheck = function (instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	};
-
-	/**
-	 * HTTP Response.
-	 */
-
-	var Response = function () {
-	    function Response(body, _ref) {
-	        var url = _ref.url;
-	        var headers = _ref.headers;
-	        var status = _ref.status;
-	        var statusText = _ref.statusText;
-	        classCallCheck(this, Response);
-
-
-	        this.url = url;
-	        this.body = body;
-	        this.headers = headers || {};
-	        this.status = status || 0;
-	        this.statusText = statusText || '';
-	        this.ok = status >= 200 && status < 300;
-	    }
-
-	    Response.prototype.text = function text() {
-	        return this.body;
-	    };
-
-	    Response.prototype.blob = function blob() {
-	        return new Blob([this.body]);
-	    };
-
-	    Response.prototype.json = function json() {
-	        return JSON.parse(this.body);
-	    };
-
-	    return Response;
-	}();
-
-	var Request = function () {
-	    function Request(options) {
-	        classCallCheck(this, Request);
-
-
-	        this.method = 'GET';
-	        this.body = null;
-	        this.params = {};
-	        this.headers = {};
-
-	        assign(this, options);
-	    }
-
-	    Request.prototype.getUrl = function getUrl() {
-	        return Url(this);
-	    };
-
-	    Request.prototype.getBody = function getBody() {
-	        return this.body;
-	    };
-
-	    Request.prototype.respondWith = function respondWith(body, options) {
-	        return new Response(body, assign(options || {}, { url: this.getUrl() }));
-	    };
-
-	    return Request;
-	}();
-
-	/**
-	 * Service for sending network requests.
-	 */
-
-	var CUSTOM_HEADERS = { 'X-Requested-With': 'XMLHttpRequest' };
-	var COMMON_HEADERS = { 'Accept': 'application/json, text/plain, */*' };
-	var JSON_CONTENT_TYPE = { 'Content-Type': 'application/json;charset=utf-8' };
-
-	function Http(options) {
-
-	    var self = this || {},
-	        client = Client(self.$vm);
-
-	    defaults(options || {}, self.$options, Http.options);
-
-	    Http.interceptors.forEach(function (handler) {
-	        client.use(handler);
-	    });
-
-	    return client(new Request(options)).then(function (response) {
-
-	        return response.ok ? response : Promise$1.reject(response);
-	    }, function (response) {
-
-	        if (response instanceof Error) {
-	            error(response);
-	        }
-
-	        return Promise$1.reject(response);
-	    });
-	}
-
-	Http.options = {};
-
-	Http.headers = {
-	    put: JSON_CONTENT_TYPE,
-	    post: JSON_CONTENT_TYPE,
-	    patch: JSON_CONTENT_TYPE,
-	    delete: JSON_CONTENT_TYPE,
-	    custom: CUSTOM_HEADERS,
-	    common: COMMON_HEADERS
-	};
-
-	Http.interceptors = [before, timeout, method, body, jsonp, header, cors];
-
-	['get', 'delete', 'head', 'jsonp'].forEach(function (method) {
-
-	    Http[method] = function (url, options) {
-	        return this(assign(options || {}, { url: url, method: method }));
-	    };
-	});
-
-	['post', 'put', 'patch'].forEach(function (method) {
-
-	    Http[method] = function (url, body, options) {
-	        return this(assign(options || {}, { url: url, method: method, body: body }));
-	    };
-	});
-
-	function Resource(url, params, actions, options) {
-
-	    var self = this || {},
-	        resource = {};
-
-	    actions = assign({}, Resource.actions, actions);
-
-	    each(actions, function (action, name) {
-
-	        action = merge({ url: url, params: params || {} }, options, action);
-
-	        resource[name] = function () {
-	            return (self.$http || Http)(opts(action, arguments));
-	        };
-	    });
-
-	    return resource;
-	}
-
-	function opts(action, args) {
-
-	    var options = assign({}, action),
-	        params = {},
-	        body;
-
-	    switch (args.length) {
-
-	        case 2:
-
-	            params = args[0];
-	            body = args[1];
-
-	            break;
-
-	        case 1:
-
-	            if (/^(POST|PUT|PATCH)$/i.test(options.method)) {
-	                body = args[0];
-	            } else {
-	                params = args[0];
-	            }
-
-	            break;
-
-	        case 0:
-
-	            break;
-
-	        default:
-
-	            throw 'Expected up to 4 arguments [params, body], got ' + args.length + ' arguments';
-	    }
-
-	    options.body = body;
-	    options.params = assign({}, options.params, params);
-
-	    return options;
-	}
-
-	Resource.actions = {
-
-	    get: { method: 'GET' },
-	    save: { method: 'POST' },
-	    query: { method: 'GET' },
-	    update: { method: 'PUT' },
-	    remove: { method: 'DELETE' },
-	    delete: { method: 'DELETE' }
-
-	};
-
-	function plugin(Vue) {
-
-	    if (plugin.installed) {
-	        return;
-	    }
-
-	    Util(Vue);
-
-	    Vue.url = Url;
-	    Vue.http = Http;
-	    Vue.resource = Resource;
-	    Vue.Promise = Promise$1;
-
-	    Object.defineProperties(Vue.prototype, {
-
-	        $url: {
-	            get: function () {
-	                return options(Vue.url, this, this.$options.url);
-	            }
-	        },
-
-	        $http: {
-	            get: function () {
-	                return options(Vue.http, this, this.$options.http);
-	            }
-	        },
-
-	        $resource: {
-	            get: function () {
-	                return Vue.resource.bind(this);
-	            }
-	        },
-
-	        $promise: {
-	            get: function () {
-	                var _this = this;
-
-	                return function (executor) {
-	                    return new Vue.Promise(executor, _this);
-	                };
-	            }
-	        }
-
-	    });
-	}
-
-	if (typeof window !== 'undefined' && window.Vue) {
-	    window.Vue.use(plugin);
-	}
-
-	module.exports = plugin;
-
-/***/ },
+/* 29 */,
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24175,7 +23000,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%;\n  padding-top: 49px; }\n  .body .header {\n    height: 100px;\n    background-color: #2196F3; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 5002;\n  padding: 0;\n  margin: 0; }\n  header .left {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50px;\n    height: 50px;\n    text-align: center; }\n    header .left i {\n      font-size: 3rem;\n      color: #fff;\n      height: 50px;\n      line-height: 50px; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%; }\n  .body .header {\n    height: 120px;\n    background-color: #2196F3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .body .header .content {\n      height: 60px;\n      width: 100%; }\n    .body .header .left {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      text-align: center; }\n      .body .header .left img {\n        width: 60px;\n        height: 60px;\n        border-radius: 50%; }\n    .body .header .right {\n      -ms-flex: 0.7;\n          flex: 0.7; }\n      .body .header .right p {\n        color: #fff;\n        height: 40px;\n        font-size: 1.6rem; }\n      .body .header .right span {\n        color: #fff;\n        font-size: 1.1rem;\n        height: 20px; }\n  .body .order-discount {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    height: 50px;\n    background-color: #fff;\n    margin-bottom: 20px; }\n    .body .order-discount .content {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      text-align: center;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n      .body .order-discount .content:first-child {\n        border-right: 1px solid #eaeaea; }\n      .body .order-discount .content img {\n        width: 26px;\n        height: 26px; }\n      .body .order-discount .content span {\n        color: #111111;\n        font-size: 1.4rem;\n        margin-left: 10px; }\n  .body .lists {\n    width: 100%; }\n    .body .lists .list-body {\n      width: 100%;\n      padding: 0 2%;\n      margin-bottom: 10px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      background-color: #fff;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .body .lists .list-body .list {\n        width: 100%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        height: 50px;\n        border-bottom: 1px solid #f7f7f7; }\n        .body .lists .list-body .list i.left {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.8rem;\n          text-align: center;\n          color: #777777; }\n        .body .lists .list-body .list span {\n          -ms-flex: 0.8;\n              flex: 0.8;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem; }\n        .body .lists .list-body .list i.fa-chevron-right {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem;\n          color: #AAAAAA;\n          text-align: right; }\n\n.order-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .order-lists .lists {\n    width: 94%;\n    margin: 0 3%;\n    margin-top: 60px; }\n    .order-lists .lists .list {\n      width: 100%;\n      padding: 5px 5px;\n      background-color: #fff;\n      border-radius: 10px;\n      margin-bottom: 10px; }\n      .order-lists .lists .list .list-header {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        border-bottom: 1px solid #dddddd;\n        padding: 5px 0; }\n        .order-lists .lists .list .list-header span {\n          font-size: 1.4rem;\n          color: #444444; }\n        .order-lists .lists .list .list-header span.time {\n          text-align: left;\n          -ms-flex: 0.7;\n              flex: 0.7;\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-header span.type {\n          text-align: right;\n          -ms-flex: 0.3;\n              flex: 0.3; }\n      .order-lists .lists .list .list-center {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 50px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-center .city {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex: 0.8;\n              flex: 0.8;\n          position: relative; }\n          .order-lists .lists .list .list-center .city > span {\n            font-size: 1.6rem;\n            -ms-flex: 1;\n                flex: 1; }\n          .order-lists .lists .list .list-center .city > span.start {\n            position: relative; }\n            .order-lists .lists .list .list-center .city > span.start::before {\n              position: absolute;\n              bottom: 5px;\n              right: 20%;\n              height: 5px;\n              width: 30%;\n              background-color: #0074D9;\n              content: \"\"; }\n            .order-lists .lists .list .list-center .city > span.start::after {\n              position: absolute;\n              bottom: 5px;\n              right: 12%;\n              height: 0;\n              width: 0;\n              border: 6px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9;\n              content: \"\"; }\n          .order-lists .lists .list .list-center .city i {\n            position: absolute;\n            top: 0;\n            left: 27%; }\n        .order-lists .lists .list .list-center span.money {\n          font-size: 1.6rem;\n          -ms-flex: 0.2;\n              flex: 0.2;\n          text-align: right;\n          color: #db3652; }\n      .order-lists .lists .list .list-footer {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 30px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-footer span {\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-footer span.name {\n          text-align: left;\n          color: #777777;\n          -ms-flex: 0.7;\n              flex: 0.7; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          -ms-flex: 0.3;\n              flex: 0.3; }\n        .order-lists .lists .list .list-footer span.order-status {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-no {\n          color: #db3652; }\n        .order-lists .lists .list .list-footer span.order-paying {\n          color: #0074D9; }\n        .order-lists .lists .list .list-footer span.order-payed {\n          color: #2ecc71; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem;\n  z-index: 10000; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n\n.mint-toast {\n  z-index: 10000; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n", ""]);
 
 	// exports
 
@@ -25733,6 +24558,29 @@
 	  }
 	}.call(this));
 
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(34), __esModule: true };
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(35)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ }
 /******/ ]);
