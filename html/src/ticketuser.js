@@ -100,9 +100,10 @@ const Vue_User = new Vue({
 			});
 		},
 		//回退界面
-		GoBack(event, status = false, title = "用户中心", visable = "orderVisible") {
-			this.controlHeader(status, title);
-			this[visable] = false;
+		GoBack(event, status = false, title = "用户中心") {
+			this.controlHeader();
+			this.orderVisible = false;
+			this.discountVisible = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -144,8 +145,8 @@ const Vue_User = new Vue({
 		 * @return {[type]} [description]
 		 */
 		showDiscountList() {
-			this.controlHeader(true, "全部订单");
-			this.orderVisible = true; //显示订单
+			this.controlHeader(true, "优惠券");
+			this.discountVisible = true; //显示
 		},
 		/**
 		 * 获取订单数据

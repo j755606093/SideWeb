@@ -1052,6 +1052,9 @@ export default {
 		cancelOrder(){
 			this.$store.dispatch("cancelOrder",this.serverPayInfo.OrderInfo.Id).then(result=>{
 				this.popupMessage("取消订单成功!");
+				setTimeout(()=>{
+					this.$router.go(-1);
+				},1000);
 			})
 		}
 	}

@@ -108,6 +108,17 @@
       <div class="lists">
         <!-- 列表 -->
         <div class="list" v-for="(item,index) in Rebate">
+          <div class="left">
+            <img src="./picture/rebate.png">
+          </div>
+          <div class="center">
+            <p v-text="item.Name"></p>
+            <span v-text="'截止:'+item.EndDate"></span>
+            <span v-text="item.IsSingle"></span>
+          </div>
+          <div class="right">
+            <span v-text="item.Money+'¥'"></span>
+          </div>
         </div>
       </div>
     </mt-popup>

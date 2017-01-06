@@ -153,6 +153,9 @@ input {
   padding: 0;
   background-color: #f7f7f7; }
 
+.mint-toast {
+  z-index: 10000; }
+
 .ticket-info {
   width: 100%;
   background-color: #2196F3;
@@ -498,7 +501,9 @@ input {
     width: 96%;
     margin: 0 2%;
     padding-top: 5px; }
-    .contact-info .discount-code input, .contact-info .discount-code button, .contact-info .discount-code i {
+    .contact-info .discount-code input,
+    .contact-info .discount-code button,
+    .contact-info .discount-code i {
       font-size: 1.3rem;
       height: 30px;
       line-height: 30px; }
@@ -539,7 +544,8 @@ input {
           flex: 0.3;
       height: 40px;
       font-size: 1.3rem; }
-    .other-info .info span.center, .other-info .info input.center {
+    .other-info .info span.center,
+    .other-info .info input.center {
       -ms-flex: 0.5;
           flex: 0.5;
       height: 39px;
@@ -586,7 +592,9 @@ input {
     width: 96%;
     margin: 0 2%;
     padding-top: 5px; }
-    .other-info .discount-code input, .other-info .discount-code button, .other-info .discount-code i {
+    .other-info .discount-code input,
+    .other-info .discount-code button,
+    .other-info .discount-code i {
       font-size: 1.3rem;
       height: 30px;
       line-height: 30px; }
