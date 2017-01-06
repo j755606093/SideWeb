@@ -312,7 +312,7 @@ export default {
 				longitude:longitude
 			}).then(data=>{
 				this.locationLoad = false;//停止界面加载提示
-				if(Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi,"$1").toLowerCase()==="array"){
+				if(data){
 					this.locationName = "最近上车点:"+data.Name;
 					this.$store.dispatch("setStartCity",{
 						Code:data.Id,

@@ -31006,7 +31006,7 @@
 					longitude: longitude
 				}).then(function (data) {
 					_this2.locationLoad = false; //停止界面加载提示
-					if (Object.prototype.toString.call(data).replace(/\[object (\w*)\]/gi, "$1").toLowerCase() === "array") {
+					if (data) {
 						_this2.locationName = "最近上车点:" + data.Name;
 						_this2.$store.dispatch("setStartCity", {
 							Code: data.Id,
