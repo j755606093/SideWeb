@@ -226,7 +226,7 @@ export default {
 			else{
 				// 不需要再次获取地理位置
 				this.locationLoad = false;
-				if(this.$store.getters.getLocationResult&&this.$store.getters.getLocationResult.length!==0){
+				if(this.$store.getters.getLocationResult){
 					this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
 				}
 				else{

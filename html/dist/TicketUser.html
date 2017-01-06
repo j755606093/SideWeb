@@ -8,28 +8,33 @@
 	<title>订单</title>
 </head>
 <body>
-	<div id="app">
+	<div id="app" v-show="ready" style="display: none;">
 		<!-- 头部 -->
 		<header>
 			<div class="home">
-				<span>订单</span>
+				<span>用户中心</span>
 			</div>
 		</header>
 		<div class="body">
-			
+			<div class="header">
+				
+			</div>
 		</div>
 		<footer>
-			<a href="./getCustomPage?page=ticket#/home/ticketbody" class="footer">
-				<i class="fa fa-home"></i>
+			<a href="./ticket.html" class="footer">
+				<!-- <i class="fa fa-home"></i> -->
+				<img src="./picture/ticket.png">
 				<p>票务</p>
 			</a>
-			<a href="./getCustomPage?page=TicketOrder" class="footer">
-				<i class="fa fa-sticky-note"></i>
+			<a href="./TicketOrder.html" class="footer">
+				<!-- <i class="fa fa-sticky-note"></i> -->
+				<img src="./picture/cart_order.png">
 				<p>订单</p>
 			</a>
-			<a href="./getCustomPage?page=TicketUser" class="footer active">
-				<i class="fa fa-user"></i>
-				<p>个人中心</p>
+			<a href="./TicketUser.html" class="footer active">
+				<!-- <i class="fa fa-user"></i> -->
+				<img src="./picture/user_blue.png">
+				<p>我的</p>
 			</a>
 		</footer>
 	</div>

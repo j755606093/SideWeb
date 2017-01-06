@@ -46,33 +46,29 @@
 
 	"use strict";
 
-	var _stringify = __webpack_require__(1);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
-	var _vue = __webpack_require__(4);
+	var _vue = __webpack_require__(1);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	__webpack_require__(5);
+	__webpack_require__(2);
 
-	var _mintUi = __webpack_require__(6);
+	var _mintUi = __webpack_require__(3);
 
-	__webpack_require__(30);
+	__webpack_require__(27);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_vue2.default.use(__webpack_require__(32)); //引用ajax库
+	_vue2.default.use(__webpack_require__(29)); //引用ajax库
 	__webpack_require__(33);
 
-	var _ = __webpack_require__(35);
+	var _ = __webpack_require__(32);
 
 
-	_vue2.default.component(_mintUi.TabContainer.name, _mintUi.TabContainer);
-	_vue2.default.component(_mintUi.TabContainerItem.name, _mintUi.TabContainerItem);
-	_vue2.default.component(_mintUi.Tabbar.name, _mintUi.Tabbar);
-	_vue2.default.component(_mintUi.TabItem.name, _mintUi.TabItem);
-	_vue2.default.component(_mintUi.Navbar.name, _mintUi.Navbar);
+	// Vue.component(TabContainer.name, TabContainer);
+	// Vue.component(TabContainerItem.name, TabContainerItem);
+	// Vue.component(Tabbar.name, Tabbar);
+	// Vue.component(TabItem.name, TabItem);
+	// Vue.component(Navbar.name, Navbar);
 
 	var debug = function () {
 		var debug = false;
@@ -114,52 +110,13 @@
 	var Vue_Order = new _vue2.default({
 		el: "#app",
 		data: {
-			OrderList: [],
-			index: 1, //页数
-			noMoreData: false, //没有更多数据
-			isUse: false, //是否使用中
-			noDataShow: true, //没有订单数据
-
-			OrderList1: [],
-			index1: 1, //页数
-			noMoreData1: false, //没有更多数据
-			isUse1: false, //是否使用中
-			noDataShow1: true, //没有订单数据
-
-			ready: false, //是否准备显示
-			Passengers: [], //乘客名数据,方便使用
-			orderVisible: false,
-
-			OrderDetail: {}, //订单详细信息
-			passenger: "", //乘客名
-
-			selected: "1", //默认选择未支付
-
-			countdown: null, //倒计时
-			countdownTime: "", //倒计时显示
-			storeCountTime: "" },
+			ready: false },
 		created: function created() {
 			this.ready = true;
-			if (this.getQueryString("orderid")) {
-				// 需要显示订单详细信息
-				this.loading();
-				this.getOrderInfo(this.getQueryString("orderid"));
-			}
-			this.moreOrderData();
-			this.moreOrderData1();
 		},
-		mounted: function mounted() {
-			// 设置第一个显示
-			// document.getElementsByClassName("mint-tab-container-item")[0].style.display = "block";
-			// document.getElementsByClassName("mint-tab-item")[0].click();
-		},
+		mounted: function mounted() {},
 
-		watch: {
-			// 监控tab的变化
-			// selected(val){
-			// 	console.log(val)
-			// }
-		},
+		watch: {},
 		methods: {
 			loading: function loading() {
 				_mintUi.Indicator.open({
@@ -173,195 +130,6 @@
 					return unescape(r[2]);
 				}
 				return null;
-			},
-			moreOrderData: function moreOrderData() {
-				var _this = this;
-
-				if (this.noMoreData || this.isUse) {
-					return;
-				}
-				this.isUse = true; //锁住这个函数
-				this.loading();
-				fetch(config.serverUrl + "/api/Order/List", {
-					method: "POST",
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						Index: this.index,
-						// Size:10,
-						Type: 1
-					})
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					if (result.Data) {
-						if (result.Data.length < 10) {
-							// 说明没有跟多数据了
-							_this.noMoreData = true;
-						}
-						for (var i = 0; i < result.Data.length; i++) {
-							_this.OrderList.push(result.Data[i]);
-						}
-
-						_this.noDataShow = false; //显示订单
-					} else {
-						_this.noMoreData = true;
-						(0, _mintUi.Toast)({
-							message: result.Message,
-							position: 'bottom',
-							duration: 3000
-						});
-					}
-					_this.isUse = false; //释放这个函数
-					_this.index++;
-					_mintUi.Indicator.close();
-				});
-			},
-			moreOrderData1: function moreOrderData1() {
-				var _this2 = this;
-
-				if (this.noMoreData1 || this.isUse1) {
-					return;
-				}
-				this.isUse1 = true; //锁住这个函数
-				this.loading();
-				fetch(config.serverUrl + "/api/Order/List", {
-					method: "POST",
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						Index: this.index1,
-						// Size:10,
-						Type: 2
-					})
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					if (result.Data) {
-						if (result.Data.length < 10) {
-							// 说明没有跟多数据了
-							_this2.noMoreData1 = true;
-						}
-						for (var i = 0; i < result.Data.length; i++) {
-							_this2.OrderList1.push(result.Data[i]);
-						}
-
-						_this2.noDataShow1 = false; //显示订单
-					} else {
-						_this2.noMoreData1 = true;
-						(0, _mintUi.Toast)({
-							message: result.Message,
-							position: 'bottom',
-							duration: 3000
-						});
-					}
-					_this2.isUse1 = false; //释放这个函数
-					_this2.index1++;
-					_mintUi.Indicator.close();
-				});
-			},
-			openOrder: function openOrder(index) {
-				this.loading();
-				if (this.selected === "1") {
-					this.getOrderInfo(this.OrderList[index].Id);
-				} else {
-					this.getOrderInfo(this.OrderList1[index].Id);
-				}
-			},
-			getOrderInfo: function getOrderInfo(id) {
-				var _this3 = this;
-
-				return fetch(config.serverUrl + "/api/Order/Get", {
-					method: "POST",
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						OrderId: id
-					})
-				}).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					_this3.OrderDetail = result.Data;
-					_this3.passenger = "";
-					for (var i = 0; i < _this3.OrderDetail.Passengers.length; i++) {
-						_this3.passenger = _this3.passenger + _this3.OrderDetail.Passengers[i].Name + ",";
-					}
-					_this3.passenger = _this3.passenger.slice(0, _this3.passenger.length - 1);
-					_mintUi.Indicator.close();
-					_this3.orderVisible = true;
-					if (_this3.selected === "1") {
-						// 只有未支付的情况下才倒计时
-						_this3.CountDown();
-					}
-				});
-			},
-			payMoney: function payMoney() {
-				this.loading();
-				var id = this.OrderDetail.Id;
-				return fetch(config.serverUrl + "/api/Order/PayOrder", {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: config.Authorization
-					},
-					body: (0, _stringify2.default)({
-						OrderId: id
-					})
-				}).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					_mintUi.Indicator.close();
-					var paydata = result.Data;
-					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
-						if (r.err_msg === "get_brand_wcpay_request:ok") {
-							(0, _mintUi.MessageBox)('提示', '支付成功');
-						}
-					});
-				});
-			},
-			CountDown: function CountDown() {
-				var _this4 = this;
-
-				var time = new Date(this.OrderDetail.CTime).getTime() + 60 * 30 * 1000;
-				var nowTime = Date.now();
-				this.storeCountTime = parseInt((time - nowTime) / 1000);
-				// this.storeCountTime = 60*30-1;//半个小时
-				this.countdown = setInterval(function () {
-					if (_this4.storeCountTime === 0) {
-						clearInterval(_this4.countdown);
-						_this4.countdown = null;
-						return;
-					}
-					var minth = parseInt(_this4.storeCountTime / 60);
-					var second = parseInt(_this4.storeCountTime % 60);
-					if (minth < 10) {
-						_this4.countdownTime = "0" + minth + ":";
-					} else {
-						_this4.countdownTime = minth + ":";
-					}
-
-					if (second < 10) {
-						_this4.countdownTime = _this4.countdownTime + "0" + second;
-					} else {
-						_this4.countdownTime = _this4.countdownTime + second;
-					}
-					_this4.storeCountTime--;
-				}, 1000);
-			},
-			goback: function goback() {
-				clearInterval(this.countdown);
-				this.countdown = null;
-				this.orderVisible = false;
-			},
-			cancelOrder: function cancelOrder() {
-				fetch(config.serverUrl + "/api/Order/Cancel", {
-					method: "POST",
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						OrderId: this.OrderDetail.Id
-					})
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					(0, _mintUi.MessageBox)('提示', '取消订单成功');
-				});
 			}
 		},
 		components: {
@@ -369,46 +137,8 @@
 		}
 	});
 
-	// window.addEventListener('scroll',_.throttle(function(){
-	// 	let selected = Vue_Order.selected;
-	// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
-	// 	if(status<1000 && selected==="1"){
-	// 		Vue_Order.moreOrderData();
-	// 		// console.log('yes');
-	// 	}
-
-	// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
-	// 	if(status1<1000 && selected==="2"){
-	// 		Vue_Order.moreOrderData1();
-	// 		// console.log('yes');
-	// 	}
-	// },100,{leading: false}));
-
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(2), __esModule: true };
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var core  = __webpack_require__(3)
-	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return $JSON.stringify.apply($JSON, arguments);
-	};
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -8506,7 +8236,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 5 */
+/* 2 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -8970,7 +8700,7 @@
 
 
 /***/ },
-/* 6 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -9050,13 +8780,13 @@
 	/* 1 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(7);
+	module.exports = __webpack_require__(4);
 
 	/***/ },
 	/* 2 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(12);
+	module.exports = __webpack_require__(9);
 
 	/***/ },
 	/* 3 */
@@ -9137,13 +8867,13 @@
 	/* 5 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(11);
 
 	/***/ },
 	/* 6 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(4);
+	module.exports = __webpack_require__(1);
 
 	/***/ },
 	/* 7 */
@@ -9303,7 +9033,7 @@
 	/* 11 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(5);
 
 	/***/ },
 	/* 12 */
@@ -18309,55 +18039,55 @@
 	/* 200 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(12);
 
 	/***/ },
 	/* 201 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(16);
+	module.exports = __webpack_require__(13);
 
 	/***/ },
 	/* 202 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(18);
+	module.exports = __webpack_require__(15);
 
 	/***/ },
 	/* 203 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(20);
+	module.exports = __webpack_require__(17);
 
 	/***/ },
 	/* 204 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(21);
+	module.exports = __webpack_require__(18);
 
 	/***/ },
 	/* 205 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(23);
+	module.exports = __webpack_require__(20);
 
 	/***/ },
 	/* 206 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(21);
 
 	/***/ },
 	/* 207 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(17);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 	/* 208 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(23);
 
 	/***/ },
 	/* 209 */
@@ -18370,7 +18100,7 @@
 	/******/ ]);
 
 /***/ },
-/* 7 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -18484,7 +18214,7 @@
 	/***/ 15:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(5);
 
 	/***/ },
 
@@ -18670,16 +18400,16 @@
 	/******/ });
 
 /***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(9);
+	var content = __webpack_require__(6);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18696,10 +18426,10 @@
 	}
 
 /***/ },
-/* 9 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -18710,7 +18440,7 @@
 
 
 /***/ },
-/* 10 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*
@@ -18766,7 +18496,7 @@
 
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -19018,16 +18748,16 @@
 
 
 /***/ },
-/* 12 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(13);
+	var content = __webpack_require__(10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -19044,10 +18774,10 @@
 	}
 
 /***/ },
-/* 13 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -19058,13 +18788,13 @@
 
 
 /***/ },
-/* 14 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t(__webpack_require__(4)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
+	!function(e,t){ true?module.exports=t(__webpack_require__(1)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
 
 /***/ },
-/* 15 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19095,7 +18825,7 @@
 
 
 /***/ },
-/* 16 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -19388,7 +19118,7 @@
 	/***/ 205:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(17);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 
@@ -20302,7 +20032,7 @@
 	/******/ });
 
 /***/ },
-/* 17 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/*
@@ -20349,16 +20079,16 @@
 
 
 /***/ },
-/* 18 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(19);
+	var content = __webpack_require__(16);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20375,10 +20105,10 @@
 	}
 
 /***/ },
-/* 19 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -20389,7 +20119,7 @@
 
 
 /***/ },
-/* 20 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -20552,7 +20282,7 @@
 	/***/ 5:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(11);
 
 	/***/ },
 
@@ -20718,16 +20448,16 @@
 	/******/ });
 
 /***/ },
-/* 21 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(22);
+	var content = __webpack_require__(19);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20744,10 +20474,10 @@
 	}
 
 /***/ },
-/* 22 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -20758,7 +20488,7 @@
 
 
 /***/ },
-/* 23 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -21409,16 +21139,16 @@
 	/******/ });
 
 /***/ },
-/* 24 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(25);
+	var content = __webpack_require__(22);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21435,10 +21165,10 @@
 	}
 
 /***/ },
-/* 25 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -21449,7 +21179,7 @@
 
 
 /***/ },
-/* 26 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -21463,7 +21193,7 @@
 	    (global.install = factory());
 	}(this, (function () { 'use strict';
 
-	var Promise = __webpack_require__(27).Promise;
+	var Promise = __webpack_require__(24).Promise;
 	var inBrowser = typeof window !== 'undefined';
 
 	if (!Array.prototype.$remove) {
@@ -21702,7 +21432,7 @@
 	})));
 
 /***/ },
-/* 27 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -21837,7 +21567,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(29);
+	    var vertx = __webpack_require__(26);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -22859,10 +22589,10 @@
 
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), (function() { return this; }())))
 
 /***/ },
-/* 28 */
+/* 25 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -23048,22 +22778,22 @@
 
 
 /***/ },
-/* 29 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 30 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(31);
+	var content = __webpack_require__(28);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23080,10 +22810,10 @@
 	}
 
 /***/ },
-/* 31 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -23094,7 +22824,7 @@
 
 
 /***/ },
-/* 32 */
+/* 29 */
 /***/ function(module, exports) {
 
 	/*!
@@ -24411,47 +24141,9 @@
 	module.exports = plugin;
 
 /***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(34);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ticketorder.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./ticketorder.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(10)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7; }\n\n#app {\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.mint-navbar {\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  height: 40px;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  background-color: #fff;\n  position: fixed;\n  top: 50px;\n  left: 0;\n  box-shadow: 0px 6px 5px 0px #ececec;\n  z-index: 10; }\n  .mint-navbar .mint-tab-item {\n    -ms-flex: 0.5;\n        flex: 0.5;\n    width: 50%;\n    font-size: 1.6rem; }\n  .mint-navbar .is-selected {\n    color: #0074D9; }\n\n.body {\n  width: 100%;\n  padding-bottom: 50px; }\n  .body .no-data {\n    padding-top: 100px;\n    text-align: center; }\n    .body .no-data p {\n      color: #AAAAAA;\n      font-size: 1.8rem; }\n  .body .order {\n    width: 100%; }\n    .body .order .lists {\n      width: 94%;\n      margin: 0 3%;\n      margin-top: 100px; }\n      .body .order .lists .list {\n        width: 100%;\n        padding: 5px 5px;\n        background-color: #fff;\n        border-radius: 10px;\n        margin-bottom: 10px; }\n        .body .order .lists .list .list-header {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          border-bottom: 1px solid #dddddd;\n          padding: 5px 0; }\n          .body .order .lists .list .list-header span {\n            font-size: 1.4rem;\n            color: #444444; }\n          .body .order .lists .list .list-header span.time {\n            text-align: left;\n            -ms-flex: 0.7;\n                flex: 0.7;\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-header span.type {\n            text-align: right;\n            -ms-flex: 0.3;\n                flex: 0.3; }\n        .body .order .lists .list .list-center {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 50px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-center .city {\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: row;\n                flex-direction: row;\n            -ms-flex-pack: center;\n                justify-content: center;\n            -ms-flex: 0.8;\n                flex: 0.8;\n            position: relative; }\n            .body .order .lists .list .list-center .city > span {\n              font-size: 1.6rem;\n              -ms-flex: 1;\n                  flex: 1; }\n            .body .order .lists .list .list-center .city > span.start {\n              position: relative; }\n              .body .order .lists .list .list-center .city > span.start::before {\n                position: absolute;\n                bottom: 5px;\n                right: 20%;\n                height: 5px;\n                width: 30%;\n                background-color: #0074D9;\n                content: \"\"; }\n              .body .order .lists .list .list-center .city > span.start::after {\n                position: absolute;\n                bottom: 5px;\n                right: 12%;\n                height: 0;\n                width: 0;\n                border: 6px solid #fff;\n                border-color: transparent transparent #0074D9 #0074D9;\n                content: \"\"; }\n            .body .order .lists .list .list-center .city i {\n              position: absolute;\n              top: 0;\n              left: 27%; }\n          .body .order .lists .list .list-center span.money {\n            font-size: 1.6rem;\n            -ms-flex: 0.2;\n                flex: 0.2;\n            text-align: right;\n            color: #db3652; }\n        .body .order .lists .list .list-footer {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          padding: 5px 0;\n          min-height: 30px;\n          -ms-flex-align: center;\n              align-items: center; }\n          .body .order .lists .list .list-footer span {\n            font-size: 1.2rem; }\n          .body .order .lists .list .list-footer span.name {\n            text-align: left;\n            color: #777777;\n            -ms-flex: 0.7;\n                flex: 0.7; }\n          .body .order .lists .list .list-footer span.order-pay {\n            -ms-flex: 0.3;\n                flex: 0.3; }\n          .body .order .lists .list .list-footer span.order-status {\n            text-align: right; }\n          .body .order .lists .list .list-footer span.order-pay {\n            text-align: right; }\n          .body .order .lists .list .list-footer span.order-no {\n            color: #db3652; }\n          .body .order .lists .list .list-footer span.order-paying {\n            color: #0074D9; }\n          .body .order .lists .list .list-footer span.order-payed {\n            color: #2ecc71; }\n\n.pay-order {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .pay-order .pay-lists {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .pay-order .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff;\n    position: relative; }\n    .pay-order .info-body .head {\n      height: 40px;\n      display: inline-block;\n      position: absolute;\n      top: 0;\n      left: 0px;\n      width: 40px;\n      text-align: center; }\n      .pay-order .info-body .head > i {\n        font-size: 20px;\n        line-height: 40px; }\n    .pay-order .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .pay-order .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .pay-order .info-body .status > i.fa-times-circle {\n        color: #db3652; }\n      .pay-order .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .pay-order .info-body .status p.time {\n        font-size: 1.4rem; }\n  .pay-order .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .pay-order .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .pay-order .ticket-body .pay-info .qr-img {\n        width: 90%;\n        margin: 0 5%;\n        text-align: center; }\n        .pay-order .ticket-body .pay-info .qr-img img {\n          width: 50%;\n          height: 50%;\n          border-radius: 20px; }\n        .pay-order .ticket-body .pay-info .qr-img p {\n          color: #AAAAAA; }\n      .pay-order .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 0px 2%;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-align: center;\n            align-items: center;\n        height: 40px; }\n        .pay-order .ticket-body .pay-info .address-info .city {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex: 1;\n              flex: 1;\n          position: relative;\n          justify-content: center;\n          text-align: center; }\n          .pay-order .ticket-body .pay-info .address-info .city > span {\n            font-size: 1.6rem;\n            -ms-flex: 1;\n                flex: 1;\n            height: 40px;\n            line-height: 40px; }\n          .pay-order .ticket-body .pay-info .address-info .city > span.start {\n            position: relative; }\n            .pay-order .ticket-body .pay-info .address-info .city > span.start::before {\n              position: absolute;\n              bottom: 5px;\n              right: -10%;\n              height: 5px;\n              width: 30%;\n              background-color: #0074D9;\n              content: \"\"; }\n            .pay-order .ticket-body .pay-info .address-info .city > span.start::after {\n              position: absolute;\n              bottom: 5px;\n              right: -15%;\n              height: 0;\n              width: 0;\n              border: 5px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9;\n              content: \"\"; }\n          .pay-order .ticket-body .pay-info .address-info .city i {\n            position: absolute;\n            top: 5px;\n            left: 40%; }\n      .pay-order .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .pay-order .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .pay-order .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .pay-order .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .pay-order .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .pay-order .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .pay-order .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .pay-order .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .pay-order .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .pay-order .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .pay-order .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .pay-order .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .pay-order .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .pay-order .out-order {\n    width: 100%;\n    text-align: center; }\n    .pay-order .out-order a {\n      color: #AAAAAA; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 35 */
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -26002,6 +25694,46 @@
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  }
 	}.call(this));
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(34);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ticketuser.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./ticketuser.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%;\n  padding-top: 49px; }\n  .body .header {\n    height: 100px;\n    background-color: #2196F3; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n", ""]);
+
+	// exports
 
 
 /***/ }

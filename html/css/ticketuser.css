@@ -172,21 +172,32 @@ header {
       line-height: 50px;
       font-size: 1.8rem; }
 
+.body {
+  width: 100%;
+  padding-top: 49px; }
+  .body .header {
+    height: 100px;
+    background-color: #2196F3; }
+
 footer {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   height: 50px;
+  line-height: 50px;
   width: 100%;
+  overflow-x: hidden;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  border-top: 1px solid #AAAAAA; }
+  background-color: #fff;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  z-index: 100; }
   footer .footer {
     -ms-flex: 1;
         flex: 1;
@@ -198,16 +209,20 @@ footer {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    color: #AAAAAA; }
+    width: 33.3333%;
+    color: #AAAAAA;
+    height: 50px;
+    line-height: 50px; }
     footer .footer i {
-      -ms-flex: 1;
-          flex: 1;
       font-size: 1.8rem; }
+    footer .footer img {
+      width: 22px;
+      height: 22px; }
     footer .footer p {
-      -ms-flex: 1;
-          flex: 1;
-      font-size: 1.4rem;
-      color: #AAAAAA; }
+      font-size: 1.2rem;
+      color: #AAAAAA;
+      height: 20px;
+      line-height: 20px; }
   footer .footer.active {
     color: #0074D9; }
     footer .footer.active p {

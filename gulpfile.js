@@ -160,3 +160,23 @@ gulp.task('ticketorder',function() {
 		.pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
+
+gulp.task('ticketuser',function() {
+	return gulp.src('./html/src/ticketuser.js')
+		.pipe(webpack({
+			watch:true,
+			output:{
+				filename:'bundle-ticketuser.js'
+			},
+			module:modules,
+			resolve: {
+					extensions: ['', '.js', '.jsx'],
+					alias: {
+							'vue$': 'vue/dist/vue.js'
+					}
+			},
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		.pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});

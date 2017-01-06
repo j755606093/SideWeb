@@ -10,7 +10,7 @@
 			<img src="../picture/cart_order.png">
 			<p>订单</p>
 		</a>
-		<a class="footer">
+		<a href="./TicketUser.html" class="footer">
 			<!-- <i class="fa fa-user"></i> -->
 			<img src="../picture/user.png">
 			<p>我的</p>

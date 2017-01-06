@@ -136,7 +136,7 @@
 		  		</div>
 		  		<div class="ticket-body">
 		  			<div class="pay-info">
-		  				<div class="qr-img">
+		  				<div class="qr-img" v-if="selected==='2'">
 		  					<img src="./picture/qrcode_for_gh_f5b67cac0e4d_344.jpg">
 		  					<p>提示:长按二维码关注城市圈可以获取最新的订单信息.</p>
 		  				</div>
@@ -215,7 +215,7 @@
 				<img src="./picture/cart_order_active.png">
 				<p>订单</p>
 			</a>
-			<a class="footer">
+			<a href="./TicketUser.html" class="footer">
 				<!-- <i class="fa fa-user"></i> -->
 				<img src="./picture/user.png">
 				<p>我的</p>

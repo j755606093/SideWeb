@@ -57,7 +57,7 @@ const state = {
 	endCityList:[],//到达的城市列表
 
 	resultList:[],//搜索结果
-	locationResult:[],//定位结果
+	locationResult:null,//定位结果
 	haveLocation:false,//没有定位结果
 
 	passenger:[],//乘客信息
@@ -271,7 +271,7 @@ const actions = {
 				return data.Data;
 			}
 			else{
-				commit(types.SET_LOCATIONRESULT,[]);
+				commit(types.SET_LOCATIONRESULT,null);
 				return null;//没有找到数据
 			}
 		})
