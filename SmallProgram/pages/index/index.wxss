@@ -1,21 +1,57 @@
 /**index.wxss**/
-.userinfo {
+.root{
+  background-color: #fff;
+  height:100%;
+  width:100%;
+}
+
+/*搜索框部分*/
+
+.search{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.line{
+  flex:1;
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height:50px;
+  border-bottom:1px solid aliceblue;
+  position:relative;
+}
+.right{
+  position:absolute;
+  top:15px;
+  right:5px;
+}
+.line-text{
+  flex:0.3;
+  color:gray;
+  font-size: 16px;
+}
+.line-city{
+  flex:0.65;
+}
+.line-img{
+  flex:0.1;
+  width:20px;
+  height:20px;
+  margin-right: 5px;
+}
+.picker-text{
+  margin-right:20px;
 }
 
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 200px;
+/*查询按钮*/
+.query{
+  width:90%;
+  margin:0 5%;
+  margin-top:10px;
+  background-color: #e74c3c;
+  color:#fff;
 }

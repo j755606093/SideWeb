@@ -1,0 +1,10 @@
+<scroll-view scroll-y="true" class="root">
+  <!--时间-->
+  <view class="header">
+    <view class="select-date">
+      <text class="date-left">前一天</text>
+      <text class="date-center">2017-01-12 明天</text>
+      <text class="date-right">后一天</text>
+    </view>
+  </view>
+</scroll-view>

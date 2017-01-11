@@ -1,0 +1,7 @@
+{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#2196F3",
+    "navigationBarTitleText": "选择",
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh":false
+}

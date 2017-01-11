@@ -1,10 +1,36 @@
 <!--index.wxml-->
-<view class="container">
-  <view  bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+<scroll-view scroll-y="true" class="root">
+  <!--主体-->
+  <view class="body">
+    <!--搜索框-->
+    <view class="search">
+      <!--出发点-->
+      <view bindtap="getStartCity" class="line">
+        <view><image class="line-img" src="/picture/map_red.png"></image></view>
+        <text class="line-text">出发点</text>
+        <text class="line-city">{{search.start}}</text>
+        <view class="right"><image class="line-img" src="/picture/search.png"></image></view>
+      </view>
+      <!--到达点-->
+      <view bindtap="getEndCity" class="line">
+        <view><image class="line-img" src="/picture/map_blue.png"></image></view>
+        <text class="line-text">到达点</text>
+        <text class="line-city">{{search.end}}</text>
+        <view class="right"><image class="line-img" src="/picture/search.png"></image></view>
+      </view>
+      <!--出发日期-->
+      <view class="line">
+        <view><image class="line-img" src="/picture/date.png"></image></view>
+        <text class="line-text">出发日期</text>
+        <picker class="line-city" mode="date" value="{{date.nowDate}}" start="{{date.chooseStartTime}}" end="{{date.chooseEndTime}}" bindchange="dateChange">
+          <view class="picker">
+            <text class="picker-text">{{date.nowDate}}</text>
+            <text>{{date.nowDateText}}</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <button hover-class="none" class="query" bindtap="query">查询</button>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-</view>
+</scroll-view>
