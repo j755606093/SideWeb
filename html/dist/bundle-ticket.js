@@ -11387,7 +11387,7 @@
 			}).then(function (result) {
 				var data = result.Data;
 				commit(_Type2.default.SET_STARTCITY, {
-					Code: data.Start.Id,
+					Code: data.Start.CityId,
 					Name: data.Start.Name
 				});
 				if (!data.End) {
@@ -11399,7 +11399,7 @@
 					return { End: false };
 				}
 				commit(_Type2.default.SET_ENDCITY, {
-					Code: data.End.Id,
+					Code: data.End.CityId,
 					Name: data.End.Name
 				});
 				return data;
@@ -11449,8 +11449,8 @@
 					'Content-Type': 'application/json'
 				},
 				body: (0, _stringify2.default)({
-					SPointId: state.startCity.Code,
-					EPointId: state.endCity.Code,
+					SPoint: state.startCity.Name,
+					EPoint: state.endCity.Name,
 					// SPointId:state.startCity.Code,
 					// EPointId:state.endCity.Code,
 					Date: state.startDate.server
@@ -31022,7 +31022,7 @@
 					if (data) {
 						_this2.locationName = "最近上车点:" + data.Name;
 						_this2.$store.dispatch("setStartCity", {
-							Code: data.Id,
+							Code: data.CityId,
 							Name: data.Name
 						});
 						(0, _mintUi.Toast)({

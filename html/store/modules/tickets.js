@@ -142,7 +142,7 @@ const actions = {
 			.then(result => {
 				let data = result.Data;
 				commit(types.SET_STARTCITY, {
-					Code: data.Start.Id,
+					Code: data.Start.CityId,
 					Name: data.Start.Name
 				});
 				if (!data.End) {
@@ -154,7 +154,7 @@ const actions = {
 					return { End: false };
 				}
 				commit(types.SET_ENDCITY, {
-					Code: data.End.Id,
+					Code: data.End.CityId,
 					Name: data.End.Name
 				});
 				return data;
@@ -195,8 +195,8 @@ const actions = {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					SPointId: state.startCity.Code,
-					EPointId: state.endCity.Code,
+					SPoint: state.startCity.Name,
+					EPoint: state.endCity.Name,
 					// SPointId:state.startCity.Code,
 					// EPointId:state.endCity.Code,
 					Date: state.startDate.server
