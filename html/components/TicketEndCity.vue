@@ -50,6 +50,22 @@
 .mint-indexlist-navitem{
 	padding-top:5px;
 }
+.mint-indexsection{
+	>p.top-active+ul{
+		margin-top:30px;
+	}
+}
+.mint-indexlist-nav{
+	z-index:1002;
+}
+.top-active{
+	position: fixed;
+  top: 50px;
+  left: 0;
+  margin-right: 36px;
+  z-index: 1001;
+  width: 100%;
+}
 </style>
 
 <script type="text/babel">
@@ -69,6 +85,10 @@ export default {
 				values: [],
 				className: 'endcity'
 			}],
+			nowElement:null,//目前固定的元素
+			content:null,
+			elementHeight:[],//各个元素距离顶部的高度
+			throttleFunction:null,//引用的函数
 		}
 	},
 	created(){
@@ -84,6 +104,40 @@ export default {
   			Indicator.close();
   		});
 		}
+	},
+	mounted(){
+		//实现iphone通讯录中类似顶部显示当前块功能
+		let element = document.getElementsByClassName("mint-indexsection-index");
+		this.nowElement = element[0];
+		this.content = document.getElementsByClassName("mint-indexlist-content")[0];//body
+
+		this.nowElement.classList.add("top-active");//给第一个头加上固定
+		for(let i=0;i<element.length;i++){
+			this.elementHeight.push(element[i].offsetTop);
+		}
+		
+		//记录函数引用,方便移除事件
+		this.throttleFunction = _.throttle(()=>{
+			let contentHeight = this.content.scrollTop;
+			let whoBig = 0;
+			
+			for(let i=0;i<this.elementHeight.length;i++){
+				let height = this.elementHeight[i];
+				if(contentHeight>=height){
+					whoBig = i;//记录大于contentHeight中最大的一个
+				}
+			}
+
+			this.nowElement.classList.remove("top-active");//去掉之前的
+			this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
+			this.nowElement.classList.add("top-active");//给头加上固定
+		},100,{leading: false})
+
+		//监听滚动
+		this.content.addEventListener("scroll",this.throttleFunction,false);
+	},
+	beforeDestroy(){
+		document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll",this.throttleFunction);
 	},
 	computed:{
 		setEndCityList(){

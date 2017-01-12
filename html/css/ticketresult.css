@@ -158,7 +158,8 @@ input {
           flex: 0.6;
       -ms-flex-pack: center;
           justify-content: center; }
-    .result .date-control span:first-child, .result .date-control span:last-child {
+    .result .date-control span:first-child,
+    .result .date-control span:last-child {
       -ms-flex: 0.2;
           flex: 0.2;
       display: -ms-flexbox;
@@ -298,6 +299,7 @@ input {
             position: absolute;
             border-radius: 4px;
             border: 1px solid #FF851B;
+            background-color: #FF851B;
             top: 7px;
             left: -15px; }
       .result .result-list .list > .ticket-type {
@@ -315,7 +317,8 @@ input {
           line-height: 30px; }
         .result .result-list .list > .ticket-type .money {
           color: #FF851B; }
-        .result .result-list .list > .ticket-type .number, .result .result-list .list > .ticket-type .type {
+        .result .result-list .list > .ticket-type .number,
+        .result .result-list .list > .ticket-type .type {
           font-size: 1.1rem;
           color: #AAAAAA; }
     .result .result-list .change-set .btn {
