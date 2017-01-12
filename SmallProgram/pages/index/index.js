@@ -77,12 +77,12 @@ Page({
     // 根据获取到的城市设置当前默认城市信息
     Utils.setDataSync("startCity",{
       Name:Data.Start.Name,
-      Code:Data.Start.Id,
+      Code:Data.Start.CityId,
       CityName:Data.Start.CityName
     });
     Utils.setDataSync("endCity",{
       Name:Data.End.Name,
-      Code:Data.End.Id,
+      Code:Data.End.CityId,
       CityName:Data.End.CityName
     });
     

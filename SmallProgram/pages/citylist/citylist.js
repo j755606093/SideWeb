@@ -64,13 +64,13 @@ Page({
     if(this.data.page==="startCityList"){
         Utils.setDataSync("startCity",{
             Name:data.Name,
-            Code:data.Id
+            Code:data.CityId
         });
     }
     else{
         Utils.setDataSync("endCity",{
             Name:data.Name,
-            Code:data.Id
+            Code:data.CityId
         });
     }
 

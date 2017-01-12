@@ -8,8 +8,9 @@ let app = getApp();
 
 Page({
   data: {
-    resultData:null,
+    resultData:[],
     selectIndex:3,//默认选择第一个
+    showLine:-1,//默认不显示任何一个途经点
   },
   onLoad (options) {
     let start = wx.getStorageSync('startCity');//出发地
@@ -23,8 +24,8 @@ Page({
     wx.request({
       url: debugData.serverUrl+"/api/Transport/GetLines",
       data: {
-        SPointId: start.Code,
-				EPointId: end.Code,
+        SPoint: start.Name,
+				EPoint: end.Name,
 				Date: startDate.server
       },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -33,13 +34,13 @@ Page({
         // success
         // 去掉日期后的秒数
         let formatdata = [];
-        console.log(res.data)
+        
         for(let i=0;i<res.data.Data.length;i++){
           let item = Object.assign({},res.data.Data[i]);
           item.StartTime = item.StartTime.slice(0,item.StartTime.length-3);
           formatdata.push(item);
         }
-        console.log(formatdata)
+        // console.log(formatdata)
         this.setData({
           resultData:formatdata
         });
@@ -81,5 +82,15 @@ Page({
     let json = {};
     json[name] = Object.assign(this.data[name],data);
     this.setData(json);
+  },
+  showLine(event){
+    // 显示途经点
+    let index = event.currentTarget.dataset.index;
+    console.log("line"+index)
+  },
+  setOrder(event){
+    // 准备进入订单页
+    let index = event.currentTarget.dataset.index;
+    console.log(index)
   }
 })
