@@ -86,7 +86,17 @@ Page({
   showLine(event){
     // 显示途经点
     let index = event.currentTarget.dataset.index;
-    console.log("line"+index)
+    if(index===this.data.showLine){
+      // 说明相等,那就收起来
+      this.setData({
+        showLine:-1
+      })
+    }
+    else{
+      this.setData({
+        showLine:index
+      })
+    }
   },
   setOrder(event){
     // 准备进入订单页

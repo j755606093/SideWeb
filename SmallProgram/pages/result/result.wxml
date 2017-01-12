@@ -25,13 +25,13 @@
     <!--结果列表-->
     <view class="items">
       <!--单个结果-->
-      <view class="item" wx:for="{{resultData}}"  wx:key="index" wx:for-item="item" wx:for-index="index" data-index="{{index}}" catchtap="setOrder">
-        <view class="item-left"><text class="item-left-text">{{item.StartTime}}</text></view>
+      <view class="item" wx:for="{{resultData}}"  wx:key="index" wx:for-item="items" wx:for-index="index" data-index="{{index}}" catchtap="setOrder">
+        <view class="item-left"><text class="item-left-text">{{items.StartTime}}</text></view>
         <view class="item-center">
           <!--出发点-->
           <view class="item-line">
             <text class="sign">始</text>
-            <text class="item-cityname">{{item.StartPoint}}</text>
+            <text class="item-cityname">{{items.StartPoint}}</text>
           </view>
           <!--途经点-->
           <view class="item-line" data-index="{{index}}" catchtap="showLine">
@@ -39,17 +39,30 @@
             <text class="item-line-text">途经点</text>
             <image class="item-line-image little" src="/picture/downplus.png"></image>
           </view>
+          <!--显示途经点-->
+          <view class="item-lines" wx:if="{{showLine===index}}">
+            <text>始点</text>
+            <view wx:for="{{items.SPoint}}" wx:key="i" wx:for-item="list" wx:for-index="i">
+              <text class="location-active" wx:if="{{list.NodeType===1}}">{{list.Point+" "+list.BoardTime}}</text>
+              <text class="location" wx:else>{{list.Point+" "+list.BoardTime}}</text>
+            </view>
+            <text>终点</text>
+            <view wx:for="{{items.EPoint}}" wx:key="i" wx:for-item="list" wx:for-index="i">
+              <text class="location-active" wx:if="{{list.NodeType===2}}">{{list.Point+" "+list.BoardTime}}</text>
+              <text class="location" wx:else>{{list.Point}}</text>
+            </view>
+          </view>
           <!--到达点-->
           <view class="item-line">
             <text class="sign">终</text>
-            <text class="item-cityname">{{item.EndPoint}}</text>
+            <text class="item-cityname">{{items.EndPoint}}</text>
           </view>
-          <text class="item-router">{{item.Route}}</text>
+          <text class="item-router">{{items.Route}}</text>
         </view>
         <view class="item-right">
-          <text class="item-right-text orange">{{item.Price+'元'}}</text>
-          <text class="item-right-text">{{item.CoName}}</text>
-          <text class="item-right-text">{{item.TicketNum+'张余票'}}</text>
+          <text class="item-right-text orange">{{items.Price+'元'}}</text>
+          <text class="item-right-text">{{items.CoName}}</text>
+          <text class="item-right-text">{{items.TicketNum+'张余票'}}</text>
         </view>
       </view>
     </view>
