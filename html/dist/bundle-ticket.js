@@ -50677,7 +50677,7 @@
 	    domProps: {
 	      "textContent": _vm._s(_vm.busInfo.EndPoint)
 	    }
-	  }), " ", _vm._h('p', [_vm._s(_vm.busInfo.AcrossCity)])])]), " ", _vm._h('div', {
+	  }), " ", _vm._h('p', [_vm._s(_vm.busInfo.TargetAddr)])])]), " ", _vm._h('div', {
 	    staticClass: "tip-info",
 	    on: {
 	      "click": _vm.openTip

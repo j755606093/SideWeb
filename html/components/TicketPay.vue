@@ -19,7 +19,7 @@
 				</div>
 				<div class="end box">
 					<p v-text="busInfo.EndPoint"></p>
-					<p>{{busInfo.AcrossCity}}</p>
+					<p>{{busInfo.TargetAddr}}</p>
 				</div>
 			</div>
 			<div class="tip-info" @click="openTip">
