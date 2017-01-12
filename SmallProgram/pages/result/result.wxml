@@ -1,10 +1,42 @@
-<scroll-view scroll-y="true" class="root">
+<view class="root">
   <!--时间-->
   <view class="header">
+    <!--日期选择-->
     <view class="select-date">
       <text class="date-left">前一天</text>
       <text class="date-center">2017-01-12 明天</text>
       <text class="date-right">后一天</text>
     </view>
+    <!--其他选项-->
+    <view class="select-other">
+      <!--时段显示-->
+      <view wx:if="{{selectIndex===1}}" class="select-left"><image class="select-img" src="/picture/select_active.png"></image><text class="select-text-active">时段</text></view>
+      <view wx:else class="select-left"><image class="select-img" src="/picture/select.png"></image><text class="select-text">时段</text></view>
+      <!--路线信息显示-->
+      <view wx:if="{{selectIndex===2}}" class="select-center"><image class="select-img" src="/picture/bus.png"></image><text class="select-text-active">路线信息</text></view>
+      <view wx:else class="select-center"><image class="select-img" src="/picture/bus.png"></image><text class="select-text">路线信息</text></view>
+      <!--票价显示-->
+      <view wx:if="{{selectIndex===3}}" class="select-right"><image class="select-img" src="/picture/downplus_active.png"></image><text class="select-text-active">票价</text></view>
+      <view wx:else class="select-right"><image class="select-img" src="/picture/downplus.png"></image><text class="select-text">票价</text></view>
+    </view>
   </view>
-</scroll-view>
+  <!--结果显示-->
+  <scroll-view scroll-y="true" class="body">
+    <!--结果列表-->
+    <view class="items">
+      <!--单个结果-->
+      <view class="item" wx:for="{{resultData}}"  wx:key="index" wx:for-item="item" wx:for-index="index">
+        <view class="item-left"><text class="item-left-text">{{item.StartTime)}}</text></view>
+        <view class="item-center">
+          <text>{{item.StartPoint}}</text>
+          <text>{{item.EndPoint}}</text>
+        </view>
+        <view class="item-right">
+          <text class="item-right-text">{{item.Price+'元'}}</text>
+          <text class="item-right-text">{{item.CoName}}</text>
+          <text class="item-right-text">{{item.TicketNum+'张余票'}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

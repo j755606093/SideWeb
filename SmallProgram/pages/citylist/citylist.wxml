@@ -1,12 +1,12 @@
-<scroll-view scroll-y="true" class="root">
+<view class="root">
   <!--列表-->
-  <view class="lists">
+  <scroll-view scroll-y="true" scroll-into-view="{{intoId}}" class="lists">
     <view class="list" wx:for="{{CityList}}" wx:key="index" wx:for-item="items" wx:for-index="index">
-        <text class="title">{{items.ShortKey}}</text>
+        <text class="title" id="{{items.ShortKey}}">{{items.ShortKey}}</text>
         <text class="list-text" bindtap="getCity" wx:for="{{items.Content}}" wx:key="i" wx:for-item="item" wx:for-index="i" data-i="{{i}}" data-index="{{index}}">{{item.Name}}</text>
     </view>
-  </view>
+  </scroll-view>
   <view class="city-lists">
-    <text class="city-name" wx:key="index"  wx:for="{{CityList}}" wx:for-item="items" wx:for-index="index">{{items.ShortKey}}</text>
+    <text class="city-name" wx:key="index" bindtap="setLocation" data-name="{{items.ShortKey}}"  wx:for="{{CityList}}" wx:for-item="items" wx:for-index="index">{{items.ShortKey}}</text>
   </view>
-</scroll-view>
+</view>

@@ -16,31 +16,40 @@
     height:100%;
     width:90%;
     margin-bottom:5px;
+    position:relative;
 }
 .list{
-    display: flex;
+    /*display: flex;*/
     width:100%;
-    flex-direction: column;
+    text-align: left;
+    flex:1;
+    /*height:100%;*/
+    /*flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start;*/
+    position:relative;
 }
 .title{
     width:96%;
     font-size:18px;
     color:black;
-    height:30px;
-    line-height: 30px;
+    height:40px;
+    line-height: 40px;
     padding:0 2%;
     background-color: #fafafa;
     margin-bottom:5px;
+    display: block;
+    float:left;
 }
 .list-text{
     width:96%;
     font-size: 16px;
     padding:0 2%;
-    height:30px;
-    line-height: 30px;
+    height:40px;
+    line-height: 40px;
     border-bottom:1px solid #fafafa;
+    display: block;
+    float:left;
 }
 
 /*城市名列表*/

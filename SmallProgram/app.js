@@ -6,25 +6,28 @@ App({
   globalData:{
     userInfo:{}
   },
-  onLaunch: function () {
+  onLaunch() {
     //调用API从本地缓存中获取数据
     // wx.setStorageSync('globalData', this.globalData);
-    this.getUserInfo();
+    this.login();
   },
-  getUserInfo:function(){
+  login(){
     // 获取用户信息不需要权限
     wx.login({
       success:(res)=> {
         if(res.code){
           console.log(res.code)
         }
-        wx.getUserInfo({
-          success: (res)=> {
-            this.setData({
-              uesrInfo:res.userInfo
-            });
-          }
-        })
+        // this.getUserInfo();
+      }
+    })
+  },
+  getUserInfo(){
+    wx.getUserInfo({
+      success: (res)=> {
+        this.setData({
+          uesrInfo:res.userInfo
+        });
       }
     })
   }

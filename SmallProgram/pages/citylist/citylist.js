@@ -9,17 +9,19 @@ Page({
   data: {
     CityList:[],
     page:"startCityList",//startCityList或者endCityList
+    intoId:""
   },
   onLoad (options) {
     let city = options.city;//获取需要显示的列表
-
+    
     wx.getStorage({
       key: city,
       success:(res)=>{
-          this.setData({
-            CityList:res.data,
-            page:city
-          });
+        this.setData({
+          CityList:res.data,
+          page:city,
+          intoId:res.data[0].ShortKey
+        });
       }
     })
   },
@@ -73,5 +75,13 @@ Page({
     }
 
     wx.navigateBack();//返回上一个页面
+  },
+  setLocation(event){
+    // 设置定位
+    let name = event.currentTarget.dataset.name;
+    
+    this.setData({
+      intoId:name
+    })
   }
 })

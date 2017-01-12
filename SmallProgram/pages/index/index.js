@@ -161,6 +161,13 @@ Page({
       showWeek = "明天";
     }
 
+    // 保存时间
+    Utils.setDataSync("startDate",{
+      date:Utils.formatDateTypeOne(date),
+      week:showWeek,
+      server:new Date(date)
+    });
+
     this.setData({
       date:Object.assign(this.data.date,{
         nowDate:event.detail.value,
@@ -182,6 +189,13 @@ Page({
     let showText = Utils.formatDateTypeOne(new Date(nowDate.getTime()+1000*60*60*24));
     let nowText = Utils.formatDateTypeOne(new Date(nowDate.getTime()));
     let endText = Utils.formatDateTypeOne(new Date(nowDate.getTime()+1000*60*60*24*30));
+
+    //保存时间
+    Utils.setDataSync("startDate",{
+      date:showText,
+      week:Utils.formatWeek(new Date(nowDate.getTime())),
+      server:new Date(nowDate.getTime()+1000*60*60*24)
+    });
 
     this.setData({
       date:Object.assign(this.data.date,{
