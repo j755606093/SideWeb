@@ -8,7 +8,8 @@ let app = getApp();
 
 Page({
   data: {
-    orderData:[]
+    orderData:[],
+    islogin:false,//是否注册过
   },
   onLoad (options) {
     let index = options.index;//获取用户选择的结果数据
@@ -23,10 +24,14 @@ Page({
     wx.setNavigationBarTitle({
       title: startDate.date+" "+startDate.week
     });
+    console.log(app.globalData.islogin)
   },
   //监听页面显示
   onShow(){
-    console.log(this.data.orderData)
+    // 每次显示都查看是否注册过
+    this.setData({
+      islogin:app.globalData.islogin
+    });
   },
   //监听页面初次渲染完成
   onReady(){

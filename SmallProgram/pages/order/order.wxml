@@ -18,22 +18,81 @@
     </view>
     <view class="head-bottom">
       <text class="white little">查看取票、退票说明、预订须知</text>
-      <text class="white little">余票40</text>
+      <image class="head-bottom-img" src="/picture/downpuls_white.png"></image>
+      <text class="white little head-bottom-right">余票40</text>
     </view>
   </view>
   <!--列表-->
   <scroll-view scroll-y="true" class="lists">
     <!--乘车点-->
-    <view class="lists-cart-location"></view>
+    <view class="lists-cart">
+      <text class="gray">乘车点:</text>
+      <text class="address-detail">详细地址1详细地址1详细地址1详细地址1详细地址1详细地址1</text>
+      <view class="btn-view"><text class="btn">其它</text></view>
+    </view>
     <!--乘客信息-->
-    <view class="lists-line lists-passenger"></view>
+    <view class="lists-line lists-passenger">
+      <view class="lists-head"><text class="gray">乘客信息</text></view>
+      <view class="list-user">
+        <image src="/picture/cricle.png" class="check-user"></image>
+        <text class="user-name">周周周</text>
+        <text class="user-phone">18951648431</text>
+        <view><text class="set-contact">设为联系人</text></view>
+        <image src="/picture/delete.png" class="check-user right"></image>
+      </view>
+      <view class="list-user">
+        <image src="/picture/right.png" class="check-user"></image>
+        <text class="user-name">种植物</text>
+        <text class="user-phone">18951648431</text>
+        <view><text class="set-contact">设为联系人</text></view>
+        <image src="/picture/delete.png" class="check-user right"></image>
+      </view>
+      <!--增加乘客-->
+      <view class="add-info">
+        <text class="info-name">乘客姓名</text>
+        <input class="info-value" placeholder="请填写真实姓名" />
+      </view>
+      <view class="add-phone">
+        <text class="info-name">手机号</text>
+        <input class="info-phone" type="digit" placeholder="选填(可用于联系)" />
+        <view class="add-btn"><text>添加</text></view>
+      </view>
+    </view>
     <!--联系信息-->
-    <view class="lists-line lists-contact"></view>
+    <view class="lists-line lists-contact">
+      <view class="lists-head"><text class="gray">联系信息</text></view>
+      <view class="add-info">
+        <text class="info-name">联系手机</text>
+        <input class="info-value" type="digit" placeholder="必填(用于联系)" />
+      </view>
+    </view>
     <!--其他信息-->
-    <view class="lists-line lists-other"></view>
+    <view class="lists-line lists-other">
+      <view class="lists-head"><text class="gray">其它信息</text></view>
+      <view class="add-info">
+        <text class="info-name">优惠券</text>
+        <text class="gray placeholder">你有9个优惠券</text>
+        <text class="gray info-tip-text">已选1个</text>
+      </view>
+      <view class="add-phone">
+        <text class="info-name">优惠码</text>
+        <input class="info-value" style="flex:0.5" placeholder="请输入您的优惠码" />
+        <view class="add-btn"><text>验证</text></view>
+      </view>
+    </view>
   </scroll-view>
   <view class="footer">
-    <view class="footer-left"></view>
-    <view class="footer-right"></view>
+    <view class="footer-left">
+      <view class="footer-left-top">
+        <text class="footer-bold">订单总额</text>
+        <text class="orange" style="font-size:16px;">¥0.00</text>
+      </view>
+      <view class="footer-left-bottom">
+        <text>票价 ¥0.00  优惠 ¥0.00</text>
+      </view>
+    </view>
+    <view class="footer-right">
+      <text class="footer-right-btn">提交订单</text>
+    </view>
   </view>
 </view>
