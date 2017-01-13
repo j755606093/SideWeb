@@ -22,7 +22,7 @@
 .head-top{
     display: flex;
     flex-direction: row;
-    height:100px;
+    height:80px;
 }
 .head-top-left{
     flex:0.3;
@@ -69,4 +69,10 @@
     bottom: -16px;
     content: "";
     border-color: transparent transparent white white;
+}
+.head-bottom{
+    display: flex;
+    flex-direction: row;
+    height:40px;
+    line-height: 40px;
 }

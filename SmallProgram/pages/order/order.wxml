@@ -16,7 +16,10 @@
         <text class="white head-text little">深圳</text>
       </view>
     </view>
-    <view class="head-bottom"></view>
+    <view class="head-bottom">
+      <text class="white little">查看取票、退票说明、预订须知</text>
+      <text class="white little">余票40</text>
+    </view>
   </view>
   <!--列表-->
   <scroll-view scroll-y="true" class="lists">
