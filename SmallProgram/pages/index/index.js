@@ -193,7 +193,8 @@ Page({
     //保存时间
     Utils.setDataSync("startDate",{
       date:showText,
-      week:Utils.formatWeek(new Date(nowDate.getTime())),
+      week:"明天",
+      // week:Utils.formatWeek(new Date(nowDate.getTime())),
       server:new Date(nowDate.getTime()+1000*60*60*24)
     });
 

@@ -11,6 +11,7 @@ Page({
     resultData:[],
     selectIndex:3,//默认选择第一个
     showLine:-1,//默认不显示任何一个途经点
+    noData:true,//没有数据
   },
   onLoad (options) {
     let start = wx.getStorageSync('startCity');//出发地
@@ -34,16 +35,24 @@ Page({
         // success
         // 去掉日期后的秒数
         let formatdata = [];
-        
-        for(let i=0;i<res.data.Data.length;i++){
-          let item = Object.assign({},res.data.Data[i]);
-          item.StartTime = item.StartTime.slice(0,item.StartTime.length-3);
-          formatdata.push(item);
+        if(res.data.Data){
+          for(let i=0;i<res.data.Data.length;i++){
+            let item = Object.assign({},res.data.Data[i]);
+            item.StartTime = item.StartTime.slice(0,item.StartTime.length-3);
+            formatdata.push(item);
+          }
+          // console.log(formatdata)
+          wx.setStorageSync('resultList', formatdata);
+          this.setData({
+            resultData:formatdata,
+            noData:true
+          });
         }
-        // console.log(formatdata)
-        this.setData({
-          resultData:formatdata
-        });
+        else{
+          this.setData({
+            noData:false
+          })
+        }
       },
       fail: ()=>{
         // fail
@@ -101,6 +110,8 @@ Page({
   setOrder(event){
     // 准备进入订单页
     let index = event.currentTarget.dataset.index;
-    console.log(index)
+    wx.navigateTo({
+      url: '../order/order?index='+index
+    });
   }
 })

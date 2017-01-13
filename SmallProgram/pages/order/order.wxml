@@ -1,0 +1,36 @@
+<view class="root">
+  <!--头部的车票信息-->
+  <view class="header">
+    <view class="head-top">
+      <view class="head-top-left">
+        <text class="white head-text">五经富</text>
+        <text class="white head-text little">揭阳</text>
+      </view>
+      <view class="head-top-center">
+        <text class="white head-text little">06:25</text>
+        <text class="white head-text little">深汕高速</text>
+        <view id="arrow"></view>
+      </view>
+      <view class="head-top-right">
+        <text class="white head-text">淡水</text>
+        <text class="white head-text little">深圳</text>
+      </view>
+    </view>
+    <view class="head-bottom"></view>
+  </view>
+  <!--列表-->
+  <scroll-view scroll-y="true" class="lists">
+    <!--乘车点-->
+    <view class="lists-cart-location"></view>
+    <!--乘客信息-->
+    <view class="lists-line lists-passenger"></view>
+    <!--联系信息-->
+    <view class="lists-line lists-contact"></view>
+    <!--其他信息-->
+    <view class="lists-line lists-other"></view>
+  </scroll-view>
+  <view class="footer">
+    <view class="footer-left"></view>
+    <view class="footer-right"></view>
+  </view>
+</view>
