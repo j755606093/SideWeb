@@ -1,457 +1,460 @@
 @import "./utils.scss";
-
-body{
-	background-color: lighten($gray, 30%);
+body {
+  background-color: lighten($gray, 30%);
 }
 
-#app{
-	width:100%;
-	height:100%;
-	position: absolute;
+#app {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
-header{
-	height:50px;
-	// background-color:#14d67c;
-	background-color:#2196F3;
-	color:$white;
-	font-size:1.5rem;
-	position:fixed;
-	top:0;
-	left:0;
-	width:100%;
-	z-index:100;
-	padding:0;
-	margin:0;
-	// color:#000;
-	.home{
-		text-align:center;
-		line-height:50px;
-		font-size:1.8rem;
-		font-weight:900;
-	}
-	.other{
-		text-align:center;
-		.left{
-			height:50px;
-			font-size:1.5rem;
-			position:absolute;
-			top:0;
-			left:0;
-			width:50px;
-			i{
-				font-size:3rem;
-				line-height:50px;
-			}
-		}
-		.center{
-			line-height:50px;
-			font-size:1.8rem;
-		}
-	}
+header {
+  height: 50px;
+  // background-color:#14d67c;
+  background-color: #2196F3;
+  color: $white;
+  font-size: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  // color:#000;
+  .home {
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+  .other {
+    text-align: center;
+    .left {
+      height: 50px;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      i {
+        font-size: 3rem;
+        line-height: 50px;
+      }
+    }
+    .center {
+      line-height: 50px;
+      font-size: 1.8rem;
+    }
+  }
 }
-.mint-navbar{
-	// margin-top:50px;
-	display:flex;
-	width:100%;
-	height:40px;
-	justify-content:center;
-	align-items:center;
-	text-align:center;
-	background-color:$white;
-	position:fixed;
-	top:50px;
-	left:0;
-	box-shadow:0px 6px 5px 0px #ececec;
-	z-index:10;
-	.mint-tab-item{
-		flex:0.5;
-		width:50%;
-		font-size:1.6rem;
-	}
-	.is-selected{
-		color:$blue;
-	}
+
+.mint-navbar {
+  // margin-top:50px;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: $white;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  box-shadow: 0px 6px 5px 0px #ececec;
+  z-index: 10;
+  .mint-tab-item {
+    flex: 0.5;
+    width: 50%;
+    font-size: 1.6rem;
+  }
+  .is-selected {
+    color: $blue;
+  }
 }
-.body{
-	width:100%;
-	// margin-top:50px;
-	padding-bottom:50px;
-	.no-data{
-		padding-top:100px;
-		text-align: center;
-		p{
-			color:$gray;
-			font-size:1.8rem;
-		}
-	}
-	.order{
-		width:100%;
-		// background-color: lighten($gray, 20%);
-		.lists {
-			// background-color: $white;
-			width:94%;
-			margin:0 3%;
-			margin-top:100px;
-			.list{
-				width:100%;
-				padding:5px 5px;
-				background-color: $white;
-				border-radius: 10px;
-				margin-bottom:10px;
-				.list-header{
-					display:flex;
-					flex-direction:row;
-					justify-content: center;
-					border-bottom: 1px solid lighten($gray, 20%);
-					padding:5px 0;
-					span{
-						font-size:1.4rem;
-						color:darken($gray,40%);
-					}
-					span.time{
-						text-align: left;
-						flex:0.7;
-						font-size:1.2rem;
-					}
-					span.type{
-						text-align: right;
-						flex:0.3;
-					}
-				}
-				.list-center{
-					display:flex;
-					flex-direction:row;
-					justify-content: center;
-					padding:5px 0;
-					min-height:50px;
-					align-items: center;
-					.city{
-						display:flex;
-						flex-direction:row;
-						justify-content: center;
-						flex:0.8;
-						position:relative;
-						>span{
-							font-size:1.6rem;
-							flex:1;
-						}
-						>span.start{
-							position:relative;
-							&::before{
-								position:absolute;
-								bottom:5px;
-								right:20%;
-								height: 5px;
-								width:30%;
-								background-color: $blue;
-								content:"";
-							}
-							&::after{
-								position: absolute;
-								bottom:5px;
-								right: 12%;
-								height: 0;
-								width:0;
-								border:6px solid $white;
-								border-color:transparent transparent $blue $blue;
-								content:"";
-							}
-						}
-						i{
-							position: absolute;
-							top:0;
-							left:27%;
-						}
-					}
-					span.money{
-						font-size:1.6rem;
-						flex:0.2;
-						text-align: right;
-						color:$red;
-					}
-				}
-				.list-footer{
-					display:flex;
-					flex-direction:row;
-					justify-content: center;
-					padding:5px 0;
-					min-height:30px;
-					align-items: center;
-					span{
-						font-size:1.2rem;
-						
-					}
-					span.name{
-						text-align: left;
-						color:darken($gray, 20%);
-						flex:0.7;
-					}
-					span.order-pay{
-						flex:0.3;
-					}
-					span.order-status{
-						text-align: right;
-					}
-					span.order-pay{
-						text-align: right;
-					}
-					span.order-no{
-						color:$red;
-					}
-					span.order-paying{
-						color:$blue;
-					}
-					span.order-payed{
-						color:$green;
-					}
-				}
-			}
-		}
-	}
+
+.body {
+  width: 100%;
+  // margin-top:50px;
+  padding-bottom: 50px;
+  .no-data {
+    padding-top: 100px;
+    text-align: center;
+    p {
+      color: $gray;
+      font-size: 1.8rem;
+    }
+  }
+  .order {
+    width: 100%;
+    // background-color: lighten($gray, 20%);
+    .lists {
+      // background-color: $white;
+      width: 94%;
+      margin: 0 3%;
+      margin-top: 100px;
+      .list {
+        width: 100%;
+        padding: 5px 5px;
+        background-color: $white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        .list-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          border-bottom: 1px solid lighten($gray, 20%);
+          padding: 5px 0;
+          span {
+            font-size: 1.4rem;
+            color: darken($gray, 40%);
+          }
+          span.time {
+            text-align: left;
+            flex: 0.7;
+            font-size: 1.2rem;
+          }
+          span.type {
+            text-align: right;
+            flex: 0.3;
+          }
+        }
+        .list-center {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 5px 0;
+          min-height: 50px;
+          align-items: center;
+          .city {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex: 0.8;
+            position: relative;
+            >span {
+              font-size: 1.6rem;
+              flex: 1;
+            }
+            >span.start {
+              position: relative;
+              &::before {
+                position: absolute;
+                bottom: 5px;
+                right: 20%;
+                height: 5px;
+                width: 30%;
+                background-color: $blue;
+                content: "";
+              }
+              &::after {
+                position: absolute;
+                bottom: 5px;
+                right: 12%;
+                height: 0;
+                width: 0;
+                border: 6px solid $white;
+                border-color: transparent transparent $blue $blue;
+                content: "";
+              }
+            }
+            i {
+              position: absolute;
+              top: 0;
+              left: 27%;
+            }
+          }
+          span.money {
+            font-size: 1.6rem;
+            flex: 0.2;
+            text-align: right;
+            color: $red;
+          }
+        }
+        .list-footer {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 5px 0;
+          min-height: 30px;
+          align-items: center;
+          span {
+            font-size: 1.2rem;
+          }
+          span.name {
+            text-align: left;
+            color: darken($gray, 20%);
+            flex: 0.7;
+          }
+          span.order-pay {
+            flex: 0.3;
+          }
+          span.order-status {
+            text-align: right;
+          }
+          span.order-pay {
+            text-align: right;
+          }
+          span.order-no {
+            color: $red;
+          }
+          span.order-paying {
+            color: $blue;
+          }
+          span.order-payed {
+            color: $green;
+          }
+        }
+      }
+    }
+  }
 }
-.pay-order{
-	width:100%;
-	height:100%;
-	background-color:lighten($gray, 30%);
-	position:fixed;
-	left:0;
-	bottom:0;
-	.pay-lists{
-		width:100%;
-		height:100%;
-		overflow-y:auto;
-	}
-	.info-body{
-		height:160px;
-		width:100%;
-		background-color:#2196F3;
-		color:$white;
-		position:relative;
-		.head{
-			height:40px;
-			display:inline-block;
-			position:absolute;
-			top:0;
-			left:0px;
-			width:40px;
-			text-align: center;
-			>i{
-				font-size:20px;
-				line-height:40px;
-			}
-		}
-		.status{
-			text-align: center;
-			padding-top:20px;
-			>i.fa{
-				font-size:4rem;
-				color:#2ecc71;
-			}
-			>i.fa-times-circle{
-				color:$red;
-			}
-			>p{
-				font-size:1.8rem;
-				color:$white;
-				margin-top:10px;
-			}
-			p.time{
-				font-size:1.4rem;
-			}
-		}
-	}
-	.ticket-body{
-		margin-bottom: 10px;
-		width:100%;
-		.pay-info{
-			background-color: $white;
-			width:100%;
-			padding:0 3%;
-			.qr-img{
-				width:90%;
-				margin:0 5%;
-				text-align: center;
-				img{
-					width:50%;
-					height:50%;
-					border-radius: 20px;
-				}
-				p{
-					color:$gray;
-				}
-			}
-			.address-info{
-				width:96%;
-				margin:0px 2%;
-				font-size:1.2rem;
-				display:flex;
-				flex-direction: row;
-				align-items: center;
-				height:40px;
-				.city{
-					display:flex;
-					flex-direction:row;
-					justify-content: center;
-					flex:1;
-					position:relative;
-					justify-content: center;
-					text-align:center;
-					>span{
-						font-size:1.6rem;
-						flex:1;
-						height:40px;
-						line-height:40px;
-					}
-					>span.start{
-						position:relative;
-						&::before{
-							position:absolute;
-							bottom:5px;
-							right:-10%;
-							height: 5px;
-							width:30%;
-							background-color: $blue;
-							content:"";
-						}
-						&::after{
-							position: absolute;
-							bottom:5px;
-							right: -15%;
-							height: 0;
-							width:0;
-							border:5px solid $white;
-							border-color:transparent transparent $blue $blue;
-							content:"";
-						}
-					}
-					i{
-						position: absolute;
-						top:5px;
-						left:40%;
-					}
-				}
-			}
-			.info-box{
-				min-height:40px;
-				border-top:1px solid lighten($gray,30%);
-				>p{
-					font-size:1.3rem;
-					span{
-						font-size:1.3rem;
-						color:$gray;
-						line-height:40px;
-						min-height:40px;
-					}
-					span.type{
-						width:50px;
-					}
-					span.name{
-						color:$black;
-					}
-				}
-			}
-		}
-	}
-	.pay-ticket-info{
-		background-color: $white;
-		width:100%;
-		.pay-ticket-info-header{
-			padding:0 3%;
-			border-bottom: 1px solid lighten($gray,20%);
-			p{
-				font-size:1.4rem;
-				height:40px;
-				line-height:40px;
-			}
-		}
-		.pay-ticket-info-body{
-			padding:0 3%;
-			p{
-				font-size:1.2rem;
-				color:darken($gray,10%);
-				height:30px;
-				line-height:30px;
-			}
-			p.all{
-				font-size:1.4rem;
-				text-align: right;
-			}
-		}
-	}
-	.now-pay{
-		width:100%;
-		padding:0 2%;
-		margin-top:10px;
-		// background-color: $white;
-		button{
-			outline: none;
-			border:0;
-			background-color: $orange;
-			font-size:1.5rem;
-			color:$white;
-			width:100%;
-			height:40px;
-			border-radius:10px;
-		}
-	}
-	.out-order{
-		width:100%;
-		text-align: center;
-		a{
-			color:$gray;
-		}
-	}
+
+.pay-order {
+  width: 100%;
+  height: 100%;
+  background-color: lighten($gray, 30%);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  .pay-lists {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .info-body {
+    height: 160px;
+    width: 100%;
+    background-color: #2196F3;
+    color: $white;
+    position: relative;
+    .head {
+      height: 40px;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 40px;
+      text-align: center;
+      >i {
+        font-size: 20px;
+        line-height: 40px;
+      }
+    }
+    .status {
+      text-align: center;
+      padding-top: 20px;
+      >i.fa {
+        font-size: 4rem;
+        color: #2ecc71;
+      }
+      >i.fa-times-circle {
+        color: $red;
+      }
+      >p {
+        font-size: 1.8rem;
+        color: $white;
+        margin-top: 10px;
+      }
+      p.time {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  .ticket-body {
+    margin-bottom: 10px;
+    width: 100%;
+    .pay-info {
+      background-color: $white;
+      width: 100%;
+      padding: 0 3%;
+      .qr-img {
+        width: 90%;
+        margin: 0 5%;
+        text-align: center;
+        img {
+          width: 50%;
+          height: 50%;
+          border-radius: 20px;
+        }
+        p {
+          color: $gray;
+        }
+      }
+      .address-info {
+        width: 96%;
+        margin: 0px 2%;
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 40px;
+        .city {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          flex: 1;
+          position: relative;
+          justify-content: center;
+          text-align: center;
+          >span {
+            font-size: 1.6rem;
+            flex: 1;
+            height: 40px;
+            line-height: 40px;
+          }
+          >span.start {
+            position: relative;
+            &::before {
+              position: absolute;
+              bottom: 5px;
+              right: -10%;
+              height: 5px;
+              width: 30%;
+              background-color: $blue;
+              content: "";
+            }
+            &::after {
+              position: absolute;
+              bottom: 5px;
+              right: -15%;
+              height: 0;
+              width: 0;
+              border: 5px solid $white;
+              border-color: transparent transparent $blue $blue;
+              content: "";
+            }
+          }
+          i {
+            position: absolute;
+            top: 5px;
+            left: 40%;
+          }
+        }
+      }
+      .info-box {
+        min-height: 40px;
+        border-top: 1px solid lighten($gray, 30%);
+        >p {
+          font-size: 1.3rem;
+          span {
+            font-size: 1.3rem;
+            color: $gray;
+            line-height: 40px;
+            min-height: 40px;
+          }
+          span.type {
+            width: 50px;
+          }
+          span.name {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+  .pay-ticket-info {
+    background-color: $white;
+    width: 100%;
+    .pay-ticket-info-header {
+      padding: 0 3%;
+      border-bottom: 1px solid lighten($gray, 20%);
+      p {
+        font-size: 1.4rem;
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+    .pay-ticket-info-body {
+      padding: 0 3%;
+      p {
+        font-size: 1.2rem;
+        color: darken($gray, 10%);
+        height: 30px;
+        line-height: 30px;
+      }
+      p.all {
+        font-size: 1.4rem;
+        text-align: right;
+      }
+    }
+  }
+  .now-pay {
+    width: 100%;
+    padding: 0 2%;
+    margin-top: 10px;
+    // background-color: $white;
+    button {
+      outline: none;
+      border: 0;
+      background-color: $orange;
+      font-size: 1.5rem;
+      color: $white;
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+    }
+  }
+  .out-order {
+    width: 100%;
+    text-align: center;
+    a {
+      color: $gray;
+    }
+  }
 }
-footer{
-	display:flex;
-	flex-direction:row;
-	position:fixed;
-	bottom:0;
-	left:0;
-	height:50px;
-	line-height: 50px;
-	width:100%;
-	overflow-x: hidden;
-	justify-content:center;
-	align-items:center;
-	// border-top:1px solid $gray;
-	background-color: $white;
-	box-shadow:3px 0 3px 3px #efeeee;
-	z-index: 100;
-	.footer{
-		flex:1;
-		display:flex;
-		flex-direction:column;
-		justify-content:center;
-		align-items:center;
-		width:33.3333%;
-		color:$gray;
-		height: 50px;
-		line-height:50px;
-		i{
-			font-size:1.8rem;
-		}
-		img{
-			width:22px;
-			height:22px;
-		}
-		p{
-			font-size:1.2rem;
-			color:$gray;
-			height:20px;
-			line-height:20px;
-		}
-	}
-	.footer.active{
-		color:$blue;
-		p{
-			color:$blue;
-		}
-	}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+  // border-top:1px solid $gray;
+  background-color: $white;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  z-index: 100;
+  .footer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 33.3333%;
+    color: $gray;
+    height: 50px;
+    line-height: 50px;
+    i {
+      font-size: 1.8rem;
+    }
+    img {
+      width: 22px;
+      height: 22px;
+    }
+    p {
+      font-size: 1.2rem;
+      color: $gray;
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+  .footer.active {
+    color: $blue;
+    p {
+      color: $blue;
+    }
+  }
 }
-.mint-indicator{
-	position: fixed;
+
+.mint-indicator {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -464,9 +467,10 @@ footer{
   text-align: center;
   color: #fff;
   font-size: 2rem;
-	.mint-indicator-wrapper{
-		background-color: rgba(0,0,0,0.7);
-		border-radius: 10px;
-		padding:25px !important;
-	}
+  z-index: 10000;
+  .mint-indicator-wrapper {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 25px !important;
+  }
 }

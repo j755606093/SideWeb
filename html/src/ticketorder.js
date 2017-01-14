@@ -235,6 +235,7 @@ const Vue_Order = new Vue({
 						OrderId: id
 					})
 				})
+				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => {
 					Indicator.close();
