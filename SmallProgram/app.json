@@ -1,9 +1,10 @@
 {
   "pages":[
-    "pages/order/order",
+    
     "pages/index/index",
     "pages/citylist/citylist",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/order/order"
   ],
   "window":{
     "backgroundTextStyle":"light",

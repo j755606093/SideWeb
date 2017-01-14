@@ -1,7 +1,7 @@
 //index.js
 
 let Utils = require("../../utils/util.js");
-let debugData = wx.getStorageSync('debugData')
+let debugData = wx.getStorageSync('debugData');
 
 //获取应用实例
 let app = getApp();
@@ -22,6 +22,7 @@ Page({
   onLoad () {
     this.setStartDate();// 设置出发时间
     this.getCityDefault();//设置默认城市
+    this.getUserRelative();//获取用户信息
   },
   //监听页面初次渲染完成
   onReady(){
@@ -31,11 +32,12 @@ Page({
   onShow(){
     let start = wx.getStorageSync('startCity').Name;
     let end = wx.getStorageSync('endCity').Name;
+    debugData = wx.getStorageSync('debugData');//更新数据
 
     this.setState("search",{
       start:start,
       end:end
-    })
+    });
   },
   //监听页面隐藏
   onHide(){
@@ -64,6 +66,24 @@ Page({
         if(res.data.Data){
           this.setCityDefault(res.data.Data)
         }
+      }
+    })
+  },
+  getUserRelative(){
+    // 获取用户相关的信息信息
+    wx.request({
+      url: debugData.serverUrl+'/api/Transport/UserRelevant/0',
+      data: {},
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      header: debugData.headers, // 设置请求的 header
+      success: function(res){
+        // success
+        let data = res.data.Data;
+        console.log(res.data.Data);
+        wx.setStorageSync('passenger', data.Passengers);
+        wx.setStorageSync('rebate', data.Rebates);
+        wx.setStorageSync('nopay', data.NoPay);
+        wx.setStorageSync('phone', data.Userinfo.Mobile?data.Userinfo.Mobile:"");
       }
     })
   },
