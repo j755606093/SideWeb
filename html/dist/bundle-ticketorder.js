@@ -75,14 +75,14 @@
 	_vue2.default.component(_mintUi.Navbar.name, _mintUi.Navbar);
 
 	var debug = function () {
-		var debug = false;
+		var test = false;
 		var url = window.location.href;
 		if (url.slice(0, 5) === "https") {
-			debug = false;
+			test = false;
 		} else {
-			debug = true;
+			test = true;
 		}
-		return debug;
+		return test;
 	}();
 
 	//检查请求返回的状态
@@ -295,7 +295,7 @@
 			payMoney: function payMoney() {
 				this.loading();
 				var id = this.OrderDetail.Id;
-				return fetch(config.serverUrl + "/api/Order/PayOrder", {
+				fetch(config.serverUrl + "/api/Order/PayOrder", {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

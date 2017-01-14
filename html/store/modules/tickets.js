@@ -305,7 +305,7 @@ const actions = {
 				commit("SET_PASSENGER", data.Passengers);
 				commit("SET_REBATES", data.Rebates);
 				commit("SET_NOPAY", data.NoPay);
-				commit("SET_PHONE", data.Phone ? data.Phone : '');
+				commit("SET_PHONE", data.Userinfo.Mobile ? data.Userinfo.Mobile : '');
 				return data;
 			})
 	},
