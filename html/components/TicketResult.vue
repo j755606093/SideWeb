@@ -28,12 +28,24 @@
 							<i class="fa fa-caret-down"></i>
 						</p>
 						<div class="show-router" v-show="routerDetailShow===index">
-							<ul class="router">
-								<span>始点:</span>
-								<li :class="{active:list.NodeType===1}" v-for="list in item.SPoint" v-bind:key="index">{{list.Point+" "+list.BoardTime}}</li>
-								<span>终点:</span>
-								<li :class="{active:list.NodeType===2}" v-for="list in item.EPoint" v-bind:key="index">{{list.Point}}</li>
-							</ul>
+							<div class="router">
+								<p>始点:</p>
+								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.SPoint" v-bind:key="i">
+									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
+									<ul>
+										<li v-for="content in list.Content" v-bind:key="j" :class="{active:content.NodeType===1}">{{content.Point+" "+content.BoardTime}}</li>
+									</ul>
+								</div>
+								
+								<p>终点:</p>
+								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.EPoint" v-bind:key="i">
+									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
+									<ul>
+										<li v-for="content in list.Content" v-bind:key="j" :class="{active:content.NodeType===2}" >{{content.Point}}</li>
+									</ul>
+								</div>
+								
+							</div>
 						</div>
 						<p>
 							<span class="brand">终</span>{{item.EndPoint}}

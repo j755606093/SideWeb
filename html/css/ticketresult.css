@@ -266,7 +266,8 @@ input {
           height: 20px;
           line-height: 20px; }
         .result .result-list .list > .car-position > .show-router ul {
-          list-style: none; }
+          list-style: none;
+          position: relative; }
           .result .result-list .list > .car-position > .show-router ul li {
             margin-left: 20px;
             position: relative;
@@ -290,7 +291,7 @@ input {
               border: 1px solid #AAAAAA;
               top: -5px;
               left: -12px; }
-          .result .result-list .list > .car-position > .show-router ul span + li::before {
+          .result .result-list .list > .car-position > .show-router ul li:first-child::before {
             border: 1px solid #fff; }
           .result .result-list .list > .car-position > .show-router ul li.active::after {
             content: "";
@@ -302,6 +303,60 @@ input {
             background-color: #FF851B;
             top: 7px;
             left: -15px; }
+        .result .result-list .list > .car-position > .show-router .bracket {
+          /*height: 100px;*/
+          display: block;
+          padding-left: 5px;
+          margin-left: 5px;
+          border-radius: 10px;
+          border: 1px solid #2ecc71;
+          border-color: transparent transparent transparent #2ecc71;
+          position: relative; }
+        .result .result-list .list > .car-position > .show-router .bracket::before {
+          content: "";
+          position: absolute;
+          top: 45%;
+          left: -12px;
+          border: 6px solid #2ecc71;
+          border-color: transparent #2ecc71 transparent transparent;
+          height: 0;
+          width: 0; }
+        .result .result-list .list > .car-position > .show-router .cityname {
+          position: absolute;
+          top: 45%;
+          left: -30px;
+          /*border: 6px solid #2ecc71;*/
+          /*border-color: transparent #2ecc71 transparent transparent;*/
+          height: 12px;
+          width: 30px;
+          font-size: 12px; }
+        .result .result-list .list > .car-position > .show-router .bracket-small {
+          /*height: 100px;*/
+          display: block;
+          padding-left: 5px;
+          margin-left: 5px;
+          border-radius: 10px;
+          border: 1px solid #2ecc71;
+          border-color: transparent transparent transparent #2ecc71;
+          position: relative; }
+        .result .result-list .list > .car-position > .show-router .bracket-small::before {
+          content: "";
+          position: absolute;
+          top: 30%;
+          left: -12px;
+          border: 6px solid #2ecc71;
+          border-color: transparent #2ecc71 transparent transparent;
+          height: 0;
+          width: 0; }
+        .result .result-list .list > .car-position > .show-router .cityname-small {
+          position: absolute;
+          top: 30%;
+          left: -30px;
+          /*border: 6px solid #2ecc71;*/
+          /*border-color: transparent #2ecc71 transparent transparent;*/
+          height: 12px;
+          width: 30px;
+          font-size: 12px; }
       .result .result-list .list > .ticket-type {
         margin: 5px 0;
         width: 30%;

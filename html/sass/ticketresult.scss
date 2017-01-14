@@ -134,6 +134,7 @@
         >.show-router {
           ul {
             list-style: none;
+            position: relative;
             li {
               margin-left: 20px;
               position: relative;
@@ -159,8 +160,13 @@
                 top: -5px;
                 left: -12px;
               }
+              // &:first-child {
+              //   &::before {
+              //     border: 1px solid $white;
+              //   }
+              // }
             }
-            span+li {
+            li:first-child {
               &::before {
                 border: 1px solid $white;
               }
@@ -178,6 +184,79 @@
                 left: -15px;
               }
             }
+          }
+          // ul:last-child::after {
+          //   content: "";
+          //   height: 7px;
+          //   width: 1px;
+          //   position: absolute;
+          //   border: 1px solid $gray;
+          //   top: -5px;
+          //   left: 8px;
+          // }
+          .bracket {
+            /*height: 100px;*/
+            // width: 100px;
+            display: block;
+            padding-left: 5px;
+            margin-left: 5px;
+            border-radius: 10px;
+            border: 1px solid #2ecc71;
+            border-color: transparent transparent transparent #2ecc71;
+            position: relative;
+          }
+          .bracket::before {
+            content: "";
+            position: absolute;
+            top: 45%;
+            left: -12px;
+            border: 6px solid #2ecc71;
+            border-color: transparent #2ecc71 transparent transparent;
+            height: 0;
+            width: 0;
+          }
+          .cityname {
+            // content: "城市";
+            position: absolute;
+            top: 45%;
+            left: -30px;
+            /*border: 6px solid #2ecc71;*/
+            /*border-color: transparent #2ecc71 transparent transparent;*/
+            height: 12px;
+            width: 30px;
+            font-size: 12px;
+          }
+          .bracket-small {
+            /*height: 100px;*/
+            // width: 100px;
+            display: block;
+            padding-left: 5px;
+            margin-left: 5px;
+            border-radius: 10px;
+            border: 1px solid #2ecc71;
+            border-color: transparent transparent transparent #2ecc71;
+            position: relative;
+          }
+          .bracket-small::before {
+            content: "";
+            position: absolute;
+            top: 30%;
+            left: -12px;
+            border: 6px solid #2ecc71;
+            border-color: transparent #2ecc71 transparent transparent;
+            height: 0;
+            width: 0;
+          }
+          .cityname-small {
+            // content: "城市";
+            position: absolute;
+            top: 30%;
+            left: -30px;
+            /*border: 6px solid #2ecc71;*/
+            /*border-color: transparent #2ecc71 transparent transparent;*/
+            height: 12px;
+            width: 30px;
+            font-size: 12px;
           }
         }
       }
