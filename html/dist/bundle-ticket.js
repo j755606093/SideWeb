@@ -11224,7 +11224,7 @@
 			return response;
 		} else {
 			if (response.status === 401) {
-				window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+				// window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
 			}
 			(0, _mintUi.Toast)({
 				message: "服务器繁忙,请稍后重试...",
