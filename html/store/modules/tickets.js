@@ -20,7 +20,7 @@ function checkStatus(response) {
 		return response
 	} else {
 		if (response.status === 401) {
-			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
 		}
 		Toast({
 			message: "服务器繁忙,请稍后重试...",
@@ -72,7 +72,7 @@ const state = {
 
 	busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 	serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : "",
+	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : "",
 }
 
 // getters,获取数据
