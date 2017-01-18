@@ -131,7 +131,7 @@
 	var config = {
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : Authorization
+			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
 		},
 		serverUrl: debug ? "http://192.168.31.80" : ""
 	};
@@ -230,11 +230,13 @@
 						_this.noDataShow = false; //显示订单
 					} else {
 						_this.noMoreData = true;
-						(0, _mintUi.Toast)({
-							message: result.Message,
-							position: 'bottom',
-							duration: 3000
-						});
+						if (_this.index !== 1) {
+							(0, _mintUi.Toast)({
+								message: result.Message,
+								position: 'bottom',
+								duration: 3000
+							});
+						}
 					}
 					_this.isUse = false; //释放这个函数
 					_this.index++;
@@ -272,11 +274,13 @@
 						_this2.noDataShow1 = false; //显示订单
 					} else {
 						_this2.noMoreData1 = true;
-						(0, _mintUi.Toast)({
-							message: result.Message,
-							position: 'bottom',
-							duration: 3000
-						});
+						if (_this2.index1 !== 1) {
+							(0, _mintUi.Toast)({
+								message: result.Message,
+								position: 'bottom',
+								duration: 3000
+							});
+						}
 					}
 					_this2.isUse1 = false; //释放这个函数
 					_this2.index1++;

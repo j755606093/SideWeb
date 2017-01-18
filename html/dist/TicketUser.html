@@ -24,16 +24,16 @@
       <!-- 头部 -->
       <div class="header">
         <div class="left content">
-          <img src="./picture/profile.jpeg">
+          <img :src="UserInfo.Headimgurl">
         </div>
         <div class="right content">
-          <p>基佬世纪大战</p>
-          <span>13545678942</span>
+          <p v-text="UserInfo.Nickname"></p>
+          <span v-text="UserInfo.Mobile?UserInfo.Mobile:UserInfo.Province+UserInfo.City"></span>
         </div>
       </div>
       <!-- 订单和优惠券 -->
       <div class="order-discount">
-        <div @click="showOrderList" class="left content">
+        <div @click="showOrderList()" class="left content">
           <img src="./picture/order_red.png">
           <span>全部订单</span>
         </div>
@@ -73,8 +73,14 @@
     <!-- 全部订单信息 -->
     <mt-popup v-model="orderVisible" position="right" id="order-lists" class="order-lists">
       <div class="lists">
+        <div class="order-lists-header">
+          <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部</span>
+          <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">未支付</span>
+          <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">已支付</span>
+          <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">待出行</span>
+        </div>
         <!-- 订单 -->
-        <div class="list" @click="openOrder(index)" v-for="(item,index) in Order.OrderList">
+        <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
           <!-- 订单头部 -->
           <div class="list-header">
             <span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
@@ -103,7 +109,7 @@
         <div id="last"></div>
       </div>
     </mt-popup>
-    <!-- 全部订单信息 -->
+    <!-- 优惠券 -->
     <mt-popup v-model="discountVisible" position="right" id="discount-lists" class="discount-lists">
       <div class="lists">
         <!-- 列表 -->
@@ -117,7 +123,7 @@
             <span v-text="item.IsSingle"></span>
           </div>
           <div class="right">
-            <span v-text="item.Money+'¥'"></span>
+            <span v-text="'¥'+item.Money"></span>
           </div>
         </div>
       </div>

@@ -314,7 +314,33 @@ header {
   .order-lists .lists {
     width: 94%;
     margin: 0 3%;
-    margin-top: 60px; }
+    margin-top: 60px;
+    position: relative; }
+    .order-lists .lists .order-lists-header {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-align: center;
+          align-items: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+      margin-bottom: 10px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      box-shadow: 3px 0 3px 3px #efeeee;
+      background-color: white; }
+      .order-lists .lists .order-lists-header span {
+        -ms-flex: 1;
+            flex: 1;
+        font-size: 16px; }
+      .order-lists .lists .order-lists-header span.active {
+        border-bottom: 2px solid #0074D9; }
     .order-lists .lists .list {
       width: 100%;
       padding: 5px 5px;
@@ -438,13 +464,13 @@ header {
   overflow-y: scroll; }
   .discount-lists .lists {
     width: 100%;
-    margin-top: 60px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
         justify-content: center;
+    margin-top: 60px;
     -ms-flex-align: center;
         align-items: center; }
     .discount-lists .lists .list {
@@ -458,19 +484,20 @@ header {
           justify-content: center;
       -ms-flex-align: center;
           align-items: center;
-      height: 50px;
+      height: 60px;
       margin-bottom: 10px;
       background-color: #fff; }
       .discount-lists .lists .list .left {
-        -ms-flex: 0.2;
-            flex: 0.2;
+        -ms-flex: 0.1;
+            flex: 0.1;
         text-align: center; }
         .discount-lists .lists .list .left img {
           width: 40px;
           height: 40px; }
       .discount-lists .lists .list .center {
-        -ms-flex: 0.6;
-            flex: 0.6; }
+        -ms-flex: 0.7;
+            flex: 0.7;
+        padding-left: 10px; }
         .discount-lists .lists .list .center p {
           font-size: 1.4rem;
           height: 30px;

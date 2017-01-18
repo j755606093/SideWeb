@@ -66,7 +66,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
@@ -80,17 +80,38 @@ const Vue_User = new Vue({
 
 		Passenger: [], //乘客
 		Rebate: [], //优惠券
+		UserInfo: {}, //用户信息
 		discountVisible: false, //优惠券列表显示
 		isNoPay: 0, //未支付订单个数
-		Order: {
+		OrderType: {
 			OrderList: [], //订单数据
 			noMoreData: false, //是否还有订单数据
 			isUse: false, //刷新函数是否使用中
 			index: 1, //数据页面
-		}, //订单
+		}, //全部订单
+		OrderType1: {
+			OrderList: [], //订单数据
+			noMoreData: false, //是否还有订单数据
+			isUse: false, //刷新函数是否使用中
+			index: 1, //数据页面
+		}, //未支付订单
+		OrderType2: {
+			OrderList: [], //订单数据
+			noMoreData: false, //是否还有订单数据
+			isUse: false, //刷新函数是否使用中
+			index: 1, //数据页面
+		}, //已支付订单
+		OrderType3: {
+			OrderList: [], //订单数据
+			noMoreData: false, //是否还有订单数据
+			isUse: false, //刷新函数是否使用中
+			index: 1, //数据页面
+		}, //待出行订单
+
+		UseOrderType: 0, //使用中的订单列表,默认是全部订单0
+		OrderList: [], //显示订单数据,需要赋值
 
 		orderVisible: false, //是否显示订单列表
-
 	},
 	created() {
 		this.getUserInfo()
@@ -101,6 +122,7 @@ const Vue_User = new Vue({
 				if (result.Rebates) {
 					this.Rebate = result.Rebates;
 				}
+				this.UserInfo = result.Userinfo;
 				this.isNoPay = result.NoPay;
 				this.ready = true;
 			})
@@ -156,13 +178,15 @@ const Vue_User = new Vue({
 		 * 显示订单列表
 		 * @return {[type]} [description]
 		 */
-		showOrderList() {
-			this.controlHeader(true, "全部订单");
-			if (this.Order.OrderList.length === 0) {
+		showOrderList(type = "") {
+			this.controlHeader(true, "订单");
+			this.UseOrderType = type === '' ? 0 : type;
+			if (this["OrderType" + type].OrderList.length === 0) {
 				// 只有长度为0的时候也就是第一次才加载数据
 				// 否则每次点击都加载一次数据bug了
-				this.getOrderData();
+				this.getOrderData(type);
 			}
+			this.OrderList = this["OrderType" + type].OrderList;
 			this.orderVisible = true; //显示订单
 		},
 		/**
@@ -177,45 +201,51 @@ const Vue_User = new Vue({
 		 * 获取订单数据
 		 * @return {[type]} [description]
 		 */
-		getOrderData() {
-			if (this.Order.noMoreData || this.Order.isUse) {
+		getOrderData(type = "") {
+			if (this["OrderType" + type].noMoreData || this["OrderType" + type].isUse) {
 				return;
 			}
-			this.Order.isUse = true; //锁住这个函数
+			this["OrderType" + type].isUse = true; //锁住这个函数
 			this.loading();
 			fetch(config.serverUrl + "/api/Order/List", {
 					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
-						Index: this.Order.index,
+						Index: this["OrderType" + type].index,
 						Size: 10,
-						Type: 0
+						Type: type === "" ? 0 : type
 					})
 				})
 				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => {
 					if (result.Data) {
-						if (result.Data.length < 10) {
-							// 说明没有跟多数据了
-							this.Order.noMoreData = true;
-							this.toast("已经没有的更多数据了...");
-						}
+						// if (result.Data.length < 10) {
+						// 	// 说明没有跟多数据了
+						// 	this["OrderType" + type].noMoreData = true;
+						// 	this.toast("已经没有的更多数据了...");
+						// }
 						for (let i = 0; i < result.Data.length; i++) {
-							this.Order.OrderList.push(result.Data[i]);
+							this["OrderType" + type].OrderList.push(result.Data[i]);
 						}
 					} else {
-						this.Order.noMoreData = true;
+						this["OrderType" + type].noMoreData = true;
 						this.toast(result.Message);
 					}
 
-					this.Order.isUse = false; //释放这个函数
-					this.Order.index++;
+					this["OrderType" + type].isUse = false; //释放这个函数
+					this["OrderType" + type].index++;
 					Indicator.close();
 				})
 		},
+		selectType(type) {
+			// 选择这个类型的订单
+			this.UseOrderType = type;
+			this.getOrderData(type);
+		},
 		openOrder(index) {
-			console.log(index)
+			console.log(index);
+			// this.loading();
 		}
 	},
 	components: {
@@ -228,6 +258,7 @@ document.getElementById("order-lists").addEventListener('scroll', _.throttle(fun
 	let status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
 
 	if (status < 1000 && orderVisible) {
-		Vue_User.getOrderData();
+		let id = Vue_User.UseOrderType;
+		Vue_User.getOrderData(id === 0 ? '' : id);
 	}
 }, 100, { leading: false }));

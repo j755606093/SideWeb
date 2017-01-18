@@ -182,6 +182,30 @@ header {
     width: 94%;
     margin: 0 3%;
     margin-top: 60px;
+    position: relative;
+    .order-lists-header {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      box-shadow: 3px 0 3px 3px #efeeee;
+      background-color: white;
+      span {
+        flex: 1;
+        font-size: 16px;
+      }
+      span.active {
+        border-bottom: 2px solid #0074D9;
+      }
+    }
     .list {
       width: 100%;
       padding: 5px 5px;
@@ -308,10 +332,10 @@ header {
   overflow-y: scroll;
   .lists {
     width: 100%;
-    margin-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 60px;
     align-items: center;
     .list {
       width: 100%;
@@ -320,11 +344,11 @@ header {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      height: 50px;
+      height: 60px;
       margin-bottom: 10px;
       background-color: $white;
       .left {
-        flex: 0.2;
+        flex: 0.1;
         text-align: center;
         img {
           width: 40px;
@@ -332,7 +356,8 @@ header {
         }
       }
       .center {
-        flex: 0.6;
+        flex: 0.7;
+        padding-left: 10px;
         p {
           font-size: 1.4rem;
           height: 30px;
