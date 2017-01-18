@@ -244,8 +244,9 @@ const Vue_User = new Vue({
 			this.getOrderData(type);
 		},
 		openOrder(index) {
-			console.log(index);
-			// this.loading();
+			let type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
+			let Id = this["OrderType" + type].OrderList[index].Id;
+			window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
 		}
 	},
 	components: {

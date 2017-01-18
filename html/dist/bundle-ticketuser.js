@@ -317,8 +317,9 @@
 				this.getOrderData(type);
 			},
 			openOrder: function openOrder(index) {
-				console.log(index);
-				// this.loading();
+				var type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
+				var Id = this["OrderType" + type].OrderList[index].Id;
+				window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
 			}
 		},
 		components: {
