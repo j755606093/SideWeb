@@ -21,6 +21,11 @@ const debug = (function() {
  */
 const Authorization = (function() {
 	let cookie = document.cookie;
+	Toast({
+		message: cookie,
+		position: 'bottom',
+		duration: 10000
+	});
 	if (cookie === "") {
 		return cookie;
 	}

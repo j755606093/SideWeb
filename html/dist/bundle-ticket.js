@@ -11225,6 +11225,11 @@
 	 */
 	var Authorization = function () {
 		var cookie = document.cookie;
+		(0, _mintUi.Toast)({
+			message: cookie,
+			position: 'bottom',
+			duration: 10000
+		});
 		if (cookie === "") {
 			return cookie;
 		}
