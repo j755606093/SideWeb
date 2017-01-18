@@ -32,7 +32,7 @@ const Authorization = (function() {
 
 		let key = item[0];
 		if (key === "access_token") {
-			return item[1];
+			return "Bearer " + item[1];
 		}
 	}
 
