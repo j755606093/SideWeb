@@ -315,7 +315,7 @@ const actions = {
 		commit("SET_ISFIRST", data);
 	},
 	getPassenger({ commit, state }) {
-		return fetch(state.serverUrl + "/api/Transport/UserRelevant/0", {
+		return fetch(state.serverUrl + "/api/Transport/UserRelevant", {
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: state.Authorization

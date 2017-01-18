@@ -240,7 +240,7 @@
 
 			// 获取用户信息,乘客信息,优惠券信息,是否有未支付订单的个数信息数据
 			getUserInfo: function getUserInfo() {
-				return fetch(config.serverUrl + "/api/Transport/UserRelevant/0", {
+				return fetch(config.serverUrl + "/api/Transport/UserRelevant", {
 					headers: config.headers
 				}).then(checkStatus).then(function (result) {
 					return result.json();
