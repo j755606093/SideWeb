@@ -11218,6 +11218,31 @@
 		return debug;
 	}();
 
+	/**
+	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
+	 * @param  {[type]} ) {	let        cookie [description]
+	 * @return {[type]}   [description]
+	 */
+	var Authorization = function () {
+		var cookie = document.cookie;
+		if (cookie === "") {
+			return cookie;
+		}
+
+		var arrayCookie = cookie.splite(";");
+
+		for (var i = 0; i < arrayCookie.length; i++) {
+			var item = arrayCookie[i].split("=");
+
+			var key = item[0];
+			if (key === "access_token") {
+				return item[1];
+			}
+		}
+
+		return ""; //如果没有就返回这个
+	}();
+
 	//检查请求返回的状态
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
@@ -11276,7 +11301,7 @@
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : ""
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
 	};
 
 	// getters,获取数据
@@ -51107,7 +51132,7 @@
 	    staticClass: "status"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-clock-o"
-	  }), " ", _vm._h('p', ["生成订单成功!"]), " ", _vm._h('p', {
+	  }), " ", _vm._h('p', ["订单提交成功!"]), " ", _vm._h('p', {
 	    staticClass: "time"
 	  }, ["请在半小时之内支付订单 " + _vm._s(_vm.countdownTime)])])]), " ", _vm._h('div', {
 	    staticClass: "ticket-body"
@@ -51176,7 +51201,7 @@
 	    staticStyle: {
 	      "color": "red"
 	    }
-	  }, [_vm._s(_vm.serverPayInfo.OrderInfo.TotalPrice + '¥')])]), " ", _vm._h('span', {
+	  }, [_vm._s('¥' + _vm.serverPayInfo.OrderInfo.TotalPrice)])]), " ", _vm._h('span', {
 	    staticStyle: {
 	      "clear": "both"
 	    }

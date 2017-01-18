@@ -231,7 +231,7 @@
 		  		<div class="info-body">
 		  			<div class="status">
 		  				<i class="fa fa-clock-o"></i>
-		  				<p>生成订单成功!</p>
+		  				<p>订单提交成功!</p>
 		  				<p class="time">请在半小时之内支付订单 {{countdownTime}}</p>
 		  			</div>
 		  		</div>
@@ -294,7 +294,7 @@
 		  			<div class="pay-ticket-info-body">
 		  				<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
 		  				<p>下单日期:{{serverPayInfo.OrderInfo.OrderTime}}</p>
-		  				<p class="all">总额: <span style="color:red">{{serverPayInfo.OrderInfo.TotalPrice+'¥'}}</span></p>
+		  				<p class="all">总额: <span style="color:red">{{'¥'+serverPayInfo.OrderInfo.TotalPrice}}</span></p>
 		  				<span style="clear:both;"></span>
 		  			</div>
 		  		</div>

@@ -85,6 +85,31 @@
 		return test;
 	}();
 
+	/**
+	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
+	 * @param  {[type]} ) {	let        cookie [description]
+	 * @return {[type]}   [description]
+	 */
+	var Authorization = function () {
+		var cookie = document.cookie;
+		if (cookie === "") {
+			return cookie;
+		}
+
+		var arrayCookie = cookie.splite(";");
+
+		for (var i = 0; i < arrayCookie.length; i++) {
+			var item = arrayCookie[i].split("=");
+
+			var key = item[0];
+			if (key === "access_token") {
+				return item[1];
+			}
+		}
+
+		return ""; //如果没有就返回这个
+	}();
+
 	//检查请求返回的状态
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
@@ -106,7 +131,7 @@
 	var config = {
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : ""
+			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiJlNGNhY2U1NC0wZDJkLTQwOGYtOGIzMC1lM2FiYmJhYjUwMTYiLCJpYXQiOjE0ODMzNTAxMzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4MzM1MDEzMCwiZXhwIjoxNDg0NTU5NzMwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.cmj1ZyP3OWnbwuexFwW05_4xYHZ4D7LgTZhrl_He9Rs" : Authorization
 		},
 		serverUrl: debug ? "http://192.168.31.80" : ""
 	};
