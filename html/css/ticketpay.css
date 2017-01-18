@@ -500,7 +500,8 @@ input {
     line-height: 40px;
     width: 96%;
     margin: 0 2%;
-    padding-top: 5px; }
+    padding-top: 5px;
+    border-top: 1px solid #dddddd; }
     .contact-info .discount-code input,
     .contact-info .discount-code button,
     .contact-info .discount-code i {

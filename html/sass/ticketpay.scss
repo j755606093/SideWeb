@@ -288,16 +288,16 @@
           }
         }
         // .list-bottom{
-        // 	height: 20px;
-        // 	p{
-        // 		height: 20px;
-        // 		line-height:20px;
-        // 		color:$gray;
-        // 		span{
-        // 			color:$gray;
-        // 			margin-left:5px;
-        // 		}
-        // 	}
+        //  height: 20px;
+        //  p{
+        //    height: 20px;
+        //    line-height:20px;
+        //    color:$gray;
+        //    span{
+        //      color:$gray;
+        //      margin-left:5px;
+        //    }
+        //  }
         // }
       }
     }
@@ -424,6 +424,7 @@
     width: 96%;
     margin: 0 2%;
     padding-top: 5px;
+    border-top: 1px solid lighten($gray, 20%);
     input,
     button,
     i {
