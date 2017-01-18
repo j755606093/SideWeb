@@ -60,6 +60,10 @@
 
 	__webpack_require__(30);
 
+	var _utils = __webpack_require__(35);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
@@ -169,7 +173,11 @@
 			UseOrderType: 0, //使用中的订单列表,默认是全部订单0
 			OrderList: [], //显示订单数据,需要赋值
 
-			orderVisible: false },
+			orderVisible: false, //是否显示订单列表
+			passengerVisible: false, //乘客列表
+
+			passengerName: "", //新增乘客姓名
+			passengerPhone: "" },
 		created: function created() {
 			var _this = this;
 
@@ -210,6 +218,7 @@
 				this.controlHeader();
 				this.orderVisible = false;
 				this.discountVisible = false;
+				this.passengerVisible = false;
 			},
 
 			//控制头部显示和标题
@@ -311,15 +320,56 @@
 					_mintUi.Indicator.close();
 				});
 			},
-			selectType: function selectType(type) {
-				// 选择这个类型的订单
-				this.UseOrderType = type;
-				this.getOrderData(type);
-			},
 			openOrder: function openOrder(index) {
 				var type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
 				var Id = this["OrderType" + type].OrderList[index].Id;
 				window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
+			},
+
+			/**
+	   * 显示乘客
+	   * @return {[type]} [description]
+	   */
+			showPassengerList: function showPassengerList() {
+				this.passengerVisible = true;
+				this.controlHeader(true, "乘客列表");
+			},
+
+			// 新增乘客按钮
+			addPassenger: function addPassenger() {
+				var _this3 = this;
+
+				if (!_utils2.default.isChinaName(this.passengerName) || this.passengerName.length < 2) {
+					this.toast("请输入正确的姓名!");
+					return;
+				}
+				if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
+					this.toast("请输入正确的手机号!");
+					return;
+				}
+
+				fetch(config.serverUrl + "/api/Passenger/Add", {
+					method: 'POST',
+					headers: config.headers,
+					body: (0, _stringify2.default)({
+						Name: this.passengerName,
+						Mobile: this.passengerPhone
+					})
+				}).then(checkStatus).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						var json = {};
+						json.Name = _this3.passengerName;
+						json.Mobile = _this3.passengerPhone;
+						json.Id = result.Data;
+						_this3.passengerPhone = "";
+						_this3.passengerName = "";
+						_this3.Passenger.push(json);
+					} else {
+						_this3.toast(result.Message);
+					}
+				});
 			}
 		},
 		components: {
@@ -23081,7 +23131,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 5002;\n  padding: 0;\n  margin: 0; }\n  header .left {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50px;\n    height: 50px;\n    text-align: center; }\n    header .left i {\n      font-size: 3rem;\n      color: #fff;\n      height: 50px;\n      line-height: 50px; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%; }\n  .body .header {\n    height: 120px;\n    background-color: #2196F3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .body .header .content {\n      height: 60px;\n      width: 100%; }\n    .body .header .left {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      text-align: center; }\n      .body .header .left img {\n        width: 60px;\n        height: 60px;\n        border-radius: 50%; }\n    .body .header .right {\n      -ms-flex: 0.7;\n          flex: 0.7; }\n      .body .header .right p {\n        color: #fff;\n        height: 40px;\n        font-size: 1.6rem; }\n      .body .header .right span {\n        color: #fff;\n        font-size: 1.1rem;\n        height: 20px; }\n  .body .order-discount {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    height: 50px;\n    background-color: #fff;\n    margin-bottom: 20px; }\n    .body .order-discount .content {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      text-align: center;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n      .body .order-discount .content:first-child {\n        border-right: 1px solid #eaeaea; }\n      .body .order-discount .content img {\n        width: 26px;\n        height: 26px; }\n      .body .order-discount .content span {\n        color: #111111;\n        font-size: 1.4rem;\n        margin-left: 10px; }\n  .body .lists {\n    width: 100%; }\n    .body .lists .list-body {\n      width: 100%;\n      padding: 0 2%;\n      margin-bottom: 10px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      background-color: #fff;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .body .lists .list-body .list {\n        width: 100%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        height: 50px;\n        border-bottom: 1px solid #f7f7f7; }\n        .body .lists .list-body .list i.left {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.8rem;\n          text-align: center;\n          color: #777777; }\n        .body .lists .list-body .list span {\n          -ms-flex: 0.8;\n              flex: 0.8;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem; }\n        .body .lists .list-body .list i.fa-chevron-right {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem;\n          color: #AAAAAA;\n          text-align: right; }\n\n.order-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .order-lists .lists {\n    width: 94%;\n    margin: 0 3%;\n    margin-top: 60px;\n    position: relative; }\n    .order-lists .lists .order-lists-header {\n      position: fixed;\n      top: 50px;\n      left: 0;\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n      margin-bottom: 10px;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      box-shadow: 3px 0 3px 3px #efeeee;\n      background-color: white; }\n      .order-lists .lists .order-lists-header span {\n        -ms-flex: 1;\n            flex: 1;\n        font-size: 16px; }\n      .order-lists .lists .order-lists-header span.active {\n        border-bottom: 2px solid #0074D9; }\n    .order-lists .lists .list {\n      width: 100%;\n      padding: 5px 5px;\n      background-color: #fff;\n      border-radius: 10px;\n      margin-bottom: 10px; }\n      .order-lists .lists .list .list-header {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        border-bottom: 1px solid #dddddd;\n        padding: 5px 0; }\n        .order-lists .lists .list .list-header span {\n          font-size: 1.4rem;\n          color: #444444; }\n        .order-lists .lists .list .list-header span.time {\n          text-align: left;\n          -ms-flex: 0.7;\n              flex: 0.7;\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-header span.type {\n          text-align: right;\n          -ms-flex: 0.3;\n              flex: 0.3; }\n      .order-lists .lists .list .list-center {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 50px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-center .city {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex: 0.8;\n              flex: 0.8;\n          position: relative; }\n          .order-lists .lists .list .list-center .city > span {\n            font-size: 1.6rem;\n            -ms-flex: 1;\n                flex: 1; }\n          .order-lists .lists .list .list-center .city > span.start {\n            position: relative; }\n            .order-lists .lists .list .list-center .city > span.start::before {\n              position: absolute;\n              bottom: 5px;\n              right: 20%;\n              height: 5px;\n              width: 30%;\n              background-color: #0074D9;\n              content: \"\"; }\n            .order-lists .lists .list .list-center .city > span.start::after {\n              position: absolute;\n              bottom: 5px;\n              right: 12%;\n              height: 0;\n              width: 0;\n              border: 6px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9;\n              content: \"\"; }\n          .order-lists .lists .list .list-center .city i {\n            position: absolute;\n            top: 0;\n            left: 27%; }\n        .order-lists .lists .list .list-center span.money {\n          font-size: 1.6rem;\n          -ms-flex: 0.2;\n              flex: 0.2;\n          text-align: right;\n          color: #db3652; }\n      .order-lists .lists .list .list-footer {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 30px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-footer span {\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-footer span.name {\n          text-align: left;\n          color: #777777;\n          -ms-flex: 0.7;\n              flex: 0.7; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          -ms-flex: 0.3;\n              flex: 0.3; }\n        .order-lists .lists .list .list-footer span.order-status {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-no {\n          color: #db3652; }\n        .order-lists .lists .list .list-footer span.order-paying {\n          color: #0074D9; }\n        .order-lists .lists .list .list-footer span.order-payed {\n          color: #2ecc71; }\n\n.discount-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .discount-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center; }\n    .discount-lists .lists .list {\n      width: 100%;\n      padding: 0 2%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      height: 60px;\n      margin-bottom: 10px;\n      background-color: #fff; }\n      .discount-lists .lists .list .left {\n        -ms-flex: 0.1;\n            flex: 0.1;\n        text-align: center; }\n        .discount-lists .lists .list .left img {\n          width: 40px;\n          height: 40px; }\n      .discount-lists .lists .list .center {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        padding-left: 10px; }\n        .discount-lists .lists .list .center p {\n          font-size: 1.4rem;\n          height: 30px;\n          line-height: 30px; }\n        .discount-lists .lists .list .center span {\n          color: #AAAAAA;\n          height: 20px;\n          line-height: 20px; }\n      .discount-lists .lists .list .right {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        text-align: right; }\n        .discount-lists .lists .list .right span {\n          color: #db3652;\n          font-size: 1.6rem; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem;\n  z-index: 10000; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n\n.mint-toast {\n  z-index: 10000; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na, img, button, input, textarea, p, div {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na, img, button, p, span {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na, input {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 5002;\n  padding: 0;\n  margin: 0; }\n  header .left {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50px;\n    height: 50px;\n    text-align: center; }\n    header .left i {\n      font-size: 3rem;\n      color: #fff;\n      height: 50px;\n      line-height: 50px; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.body {\n  width: 100%; }\n  .body .header {\n    height: 120px;\n    background-color: #2196F3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .body .header .content {\n      height: 60px;\n      width: 100%; }\n    .body .header .left {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      text-align: center; }\n      .body .header .left img {\n        width: 60px;\n        height: 60px;\n        border-radius: 50%; }\n    .body .header .center {\n      -ms-flex: 0.5;\n          flex: 0.5; }\n      .body .header .center p {\n        color: #fff;\n        height: 40px;\n        font-size: 1.6rem; }\n      .body .header .center span {\n        color: #fff;\n        font-size: 1.1rem;\n        height: 20px; }\n    .body .header .right {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      height: 80px; }\n      .body .header .right i {\n        font-size: 3rem;\n        color: white; }\n  .body .order-discount {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    height: 50px;\n    background-color: #fff;\n    margin-bottom: 20px; }\n    .body .order-discount .content {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      text-align: center;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n      .body .order-discount .content:first-child {\n        border-right: 1px solid #eaeaea; }\n      .body .order-discount .content img {\n        width: 26px;\n        height: 26px; }\n      .body .order-discount .content span {\n        color: #111111;\n        font-size: 1.4rem;\n        margin-left: 10px; }\n  .body .lists {\n    width: 100%; }\n    .body .lists .list-body {\n      width: 100%;\n      padding: 0 2%;\n      margin-bottom: 10px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      background-color: #fff;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .body .lists .list-body .list {\n        width: 100%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        height: 50px;\n        border-bottom: 1px solid #f7f7f7;\n        color: #111111; }\n        .body .lists .list-body .list i.left {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.8rem;\n          text-align: center;\n          color: #777777; }\n        .body .lists .list-body .list span {\n          -ms-flex: 0.8;\n              flex: 0.8;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem; }\n        .body .lists .list-body .list i.fa-chevron-right {\n          -ms-flex: 0.1;\n              flex: 0.1;\n          height: 50px;\n          line-height: 50px;\n          font-size: 1.4rem;\n          color: #AAAAAA;\n          text-align: right; }\n\n.order-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .order-lists .lists {\n    width: 94%;\n    margin: 0 3%;\n    margin-top: 60px;\n    position: relative; }\n    .order-lists .lists .order-lists-header {\n      position: fixed;\n      top: 50px;\n      left: 0;\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n      margin-bottom: 10px;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      box-shadow: 3px 0 3px 3px #efeeee;\n      background-color: white; }\n      .order-lists .lists .order-lists-header span {\n        -ms-flex: 1;\n            flex: 1;\n        font-size: 16px; }\n      .order-lists .lists .order-lists-header span.active {\n        border-bottom: 2px solid #0074D9; }\n    .order-lists .lists .list {\n      width: 100%;\n      padding: 5px 5px;\n      background-color: #fff;\n      border-radius: 10px;\n      margin-bottom: 10px; }\n      .order-lists .lists .list .list-header {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        border-bottom: 1px solid #dddddd;\n        padding: 5px 0; }\n        .order-lists .lists .list .list-header span {\n          font-size: 1.4rem;\n          color: #444444; }\n        .order-lists .lists .list .list-header span.time {\n          text-align: left;\n          -ms-flex: 0.7;\n              flex: 0.7;\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-header span.type {\n          text-align: right;\n          -ms-flex: 0.3;\n              flex: 0.3; }\n      .order-lists .lists .list .list-center {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 50px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-center .city {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex: 0.8;\n              flex: 0.8;\n          position: relative; }\n          .order-lists .lists .list .list-center .city > span {\n            font-size: 1.6rem;\n            -ms-flex: 1;\n                flex: 1; }\n          .order-lists .lists .list .list-center .city > span.start {\n            position: relative; }\n            .order-lists .lists .list .list-center .city > span.start::before {\n              position: absolute;\n              bottom: 5px;\n              right: 20%;\n              height: 5px;\n              width: 30%;\n              background-color: #0074D9;\n              content: \"\"; }\n            .order-lists .lists .list .list-center .city > span.start::after {\n              position: absolute;\n              bottom: 5px;\n              right: 12%;\n              height: 0;\n              width: 0;\n              border: 6px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9;\n              content: \"\"; }\n          .order-lists .lists .list .list-center .city i {\n            position: absolute;\n            top: 0;\n            left: 27%; }\n        .order-lists .lists .list .list-center span.money {\n          font-size: 1.6rem;\n          -ms-flex: 0.2;\n              flex: 0.2;\n          text-align: right;\n          color: #db3652; }\n      .order-lists .lists .list .list-footer {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 30px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-footer span {\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-footer span.name {\n          text-align: left;\n          color: #777777;\n          -ms-flex: 0.7;\n              flex: 0.7; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          -ms-flex: 0.3;\n              flex: 0.3; }\n        .order-lists .lists .list .list-footer span.order-status {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-no {\n          color: #db3652; }\n        .order-lists .lists .list .list-footer span.order-paying {\n          color: #0074D9; }\n        .order-lists .lists .list .list-footer span.order-payed {\n          color: #2ecc71; }\n\n.discount-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .discount-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center; }\n    .discount-lists .lists .list {\n      width: 100%;\n      padding: 0 2%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      margin-bottom: 10px;\n      background-color: #fff; }\n      .discount-lists .lists .list .left {\n        -ms-flex: 0.1;\n            flex: 0.1;\n        text-align: center; }\n        .discount-lists .lists .list .left img {\n          width: 40px;\n          height: 40px; }\n      .discount-lists .lists .list .center {\n        -ms-flex: 0.6;\n            flex: 0.6;\n        padding-left: 10px; }\n        .discount-lists .lists .list .center p {\n          font-size: 1.4rem;\n          height: 24px;\n          line-height: 24px; }\n          .discount-lists .lists .list .center p span.little {\n            font-size: 1rem; }\n          .discount-lists .lists .list .center p span.red {\n            color: #db3652; }\n          .discount-lists .lists .list .center p span.big {\n            font-size: 1.4rem; }\n        .discount-lists .lists .list .center span {\n          color: #AAAAAA;\n          height: 20px;\n          line-height: 20px; }\n      .discount-lists .lists .list .right {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        text-align: center; }\n        .discount-lists .lists .list .right a {\n          color: white;\n          background-color: #0074D9;\n          font-size: 1.2rem;\n          padding: 5px 10px;\n          outline: none;\n          border-radius: 10px; }\n\n.passenger-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .passenger-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center;\n    background-color: white; }\n    .passenger-lists .lists .list {\n      -ms-flex: 1;\n          flex: 1;\n      width: 100%;\n      padding: 0 2%;\n      height: 40px;\n      line-height: 40px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .passenger-lists .lists .list span {\n        font-size: 1.4rem; }\n      .passenger-lists .lists .list .passenger-name {\n        -ms-flex: 0.2;\n            flex: 0.2; }\n      .passenger-lists .lists .list .passenger-phone {\n        color: #777777;\n        font-size: 1.2rem;\n        -ms-flex: 0.5;\n            flex: 0.5; }\n      .passenger-lists .lists .list .passenger-operate {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px;\n        color: #0074D9;\n        -ms-flex: 0.3;\n            flex: 0.3;\n        text-align: right; }\n        .passenger-lists .lists .list .passenger-operate i {\n          height: 40px;\n          width: 40px;\n          line-height: 40px; }\n  .passenger-lists .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    background-color: white;\n    margin-top: 20px; }\n    .passenger-lists .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .passenger-lists .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .passenger-lists .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n    .passenger-lists .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .passenger-lists .add-passenger {\n    color: white;\n    background-color: #FF851B;\n    width: 90%;\n    margin: 0 5%;\n    padding: 10px 0;\n    border: 0;\n    outline: none;\n    border-radius: 10px;\n    margin-top: 20px;\n    font-size: 1.4rem; }\n    .passenger-lists .add-passenger i {\n      margin-right: 5px; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem;\n  z-index: 10000; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n\n.mint-toast {\n  z-index: 10000; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n", ""]);
 
 	// exports
 
@@ -24639,6 +24689,199 @@
 	  }
 	}.call(this));
 
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _stringify = __webpack_require__(1);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 工具库
+	 * 包含常用的一些函数或者数据
+	 */
+
+	/**
+	 * 格式化时间显示多久之前
+	 * @param  {[type]} data [Date对象]
+	 * @return {[type]}      [时间字符串]
+	 */
+	var formatDate = function formatDate(date) {
+		if (!date) {
+			return 0;
+		}
+		var old = new Date(date); //转换为DATE对象
+		var now = Date.now();
+		var result = ""; //存储结果
+
+		var diffMinute = Math.floor((now - old) / 1000 / 60); //相差的分钟数
+		if (diffMinute < 60) {
+			result = diffMinute + "分钟之前";
+		} else {
+			var diffHour = Math.floor((now - old) / 1000 / 60 / 60); //相差的小时数
+			if (diffHour < 24) {
+				// 小于24小时
+				// let diffHourMinute = Math.floor((now - old)/1000/60%60);//相差的分钟数
+				result = diffHour + "小时之前";
+			} else {
+				var diffDay = Math.floor(diffHour / 24); //相差的天数
+				if (diffDay < 30) {
+					result = diffDay + "天之前";
+				} else {
+					var diffMonth = Math.floor(diffDay / 30); //相差的月数
+					if (diffMonth < 12) {
+						result = diffDay + "个月之前";
+					} else {
+						result = diffDay + "年之前";
+					}
+				}
+			}
+		}
+
+		return result;
+	};
+
+	/**
+	 * 返回2016-05-05格式
+	 * @param  {[type]} date [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatDateTypeOne = function formatDateTypeOne(date) {
+		if (typeof date === "string") {
+			date = new Date(date);
+		}
+		var year = date.getYear() - 100 + 2000;
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+
+		// return month+"月"+day+"日";
+		return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
+	};
+
+	/**
+	 * 格式化日期格式:10-07 13:25
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatTime = function formatTime(date) {
+		if (!date) {
+			return 0;
+		}
+		var formatDate = new Date(date); //转换为DATE对象
+
+		var year = formatDate.getYear() - 100 + 2000; //2016
+		var month = formatDate.getMonth() + 1; //10
+		var day = formatDate.getDate() > 9 ? formatDate.getDate() : "0" + formatDate.getDate(); //04
+		var hours = formatDate.getHours(); //16
+		var minute = formatDate.getMinutes() > 9 ? formatDate.getMinutes() : "0" + formatDate.getMinutes(); //03
+		var milliseconds = formatDate.getMilliseconds(); //450
+
+		var week = formatDate.getDay(); //获取星期,1
+
+		return month + "-" + day + " " + hours + ":" + minute;
+	};
+
+	/**
+	 * 获取当前星期
+	 * @param  {[type]} date [日期对象]
+	 * @return {[type]}      [周一]
+	 */
+	var formatWeek = function formatWeek(date) {
+		var week = ["日", "一", "二", "三", "四", "五", "六"];
+		return "周" + week[date.getDay()];
+	};
+
+	/**
+	 * 获取浏览器中的参数
+	 * @param  {[type]} name [description]
+	 * @return {[type]}      [description]
+	 */
+	var getQueryString = function getQueryString(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = window.location.search.substr(1).match(reg);
+		if (r !== null) {
+			return unescape(r[2]);
+		}
+		return null;
+	};
+
+	/**
+	 * 格式化vue中的变量成JSON数据
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	var formatJsonData = function formatJsonData(data) {
+		return JSON.parse((0, _stringify2.default)(data));
+	};
+
+	/**
+	 * 身份证验证
+	 * @param  {[type]} code [description]
+	 * @return {[type]}      [description]
+	 */
+	var IdentityCodeValid = function IdentityCodeValid(code) {
+		var city = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外 " };
+
+		if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+			return false;
+		} else {
+			if (!city[code.substr(0, 2)]) {
+				return false;
+			} else {
+				//验证身份证最后一位
+				code = code.split('');
+				//∑(ai×Wi)(mod 11)
+				//加权因子
+				var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+				//校验位
+				var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+				var sum = 0;
+				var ai = 0;
+				var wi = 0;
+				for (var i = 0; i < 17; i++) {
+					ai = code[i];
+					wi = factor[i];
+					sum += ai * wi;
+				}
+				var last = parity[sum % 11];
+				if (parity[sum % 11] != code[17]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	};
+
+	/**
+	 * 检查是否中文名
+	 * @param  {[type]} name [description]
+	 * @return {[type]}      [description]
+	 */
+	var isChinaName = function isChinaName(name) {
+		return (/^[\u4e00-\u9fa5]+$/i.test(name)
+		);
+	};
+
+	exports.default = {
+		formatDate: formatDate,
+		formatTime: formatTime,
+		getQueryString: getQueryString,
+		formatWeek: formatWeek,
+		formatJsonData: formatJsonData,
+		IdentityCodeValid: IdentityCodeValid,
+		isChinaName: isChinaName,
+		formatDateTypeOne: formatDateTypeOne
+	};
 
 /***/ }
 /******/ ]);

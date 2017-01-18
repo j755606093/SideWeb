@@ -81,8 +81,8 @@ header {
         border-radius: 50%;
       }
     }
-    .right {
-      flex: 0.7;
+    .center {
+      flex: 0.5;
       p {
         color: $white;
         height: 40px;
@@ -92,6 +92,18 @@ header {
         color: $white;
         font-size: 1.1rem;
         height: 20px;
+      }
+    }
+    .right {
+      flex: 0.2;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 80px;
+      i {
+        font-size: 3rem;
+        color: white;
       }
     }
   }
@@ -142,6 +154,7 @@ header {
         justify-content: center;
         height: 50px;
         border-bottom: 1px solid lighten($gray, 30%);
+        color: $black;
         i.left {
           flex: 0.1;
           height: 50px;
@@ -344,7 +357,7 @@ header {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      height: 60px;
+      // height: 60px;
       margin-bottom: 10px;
       background-color: $white;
       .left {
@@ -356,12 +369,21 @@ header {
         }
       }
       .center {
-        flex: 0.7;
+        flex: 0.6;
         padding-left: 10px;
         p {
           font-size: 1.4rem;
-          height: 30px;
-          line-height: 30px;
+          height: 24px;
+          line-height: 24px;
+          span.little {
+            font-size: 1rem;
+          }
+          span.red {
+            color: $red;
+          }
+          span.big {
+            font-size: 1.4rem;
+          }
         }
         span {
           color: $gray;
@@ -370,13 +392,115 @@ header {
         }
       }
       .right {
-        flex: 0.2;
-        text-align: right;
-        span {
-          color: $red;
-          font-size: 1.6rem;
+        flex: 0.3;
+        text-align: center;
+        a {
+          color: white;
+          background-color: $blue;
+          font-size: 1.2rem;
+          padding: 5px 10px;
+          outline: none;
+          border-radius: 10px;
         }
       }
+    }
+  }
+}
+
+.passenger-lists {
+  width: 100%;
+  height: 100%;
+  background-color: lighten($gray, 30%);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  .lists {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+    align-items: center;
+    background-color: white;
+    .list {
+      flex: 1;
+      width: 100%;
+      padding: 0 2%;
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid lighten($gray, 20%);
+      span {
+        font-size: 1.4rem;
+      }
+      .passenger-name {
+        flex: 0.2;
+      }
+      .passenger-phone {
+        color: darken($gray, 20%);
+        font-size: 1.2rem;
+        flex: 0.5;
+      }
+      .passenger-operate {
+        font-size: 1.4rem;
+        height: 40px;
+        line-height: 40px;
+        color: $blue;
+        flex: 0.3;
+        text-align: right;
+        i {
+          height: 40px;
+          width: 40px;
+          line-height: 40px;
+        }
+      }
+    }
+  }
+  .info-man {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 20px;
+    .info {
+      height: 40px;
+      line-height: 40px;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      width: 96%;
+      margin: 0 2%;
+      border-bottom: 1px solid lighten($gray, 20%);
+      span {
+        flex: 0.3;
+        font-size: 1.3rem;
+      }
+      input {
+        flex: 0.7;
+        font-size: 1.3rem;
+      }
+    }
+    .info-man-name {
+      input {
+        flex: 0.7;
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .add-passenger {
+    color: white;
+    background-color: $orange;
+    width: 90%;
+    margin: 0 5%;
+    padding: 10px 0;
+    border: 0;
+    outline: none;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 1.4rem;
+    i {
+      margin-right: 5px;
     }
   }
 }

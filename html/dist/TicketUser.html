@@ -26,9 +26,12 @@
         <div class="left content">
           <img :src="UserInfo.Headimgurl">
         </div>
-        <div class="right content">
+        <div class="center content">
           <p v-text="UserInfo.Nickname"></p>
           <span v-text="UserInfo.Mobile?UserInfo.Mobile:UserInfo.Province+UserInfo.City"></span>
+        </div>
+        <div class="right">
+          <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <!-- 订单和优惠券 -->
@@ -47,7 +50,7 @@
         <!-- 单个或多个选项 -->
         <div class="list-body">
           <!-- 单个 -->
-          <div class="list">
+          <div class="list" @click="showPassengerList">
             <i class="left fa fa-user"></i>
             <span>常用联系人</span>
             <i class="fa fa-chevron-right"></i>
@@ -56,11 +59,11 @@
         <!-- 单个或多个选项 -->
         <div class="list-body">
           <!-- 单个 -->
-          <div class="list">
+          <a class="list" href="tel:13871895108">
             <i class="left fa fa-pencil-square"></i>
-            <span>意见反馈</span>
+            <span>联系客服</span>
             <i class="fa fa-chevron-right"></i>
-          </div>
+          </a>
           <!-- 单个 -->
           <div class="list">
             <i class="left fa  fa-question-circle"></i>
@@ -119,14 +122,44 @@
           </div>
           <div class="center">
             <p v-text="item.Name"></p>
+            <p>
+              <span class="red little">¥</span>
+              <span class="red big" v-text="item.Money"></span>
+            </p>
             <span v-text="'截止:'+item.EndDate"></span>
             <span v-text="item.IsSingle"></span>
           </div>
           <div class="right">
-            <span v-text="'¥'+item.Money"></span>
+            <a :href="'https://ticket.samecity.com.cn/wx/ticket.html?rebateid='+item.Id">立即使用</a>
+            <!-- <a :href="'http://192.168.31.116:3000/getCustomPage?page=ticket&rebateid='+item.Id">立即使用</a> -->
           </div>
         </div>
       </div>
+    </mt-popup>
+    <!-- 乘客 -->
+    <mt-popup v-model="passengerVisible" position="right" id="passenger-lists" class="passenger-lists">
+      <div class="lists">
+        <!-- 列表 -->
+        <div class="list" v-for="(item,index) in Passenger">
+          <span class="passenger-name">{{item.Name}}</span>
+          <span class="passenger-phone">{{item.Mobile}}</span>
+          <div class="passenger-operate">
+            <i class="fa fa-trash"></i>
+          </div>
+        </div>
+      </div>
+      <!-- 增加乘客 -->
+      <div class="info-man">
+        <div class="info-man-name info">
+          <span>乘客姓名:</span>
+          <input type="text" placeholder="请填写真实姓名" v-model="passengerName">
+        </div>
+        <div class="info-man-card info">
+          <span>联系手机:</span>
+          <input type="text" placeholder="选填(可用于联系)" v-model="passengerPhone">
+        </div>
+      </div>
+      <button @click="addPassenger" class="add-passenger"><i class="fa fa-plus-circle"></i>增加乘客</button>
     </mt-popup>
     <footer>
       <a href="./ticket.html" class="footer">

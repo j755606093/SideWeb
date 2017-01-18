@@ -4,7 +4,8 @@ require("../css/ticketuser.css");
 import "whatwg-fetch";
 const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem } from 'mint-ui';
-import 'mint-ui/lib/style.css'
+import 'mint-ui/lib/style.css';
+import Utils from "../Utils/utils";
 
 // Vue.component(TabContainer.name, TabContainer);
 // Vue.component(TabContainerItem.name, TabContainerItem);
@@ -112,6 +113,10 @@ const Vue_User = new Vue({
 		OrderList: [], //显示订单数据,需要赋值
 
 		orderVisible: false, //是否显示订单列表
+		passengerVisible: false, //乘客列表
+
+		passengerName: "", //新增乘客姓名
+		passengerPhone: "", //新增乘客手机号
 	},
 	created() {
 		this.getUserInfo()
@@ -151,6 +156,7 @@ const Vue_User = new Vue({
 			this.controlHeader();
 			this.orderVisible = false;
 			this.discountVisible = false;
+			this.passengerVisible = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -238,15 +244,53 @@ const Vue_User = new Vue({
 					Indicator.close();
 				})
 		},
-		selectType(type) {
-			// 选择这个类型的订单
-			this.UseOrderType = type;
-			this.getOrderData(type);
-		},
 		openOrder(index) {
 			let type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
 			let Id = this["OrderType" + type].OrderList[index].Id;
 			window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
+		},
+		/**
+		 * 显示乘客
+		 * @return {[type]} [description]
+		 */
+		showPassengerList() {
+			this.passengerVisible = true;
+			this.controlHeader(true, "乘客列表");
+		},
+		// 新增乘客按钮
+		addPassenger() {
+			if (!Utils.isChinaName(this.passengerName) || this.passengerName.length < 2) {
+				this.toast("请输入正确的姓名!");
+				return;
+			}
+			if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
+				this.toast("请输入正确的手机号!");
+				return;
+			}
+
+			fetch(config.serverUrl + "/api/Passenger/Add", {
+					method: 'POST',
+					headers: config.headers,
+					body: JSON.stringify({
+						Name: this.passengerName,
+						Mobile: this.passengerPhone,
+					})
+				})
+				.then(checkStatus)
+				.then(result => result.json())
+				.then(result => {
+					if (result.Data) {
+						let json = {};
+						json.Name = this.passengerName;
+						json.Mobile = this.passengerPhone;
+						json.Id = result.Data;
+						this.passengerPhone = "";
+						this.passengerName = "";
+						this.Passenger.push(json);
+					} else {
+						this.toast(result.Message);
+					}
+				})
 		}
 	},
 	components: {
