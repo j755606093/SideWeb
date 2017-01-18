@@ -10,168 +10,201 @@ $orange:#FF851B;
 $navy:#001f3f;
 $purple:#B10DC9;
 $meBlack:#353535;
-
-$width-iphone5:  320px;
+$width-iphone5: 320px;
 $width-iphone6: 375px;
 $width-iphone6p: 414px;
-
 @mixin responsive($name) {
-  @if $name == 'iphone5' {
-    @media (max-width: $width-iphone5) { @content; }
+  @if $name=='iphone5' {
+    @media (max-width: $width-iphone5) {
+      @content;
+    }
   }
-  @else if $name == 'iphone6' {
-    @media (max-width: $width-iphone6) { @content; }
+  @else if $name=='iphone6' {
+    @media (max-width: $width-iphone6) {
+      @content;
+    }
   }
-  @else if $name == 'iphone6p' {
-    @media (max-width: $width-iphone6p) { @content; }
+  @else if $name=='iphone6p' {
+    @media (max-width: $width-iphone6p) {
+      @content;
+    }
   }
 }
 
-@mixin text_nowrap{
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+@mixin text_nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 //修改chrome记住密码后自动填充表单的黄色背景
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-  background-color: rgb(250, 255, 189); /* #FAFFBD; */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: rgb(250, 255, 189);
+  /* #FAFFBD; */
   background-image: none;
   color: rgb(0, 0, 0);
 }
 
-a,img,button,input,textarea,p,div{-webkit-tap-highlight-color:rgba(255,255,255,0);
-}
-a,img,button,p,span{
-	user-select: none;
+a,
+img,
+button,
+input,
+textarea,
+p,
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.font-red{
-	color:$red;
+a,
+img,
+button,
+p,
+span {
+  user-select: none;
 }
-.font-blue{
-	color:$blue;
+
+.font-red {
+  color: $red;
 }
-.font-gray{
-	color:darken($gray,50%);
+
+.font-blue {
+  color: $blue;
 }
-.font-small{
-	font-size:12px;
+
+.font-gray {
+  color: darken($gray, 50%);
 }
-.bg-gray{
-	background-color:$gray;
+
+.font-small {
+  font-size: 12px;
 }
-.nowrap{
-	@include text_nowrap;
+
+.bg-gray {
+  background-color: $gray;
 }
-.btn{
-	border:0;
-	outline:none;
+
+.nowrap {
+  @include text_nowrap;
 }
-button:active{
-	outline:none;
-	border:0;
+
+.btn {
+  border: 0;
+  outline: none;
 }
-a,input{
-	text-decoration:none;
-	outline:none;
-	-webkit-tap-highlight-color:transparent;
+
+button:active {
+  outline: none;
+  border: 0;
 }
-a:focus{
-	text-decoration: none;
+
+a,
+input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
-html{
-	font-size:12px;
+
+a:focus {
+  text-decoration: none;
 }
-input{
-	outline:none;
-	border:none;
+
+html {
+  font-size: 12px;
 }
-*{
-	box-sizing:border-box;
-	margin:0;
-	padding:0;
-	// user-select: none; 
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	/*禁止选中*/
-	
-	//让页面里的字体变清晰，变细用CSS
-	-webkit-font-smoothing: antialiased;
-	// 点击不显示高亮
-	// -webkit-tap-highlight-color:transparent;
+
+input {
+  outline: none;
+  border: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  // user-select: none; 
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/
+  //让页面里的字体变清晰，变细用CSS
+  -webkit-font-smoothing: antialiased;
+  // 点击不显示高亮
+  // -webkit-tap-highlight-color:transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 @keyframes fadeOutLeft {
-	from {
-		opacity: 1;
-		transform: none;
-	}
-	to {
-		opacity: 0;
-		transform: translate3d(-100%, 0, 0);
-	}
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
 }
+
 .fadeLeft-out {
-	animation-name: fadeOutLeft;
-	animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-name: fadeOutLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
 }
+
 @keyframes fadeInLeft {
-	from {
-			opacity: 0;
-			transform: translate3d(-100%, 0, 0);
-	}
-	to {
-		opacity: 1;
-		transform: none;
-	}
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .fadeLeft-in {
-	animation-name: fadeInLeft;
-	animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-name: fadeInLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeInRight {
-	from {
-		opacity: 0;	
-		transform: translate3d(100%, 0, 0);
-	}
-	to {
-		opacity: 1;
-		transform: none;
-	}
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .fadeRight-in {
-	animation-name: fadeInRight;
-	animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-name: fadeInRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeOutRight {
-	from {
-		opacity: 0;
-		transform: none;
-	}
-	to {
-		opacity: 1;
-		transform: translate3d(100%, 0, 0);
-	}
+  from {
+    opacity: 0;
+    transform: none;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(100%, 0, 0);
+  }
 }
 
 .fadeRight-out {
-	animation-name: fadeOutRight;
-	animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-name: fadeOutRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -181,14 +214,13 @@ input{
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
   animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeOut {
   from {
     opacity: 1;
   }
-
   to {
     opacity: 0;
   }
@@ -198,5 +230,5 @@ input{
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
   animation-duration: 0.5s;
-	animation-fill-mode: both;
+  animation-fill-mode: both;
 }
