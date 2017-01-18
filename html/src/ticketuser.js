@@ -39,7 +39,7 @@ const Authorization = (function() {
 	for (let i = 0; i < arrayCookie.length; i++) {
 		let item = arrayCookie[i].split("=");
 
-		let key = item[0];
+		let key = item[0].trim();
 		if (key === "access_token") {
 			return "Bearer " + item[1];
 		}

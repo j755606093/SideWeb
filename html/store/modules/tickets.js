@@ -21,22 +21,21 @@ const debug = (function() {
  */
 const Authorization = (function() {
 	let cookie = document.cookie;
-	Toast({
-		message: cookie,
-		position: 'bottom',
-		duration: 10000
-	});
 	if (cookie === "") {
 		return cookie;
 	}
+	// Toast({
+	// 	message: cookie,
+	// 	position: 'bottom',
+	// 	duration: 10000
+	// });
 
 	let arrayCookie = cookie.split(";");
 
 	for (let i = 0; i < arrayCookie.length; i++) {
 		let item = arrayCookie[i].split("=");
 
-		let key = item[0];
-		if (key === "access_token") {
+		if (item[0].trim() === "access_token") {
 			return "Bearer " + item[1];
 		}
 	}

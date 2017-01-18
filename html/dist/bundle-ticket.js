@@ -11225,22 +11225,21 @@
 	 */
 	var Authorization = function () {
 		var cookie = document.cookie;
-		(0, _mintUi.Toast)({
-			message: cookie,
-			position: 'bottom',
-			duration: 10000
-		});
 		if (cookie === "") {
 			return cookie;
 		}
+		// Toast({
+		// 	message: cookie,
+		// 	position: 'bottom',
+		// 	duration: 10000
+		// });
 
 		var arrayCookie = cookie.split(";");
 
 		for (var i = 0; i < arrayCookie.length; i++) {
 			var item = arrayCookie[i].split("=");
 
-			var key = item[0];
-			if (key === "access_token") {
+			if (item[0].trim() === "access_token") {
 				return "Bearer " + item[1];
 			}
 		}

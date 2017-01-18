@@ -101,7 +101,7 @@
 		for (var i = 0; i < arrayCookie.length; i++) {
 			var item = arrayCookie[i].split("=");
 
-			var key = item[0];
+			var key = item[0].trim();
 			if (key === "access_token") {
 				return "Bearer " + item[1];
 			}
