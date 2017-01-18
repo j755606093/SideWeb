@@ -34,7 +34,7 @@ const Authorization = (function() {
 		return cookie;
 	}
 
-	let arrayCookie = cookie.splite(";");
+	let arrayCookie = cookie.split(";");
 
 	for (let i = 0; i < arrayCookie.length; i++) {
 		let item = arrayCookie[i].split("=");

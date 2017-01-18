@@ -96,7 +96,7 @@
 			return cookie;
 		}
 
-		var arrayCookie = cookie.splite(";");
+		var arrayCookie = cookie.split(";");
 
 		for (var i = 0; i < arrayCookie.length; i++) {
 			var item = arrayCookie[i].split("=");
