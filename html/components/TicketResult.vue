@@ -29,7 +29,7 @@
 						</p>
 						<div class="show-router" v-show="routerDetailShow===index">
 							<div class="router">
-								<p>始点:</p>
+								<!-- <p>始点:</p> -->
 								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.SPoint" v-bind:key="i">
 									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
 									<ul>
@@ -37,7 +37,7 @@
 									</ul>
 								</div>
 								
-								<p>终点:</p>
+								<!-- <p>终点:</p> -->
 								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.EPoint" v-bind:key="i">
 									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
 									<ul>

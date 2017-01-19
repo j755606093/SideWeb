@@ -396,16 +396,62 @@
 				this.orderVisible = false;
 			},
 			cancelOrder: function cancelOrder() {
-				fetch(config.serverUrl + "/api/Order/Cancel", {
-					method: "POST",
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						OrderId: this.OrderDetail.Id
-					})
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					(0, _mintUi.MessageBox)('提示', '取消订单成功');
+				var _this6 = this;
+
+				_mintUi.MessageBox.confirm('确定取消订单?').then(function (action) {
+					fetch(config.serverUrl + "/api/Order/Cancel", {
+						method: "POST",
+						headers: config.headers,
+						body: (0, _stringify2.default)({
+							OrderId: _this6.OrderDetail.Id
+						})
+					}).then(checkStatus).then(function (result) {
+						return result.json();
+					}).then(function (result) {
+						(0, _mintUi.MessageBox)('提示', '取消订单成功');
+						_this6.goback();
+						_this6.moreOrderData();
+						_this6.moreOrderData1();
+					});
+				});
+			},
+			inputRefund: function inputRefund() {
+				return _mintUi.MessageBox.prompt('请输入退款理由').then(function (_ref) {
+					var value = _ref.value,
+					    action = _ref.action;
+
+					return value;
+				});
+			},
+			refund: function refund() {
+				// /api/Order/Refund
+				var id = this.OrderDetail.Id;
+				var DIds = [];
+				for (var i = 0; i < this.OrderDetail.Passengers.length; i++) {
+					DIds.push(this.OrderDetail.Passengers[i].Did);
+				}
+
+				this.inputRefund().then(function (result) {
+					fetch(config.serverUrl + "/api/Order/Refund", {
+						method: "POST",
+						headers: config.headers,
+						body: (0, _stringify2.default)({
+							OrderId: id,
+							DIds: DIds,
+							Remark: result ? result : "用户未填写信息"
+						})
+					}).then(checkStatus).then(function (result) {
+						return result.json();
+					}).then(function (result) {
+						if (result.Data) {
+							// 申请成功
+							(0, _mintUi.MessageBox)('提示', '申请退款成功');
+						} else {
+							(0, _mintUi.MessageBox)('提示', '申请退款失败,请联系客服人员.');
+						}
+					});
+				}).catch(function (error) {
+					// MessageBox('提示', '取消申请退款');
 				});
 			}
 		},

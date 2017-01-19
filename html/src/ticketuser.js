@@ -114,6 +114,7 @@ const Vue_User = new Vue({
 
 		orderVisible: false, //是否显示订单列表
 		passengerVisible: false, //乘客列表
+		userVisible: false, //用户信息显示
 
 		passengerName: "", //新增乘客姓名
 		passengerPhone: "", //新增乘客手机号
@@ -157,6 +158,7 @@ const Vue_User = new Vue({
 			this.orderVisible = false;
 			this.discountVisible = false;
 			this.passengerVisible = false;
+			this.userVisible = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -200,6 +202,10 @@ const Vue_User = new Vue({
 		 * @return {[type]} [description]
 		 */
 		showDiscountList() {
+			if (this.Rebate.length === 0) {
+				MessageBox.alert("提示", "你没有优惠券")
+				return;
+			}
 			this.controlHeader(true, "优惠券");
 			this.discountVisible = true; //显示
 		},
@@ -314,6 +320,10 @@ const Vue_User = new Vue({
 						}
 					})
 			});
+		},
+		showUserInfo() {
+			this.controlHeader(true, "用户信息");
+			this.userVisible = true;
 		}
 	},
 	components: {

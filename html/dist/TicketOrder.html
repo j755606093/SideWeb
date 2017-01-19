@@ -187,7 +187,7 @@
             <div class="pay-ticket-info-body">
               <p>订单编号:{{OrderDetail.Id}}</p>
               <p>下单日期:{{OrderDetail.CTime}}</p>
-              <p class="all">总额: <span style="color:red">{{OrderDetail.TotalPrice+'¥'}}</span></p>
+              <p class="all">总额: <span style="color:red">{{'¥'+OrderDetail.TotalPrice}}</span></p>
               <span style="clear:both;"></span>
             </div>
           </div>
@@ -198,6 +198,11 @@
             </div>
             <div class="out-order" style="margin-top:20px;margin-bottom:20px;">
               <a @click="cancelOrder">取消订单</a>
+            </div>
+          </template>
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
+            <div class="out-order" style="margin-top:20px;margin-bottom:20px;">
+              <a @click="refund">申请退款</a>
             </div>
           </template>
         </div>

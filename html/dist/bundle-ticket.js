@@ -48852,7 +48852,7 @@
 	      staticClass: "show-router"
 	    }, [_vm._h('div', {
 	      staticClass: "router"
-	    }, [_vm._h('p', ["始点:"]), " ", _vm._l((item.SPoint), function(list) {
+	    }, [_vm._l((item.SPoint), function(list) {
 	      return _vm._h('div', {
 	        key: _vm.i,
 	        class: {
@@ -48870,7 +48870,7 @@
 	          }
 	        }, [_vm._s(content.Point + " " + content.BoardTime)])
 	      })])])
-	    }), " ", _vm._h('p', ["终点:"]), " ", _vm._l((item.EPoint), function(list) {
+	    }), " ", " ", _vm._l((item.EPoint), function(list) {
 	      return _vm._h('div', {
 	        key: _vm.i,
 	        class: {

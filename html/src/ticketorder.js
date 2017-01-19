@@ -111,6 +111,7 @@ const Vue_Order = new Vue({
 		}
 		this.moreOrderData();
 		this.moreOrderData1();
+
 	},
 	mounted() {
 		// 设置第一个显示
@@ -325,17 +326,61 @@ const Vue_Order = new Vue({
 			this.orderVisible = false;
 		},
 		cancelOrder() {
-			fetch(config.serverUrl + "/api/Order/Cancel", {
-					method: "POST",
-					headers: config.headers,
-					body: JSON.stringify({
-						OrderId: this.OrderDetail.Id
+			MessageBox.confirm('确定取消订单?').then(action => {
+				fetch(config.serverUrl + "/api/Order/Cancel", {
+						method: "POST",
+						headers: config.headers,
+						body: JSON.stringify({
+							OrderId: this.OrderDetail.Id
+						})
 					})
+					.then(checkStatus)
+					.then(result => result.json())
+					.then(result => {
+						MessageBox('提示', '取消订单成功');
+						this.goback();
+						this.moreOrderData();
+						this.moreOrderData1();
+					})
+			});
+
+		},
+		inputRefund() {
+			return MessageBox.prompt('请输入退款理由').then(({ value, action }) => {
+				return value;
+			});
+		},
+		refund() {
+			// /api/Order/Refund
+			let id = this.OrderDetail.Id;
+			let DIds = [];
+			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
+				DIds.push(this.OrderDetail.Passengers[i].Did);
+			}
+
+			this.inputRefund().then(result => {
+					fetch(config.serverUrl + "/api/Order/Refund", {
+							method: "POST",
+							headers: config.headers,
+							body: JSON.stringify({
+								OrderId: id,
+								DIds: DIds,
+								Remark: result ? result : "用户未填写信息"
+							})
+						})
+						.then(checkStatus)
+						.then(result => result.json())
+						.then(result => {
+							if (result.Data) {
+								// 申请成功
+								MessageBox('提示', '申请退款成功');
+							} else {
+								MessageBox('提示', '申请退款失败,请联系客服人员.');
+							}
+						})
 				})
-				.then(checkStatus)
-				.then(result => result.json())
-				.then(result => {
-					MessageBox('提示', '取消订单成功');
+				.catch(error => {
+					// MessageBox('提示', '取消申请退款');
 				})
 		}
 	},

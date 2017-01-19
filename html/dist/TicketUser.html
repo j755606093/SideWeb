@@ -30,7 +30,7 @@
           <p v-text="UserInfo.Nickname"></p>
           <span v-text="UserInfo.Mobile?UserInfo.Mobile:UserInfo.Province+UserInfo.City"></span>
         </div>
-        <div class="right">
+        <div class="right" @click="showUserInfo">
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
@@ -160,6 +160,36 @@
         </div>
       </div>
       <button @click="addPassenger" class="add-passenger"><i class="fa fa-plus-circle"></i>增加乘客</button>
+    </mt-popup>
+    <!-- 用户信息 -->
+    <mt-popup v-model="userVisible" position="right" id="user-lists" class="user-lists">
+      <div class="lists">
+        <!-- 列表 -->
+        <div class="info-man">
+          <div class="info-man-line info">
+            <span class="left">ID:</span>
+            <span class="gray" v-text="UserInfo.Id"></span>
+          </div>
+        </div>
+        <div class="info-man">
+          <div class="info-man-line info">
+            <span class="left">昵称:</span>
+            <span class="gray" v-text="UserInfo.Nickname"></span>
+          </div>
+          <div class="info-man-line info">
+            <span class="left">姓名:</span>
+            <span class="gray" v-text="UserInfo.Name?UserInfo.Name:'未设置'"></span>
+          </div>
+          <div class="info-man-line info">
+            <span class="left">手机号:</span>
+            <span class="gray" v-text="UserInfo.Mobile?UserInfo.Mobile:'未设置'"></span>
+          </div>
+          <div class="info-man-line info">
+            <span class="left">性别:</span>
+            <span class="gray" v-text="UserInfo.Sex===1?'男':'女'"></span>
+          </div>
+        </div>
+      </div>
     </mt-popup>
     <footer>
       <a href="./ticket.html" class="footer">
