@@ -202,6 +202,8 @@
 			moreOrderData: function moreOrderData() {
 				var _this = this;
 
+				var empty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
 				if (this.noMoreData || this.isUse) {
 					return;
 				}
@@ -223,8 +225,12 @@
 							// 说明没有跟多数据了
 							_this.noMoreData = true;
 						}
-						for (var i = 0; i < result.Data.length; i++) {
-							_this.OrderList.push(result.Data[i]);
+						if (empty) {
+							_this.OrderList1 = result.Data;
+						} else {
+							for (var i = 0; i < result.Data.length; i++) {
+								_this.OrderList.push(result.Data[i]);
+							}
 						}
 
 						_this.noDataShow = false; //显示订单
@@ -245,6 +251,8 @@
 			},
 			moreOrderData1: function moreOrderData1() {
 				var _this2 = this;
+
+				var empty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 				if (this.noMoreData1 || this.isUse1) {
 					return;
@@ -267,8 +275,12 @@
 							// 说明没有跟多数据了
 							_this2.noMoreData1 = true;
 						}
-						for (var i = 0; i < result.Data.length; i++) {
-							_this2.OrderList1.push(result.Data[i]);
+						if (empty) {
+							_this2.OrderList1 = result.Data;
+						} else {
+							for (var i = 0; i < result.Data.length; i++) {
+								_this2.OrderList1.push(result.Data[i]);
+							}
 						}
 
 						_this2.noDataShow1 = false; //显示订单
@@ -340,8 +352,8 @@
 
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							_mintUi.MessageBox.alert('支付成功').then(function (action) {
-								_this4.moreOrderData();
-								_this4.moreOrderData1();
+								_this4.moreOrderData(true);
+								_this4.moreOrderData1(true);
 							});
 
 							// MessageBox('提示', '支付成功');

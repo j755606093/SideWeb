@@ -137,7 +137,7 @@ const Vue_Order = new Vue({
 			}
 			return null;
 		},
-		moreOrderData() {
+		moreOrderData(empty = false) {
 			if (this.noMoreData || this.isUse) {
 				return;
 			}
@@ -160,9 +160,14 @@ const Vue_Order = new Vue({
 							// 说明没有跟多数据了
 							this.noMoreData = true;
 						}
-						for (let i = 0; i < result.Data.length; i++) {
-							this.OrderList.push(result.Data[i]);
+						if (empty) {
+							this.OrderList1 = result.Data;
+						} else {
+							for (let i = 0; i < result.Data.length; i++) {
+								this.OrderList.push(result.Data[i]);
+							}
 						}
+
 
 						this.noDataShow = false; //显示订单
 					} else {
@@ -180,7 +185,7 @@ const Vue_Order = new Vue({
 					Indicator.close();
 				})
 		},
-		moreOrderData1() {
+		moreOrderData1(empty = false) {
 			if (this.noMoreData1 || this.isUse1) {
 				return;
 			}
@@ -203,9 +208,14 @@ const Vue_Order = new Vue({
 							// 说明没有跟多数据了
 							this.noMoreData1 = true;
 						}
-						for (let i = 0; i < result.Data.length; i++) {
-							this.OrderList1.push(result.Data[i]);
+						if (empty) {
+							this.OrderList1 = result.Data;
+						} else {
+							for (let i = 0; i < result.Data.length; i++) {
+								this.OrderList1.push(result.Data[i]);
+							}
 						}
+
 
 						this.noDataShow1 = false; //显示订单
 					} else {
@@ -273,8 +283,8 @@ const Vue_Order = new Vue({
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function(r) {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							MessageBox.alert('支付成功').then(action => {
-								this.moreOrderData();
-								this.moreOrderData1();
+								this.moreOrderData(true);
+								this.moreOrderData1(true);
 							});
 
 							// MessageBox('提示', '支付成功');
