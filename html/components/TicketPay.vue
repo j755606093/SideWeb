@@ -603,6 +603,13 @@ export default {
 								window.location.href="./TicketOrder.html?orderid="+id
 							},2000);
 						}
+						else{
+							Toast({
+							  message: '未支付成功',
+							  iconClass: 'fa fa-close',
+							  duration:1000,
+							});
+						}
 					});
 					// wx.chooseWXPay(paydata)
 				})
