@@ -355,7 +355,7 @@ const Vue_Order = new Vue({
 			let id = this.OrderDetail.Id;
 			let DIds = [];
 			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
-				DIds.push(this.OrderDetail.Passengers[i].Did);
+				DIds.push(this.OrderDetail.Passengers[i].DId);
 			}
 
 			this.inputRefund().then(result => {

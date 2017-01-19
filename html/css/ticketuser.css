@@ -698,9 +698,26 @@ header {
           -ms-flex: 0.2;
               flex: 0.2; }
         .user-lists .lists .info-man .info-man-line .gray {
-          -ms-flex: 0.8;
-              flex: 0.8;
+          -ms-flex: 0.7;
+              flex: 0.7;
           color: #777777; }
+        .user-lists .lists .info-man .info-man-line .right {
+          -ms-flex: 0.1;
+              flex: 0.1;
+          height: 40px;
+          line-height: 40px;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+          .user-lists .lists .info-man .info-man-line .right i {
+            float: right;
+            color: #0074D9;
+            font-size: 1.4rem; }
       .user-lists .lists .info-man span {
         font-size: 1.4rem; }
 

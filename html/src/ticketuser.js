@@ -324,6 +324,26 @@ const Vue_User = new Vue({
 		showUserInfo() {
 			this.controlHeader(true, "用户信息");
 			this.userVisible = true;
+		},
+		edit(index) {
+			let title = "";
+			switch (index) {
+				case 0:
+					title = "修改昵称";
+				case 1:
+					title = "修改姓名";
+				case 2:
+					title = "修改手机号";
+				case 3:
+					title = "修改性别(男或女)";
+			}
+			MessageBox.prompt(title).then(({ value, action }) => {
+
+			}).catch(error => {
+				console.log(error);
+			});
+			// MessageBox("修改数据", "第" + index + "项")
+			// console.log(index)
 		}
 	},
 	components: {

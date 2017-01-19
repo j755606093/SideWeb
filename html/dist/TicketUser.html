@@ -175,18 +175,22 @@
           <div class="info-man-line info">
             <span class="left">昵称:</span>
             <span class="gray" v-text="UserInfo.Nickname"></span>
+            <div @click="edit(0)" class="right"><i class="fa fa-edit"></i></div>
           </div>
-          <div class="info-man-line info">
+          <!-- <div class="info-man-line info">
             <span class="left">姓名:</span>
             <span class="gray" v-text="UserInfo.Name?UserInfo.Name:'未设置'"></span>
-          </div>
+            <div @click="edit(1)" class="right"><i class="fa fa-edit"></i></div>
+          </div> -->
           <div class="info-man-line info">
             <span class="left">手机号:</span>
             <span class="gray" v-text="UserInfo.Mobile?UserInfo.Mobile:'未设置'"></span>
+            <div @click="edit(2)" class="right"><i class="fa fa-edit"></i></div>
           </div>
           <div class="info-man-line info">
             <span class="left">性别:</span>
             <span class="gray" v-text="UserInfo.Sex===1?'男':'女'"></span>
+            <div @click="edit(3)" class="right"><i class="fa fa-edit"></i></div>
           </div>
         </div>
       </div>

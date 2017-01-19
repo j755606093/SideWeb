@@ -428,7 +428,7 @@
 				var id = this.OrderDetail.Id;
 				var DIds = [];
 				for (var i = 0; i < this.OrderDetail.Passengers.length; i++) {
-					DIds.push(this.OrderDetail.Passengers[i].Did);
+					DIds.push(this.OrderDetail.Passengers[i].DId);
 				}
 
 				this.inputRefund().then(function (result) {
