@@ -49,7 +49,7 @@ function checkStatus(response) {
 		return response
 	} else {
 		if (response.status === 401) {
-			// window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			// window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
 		}
 		Toast({
 			message: "服务器繁忙,请稍后重试...",

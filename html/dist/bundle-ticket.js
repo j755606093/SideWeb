@@ -11253,7 +11253,7 @@
 			return response;
 		} else {
 			if (response.status === 401) {
-				// window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+				// window.location.href = "https://ticket.samecity.com.cn/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
 			}
 			(0, _mintUi.Toast)({
 				message: "服务器繁忙,请稍后重试...",
@@ -49720,14 +49720,18 @@
 					// }
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
-							(0, _mintUi.Toast)({
-								message: '支付成功,准备跳转至订单页!',
-								iconClass: 'fa fa-check',
-								duration: 3000,
-								className: "success"
+							_mintUi.Indicator.open({
+								text: '支付成功,准备跳转至订单页!',
+								spinnerType: 'double-bounce'
 							});
+							// Toast({
+							//   message: '支付成功,准备跳转至订单页!',
+							//   iconClass: 'fa fa-check',
+							//   duration:1000,
+							//   className:"success"
+							// });
 							setTimeout(function () {
-								window.location.href = "./TicketOrder.html";
+								window.location.href = "./TicketOrder.html?orderid=" + id;
 							}, 2000);
 						}
 					});
@@ -50196,11 +50200,13 @@
 			cancelOrder: function cancelOrder() {
 				var _this10 = this;
 
-				this.$store.dispatch("cancelOrder", this.serverPayInfo.OrderInfo.Id).then(function (result) {
-					_this10.popupMessage("取消订单成功!");
-					setTimeout(function () {
-						_this10.$router.go(-1);
-					}, 1000);
+				_mintUi.MessageBox.confirm('确定取消订单?').then(function (action) {
+					_this10.$store.dispatch("cancelOrder", _this10.serverPayInfo.OrderInfo.Id).then(function (result) {
+						_this10.popupMessage("取消订单成功!");
+						setTimeout(function () {
+							_this10.$router.go(-1);
+						}, 1000);
+					});
 				});
 			}
 		}

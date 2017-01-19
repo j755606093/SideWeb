@@ -120,7 +120,7 @@
 			return response;
 		} else {
 			if (response.status === 401) {
-				window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+				window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
 			} else {
 				_mintUi.Indicator.close();
 				alert("服务器繁忙,请稍后再试...");
@@ -369,6 +369,24 @@
 					} else {
 						_this3.toast(result.Message);
 					}
+				});
+			},
+			trashPassenger: function trashPassenger(index) {
+				var _this4 = this;
+
+				_mintUi.MessageBox.confirm('确定执行此操作?').then(function (action) {
+					fetch(config.serverUrl + "/api/Passenger/Delete/" + _this4.Passenger[index].Id, {
+						headers: config.headers
+					}).then(checkStatus).then(function (result) {
+						return result.json();
+					}).then(function (result) {
+						if (result.Data) {
+							_this4.Passenger.splice(index, 1);
+							_this4.toast("删除成功");
+						} else {
+							_this4.toast(result.Message);
+						}
+					});
 				});
 			}
 		},

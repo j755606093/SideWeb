@@ -55,7 +55,7 @@ function checkStatus(response) {
 		return response
 	} else {
 		if (response.status === 401) {
-			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
 		} else {
 			Indicator.close();
 			alert("服务器繁忙,请稍后再试...")
@@ -291,6 +291,23 @@ const Vue_User = new Vue({
 						this.toast(result.Message);
 					}
 				})
+		},
+		trashPassenger(index) {
+			MessageBox.confirm('确定执行此操作?').then(action => {
+				fetch(config.serverUrl + "/api/Passenger/Delete/" + this.Passenger[index].Id, {
+						headers: config.headers,
+					})
+					.then(checkStatus)
+					.then(result => result.json())
+					.then(result => {
+						if (result.Data) {
+							this.Passenger.splice(index, 1);
+							this.toast("删除成功");
+						} else {
+							this.toast(result.Message);
+						}
+					})
+			});
 		}
 	},
 	components: {

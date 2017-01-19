@@ -143,7 +143,7 @@
         <div class="list" v-for="(item,index) in Passenger">
           <span class="passenger-name">{{item.Name}}</span>
           <span class="passenger-phone">{{item.Mobile}}</span>
-          <div class="passenger-operate">
+          <div class="passenger-operate" @click="trashPassenger(index)">
             <i class="fa fa-trash"></i>
           </div>
         </div>

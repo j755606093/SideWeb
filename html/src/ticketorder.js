@@ -54,7 +54,7 @@ function checkStatus(response) {
 		return response
 	} else {
 		if (response.status === 401) {
-			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html#/";
+			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
 		} else {
 			Indicator.close();
 			alert("服务器繁忙,请稍后再试...")

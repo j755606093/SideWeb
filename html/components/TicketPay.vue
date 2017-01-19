@@ -587,16 +587,20 @@ export default {
 					// 	  className:"success"
 					// 	});
 					// }
-					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,function(r){
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,(r)=>{
 						if(r.err_msg==="get_brand_wcpay_request:ok"){
-							Toast({
-							  message: '支付成功,准备跳转至订单页!',
-							  iconClass: 'fa fa-check',
-							  duration:3000,
-							  className:"success"
+							Indicator.open({
+								text: '支付成功,准备跳转至订单页!',
+								spinnerType: 'double-bounce'
 							});
+							// Toast({
+							//   message: '支付成功,准备跳转至订单页!',
+							//   iconClass: 'fa fa-check',
+							//   duration:1000,
+							//   className:"success"
+							// });
 							setTimeout(()=>{
-								window.location.href="./TicketOrder.html"
+								window.location.href="./TicketOrder.html?orderid="+id
 							},2000);
 						}
 					});
@@ -1050,12 +1054,14 @@ export default {
 			this.computeAll();
 		},
 		cancelOrder(){
-			this.$store.dispatch("cancelOrder",this.serverPayInfo.OrderInfo.Id).then(result=>{
+			MessageBox.confirm('确定取消订单?').then(action => {
+				this.$store.dispatch("cancelOrder",this.serverPayInfo.OrderInfo.Id).then(result=>{
 				this.popupMessage("取消订单成功!");
-				setTimeout(()=>{
-					this.$router.go(-1);
-				},1000);
-			})
+					setTimeout(()=>{
+						this.$router.go(-1);
+					},1000);
+				})
+			});
 		}
 	}
 }
