@@ -214,7 +214,7 @@
 					headers: config.headers,
 					body: (0, _stringify2.default)({
 						Index: this.index,
-						// Size:10,
+						Size: 10,
 						Type: 1
 					})
 				}).then(checkStatus).then(function (result) {
@@ -264,7 +264,7 @@
 					headers: config.headers,
 					body: (0, _stringify2.default)({
 						Index: this.index1,
-						// Size:10,
+						Size: 10,
 						Type: 2
 					})
 				}).then(checkStatus).then(function (result) {

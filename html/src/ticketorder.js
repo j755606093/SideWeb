@@ -148,7 +148,7 @@ const Vue_Order = new Vue({
 					headers: config.headers,
 					body: JSON.stringify({
 						Index: this.index,
-						// Size:10,
+						Size: 10,
 						Type: 1
 					})
 				})
@@ -196,7 +196,7 @@ const Vue_Order = new Vue({
 					headers: config.headers,
 					body: JSON.stringify({
 						Index: this.index1,
-						// Size:10,
+						Size: 10,
 						Type: 2
 					})
 				})
