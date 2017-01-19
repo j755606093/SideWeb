@@ -30924,6 +30924,7 @@
 		created: function created() {
 			var _this = this;
 
+			history.replaceState({}, "", "#/home/ticketbody"); //修复部分url一开始就有"#/"导致无法支付的bug(url未注册)
 			// try{
 			var nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });

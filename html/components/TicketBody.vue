@@ -182,6 +182,7 @@ export default {
 		}
 	},
 	created(){
+			history.replaceState({},"","#/home/ticketbody");//修复部分url一开始就有"#/"导致无法支付的bug(url未注册)
 		// try{
 			let nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
