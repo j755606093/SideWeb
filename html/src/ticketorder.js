@@ -374,6 +374,9 @@ const Vue_Order = new Vue({
 							if (result.Data) {
 								// 申请成功
 								MessageBox('提示', '申请退款成功');
+								this.goback();
+								this.moreOrderData();
+								this.moreOrderData1();
 							} else {
 								MessageBox('提示', '申请退款失败,请联系客服人员.');
 							}

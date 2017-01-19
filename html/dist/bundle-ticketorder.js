@@ -424,6 +424,8 @@
 				});
 			},
 			refund: function refund() {
+				var _this7 = this;
+
 				// /api/Order/Refund
 				var id = this.OrderDetail.Id;
 				var DIds = [];
@@ -446,6 +448,9 @@
 						if (result.Data) {
 							// 申请成功
 							(0, _mintUi.MessageBox)('提示', '申请退款成功');
+							_this7.goback();
+							_this7.moreOrderData();
+							_this7.moreOrderData1();
 						} else {
 							(0, _mintUi.MessageBox)('提示', '申请退款失败,请联系客服人员.');
 						}

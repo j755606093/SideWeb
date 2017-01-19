@@ -410,16 +410,22 @@
 				switch (index) {
 					case 0:
 						title = "修改昵称";
+						break;
 					case 1:
 						title = "修改姓名";
+						break;
 					case 2:
 						title = "修改手机号";
+						break;
 					case 3:
 						title = "修改性别(男或女)";
+						break;
 				}
 				_mintUi.MessageBox.prompt(title).then(function (_ref) {
 					var value = _ref.value,
 					    action = _ref.action;
+
+					(0, _mintUi.MessageBox)("你的输入:", value);
 				}).catch(function (error) {
 					console.log(error);
 				});

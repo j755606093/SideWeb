@@ -330,15 +330,19 @@ const Vue_User = new Vue({
 			switch (index) {
 				case 0:
 					title = "修改昵称";
+					break;
 				case 1:
 					title = "修改姓名";
+					break;
 				case 2:
 					title = "修改手机号";
+					break;
 				case 3:
 					title = "修改性别(男或女)";
+					break;
 			}
 			MessageBox.prompt(title).then(({ value, action }) => {
-
+				MessageBox("你的输入:", value);
 			}).catch(error => {
 				console.log(error);
 			});
