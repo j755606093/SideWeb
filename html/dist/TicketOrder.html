@@ -1,227 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-	<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
-	<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<title>订单</title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <title>订单</title>
 </head>
+
 <body>
-	<div id="app" v-show="ready" style="display: none;">
-		<!-- 头部 -->
-		<header>
-			<div class="home">
-				<span>订单</span>
-			</div>
-		</header>
-		<!-- tab -->
-<mt-navbar class="mint-navbar" v-model="selected">
-  <mt-tab-item class="mint-tab-item" id="1">待支付</mt-tab-item>
-  <mt-tab-item class="mint-tab-item" id="2">待使用</mt-tab-item>
-</mt-navbar>
-<!-- tab内容 -->
-<mt-tab-container v-model="selected">
-  <mt-tab-container-item id="1">
-    <div class="body">
-			<!-- 没有订单数据 -->
-			<div class="no-data" v-if="noDataShow">
-				<p>这里空空如也</p>
-			</div>
-			<!-- 订单数据 -->
-			<div class="order" v-else>
-				<!-- 订单列表 -->
-				<div class="lists">
-					<!-- 订单 -->
-					<div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
-						<!-- 订单头部 -->
-						<div class="list-header">
-							<span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
-							<span class="type" v-text="item.Route">高铁大巴</span>
-						</div>
-						<!-- 订单中间 -->
-						<div class="list-center">
-							<div class="city">
-								<span class="start" v-text="item.StartPoint">揭阳</span>
-								<i class="start-time" v-text="item.Boardtime.slice(0,5)">12:50</i>
-								<span class="end"  v-text="item.EndPoint">广州</span>
-							</div>
-							<span class="money" v-text="'¥'+item.TotalPrice">¥402</span>
-						</div>
-						<div class="list-footer">
-							<span class="name" v-text="'乘车日期:'+item.Boarddate">岳飞</span>
-							<template v-if="item.Status===0">
-								<span class="order-pay order-no">订单失效</span>
-							</template>
-							<template v-else>
-								<span class="order-pay order-paying">未支付</span>
-							</template>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="last" show></div>
-  </mt-tab-container-item>
-  <mt-tab-container-item id="2">
-    <div class="body">
-			<!-- 没有订单数据 -->
-			<div class="no-data" v-if="noDataShow1">
-				<p>这里空空如也</p>
-			</div>
-			<!-- 订单数据 -->
-			<div class="order" v-else>
-				<!-- 订单列表 -->
-				<div class="lists">
-					<!-- 订单 -->
-					<div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList1">
-						<!-- 订单头部 -->
-						<div class="list-header">
-							<span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
-							<span class="type" v-text="item.Route">高铁大巴</span>
-						</div>
-						<!-- 订单中间 -->
-						<div class="list-center">
-							<div class="city">
-								<span class="start" v-text="item.StartPoint">揭阳</span>
-								<i class="start-time" v-text="item.Boardtime.slice(0,5)">12:50</i>
-								<span class="end"  v-text="item.EndPoint">广州</span>
-							</div>
-							<span class="money" v-text="'¥'+item.TotalPrice">¥402</span>
-						</div>
-						<div class="list-footer">
-							<span class="name" v-text="'乘车日期:'+item.Boarddate">岳飞</span>
-							<template v-if="item.Status===0">
-								<span class="order-pay order-no">订单失效</span>
-							</template>
-							<template v-else>
-								<span class="order-pay order-paying" v-if="item.IsPay===0">未支付</span>
-								<span class="order-pay order-payed" v-else>已支付</span>
-							</template>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="last1"></div>
-  </mt-tab-container-item>
-</mt-tab-container>	
-		<mt-popup
-		  v-model="orderVisible"
-		  position="right"
-		  class="pay-order">
-		  <div class="pay-lists">
-		  	<div class="pay-body" v-if="orderVisible">
-		  		<div class="info-body">
-		  			<div class="head" @click="goback">
-		  				<i class="fa fa-chevron-left"></i>
-		  			</div>
-		  			<div class="status">
-		  				<template v-if="OrderDetail.Status===1">
-		  					<template v-if="OrderDetail.IsPay===0">
-		  						<i class="fa fa-clock-o"></i>
-		  						<p>订单等待支付!</p>
-		  						<p class="time">请在以下时间内完成支付 {{countdownTime}}</p>
-		  					</template>
-		  					<template v-else>
-		  						<i class="fa fa-check-circle"></i>
-		  						<p>订单已支付</p>
-		  					</template>
-		  				</template>
-		  				<template v-else>
-		  					<i class="fa fa-times-circle"></i>
-		  					<p>订单已经失效!</p>
-		  				</template>
-		  			</div>
-		  		</div>
-		  		<div class="ticket-body">
-		  			<div class="pay-info">
-		  				<div class="qr-img" v-if="selected==='2'">
-		  					<img src="./picture/qrcode_for_gh_f5b67cac0e4d_344.jpg">
-		  					<p>提示:长按二维码关注城市圈可以获取最新的订单信息.</p>
-		  				</div>
-							<div class="address-info">
-								<div class="city">
-									<span class="start" v-text="OrderDetail.StartPoint">揭阳</span>
-									<i class="start-time" v-text="OrderDetail.Route">12:50</i>
-									<span class="end"  v-text="OrderDetail.EndPoint">广州</span>
-								</div>
-							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘车日期:</span>
-									<span class="name">{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</span>
-								</p>
-							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘车地址:</span>
-									<!-- <span class="name"></span> -->
-									{{OrderDetail.StartAddress}}
-								</p>
-							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘客:</span>
-									<span class="name">{{passenger}}</span>
-								</p>
-							</div>
-							<!-- <div class="info-box get-ticket">
+  <div id="app" v-show="ready" style="display: none;">
+    <!-- 头部 -->
+    <header>
+      <div class="home">
+        <span>订单</span>
+      </div>
+    </header>
+    <!-- tab -->
+    <mt-navbar class="mint-navbar" v-model="selected">
+      <mt-tab-item class="mint-tab-item" id="1">待支付</mt-tab-item>
+      <mt-tab-item class="mint-tab-item" id="2">待使用</mt-tab-item>
+    </mt-navbar>
+    <!-- tab内容 -->
+    <mt-tab-container v-model="selected">
+      <mt-tab-container-item id="1">
+        <div class="body">
+          <!-- 没有订单数据 -->
+          <div class="no-data" v-if="noDataShow">
+            <p>这里空空如也</p>
+          </div>
+          <!-- 订单数据 -->
+          <div class="order" v-else>
+            <!-- 订单列表 -->
+            <div class="lists">
+              <!-- 订单 -->
+              <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
+                <!-- 订单头部 -->
+                <div class="list-header">
+                  <span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
+                  <span class="type" v-text="item.Route">高铁大巴</span>
+                </div>
+                <!-- 订单中间 -->
+                <div class="list-center">
+                  <div class="city">
+                    <span class="start" v-text="item.StartPoint">揭阳</span>
+                    <i class="start-time" v-text="item.Boardtime.slice(0,5)">12:50</i>
+                    <span class="end" v-text="item.EndPoint">广州</span>
+                  </div>
+                  <span class="money" v-text="'¥'+item.TotalPrice">¥402</span>
+                </div>
+                <div class="list-footer">
+                  <span class="name" v-text="'乘车日期:'+item.Boarddate">岳飞</span>
+                  <template v-if="item.Status===0">
+                    <span class="order-pay order-no">订单失效</span>
+                  </template>
+                  <template v-else>
+                    <span class="order-pay order-paying">未支付</span>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="last" show></div>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <div class="body">
+          <!-- 没有订单数据 -->
+          <div class="no-data" v-if="noDataShow1">
+            <p>这里空空如也</p>
+          </div>
+          <!-- 订单数据 -->
+          <div class="order" v-else>
+            <!-- 订单列表 -->
+            <div class="lists">
+              <!-- 订单 -->
+              <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList1">
+                <!-- 订单头部 -->
+                <div class="list-header">
+                  <span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
+                  <span class="type" v-text="item.Route">高铁大巴</span>
+                </div>
+                <!-- 订单中间 -->
+                <div class="list-center">
+                  <div class="city">
+                    <span class="start" v-text="item.StartPoint">揭阳</span>
+                    <i class="start-time" v-text="item.Boardtime.slice(0,5)">12:50</i>
+                    <span class="end" v-text="item.EndPoint">广州</span>
+                  </div>
+                  <span class="money" v-text="'¥'+item.TotalPrice">¥402</span>
+                </div>
+                <div class="list-footer">
+                  <span class="name" v-text="'乘车日期:'+item.Boarddate">岳飞</span>
+                  <template v-if="item.Status===0">
+                    <span class="order-pay order-no">订单失效</span>
+                  </template>
+                  <template v-else>
+                    <span class="order-pay order-paying" v-if="item.IsPay===0">未支付</span>
+                    <span class="order-pay order-payed" v-else>已支付</span>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="last1"></div>
+      </mt-tab-container-item>
+    </mt-tab-container>
+    <mt-popup v-model="orderVisible" position="right" class="pay-order">
+      <div class="pay-lists">
+        <div class="pay-body" v-if="orderVisible">
+          <div class="info-body">
+            <div class="head" @click="goback">
+              <i class="fa fa-chevron-left"></i>
+            </div>
+            <div class="status">
+              <template v-if="OrderDetail.Status===1">
+                <template v-if="OrderDetail.IsPay===0">
+                  <i class="fa fa-clock-o"></i>
+                  <p>订单等待支付!</p>
+                  <p class="time">请在以下时间内完成支付 {{countdownTime}}</p>
+                </template>
+                <template v-else>
+                  <i class="fa fa-check-circle"></i>
+                  <p>订单已完成</p>
+                </template>
+              </template>
+              <template v-else>
+                <i class="fa fa-times-circle"></i>
+                <p>订单已经失效!</p>
+              </template>
+            </div>
+          </div>
+          <div class="ticket-body">
+            <div class="pay-info">
+              <div class="qr-img" v-if="selected==='2'">
+                <img src="./picture/qrcode_for_gh_f5b67cac0e4d_344.jpg">
+                <p>提示:长按二维码关注城市圈可以获取最新的订单信息.</p>
+              </div>
+              <div class="address-info">
+                <div class="city">
+                  <span class="start" v-text="OrderDetail.StartPoint">揭阳</span>
+                  <i class="start-time" v-text="OrderDetail.Route">12:50</i>
+                  <span class="end" v-text="OrderDetail.EndPoint">广州</span>
+                </div>
+              </div>
+              <div class="info-box passager-info">
+                <p>
+                  <span class="type">乘车日期:</span>
+                  <span class="name">{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</span>
+                </p>
+              </div>
+              <div class="info-box passager-info">
+                <p>
+                  <span class="type">乘车地址:</span>
+                  <!-- <span class="name"></span> -->
+                  {{OrderDetail.StartAddress}}
+                </p>
+              </div>
+              <div class="info-box passager-info">
+                <p>
+                  <span class="type">乘客:</span>
+                  <span class="name">{{passenger}}</span>
+                </p>
+              </div>
+              <!-- <div class="info-box get-ticket">
 								<p>
 									<span class="type">联系人:</span>
 									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
 								</p>
 							</div> -->
-							<div class="info-box get-ticket">
-								<p>
-									<span class="type">联系方式:</span>
-									<span class="name">{{OrderDetail.Linkmanid}}</span>
-								</p>
-							</div>
-		  			</div>
-		  			<!-- <button @click="outpay">点击退出</button> -->
-		  		</div>
-		  		<div class="pay-ticket-info">
-		  			<div class="pay-ticket-info-header">
-		  				<p>订单信息</p>
-		  			</div>
-		  			<div class="pay-ticket-info-body">
-		  				<p>订单编号:{{OrderDetail.Id}}</p>
-		  				<p>下单日期:{{OrderDetail.CTime}}</p>
-		  				<p class="all">总额: <span style="color:red">{{OrderDetail.TotalPrice+'¥'}}</span></p>
-		  				<span style="clear:both;"></span>
-		  			</div>
-		  		</div>
-		  		<!-- 立即支付 -->
-		  		<template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
-			  		<div class="now-pay">
-			  			<button @click="payMoney">立即支付</button>
-			  		</div>
-			  		<div class="out-order" style="margin-top:20px;margin-bottom:20px;">
-			  			<a @click="cancelOrder">取消订单</a>
-			  		</div>
-		  		</template>
-		  	</div>
-		  </div>
-		</mt-popup>
-		<footer>
-			<a href="./ticket.html" class="footer">
-				<!-- <i class="fa fa-home"></i> -->
-				<img src="./picture/ticket.png">
-				<p>票务</p>
-			</a>
-			<a href="./TicketOrder.html" class="footer active">
-				<!-- <i class="fa fa-sticky-note"></i> -->
-				<img src="./picture/cart_order_active.png">
-				<p>订单</p>
-			</a>
-			<a href="./TicketUser.html" class="footer">
-				<!-- <i class="fa fa-user"></i> -->
-				<img src="./picture/user.png">
-				<p>我的</p>
-			</a>
-		</footer>
-	</div>
-<script src="./bundle-ticketorder.js"></script>
+              <div class="info-box get-ticket">
+                <p>
+                  <span class="type">联系方式:</span>
+                  <span class="name">{{OrderDetail.Linkmanid}}</span>
+                </p>
+              </div>
+            </div>
+            <!-- <button @click="outpay">点击退出</button> -->
+          </div>
+          <div class="pay-ticket-info">
+            <div class="pay-ticket-info-header">
+              <p>订单信息</p>
+            </div>
+            <div class="pay-ticket-info-body">
+              <p>订单编号:{{OrderDetail.Id}}</p>
+              <p>下单日期:{{OrderDetail.CTime}}</p>
+              <p class="all">总额: <span style="color:red">{{OrderDetail.TotalPrice+'¥'}}</span></p>
+              <span style="clear:both;"></span>
+            </div>
+          </div>
+          <!-- 立即支付 -->
+          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
+            <div class="now-pay">
+              <button @click="payMoney">立即支付</button>
+            </div>
+            <div class="out-order" style="margin-top:20px;margin-bottom:20px;">
+              <a @click="cancelOrder">取消订单</a>
+            </div>
+          </template>
+        </div>
+      </div>
+    </mt-popup>
+    <footer>
+      <a href="./ticket.html" class="footer">
+        <!-- <i class="fa fa-home"></i> -->
+        <img src="./picture/ticket.png">
+        <p>票务</p>
+      </a>
+      <a href="./TicketOrder.html" class="footer active">
+        <!-- <i class="fa fa-sticky-note"></i> -->
+        <img src="./picture/cart_order_active.png">
+        <p>订单</p>
+      </a>
+      <a href="./TicketUser.html" class="footer">
+        <!-- <i class="fa fa-user"></i> -->
+        <img src="./picture/user.png">
+        <p>我的</p>
+      </a>
+    </footer>
+  </div>
+  <script src="./bundle-ticketorder.js"></script>
 </body>
+
 </html>

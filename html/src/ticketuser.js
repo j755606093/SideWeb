@@ -208,6 +208,12 @@ const Vue_User = new Vue({
 		 * @return {[type]} [description]
 		 */
 		getOrderData(type = "") {
+			if (type === 1 || type === 3) {
+				//这两个列表是返回的全部数据,不需要再次获取
+				if (this["OrderType" + type].OrderList.length !== 0) {
+					return;
+				}
+			}
 			if (this["OrderType" + type].noMoreData || this["OrderType" + type].isUse) {
 				return;
 			}
