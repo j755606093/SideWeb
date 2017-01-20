@@ -336,22 +336,57 @@ const Vue_User = new Vue({
 		},
 		edit(index) {
 			let title = "";
+			let NickName = "";
+			let Mobile = "";
+			let Sex = "";
 			switch (index) {
 				case 0:
-					title = "修改昵称";
+					title = "昵称";
 					break;
-				case 1:
-					title = "修改姓名";
-					break;
+					// case 1:
+					// 	title = "姓名";
+					// 	break;
 				case 2:
-					title = "修改手机号";
+					title = "手机号";
 					break;
 				case 3:
-					title = "修改性别(男或女)";
+					title = "性别(男或女)";
 					break;
 			}
-			MessageBox.prompt(title).then(({ value, action }) => {
-				MessageBox("你的输入:", value);
+
+			MessageBox.prompt("修改" + title).then(({ value, action }) => {
+				switch (index) {
+					case 0:
+						NickName = value;
+						break;
+						// case 1:
+						// 	title = "姓名";
+						// 	break;
+					case 2:
+						Mobile = value;
+						break;
+					case 3:
+						Sex = value;
+						break;
+				}
+				if (value === "") {
+					MessageBox("请输入正确的" + title);
+					return;
+				} else {
+					fetch(config.serverUrl + "/api/Transport/UpdateUserInfo", {
+							method: 'POST',
+							headers: config.headers,
+							body: JSON.stringify({
+								NickName: NickName,
+								Mobile: Mobile
+							})
+						})
+						.then(checkStatus)
+						.then(result => result.json())
+						.then(result => {
+							MessageBox.alert(result.Message);
+						});
+				}
 			}).catch(error => {
 				console.log(error);
 			});
@@ -373,6 +408,8 @@ const Vue_User = new Vue({
 		},
 		// 申请退款
 		applyRefund() {
+			this.controlHeader(true, "申请退款");
+			this.refundVisible = true;
 			if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
 				return;
 			}
@@ -393,8 +430,7 @@ const Vue_User = new Vue({
 				} else {
 					this.RefundOrder.noMoreData = true;
 				}
-				this.controlHeader(true, "申请退款");
-				this.refundVisible = true;
+
 				this.RefundOrder.isUse = false;
 			})
 

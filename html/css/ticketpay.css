@@ -937,5 +937,10 @@ input {
     .payinfo-popup-visible .out-order a {
       color: #AAAAAA; }
 
+.mint-msgbox-input input {
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px; }
+
 .success {
   color: #2ecc71; }

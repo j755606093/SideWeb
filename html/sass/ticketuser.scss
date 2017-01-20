@@ -661,6 +661,14 @@ header {
   z-index: 10000;
 }
 
+.mint-msgbox-input {
+  input {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+  }
+}
+
 footer {
   display: flex;
   flex-direction: row;

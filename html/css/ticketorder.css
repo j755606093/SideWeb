@@ -559,6 +559,11 @@ footer {
     footer .footer.active p {
       color: #0074D9; }
 
+.mint-msgbox-input input {
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px; }
+
 .mint-indicator {
   position: fixed;
   top: 0;
