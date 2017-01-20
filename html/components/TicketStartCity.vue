@@ -47,6 +47,9 @@
 		background-color:$white;
 	}
 }
+.mint-indexsection-index{
+	font-size:16px;
+}
 .mint-indexlist-navitem{
 	padding-top:5px;
 }
