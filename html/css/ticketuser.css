@@ -344,7 +344,7 @@ header {
   .order-lists .lists {
     width: 94%;
     margin: 0 3%;
-    margin-top: 60px;
+    margin-top: 100px;
     position: relative; }
     .order-lists .lists .order-lists-header {
       position: fixed;
@@ -695,11 +695,11 @@ header {
         -ms-flex-align: center;
             align-items: center; }
         .user-lists .lists .info-man .info-man-line .left {
-          -ms-flex: 0.2;
-              flex: 0.2; }
+          -ms-flex: 0.3;
+              flex: 0.3; }
         .user-lists .lists .info-man .info-man-line .gray {
-          -ms-flex: 0.7;
-              flex: 0.7;
+          -ms-flex: 0.6;
+              flex: 0.6;
           color: #777777; }
         .user-lists .lists .info-man .info-man-line .right {
           -ms-flex: 0.1;
@@ -720,6 +720,75 @@ header {
             font-size: 1.4rem; }
       .user-lists .lists .info-man span {
         font-size: 1.4rem; }
+
+.refund-lists {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll; }
+  .refund-lists .lists {
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    margin-top: 60px;
+    -ms-flex-align: center;
+        align-items: center; }
+    .refund-lists .lists .list {
+      width: 96%;
+      margin: 0 2%;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      background-color: white;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 10px 10px;
+      color: #111111; }
+      .refund-lists .lists .list .left {
+        -ms-flex: 0.8;
+            flex: 0.8;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+        .refund-lists .lists .list .left .left-line {
+          height: 30px;
+          line-height: 30px;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row; }
+          .refund-lists .lists .list .left .left-line .left-span {
+            -ms-flex: 0.3;
+                flex: 0.3; }
+          .refund-lists .lists .list .left .left-line span:last-child {
+            -ms-flex: 0.7;
+                flex: 0.7; }
+      .refund-lists .lists .list .right {
+        -ms-flex: 0.2;
+            flex: 0.2;
+        position: relative; }
+        .refund-lists .lists .list .right img.checking {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          width: 60px;
+          height: 60px;
+          transform: rotate(-30deg); }
+    .refund-lists .lists span {
+      font-size: 1.2rem; }
+    .refund-lists .lists .blue {
+      color: #0074D9; }
+    .refund-lists .lists .red {
+      color: #db3652; }
 
 .mint-indicator {
   position: fixed;

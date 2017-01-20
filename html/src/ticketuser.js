@@ -115,9 +115,17 @@ const Vue_User = new Vue({
 		orderVisible: false, //是否显示订单列表
 		passengerVisible: false, //乘客列表
 		userVisible: false, //用户信息显示
+		refundVisible: false, //申请退款显示
 
 		passengerName: "", //新增乘客姓名
 		passengerPhone: "", //新增乘客手机号
+
+		RefundOrder: {
+			RefundList: [],
+			index: 1,
+			isUse: false,
+			noMoreData: false
+		}
 	},
 	created() {
 		this.getUserInfo()
@@ -159,6 +167,7 @@ const Vue_User = new Vue({
 			this.discountVisible = false;
 			this.passengerVisible = false;
 			this.userVisible = false;
+			this.refundVisible = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -348,6 +357,47 @@ const Vue_User = new Vue({
 			});
 			// MessageBox("修改数据", "第" + index + "项")
 			// console.log(index)
+		},
+		getRefund() {
+			return fetch(config.serverUrl + "/api/Order/ListRefund", {
+					method: 'POST',
+					headers: config.headers,
+					body: JSON.stringify({
+						Index: this.RefundOrder.index,
+						Size: 10,
+						Status: -1, //不分状态
+					})
+				})
+				.then(checkStatus)
+				.then(result => result.json())
+		},
+		// 申请退款
+		applyRefund() {
+			if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
+				return;
+			}
+
+			this.RefundOrder.isUse = true;
+			this.loading();
+			this.getRefund().then(result => {
+				Indicator.close();
+
+				if (result.Data) {
+					for (let i = 0; i < result.Data.length; i++) {
+						this.RefundOrder.RefundList.push(result.Data[i])
+					}
+					if (result.Data.length < 10) {
+						// 没有更多数据
+						this.RefundOrder.noMoreData = true;
+					}
+				} else {
+					this.RefundOrder.noMoreData = true;
+				}
+				this.controlHeader(true, "申请退款");
+				this.refundVisible = true;
+				this.RefundOrder.isUse = false;
+			})
+
 		}
 	},
 	components: {
@@ -362,5 +412,14 @@ document.getElementById("order-lists").addEventListener('scroll', _.throttle(fun
 	if (status < 1000 && orderVisible) {
 		let id = Vue_User.UseOrderType;
 		Vue_User.getOrderData(id === 0 ? '' : id);
+	}
+}, 100, { leading: false }));
+
+document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
+	let refundVisible = Vue_User.refundVisible;
+	let status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
+
+	if (status_refund < 1000 && refundVisible) {
+		Vue_User.applyRefund();
 	}
 }, 100, { leading: false }));
