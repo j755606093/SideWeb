@@ -137,6 +137,15 @@
 		serverUrl: debug ? "http://192.168.31.80" : ""
 	};
 
+	/** 刷新地址上的时间戳 */
+	var refreshLink = function () {
+		var linkTime = [];
+		for (var i = 0; i < 3; i++) {
+			linkTime.push(Date.now());
+		}
+		return linkTime;
+	}();
+
 	var Vue_Order = new _vue2.default({
 		el: "#app",
 		data: {
@@ -167,8 +176,9 @@
 
 			passengerPopupVisible: false, //退款人选择
 			selectPassenger: [],
-			optionsPassenger: []
-		},
+			optionsPassenger: [],
+
+			refreshLink: refreshLink },
 		created: function created() {
 			this.ready = true;
 			if (this.getQueryString("orderid")) {
@@ -331,11 +341,13 @@
 					for (var i = 0; i < _this3.OrderDetail.Passengers.length; i++) {
 						var item = _this3.OrderDetail.Passengers[i];
 						if (item.Status === -3) {
-							continue; //这个乘客已经退款就不显示
+							_this3.passenger = _this3.passenger + item.Name + "(已退款),";
+							// continue; //这个乘客已经退款就不显示
+						} else {
+							_this3.passenger = _this3.passenger + item.Name + ",";
 						}
 
 						_this3.optionsPassenger.push({ label: item.Name, value: item.DId }); //提供申请退款选择的用户名
-						_this3.passenger = _this3.passenger + item.Name + ",";
 					}
 					_this3.passenger = _this3.passenger.slice(0, _this3.passenger.length - 1);
 					_mintUi.Indicator.close();
@@ -481,7 +493,7 @@
 					}).then(function (result) {
 						if (result.Data) {
 							// 申请成功
-							(0, _mintUi.MessageBox)('提示', '申请退款成功');
+							(0, _mintUi.MessageBox)('提示', '申请退款已提交');
 							_this7.goback();
 							_this7.moreOrderData();
 							_this7.moreOrderData1();

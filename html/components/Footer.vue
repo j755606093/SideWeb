@@ -1,16 +1,16 @@
 <template type="x/template" id="ticketfooter">
 	<footer v-show="getfooter">
-		<a href="./ticket.html#/home/ticketbody" class="footer active">
+		<a :href="refresh" class="footer active">
 			<!-- <i class="fa fa-home"></i> -->
 			<img src="../picture/ticket_blue.png">
 			<p>票务</p>
 		</a>
-		<a href="./TicketOrder.html" :class="['footer',getNoPay>0?'nopay':'']">
+		<a :href="'./TicketOrder.html?datetime='+Date.now()" :class="['footer',getNoPay>0?'nopay':'']">
 			<!-- <i class="fa fa-sticky-note"></i> -->
 			<img src="../picture/cart_order.png">
 			<p>订单</p>
 		</a>
-		<a href="./TicketUser.html" class="footer">
+		<a :href="'./TicketUser.html?datetime='+Date.now()" class="footer">
 			<!-- <i class="fa fa-user"></i> -->
 			<img src="../picture/user.png">
 			<p>我的</p>
@@ -88,11 +88,11 @@ import Utils from "../Utils/utils";
 export default {
 	data () {
 		return {
-			
+			refresh:""
 		}
 	},
 	created(){
-		
+		this.refresh = "./ticket.html?datatime="+Date.now();
 	},
 	computed:{
 		getfooter(){

@@ -30416,9 +30416,13 @@
 
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				refresh: ""
+			};
 		},
-		created: function created() {},
+		created: function created() {
+			this.refresh = "./ticket.html?datatime=" + Date.now();
+		},
 
 		computed: {
 			getfooter: function getfooter() {
@@ -30527,39 +30531,35 @@
 	      value: (_vm.getfooter),
 	      expression: "getfooter"
 	    }]
-	  }, [_vm._m(0), " ", _vm._h('a', {
-	    class: ['footer', _vm.getNoPay > 0 ? 'nopay' : ''],
-	    attrs: {
-	      "href": "./TicketOrder.html"
-	    }
-	  }, [_vm._h('img', {
-	    attrs: {
-	      "src": __webpack_require__(136)
-	    }
-	  }), " ", _vm._h('p', ["订单"])]), " ", _vm._m(1)])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('a', {
+	  }, [_vm._h('a', {
 	    staticClass: "footer active",
 	    attrs: {
-	      "href": "./ticket.html#/home/ticketbody"
+	      "href": _vm.refresh
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(137)
 	    }
-	  }), " ", _vm._h('p', ["票务"])])
-	},function (){var _vm=this;
-	  return _vm._h('a', {
+	  }), " ", _vm._h('p', ["票务"])]), " ", _vm._h('a', {
+	    class: ['footer', _vm.getNoPay > 0 ? 'nopay' : ''],
+	    attrs: {
+	      "href": './TicketOrder.html?datetime=' + Date.now()
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(136)
+	    }
+	  }), " ", _vm._h('p', ["订单"])]), " ", _vm._h('a', {
 	    staticClass: "footer",
 	    attrs: {
-	      "href": "./TicketUser.html"
+	      "href": './TicketUser.html?datetime=' + Date.now()
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(138)
 	    }
-	  }), " ", _vm._h('p', ["我的"])])
-	}]}
+	  }), " ", _vm._h('p', ["我的"])])])
+	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {

@@ -75,6 +75,15 @@ const config = {
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
 
+/** 刷新地址上的时间戳 */
+const refreshLink = (function() {
+	let linkTime = [];
+	for (let i = 0; i < 3; i++) {
+		linkTime.push(Date.now());
+	}
+	return linkTime;
+})();
+
 const Vue_Order = new Vue({
 	el: "#app",
 	data: {
@@ -105,7 +114,9 @@ const Vue_Order = new Vue({
 
 		passengerPopupVisible: false, //退款人选择
 		selectPassenger: [],
-		optionsPassenger: []
+		optionsPassenger: [],
+
+		refreshLink: refreshLink, //刷新页面地址
 	},
 	created() {
 		this.ready = true;
@@ -263,11 +274,13 @@ const Vue_Order = new Vue({
 					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
 						let item = this.OrderDetail.Passengers[i];
 						if (item.Status === -3) {
-							continue; //这个乘客已经退款就不显示
+							this.passenger = this.passenger + item.Name + "(已退款),";
+							// continue; //这个乘客已经退款就不显示
+						} else {
+							this.passenger = this.passenger + item.Name + ",";
 						}
 
 						this.optionsPassenger.push({ label: item.Name, value: item.DId }); //提供申请退款选择的用户名
-						this.passenger = this.passenger + item.Name + ",";
 					}
 					this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					Indicator.close();
@@ -405,7 +418,7 @@ const Vue_Order = new Vue({
 						.then(result => {
 							if (result.Data) {
 								// 申请成功
-								MessageBox('提示', '申请退款成功');
+								MessageBox('提示', '申请退款已提交');
 								this.goback();
 								this.moreOrderData();
 								this.moreOrderData1();
