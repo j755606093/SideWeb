@@ -12,4 +12,4 @@ COPY . /usr/sideServer/app/
 
 EXPOSE 3000
 
-ENTRYPOINT ["pm2","start","./bin/www"]
+CMD ["pm2-docker", "./bin/www"]
