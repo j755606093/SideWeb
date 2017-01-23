@@ -139,7 +139,7 @@
           </div>
           <div class="ticket-body">
             <div class="pay-info">
-              <div class="qr-img" v-if="selected==='2'">
+              <div class="qr-img" v-if="OrderDetail.IsPay===1">
                 <p style="margin-top:10px;">提示:系统正为你出票,长按二维码关注城市圈可以获取最新的订单信息.</p>
                 <img src="./picture/qrcode_for_gh_c94040df86a5_430.jpg">
               </div>
@@ -204,7 +204,7 @@
               <a @click="cancelOrder">取消订单</a>
             </div>
           </template>
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
             <div class="out-order" style="margin-top:20px;margin-bottom:20px;color:red;font-size:16px;">
               <a @click="showSelectPassenger">申请退款</a>
             </div>
