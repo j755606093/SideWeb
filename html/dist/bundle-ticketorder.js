@@ -437,11 +437,12 @@
 				});
 			},
 			checkSelectPassenger: function checkSelectPassenger() {
+				this.passengerPopupVisible = false;
+
 				if (this.selectPassenger.length === 0) {
-					this.passengerPopupVisible = false;
+					(0, _mintUi.MessageBox)('提示', "你未选择退款乘客");
 				} else {
 					this.refund();
-					console.log(this.selectPassenger);
 				}
 			},
 			showSelectPassenger: function showSelectPassenger() {
@@ -479,7 +480,6 @@
 						return result.json();
 					}).then(function (result) {
 						if (result.Data) {
-							_this7.passengerPopupVisible = false;
 							// 申请成功
 							(0, _mintUi.MessageBox)('提示', '申请退款成功');
 							_this7.goback();

@@ -362,11 +362,12 @@ const Vue_Order = new Vue({
 			});
 		},
 		checkSelectPassenger() {
+			this.passengerPopupVisible = false;
+
 			if (this.selectPassenger.length === 0) {
-				this.passengerPopupVisible = false;
+				MessageBox('提示', "你未选择退款乘客");
 			} else {
 				this.refund();
-				console.log(this.selectPassenger)
 			}
 		},
 		showSelectPassenger() {
@@ -403,7 +404,6 @@ const Vue_Order = new Vue({
 						.then(result => result.json())
 						.then(result => {
 							if (result.Data) {
-								this.passengerPopupVisible = false;
 								// 申请成功
 								MessageBox('提示', '申请退款成功');
 								this.goback();
