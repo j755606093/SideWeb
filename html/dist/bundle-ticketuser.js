@@ -512,6 +512,7 @@
 							// 没有更多数据
 							_this5.RefundOrder.noMoreData = true;
 						}
+						_this5.RefundOrder.index++;
 					} else {
 						_this5.RefundOrder.noMoreData = true;
 					}

@@ -427,6 +427,7 @@ const Vue_User = new Vue({
 						// 没有更多数据
 						this.RefundOrder.noMoreData = true;
 					}
+					this.RefundOrder.index++;
 				} else {
 					this.RefundOrder.noMoreData = true;
 				}
