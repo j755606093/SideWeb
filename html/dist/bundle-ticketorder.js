@@ -343,6 +343,12 @@
 						if (item.Status === -3) {
 							_this3.passenger = _this3.passenger + item.Name + "(已退款),";
 							// continue; //这个乘客已经退款就不显示
+						}
+						if (item.Status === -1) {
+							_this3.passenger = _this3.passenger + item.Name + "(审核中),";
+						}
+						if (item.Status === -2) {
+							_this3.passenger = _this3.passenger + item.Name + "(待退款),";
 						} else {
 							_this3.passenger = _this3.passenger + item.Name + ",";
 						}

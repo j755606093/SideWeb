@@ -276,6 +276,12 @@ const Vue_Order = new Vue({
 						if (item.Status === -3) {
 							this.passenger = this.passenger + item.Name + "(已退款),";
 							// continue; //这个乘客已经退款就不显示
+						}
+						if (item.Status === -1) {
+							this.passenger = this.passenger + item.Name + "(审核中),";
+						}
+						if (item.Status === -2) {
+							this.passenger = this.passenger + item.Name + "(待退款),";
 						} else {
 							this.passenger = this.passenger + item.Name + ",";
 						}

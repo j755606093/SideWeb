@@ -125,6 +125,7 @@
                 <template v-else>
                   <i class="fa fa-check-circle"></i>
                   <p>订单已完成</p>
+                  <p>系统正为你出票,请耐心等候...</p>
                 </template>
               </template>
               <template v-if="OrderDetail.Status===0">
@@ -134,13 +135,14 @@
               <template v-if="OrderDetail.Status===2">
                 <i class="fa fa-check-circle"></i>
                 <p>订单已完成</p>
+                <p>系统正为你出票,请耐心等候...</p>
               </template>
             </div>
           </div>
           <div class="ticket-body">
             <div class="pay-info">
               <div class="qr-img" v-if="OrderDetail.IsPay===1">
-                <p style="margin-top:10px;">提示:系统正为你出票,长按二维码关注城市圈可以获取最新的订单信息.</p>
+                <p style="margin-top:10px;">提示:长按二维码关注城市圈可以获取最新的订单信息.</p>
                 <img src="./picture/qrcode_for_gh_c94040df86a5_430.jpg">
               </div>
               <div class="address-info">
