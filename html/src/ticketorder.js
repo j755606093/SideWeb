@@ -3,7 +3,7 @@ Vue.use(require('vue-resource')); //引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
-import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem } from 'mint-ui';
+import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem, Checklist } from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
 Vue.component(TabContainer.name, TabContainer);
@@ -11,6 +11,7 @@ Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 Vue.component(Navbar.name, Navbar);
+Vue.component(Checklist.name, Checklist);
 
 const debug = (function() {
 	let test = false;
@@ -101,6 +102,10 @@ const Vue_Order = new Vue({
 		countdown: null, //倒计时
 		countdownTime: "", //倒计时显示
 		storeCountTime: "", //剩余支付时间
+
+		passengerPopupVisible: false, //退款人选择
+		selectPassenger: [],
+		optionsPassenger: []
 	},
 	created() {
 		this.ready = true;
@@ -254,8 +259,15 @@ const Vue_Order = new Vue({
 				.then(result => {
 					this.OrderDetail = result.Data;
 					this.passenger = "";
+					this.optionsPassenger = [];
 					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
-						this.passenger = this.passenger + this.OrderDetail.Passengers[i].Name + ",";
+						let item = this.OrderDetail.Passengers[i];
+						if (item.Status === -3) {
+							continue; //这个乘客已经退款就不显示
+						}
+
+						this.optionsPassenger.push({ label: item.Name, value: item.DId }); //提供申请退款选择的用户名
+						this.passenger = this.passenger + item.Name + ",";
 					}
 					this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					Indicator.close();
@@ -343,19 +355,38 @@ const Vue_Order = new Vue({
 						this.moreOrderData1();
 					})
 			});
-
 		},
 		inputRefund() {
 			return MessageBox.prompt('请输入退款理由').then(({ value, action }) => {
 				return value;
 			});
 		},
+		checkSelectPassenger() {
+			if (this.selectPassenger.length === 0) {
+				this.passengerPopupVisible = false;
+			} else {
+				this.refund();
+				console.log(this.selectPassenger)
+			}
+		},
+		showSelectPassenger() {
+			this.passengerPopupVisible = true;
+		},
 		refund() {
 			// /api/Order/Refund
 			let id = this.OrderDetail.Id;
+			let len = this.OrderDetail.Passengers.length;
 			let DIds = [];
-			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
-				DIds.push(this.OrderDetail.Passengers[i].DId);
+			if (len === 1) {
+				//就全部退掉
+				for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
+					DIds.push(this.OrderDetail.Passengers[i].DId);
+				}
+			} else {
+				//退掉用户选中的
+				for (let i = 0; i < this.selectPassenger.length; i++) {
+					DIds.push(this.selectPassenger[i]);
+				}
 			}
 
 			this.inputRefund().then(result => {
@@ -365,20 +396,21 @@ const Vue_Order = new Vue({
 							body: JSON.stringify({
 								OrderId: id,
 								DIds: DIds,
-								Remark: result ? result : "用户未填写信息"
+								Remark: result ? result : "用户未填写理由"
 							})
 						})
 						.then(checkStatus)
 						.then(result => result.json())
 						.then(result => {
 							if (result.Data) {
+								this.passengerPopupVisible = false;
 								// 申请成功
 								MessageBox('提示', '申请退款成功');
 								this.goback();
 								this.moreOrderData();
 								this.moreOrderData1();
 							} else {
-								MessageBox('提示', '申请退款失败,请联系客服人员.');
+								MessageBox('提示', result.Message);
 							}
 						})
 				})

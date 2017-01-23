@@ -47420,19 +47420,7 @@
 	    staticClass: "showload"
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-circle-o-notch fa-spin"
-	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._h('div', {
-	    staticClass: "location-result"
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-map-marker",
-	    style: ({
-	      color: _vm.locationName === '' ? '#fff' : '#000'
-	    })
-	  }), " ", _vm._h('span', [_vm._s(_vm.locationName)]), " ", (_vm.showRefresh) ? _vm._h('span', {
-	    staticClass: "refresh-location",
-	    on: {
-	      "click": _vm.refreshLocation
-	    }
-	  }, ["重新定位"]) : _vm._e()]), " "]), " ", " ", _vm._h('div', {
+	  }), " ", _vm._h('span', ["正在为你定位最近的上车点..."])]) : _vm._e(), " "]), " ", " ", _vm._h('div', {
 	    staticClass: "click-search"
 	  }, [_vm._h('p', {
 	    on: {
@@ -48836,7 +48824,7 @@
 	      staticClass: "car-position"
 	    }, [_vm._h('p', [_vm._h('span', {
 	      staticClass: "brand"
-	    }, ["始"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", " ", _vm._h('p', {
+	    }, ["上"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", " ", _vm._h('p', {
 	      staticClass: "type",
 	      on: {
 	        "click": function($event) {
@@ -48896,7 +48884,7 @@
 	      })])])
 	    })])]), " ", _vm._h('p', [_vm._h('span', {
 	      staticClass: "brand"
-	    }, ["终"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"]), " ", _vm._h('p', {
+	    }, ["下"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"]), " ", _vm._h('p', {
 	      staticClass: "router-type"
 	    }, ["\n\t\t\t\t\t" + _vm._s(item.Route)])]), " ", _vm._h('div', {
 	      staticClass: "ticket-type"

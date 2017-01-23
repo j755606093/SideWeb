@@ -510,6 +510,30 @@ header {
     .pay-order .out-order a {
       color: #AAAAAA; }
 
+.passenger-popup-visible {
+  width: 80%;
+  height: 60%;
+  background-color: #fff;
+  border-radius: 10px; }
+  .passenger-popup-visible .passenger {
+    position: relative;
+    border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll; }
+    .passenger-popup-visible .passenger .mint-checklist {
+      margin-bottom: 50px; }
+    .passenger-popup-visible .passenger button {
+      width: 100%;
+      padding: 10px;
+      color: #fff;
+      background-color: #0074D9;
+      font-size: 1.6rem;
+      position: fixed;
+      bottom: 0px;
+      left: 0;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px; }
+
 footer {
   display: -ms-flexbox;
   display: flex;

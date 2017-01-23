@@ -6,7 +6,7 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <title>订单</title>
+  <title>身边票务--订单</title>
 </head>
 
 <body>
@@ -127,9 +127,13 @@
                   <p>订单已完成</p>
                 </template>
               </template>
-              <template v-else>
+              <template v-if="OrderDetail.Status===0">
                 <i class="fa fa-times-circle"></i>
                 <p>订单已经失效!</p>
+              </template>
+              <template v-if="OrderDetail.Status===2">
+                <i class="fa fa-check-circle"></i>
+                <p>订单已完成</p>
               </template>
             </div>
           </div>
@@ -202,11 +206,21 @@
           </template>
           <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
             <div class="out-order" style="margin-top:20px;margin-bottom:20px;color:red;font-size:16px;">
-              <a @click="refund">申请退款</a>
+              <a @click="showSelectPassenger">申请退款</a>
             </div>
           </template>
         </div>
       </div>
+    </mt-popup>
+    <!-- 退款人选择 -->
+    <mt-popup closeOnClickModal="false" v-model="passengerPopupVisible" class="passenger-popup-visible">
+      <slot>
+        <div class="passenger">
+          <mt-checklist title="退款人选择" v-model="selectPassenger" :options="optionsPassenger">
+          </mt-checklist>
+          <button @click="checkSelectPassenger" class="btn">确定</button>
+        </div>
+      </slot>
     </mt-popup>
     <footer>
       <a href="./ticket.html" class="footer">

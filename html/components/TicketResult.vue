@@ -20,7 +20,7 @@
 					<span class="data" v-text="item.StartTime.slice(0,item.StartTime.length-3)"></span>
 					<div class="car-position">
 						<p>
-							<span class="brand">始</span>{{item.StartPoint}}
+							<span class="brand">上</span>{{item.StartPoint}}
 						</p>
 						<!-- 点击查看路线 -->
 						<p class="type" v-on:click.stop="showCompanyDeatil(index,$event)">
@@ -48,7 +48,7 @@
 							</div>
 						</div>
 						<p>
-							<span class="brand">终</span>{{item.EndPoint}}
+							<span class="brand">下</span>{{item.EndPoint}}
 						</p>
 						<p class="router-type">
 						<!-- <i class="fa fa-arrow-h"></i> -->

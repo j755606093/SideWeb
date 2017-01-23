@@ -70,11 +70,11 @@
 				<i class="fa fa-circle-o-notch fa-spin"></i>
 				<span>正在为你定位最近的上车点...</span>
 			</div>
-			<div class="location-result" v-else>
+			<!-- <div class="location-result" v-else>
 				<i class="fa fa-map-marker" :style="{color:locationName===''?'#fff':'#000'}"></i>
 				<span>{{locationName}}</span>
 				<span @click="refreshLocation" v-if="showRefresh" class="refresh-location">重新定位</span>
-			</div>
+			</div> -->
 		</div>
 		<!-- 查询记录 -->
 		<div class="click-search">

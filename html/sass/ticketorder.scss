@@ -405,6 +405,34 @@ header {
   }
 }
 
+.passenger-popup-visible {
+  width: 80%;
+  height: 60%;
+  background-color: $white;
+  border-radius: 10px;
+  .passenger {
+    position: relative;
+    border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll;
+    .mint-checklist {
+      margin-bottom: 50px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      color: $white;
+      background-color: $blue;
+      font-size: 1.6rem;
+      position: fixed;
+      bottom: 0px;
+      left: 0;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+}
+
 footer {
   display: flex;
   flex-direction: row;
