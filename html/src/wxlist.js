@@ -13,7 +13,7 @@ import Utils from "../Utils/utils";
 // Vue.component(TabItem.name, TabItem);
 // Vue.component(Navbar.name, Navbar);
 
-const debug = (function() {
+let debug = (function() {
 	let debug = false;
 	let url = window.location.href;
 	if (url.slice(0, 5) === "https") {
@@ -23,6 +23,8 @@ const debug = (function() {
 	}
 	return debug;
 })();
+
+debug = false;
 
 //检查请求返回的状态
 function checkStatus(response) {

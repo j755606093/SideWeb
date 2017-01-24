@@ -89,6 +89,8 @@
 		return debug;
 	}();
 
+	debug = false;
+
 	//检查请求返回的状态
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
