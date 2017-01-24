@@ -89,6 +89,8 @@
 		return debug;
 	}();
 
+	debug = false;
+
 	//检查请求返回的状态
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
@@ -281,7 +283,7 @@
 				});
 			},
 			gotoPage: function gotoPage(UniqueId) {
-				window.location.href = "https://app.samecity.com.cn:3000/api/GetTopic?id=" + UniqueId;
+				window.location.href = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId;
 			}
 		},
 		components: {
@@ -292,7 +294,6 @@
 	window.onscroll = _.throttle(function () {
 		var headerTitle = Vue_WxList.headerTitle;
 		var status = document.getElementById("record").offsetTop - document.body.scrollTop;
-		console.log(status);
 
 		if (status < 1000 && headerTitle === "微信公众号") {
 			Vue_WxList.getAllData();
