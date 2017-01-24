@@ -218,7 +218,7 @@ const Vue_WxList = new Vue({
 			let url = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId;
 
 			if (typeof jgkj !== "undefined") {
-				jgkj.loadUrl(url);
+				jgkj.loadPageUrl(url);
 			} else {
 				window.location.href = url
 			}
