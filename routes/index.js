@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require("fs");
 const rp = require("request-promise");
-const serverUrl = "http://192.168.31.86";
+const serverUrl = process.env.ADDRESS ? process.env.ADDRESS : "http://192.168.31.86";
 const {
 	weixin,
 	news,
@@ -14,25 +14,24 @@ const {
 /*********************************************/
 
 /** 获取微信号文章 */
-router.get("/GetTopic",(req,res)=>{
+router.get("/GetTopic", (req, res) => {
 	const id = req.query.id;
 	rp({
-		method:'POST',
-		uri:serverUrl+"/api/Topic/GetTopicDetail/",
-		body:{
-			id:id
+		method: 'POST',
+		uri: serverUrl + "/api/Topic/GetTopicDetail/",
+		body: {
+			id: id
 		},
-		json:true
-	}).then((response)=>{
-			let data = formatJSON(response);
-			if(data.Data){
-				res.set('Content-Type', 'text/html');
-				res.send(weixin(data.Data));
-			}
-			else{
-				res.send({error:"404",message:"未找到此数据"})
-			}
-		})
+		json: true
+	}).then((response) => {
+		let data = formatJSON(response);
+		if (data.Data) {
+			res.set('Content-Type', 'text/html');
+			res.send(weixin(data.Data));
+		} else {
+			res.send({ error: "404", message: "未找到此数据" })
+		}
+	})
 });
 
 /*********************************************/
@@ -40,24 +39,23 @@ router.get("/GetTopic",(req,res)=>{
 /*********************************************/
 
 /** 获取新闻 */
-router.get("/GetNews",(req,res)=>{
+router.get("/GetNews", (req, res) => {
 	const id = req.query.id;
 	rp({
-		method:'POST',
-		uri:serverUrl+"/api/news/GetNewsDetail/",
-		body:{
-			id:id
-		},
-		json:true
-	})
-		.then((response)=>{
+			method: 'POST',
+			uri: serverUrl + "/api/news/GetNewsDetail/",
+			body: {
+				id: id
+			},
+			json: true
+		})
+		.then((response) => {
 			let data = formatJSON(response);
-			if(data.Data){
+			if (data.Data) {
 				res.set('Content-Type', 'text/html');
 				res.send(news(data.Data));
-			}
-			else{
-				res.send({error:"404",message:"未找到此数据"})
+			} else {
+				res.send({ error: "404", message: "未找到此数据" })
 			}
 		})
 });
@@ -66,14 +64,13 @@ router.get("/GetNews",(req,res)=>{
 /*****************功能分割线********************/
 /*********************************************/
 
-router.get("/getHomeContent",(req,res)=>{
+router.get("/getHomeContent", (req, res) => {
 	const realPath = "html/content.html";
-	
-	fs.readFile(realPath,"utf-8",(error,file)=>{
-		if(error){
-			res.send({status:500,error:"没有这个文件!"});
-		}
-		else{
+
+	fs.readFile(realPath, "utf-8", (error, file) => {
+		if (error) {
+			res.send({ status: 500, error: "没有这个文件!" });
+		} else {
 			res.set('Content-Type', 'text/html');
 			res.send(file);
 		}
