@@ -1,0 +1,154 @@
+@charset "UTF-8";
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: #faffbd;
+  /* #FAFFBD; */
+  background-image: none;
+  color: black; }
+
+a,
+img,
+button,
+input,
+textarea,
+p,
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
+a,
+img,
+button,
+p,
+span {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a,
+input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+input {
+  outline: none;
+  border: none; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch; }
+
+@keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+    transform: none; }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); } }
+
+.fadeLeft-out {
+  animation-name: fadeOutLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeLeft-in {
+  animation-name: fadeInLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeRight-in {
+  animation-name: fadeInRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 0;
+    transform: none; }
+  to {
+    opacity: 1;
+    transform: translate3d(100%, 0, 0); } }
+
+.fadeRight-out {
+  animation-name: fadeOutRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
