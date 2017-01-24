@@ -214,7 +214,7 @@ const Vue_WxList = new Vue({
 		},
 
 		gotoPage(UniqueId) {
-			window.location.href = "https://app.samecity.com.cn:3000/api/GetTopic?id=" + UniqueId
+			window.location.href = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId
 		}
 	},
 	components: {
@@ -225,7 +225,6 @@ const Vue_WxList = new Vue({
 window.onscroll = _.throttle(function() {
 	let headerTitle = Vue_WxList.headerTitle;
 	let status = document.getElementById("record").offsetTop - document.body.scrollTop;
-	console.log(status)
 
 	if (status < 1000 && headerTitle === "微信公众号") {
 		Vue_WxList.getAllData();
