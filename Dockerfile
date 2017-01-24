@@ -6,7 +6,7 @@ COPY . /usr/sideServer/app/
 WORKDIR /usr/sideServer/app
 RUN npm install
 RUN npm install pm2 -g
-
+ENV ADDRESS https://app.samecity.com.cn
 EXPOSE 3000
 
 ENTRYPOINT ["pm2","start","./bin/www","--no-daemon"]
