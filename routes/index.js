@@ -20,7 +20,8 @@ router.get("/GetTopic", (req, res) => {
 		method: 'POST',
 		uri: serverUrl + "/api/Topic/GetTopicDetail/",
 		body: {
-			id: id
+			id: id,
+			UniqueId: id
 		},
 		json: true
 	}).then((response) => {
@@ -45,7 +46,8 @@ router.get("/GetNews", (req, res) => {
 			method: 'POST',
 			uri: serverUrl + "/api/news/GetNewsDetail/",
 			body: {
-				id: id
+				id: id,
+				UniqueId: id
 			},
 			json: true
 		})
