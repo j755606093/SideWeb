@@ -283,7 +283,13 @@
 				});
 			},
 			gotoPage: function gotoPage(UniqueId) {
-				window.location.href = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId;
+				var url = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId;
+
+				if (typeof Jigu !== "undefined") {
+					Jigu.loadUrl(url);
+				} else {
+					window.location.href = url;
+				}
 			}
 		},
 		components: {
