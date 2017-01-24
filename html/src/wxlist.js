@@ -214,9 +214,14 @@ const Vue_WxList = new Vue({
 					this.wxVisible = true;
 				})
 		},
-
 		gotoPage(UniqueId) {
-			window.location.href = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId
+			let url = "http://120.76.28.91:3000/api/GetTopic?id=" + UniqueId;
+
+			if (typeof jgkj !== "undefined") {
+				jgkj.loadUrl(url);
+			} else {
+				window.location.href = url
+			}
 		}
 	},
 	components: {
