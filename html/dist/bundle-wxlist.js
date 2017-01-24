@@ -299,17 +299,6 @@
 		}
 	}, 100, { leading: false });
 
-	// document.body.addEventListener('scroll', _.throttle(function() {
-	// 	// let headerTitle = Vue_WxList.headerTitle;
-	// 	// let status = document.getElementById("record").offsetTop - document.body.scrollTop;
-	// 	// console.log(status)
-
-	// 	// if (status < 1000 && headerTitle === "微信公众号") {
-	// 	// 	Vue_WxList.getAllData();
-	// 	// }
-	// 	console.log("yes")
-	// }, 100, { leading: false }));
-
 	document.getElementById("wx-lists").addEventListener('scroll', _.throttle(function () {
 		var headerTitle = Vue_WxList.headerTitle;
 		var status_list = document.getElementById("record_list").offsetTop - document.getElementById("wx-lists").scrollTop;
