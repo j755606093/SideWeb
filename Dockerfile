@@ -9,4 +9,4 @@ RUN npm install pm2 -g
 
 EXPOSE 3000
 
-ENTRYPOINT ["pm2","start","./bin/www"]
+ENTRYPOINT ["pm2","start","./bin/www","--no-daemon"]
