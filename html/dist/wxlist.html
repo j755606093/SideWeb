@@ -12,9 +12,48 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" v-show="ready" style="display: none;">
+    <!-- 头部 -->
+    <header>
+      <div @click="GoBack" class="left">
+        <i class="fa fa-angle-left" v-show="showHeader"></i>
+      </div>
+      <div class="home">
+        <span v-text="headerTitle"></span>
+      </div>
+    </header>
+    <!-- 公众号列表 -->
+    <div id="wx-chat-lists" class="wx-chat-lists">
+      <div class="wx-list" @click="getWxChatList(item.Id)" v-for="(item,index) in showWxLists">
+        <div class="wx-img">
+          <img onerror="this.src='./picture/404.png'" class="wx-img-show" :src="item.Avatar">
+        </div>
+        <div class="wx-content">
+          <p class="wx-title nowrap" v-text="item.Intro">标题</p>
+          <p>
+            <span class="wx-name nowrap" v-text="'发布人:'+item.Name"></span>
+            <span class="wx-source nowrap" v-text="'分类:'+item.ClassId"></span>
+          </p>
+        </div>
+      </div>
+      <div id="record"></div>
+    </div>
+    <!-- 公众号文章列表 -->
+    <mt-popup v-model="wxVisible" position="right" id="wx-lists" class="wx-lists">
+      <div class="lists">
+        <!-- 列表 -->
+        <div class="wx-two-list" @click="gotoPage(item.UniqueId)" v-for="(item,index) in wxArticle.List">
+          <p class="wx-two-list-title nowrap" v-text="item.Title"></p>
+          <div class="wx-two-list-bottom">
+            <span>阅读数:{{parseInt(Math.random()*10000)}}</span>
+            <span>喜欢数:{{parseInt(Math.random()*100)}}</span>
+          </div>
+        </div>
+        <div id="record_list"></div>
+      </div>
+    </mt-popup>
   </div>
-  <script type="text/javascript" src="bundle-wxlist.js?a45d634e003e25f8d78f"></script>
+  <script type="text/javascript" src="./bundle-wxlist.js"></script>
 </body>
 
 </html>

@@ -89,123 +89,71 @@
 		return debug;
 	}();
 
-	/**
-	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
-	 * @param  {[type]} ) {	let        cookie [description]
-	 * @return {[type]}   [description]
-	 */
-	var Authorization = function () {
-		var cookie = document.cookie;
-		if (cookie === "") {
-			return cookie;
-		}
-
-		var arrayCookie = cookie.split(";");
-
-		for (var i = 0; i < arrayCookie.length; i++) {
-			var item = arrayCookie[i].split("=");
-
-			var key = item[0].trim();
-			if (key === "access_token") {
-				return "Bearer " + item[1];
-			}
-		}
-
-		return ""; //如果没有就返回这个
-	}();
-
 	//检查请求返回的状态
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
 			return response;
 		} else {
-			if (response.status === 401) {
-				window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
-			} else {
-				_mintUi.Indicator.close();
-				alert("服务器繁忙,请稍后再试...");
-			}
+
+			_mintUi.Indicator.close();
+			alert("服务器繁忙,请稍后再试...");
 			return response;
 		}
 	}
 
 	var config = {
 		headers: {
-			'Content-Type': 'application/json',
-			Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
+			'Content-Type': 'application/json'
 		},
-		serverUrl: debug ? "http://192.168.31.80" : ""
+		serverUrl: debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
 	};
 
-	var Vue_User = new _vue2.default({
+	var Vue_WxList = new _vue2.default({
 		el: "#app",
 		data: {
 			ready: false, //页面为准备好
 			showHeader: false, //是否显示头部
-			headerTitle: "用户中心", //头部标题
+			headerTitle: "微信公众号", //头部标题
 
-			Passenger: [], //乘客
-			Rebate: [], //优惠券
-			UserInfo: {}, //用户信息
-			discountVisible: false, //优惠券列表显示
-			isNoPay: 0, //未支付订单个数
-			OrderType: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //全部订单
-			OrderType1: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //未支付订单
-			OrderType2: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //已支付订单
-			OrderType3: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //待出行订单
+			wxVisible: false, //显示公众号文章
 
-			UseOrderType: 0, //使用中的订单列表,默认是全部订单0
-			OrderList: [], //显示订单数据,需要赋值
+			noClassIdData: {
+				Index: 1,
+				Lists: [],
+				noMoreData: false,
+				isUse: false
+			},
 
-			orderVisible: false, //是否显示订单列表
-			passengerVisible: false, //乘客列表
-			userVisible: false, //用户信息显示
-			refundVisible: false, //申请退款显示
+			showWxLists: [], //需要显示的列表数据
 
-			passengerName: "", //新增乘客姓名
-			passengerPhone: "", //新增乘客手机号
+			showClassName: [], //公众号的类型
+			defaultShowWx: [], //默认显示的公众号列表
 
-			RefundOrder: {
-				RefundList: [],
-				index: 1,
-				isUse: false,
+			wxArticle: {
+				List: [],
+				Index: 1,
 				noMoreData: false
+			} },
+		created: function created() {
+			this.getAllData();
+			// this.getAllClassData();
+			// this.showHeader = true;
+		},
+		mounted: function mounted() {
+			// this.ready = true;
+		},
+
+		watch: {
+			wxVisible: function wxVisible(value) {
+				if (value) {
+					this.headerTitle = "公众号文章";
+					this.showHeader = true;
+				} else {
+					this.showHeader = false;
+					this.headerTitle = "微信公众号";
+				}
 			}
 		},
-		created: function created() {
-			var _this = this;
-
-			this.getUserInfo().then(function (result) {
-				if (result.Passengers) {
-					_this.Passenger = result.Passengers;
-				}
-				if (result.Rebates) {
-					_this.Rebate = result.Rebates;
-				}
-				_this.UserInfo = result.Userinfo;
-				_this.isNoPay = result.NoPay;
-				_this.ready = true;
-			});
-		},
-		mounted: function mounted() {},
-
-		watch: {},
 		methods: {
 			loading: function loading() {
 				_mintUi.Indicator.open({
@@ -221,25 +169,11 @@
 			},
 
 			//回退界面
-			GoBack: function GoBack(event) {
-				var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-				var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "用户中心";
+			GoBack: function GoBack() {
+				var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "微信公众号";
 
-				this.controlHeader();
-				this.orderVisible = false;
-				this.discountVisible = false;
-				this.passengerVisible = false;
-				this.userVisible = false;
-				this.refundVisible = false;
-			},
-
-			//控制头部显示和标题
-			controlHeader: function controlHeader() {
-				var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-				var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "用户中心";
-
-				this.showHeader = status;
 				this.headerTitle = title;
+				this.wxVisible = false;
 			},
 			getQueryString: function getQueryString(name) {
 				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -250,275 +184,104 @@
 				return null;
 			},
 
-			// 获取用户信息,乘客信息,优惠券信息,是否有未支付订单的个数信息数据
-			getUserInfo: function getUserInfo() {
-				return fetch(config.serverUrl + "/api/Transport/UserRelevant", {
-					headers: config.headers
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					return result.Data;
-				});
-			},
+			// 获取所有的不分id列表
+			getAllData: function getAllData() {
+				var _this = this;
 
-			/**
-	   * 显示订单列表
-	   * @return {[type]} [description]
-	   */
-			showOrderList: function showOrderList() {
-				var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-
-				this.controlHeader(true, "订单");
-				this.UseOrderType = type === '' ? 0 : type;
-				if (this["OrderType" + type].OrderList.length === 0) {
-					// 只有长度为0的时候也就是第一次才加载数据
-					// 否则每次点击都加载一次数据bug了
-					this.getOrderData(type);
-				}
-				this.OrderList = this["OrderType" + type].OrderList;
-				this.orderVisible = true; //显示订单
-			},
-
-			/**
-	   * 显示优惠券列表
-	   * @return {[type]} [description]
-	   */
-			showDiscountList: function showDiscountList() {
-				if (this.Rebate.length === 0) {
-					_mintUi.MessageBox.alert("提示", "你没有优惠券");
+				if (this.noClassIdData.noMoreData || this.noClassIdData.isUse) {
 					return;
 				}
-				this.controlHeader(true, "优惠券");
-				this.discountVisible = true; //显示
-			},
 
-			/**
-	   * 获取订单数据
-	   * @return {[type]} [description]
-	   */
-			getOrderData: function getOrderData() {
-				var _this2 = this;
-
-				var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-
-				if (type === 1 || type === 3) {
-					//这两个列表是返回的全部数据,不需要再次获取
-					if (this["OrderType" + type].OrderList.length !== 0) {
-						return;
-					}
-				}
-				if (this["OrderType" + type].noMoreData || this["OrderType" + type].isUse) {
-					return;
-				}
-				this["OrderType" + type].isUse = true; //锁住这个函数
 				this.loading();
-				fetch(config.serverUrl + "/api/Order/List", {
+				this.noClassIdData.isUse = true;
+
+				fetch(config.serverUrl + "/api/Wechat/AcctList", {
 					method: "POST",
 					headers: config.headers,
 					body: (0, _stringify2.default)({
-						Index: this["OrderType" + type].index,
-						Size: 10,
-						Type: type === "" ? 0 : type
+						Index: this.noClassIdData.Index,
+						Size: 10
 					})
 				}).then(checkStatus).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					if (result.Data) {
-						// if (result.Data.length < 10) {
-						// 	// 说明没有跟多数据了
-						// 	this["OrderType" + type].noMoreData = true;
-						// 	this.toast("已经没有的更多数据了...");
-						// }
 						for (var i = 0; i < result.Data.length; i++) {
-							_this2["OrderType" + type].OrderList.push(result.Data[i]);
+							_this.noClassIdData.Lists.push(result.Data[i]);
+						}
+						_this.showWxLists = _this.noClassIdData.Lists;
+
+						if (result.Data.length < 10) {
+							_this.noClassIdData.noMoreData = true;
 						}
 					} else {
-						_this2["OrderType" + type].noMoreData = true;
-						_this2.toast(result.Message);
+						_this.noClassIdData.noMoreData = true;
 					}
 
-					_this2["OrderType" + type].isUse = false; //释放这个函数
-					_this2["OrderType" + type].index++;
+					_this.noClassIdData.Index++;
+					_this.noClassIdData.isUse = false;
 					_mintUi.Indicator.close();
+				}).then(function (result) {
+					_this.ready = true;
 				});
 			},
-			openOrder: function openOrder(index) {
-				var type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
-				var Id = this["OrderType" + type].OrderList[index].Id;
-				window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
-			},
+			getAllClassData: function getAllClassData() {
+				var _this2 = this;
 
-			/**
-	   * 显示乘客
-	   * @return {[type]} [description]
-	   */
-			showPassengerList: function showPassengerList() {
-				this.passengerVisible = true;
-				this.controlHeader(true, "乘客列表");
+				fetch(config.serverUrl + "/api/Wechat/Index").then(checkStatus).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						for (var i = 0; i < result.Data.Classify.length; i++) {
+							_this2.showClassName.push(result.Data.Classify[i]);
+						}
+						for (var j = 0; j < result.Data.Wechat.length; j++) {
+							_this2.defaultShowWx.push(result.Data.Wechat[j]);
+						}
+						_this2.showWxLists = _this2.defaultShowWx;
+					}
+				}).then(function (result) {
+					_this2.ready = true;
+				});
 			},
-
-			// 新增乘客按钮
-			addPassenger: function addPassenger() {
+			getWxChatList: function getWxChatList(id) {
 				var _this3 = this;
 
-				if (!_utils2.default.isChinaName(this.passengerName) || this.passengerName.length < 2) {
-					this.toast("请输入正确的姓名!");
-					return;
-				}
-				if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
-					this.toast("请输入正确的手机号!");
-					return;
+				if (id) {
+					// 有id数据就说明这个是点击的
+					this.wxArticle.Index = 1; //清空数据
+					this.wxArticle.List = [];
+					this.wxArticle.noMoreData = false;
 				}
 
-				fetch(config.serverUrl + "/api/Passenger/Add", {
-					method: 'POST',
+				this.loading();
+
+				fetch(config.serverUrl + "/api/Topic/List", {
+					method: "POST",
 					headers: config.headers,
 					body: (0, _stringify2.default)({
-						Name: this.passengerName,
-						Mobile: this.passengerPhone
+						WechatId: id,
+						Index: this.wxArticle.Index,
+						Size: 10
 					})
 				}).then(checkStatus).then(function (result) {
 					return result.json();
 				}).then(function (result) {
 					if (result.Data) {
-						var json = {};
-						json.Name = _this3.passengerName;
-						json.Mobile = _this3.passengerPhone;
-						json.Id = result.Data;
-						_this3.passengerPhone = "";
-						_this3.passengerName = "";
-						_this3.Passenger.push(json);
-					} else {
-						_this3.toast(result.Message);
-					}
-				});
-			},
-			trashPassenger: function trashPassenger(index) {
-				var _this4 = this;
-
-				_mintUi.MessageBox.confirm('确定执行此操作?').then(function (action) {
-					fetch(config.serverUrl + "/api/Passenger/Delete/" + _this4.Passenger[index].Id, {
-						headers: config.headers
-					}).then(checkStatus).then(function (result) {
-						return result.json();
-					}).then(function (result) {
-						if (result.Data) {
-							_this4.Passenger.splice(index, 1);
-							_this4.toast("删除成功");
-						} else {
-							_this4.toast(result.Message);
-						}
-					});
-				});
-			},
-			showUserInfo: function showUserInfo() {
-				this.controlHeader(true, "用户信息");
-				this.userVisible = true;
-			},
-			edit: function edit(index) {
-				var title = "";
-				var NickName = "";
-				var Mobile = "";
-				var Sex = "";
-				switch (index) {
-					case 0:
-						title = "昵称";
-						break;
-					// case 1:
-					// 	title = "姓名";
-					// 	break;
-					case 2:
-						title = "手机号";
-						break;
-					case 3:
-						title = "性别(男或女)";
-						break;
-				}
-
-				_mintUi.MessageBox.prompt("修改" + title).then(function (_ref) {
-					var value = _ref.value,
-					    action = _ref.action;
-
-					switch (index) {
-						case 0:
-							NickName = value;
-							break;
-						// case 1:
-						// 	title = "姓名";
-						// 	break;
-						case 2:
-							Mobile = value;
-							break;
-						case 3:
-							Sex = value;
-							break;
-					}
-					if (value === "") {
-						(0, _mintUi.MessageBox)("请输入正确的" + title);
-						return;
-					} else {
-						fetch(config.serverUrl + "/api/Transport/UpdateUserInfo", {
-							method: 'POST',
-							headers: config.headers,
-							body: (0, _stringify2.default)({
-								NickName: NickName,
-								Mobile: Mobile
-							})
-						}).then(checkStatus).then(function (result) {
-							return result.json();
-						}).then(function (result) {
-							_mintUi.MessageBox.alert(result.Message);
-						});
-					}
-				}).catch(function (error) {
-					console.log(error);
-				});
-				// MessageBox("修改数据", "第" + index + "项")
-				// console.log(index)
-			},
-			getRefund: function getRefund() {
-				return fetch(config.serverUrl + "/api/Order/ListRefund", {
-					method: 'POST',
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						Index: this.RefundOrder.index,
-						Size: 10,
-						Status: -1 })
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				});
-			},
-
-			// 申请退款
-			applyRefund: function applyRefund() {
-				var _this5 = this;
-
-				this.controlHeader(true, "申请退款");
-				this.refundVisible = true;
-				if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
-					return;
-				}
-
-				this.RefundOrder.isUse = true;
-				this.loading();
-				this.getRefund().then(function (result) {
-					_mintUi.Indicator.close();
-
-					if (result.Data) {
 						for (var i = 0; i < result.Data.length; i++) {
-							_this5.RefundOrder.RefundList.push(result.Data[i]);
+							_this3.wxArticle.List.push(result.Data[i]);
 						}
-						if (result.Data.length < 10) {
-							// 没有更多数据
-							_this5.RefundOrder.noMoreData = true;
-						}
-						_this5.RefundOrder.index++;
 					} else {
-						_this5.RefundOrder.noMoreData = true;
+						_this3.wxArticle.noMoreData = true;
 					}
-
-					_this5.RefundOrder.isUse = false;
+					_this3.wxArticle.Index++;
+				}).then(function (result) {
+					_mintUi.Indicator.close();
+					_this3.wxVisible = true;
 				});
+			},
+			gotoPage: function gotoPage(UniqueId) {
+				window.location.href = "https://app.samecity.com.cn:3000/api/GetTopic?id=" + UniqueId;
 			}
 		},
 		components: {
@@ -526,22 +289,33 @@
 		}
 	});
 
-	document.getElementById("order-lists").addEventListener('scroll', _.throttle(function () {
-		var orderVisible = Vue_User.orderVisible;
-		var status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
+	window.onscroll = _.throttle(function () {
+		var headerTitle = Vue_WxList.headerTitle;
+		var status = document.getElementById("record").offsetTop - document.body.scrollTop;
+		console.log(status);
 
-		if (status < 1000 && orderVisible) {
-			var id = Vue_User.UseOrderType;
-			Vue_User.getOrderData(id === 0 ? '' : id);
+		if (status < 1000 && headerTitle === "微信公众号") {
+			Vue_WxList.getAllData();
 		}
-	}, 100, { leading: false }));
+	}, 100, { leading: false });
 
-	document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function () {
-		var refundVisible = Vue_User.refundVisible;
-		var status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
+	// document.body.addEventListener('scroll', _.throttle(function() {
+	// 	// let headerTitle = Vue_WxList.headerTitle;
+	// 	// let status = document.getElementById("record").offsetTop - document.body.scrollTop;
+	// 	// console.log(status)
 
-		if (status_refund < 1000 && refundVisible) {
-			Vue_User.applyRefund();
+	// 	// if (status < 1000 && headerTitle === "微信公众号") {
+	// 	// 	Vue_WxList.getAllData();
+	// 	// }
+	// 	console.log("yes")
+	// }, 100, { leading: false }));
+
+	document.getElementById("wx-lists").addEventListener('scroll', _.throttle(function () {
+		var headerTitle = Vue_WxList.headerTitle;
+		var status_list = document.getElementById("record_list").offsetTop - document.getElementById("wx-lists").scrollTop;
+
+		if (status_list < 1000 && headerTitle !== "微信公众号") {
+			Vue_WxList.getWxChatList();
 		}
 	}, 100, { leading: false }));
 
@@ -23482,7 +23256,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch;\n  position: relative; }\n\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 5002;\n  padding: 0;\n  margin: 0; }\n  header .left {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 50px;\n    height: 50px;\n    text-align: center; }\n    header .left i {\n      font-size: 3rem;\n      color: #fff;\n      height: 50px;\n      line-height: 50px; }\n  header .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900; }\n  header .other {\n    text-align: center; }\n    header .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px; }\n      header .other .left i {\n        font-size: 3rem;\n        line-height: 50px; }\n    header .other .center {\n      line-height: 50px;\n      font-size: 1.8rem; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem;\n  z-index: 10000; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.wx-chat-lists {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 50px;\n  left: 0; }\n  .wx-chat-lists .wx-list {\n    width: 96%;\n    margin: 0 2%;\n    height: 70px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-align: center;\n        align-items: center;\n    background-color: #fff;\n    margin-top: 10px;\n    border-radius: 10px;\n    padding: 10px 5px; }\n    .wx-chat-lists .wx-list .wx-img {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      width: 20%; }\n      .wx-chat-lists .wx-list .wx-img .wx-img-show {\n        width: 50px;\n        height: 50px;\n        border-radius: 10px; }\n    .wx-chat-lists .wx-list .wx-content {\n      width: 80%;\n      -ms-flex: 0.8;\n          flex: 0.8;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column; }\n      .wx-chat-lists .wx-list .wx-content p {\n        height: 30px;\n        line-height: 30px;\n        margin-right: 10px; }\n        .wx-chat-lists .wx-list .wx-content p:first-child {\n          font-size: 1.4rem; }\n        .wx-chat-lists .wx-list .wx-content p:last-child {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row; }\n        .wx-chat-lists .wx-list .wx-content p span {\n          -ms-flex: 1;\n              flex: 1;\n          width: 50%; }\n      .wx-chat-lists .wx-list .wx-content .wx-source {\n        text-align: right; }\n\n.wx-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .wx-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 50px;\n    -ms-flex-align: center;\n        align-items: center; }\n    .wx-lists .lists .wx-two-list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      width: 96%;\n      margin: 0 2%;\n      padding: 10px 5px;\n      height: 70px;\n      margin-top: 10px;\n      background-color: #fff;\n      border-radius: 10px; }\n      .wx-lists .lists .wx-two-list .wx-two-list-bottom {\n        height: 30px;\n        line-height: 30px;\n        width: 100%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex: 1;\n            flex: 1; }\n        .wx-lists .lists .wx-two-list .wx-two-list-bottom span {\n          -ms-flex: 1;\n              flex: 1; }\n          .wx-lists .lists .wx-two-list .wx-two-list-bottom span:last-child {\n            text-align: right; }\n      .wx-lists .lists .wx-two-list .wx-two-list-title {\n        font-size: 1.4rem;\n        height: 30px;\n        line-height: 30px;\n        width: 100%; }\n", ""]);
 
 	// exports
 

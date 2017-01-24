@@ -24,42 +24,15 @@ const debug = (function() {
 	return debug;
 })();
 
-/**
- * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
- * @param  {[type]} ) {	let        cookie [description]
- * @return {[type]}   [description]
- */
-const Authorization = (function() {
-	let cookie = document.cookie;
-	if (cookie === "") {
-		return cookie;
-	}
-
-	let arrayCookie = cookie.split(";");
-
-	for (let i = 0; i < arrayCookie.length; i++) {
-		let item = arrayCookie[i].split("=");
-
-		let key = item[0].trim();
-		if (key === "access_token") {
-			return "Bearer " + item[1];
-		}
-	}
-
-	return ""; //如果没有就返回这个
-})();
-
 //检查请求返回的状态
 function checkStatus(response) {
 	if (response.status >= 200 && response.status < 300) {
 		return response
 	} else {
-		if (response.status === 401) {
-			window.location.href = "/api/oauth2/Index?returnUrl=https://ticket.samecity.com.cn/wx/ticket.html";
-		} else {
-			Indicator.close();
-			alert("服务器繁忙,请稍后再试...")
-		}
+
+
+		Indicator.close();
+		alert("服务器繁忙,请稍后再试...")
 		return response;
 	}
 }
@@ -67,85 +40,55 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
 	},
-	serverUrl: debug ? "http://192.168.31.80" : ""
+	serverUrl: debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
 }
 
-const Vue_User = new Vue({
+const Vue_WxList = new Vue({
 	el: "#app",
 	data: {
 		ready: false, //页面为准备好
 		showHeader: false, //是否显示头部
-		headerTitle: "用户中心", //头部标题
+		headerTitle: "微信公众号", //头部标题
 
-		Passenger: [], //乘客
-		Rebate: [], //优惠券
-		UserInfo: {}, //用户信息
-		discountVisible: false, //优惠券列表显示
-		isNoPay: 0, //未支付订单个数
-		OrderType: {
-			OrderList: [], //订单数据
-			noMoreData: false, //是否还有订单数据
-			isUse: false, //刷新函数是否使用中
-			index: 1, //数据页面
-		}, //全部订单
-		OrderType1: {
-			OrderList: [], //订单数据
-			noMoreData: false, //是否还有订单数据
-			isUse: false, //刷新函数是否使用中
-			index: 1, //数据页面
-		}, //未支付订单
-		OrderType2: {
-			OrderList: [], //订单数据
-			noMoreData: false, //是否还有订单数据
-			isUse: false, //刷新函数是否使用中
-			index: 1, //数据页面
-		}, //已支付订单
-		OrderType3: {
-			OrderList: [], //订单数据
-			noMoreData: false, //是否还有订单数据
-			isUse: false, //刷新函数是否使用中
-			index: 1, //数据页面
-		}, //待出行订单
+		wxVisible: false, //显示公众号文章
 
-		UseOrderType: 0, //使用中的订单列表,默认是全部订单0
-		OrderList: [], //显示订单数据,需要赋值
-
-		orderVisible: false, //是否显示订单列表
-		passengerVisible: false, //乘客列表
-		userVisible: false, //用户信息显示
-		refundVisible: false, //申请退款显示
-
-		passengerName: "", //新增乘客姓名
-		passengerPhone: "", //新增乘客手机号
-
-		RefundOrder: {
-			RefundList: [],
-			index: 1,
+		noClassIdData: {
+			Index: 1,
+			Lists: [],
+			noMoreData: false,
 			isUse: false,
-			noMoreData: false
-		}
+		},
+
+		showWxLists: [], //需要显示的列表数据
+
+		showClassName: [], //公众号的类型
+		defaultShowWx: [], //默认显示的公众号列表
+
+		wxArticle: {
+			List: [],
+			Index: 1,
+			noMoreData: false,
+		}, //显示的公众号文章
 	},
 	created() {
-		this.getUserInfo()
-			.then(result => {
-				if (result.Passengers) {
-					this.Passenger = result.Passengers;
-				}
-				if (result.Rebates) {
-					this.Rebate = result.Rebates;
-				}
-				this.UserInfo = result.Userinfo;
-				this.isNoPay = result.NoPay;
-				this.ready = true;
-			})
+		this.getAllData();
+		// this.getAllClassData();
+		// this.showHeader = true;
 	},
 	mounted() {
-
+		// this.ready = true;
 	},
 	watch: {
-
+		wxVisible(value) {
+			if (value) {
+				this.headerTitle = "公众号文章";
+				this.showHeader = true;
+			} else {
+				this.showHeader = false;
+				this.headerTitle = "微信公众号";
+			}
+		}
 	},
 	methods: {
 		loading() {
@@ -161,18 +104,9 @@ const Vue_User = new Vue({
 			});
 		},
 		//回退界面
-		GoBack(event, status = false, title = "用户中心") {
-			this.controlHeader();
-			this.orderVisible = false;
-			this.discountVisible = false;
-			this.passengerVisible = false;
-			this.userVisible = false;
-			this.refundVisible = false;
-		},
-		//控制头部显示和标题
-		controlHeader(status = false, title = "用户中心") {
-			this.showHeader = status;
+		GoBack(title = "微信公众号") {
 			this.headerTitle = title;
+			this.wxVisible = false;
 		},
 		getQueryString(name) {
 			let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -182,259 +116,105 @@ const Vue_User = new Vue({
 			}
 			return null;
 		},
-		// 获取用户信息,乘客信息,优惠券信息,是否有未支付订单的个数信息数据
-		getUserInfo() {
-			return fetch(config.serverUrl + "/api/Transport/UserRelevant", {
-					headers: config.headers
-				})
-				.then(checkStatus)
-				.then(result => result.json())
-				.then(result => result.Data);
-		},
-		/**
-		 * 显示订单列表
-		 * @return {[type]} [description]
-		 */
-		showOrderList(type = "") {
-			this.controlHeader(true, "订单");
-			this.UseOrderType = type === '' ? 0 : type;
-			if (this["OrderType" + type].OrderList.length === 0) {
-				// 只有长度为0的时候也就是第一次才加载数据
-				// 否则每次点击都加载一次数据bug了
-				this.getOrderData(type);
-			}
-			this.OrderList = this["OrderType" + type].OrderList;
-			this.orderVisible = true; //显示订单
-		},
-		/**
-		 * 显示优惠券列表
-		 * @return {[type]} [description]
-		 */
-		showDiscountList() {
-			if (this.Rebate.length === 0) {
-				MessageBox.alert("提示", "你没有优惠券")
+		// 获取所有的不分id列表
+		getAllData() {
+			if (this.noClassIdData.noMoreData || this.noClassIdData.isUse) {
 				return;
 			}
-			this.controlHeader(true, "优惠券");
-			this.discountVisible = true; //显示
-		},
-		/**
-		 * 获取订单数据
-		 * @return {[type]} [description]
-		 */
-		getOrderData(type = "") {
-			if (type === 1 || type === 3) {
-				//这两个列表是返回的全部数据,不需要再次获取
-				if (this["OrderType" + type].OrderList.length !== 0) {
-					return;
-				}
-			}
-			if (this["OrderType" + type].noMoreData || this["OrderType" + type].isUse) {
-				return;
-			}
-			this["OrderType" + type].isUse = true; //锁住这个函数
+
 			this.loading();
-			fetch(config.serverUrl + "/api/Order/List", {
+			this.noClassIdData.isUse = true;
+
+			fetch(config.serverUrl + "/api/Wechat/AcctList", {
 					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
-						Index: this["OrderType" + type].index,
-						Size: 10,
-						Type: type === "" ? 0 : type
+						Index: this.noClassIdData.Index,
+						Size: 10
 					})
 				})
 				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => {
 					if (result.Data) {
-						// if (result.Data.length < 10) {
-						// 	// 说明没有跟多数据了
-						// 	this["OrderType" + type].noMoreData = true;
-						// 	this.toast("已经没有的更多数据了...");
-						// }
 						for (let i = 0; i < result.Data.length; i++) {
-							this["OrderType" + type].OrderList.push(result.Data[i]);
+							this.noClassIdData.Lists.push(result.Data[i]);
+						}
+						this.showWxLists = this.noClassIdData.Lists;
+
+						if (result.Data.length < 10) {
+							this.noClassIdData.noMoreData = true;
 						}
 					} else {
-						this["OrderType" + type].noMoreData = true;
-						this.toast(result.Message);
+						this.noClassIdData.noMoreData = true;
 					}
 
-					this["OrderType" + type].isUse = false; //释放这个函数
-					this["OrderType" + type].index++;
+					this.noClassIdData.Index++;
+					this.noClassIdData.isUse = false;
 					Indicator.close();
 				})
+				.then(result => {
+					this.ready = true;
+				})
 		},
-		openOrder(index) {
-			let type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
-			let Id = this["OrderType" + type].OrderList[index].Id;
-			window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
+		getAllClassData() {
+			fetch(config.serverUrl + "/api/Wechat/Index")
+				.then(checkStatus)
+				.then(result => result.json())
+				.then(result => {
+					if (result.Data) {
+						for (let i = 0; i < result.Data.Classify.length; i++) {
+							this.showClassName.push(result.Data.Classify[i]);
+						}
+						for (let j = 0; j < result.Data.Wechat.length; j++) {
+							this.defaultShowWx.push(result.Data.Wechat[j]);
+						}
+						this.showWxLists = this.defaultShowWx;
+					}
+				})
+				.then(result => {
+					this.ready = true;
+				})
 		},
-		/**
-		 * 显示乘客
-		 * @return {[type]} [description]
-		 */
-		showPassengerList() {
-			this.passengerVisible = true;
-			this.controlHeader(true, "乘客列表");
-		},
-		// 新增乘客按钮
-		addPassenger() {
-			if (!Utils.isChinaName(this.passengerName) || this.passengerName.length < 2) {
-				this.toast("请输入正确的姓名!");
-				return;
-			}
-			if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
-				this.toast("请输入正确的手机号!");
-				return;
+		getWxChatList(id) {
+			if (id) {
+				// 有id数据就说明这个是点击的
+				this.wxArticle.Index = 1; //清空数据
+				this.wxArticle.List = [];
+				this.wxArticle.noMoreData = false;
 			}
 
-			fetch(config.serverUrl + "/api/Passenger/Add", {
-					method: 'POST',
+			this.loading();
+
+			fetch(config.serverUrl + "/api/Topic/List", {
+					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
-						Name: this.passengerName,
-						Mobile: this.passengerPhone,
+						WechatId: id,
+						Index: this.wxArticle.Index,
+						Size: 10
 					})
 				})
 				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => {
 					if (result.Data) {
-						let json = {};
-						json.Name = this.passengerName;
-						json.Mobile = this.passengerPhone;
-						json.Id = result.Data;
-						this.passengerPhone = "";
-						this.passengerName = "";
-						this.Passenger.push(json);
-					} else {
-						this.toast(result.Message);
-					}
-				})
-		},
-		trashPassenger(index) {
-			MessageBox.confirm('确定执行此操作?').then(action => {
-				fetch(config.serverUrl + "/api/Passenger/Delete/" + this.Passenger[index].Id, {
-						headers: config.headers,
-					})
-					.then(checkStatus)
-					.then(result => result.json())
-					.then(result => {
-						if (result.Data) {
-							this.Passenger.splice(index, 1);
-							this.toast("删除成功");
-						} else {
-							this.toast(result.Message);
+						for (let i = 0; i < result.Data.length; i++) {
+							this.wxArticle.List.push(result.Data[i]);
 						}
-					})
-			});
-		},
-		showUserInfo() {
-			this.controlHeader(true, "用户信息");
-			this.userVisible = true;
-		},
-		edit(index) {
-			let title = "";
-			let NickName = "";
-			let Mobile = "";
-			let Sex = "";
-			switch (index) {
-				case 0:
-					title = "昵称";
-					break;
-					// case 1:
-					// 	title = "姓名";
-					// 	break;
-				case 2:
-					title = "手机号";
-					break;
-				case 3:
-					title = "性别(男或女)";
-					break;
-			}
-
-			MessageBox.prompt("修改" + title).then(({ value, action }) => {
-				switch (index) {
-					case 0:
-						NickName = value;
-						break;
-						// case 1:
-						// 	title = "姓名";
-						// 	break;
-					case 2:
-						Mobile = value;
-						break;
-					case 3:
-						Sex = value;
-						break;
-				}
-				if (value === "") {
-					MessageBox("请输入正确的" + title);
-					return;
-				} else {
-					fetch(config.serverUrl + "/api/Transport/UpdateUserInfo", {
-							method: 'POST',
-							headers: config.headers,
-							body: JSON.stringify({
-								NickName: NickName,
-								Mobile: Mobile
-							})
-						})
-						.then(checkStatus)
-						.then(result => result.json())
-						.then(result => {
-							MessageBox.alert(result.Message);
-						});
-				}
-			}).catch(error => {
-				console.log(error);
-			});
-			// MessageBox("修改数据", "第" + index + "项")
-			// console.log(index)
-		},
-		getRefund() {
-			return fetch(config.serverUrl + "/api/Order/ListRefund", {
-					method: 'POST',
-					headers: config.headers,
-					body: JSON.stringify({
-						Index: this.RefundOrder.index,
-						Size: 10,
-						Status: -1, //不分状态
-					})
+					} else {
+						this.wxArticle.noMoreData = true;
+					}
+					this.wxArticle.Index++;
 				})
-				.then(checkStatus)
-				.then(result => result.json())
+				.then(result => {
+					Indicator.close();
+					this.wxVisible = true;
+				})
 		},
-		// 申请退款
-		applyRefund() {
-			this.controlHeader(true, "申请退款");
-			this.refundVisible = true;
-			if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
-				return;
-			}
 
-			this.RefundOrder.isUse = true;
-			this.loading();
-			this.getRefund().then(result => {
-				Indicator.close();
-
-				if (result.Data) {
-					for (let i = 0; i < result.Data.length; i++) {
-						this.RefundOrder.RefundList.push(result.Data[i])
-					}
-					if (result.Data.length < 10) {
-						// 没有更多数据
-						this.RefundOrder.noMoreData = true;
-					}
-					this.RefundOrder.index++;
-				} else {
-					this.RefundOrder.noMoreData = true;
-				}
-
-				this.RefundOrder.isUse = false;
-			})
-
+		gotoPage(UniqueId) {
+			window.location.href = "https://app.samecity.com.cn:3000/api/GetTopic?id=" + UniqueId
 		}
 	},
 	components: {
@@ -442,21 +222,32 @@ const Vue_User = new Vue({
 	}
 });
 
-document.getElementById("order-lists").addEventListener('scroll', _.throttle(function() {
-	let orderVisible = Vue_User.orderVisible;
-	let status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
+window.onscroll = _.throttle(function() {
+	let headerTitle = Vue_WxList.headerTitle;
+	let status = document.getElementById("record").offsetTop - document.body.scrollTop;
+	console.log(status)
 
-	if (status < 1000 && orderVisible) {
-		let id = Vue_User.UseOrderType;
-		Vue_User.getOrderData(id === 0 ? '' : id);
+	if (status < 1000 && headerTitle === "微信公众号") {
+		Vue_WxList.getAllData();
 	}
-}, 100, { leading: false }));
+}, 100, { leading: false })
 
-document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
-	let refundVisible = Vue_User.refundVisible;
-	let status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
+// document.body.addEventListener('scroll', _.throttle(function() {
+// 	// let headerTitle = Vue_WxList.headerTitle;
+// 	// let status = document.getElementById("record").offsetTop - document.body.scrollTop;
+// 	// console.log(status)
 
-	if (status_refund < 1000 && refundVisible) {
-		Vue_User.applyRefund();
+// 	// if (status < 1000 && headerTitle === "微信公众号") {
+// 	// 	Vue_WxList.getAllData();
+// 	// }
+// 	console.log("yes")
+// }, 100, { leading: false }));
+
+document.getElementById("wx-lists").addEventListener('scroll', _.throttle(function() {
+	let headerTitle = Vue_WxList.headerTitle;
+	let status_list = document.getElementById("record_list").offsetTop - document.getElementById("wx-lists").scrollTop;
+
+	if (status_list < 1000 && headerTitle !== "微信公众号") {
+		Vue_WxList.getWxChatList();
 	}
 }, 100, { leading: false }));

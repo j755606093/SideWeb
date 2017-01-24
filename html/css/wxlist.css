@@ -152,3 +152,186 @@ input {
   animation-name: fadeOut;
   animation-duration: 0.5s;
   animation-fill-mode: both; }
+
+body {
+  background-color: #f7f7f7;
+  -webkit-overflow-scrolling: touch;
+  position: relative; }
+
+header {
+  height: 50px;
+  background-color: #2196F3;
+  color: #fff;
+  font-size: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5002;
+  padding: 0;
+  margin: 0; }
+  header .left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center; }
+    header .left i {
+      font-size: 3rem;
+      color: #fff;
+      height: 50px;
+      line-height: 50px; }
+  header .home {
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.8rem;
+    font-weight: 900; }
+  header .other {
+    text-align: center; }
+    header .other .left {
+      height: 50px;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px; }
+      header .other .left i {
+        font-size: 3rem;
+        line-height: 50px; }
+    header .other .center {
+      line-height: 50px;
+      font-size: 1.8rem; }
+
+.mint-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  z-index: 10000; }
+  .mint-indicator .mint-indicator-wrapper {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 25px !important; }
+
+.mint-toast {
+  z-index: 10000; }
+
+.wx-chat-lists {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0; }
+  .wx-chat-lists .wx-list {
+    width: 96%;
+    margin: 0 2%;
+    height: 70px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-align: center;
+        align-items: center;
+    background-color: #fff;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px 5px; }
+    .wx-chat-lists .wx-list .wx-img {
+      -ms-flex: 0.2;
+          flex: 0.2;
+      width: 20%; }
+      .wx-chat-lists .wx-list .wx-img .wx-img-show {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px; }
+    .wx-chat-lists .wx-list .wx-content {
+      width: 80%;
+      -ms-flex: 0.8;
+          flex: 0.8;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+      .wx-chat-lists .wx-list .wx-content p {
+        height: 30px;
+        line-height: 30px;
+        margin-right: 10px; }
+        .wx-chat-lists .wx-list .wx-content p:first-child {
+          font-size: 1.4rem; }
+        .wx-chat-lists .wx-list .wx-content p:last-child {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row; }
+        .wx-chat-lists .wx-list .wx-content p span {
+          -ms-flex: 1;
+              flex: 1;
+          width: 50%; }
+      .wx-chat-lists .wx-list .wx-content .wx-source {
+        text-align: right; }
+
+.wx-lists {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll; }
+  .wx-lists .lists {
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    margin-top: 50px;
+    -ms-flex-align: center;
+        align-items: center; }
+    .wx-lists .lists .wx-two-list {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      width: 96%;
+      margin: 0 2%;
+      padding: 10px 5px;
+      height: 70px;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 10px; }
+      .wx-lists .lists .wx-two-list .wx-two-list-bottom {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex: 1;
+            flex: 1; }
+        .wx-lists .lists .wx-two-list .wx-two-list-bottom span {
+          -ms-flex: 1;
+              flex: 1; }
+          .wx-lists .lists .wx-two-list .wx-two-list-bottom span:last-child {
+            text-align: right; }
+      .wx-lists .lists .wx-two-list .wx-two-list-title {
+        font-size: 1.4rem;
+        height: 30px;
+        line-height: 30px;
+        width: 100%; }
