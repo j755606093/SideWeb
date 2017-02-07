@@ -194,3 +194,33 @@ gulp.task('wxlist', function() {
 		.pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
+
+gulp.task('checkin', function() {
+	return gulp.src('./html/src/checkin.js')
+		.pipe(webpack({
+			watch: true,
+			output: {
+				filename: 'bundle-checkin.js'
+			},
+			module: modules,
+			resolve: {
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+					'vue$': 'vue/dist/vue.js'
+				}
+			},
+			plugins: [new HtmlWebpackPlugin({
+				title: "有奖签到",
+				filename: "checkin.html",
+				hash: true,
+				template: "!!ejs!html/default.ejs",
+				inject: true
+			})]
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		// .pipe(rev())
+		.pipe(gulp.dest('html/dist/'))
+		// .pipe(rev.manifest())
+		// .pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
