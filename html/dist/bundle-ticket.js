@@ -11305,7 +11305,7 @@
 
 		busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 		serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxYTMxNmRjNC1lM2M4LTRkZTUtODE5NC01YjY1N2I4YzVjZTAiLCJpYXQiOjE0ODYxODcxODEsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NjE4NzE4MSwiZXhwIjoxNDg3Mzk2NzgxLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.0BgOqou-PbMFEnumMVanM8qaU74FgjomA74RxXF_cpQ" : Authorization
 	};
 
 	// getters,获取数据

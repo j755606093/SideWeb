@@ -67,7 +67,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI3YjA5YmUzMy1mNmE5LTRhYWEtOGQ1OS00M2MwNTQ1NWFlMjciLCJpYXQiOjE0ODQ1NjQyNTMsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NDU2NDI1MiwiZXhwIjoxNDg1NzczODUyLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.BKUUCZKNKyAfayx2qfYFbdLOLa8123L6jvjHGwj1t3Y" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxYTMxNmRjNC1lM2M4LTRkZTUtODE5NC01YjY1N2I4YzVjZTAiLCJpYXQiOjE0ODYxODcxODEsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NjE4NzE4MSwiZXhwIjoxNDg3Mzk2NzgxLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.0BgOqou-PbMFEnumMVanM8qaU74FgjomA74RxXF_cpQ" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
@@ -116,6 +116,7 @@ const Vue_User = new Vue({
 		passengerVisible: false, //乘客列表
 		userVisible: false, //用户信息显示
 		refundVisible: false, //申请退款显示
+		helpVisible: false, //帮助中心显示
 
 		passengerName: "", //新增乘客姓名
 		passengerPhone: "", //新增乘客手机号
@@ -125,7 +126,8 @@ const Vue_User = new Vue({
 			index: 1,
 			isUse: false,
 			noMoreData: false
-		}
+		},
+		helpContentShow: 0, //默认不显示任何一个
 	},
 	created() {
 		this.getUserInfo()
@@ -168,6 +170,7 @@ const Vue_User = new Vue({
 			this.passengerVisible = false;
 			this.userVisible = false;
 			this.refundVisible = false;
+			this.helpVisible = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -212,7 +215,7 @@ const Vue_User = new Vue({
 		 */
 		showDiscountList() {
 			if (this.Rebate.length === 0) {
-				MessageBox.alert("提示", "你没有优惠券")
+				MessageBox.alert("你没有优惠券", "提示")
 				return;
 			}
 			this.controlHeader(true, "优惠券");
@@ -384,6 +387,15 @@ const Vue_User = new Vue({
 						.then(checkStatus)
 						.then(result => result.json())
 						.then(result => {
+							if (result.Code === 200) {
+								if (index === 0) {
+									// 修改昵称
+									this.UserInfo.Nickname = value;
+								}
+								if (index === 2) {
+									this.UserInfo.Mobile = value;
+								}
+							}
 							MessageBox.alert(result.Message);
 						});
 				}
@@ -434,6 +446,17 @@ const Vue_User = new Vue({
 
 				this.RefundOrder.isUse = false;
 			})
+		},
+		helpCenter() {
+			this.controlHeader(true, "帮助中心");
+			this.helpVisible = true;
+		},
+		showHelpContent(index) {
+			if (index === this.helpContentShow) {
+				this.helpContentShow = 0;
+			} else {
+				this.helpContentShow = index;
+			}
 
 		}
 	},
