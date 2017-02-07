@@ -371,8 +371,15 @@ const Vue_Order = new Vue({
 					.then(result => {
 						MessageBox('提示', '取消订单成功');
 						this.goback();
-						this.moreOrderData();
-						this.moreOrderData1();
+						for (let i = 0; i < this.OrderList1.length; i++) {
+							if (this.OrderList[i].Id === this.OrderDetail.Id) {
+								this.OrderList.splice(i, 1);
+								if (this.OrderList[i].length === 0) {
+									this.noMoreData = true;
+								}
+								break;
+							}
+						}
 					})
 			});
 		},

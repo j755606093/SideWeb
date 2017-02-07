@@ -442,8 +442,15 @@
 					}).then(function (result) {
 						(0, _mintUi.MessageBox)('提示', '取消订单成功');
 						_this6.goback();
-						_this6.moreOrderData();
-						_this6.moreOrderData1();
+						for (var i = 0; i < _this6.OrderList1.length; i++) {
+							if (_this6.OrderList[i].Id === _this6.OrderDetail.Id) {
+								_this6.OrderList.splice(i, 1);
+								if (_this6.OrderList[i].length === 0) {
+									_this6.noMoreData = true;
+								}
+								break;
+							}
+						}
 					});
 				});
 			},
