@@ -349,7 +349,8 @@
 						}
 						if (item.Status === -2) {
 							_this3.passenger = _this3.passenger + item.Name + "(待退款),";
-						} else {
+						}
+						if (item.Status === 1) {
 							_this3.passenger = _this3.passenger + item.Name + ",";
 						}
 

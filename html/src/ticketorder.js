@@ -282,7 +282,8 @@ const Vue_Order = new Vue({
 						}
 						if (item.Status === -2) {
 							this.passenger = this.passenger + item.Name + "(待退款),";
-						} else {
+						}
+						if (item.Status === 1) {
 							this.passenger = this.passenger + item.Name + ",";
 						}
 
