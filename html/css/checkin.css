@@ -1,0 +1,305 @@
+@charset "UTF-8";
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: #faffbd;
+  /* #FAFFBD; */
+  background-image: none;
+  color: black; }
+
+a,
+img,
+button,
+input,
+textarea,
+p,
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
+a,
+img,
+button,
+p,
+span {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a,
+input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+input {
+  outline: none;
+  border: none; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch; }
+
+@keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+    transform: none; }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); } }
+
+.fadeLeft-out {
+  animation-name: fadeOutLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeLeft-in {
+  animation-name: fadeInLeft;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeRight-in {
+  animation-name: fadeInRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 0;
+    transform: none; }
+  to {
+    opacity: 1;
+    transform: translate3d(100%, 0, 0); } }
+
+.fadeRight-out {
+  animation-name: fadeOutRight;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+p {
+  margin: 0;
+  padding: 0; }
+
+.animated {
+  animation-duration: 0.5s; }
+
+.model {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1; }
+
+#checkin {
+  padding-top: 10px; }
+
+.circle-btn {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+  .circle-btn .circle-model {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #e1f0fa;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    .circle-btn .circle-model .circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background-color: #3498db;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+      .circle-btn .circle-model .circle p {
+        color: #fff;
+        margin-bottom: 0; }
+      .circle-btn .circle-model .circle p.status {
+        font-size: 2rem; }
+      .circle-btn .circle-model .circle p.check-day {
+        font-size: 1.4rem; }
+      .circle-btn .circle-model .circle span.hr {
+        height: 0;
+        width: 100%;
+        border-bottom: 1px solid #fff;
+        margin: 10px 0; }
+
+.credits-menu {
+  margin-top: 20px;
+  position: relative; }
+  .credits-menu .menu {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    width: 100%;
+    height: 40px; }
+    .credits-menu .menu button {
+      -ms-flex: 1;
+          flex: 1;
+      font-size: 1.6rem;
+      font-weight: 400; }
+      .credits-menu .menu button i {
+        margin-left: 5px; }
+  .credits-menu .my-credit, .credits-menu .get-credit {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #dddddd;
+    box-shadow: 0 5px 5px 0px #dcdcdc;
+    z-index: 10;
+    min-height: 200px; }
+    .credits-menu .my-credit .credit-header, .credits-menu .get-credit .credit-header {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      padding-left: 15px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      border-bottom: 1px solid #dddddd; }
+      .credits-menu .my-credit .credit-header p, .credits-menu .get-credit .credit-header p {
+        height: 20px;
+        line-height: 20px;
+        font-size: 1.4rem;
+        border: none;
+        border-left: 2px solid #0074D9;
+        padding-left: 5px; }
+    .credits-menu .my-credit .credit-lists, .credits-menu .get-credit .credit-lists {
+      width: 100%;
+      padding: 0 4%; }
+      .credits-menu .my-credit .credit-lists .list, .credits-menu .get-credit .credit-lists .list {
+        width: 100%;
+        border-bottom: 1px solid #dddddd;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+        .credits-menu .my-credit .credit-lists .list > span, .credits-menu .get-credit .credit-lists .list > span {
+          font-size: 1.4rem;
+          height: 40px;
+          line-height: 40px; }
+        .credits-menu .my-credit .credit-lists .list > span.name, .credits-menu .get-credit .credit-lists .list > span.name {
+          -ms-flex: 0.4;
+              flex: 0.4; }
+        .credits-menu .my-credit .credit-lists .list > span.time, .credits-menu .get-credit .credit-lists .list > span.time {
+          -ms-flex: 0.3;
+              flex: 0.3;
+          color: #AAAAAA; }
+        .credits-menu .my-credit .credit-lists .list > span.number, .credits-menu .get-credit .credit-lists .list > span.number {
+          -ms-flex: 0.3;
+              flex: 0.3;
+          -ms-flex-item-align: end;
+              align-self: flex-end;
+          text-align: right; }
+      .credits-menu .my-credit .credit-lists .list:last-child, .credits-menu .get-credit .credit-lists .list:last-child {
+        border-bottom: none; }

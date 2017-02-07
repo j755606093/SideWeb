@@ -58,10 +58,6 @@
 
 	var _vuex2 = _interopRequireDefault(_vuex);
 
-	var _commentApp = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/commentApp.vue\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _commentApp2 = _interopRequireDefault(_commentApp);
-
 	var _index = __webpack_require__(5);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -75,27 +71,29 @@
 	//导入状态库
 
 	_vue2.default.use(_vuex2.default);
+	// import commentApp from "../components/commentApp.vue";
+
 	_vue2.default.use(_vueRouter2.default);
 	_vue2.default.use(__webpack_require__(119)); //引用ajax库
 
 	var routes = [{
-			path: '/',
-			name: "home",
-			component: _Checkin2.default,
-			children: []
+		path: '/',
+		name: "home",
+		component: _Checkin2.default,
+		children: []
 	}, {
-			path: "*",
-			name: "all",
-			redirect: { name: "home" }
+		path: "*",
+		name: "all",
+		redirect: { name: "home" }
 	}];
 
 	var router = new _vueRouter2.default({
-			routes: routes // （缩写）相当于 routes: routes
+		routes: routes // （缩写）相当于 routes: routes
 	});
 
 	var app = new _vue2.default({
-			router: router,
-			store: _index2.default
+		router: router,
+		store: _index2.default
 	}).$mount('#app');
 
 /***/ },
@@ -29252,7 +29250,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3209f20e!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Checkin.vue\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var content = __webpack_require__(114);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(115)(content, {});
@@ -29272,7 +29270,20 @@
 	}
 
 /***/ },
-/* 114 */,
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.animated {\n  animation-duration: 0.5s;\n}\n.model {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  z-index: 1;\n}\n#checkin {\n  padding-top: 10px;\n}\n.circle-btn {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.circle-btn .circle-model {\n    width: 160px;\n    height: 160px;\n    border-radius: 50%;\n    background-color: #e1f0fa;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.circle-btn .circle-model .circle {\n      width: 140px;\n      height: 140px;\n      border-radius: 50%;\n      background-color: #3498db;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center;\n}\n.circle-btn .circle-model .circle p {\n        color: #fff;\n        margin-bottom: 0;\n}\n.circle-btn .circle-model .circle p.status {\n        font-size: 2rem;\n}\n.circle-btn .circle-model .circle p.check-day {\n        font-size: 1.4rem;\n}\n.circle-btn .circle-model .circle span.hr {\n        height: 0;\n        width: 100%;\n        border-bottom: 1px solid #fff;\n        margin: 10px 0;\n}\n.credits-menu {\n  margin-top: 20px;\n  position: relative;\n}\n.credits-menu .menu {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    height: 40px;\n}\n.credits-menu .menu button {\n      flex: 1;\n      font-size: 1.6rem;\n      font-weight: 400;\n}\n.credits-menu .menu button i {\n        margin-left: 5px;\n}\n.credits-menu .my-credit, .credits-menu .get-credit {\n    position: absolute;\n    top: 38px;\n    left: 0;\n    width: 100%;\n    border-top: 1px solid #dddddd;\n    box-shadow: 0 5px 5px 0px #dcdcdc;\n    z-index: 10;\n    min-height: 200px;\n}\n.credits-menu .my-credit .credit-header, .credits-menu .get-credit .credit-header {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      padding-left: 15px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      border-bottom: 1px solid #dddddd;\n}\n.credits-menu .my-credit .credit-header p, .credits-menu .get-credit .credit-header p {\n        height: 20px;\n        line-height: 20px;\n        font-size: 1.4rem;\n        border: none;\n        border-left: 2px solid #0074D9;\n        padding-left: 5px;\n}\n.credits-menu .my-credit .credit-lists, .credits-menu .get-credit .credit-lists {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists .list, .credits-menu .get-credit .credit-lists .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists .list > span, .credits-menu .get-credit .credit-lists .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists .list > span.name, .credits-menu .get-credit .credit-lists .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists .list > span.time, .credits-menu .get-credit .credit-lists .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists .list > span.number, .credits-menu .get-credit .credit-lists .list > span.number {\n          flex: 0.3;\n          align-self: flex-end;\n          text-align: right;\n}\n.credits-menu .my-credit .credit-lists .list:last-child, .credits-menu .get-credit .credit-lists .list:last-child {\n        border-bottom: none;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
 /* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
