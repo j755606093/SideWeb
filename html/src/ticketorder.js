@@ -398,7 +398,20 @@ const Vue_Order = new Vue({
 			}
 		},
 		showSelectPassenger() {
-			this.passengerPopupVisible = true;
+			let number = 0;
+			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
+				let item = this.OrderDetail.Passengers[i];
+				if (item.Status === 1) {
+					number++;
+				}
+			}
+
+			if (number !== this.OrderDetail.Passengers.length) {
+				// 说明都不可以退款
+				MessageBox('提示', '订单中所有乘客都不满足退款条件!');
+			} else {
+				this.passengerPopupVisible = true;
+			}
 		},
 		refund() {
 			// /api/Order/Refund
