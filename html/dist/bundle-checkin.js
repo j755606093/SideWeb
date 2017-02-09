@@ -29278,7 +29278,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.animated {\n  animation-duration: 0.5s;\n}\n.model {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  z-index: 1;\n}\n#checkin {\n  padding-top: 10px;\n}\n.circle-btn {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.circle-btn .circle-model {\n    width: 160px;\n    height: 160px;\n    border-radius: 50%;\n    background-color: #e1f0fa;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.circle-btn .circle-model .circle {\n      width: 140px;\n      height: 140px;\n      border-radius: 50%;\n      background-color: #3498db;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center;\n}\n.circle-btn .circle-model .circle p {\n        color: #fff;\n        margin-bottom: 0;\n}\n.circle-btn .circle-model .circle p.status {\n        font-size: 2rem;\n}\n.circle-btn .circle-model .circle p.check-day {\n        font-size: 1.4rem;\n}\n.circle-btn .circle-model .circle span.hr {\n        height: 0;\n        width: 100%;\n        border-bottom: 1px solid #fff;\n        margin: 10px 0;\n}\n.credits-menu {\n  margin-top: 20px;\n  position: relative;\n}\n.credits-menu .menu {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    height: 40px;\n}\n.credits-menu .menu button {\n      flex: 1;\n      font-size: 1.6rem;\n      font-weight: 400;\n}\n.credits-menu .menu button i {\n        margin-left: 5px;\n}\n.credits-menu .my-credit, .credits-menu .get-credit {\n    position: absolute;\n    top: 38px;\n    left: 0;\n    width: 100%;\n    border-top: 1px solid #dddddd;\n    box-shadow: 0 5px 5px 0px #dcdcdc;\n    z-index: 10;\n    min-height: 200px;\n}\n.credits-menu .my-credit .credit-header, .credits-menu .get-credit .credit-header {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      padding-left: 15px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      border-bottom: 1px solid #dddddd;\n}\n.credits-menu .my-credit .credit-header p, .credits-menu .get-credit .credit-header p {\n        height: 20px;\n        line-height: 20px;\n        font-size: 1.4rem;\n        border: none;\n        border-left: 2px solid #0074D9;\n        padding-left: 5px;\n}\n.credits-menu .my-credit .credit-lists, .credits-menu .get-credit .credit-lists {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists .list, .credits-menu .get-credit .credit-lists .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists .list > span, .credits-menu .get-credit .credit-lists .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists .list > span.name, .credits-menu .get-credit .credit-lists .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists .list > span.time, .credits-menu .get-credit .credit-lists .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists .list > span.number, .credits-menu .get-credit .credit-lists .list > span.number {\n          flex: 0.3;\n          align-self: flex-end;\n          text-align: right;\n}\n.credits-menu .my-credit .credit-lists .list:last-child, .credits-menu .get-credit .credit-lists .list:last-child {\n        border-bottom: none;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.animated {\n  animation-duration: 0.5s;\n}\n.model {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  z-index: 1;\n}\n#checkin {\n  padding-top: 10px;\n}\n.circle-btn {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.circle-btn .circle-model {\n    position: absolute;\n    width: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    z-index: 0;\n    text-align: center;\n}\n.circle-btn .circle-model .circle-move {\n      width: 160px;\n      height: 160px;\n      border-radius: 50%;\n      display: inline-block;\n      background-color: #b6daf2;\n}\n.circle-btn .circle {\n    width: 140px;\n    height: 140px;\n    border-radius: 50%;\n    background-color: #3498db;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    z-index: 10;\n}\n.circle-btn .circle p {\n      color: #fff;\n      margin-bottom: 0;\n}\n.circle-btn .circle p.status {\n      font-size: 2rem;\n}\n.circle-btn .circle p.check-day {\n      font-size: 1.4rem;\n}\n.circle-btn .circle span.hr {\n      height: 0;\n      width: 100%;\n      border-bottom: 1px solid #fff;\n      margin: 10px 0;\n}\n.credits-menu {\n  margin-top: 20px;\n  position: relative;\n}\n.credits-menu .menu {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    height: 40px;\n    position: relative;\n    text-align: center;\n}\n.credits-menu .menu p {\n      flex: 1;\n      font-size: 1.6rem;\n      font-weight: 400;\n}\n.credits-menu .menu p i {\n        margin-left: 5px;\n}\n.credits-menu .menu::after {\n      width: 100%;\n      position: absolute;\n      bottom: -16px;\n      right: 0;\n      content: \"\";\n      height: 16px;\n      background-color: #ececec;\n      z-index: 0;\n}\n.credits-menu .my-credit,\n  .credits-menu .get-credit {\n    position: absolute;\n    top: 38px;\n    left: 0;\n    width: 100%;\n    border-top: 1px solid #dddddd;\n    box-shadow: 0 5px 5px 0px #dcdcdc;\n    z-index: 10;\n    min-height: 200px;\n    background-color: #fff;\n}\n.credits-menu .my-credit .credit-header,\n    .credits-menu .get-credit .credit-header {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      padding-left: 15px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      border-bottom: 1px solid #dddddd;\n}\n.credits-menu .my-credit .credit-header p,\n      .credits-menu .get-credit .credit-header p {\n        height: 20px;\n        line-height: 20px;\n        font-size: 1.4rem;\n        border: none;\n        border-left: 2px solid #0074D9;\n        padding-left: 5px;\n}\n.credits-menu .my-credit .credit-lists,\n    .credits-menu .get-credit .credit-lists {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists .list,\n      .credits-menu .get-credit .credit-lists .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists .list > span,\n        .credits-menu .get-credit .credit-lists .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists .list > span.name,\n        .credits-menu .get-credit .credit-lists .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists .list > span.time,\n        .credits-menu .get-credit .credit-lists .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists .list > span.number,\n        .credits-menu .get-credit .credit-lists .list > span.number {\n          flex: 0.3;\n          align-self: flex-end;\n          text-align: right;\n          color: #2ecc71;\n}\n.credits-menu .my-credit .credit-lists .list:last-child,\n      .credits-menu .get-credit .credit-lists .list:last-child {\n        border-bottom: none;\n}\n.credit-exchange {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 20px;\n}\n.credit-exchange .exchange-header {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    border-bottom: 1px solid #f7f7f7;\n    height: 30px;\n    line-height: 30px;\n}\n.credit-exchange .exchange-header span {\n      flex: 1;\n      font-size: 1.4rem;\n}\n.credit-exchange .exchange-header span:last-child {\n      text-align: right;\n}\n@keyframes circleAnimate {\nfrom {\n    transform: scale(0.9, 0.9);\n    opacity: 1;\n}\nto {\n    transform: scale(1.1, 1.1);\n    opacity: 0;\n}\n}\n.circle-animate {\n  -webkit-animation-name: circleAnimate;\n  animation-name: circleAnimate;\n  animation-duration: 1.5s;\n  animation-fill-mode: both;\n  animation-iteration-count: infinite;\n}\n", ""]);
 
 	// exports
 
@@ -29521,37 +29521,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
-		props: ['Data'],
-		data: function data() {
-			return {
-				showMyCredit: false, //显示我的积分
-				showGetCredit: false, //显示赚积分
-				showModel: false };
-		},
-		created: function created() {},
-
-		methods: {
-			/** 显示我的积分 */
-			myCredit: function myCredit() {
-				this.showMyCredit = !this.showMyCredit;
-				this.showModel = this.showMyCredit;
-			},
-
-			/** 显示赚积分 */
-			getCredit: function getCredit() {
-				this.showGetCredit = !this.showGetCredit;
-				this.showModel = this.showGetCredit;
-			},
-
-			/** 关闭我的积分,赚积分菜单 */
-			hideModel: function hideModel() {
-				this.showGetCredit = false;
-				this.showMyCredit = false;
-				this.showModel = false;
-			}
-		},
-		components: {}
+	window.getData = function (data) {
+		document.getElementById("testid").innerHTML = data;
+		// return "测试成功";
 	}; //
 	//
 	//
@@ -29631,11 +29603,169 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
+
+	exports.default = {
+		props: ['Data'],
+		data: function data() {
+			return {
+				showMyCredit: false, //显示我的积分
+				showGetCredit: false, //显示赚积分
+				showModel: false, //显示遮罩层
+
+				isCheckin: false, //是否签到过
+
+				CreditInfo: {
+					IsSignIn: false, //是否签到过
+					ContCount: 0, //连续签到
+					Record: []
+				}, //用户积分信息
+				UserInfo: null, //用户信息,
+				TaskInfo: [], //积分任务
+
+				debug: false, //是否是测试环境
+				debugValue: "window.jgkj.getUserInfo()",
+				debugInfo: "这里输出信息"
+			};
+		},
+		created: function created() {
+			this.debug = function () {
+				var debug = false;
+				var url = window.location.href;
+				if (url.slice(0, 5) === "https") {
+					debug = false;
+				} else {
+					debug = true;
+				}
+				return debug;
+			}();
+			this.config = {
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': ""
+				},
+				serverUrl: this.debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
+			};
+
+			this.getUserInfo(); // 获取用户信息
+			this.getCheckinInfo(); //获取用户签到信息
+		},
+
+		methods: {
+			/** 显示我的积分 */
+			myCredit: function myCredit() {
+				this.showMyCredit = !this.showMyCredit;
+				this.showModel = this.showMyCredit;
+			},
+
+			/** 显示赚积分 */
+			getCredit: function getCredit() {
+				this.showGetCredit = !this.showGetCredit;
+				this.showModel = this.showGetCredit;
+			},
+
+			/** 关闭我的积分,赚积分菜单 */
+			hideModel: function hideModel() {
+				this.showGetCredit = false;
+				this.showMyCredit = false;
+				this.showModel = false;
+			},
+
+			/** 用户点击签到 */
+			checkIn: function checkIn() {
+				var _this = this;
+
+				if (!this.CreditInfo.IsSignIn) {
+					// 没有签到
+					this.goToCheckIn().then(function (result) {
+						if (result) {
+							_this.CreditInfo.IsSignIn = true;
+							_this.CreditInfo.ContCount++;
+						} else {
+							console.log("error");
+						}
+					});
+				}
+			},
+
+			/** 获取用户信息 */
+			getUserInfo: function getUserInfo() {
+				if (typeof window.jgkj !== "undefined") {
+					this.UserInfo = window.jgkj.getUserInfo();
+					this.debugInfo = this.UserInfo;
+				}
+				if (typeof window.webkit !== "undefined") {
+					window.webkit.messageHandlers.showSendMsg.postMessage(['getData', '顶顶顶顶顶顶顶']);
+				} else {
+					// debug数据
+					this.UserInfo = {
+						"Access_Token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMDAwMDAwMSIsImp0aSI6ImJkNGZjN2Y5LTE3MzMtNGNkNS1hZGNiLWY1YzY1YWE5YmQ0NiIsImlhdCI6MTQ4NjQ1Mjc0MCwiTWVtYmVyIjoibm9ybWFsIiwibmJmIjoxNDg2NDUyNzQwLCJleHAiOjE0ODc2NjIzNDAsImlzcyI6IlN1cGVyQXdlc29tZVRva2VuU2VydmVyIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDoxNzgzLyJ9.JG19RNq6w4mwUR9DEMKu6lOG8GP_3UNqq5ViZFWV3rY",
+						"Expires_In": 0,
+						"UserId": 10000001,
+						"UserName": "你是什么鬼",
+						"Avatar": "string",
+						"Remark": "string"
+					};
+				}
+
+				this.config.headers.Authorization = this.UserInfo.Access_Token;
+			},
+
+			/** 获取签到信息 */
+			getCheckinInfo: function getCheckinInfo() {
+				var _this2 = this;
+
+				fetch(this.config.serverUrl + "/api/SignIn/GetSignInInfo/" + this.UserInfo.UserId, {
+					method: "GET",
+					headers: this.config.headers
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						_this2.CreditInfo = result.Data;
+						if (_this2.CreditInfo.IsSignIn !== 0) {
+							_this2.isCheckin = true;
+						}
+					}
+				});
+			},
+
+			/** 签到 */
+			goToCheckIn: function goToCheckIn() {
+				return fetch(this.config.serverUrl + "/api/SignIn/IntegIncret/" + this.UserInfo.UserId, {
+					method: "GET",
+					headers: this.config.headers
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						return true;
+					} else {
+						return false;
+					}
+				});
+			},
+
+			/** 获取赚积分信息 */
+			getTaskInfo: function getTaskInfo() {
+				var _this3 = this;
+
+				fetch(this.config.serverUrl + "/api/SignIn/GetPointTask/" + this.UserInfo.UserId, {
+					method: "GET",
+					headers: this.config.headers
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					if (result.Data) {
+						_this3.TaskInfo = result.Data;
+					}
+				});
+			},
+			test: function test() {
+				eval(this.debugValue);
+			}
+		},
+		components: {}
+	};
 
 /***/ },
 /* 117 */
@@ -29839,18 +29969,43 @@
 	    attrs: {
 	      "id": "checkin"
 	    }
-	  }, [_vm._m(0), " ", " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "circle-btn"
+	  }, [_vm._h('div', {
+	    staticClass: "circle-model"
+	  }, [_vm._h('span', {
+	    class: ['fa', !_vm.CreditInfo.IsSignIn ? 'circle-animate' : '', 'circle-move'],
+	    style: ([{
+	      'background-color': _vm.CreditInfo.IsSignIn ? '#fff' : '#b6daf2'
+	    }])
+	  })]), " ", _vm._h('div', {
+	    staticClass: "circle mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent",
+	    style: ([{
+	      'background-color': _vm.CreditInfo.IsSignIn ? '#2ecc71' : '#3498db'
+	    }]),
+	    on: {
+	      "click": _vm.checkIn
+	    }
+	  }, [(!_vm.CreditInfo.IsSignIn) ? _vm._h('p', {
+	    staticClass: "status"
+	  }, ["立即签到"]) : _vm._h('p', {
+	    staticClass: "status"
+	  }, ["已签到"]), " ", " ", _vm._h('span', {
+	    staticClass: "hr"
+	  }), " ", _vm._h('p', {
+	    staticClass: "check-day"
+	  }, ["连续" + _vm._s(_vm.CreditInfo.ContCount) + "天"])])]), " ", " ", _vm._h('div', {
 	    staticClass: "credits-menu"
 	  }, [_vm._h('div', {
 	    staticClass: "menu"
-	  }, [_vm._h('button', {
+	  }, [_vm._h('p', {
 	    staticClass: "mdl-button mdl-js-button mdl-js-ripple-effect",
 	    on: {
 	      "click": _vm.myCredit
 	    }
 	  }, ["我的积分10", _vm._h('i', {
 	    staticClass: "fa fa-caret-down"
-	  })]), " ", _vm._h('button', {
+	  })]), " ", _vm._h('p', {
 	    staticClass: "mdl-button mdl-js-button mdl-js-ripple-effect",
 	    on: {
 	      "click": _vm.getCredit
@@ -29864,16 +30019,68 @@
 	      value: (_vm.showMyCredit),
 	      expression: "showMyCredit"
 	    }],
-	    staticClass: "my-credit animated bounceIn"
-	  }, [_vm._m(1), " ", _vm._m(2)]), " ", " ", _vm._h('div', {
+	    staticClass: "my-credit animated fadeIn"
+	  }, [_vm._m(0), " ", _vm._l((_vm.CreditInfo.Record), function(item, index) {
+	    return _vm._h('div', {
+	      staticClass: "credit-lists"
+	    }, [_vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('span', {
+	      staticClass: "name"
+	    }, [_vm._s(item.Content)]), " ", _vm._h('span', {
+	      staticClass: "time"
+	    }, [_vm._s(item.RecordDate)]), " ", _vm._h('span', {
+	      staticClass: "number"
+	    }, [_vm._s('+' + item.Point)])])])
+	  })]), " ", " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
 	      value: (_vm.showGetCredit),
 	      expression: "showGetCredit"
 	    }],
-	    staticClass: "get-credit animated bounceIn"
-	  }, [_vm._m(3), " ", _vm._m(4)])]), " ", " ", _vm._m(5), " ", _vm._h('div', {
+	    staticClass: "get-credit animated fadeIn"
+	  }, [_vm._m(1), " ", _vm._m(2)])]), " ", " ", _vm._m(3), " ", _vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.debugValue),
+	      expression: "debugValue"
+	    }],
+	    staticStyle: {
+	      "font-size": "1.4rem",
+	      "width": "100%",
+	      "sass/border": "1px solid #333"
+	    },
+	    attrs: {
+	      "type": "text"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.debugValue)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.debugValue = $event.target.value
+	      }
+	    }
+	  }), " ", _vm._h('button', {
+	    staticStyle: {
+	      "font-size": "1.4rem",
+	      "border": "1px solid #000",
+	      "margin": "10px 0"
+	    },
+	    on: {
+	      "click": _vm.test
+	    }
+	  }, ["点击测试"]), " ", _vm._h('p', {
+	    staticStyle: {
+	      "font-size": "1.4rem"
+	    },
+	    attrs: {
+	      "id": "testid"
+	    }
+	  }, [_vm._s(_vm.debugInfo)]), " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -29887,54 +30094,12 @@
 	  })])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "circle-btn"
-	  }, [_vm._h('div', {
-	    staticClass: "circle-model"
-	  }, [_vm._h('div', {
-	    staticClass: "circle mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-	  }, [_vm._h('p', {
-	    staticClass: "status"
-	  }, ["已签到"]), " ", _vm._h('span', {
-	    staticClass: "hr"
-	  }), " ", _vm._h('p', {
-	    staticClass: "check-day"
-	  }, ["连续1天"])])])])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
 	    staticClass: "credit-header"
 	  }, [_vm._h('p', ["积分记录"])])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "credit-lists"
-	  }, [_vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])]), " ", _vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])]), " ", _vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])])])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
 	    staticClass: "credit-header"
-	  }, [_vm._h('p', ["赚积分当前花"])])
+	  }, [_vm._h('p', ["赚积分当钱花"])])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "credit-lists"

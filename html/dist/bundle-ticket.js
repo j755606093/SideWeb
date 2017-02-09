@@ -48664,7 +48664,7 @@
 				} else {
 					this.routerDetailShow = index;
 				}
-
+				// document.getElementById("result"+index).scrollIntoView();
 				// this.showCompanyInfo = this.getResultList[index];
 				// console.log(index)
 			},
@@ -48794,22 +48794,13 @@
 	    class: ['fa', _vm.arrow]
 	  }), "票价"])]), " ", _vm._h('div', {
 	    staticClass: "result-list"
-	  }, [_vm._h('transition-group', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.isShowList),
-	      expression: "isShowList"
-	    }],
-	    staticClass: "lists",
-	    attrs: {
-	      "name": "list-complete",
-	      "tag": "div"
-	    }
 	  }, [_vm._l((_vm.getResultList), function(item, index) {
 	    return _vm._h('div', {
 	      key: index,
 	      staticClass: "list list-complete-item",
+	      attrs: {
+	        "id": 'result' + index
+	      },
 	      on: {
 	        "click": function($event) {
 	          _vm.GoToPay(index)
@@ -48904,7 +48895,7 @@
 	        "textContent": _vm._s(item.TicketNum + '张余票')
 	      }
 	    })])])
-	  })]), " ", " ", " ", " ", _vm._h('div', {
+	  }), " ", " ", " ", " ", " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

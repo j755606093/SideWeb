@@ -19,6 +19,10 @@
 | api | 参数 | 返回值 | 说明 |
 | ---- | ---- | ----| ---- |
 | getAllApi | null | Object | 获取所有的可用api. |
+| loadPageUrl | url | null | 打开一个网页 |
+| openNativePage | androidPageName,iosPageName,json | null | 打开一个原生页面 |
+
+`使用:jgkj.loadPageUrl(url);`
 
 ## 后台服务器接口
 
