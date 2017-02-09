@@ -70,11 +70,6 @@
 			</div>
 		</div>
 	</div>
-	<textarea style="font-size:1.4rem;width:100%;sass/border:1px solid #333" v-model="debugValue" rows="4" cols="50"></textarea>
-	
-		<button style="font-size:1.4rem;border:1px solid #000;margin:10px 0" @click="test">点击测试</button>
-		<button style="font-size:1.4rem;border:1px solid #000;margin:10px 0" @click="cleartest">清空</button>
-		<p id="testid" style="font-size:1.4rem;">{{debugInfo}}</p>
 	<div class="model" @click="hideModel" v-show="showModel"></div>
 </div>
 </template>

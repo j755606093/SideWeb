@@ -11110,11 +11110,6 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
 
 	exports.default = Vue_App;
 
@@ -11393,57 +11388,7 @@
 	      expression: "showGetCredit"
 	    }],
 	    staticClass: "get-credit animated fadeIn"
-	  }, [_vm._m(1), " ", _vm._m(2)])]), " ", " ", _vm._m(3), " ", _vm._h('textarea', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.debugValue),
-	      expression: "debugValue"
-	    }],
-	    staticStyle: {
-	      "font-size": "1.4rem",
-	      "width": "100%",
-	      "sass/border": "1px solid #333"
-	    },
-	    attrs: {
-	      "rows": "4",
-	      "cols": "50"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.debugValue)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.debugValue = $event.target.value
-	      }
-	    }
-	  }), " ", _vm._h('button', {
-	    staticStyle: {
-	      "font-size": "1.4rem",
-	      "border": "1px solid #000",
-	      "margin": "10px 0"
-	    },
-	    on: {
-	      "click": _vm.test
-	    }
-	  }, ["点击测试"]), " ", _vm._h('button', {
-	    staticStyle: {
-	      "font-size": "1.4rem",
-	      "border": "1px solid #000",
-	      "margin": "10px 0"
-	    },
-	    on: {
-	      "click": _vm.cleartest
-	    }
-	  }, ["清空"]), " ", _vm._h('p', {
-	    staticStyle: {
-	      "font-size": "1.4rem"
-	    },
-	    attrs: {
-	      "id": "testid"
-	    }
-	  }, [_vm._s(_vm.debugInfo)]), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._m(2)])]), " ", " ", _vm._m(3), " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

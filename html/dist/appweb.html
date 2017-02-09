@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" v-show="ready" style="display: none;">
     <md-toolbar style="background-color: #2196f3">
       <h1 class="md-title">App与Web交互测试页</h1>
     </md-toolbar>
@@ -29,6 +29,7 @@
       </md-input-container>
       <md-button style="background-color: #2196f3" @click.native="c_testInput" class="md-raised md-primary">点击测试</md-button>
       <md-button style="background-color: #2196f3" @click.native="c_clearTestInput" class="md-raised md-primary">清空输入</md-button>
+      <md-button style="background-color: #2196f3" @click.native="c_clearTestHis" class="md-raised md-primary">清空测试历史</md-button>
     </div>
     <div class="phone-viewport">
       <h3 style="padding-left: 10px;">测试历史代码:</h3>
