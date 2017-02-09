@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <title>
+    App与Web交互测试页
+  </title>
+</head>
+
+<body>
+  <div id="app">
+    <md-toolbar style="background-color: #2196f3">
+      <h1 class="md-title">App与Web交互测试页</h1>
+    </md-toolbar>
+    <div class="lists">
+      <md-input-container>
+        <label>输入需要测试的JS代码:</label>
+        <md-textarea v-model="testInput"></md-textarea>
+      </md-input-container>
+      <md-input-container md-inline>
+        <label>输出:</label>
+        <md-input v-model="testOut" disabled></md-input>
+      </md-input-container>
+      <md-button style="background-color: #2196f3" @click.native="c_testInput" class="md-raised md-primary">点击测试</md-button>
+      <md-button style="background-color: #2196f3" @click.native="c_clearTestInput" class="md-raised md-primary">清空输入</md-button>
+    </div>
+    <div class="phone-viewport">
+      <h3 style="padding-left: 10px;">测试历史代码:</h3>
+      <md-list class="md-dense">
+        <md-list-item v-for="(item,index) in localStorage">
+          <md-icon style="margin-right:10px;" md-iconset="fa fa-history"></md-icon>
+          <span style="font-size:20px;">{{item}}</span>
+          <md-button @click.native="goToTest(item)" style="height:32px;line-height:32px;" class="md-icon-button md-raised md-dense">
+            <md-icon style="font-size:20px;height:24px;line-height: 24px;" md-iconset="fa fa-plus"></md-icon>
+          </md-button>
+        </md-list-item>
+      </md-list>
+    </div>
+    <md-dialog-alert :md-content="alert.content" :md-ok-text="alert.ok" ref="dialog">
+    </md-dialog-alert>
+    <md-whiteframe style="width:94%;margin:10px 3%;" md-elevation="20">
+      <h4 style="padding:10px;padding-bottom:0;">提示:</h4>
+      <p style="padding:10px;">IOS测试可能需要一个回调函数以便传参:<span style="color:#2ecc71">getData(data)</span></p>
+    </md-whiteframe>
+  </div>
+  <script type="text/javascript" src="bundle-appweb.js?75bd0a3321135f41977d"></script>
+</body>
+
+</html>

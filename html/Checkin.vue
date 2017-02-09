@@ -70,8 +70,10 @@
 			</div>
 		</div>
 	</div>
-	<input style="font-size:1.4rem;width:100%;sass/border:1px solid #333" type="text" v-model="debugValue">
+	<textarea style="font-size:1.4rem;width:100%;sass/border:1px solid #333" v-model="debugValue" rows="4" cols="50"></textarea>
+	
 		<button style="font-size:1.4rem;border:1px solid #000;margin:10px 0" @click="test">点击测试</button>
+		<button style="font-size:1.4rem;border:1px solid #000;margin:10px 0" @click="cleartest">清空</button>
 		<p id="testid" style="font-size:1.4rem;">{{debugInfo}}</p>
 	<div class="model" @click="hideModel" v-show="showModel"></div>
 </div>
@@ -79,13 +81,8 @@
 
 <script type="text/babel">
 import Utils from "./Utils/utils.js";
-window.getData = function(data){
-	document.getElementById("testid").innerHTML = data;
-	// return "测试成功";
-}
 
-export default {
-	props: ['Data'],
+let Vue_App =  {
 	data () {
 		return {
 			showMyCredit:false,//显示我的积分
@@ -126,6 +123,13 @@ export default {
 			serverUrl: this.debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
 		}
 		
+		// this.getUserInfo();// 获取用户信息
+		// this.getCheckinInfo();//获取用户签到信息
+		window.getData = (data)=>{
+			this.debugInfo = data;
+		}
+	},
+	mounted(){
 		this.getUserInfo();// 获取用户信息
 		this.getCheckinInfo();//获取用户签到信息
 	},
@@ -169,7 +173,7 @@ export default {
 				this.debugInfo = this.UserInfo;
 			}
 			if(typeof window.webkit!=="undefined"){
-				window.webkit.messageHandlers.showSendMsg.postMessage(['getData', '顶顶顶顶顶顶顶'])
+				window.webkit.messageHandlers.getUserInfo.postMessage(['getData',]);
 			}
 			else{
 				// debug数据
@@ -231,13 +235,23 @@ export default {
 			})
 		},
 		test(){
-			eval(this.debugValue);
+			this.debugInfo = eval(this.debugValue);
+		},
+		cleartest(){
+			this.debugValue = "";
+		},
+	},
+	computed:{
+		DataChange(data){
+			console.log(data)
 		}
 	},
 	components:{
 		
 	}
 }
+
+export default Vue_App;
 </script>
 
 <style lang="sass">
