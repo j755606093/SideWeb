@@ -14,7 +14,7 @@
 		</div>
 		<div class="result-list">
 			<!-- 列表数据 -->
-			<!-- <transition-group name="list-complete" tag="div" class="lists" v-show="isShowList"> -->
+			<transition-group name="list-complete" tag="div" class="lists" v-show="isShowList">
 				<!-- 循环显示列表 -->
 				<div :id="'result'+index" class="list list-complete-item" @click="GoToPay(index)" v-for="(item,index) in getResultList" v-bind:key="index">
 					<span class="data" v-text="item.StartTime.slice(0,item.StartTime.length-3)"></span>
@@ -60,7 +60,7 @@
 						<p class="type" v-text="item.TicketNum+'张余票'"></p>
 					</div>
 				</div>
-			<!-- </transition-group> -->
+			</transition-group>
 			<!-- 提示公司详情 -->
 			<!-- <mt-popup
 			  v-model="companyDetailShow"

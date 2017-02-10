@@ -34,7 +34,7 @@
     <div class="phone-viewport">
       <h3 style="padding-left: 10px;">测试历史代码:</h3>
       <md-list class="md-dense">
-        <md-list-item v-for="(item,index) in localStorage">
+        <md-list-item v-for="(item,index) in localStorage.slice(0,5)">
           <md-icon style="margin-right:10px;" md-iconset="fa fa-history"></md-icon>
           <span style="font-size:20px;">{{item}}</span>
           <md-button @click.native="goToTest(item)" style="height:32px;line-height:32px;" class="md-icon-button md-raised md-dense">

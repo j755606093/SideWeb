@@ -165,6 +165,41 @@ p {
         border-bottom: none;
       }
     }
+    .credit-lists.make {
+      width: 100%;
+      padding: 0 4%;
+      .list {
+        width: 100%;
+        border-bottom: 1px solid lighten($gray, 20%);
+        @include displayflex(row);
+        justify-content: flex-start;
+        >span {
+          font-size: 1.4rem;
+          height: 40px;
+          line-height: 40px;
+        }
+        >span.name {
+          flex: 0.4;
+        }
+        >span.time {
+          flex: 0.3;
+          color: $gray;
+        }
+        >span.number {
+          flex: 0.1;
+          align-self: flex-end;
+          text-align: left;
+          color: $green;
+        }
+        >span.fill {
+          flex: 0.2;
+          text-align: right;
+        }
+      }
+      .list:last-child {
+        border-bottom: none;
+      }
+    }
   }
 }
 

@@ -956,7 +956,7 @@ export default {
 					.then(result=>{
 						if(result.Data){
 							this.AllFare.splice(index,1);
-							this.$store.dispatch("setPassenger",this.AllFare);
+							this.$store.dispatch("setPassenger",this.formatData(this.AllFare));
 							this.computeAll();
 						}
 						else{

@@ -328,6 +328,54 @@ p {
       .credits-menu .my-credit .credit-lists .list:last-child,
       .credits-menu .get-credit .credit-lists .list:last-child {
         border-bottom: none; }
+    .credits-menu .my-credit .credit-lists.make,
+    .credits-menu .get-credit .credit-lists.make {
+      width: 100%;
+      padding: 0 4%; }
+      .credits-menu .my-credit .credit-lists.make .list,
+      .credits-menu .get-credit .credit-lists.make .list {
+        width: 100%;
+        border-bottom: 1px solid #dddddd;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+        .credits-menu .my-credit .credit-lists.make .list > span,
+        .credits-menu .get-credit .credit-lists.make .list > span {
+          font-size: 1.4rem;
+          height: 40px;
+          line-height: 40px; }
+        .credits-menu .my-credit .credit-lists.make .list > span.name,
+        .credits-menu .get-credit .credit-lists.make .list > span.name {
+          -ms-flex: 0.4;
+              flex: 0.4; }
+        .credits-menu .my-credit .credit-lists.make .list > span.time,
+        .credits-menu .get-credit .credit-lists.make .list > span.time {
+          -ms-flex: 0.3;
+              flex: 0.3;
+          color: #AAAAAA; }
+        .credits-menu .my-credit .credit-lists.make .list > span.number,
+        .credits-menu .get-credit .credit-lists.make .list > span.number {
+          -ms-flex: 0.1;
+              flex: 0.1;
+          -ms-flex-item-align: end;
+              align-self: flex-end;
+          text-align: left;
+          color: #2ecc71; }
+        .credits-menu .my-credit .credit-lists.make .list > span.fill,
+        .credits-menu .get-credit .credit-lists.make .list > span.fill {
+          -ms-flex: 0.2;
+              flex: 0.2;
+          text-align: right; }
+      .credits-menu .my-credit .credit-lists.make .list:last-child,
+      .credits-menu .get-credit .credit-lists.make .list:last-child {
+        border-bottom: none; }
 
 .credit-exchange {
   width: 100%;

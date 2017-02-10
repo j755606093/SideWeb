@@ -37,21 +37,13 @@
 			<div class="credit-header">
 				<p>赚积分当钱花</p>
 			</div>
-			<div class="credit-lists">
+			<div class="credit-lists make" v-for="(item,index) in TaskInfo">
 				<div class="list">
-					<span class="name">签到</span>
-					<span class="time">2016-10-05</span>
-					<span class="number">+5</span>
-				</div>
-				<div class="list">
-					<span class="name">签到</span>
-					<span class="time">2016-10-05</span>
-					<span class="number">+5</span>
-				</div>
-				<div class="list">
-					<span class="name">签到</span>
-					<span class="time">2016-10-05</span>
-					<span class="number">+5</span>
+					<span class="name">{{item.Content}}</span>
+					<span class="time">{{item.RecordDate}}</span>
+					<span class="number">{{'+'+item.Point}}</span>
+					<span class="fill" v-if="item.IsFulfill==='0'">未完成</span>
+					<span class="fill" v-else>已完成</span>
 				</div>
 			</div>
 		</div>
@@ -95,8 +87,8 @@ let Vue_App =  {
 			TaskInfo:[],//积分任务
 
 			debug:false,//是否是测试环境
-			debugValue:"window.jgkj.getUserInfo()",
-			debugInfo:"这里输出信息"
+			// debugValue:"window.jgkj.getUserInfo()",
+			// debugInfo:"这里输出信息"
 		}
 	},
 	created(){
@@ -118,10 +110,11 @@ let Vue_App =  {
 			serverUrl: this.debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
 		}
 		
-		// this.getUserInfo();// 获取用户信息
-		// this.getCheckinInfo();//获取用户签到信息
+		this.getUserInfo();// 获取用户信息
+		this.getCheckinInfo();//获取用户签到信息
+		this.getTaskInfo();//获取积分任务
 		window.getData = (data)=>{
-			this.debugInfo = data;
+			this.UserInfo = JSON.parse(data);
 		}
 	},
 	mounted(){
@@ -164,7 +157,7 @@ let Vue_App =  {
 		/** 获取用户信息 */
 		getUserInfo(){
 			if(typeof window.jgkj !=="undefined"){
-				this.UserInfo = window.jgkj.getUserInfo();
+				this.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 				this.debugInfo = this.UserInfo;
 			}
 			if(typeof window.webkit!=="undefined"){
@@ -228,13 +221,7 @@ let Vue_App =  {
 					this.TaskInfo = result.Data;
 				}
 			})
-		},
-		test(){
-			this.debugInfo = eval(this.debugValue);
-		},
-		cleartest(){
-			this.debugValue = "";
-		},
+		}
 	},
 	computed:{
 		DataChange(data){

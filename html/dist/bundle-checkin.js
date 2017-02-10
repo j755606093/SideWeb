@@ -40,9 +40,8 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55,7 +54,7 @@
 
 	var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
-	var _Checkin = __webpack_require__(112);
+	var _Checkin = __webpack_require__(4);
 
 	var _Checkin2 = _interopRequireDefault(_Checkin);
 
@@ -91,8 +90,7 @@
 	}).$mount('#app');
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -8190,8 +8188,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-
-/***/ 2:
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -10258,8 +10255,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-
-/***/ 3:
+/* 3 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10445,34 +10441,94 @@
 
 
 /***/ },
-
-/***/ 16:
-/***/ function(module, exports) {
-
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ },
-
-/***/ 51:
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(52), __esModule: true };
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+
+	/* styles */
+	__webpack_require__(5)
+
+	/* script */
+	__vue_exports__ = __webpack_require__(9)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(14)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/Checkin.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-3209f20e", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-3209f20e", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] Checkin.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
 
 /***/ },
-
-/***/ 52:
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(16)
-	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return $JSON.stringify.apply($JSON, arguments);
-	};
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(6);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3209f20e!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Checkin.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3209f20e!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Checkin.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 92:
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.animated {\n  animation-duration: 0.5s;\n}\n.model {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  z-index: 1;\n}\n#checkin {\n  padding-top: 10px;\n}\n.circle-btn {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.circle-btn .circle-model {\n    position: absolute;\n    width: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    z-index: 0;\n    text-align: center;\n}\n.circle-btn .circle-model .circle-move {\n      width: 160px;\n      height: 160px;\n      border-radius: 50%;\n      display: inline-block;\n      background-color: #b6daf2;\n}\n.circle-btn .circle {\n    width: 140px;\n    height: 140px;\n    border-radius: 50%;\n    background-color: #3498db;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    z-index: 10;\n}\n.circle-btn .circle p {\n      color: #fff;\n      margin-bottom: 0;\n}\n.circle-btn .circle p.status {\n      font-size: 2rem;\n}\n.circle-btn .circle p.check-day {\n      font-size: 1.4rem;\n}\n.circle-btn .circle span.hr {\n      height: 0;\n      width: 100%;\n      border-bottom: 1px solid #fff;\n      margin: 10px 0;\n}\n.credits-menu {\n  margin-top: 20px;\n  position: relative;\n}\n.credits-menu .menu {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    height: 40px;\n    position: relative;\n    text-align: center;\n}\n.credits-menu .menu p {\n      flex: 1;\n      font-size: 1.6rem;\n      font-weight: 400;\n}\n.credits-menu .menu p i {\n        margin-left: 5px;\n}\n.credits-menu .menu::after {\n      width: 100%;\n      position: absolute;\n      bottom: -16px;\n      right: 0;\n      content: \"\";\n      height: 16px;\n      background-color: #ececec;\n      z-index: 0;\n}\n.credits-menu .my-credit,\n  .credits-menu .get-credit {\n    position: absolute;\n    top: 38px;\n    left: 0;\n    width: 100%;\n    border-top: 1px solid #dddddd;\n    box-shadow: 0 5px 5px 0px #dcdcdc;\n    z-index: 10;\n    min-height: 200px;\n    background-color: #fff;\n}\n.credits-menu .my-credit .credit-header,\n    .credits-menu .get-credit .credit-header {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      padding-left: 15px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      border-bottom: 1px solid #dddddd;\n}\n.credits-menu .my-credit .credit-header p,\n      .credits-menu .get-credit .credit-header p {\n        height: 20px;\n        line-height: 20px;\n        font-size: 1.4rem;\n        border: none;\n        border-left: 2px solid #0074D9;\n        padding-left: 5px;\n}\n.credits-menu .my-credit .credit-lists,\n    .credits-menu .get-credit .credit-lists {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists .list,\n      .credits-menu .get-credit .credit-lists .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists .list > span,\n        .credits-menu .get-credit .credit-lists .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists .list > span.name,\n        .credits-menu .get-credit .credit-lists .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists .list > span.time,\n        .credits-menu .get-credit .credit-lists .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists .list > span.number,\n        .credits-menu .get-credit .credit-lists .list > span.number {\n          flex: 0.3;\n          align-self: flex-end;\n          text-align: right;\n          color: #2ecc71;\n}\n.credits-menu .my-credit .credit-lists .list:last-child,\n      .credits-menu .get-credit .credit-lists .list:last-child {\n        border-bottom: none;\n}\n.credits-menu .my-credit .credit-lists.make,\n    .credits-menu .get-credit .credit-lists.make {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists.make .list,\n      .credits-menu .get-credit .credit-lists.make .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists.make .list > span,\n        .credits-menu .get-credit .credit-lists.make .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists.make .list > span.name,\n        .credits-menu .get-credit .credit-lists.make .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists.make .list > span.time,\n        .credits-menu .get-credit .credit-lists.make .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists.make .list > span.number,\n        .credits-menu .get-credit .credit-lists.make .list > span.number {\n          flex: 0.1;\n          align-self: flex-end;\n          text-align: left;\n          color: #2ecc71;\n}\n.credits-menu .my-credit .credit-lists.make .list > span.fill,\n        .credits-menu .get-credit .credit-lists.make .list > span.fill {\n          flex: 0.2;\n          text-align: right;\n}\n.credits-menu .my-credit .credit-lists.make .list:last-child,\n      .credits-menu .get-credit .credit-lists.make .list:last-child {\n        border-bottom: none;\n}\n.credit-exchange {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 20px;\n}\n.credit-exchange .exchange-header {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    border-bottom: 1px solid #f7f7f7;\n    height: 30px;\n    line-height: 30px;\n}\n.credit-exchange .exchange-header span {\n      flex: 1;\n      font-size: 1.4rem;\n}\n.credit-exchange .exchange-header span:last-child {\n      text-align: right;\n}\n@keyframes circleAnimate {\nfrom {\n    transform: scale(0.9, 0.9);\n    opacity: 1;\n}\nto {\n    transform: scale(1.1, 1.1);\n    opacity: 0;\n}\n}\n.circle-animate {\n  -webkit-animation-name: circleAnimate;\n  animation-name: circleAnimate;\n  animation-duration: 1.5s;\n  animation-fill-mode: both;\n  animation-iteration-count: infinite;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	/*
@@ -10528,98 +10584,7 @@
 
 
 /***/ },
-
-/***/ 112:
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-	var __vue_styles__ = {}
-
-	/* styles */
-	__webpack_require__(113)
-
-	/* script */
-	__vue_exports__ = __webpack_require__(116)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(118)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/Checkin.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-3209f20e", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-3209f20e", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] Checkin.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-
-/***/ 113:
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(114);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(115)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3209f20e!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Checkin.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3209f20e!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Checkin.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-
-/***/ 114:
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\np {\n  margin: 0;\n  padding: 0;\n}\n.animated {\n  animation-duration: 0.5s;\n}\n.model {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  z-index: 1;\n}\n#checkin {\n  padding-top: 10px;\n}\n.circle-btn {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.circle-btn .circle-model {\n    position: absolute;\n    width: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    z-index: 0;\n    text-align: center;\n}\n.circle-btn .circle-model .circle-move {\n      width: 160px;\n      height: 160px;\n      border-radius: 50%;\n      display: inline-block;\n      background-color: #b6daf2;\n}\n.circle-btn .circle {\n    width: 140px;\n    height: 140px;\n    border-radius: 50%;\n    background-color: #3498db;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    z-index: 10;\n}\n.circle-btn .circle p {\n      color: #fff;\n      margin-bottom: 0;\n}\n.circle-btn .circle p.status {\n      font-size: 2rem;\n}\n.circle-btn .circle p.check-day {\n      font-size: 1.4rem;\n}\n.circle-btn .circle span.hr {\n      height: 0;\n      width: 100%;\n      border-bottom: 1px solid #fff;\n      margin: 10px 0;\n}\n.credits-menu {\n  margin-top: 20px;\n  position: relative;\n}\n.credits-menu .menu {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    height: 40px;\n    position: relative;\n    text-align: center;\n}\n.credits-menu .menu p {\n      flex: 1;\n      font-size: 1.6rem;\n      font-weight: 400;\n}\n.credits-menu .menu p i {\n        margin-left: 5px;\n}\n.credits-menu .menu::after {\n      width: 100%;\n      position: absolute;\n      bottom: -16px;\n      right: 0;\n      content: \"\";\n      height: 16px;\n      background-color: #ececec;\n      z-index: 0;\n}\n.credits-menu .my-credit,\n  .credits-menu .get-credit {\n    position: absolute;\n    top: 38px;\n    left: 0;\n    width: 100%;\n    border-top: 1px solid #dddddd;\n    box-shadow: 0 5px 5px 0px #dcdcdc;\n    z-index: 10;\n    min-height: 200px;\n    background-color: #fff;\n}\n.credits-menu .my-credit .credit-header,\n    .credits-menu .get-credit .credit-header {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      padding-left: 15px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      border-bottom: 1px solid #dddddd;\n}\n.credits-menu .my-credit .credit-header p,\n      .credits-menu .get-credit .credit-header p {\n        height: 20px;\n        line-height: 20px;\n        font-size: 1.4rem;\n        border: none;\n        border-left: 2px solid #0074D9;\n        padding-left: 5px;\n}\n.credits-menu .my-credit .credit-lists,\n    .credits-menu .get-credit .credit-lists {\n      width: 100%;\n      padding: 0 4%;\n}\n.credits-menu .my-credit .credit-lists .list,\n      .credits-menu .get-credit .credit-lists .list {\n        width: 100%;\n        border-bottom: 1px solid #dddddd;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center;\n        justify-content: flex-start;\n}\n.credits-menu .my-credit .credit-lists .list > span,\n        .credits-menu .get-credit .credit-lists .list > span {\n          font-size: 1.4rem;\n          height: 40px;\n          line-height: 40px;\n}\n.credits-menu .my-credit .credit-lists .list > span.name,\n        .credits-menu .get-credit .credit-lists .list > span.name {\n          flex: 0.4;\n}\n.credits-menu .my-credit .credit-lists .list > span.time,\n        .credits-menu .get-credit .credit-lists .list > span.time {\n          flex: 0.3;\n          color: #AAAAAA;\n}\n.credits-menu .my-credit .credit-lists .list > span.number,\n        .credits-menu .get-credit .credit-lists .list > span.number {\n          flex: 0.3;\n          align-self: flex-end;\n          text-align: right;\n          color: #2ecc71;\n}\n.credits-menu .my-credit .credit-lists .list:last-child,\n      .credits-menu .get-credit .credit-lists .list:last-child {\n        border-bottom: none;\n}\n.credit-exchange {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 20px;\n}\n.credit-exchange .exchange-header {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    border-bottom: 1px solid #f7f7f7;\n    height: 30px;\n    line-height: 30px;\n}\n.credit-exchange .exchange-header span {\n      flex: 1;\n      font-size: 1.4rem;\n}\n.credit-exchange .exchange-header span:last-child {\n      text-align: right;\n}\n@keyframes circleAnimate {\nfrom {\n    transform: scale(0.9, 0.9);\n    opacity: 1;\n}\nto {\n    transform: scale(1.1, 1.1);\n    opacity: 0;\n}\n}\n.circle-animate {\n  -webkit-animation-name: circleAnimate;\n  animation-name: circleAnimate;\n  animation-duration: 1.5s;\n  animation-fill-mode: both;\n  animation-iteration-count: infinite;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-
-/***/ 115:
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -10841,8 +10806,7 @@
 
 
 /***/ },
-
-/***/ 116:
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10851,7 +10815,7 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(117);
+	var _utils = __webpack_require__(10);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -10874,10 +10838,7 @@
 				UserInfo: null, //用户信息,
 				TaskInfo: [], //积分任务
 
-				debug: false, //是否是测试环境
-				debugValue: "window.jgkj.getUserInfo()",
-				debugInfo: "这里输出信息"
-			};
+				debug: false };
 		},
 		created: function created() {
 			var _this = this;
@@ -10900,10 +10861,11 @@
 				serverUrl: this.debug ? "http://192.168.31.86" : "https://app.samecity.com.cn"
 			};
 
-			// this.getUserInfo();// 获取用户信息
-			// this.getCheckinInfo();//获取用户签到信息
+			this.getUserInfo(); // 获取用户信息
+			this.getCheckinInfo(); //获取用户签到信息
+			this.getTaskInfo(); //获取积分任务
 			window.getData = function (data) {
-				_this.debugInfo = data;
+				_this.UserInfo = JSON.parse(data);
 			};
 		},
 		mounted: function mounted() {
@@ -10951,7 +10913,7 @@
 			/** 获取用户信息 */
 			getUserInfo: function getUserInfo() {
 				if (typeof window.jgkj !== "undefined") {
-					this.UserInfo = window.jgkj.getUserInfo();
+					this.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 					this.debugInfo = this.UserInfo;
 				}
 				if (typeof window.webkit !== "undefined") {
@@ -11020,12 +10982,6 @@
 						_this4.TaskInfo = result.Data;
 					}
 				});
-			},
-			test: function test() {
-				this.debugInfo = eval(this.debugValue);
-			},
-			cleartest: function cleartest() {
-				this.debugValue = "";
 			}
 		},
 		computed: {
@@ -11102,20 +11058,11 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 
 	exports.default = Vue_App;
 
 /***/ },
-
-/***/ 117:
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11124,7 +11071,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(11);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -11308,8 +11255,30 @@
 	};
 
 /***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 118:
+	module.exports = { "default": __webpack_require__(12), __esModule: true };
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(13)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -11388,7 +11357,23 @@
 	      expression: "showGetCredit"
 	    }],
 	    staticClass: "get-credit animated fadeIn"
-	  }, [_vm._m(1), " ", _vm._m(2)])]), " ", " ", _vm._m(3), " ", _vm._h('div', {
+	  }, [_vm._m(1), " ", _vm._l((_vm.TaskInfo), function(item, index) {
+	    return _vm._h('div', {
+	      staticClass: "credit-lists make"
+	    }, [_vm._h('div', {
+	      staticClass: "list"
+	    }, [_vm._h('span', {
+	      staticClass: "name"
+	    }, [_vm._s(item.Content)]), " ", _vm._h('span', {
+	      staticClass: "time"
+	    }, [_vm._s(item.RecordDate)]), " ", _vm._h('span', {
+	      staticClass: "number"
+	    }, [_vm._s('+' + item.Point)]), " ", (item.IsFulfill === '0') ? _vm._h('span', {
+	      staticClass: "fill"
+	    }, ["未完成"]) : _vm._h('span', {
+	      staticClass: "fill"
+	    }, ["已完成"]), " "])])
+	  })])]), " ", " ", _vm._m(2), " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -11410,34 +11395,6 @@
 	  }, [_vm._h('p', ["赚积分当钱花"])])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "credit-lists"
-	  }, [_vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])]), " ", _vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])]), " ", _vm._h('div', {
-	    staticClass: "list"
-	  }, [_vm._h('span', {
-	    staticClass: "name"
-	  }, ["签到"]), " ", _vm._h('span', {
-	    staticClass: "time"
-	  }, ["2016-10-05"]), " ", _vm._h('span', {
-	    staticClass: "number"
-	  }, ["+5"])])])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
 	    staticClass: "credit-exchange"
 	  }, [_vm._h('div', {
 	    staticClass: "exchange-header"
@@ -11457,5 +11414,4 @@
 	}
 
 /***/ }
-
-/******/ });
+/******/ ]);

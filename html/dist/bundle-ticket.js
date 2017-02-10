@@ -48794,6 +48794,18 @@
 	    class: ['fa', _vm.arrow]
 	  }), "票价"])]), " ", _vm._h('div', {
 	    staticClass: "result-list"
+	  }, [_vm._h('transition-group', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowList),
+	      expression: "isShowList"
+	    }],
+	    staticClass: "lists",
+	    attrs: {
+	      "name": "list-complete",
+	      "tag": "div"
+	    }
 	  }, [_vm._l((_vm.getResultList), function(item, index) {
 	    return _vm._h('div', {
 	      key: index,
@@ -48895,7 +48907,7 @@
 	        "textContent": _vm._s(item.TicketNum + '张余票')
 	      }
 	    })])])
-	  }), " ", " ", " ", " ", " ", _vm._h('div', {
+	  })]), " ", " ", " ", " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -50085,7 +50097,7 @@
 					_this8.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
 						if (result.Data) {
 							_this8.AllFare.splice(index, 1);
-							_this8.$store.dispatch("setPassenger", _this8.AllFare);
+							_this8.$store.dispatch("setPassenger", _this8.formatData(_this8.AllFare));
 							_this8.computeAll();
 						} else {
 							_this8.popupMessage(result.Message);

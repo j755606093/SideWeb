@@ -150,7 +150,7 @@
 				}
 				newData.push(string); //最后才推入这个
 				//等于10的时候需要截取一部分
-				if (newData.length === 5) {
+				if (newData.length === 10) {
 					newData.splice(0, 5);
 				}
 
