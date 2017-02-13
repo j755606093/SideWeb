@@ -301,12 +301,17 @@ export default {
 			    disabled: false
 				}];//清空先
 				// 准备运输公司信息
+				let filter = [];
 				this.getResultList.map((item)=>{
-					this.PositionOptions.push({
-						label:item.CoName,
-						value:item.CoName,
-						disabled:false
-					})
+					if(filter.indexOf(item.CoName)<=-1){
+						//不重复
+						this.PositionOptions.push({
+							label:item.CoName,
+							value:item.CoName,
+							disabled:false
+						});
+						filter.push(item.CoName);
+					}
 				})
 			}
 		},

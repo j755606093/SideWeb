@@ -92,9 +92,9 @@
 
 	var _TicketPay2 = _interopRequireDefault(_TicketPay);
 
-	var _TicketOrderList = __webpack_require__(309);
+	var _TicketDate = __webpack_require__(309);
 
-	var _TicketOrderList2 = _interopRequireDefault(_TicketOrderList);
+	var _TicketDate2 = _interopRequireDefault(_TicketDate);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -129,9 +129,9 @@
 			name: "ticketpay",
 			component: _TicketPay2.default
 		}, {
-			path: "/ticketorderlist",
-			name: "ticketorderlist",
-			component: _TicketOrderList2.default
+			path: "/ticketdate",
+			name: "ticketdate",
+			component: _TicketDate2.default
 		}, {
 			path: "*",
 			name: "*ticketbody",
@@ -11218,21 +11218,31 @@
 		return debug;
 	}();
 
+	window.getData = function (data) {
+		window.UserInfo = JSON.parse(data);
+	};
+
+	if (typeof window.jgkj !== "undefined") {
+		window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+	}
+	if (typeof window.webkit !== "undefined") {
+		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']);
+	}
+
 	/**
 	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
 	 * @param  {[type]} ) {	let        cookie [description]
 	 * @return {[type]}   [description]
 	 */
 	var Authorization = function () {
+		if (window.UserInfo) {
+			// app中
+			return window.UserInfo.Access_Token;
+		}
 		var cookie = document.cookie;
 		if (cookie === "") {
 			return cookie;
 		}
-		// Toast({
-		// 	message: cookie,
-		// 	position: 'bottom',
-		// 	duration: 10000
-		// });
 
 		var arrayCookie = cookie.split(";");
 
@@ -48552,20 +48562,27 @@
 					this.showNoData = true;
 					this.getResultList = [];
 				} else {
-					this.showNoData = false;
-					this.PositionOptions = [{
-						label: '不限',
-						value: '不限',
-						disabled: false
-					}]; //清空先
-					// 准备运输公司信息
-					this.getResultList.map(function (item) {
-						_this.PositionOptions.push({
-							label: item.CoName,
-							value: item.CoName,
+					(function () {
+						_this.showNoData = false;
+						_this.PositionOptions = [{
+							label: '不限',
+							value: '不限',
 							disabled: false
+						}]; //清空先
+						// 准备运输公司信息
+						var filter = [];
+						_this.getResultList.map(function (item) {
+							if (filter.indexOf(item.CoName) <= -1) {
+								//不重复
+								_this.PositionOptions.push({
+									label: item.CoName,
+									value: item.CoName,
+									disabled: false
+								});
+								filter.push(item.CoName);
+							}
 						});
-					});
+					})();
 				}
 			},
 			queryTime: function queryTime() {
@@ -51286,7 +51303,7 @@
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketOrderList.vue"
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketDate.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
@@ -51297,12 +51314,12 @@
 	  if (!hotAPI.compatible) return
 	  module.hot.accept()
 	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-41d2f3ea", __vue_options__)
+	    hotAPI.createRecord("data-v-1cc4d27f", __vue_options__)
 	  } else {
-	    hotAPI.reload("data-v-41d2f3ea", __vue_options__)
+	    hotAPI.reload("data-v-1cc4d27f", __vue_options__)
 	  }
 	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] TicketOrderList.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+	if (__vue_options__.functional) {console.error("[vue-loader] TicketDate.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
 	module.exports = __vue_exports__
 
@@ -51323,8 +51340,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-41d2f3ea!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketOrderList.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-41d2f3ea!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketOrderList.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1cc4d27f!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketDate.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1cc4d27f!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketDate.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -51356,7 +51373,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.order-info-btn {\n  padding: 0;\n  width: 50px;\n  height: 50px;\n  background-color: #0074D9;\n  border-radius: 25px;\n  position: absolute;\n  bottom: 30px;\n  right: 20px;\n  text-align: center; }\n  .order-info-btn > i {\n    color: #fff;\n    font-size: 1.8rem;\n    height: 50px;\n    line-height: 50px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketdate {\n  width: 100%; }\n  .ticketdate .date-header {\n    height: 40px;\n    padding: 0 10px;\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    background-color: #f7f7f7;\n    text-align: center; }\n    .ticketdate .date-header > span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      line-height: 40px;\n      font-size: 1.4rem; }\n  .ticketdate .date-body {\n    width: 100%;\n    padding: 0 10px; }\n    .ticketdate .date-body .date-body-header {\n      height: 80px;\n      line-height: 80px;\n      text-align: center; }\n      .ticketdate .date-body .date-body-header > p {\n        color: #0074D9;\n        font-size: 2.4rem;\n        font-weight: 800; }\n    .ticketdate .date-body .date-body-lists {\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap; }\n      .ticketdate .date-body .date-body-lists > span {\n        -ms-flex: 1;\n            flex: 1; }\n", ""]);
 
 	// exports
 
@@ -51387,20 +51404,78 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				firstTimeText: "", //2017年2月
+				firstTimeDay: 0, //当前日期号
+				firstTimeMaxDay: 0, //当前月份最大日期数
+				firstTimeWeek: 0, //星期
+
+				secondTimeText: "",
+				secondTimeDay: 0,
+				secondTimeMaxDay: 0, //当前月份最大日期数
+				secondTimeWeek: 0, //星期
+
+				white: [0, 1, 2, 3, 4, 5, 6], //方便循环用
+				month: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+			};
 		},
 		created: function created() {
 			// let nowDate = new Date();
-			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "订单信息" });
+			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "选择日期" });
+			this.initTime();
 		},
 
 		filters: {},
 		watch: {},
 		computed: {},
-		methods: {}
+		methods: {
+			initTime: function initTime() {
+				var date = new Date();
+				var date_second = new Date(date.getTime() + 30 * 24 * 60 * 60 * 60 * 1000);
+
+				var year = date.getYear() - 100 + 2000;
+				var month = date.getMonth() + 1;
+
+				//第一个月
+				this.firstTimeWeek = date.getDay();
+				this.firstTimeDay = date.getDate();
+				date.setDate(0);
+				this.firstTimeMaxDay = date.getDate();
+
+				//第二个月
+				this.secondTimeWeek = date_second.getDay();
+				this.secondTimeDay = date_second.getDate();
+				date_second.setDate(0);
+				this.secondTimeMaxDay = date_second.getDate();
+
+				this.firstTimeText = year + "\u5E74 " + month + "\u6708";
+				if (month + 1 > 12) {
+					this.secondTimeText = year + 1 + "\u5E74 1\u6708";
+				} else {
+					this.secondTimeText = year + "\u5E74 " + (month + 1) + "\u6708";
+				}
+			}
+		}
 	};
 
 /***/ },
@@ -51408,16 +51483,28 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._m(0)
+	  return _vm._h('div', {
+	    staticClass: "ticketdate"
+	  }, [_vm._m(0), " ", _vm._h('div', {
+	    staticClass: "date-body"
+	  }, [_vm._h('div', {
+	    staticClass: "date-body-header"
+	  }, [_vm._h('p', [_vm._s(_vm.firstTimeText)])]), " ", _vm._h('div', {
+	    staticClass: "date-body-lists"
+	  }, [_vm._l((_vm.white), function(item, index) {
+	    return (item < _vm.firstTimeWeek) ? _vm._h('span', {
+	      staticClass: "white"
+	    }) : _vm._e()
+	  }), " ", _vm._h('span')])])])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "order-list"
-	  }, [_vm._h('p', ["订单历史"])])
+	    staticClass: "date-header"
+	  }, [_vm._h('span', ["日"]), " ", _vm._h('span', ["一"]), " ", _vm._h('span', ["二"]), " ", _vm._h('span', ["三"]), " ", _vm._h('span', ["四"]), " ", _vm._h('span', ["五"]), " ", _vm._h('span', ["六"])])
 	}]}
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-41d2f3ea", module.exports)
+	     require("vue-hot-reload-api").rerender("data-v-1cc4d27f", module.exports)
 	  }
 	}
 

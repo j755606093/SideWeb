@@ -1,11 +1,9 @@
 <template type="x/template" id="ticketorderlist">
-	<div class="order-list">
-		<p>订单历史</p>
-	</div>
+	<p>选择乘车人</p>
 </template>
 
 <style lang="css">
-@import "../css/ticketinfo.css";
+@import "../css/ticketselectpassenger.css";
 </style>
 
 <script type="text/babel">
@@ -20,7 +18,7 @@ export default {
 	},
 	created(){
 		// let nowDate = new Date();
-		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"订单信息"});
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"选择日期"});
 	},
 	filters:{
 		

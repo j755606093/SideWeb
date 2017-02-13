@@ -14,21 +14,31 @@ const debug = (function() {
 	return debug;
 })();
 
+window.getData = (data) => {
+	window.UserInfo = JSON.parse(data);
+}
+
+if (typeof window.jgkj !== "undefined") {
+	window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+}
+if (typeof window.webkit !== "undefined") {
+	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+}
+
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
  * @param  {[type]} ) {	let        cookie [description]
  * @return {[type]}   [description]
  */
-const Authorization = (function() {
+let Authorization = (function() {
+	if (window.UserInfo) {
+		// app中
+		return window.UserInfo.Access_Token;
+	}
 	let cookie = document.cookie;
 	if (cookie === "") {
 		return cookie;
 	}
-	// Toast({
-	// 	message: cookie,
-	// 	position: 'bottom',
-	// 	duration: 10000
-	// });
 
 	let arrayCookie = cookie.split(";");
 
