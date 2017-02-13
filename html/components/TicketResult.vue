@@ -7,11 +7,11 @@
 			<span class="font-blue"@click="gofrontdate">后一天</span>
 		</div>
 		<!-- 列表头部 -->
-		<div class="data-set">
+		<!-- <div class="data-set">
 			<span :class="{'set':true,active:isShowTime}" @click="setShowTime"><i class="fa fa-glass"></i>时段</span>
 			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-bus"></i>路线信息</span>
 			<span :class="{'set':true,active:isShowList}" @click="sortTime"><i :class="['fa',arrow]"></i>票价</span>
-		</div>
+		</div> -->
 		<div class="result-list">
 			<!-- 列表数据 -->
 			<transition-group name="list-complete" tag="div" class="lists" v-show="isShowList">

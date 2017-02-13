@@ -24,12 +24,34 @@ const debug = (function() {
 	return test;
 })();
 
+window.getData = (data) => {
+	window.localStorage.setItem("UserInfo", data);
+}
+
+if (typeof window.jgkj !== "undefined") {
+	window.localStorage.setItem("UserInfo", window.jgkj.getUserInfo());
+	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+}
+if (typeof window.webkit !== "undefined") {
+	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+}
+
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
  * @param  {[type]} ) {	let        cookie [description]
  * @return {[type]}   [description]
  */
 const Authorization = (function() {
+	if (window.localStorage.getItem("UserInfo")) {
+		// app中
+		let string = window.localStorage.getItem("UserInfo");
+		// Toast({
+		// 	message: JSON.parse(string).Access_Token,
+		// 	position: 'center',
+		// 	duration: 10000
+		// })
+		return JSON.parse(string).Access_Token;
+	}
 	let cookie = document.cookie;
 	if (cookie === "") {
 		return cookie;

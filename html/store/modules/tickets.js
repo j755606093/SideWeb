@@ -15,11 +15,12 @@ const debug = (function() {
 })();
 
 window.getData = (data) => {
-	window.UserInfo = JSON.parse(data);
+	window.localStorage.setItem("UserInfo", data);
 }
 
 if (typeof window.jgkj !== "undefined") {
-	window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+	window.localStorage.setItem("UserInfo", window.jgkj.getUserInfo());
+	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 }
 if (typeof window.webkit !== "undefined") {
 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
@@ -31,9 +32,15 @@ if (typeof window.webkit !== "undefined") {
  * @return {[type]}   [description]
  */
 let Authorization = (function() {
-	if (window.UserInfo) {
+	if (window.localStorage.getItem("UserInfo")) {
 		// app中
-		return window.UserInfo.Access_Token;
+		let string = window.localStorage.getItem("UserInfo");
+		// Toast({
+		// 	message: JSON.parse(string).Access_Token,
+		// 	position: 'center',
+		// 	duration: 10000
+		// })
+		return JSON.parse(string).Access_Token;
 	}
 	let cookie = document.cookie;
 	if (cookie === "") {

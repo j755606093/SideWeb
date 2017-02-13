@@ -86,12 +86,34 @@
 		return test;
 	}();
 
+	window.getData = function (data) {
+		window.localStorage.setItem("UserInfo", data);
+	};
+
+	if (typeof window.jgkj !== "undefined") {
+		window.localStorage.setItem("UserInfo", window.jgkj.getUserInfo());
+		// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+	}
+	if (typeof window.webkit !== "undefined") {
+		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']);
+	}
+
 	/**
 	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
 	 * @param  {[type]} ) {	let        cookie [description]
 	 * @return {[type]}   [description]
 	 */
 	var Authorization = function () {
+		if (window.localStorage.getItem("UserInfo")) {
+			// app中
+			var string = window.localStorage.getItem("UserInfo");
+			// Toast({
+			// 	message: JSON.parse(string).Access_Token,
+			// 	position: 'center',
+			// 	duration: 10000
+			// })
+			return JSON.parse(string).Access_Token;
+		}
 		var cookie = document.cookie;
 		if (cookie === "") {
 			return cookie;
