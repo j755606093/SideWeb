@@ -52,7 +52,7 @@ header{
 		}
 		.center{
 			line-height:50px;
-			font-size:1.8rem;
+			font-size:20px;
 		}
 	}
 }

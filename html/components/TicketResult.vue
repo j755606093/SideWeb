@@ -1,10 +1,11 @@
 <template type="x/template" id="ticketresult">
 	<div class="result">
+		<div class="filter"><span>刷选</span></div>
 		<!-- 时间显示 -->
 		<div class="date-control">
-			<span class="font-blue" @click="gobackdate">前一天</span>
+			<span @click="gobackdate">前一天</span>
 			<span v-text="startDate.date+' '+startDate.week"></span>
-			<span class="font-blue"@click="gofrontdate">后一天</span>
+			<span @click="gofrontdate">后一天</span>
 		</div>
 		<!-- 列表头部 -->
 		<!-- <div class="data-set">

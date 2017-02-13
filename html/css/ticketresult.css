@@ -155,23 +155,41 @@ input {
 
 .result {
   width: 100%;
-  height: 40px;
-  position: absolute; }
+  position: absolute;
+  background-color: #fafafa;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+  .result .filter {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    color: #fff;
+    font-size: 14px;
+    z-index: 100;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    width: 50px; }
   .result .date-control {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     font-size: 1.4rem;
-    border-bottom: 1px solid #f7f7f7;
-    text-align: center; }
+    text-align: center;
+    padding: 0 10px; }
     .result .date-control span {
       height: 40px;
       line-height: 40px;
       -ms-flex: 0.6;
           flex: 0.6;
       -ms-flex-pack: center;
-          justify-content: center; }
+          justify-content: center;
+      color: #323232;
+      font-size: 17px;
+      font-weight: 900; }
     .result .date-control span:first-child,
     .result .date-control span:last-child {
       -ms-flex: 0.2;
@@ -179,7 +197,11 @@ input {
       display: -ms-flexbox;
       display: flex;
       -ms-flex-pack: center;
-          justify-content: center; }
+          justify-content: center;
+      font-size: 14px;
+      color: #323232; }
+    .result .date-control > span.no {
+      color: #c8c8c8; }
   .result .data-set {
     display: -ms-flexbox;
     display: flex;
@@ -216,7 +238,8 @@ input {
     .result .data-set span.active {
       color: #0074D9; }
   .result .result-list {
-    position: relative; }
+    position: relative;
+    margin: 14px 10px; }
     .result .result-list .list {
       display: -ms-flexbox;
       display: flex;

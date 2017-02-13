@@ -17,6 +17,11 @@
 	@import "./css/ticket.css";
 	.body{
 		padding-top:50px;
+		/*position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;*/
 	}
 </style>
 
