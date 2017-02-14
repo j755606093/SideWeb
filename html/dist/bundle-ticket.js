@@ -30006,7 +30006,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 50px;\n}\nheader .other .left i {\n        font-size: 3rem;\n        line-height: 50px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 20px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n}\n", ""]);
 
 	// exports
 
@@ -30033,6 +30033,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -30141,9 +30150,11 @@
 	    on: {
 	      "click": _vm.GoBack
 	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-angle-left"
-	  })]), " ", _vm._h('div', {
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(319)
+	    }
+	  }), " "]), " ", _vm._h('div', {
 	    staticClass: "center"
 	  }, [_vm._h('span', [_vm._s(_vm.getHeaderTitle)])])]), " "])
 	},staticRenderFns: []}
@@ -48280,7 +48291,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  position: absolute;\n  background-color: #fafafa;\n  top: 50px;\n  left: 0;\n  bottom: 0;\n  right: 0; }\n  .result .filter {\n    position: absolute;\n    top: -50px;\n    right: 0;\n    color: #fff;\n    font-size: 14px;\n    z-index: 100;\n    text-align: center;\n    height: 50px;\n    line-height: 50px;\n    width: 50px; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    text-align: center;\n    padding: 0 10px; }\n    .result .date-control span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #323232;\n      font-size: 17px;\n      font-weight: 900; }\n    .result .date-control span:first-child,\n    .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      font-size: 14px;\n      color: #323232; }\n    .result .date-control > span.no {\n      color: #c8c8c8; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    box-shadow: 0 3px 5px 0px #ececec; }\n    .result .data-set span {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 0.5;\n          flex: 0.5;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #5e5e5e; }\n      .result .data-set span i {\n        height: 40px;\n        line-height: 40px;\n        font-size: 14px;\n        margin-right: 5px; }\n    .result .data-set span:first-child {\n      -ms-flex: 0.25;\n          flex: 0.25; }\n    .result .data-set span:last-child {\n      -ms-flex: 0.25;\n          flex: 0.25;\n      -ms-flex-align: end;\n          align-items: flex-end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n      margin-right: 10px; }\n    .result .data-set span.active {\n      color: #0074D9; }\n  .result .result-list {\n    position: relative;\n    margin: 14px 10px; }\n    .result .result-list .list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .result .result-list .list > .data {\n        color: #0074D9;\n        font-size: 1.5rem;\n        width: 30%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n        font-weight: 900;\n        max-height: 105px; }\n      .result .result-list .list > .car-position {\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        margin: 5px 0;\n        margin-left: 25px; }\n        .result .result-list .list > .car-position p {\n          height: 25px;\n          line-height: 25px;\n          font-size: 1.3rem;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n          color: #111111; }\n          .result .result-list .list > .car-position p span.brand {\n            border: 1px solid #FF851B;\n            background-color: #FF851B;\n            padding: 0 2px;\n            color: #fff;\n            font-size: 1.1rem;\n            margin-right: 5px;\n            border-radius: 10px; }\n        .result .result-list .list > .car-position p.type {\n          color: #919191; }\n          .result .result-list .list > .car-position p.type > i.fa-location-arrow {\n            color: #AAAAAA;\n            padding: 0 2px;\n            margin-right: 8px;\n            height: 25px;\n            line-height: 25px; }\n          .result .result-list .list > .car-position p.type > i.fa-caret-down {\n            height: 30px;\n            line-height: 30px;\n            margin-left: 5px;\n            height: 25px;\n            line-height: 25px; }\n        .result .result-list .list > .car-position p.router-type {\n          color: #919191;\n          margin-left: 25px;\n          font-size: 12px;\n          height: 20px;\n          line-height: 20px; }\n        .result .result-list .list > .car-position > .show-router ul {\n          list-style: none;\n          position: relative; }\n          .result .result-list .list > .car-position > .show-router ul li {\n            margin-left: 20px;\n            position: relative;\n            font-size: 1rem;\n            line-height: 24px;\n            height: 24px; }\n            .result .result-list .list > .car-position > .show-router ul li::after {\n              content: \"\";\n              height: 8px;\n              width: 8px;\n              position: absolute;\n              border-radius: 4px;\n              border: 1px solid #AAAAAA;\n              top: 7px;\n              left: -15px; }\n            .result .result-list .list > .car-position > .show-router ul li::before {\n              content: \"\";\n              height: 7px;\n              width: 1px;\n              position: absolute;\n              border: 1px solid #AAAAAA;\n              top: -5px;\n              left: -12px; }\n          .result .result-list .list > .car-position > .show-router ul li:first-child::before {\n            border: 1px solid #fff; }\n          .result .result-list .list > .car-position > .show-router ul li.active::after {\n            content: \"\";\n            height: 8px;\n            width: 8px;\n            position: absolute;\n            border-radius: 4px;\n            border: 1px solid #FF851B;\n            background-color: #FF851B;\n            top: 7px;\n            left: -15px; }\n        .result .result-list .list > .car-position > .show-router .bracket {\n          /*height: 100px;*/\n          display: block;\n          padding-left: 5px;\n          margin-left: 5px;\n          border-radius: 10px;\n          border: 1px solid #2ecc71;\n          border-color: transparent transparent transparent #2ecc71;\n          position: relative; }\n        .result .result-list .list > .car-position > .show-router .bracket::before {\n          content: \"\";\n          position: absolute;\n          top: 45%;\n          left: -12px;\n          border: 6px solid #2ecc71;\n          border-color: transparent #2ecc71 transparent transparent;\n          height: 0;\n          width: 0; }\n        .result .result-list .list > .car-position > .show-router .cityname {\n          position: absolute;\n          top: 45%;\n          left: -30px;\n          /*border: 6px solid #2ecc71;*/\n          /*border-color: transparent #2ecc71 transparent transparent;*/\n          height: 12px;\n          width: 30px;\n          font-size: 12px; }\n        .result .result-list .list > .car-position > .show-router .bracket-small {\n          /*height: 100px;*/\n          display: block;\n          padding-left: 5px;\n          margin-left: 5px;\n          border-radius: 10px;\n          border: 1px solid #2ecc71;\n          border-color: transparent transparent transparent #2ecc71;\n          position: relative; }\n        .result .result-list .list > .car-position > .show-router .bracket-small::before {\n          content: \"\";\n          position: absolute;\n          top: 30%;\n          left: -12px;\n          border: 6px solid #2ecc71;\n          border-color: transparent #2ecc71 transparent transparent;\n          height: 0;\n          width: 0; }\n        .result .result-list .list > .car-position > .show-router .cityname-small {\n          position: absolute;\n          top: 30%;\n          left: -30px;\n          /*border: 6px solid #2ecc71;*/\n          /*border-color: transparent #2ecc71 transparent transparent;*/\n          height: 12px;\n          width: 30px;\n          font-size: 12px; }\n      .result .result-list .list > .ticket-type {\n        margin: 5px 0;\n        width: 30%;\n        text-align: right;\n        margin-right: 10px;\n        font-size: 1.3rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n        .result .result-list .list > .ticket-type > p {\n          heihgt: 30px;\n          line-height: 30px; }\n        .result .result-list .list > .ticket-type .money {\n          color: #FF851B; }\n        .result .result-list .list > .ticket-type .number,\n        .result .result-list .list > .ticket-type .type {\n          font-size: 1.1rem;\n          color: #AAAAAA; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 60%;\n      height: 40%;\n      border-radius: 10px; }\n      .result .result-list .popup-visible .popup-header {\n        height: 40px;\n        border-top-left-radius: 10px;\n        border-top-right-radius: 10px;\n        width: 100%;\n        text-align: center;\n        font-size: 1.8rem;\n        line-height: 40px;\n        background-color: #009688;\n        color: #fff; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  position: absolute;\n  background-color: #fafafa;\n  top: 50px;\n  left: 0;\n  bottom: 0;\n  right: 0; }\n  .result .filter {\n    position: absolute;\n    top: -50px;\n    right: 0;\n    color: #fff;\n    font-size: 14px;\n    z-index: 100;\n    text-align: center;\n    height: 50px;\n    line-height: 50px;\n    width: 70px; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    text-align: center;\n    padding: 0 10px; }\n    .result .date-control span {\n      height: 30px;\n      line-height: 30px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #323232;\n      font-size: 17px; }\n    .result .date-control span:first-child,\n    .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      font-size: 14px;\n      color: #323232; }\n    .result .date-control > span.no {\n      color: #c8c8c8; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    height: 50px;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    text-align: center; }\n    .result .data-set > div {\n      -ms-flex: 1;\n          flex: 1;\n      position: relative;\n      text-align: center; }\n    .result .data-set p {\n      margin-top: 10px;\n      font-size: 12px;\n      text-align: center; }\n    .result .data-set span.set.active {\n      display: inline-block;\n      height: 4px;\n      width: 16px;\n      background-color: #329be8; }\n    .result .data-set span.active {\n      color: #329be8; }\n  .result .result-list {\n    position: relative;\n    margin: 14px 10px;\n    margin-top: 7px;\n    text-align: center; }\n    .result .result-list .list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      position: relative;\n      height: 120px;\n      margin: 10px 0;\n      border-radius: 6px;\n      background-color: #fff;\n      border: 0.5px solid #c8c8c8; }\n      .result .result-list .list .bg-result {\n        position: absolute;\n        top: 0;\n        left: 0;\n        height: 120px;\n        z-index: 0; }\n      .result .result-list .list .left {\n        z-index: 1;\n        -ms-flex: 3;\n            flex: 3;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: center; }\n        .result .result-list .list .left > span {\n          font-size: 12px;\n          font-weight: 900;\n          color: #323232;\n          margin: 2px 0; }\n          .result .result-list .list .left > span:first-child {\n            font-size: 20px;\n            color: #2196f3; }\n          .result .result-list .list .left > span:last-child {\n            color: #c8c8c8; }\n      .result .result-list .list .center {\n        z-index: 1;\n        -ms-flex: 1;\n            flex: 1;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-pack: distribute;\n            justify-content: space-around;\n        -ms-flex-align: left;\n            align-items: left;\n        height: 100%;\n        padding: 13px 0;\n        position: relative; }\n        .result .result-list .list .center > span {\n          width: 9px;\n          height: 9px;\n          border-radius: 50%;\n          background-color: #fafafa;\n          border: 0.5px solid #c8c8c8; }\n          .result .result-list .list .center > span:first-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            content: \"\";\n            border-radius: 0 0 10px 10px;\n            border-top-color: #fafafa;\n            position: absolute;\n            top: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n          .result .result-list .list .center > span:last-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            border-bottom-color: #fafafa;\n            content: \"\";\n            border-radius: 10px 10px 0 0;\n            position: absolute;\n            bottom: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n      .result .result-list .list .right {\n        z-index: 1;\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        height: 120px; }\n        .result .result-list .list .right .top {\n          -ms-flex: 7;\n              flex: 7;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .result .result-list .list .right .top .name {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            -ms-flex-align: start;\n                align-items: flex-start;\n            -ms-flex-pack: end;\n                justify-content: flex-end; }\n            .result .result-list .list .right .top .name p {\n              font-weight: bold;\n              font-size: 20px;\n              position: relative;\n              text-align: left;\n              margin-left: 20px; }\n              .result .result-list .list .right .top .name p:first-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #8cff3f;\n                position: absolute;\n                top: 9px;\n                left: -17px; }\n              .result .result-list .list .right .top .name p:last-child {\n                line-height: 40px; }\n              .result .result-list .list .right .top .name p:last-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #f35252;\n                position: absolute;\n                top: 15px;\n                left: -17px; }\n          .result .result-list .list .right .top .info {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            text-align: right;\n            -ms-flex-pack: center;\n                justify-content: center; }\n            .result .result-list .list .right .top .info p {\n              height: 28px;\n              line-height: 28px;\n              margin-right: 25px; }\n              .result .result-list .list .right .top .info p:first-child {\n                font-weight: 900;\n                font-size: 20px;\n                color: #f35252; }\n              .result .result-list .list .right .top .info p:last-child {\n                font-size: 12px;\n                color: #323232;\n                padding-top: 8px; }\n        .result .result-list .list .right .bottom {\n          -ms-flex: 3;\n              flex: 3;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: start;\n              justify-content: flex-start;\n          position: relative;\n          margin-top: 4px; }\n          .result .result-list .list .right .bottom img:first-child {\n            position: absolute;\n            top: 2px;\n            left: 4px;\n            width: 10px;\n            height: 12.5px; }\n          .result .result-list .list .right .bottom img:last-child {\n            position: absolute;\n            top: 5px;\n            right: 25px;\n            width: 10px;\n            height: 8px; }\n          .result .result-list .list .right .bottom p {\n            margin-left: 20px; }\n    .result .result-list .router {\n      height: 60px;\n      margin: 0 -10px;\n      background-color: #fff;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .result .result-list .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .result .result-list .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n        .result .result-list .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n      .result .result-list .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router > div:last-child:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .result .result-list .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #323232;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .result .result-list .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #329be8; }\n      .result .result-list .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #d3eafd;\n        z-index: 1; }\n      .result .result-list .router span.gray {\n        color: #c8c8c8; }\n        .result .result-list .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #d3eafd; }\n      .result .result-list .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #c8c8c8;\n        border-radius: 10px; }\n        .result .result-list .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #329be8;\n          z-index: 3; }\n        .result .result-list .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #68b8f7;\n          z-index: 2; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 100%;\n      height: 70%; }\n      .result .result-list .popup-visible .popup-header {\n        height: 50px;\n        width: 100%;\n        line-height: 50px;\n        background-color: #329be8;\n        color: #fff;\n        text-align: center;\n        position: relative; }\n        .result .result-list .popup-visible .popup-header span {\n          display: inline-block;\n          height: 50px;\n          line-height: 50px;\n          font-size: 12px;\n          width: 60px; }\n        .result .result-list .popup-visible .popup-header span:last-child {\n          position: absolute;\n          top: 0;\n          right: 0; }\n        .result .result-list .popup-visible .popup-header span:first-child {\n          position: absolute;\n          top: 0;\n          left: 0; }\n\n.mint-cell-title {\n  text-align: left; }\n\n.mint-cell-wrapper {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n\n.mint-cell:last-child {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n", ""]);
 
 	// exports
 
@@ -48294,6 +48305,10 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _toConsumableArray2 = __webpack_require__(322);
+
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 	var _vuex = __webpack_require__(4);
 
@@ -48419,38 +48434,77 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
 			return {
 				startCity: "",
 				endCity: "",
-				getResultList: this.$store.getters.getResultList, //列表备份
+				getResultList: [], //列表备份
+				popupVisible: false,
 				isShowList: true,
+				isShowPrice: true, //价格
 				isShowTime: false,
+				isShowConame: false,
 				isShowPosition: false,
 				showNoData: false,
 				routerDetailShow: false, //显示公司信息
 				showCompanyInfo: {}, //显示的公司信息
-				arrow: "fa-caret-down", //默认票价排序图标
+				arrow: 0, //默认票价排序
 				TimeOptions: [{
 					label: '不限时间段',
 					value: '不限',
 					disabled: false
 				}, {
-					label: '早上(00:00-06:00)',
+					label: '早上 00:00-06:00',
 					value: 6,
 					disabled: false
 				}, {
-					label: '上午(06:00-12:00)',
+					label: '上午 06:00-12:00',
 					value: 12,
 					disabled: false
 				}, {
-					label: '下午(12:00-18:00)',
+					label: '下午 12:00-18:00',
 					value: 18,
 					disabled: false
 				}, {
-					label: '晚上(18:00-24:00)',
+					label: '晚上 18:00-24:00',
 					value: 24,
 					disabled: false
 				}],
@@ -48472,6 +48526,8 @@
 			// console.log(this.getResultList)
 			//设置头部标题
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " 到 " + this.endCity.Name });
+
+			this.getResultList = [].concat((0, _toConsumableArray3.default)(this.$store.getters.getResultList));
 
 			this.refresh();
 		},
@@ -48553,19 +48609,32 @@
 				//隐藏显示列表
 				this.isShowList = !this.isShowList;
 			},
+			showFilter: function showFilter() {
+				this.popupVisible = !this.popupVisible;
+			},
 			HideAll: function HideAll() {
-				this.isShowList = false; //隐藏列表
+				// this.isShowList = false;//隐藏列表
 				//隐藏其他的tab
 				this.isShowTime = false;
 				this.isShowPosition = false;
+				this.isShowPrice = false;
+				this.isShowConame = false;
 			},
 			setShowTime: function setShowTime() {
 				this.HideAll();
 				this.isShowTime = true;
 			},
+			setShowName: function setShowName() {
+				this.HideAll();
+				this.isShowConame = true;
+			},
 			setShowPosition: function setShowPosition() {
 				this.HideAll();
 				this.isShowPosition = true;
+			},
+			setShowPrice: function setShowPrice() {
+				this.HideAll();
+				this.isShowPrice = true;
 			},
 			refresh: function refresh() {
 				var _this = this;
@@ -48584,7 +48653,7 @@
 						}]; //清空先
 						// 准备运输公司信息
 						var filter = [];
-						_this.getResultList.map(function (item) {
+						_this.getResultList.map(function (item, index) {
 							if (filter.indexOf(item.CoName) <= -1) {
 								//不重复
 								_this.PositionOptions.push({
@@ -48594,6 +48663,15 @@
 								});
 								filter.push(item.CoName);
 							}
+							// let stations = [];
+							// for(let i=0;i<item.Stations.length;i++){
+							// 	let a = item.Stations[i];
+							// 	if(a.Point.length>2){
+							// 		a.Point = a.Point.slice(0,2);
+							// 	}
+							// 	stations.push(a);
+							// }
+							// this.getResultList[index].Stations = stations;
 						});
 					})();
 				}
@@ -48673,16 +48751,16 @@
 			},
 			sortTime: function sortTime() {
 				var data = _utils2.default.formatJsonData(this.getResultList);
-				if (this.arrow === "fa-caret-down") {
+				if (this.arrow === 0) {
 					data.sort(function (a, b) {
 						return b.Price - a.Price;
 					});
-					this.arrow = "fa-caret-up";
+					this.arrow = 1;
 				} else {
 					data.sort(function (a, b) {
 						return a.Price - b.Price;
 					});
-					this.arrow = "fa-caret-down";
+					this.arrow = 0;
 				}
 
 				this.getResultList = data;
@@ -48777,7 +48855,12 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "result"
-	  }, [_vm._m(0), " ", " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "filter",
+	    on: {
+	      "click": _vm.showFilter
+	    }
+	  }, [_vm._h('span', ["筛选"])]), " ", " ", _vm._h('div', {
 	    staticClass: "date-control"
 	  }, [_vm._h('span', {
 	    on: {
@@ -48791,7 +48874,7 @@
 	    on: {
 	      "click": _vm.gofrontdate
 	    }
-	  }, ["后一天"])]), " ", " ", " ", _vm._h('div', {
+	  }, ["后一天"])]), " ", _vm._h('div', {
 	    staticClass: "result-list"
 	  }, [_vm._h('transition-group', {
 	    directives: [{
@@ -48807,7 +48890,8 @@
 	    }
 	  }, [_vm._l((_vm.getResultList), function(item, index) {
 	    return _vm._h('div', {
-	      key: index,
+	      key: index
+	    }, [_vm._h('div', {
 	      staticClass: "list list-complete-item",
 	      attrs: {
 	        "id": 'result' + index
@@ -48817,104 +48901,137 @@
 	          _vm.GoToPay(index)
 	        }
 	      }
+	    }, [_vm._h('div', {
+	      staticClass: "left"
 	    }, [_vm._h('span', {
-	      staticClass: "data",
 	      domProps: {
 	        "textContent": _vm._s(item.StartTime.slice(0, item.StartTime.length - 3))
 	      }
-	    }), " ", _vm._h('div', {
-	      staticClass: "car-position"
-	    }, [_vm._h('p', [_vm._h('span', {
-	      staticClass: "brand"
-	    }, ["上"]), _vm._s(item.StartPoint) + "\n\t\t\t\t\t"]), " ", " ", _vm._h('p', {
-	      staticClass: "type",
+	    }, ["08:23"]), " ", _vm._h('span', {
+	      domProps: {
+	        "textContent": _vm._s(item.CoName)
+	      }
+	    }, ["东方快车"]), " ", _vm._h('span', [_vm._s(item.Route)])]), " ", _vm._h('div', {
+	      staticClass: "center"
+	    }, [_vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span')]), " ", _vm._h('div', {
+	      staticClass: "right"
+	    }, [_vm._h('div', {
+	      staticClass: "top"
+	    }, [_vm._h('div', {
+	      staticClass: "name"
+	    }, [_vm._h('p', [_vm._s(item.StartPoint)]), " ", _vm._h('p', [_vm._s(item.EndPoint)])]), " ", _vm._h('div', {
+	      staticClass: "info"
+	    }, [_vm._h('p', {
+	      domProps: {
+	        "textContent": _vm._s('¥' + item.Price)
+	      }
+	    }), " ", _vm._h('p', {
+	      domProps: {
+	        "textContent": _vm._s(item.TicketNum + '张余票')
+	      }
+	    }, ["123张余票"])])]), " ", _vm._h('div', {
+	      staticClass: "bottom",
 	      on: {
 	        "click": function($event) {
 	          $event.stopPropagation();
 	          _vm.showCompanyDeatil(index, $event)
 	        }
 	      }
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-location-arrow"
-	    }), "途径点\n\t\t\t\t\t\t", _vm._h('i', {
-	      staticClass: "fa fa-caret-down"
-	    })]), " ", _vm._h('div', {
+	    }, [_vm._h('img', {
+	      attrs: {
+	        "src": __webpack_require__(320)
+	      }
+	    }), " ", _vm._h('p', ["经过车站路线"]), " ", _vm._h('img', {
+	      attrs: {
+	        "src": __webpack_require__(321)
+	      }
+	    })])])]), " ", _vm._h('div', {
 	      directives: [{
 	        name: "show",
 	        rawName: "v-show",
 	        value: (_vm.routerDetailShow === index),
 	        expression: "routerDetailShow===index"
 	      }],
-	      staticClass: "show-router"
-	    }, [_vm._h('div', {
-	      staticClass: "router"
-	    }, [_vm._l((item.SPoint), function(list) {
+	      staticClass: "router animated bounceIn"
+	    }, [_vm._l((item.Stations), function(list, index) {
 	      return _vm._h('div', {
-	        key: _vm.i,
 	        class: {
-	          'bracket': list.Content.length > 2, 'bracket-small': list.Content.length <= 2
+	          active: list.NodeType === 2 || list.NodeType === 1, other: list.NodeType === 0, last: list.NodeType === 2
 	        }
 	      }, [_vm._h('span', {
 	        class: {
-	          'cityname': list.Content.length > 2, 'cityname-small': list.Content.length <= 2
+	          gray: list.NodeType === 0, active: list.NodeType === 2 || list.NodeType === 1
 	        }
-	      }, [_vm._s(list.CityName)]), " ", _vm._h('ul', [_vm._l((list.Content), function(content) {
-	        return _vm._h('li', {
-	          key: _vm.j,
-	          class: {
-	            active: content.NodeType === 1
-	          }
-	        }, [_vm._s(content.Point + " " + content.BoardTime)])
-	      })])])
-	    }), " ", " ", _vm._l((item.EPoint), function(list) {
-	      return _vm._h('div', {
-	        key: _vm.i,
-	        class: {
-	          'bracket': list.Content.length > 2, 'bracket-small': list.Content.length <= 2
-	        }
-	      }, [_vm._h('span', {
-	        class: {
-	          'cityname': list.Content.length > 2, 'cityname-small': list.Content.length <= 2
-	        }
-	      }, [_vm._s(list.CityName)]), " ", _vm._h('ul', [_vm._l((list.Content), function(content) {
-	        return _vm._h('li', {
-	          key: _vm.j,
-	          class: {
-	            active: content.NodeType === 2
-	          }
-	        }, [_vm._s(content.Point)])
-	      })])])
-	    })])]), " ", _vm._h('p', [_vm._h('span', {
-	      staticClass: "brand"
-	    }, ["下"]), _vm._s(item.EndPoint) + "\n\t\t\t\t\t"]), " ", _vm._h('p', {
-	      staticClass: "router-type"
-	    }, ["\n\t\t\t\t\t" + _vm._s(item.Route)])]), " ", _vm._h('div', {
-	      staticClass: "ticket-type"
-	    }, [_vm._h('p', {
-	      staticClass: "money",
-	      domProps: {
-	        "textContent": _vm._s(item.Price + '元')
-	      }
-	    }), " ", _vm._h('p', {
-	      staticClass: "number",
-	      domProps: {
-	        "textContent": _vm._s(item.CoName)
-	      }
-	    }), " ", _vm._h('p', {
-	      staticClass: "type",
-	      domProps: {
-	        "textContent": _vm._s(item.TicketNum + '张余票')
-	      }
+	      }, [_vm._s(list.Point.length > 3 ? list.Point.slice(0, 3) + '..' : list.Point)])])
 	    })])])
-	  })]), " ", " ", " ", " ", _vm._h('div', {
+	  })]), " ", " ", " ", _vm._h('mt-popup', {
 	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (!_vm.isShowList),
-	      expression: "!isShowList"
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.popupVisible),
+	      expression: "popupVisible"
 	    }],
-	    staticClass: "change-set"
+	    staticClass: "popup-visible",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.popupVisible)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.popupVisible = $event
+	      }
+	    }
 	  }, [_vm._h('div', {
+	    staticClass: "popup-header"
+	  }, [_vm._h('span', ["取消"]), " ", _vm._h('span', ["清空已选"]), " ", _vm._h('span', ["确定"])]), " ", " ", _vm._h('div', {
+	    staticClass: "data-set"
+	  }, [_vm._h('div', [_vm._h('p', {
+	    class: {
+	      active: _vm.isShowTime
+	    },
+	    on: {
+	      "click": _vm.setShowTime
+	    }
+	  }, ["时段"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowTime
+	    }
+	  })]), " ", _vm._h('div', [_vm._h('p', {
+	    class: {
+	      active: _vm.isShowConame
+	    },
+	    on: {
+	      "click": _vm.setShowName
+	    }
+	  }, ["运营信息"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowConame
+	    }
+	  })]), " ", _vm._h('div', [_vm._h('p', {
+	    class: {
+	      active: _vm.isShowPosition
+	    },
+	    on: {
+	      "click": _vm.setShowPosition
+	    }
+	  }, ["路线信息"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowPosition
+	    }
+	  })]), " ", _vm._h('div', [_vm._h('p', {
+	    class: {
+	      active: _vm.isShowPrice
+	    },
+	    on: {
+	      "click": _vm.setShowPrice
+	    }
+	  }, ["票价高低"]), " ", _vm._h('span', {
+	    class: {
+	      'set': true, active: _vm.isShowPrice
+	    }
+	  })])]), " ", " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -48930,6 +49047,7 @@
 	      expression: "getTimeOptionsValue"
 	    }],
 	    attrs: {
+	      "align": "right",
 	      "options": _vm.TimeOptions
 	    },
 	    domProps: {
@@ -48940,17 +49058,12 @@
 	        _vm.getTimeOptionsValue = $event
 	      }
 	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.queryTime
-	    }
-	  }, ["确定"])]), " ", " ", _vm._h('div', {
+	  })]), " ", " ", _vm._h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (_vm.isShowPosition),
-	      expression: "isShowPosition"
+	      value: (_vm.isShowConame),
+	      expression: "isShowConame"
 	    }],
 	    staticClass: "set-position"
 	  }, [_vm._h('mt-checklist', {
@@ -48961,6 +49074,7 @@
 	      expression: "getPositionOptionsValue"
 	    }],
 	    attrs: {
+	      "align": "right",
 	      "options": _vm.PositionOptions
 	    },
 	    domProps: {
@@ -48971,19 +49085,64 @@
 	        _vm.getPositionOptionsValue = $event
 	      }
 	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
+	  })]), " ", " ", _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowPosition),
+	      expression: "isShowPosition"
+	    }],
+	    staticClass: "set-time"
+	  }, [_vm._h('mt-checklist', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.getTimeOptionsValue),
+	      expression: "getTimeOptionsValue"
+	    }],
+	    attrs: {
+	      "align": "right",
+	      "options": _vm.TimeOptions
+	    },
+	    domProps: {
+	      "value": (_vm.getTimeOptionsValue)
+	    },
 	    on: {
-	      "click": _vm.queryPosition
+	      "input": function($event) {
+	        _vm.getTimeOptionsValue = $event
+	      }
 	    }
-	  }, ["确定"])])]), " ", " ", (_vm.showNoData) ? _vm._h('div', {
+	  })]), " ", " ", _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isShowPrice),
+	      expression: "isShowPrice"
+	    }],
+	    staticClass: "set-time"
+	  }, [_vm._h('mt-checklist', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.getTimeOptionsValue),
+	      expression: "getTimeOptionsValue"
+	    }],
+	    attrs: {
+	      "align": "right",
+	      "options": _vm.TimeOptions
+	    },
+	    domProps: {
+	      "value": (_vm.getTimeOptionsValue)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.getTimeOptionsValue = $event
+	      }
+	    }
+	  })])]), " ", " ", (_vm.showNoData) ? _vm._h('div', {
 	    staticClass: "no-data"
 	  }, [_vm._h('p', ["没有更多数据..."])]) : _vm._e()])])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "filter"
-	  }, [_vm._h('span', ["刷选"])])
-	}]}
+	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {
@@ -51493,6 +51652,124 @@
 	     require("vue-hot-reload-api").rerender("data-v-1cc4d27f", module.exports)
 	  }
 	}
+
+/***/ },
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAzNJREFUaAXtmk+oDVEcx99VihCS0stGio2NlJToeS9SpPxbvbJULCxsnrJSxMJGyUt2r5SkRCIW/peykIWFkmz8KRIvf+Nxfb5Pp+6b5s6cc+/MnJlz51ff7pk5v5n7/czvnLnnzr2NZrPZ10sxrZdgxVoDh17xusJ1hTu7Als47CH6ht6ic2gR8h6NHD6WRqA6EUP2mn1r0JuYvsJ2ZT2HD+E8DlZAi9FJNXxGlhUW7PEUmJ/0z0ETKXm5dWdV4QM4TIMVxAw0Ww1fkQXwPsyfsgT4SN5ny9xc0roFFuwZB2dnHXJzSe1mDrvC3oFgM/qVC4nlSTutcCewW33D6pp0UuG9HOcyNB+TP4S+Iu/hCjyM4zFkOzIEuwmNo1KErXGZrTysIGyBg4C1BQ4GVsBpc9gV9innHEClmbN4mRJJwNvIvIxsh/0zcgfRB1TaaAcj2EuoXX8UqBKwMh0HZGCnR6nabFcGNg44aFgBt85hV9jfHH8YlXrO4u89uo8mV3oGWIv6q8h2GJNaqfiE2/3ogoCX0XiCZqGQ4y9wG3XT0kO30GFVSLEeUYWf01iuPT0QE6JWqXslmgK+1yu0cD7QkF5CQzeteYGD69HwelX4FdqBfqBQ4x1g29Ej8zks0EF0Dc3UhkVo4XEQ6SeUMocWRnryIr9TVlradoV+yTEDqOzQWPwfGtKtcZsNPV20Hd5Lyb2L9LtRJSIKLNNBQ8cBG+idNCbHvXakhKl0f0qe9+52wDJ2A+1CLtA3yV+IShtJwDKtb1Au0CvI15SwhW6QW2ikActMntCF/yvOBjhv6NJV2BhSpXcj2y8brsPbvE+ur7YVNiau0NiDXKB185trTuD71RVYfs8jF+hV5N9CpYBuXUvjySmGyR5DthdN69kN6DvyFrZm4wy6Vno1Jzkad6Ii93VTYePTpdJ6ergAFf5xZMx2U2FzDlVaj0BtYj5JXudyFsAC1V8gbKA1f7/oAF+RFbD8j6I06Ivk/FGyr8hiDke96x8+p1H0Yr5g31rk9aeZPIBh6luHRtBKNI6uo2NINy2vkRewV6ikN48Ou6TcIPpq4CDKmABRVzjh4gTR9Q8tuseIX8JTHQAAAABJRU5ErkJggg=="
+
+/***/ },
+/* 320 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAqJJREFUaAXtWr9LXEEQ9iQRQxKI+CdoigTbpIkEIoJCsPNPsLnOIhBUCFoFK9NdY5EqqUTB0sZCQUijjYXYiI2EgD8iRDRwfmuy5zyYmdv3lLvbvXmwvNlvvt0338wc7927K1Wr1Q7pqFQqw/B9whjA6JR4LYI7IXsYn8vl8ooUU0kSDLFDWLSG0epCOW3jEL3EOTQxU5GKdTpd7OzxgEX/gc+J7wfsb2TeiuYoghr5H1i/FKAmmK7ZRYt8oYC30frebMoZcd1cF3E8g+EFi7FoLS0uitkRWuGaRmTyISbva4BubMD9S6c01ptbMMJ7jLEcGOY78NYDuQ2htV1Lt53gIi19it7rCey/80Bew2i5BeM24B7hTnyEzb4t+ThCz9bSQqYGUcmvgq+pMOmw1yGBhLZ0HzZzI/qj7VraBEffs3UEWIXrJCh6d9EKuyctP74rWRgjvGmFN094bxXeJuG5658pXNYVelvKLMbTFn3Susw4sxP3aOm5f7KuzOyC8H5nPNnJX8JzHvkNZHZdbVa0wrUNYjNMcGwVyxuvVThvxmLjW4Vjq1jeeAvdh/Ed1L309keXN5jzE2Ce+4jxe6ib8J56kDm7eP1+zl1iOCpUSDB2PFZ3vXWu3pqq9RFeN+odb0AIvTa7l32G2bQkBGoVvopYpxi7JngrYsFi7JrgGQg+jFD0T8T8QYpb/MuDW4DbTy9OExgv3PyOx0usfyXssQN8W/DlgfdBXsTX1yNpkSpYWkRx8l6Ywpw9CXCBcwCbw5gVfCrsfxBXScSptTShpWOa4HRqySuxCvN5SQe1CqdTS16JVZjPSzqoVTidWvJKrMJ8XtJBrcLp1JJXYhXm85IOahVOp5a8Eqswn5d00KI/phXJgPuL0YGw8ETA7x2+Bk8bYtxmhEPaAAAAAElFTkSuQmCC"
+
+/***/ },
+/* 321 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAA3hJREFUaAXtm1tvDGEYxy298A0krnwGN3vpO5AIcYM2rEPQuNA43IiUxI04VkhQQlskgiBVNwi7hETqfEGzqiFOcYoSrP9/Y5rdyXTmmXfedw7v7JP8d96deZ/Db9/NzDyzbaFWq03Jk03NEyxZW8C2r3hrhW1f4bZKpeIwzsFgMTQbmgFNh7Js4yj+LXQfOlIsFq8TplAul6dhewhawh0W22Gwldrwsg6yHZbr2AEN86TVznc5saUEnpkTWGLOIvC7HAGPEXgoR8BDBN4D5aGD+APO/QR+DB2EbLceXIufEpjWBY3VR3a+jAJrI9Ec4M8Yr+IOS20FVvcL2Rxgjs9BZzmwzPoAe9FhagTmvtXQJ+egBduPYFjTyOEGfoOD6xsnZHzcidVtus9wA5PvKHSNg4zbIGB73QxewLwmL4N+uCdn6P131Lrcq14vYM57AW3xcsjIvs1Y3RGvWicD5txd0D0vp5Tvu4P6ePfoaX7AvBVj6/jb0zOdO1lrO1aXtXuaHzAdHkA7PT3TubMbsA/9SgsCpu9W6LlfkJQce4I6uoNqkQDzYRgfj6TZeGXpwOr+DCpSAswYN6CeoGAJHt8H2FuS/FJgxtoAvZYEjXnOK+Srd0KSvGGA2W2slASNeU4Jq/tVmjMMMGOehwakwWOYdwqwl8LkCQvM2Ow+2IUkbR9QwNqwRagA8+eLNHRUnaijqROSwKsAM+4xKMmnnVeQ/zgLCWuqwEl2VJN2QhJ4VWDGfgltkiTRPIeXoKpqzCjAzLkbuquaXMGvDJ+9Cn4TLlGB4+yofqFq3uL+naheYRAVmCmHoR0KucO6bIfDo7BO7vk6gBlzG/TMHVzje/46QuDIpguYXQq/bjx767Z6J4SggZ2QJLEuYOa6CZnoqHiSus0EOkwnMOvpgkZ1FPY/RhVbcSckyasbWHdHxUet3yQg0jm6gZn3AtQnLcBn3gkc4y2kVjMBzAKjdlTvEYPNgXYzBcwuJkrBbPsIrd1MAbPQXmhQoeLL8Dmp4CdyMQnMAnjSYXcjNZ6gStLJKvNMA4+gqDAdFR8UVlVApD6mgVkHOyr+dUGQncGEA0GToh6PA5i3hguh0z7F9uPYIsjErWlT2jiAmXAcmg/Ng/hoiA8BqavQXGgBxPbPuBVa/9Vi/DNONkFcX+lkKRuyt4AbPgwrh7lb4X8tkJ7eQOhmHQAAAABJRU5ErkJggg=="
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _from = __webpack_require__(323);
+
+	var _from2 = _interopRequireDefault(_from);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	      arr2[i] = arr[i];
+	    }
+
+	    return arr2;
+	  } else {
+	    return (0, _from2.default)(arr);
+	  }
+	};
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(324), __esModule: true };
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(56);
+	__webpack_require__(325);
+	module.exports = __webpack_require__(16).Array.from;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var ctx            = __webpack_require__(17)
+	  , $export        = __webpack_require__(14)
+	  , toObject       = __webpack_require__(50)
+	  , call           = __webpack_require__(77)
+	  , isArrayIter    = __webpack_require__(78)
+	  , toLength       = __webpack_require__(41)
+	  , createProperty = __webpack_require__(326)
+	  , getIterFn      = __webpack_require__(79);
+
+	$export($export.S + $export.F * !__webpack_require__(86)(function(iter){ Array.from(iter); }), 'Array', {
+	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
+	    var O       = toObject(arrayLike)
+	      , C       = typeof this == 'function' ? this : Array
+	      , aLen    = arguments.length
+	      , mapfn   = aLen > 1 ? arguments[1] : undefined
+	      , mapping = mapfn !== undefined
+	      , index   = 0
+	      , iterFn  = getIterFn(O)
+	      , length, result, step, iterator;
+	    if(mapping)mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+	    // if object isn't iterable or it's array with default iterator - use simple case
+	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
+	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
+	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+	      }
+	    } else {
+	      length = toLength(O.length);
+	      for(result = new C(length); length > index; index++){
+	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+	      }
+	    }
+	    result.length = index;
+	    return result;
+	  }
+	});
+
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $defineProperty = __webpack_require__(20)
+	  , createDesc      = __webpack_require__(28);
+
+	module.exports = function(object, index, value){
+	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
+	  else object[index] = value;
+	};
 
 /***/ }
 /******/ ]);

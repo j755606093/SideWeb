@@ -5,7 +5,8 @@
 		</div>
 		<div class="other" v-else>
 			<div @click="GoBack" class="left">
-				<i class="fa fa-angle-left"></i>
+				<img src="../picture/back_icon.png">
+				<!-- <i class="fa fa-angle-left"></i> -->
 			</div>
 			<div class="center">
 				<span>{{getHeaderTitle}}</span>
@@ -44,15 +45,23 @@ header{
 			position:absolute;
 			top:0;
 			left:0;
-			width:50px;
-			i{
-				font-size:3rem;
+			width:70px;
+			img{
+				width:19px;
+				height:19px;
 				line-height:50px;
+				position:absolute;
+				left:25px;
+				top:15.5px;
 			}
+			// i{
+			// 	font-size:3rem;
+			// 	line-height:50px;
+			// }
 		}
 		.center{
 			line-height:50px;
-			font-size:20px;
+			font-size:18px;
 		}
 	}
 }

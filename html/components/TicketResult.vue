@@ -1,64 +1,57 @@
-<template type="x/template" id="ticketresult">
+<template  id="ticketresult">
 	<div class="result">
-		<div class="filter"><span>刷选</span></div>
+		<div class="filter" @click="showFilter"><span>筛选</span></div>
 		<!-- 时间显示 -->
 		<div class="date-control">
 			<span @click="gobackdate">前一天</span>
 			<span v-text="startDate.date+' '+startDate.week"></span>
 			<span @click="gofrontdate">后一天</span>
 		</div>
-		<!-- 列表头部 -->
-		<!-- <div class="data-set">
-			<span :class="{'set':true,active:isShowTime}" @click="setShowTime"><i class="fa fa-glass"></i>时段</span>
-			<span :class="{'set':true,active:isShowPosition}" @click="setShowPosition"><i class="fa fa-bus"></i>路线信息</span>
-			<span :class="{'set':true,active:isShowList}" @click="sortTime"><i :class="['fa',arrow]"></i>票价</span>
-		</div> -->
+		
 		<div class="result-list">
 			<!-- 列表数据 -->
 			<transition-group name="list-complete" tag="div" class="lists" v-show="isShowList">
 				<!-- 循环显示列表 -->
-				<div :id="'result'+index" class="list list-complete-item" @click="GoToPay(index)" v-for="(item,index) in getResultList" v-bind:key="index">
-					<span class="data" v-text="item.StartTime.slice(0,item.StartTime.length-3)"></span>
-					<div class="car-position">
-						<p>
-							<span class="brand">上</span>{{item.StartPoint}}
-						</p>
-						<!-- 点击查看路线 -->
-						<p class="type" v-on:click.stop="showCompanyDeatil(index,$event)">
-							<i class="fa fa-location-arrow"></i>途径点
-							<i class="fa fa-caret-down"></i>
-						</p>
-						<div class="show-router" v-show="routerDetailShow===index">
-							<div class="router">
-								<!-- <p>始点:</p> -->
-								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.SPoint" v-bind:key="i">
-									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
-									<ul>
-										<li v-for="content in list.Content" v-bind:key="j" :class="{active:content.NodeType===1}">{{content.Point+" "+content.BoardTime}}</li>
-									</ul>
+				<div v-for="(item,index) in getResultList" v-bind:key="index">
+					<div :id="'result'+index" class="list list-complete-item" @click="GoToPay(index)" >
+						<!-- <img class="bg-result" src="../picture/bg_result2.png"> -->
+						<div class="left">
+							<span v-text="item.StartTime.slice(0,item.StartTime.length-3)">08:23</span>
+							<span v-text="item.CoName">东方快车</span>
+							<span>{{item.Route}}</span>
+						</div>
+						<div class="center">
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+						<div class="right">
+							<div class="top">
+								<div class="name">
+									<p>{{item.StartPoint}}</p>
+									<p>{{item.EndPoint}}</p>
 								</div>
-								
-								<!-- <p>终点:</p> -->
-								<div :class="{'bracket':list.Content.length>2,'bracket-small':list.Content.length<=2}" v-for="list in item.EPoint" v-bind:key="i">
-									<span :class="{'cityname':list.Content.length>2,'cityname-small':list.Content.length<=2}">{{list.CityName}}</span>
-									<ul>
-										<li v-for="content in list.Content" v-bind:key="j" :class="{active:content.NodeType===2}" >{{content.Point}}</li>
-									</ul>
+								<div class="info">
+									<p v-text="'¥'+item.Price"></p>
+									<p v-text="item.TicketNum+'张余票'">123张余票</p>
 								</div>
-								
+							</div>
+							<div class="bottom" v-on:click.stop="showCompanyDeatil(index,$event)">
+								<img src="../picture/station.png">
+								<p>经过车站路线</p>
+								<img src="../picture/drop_down.png">
 							</div>
 						</div>
-						<p>
-							<span class="brand">下</span>{{item.EndPoint}}
-						</p>
-						<p class="router-type">
-						<!-- <i class="fa fa-arrow-h"></i> -->
-						{{item.Route}}</p>
 					</div>
-					<div class="ticket-type">
-						<p class="money" v-text="item.Price+'元'"></p>
-						<p class="number" v-text="item.CoName"></p>
-						<p class="type" v-text="item.TicketNum+'张余票'"></p>
+					<div class="router animated bounceIn" v-show="routerDetailShow===index">
+						<div :class="{active:list.NodeType===2||list.NodeType===1,other:list.NodeType===0,last:list.NodeType===2}" v-for="(list,index) in item.Stations">
+							<span :class="{gray:list.NodeType===0,active:list.NodeType===2||list.NodeType===1}">{{list.Point.length>3?list.Point.slice(0,3)+'..':list.Point}}</span>
+						</div>
 					</div>
 				</div>
 			</transition-group>
@@ -70,25 +63,68 @@
 			  <p class="popup-header">{{showCompanyInfo.CoName}}</p>
 
 			</mt-popup> -->
-			<!-- 刷选列表数据 -->
-			<div class="change-set" v-show="!isShowList">
+			<mt-popup
+			  v-model="popupVisible"
+			  class="popup-visible"
+			  position="bottom">
+			  <div class="popup-header">
+			  	<span>取消</span>
+			  	<span>清空已选</span>
+			  	<span>确定</span>
+			  </div>
+			  <!-- 列表头部 -->
+				<div class="data-set">
+					<div>
+						<p :class="{active:isShowTime}" @click="setShowTime">时段</p>
+						<span :class="{'set':true,active:isShowTime}"></span>
+					</div>
+					<div>
+						<p :class="{active:isShowConame}" @click="setShowName">运营信息</p>
+						<span :class="{'set':true,active:isShowConame}"></span>
+					</div>
+					<div>
+						<p :class="{active:isShowPosition}" @click="setShowPosition">路线信息</p>
+						<span :class="{'set':true,active:isShowPosition}"></span>
+					</div>
+					<div>
+						<p :class="{active:isShowPrice}" @click="setShowPrice">票价高低</p>
+						<span :class="{'set':true,active:isShowPrice}"></span>
+					</div>
+				</div>
 				<!-- 时间段 -->
 				<div class="set-time" v-show="isShowTime">
 					<mt-checklist
+						align="right"
 					  v-model="getTimeOptionsValue"
 					  :options="TimeOptions">
 					</mt-checklist>
-					<button class="btn" @click="queryTime">确定</button>
 				</div>
 				<!-- 运输公司 -->
-				<div class="set-position" v-show="isShowPosition">
+				<div class="set-position" v-show="isShowConame">
 					<mt-checklist
+						align="right"
 					  v-model="getPositionOptionsValue"
 					  :options="PositionOptions">
 					</mt-checklist>
-					<button class="btn" @click="queryPosition">确定</button>
 				</div>
-			</div>
+				<!-- 路线信息 -->
+				<div class="set-time" v-show="isShowPosition">
+					<mt-checklist
+						align="right"
+					  v-model="getTimeOptionsValue"
+					  :options="TimeOptions">
+					</mt-checklist>
+				</div>
+				<!-- 票价高低 -->
+				<div class="set-time" v-show="isShowPrice">
+					<mt-checklist
+						align="right"
+					  v-model="getTimeOptionsValue"
+					  :options="TimeOptions">
+					</mt-checklist>
+				</div>
+			</mt-popup>
+			
 			<!-- 没有更多数据 -->
 			<div class="no-data" v-if="showNoData">
 				<p>没有更多数据...</p>
@@ -123,14 +159,17 @@ export default {
 		return {
 			startCity:"",
 			endCity:"",
-			getResultList:this.$store.getters.getResultList,//列表备份
+			getResultList:[],//列表备份
+			popupVisible:false,
 			isShowList:true,
+			isShowPrice:true,//价格
 			isShowTime:false,
+			isShowConame:false,
 			isShowPosition:false,
 			showNoData:false,
 			routerDetailShow:false,//显示公司信息
 			showCompanyInfo:{},//显示的公司信息
-			arrow:"fa-caret-down",//默认票价排序图标
+			arrow:0,//默认票价排序
 			TimeOptions:[
 				{
 			    label: '不限时间段',
@@ -138,22 +177,22 @@ export default {
 			    disabled: false
 			  },
 			  {
-			    label: '早上(00:00-06:00)',
+			    label: '早上 00:00-06:00',
 			    value: 6,
 			    disabled: false
 			  },
 			  {
-			    label: '上午(06:00-12:00)',
+			    label: '上午 06:00-12:00',
 			    value: 12,
 			    disabled: false
 			  },
 			  {
-			    label: '下午(12:00-18:00)',
+			    label: '下午 12:00-18:00',
 			    value: 18,
 			    disabled: false
 			  },
 			  {
-			    label: '晚上(18:00-24:00)',
+			    label: '晚上 18:00-24:00',
 			    value: 24,
 			    disabled: false
 			  },
@@ -182,13 +221,15 @@ export default {
 	created(){
 		if(this.$store.getters.getIsFirst){
 			//数据为空,一般是直接进入这个页面才会这样
-			this.$router.replace({path:"/home/ticketbody"})
+			this.$router.replace({path:"/home/ticketbody"});
 		}
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
 		// console.log(this.getResultList)
 		//设置头部标题
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
+
+		this.getResultList = [...this.$store.getters.getResultList];
 		
 		this.refresh();
 	},
@@ -274,19 +315,32 @@ export default {
 			//隐藏显示列表
 			this.isShowList = !this.isShowList;
 		},
+		showFilter(){
+			this.popupVisible = !this.popupVisible;
+		},
 		HideAll(){
-			this.isShowList = false;//隐藏列表
+			// this.isShowList = false;//隐藏列表
 			//隐藏其他的tab
 			this.isShowTime = false;
 			this.isShowPosition = false;
+			this.isShowPrice = false;
+			this.isShowConame  = false;
 		},
 		setShowTime(){
 			this.HideAll();
 			this.isShowTime = true;
 		},
+		setShowName(){
+			this.HideAll();
+			this.isShowConame  = true;
+		},
 		setShowPosition(){
 			this.HideAll();
 			this.isShowPosition = true;
+		},
+		setShowPrice(){
+			this.HideAll();
+			this.isShowPrice = true;
 		},
 		refresh(){
 			if(this.$store.getters.getResultList.length===0){
@@ -303,7 +357,7 @@ export default {
 				}];//清空先
 				// 准备运输公司信息
 				let filter = [];
-				this.getResultList.map((item)=>{
+				this.getResultList.map((item,index)=>{
 					if(filter.indexOf(item.CoName)<=-1){
 						//不重复
 						this.PositionOptions.push({
@@ -313,6 +367,15 @@ export default {
 						});
 						filter.push(item.CoName);
 					}
+					// let stations = [];
+					// for(let i=0;i<item.Stations.length;i++){
+					// 	let a = item.Stations[i];
+					// 	if(a.Point.length>2){
+					// 		a.Point = a.Point.slice(0,2);
+					// 	}
+					// 	stations.push(a);
+					// }
+					// this.getResultList[index].Stations = stations;
 				})
 			}
 		},
@@ -391,17 +454,17 @@ export default {
 		},
 		sortTime(){
 			let data = Utils.formatJsonData(this.getResultList);
-			if(this.arrow==="fa-caret-down"){
+			if(this.arrow===0){
 				data.sort((a,b)=>{
 					return b.Price-a.Price;
 				});
-				this.arrow = "fa-caret-up";
+				this.arrow = 1;
 			}
 			else{
 				data.sort((a,b)=>{
 					return a.Price-b.Price;
 				});
-				this.arrow = "fa-caret-down";
+				this.arrow = 0;
 			}
 
 			this.getResultList = data;
