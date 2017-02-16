@@ -487,7 +487,7 @@ export default {
 			this.TimeOptionsValue=["不限"];//结果
 			this.PositionOptionsValue=["不限"];//结果
 			this.RouterOptionsValue=["不限"];//结果
-			this.PriceOptionsValue=['不限'];//结果
+			this.PriceOptionsValue='不限';//结果
 		},
 		queryTime(){
 			//查找特定时间的车
