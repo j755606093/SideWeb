@@ -3,7 +3,7 @@
 		<div class="header">	
 			<img src="../picture/car_bg.png">
 			<div class="header-title">
-				<div><img src="../picture/back_icon.png"></div>
+				<div @click="goback"><img src="../picture/back_icon.png"></div>
 				<span v-text="startDate.date+' '+startDate.week"></span>
 			</div>
 			<div class="header-router">
@@ -69,128 +69,55 @@
 				<span>余票{{busInfo.TicketNum}}</span>
 			</div> -->
 		</div>
-		<!-- 乘客信息 -->
+		<div class="passenger-info">
+			<!-- 选择的乘客 -->
+			<div class="passenger-selected">
+				<div v-if="item.active" class="line" v-for="(item,index) in AllFare">
+					<div @click="setFare(index)"><img src="../picture/delete.png"></div>
+					<span class="center">{{item.Name}}</span>
+					<span class="right">{{item.Mobile}}</span>
+				</div>
+			</div>
+			<!-- 乘客信息 -->
+			<div class="write-info">
+				<div class="line">
+					<span>添加 / 修改乘车人</span>
+					<div @click="showPage(1)" class="img"><img src="../picture/add_passenger.png"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 手机号 -->
 		<div class="write-info">
-			<span>添加 / 修改乘车人</span>
-			<div class="img"><img src="../picture/add_passenger.png"></div>
-		</div>
-		<!-- 车站信息 -->
-		<!-- <div class="station-info">
-			<span>乘车点:</span>
-			<span class="center nowrap">{{selectStation}}</span>
-			<span @click="showStation" style="color:#0074D9;text-align:right;">其它</span>
-		</div> -->
-		<!-- 乘客信息 -->
-		<div class="people-info">
-			<div class="info-head">
-				<span>乘客信息</span>
-				<!-- <span>还剩余票{{busInfo.TicketNum}}</span> -->
-			</div>
-			<!-- 列出乘客信息 -->
-			<div class="info-list" v-if="AllFare.length!==0">
-				<div class="list" v-for="(item,index) in AllFare">
-					<div class="check" @click="setFare(index)">
-						<span :class="[item.active?'active':'']"><i class="fa fa-check"></i></span>
-					</div>
-					<div class="list-body">
-						<div class="list-top">
-							<span class="name" @click="setFare(index)" v-text="item.Name"></span>
-							<span class="type">{{item.Mobile}}</span>
-							<template v-if="item.Mobile">
-								<span class="get-ticket" v-if="item.isGetTicket">联系人</span>
-								<span class="set-ticket" @click="setGetTicketMan(index)" v-else>设为联系人</span>
-							</template>
-						</div>
-						<!-- <div class="list-bottom">
-							<p>身份证<span v-text="item.code"></span></p>
-						</div> -->
-					</div>
-					<!-- <span>{{item.Mobile}}</span> -->
-					<span @click="trashMan(index)"><i class="fa fa-trash"></i></span>
-				</div>
-			</div>
-			<!-- 添加乘客 -->
-			<div class="info-man">
-				<div class="info-man-name info">
-					<span>乘客姓名</span>
-					<input type="text" placeholder="请填写真实姓名" v-model="fareName">
-				</div>
-				<div class="info-man-card info">
-					<span>手机号</span>
-					<input type="text" placeholder="选填(可用于联系)" v-model="certificate">
-					<button @click="append"><i class="fa fa-plus-circle"></i>添加</button>
-				</div>
-			</div>
-			<!-- <div class="click-append" @click="append">
-				<i class="fa fa-plus-circle"></i>
-				<button>确定添加</button>
-			</div> -->
-		</div>
-
-		<!-- 取票人信息 -->
-		<div class="people-info">
-			<div class="info-head">
-				<span>联系信息</span>
-				<!-- <span>一张订单只需填写一人</span> -->
-			</div>
-			<div class="contact-info">
-				<div class="info">
-					<span>联系人手机</span>
-					<input type="text" placeholder="必填(用于联系)" v-model="payInfoData.contactPhone">
-				</div>
+			<div class="line">
+				<input type="text" v-model="payInfoData.contactPhone" name="phone" placeholder="手机号(用于联系)">
+				<div class="img"><img src="../picture/phone.png"></div>
 			</div>
 		</div>
-		<!-- 其他信息 -->
-		<div class="people-info">
-			<div class="contact-info">
-				<div class="info-head">
-					<span>其它信息</span>
-					<!-- <span>一张订单只需填写一人</span> -->
-				</div>
-				<div class="info">
-					<span>优惠券</span>
-					<span @click="showDiscountWindow" class="center">你有{{optionsDiscount.length}}个优惠券</span>
-					<span class="last" v-show="selectDiscount.length!==0">{{`已选${selectDiscount.length}个`}}</span>
-				</div>
-				<div class="info discount-code">
-					<span class="first">优惠码</span>
-					<input class="center" type="text" placeholder="请输入您的优惠码" v-model="payInfoData.discountcode">
-					<!-- <span class="center">有优惠码?</span> -->
-					<div class="last">
-						<button class="right" @click="checkCodeStatus">验证</button>
-						<!-- <span @click="GetDiscount" class="right"><i class="fa fa-angle-down"></i></span> -->
-					</div>
-				</div>
-				<div class="info show-discount animated fadeInDown" v-if="havediscountcode">
-					<span>优惠码信息</span>
-					<span class="center">{{discountCode.Name}}</span>
-					<span class="last" v-if="isUseCode" @click="useDiscountCode">已使用</span>
-					<span class="last" v-else @click="useDiscountCode">立即使用</span>
-				</div>
+		<!-- 上车点 -->
+		<div class="write-info">
+			<div class="line">
+				<span>乘车点选择</span>
+				<div @click="showPage(2)" class="img"><img src="../picture/green_station.png"></div>
 			</div>
 		</div>
-		<!-- <div class="other-info">
-			<div class="info">
-				<span class="first">汽车乘意险</span>
-				<span class="center">15元/份</span>
-				<div class="last">
-					<span @click="GetInSure" :class="[isInsure?'active':'']"><i class="fa fa-check"></i></span>
-				</div>
+		<!-- 优惠券 -->
+		<div class="write-info">
+			<div class="line">
+				<span v-if="optionsDiscount.length===0">没有可用优惠券</span>
+				<span v-else>{{'优惠券('+optionsDiscount.length+'张可用'}}</span>
+				<span class="info">未使用</span>
+				<div @click="showPage(3)" class="img">
+					<img src="../picture/coupon.png"></div>
 			</div>
-		</div> -->
-		<!-- 提示信息 -->
-		<div class="root-tip-info">
-			<!-- <div class="text">
-				<p>友情提示:</p>
-				<p>*自助取票请提前到出发车站取票。</p>
-				<p>*乘客信息需为实际乘车人，否则影响保险保障的权益哦。</p>
-			</div> -->
 		</div>
-		<!-- <div class="pay-people">
-			<input placeholder="输入code..." class="input" type="text" v-model="Code">
-			<button class="btn" @click="postCode">提交</button>
-		</div> -->
-
+		<!-- 备注 -->
+		<div class="write-info">
+			<div class="line">
+				<input type="text" v-model="payInfoData.remark" name="remark" placeholder="旅程备注">
+				<div class="img"><img src="../picture/edit.png"></div>
+			</div>
+		</div>
 		<!-- 底部提交订单 -->
 		<div class="submit-box">
 			<div class="order-info">
@@ -205,151 +132,46 @@
 			</div>
 		</div>
 
-		<!-- 乘车点 -->
+		<!-- 选择乘客 -->
 		<mt-popup
-		  v-model="stationPopupVisible"
-		  class="station-popup-visible">
-		  <slot>
-		  	<div class="station">
-		  		<mt-radio
-					  title="乘车点选择"
-					  v-model="selectStation"
-					  :options="options">
-					</mt-radio>
-					<button @click="checkSelectStation" class="btn">确定</button>
-		  	</div>
-		  </slot>
-		</mt-popup>
-		<!-- 优惠券选择 -->
-		<mt-popup
-		  v-model="discountPopupVisible"
-		  class="station-popup-visible">
-		  <slot>
-		  	<div class="station">
-		  		<mt-checklist
-					  title="优惠券选择"
-					  v-model="selectDiscount"
-					  :options="optionsDiscount">
-					</mt-checklist>
-					<button @click="checkSelectDiscount" class="btn">确定</button>
-		  	</div>
-		  </slot>
-		</mt-popup>
-		<!-- 查看取票...信息 -->
-		<mt-popup
-		  v-model="tipPopupVisible"
-		  position="top"
-		  class="tip-popup-visible">
-		  <slot>
-		  	<div class="body">
-		  		<h3>声明:</h3>
-			  	<p>1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。</p>
-			  	<p>2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。</p>
-			  	<p>3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。</p>
-			  	<h3>取票说明</h3>
-			  	<p>提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票</p>
-			  	<h3>退票、改签说明：</h3>
-			  	<p>2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。</p>
-			  	<p>3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
-			  	<p>3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
-			  	<p>5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理。</p>
-			  	<button @click="backTip">返回</button>
-		  	</div>
-		  </slot>
-		</mt-popup>
-		<!-- 消息提示信息 -->
-		<mt-popup
-		  v-model="popupVisible"
-		  position="top"
-		  class="message-popup-visible">
-		  <slot>
-		  	<p class="popup" v-text="popupText"></p>
-		  </slot>
-		</mt-popup>
-		<!-- 支付信息 -->
-		<mt-popup
-			v-if="payInfoPopupVisible"
-		  v-model="payInfoPopupVisible"
+		  v-model="passengerPopupVisible"
 		  position="right"
-		  class="payinfo-popup-visible">
+		  class="passenger-page">
 		  <slot>
-		  	<div class="pay-body">
-		  		<div class="info-body">
-		  			<div class="status">
-		  				<i class="fa fa-clock-o"></i>
-		  				<p>订单提交成功!</p>
-		  				<p class="time">请在半小时之内支付订单 {{countdownTime}}</p>
-		  			</div>
+		  	<div class="passenger">
+		  		<div class="page-header">
+		  			<div @click="showPage(1,true)"><img src="../picture/back_icon.png"></div>
+		  			<span class="center">选择乘车人({{AllFare.length}})</span>
+		  			<span @click="showPage(1,true)" class="right">确定</span>
 		  		</div>
-		  		<div class="ticket-body">
-		  			<div class="pay-info">
-		  				<div class="address-info">
-								<div class="start box">
-									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
-									<p class="center" v-text="serverPayInfo.LineInfo.StartPoint"></p>
-									<p class="last" v-text="serverPayInfo.LineInfo.StartCity"></p>
-								</div>
-								<div class="center box">
-									<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
-									<p class="arrow-message" v-text="serverPayInfo.LineInfo.Route"></p>
-									<p class="arrow"></p>
-								</div>
-								<div class="end box">
-									<p v-text="serverPayInfo.LineInfo.EndPoint"></p>
-									<p>{{serverPayInfo.LineInfo.AcrossCity}}</p>
-								</div>
+		  		<div class="passenger-body">
+		  			<!-- 点击新增乘客 -->
+						<div class="write-info">
+							<div class="line">
+								<span>添加新乘车人</span>
+								<div @click="showAddPassenger" class="img"><img src="../picture/add_passenger.png"></div>
 							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘车日期:</span>
-									<span class="name">{{serverPayInfo.LineInfo.Date+" "+this.$store.getters.getInfo.startDate.week+" "+serverPayInfo.LineInfo.BoardTime}}</span>
-								</p>
+						</div>
+		  			<!-- 添加乘客 -->
+		  			<div v-show="showaddpassenger" class="add-passenger animated zoomIn">
+							<div class="line">
+								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘车地址:</span>
-									<!-- <span class="name"></span> -->
-									{{selectStation}}
-								</p>
+							<div class="line">
+								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
 							</div>
-							<div class="info-box passager-info">
-								<p>
-									<span class="type">乘客:</span>
-									<span class="name">{{serverPayInfo.UsrInfo.Name.join(',')}}</span>
-								</p>
-							</div>
-							<!-- <div class="info-box get-ticket">
-								<p>
-									<span class="type">联系人:</span>
-									<span class="name">{{serverPayInfo.UsrInfo.TktHolder}}</span>
-								</p>
-							</div> -->
-							<div class="info-box get-ticket">
-								<p>
-									<span class="type">联系方式:</span>
-									<span class="name">{{serverPayInfo.UsrInfo.Mobile}}</span>
-								</p>
-							</div>
-		  			</div>
-		  			<!-- <button @click="outpay">点击退出</button> -->
+						</div>
 		  		</div>
-		  		<div class="pay-ticket-info">
-		  			<div class="pay-ticket-info-header">
-		  				<p>订单信息</p>
+		  		<p class="refresh">有新乘客没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p>
+		  		<div class="passenger-select">
+		  			<div class="line" v-for="(item,index) in AllFare">
+		  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
+		  				<div class="center">
+		  					<p>{{item.Name}}</p>
+		  					<p>{{item.Mobile}}</p>
+		  				</div>
+		  				<div class="right"><img src="../picture/edit.png"></div>
 		  			</div>
-		  			<div class="pay-ticket-info-body">
-		  				<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
-		  				<p>下单日期:{{serverPayInfo.OrderInfo.OrderTime}}</p>
-		  				<p class="all">总额: <span style="color:red">{{'¥'+serverPayInfo.OrderInfo.TotalPrice}}</span></p>
-		  				<span style="clear:both;"></span>
-		  			</div>
-		  		</div>
-		  		<!-- 立即支付 -->
-		  		<div class="now-pay">
-		  			<button @click="payMoney">立即支付</button>
-		  		</div>
-		  		<div class="out-order" style="margin-top:20px;margin-bottom:20px;">
-		  			<a @click="cancelOrder">取消订单</a>
 		  		</div>
 		  	</div>
 		  </slot>
@@ -361,7 +183,7 @@
 import { mapGetters } from 'vuex'
 import Utils from "../Utils/utils";
 const _ = require("underscore");
-import { Indicator,Toast,MessageBox } from 'mint-ui';
+import { Indicator,Toast } from 'mint-ui';
 
 export default {
 	data () {
@@ -407,6 +229,7 @@ export default {
 				payMoney:0,//总共支付的钱
 				contactPhone:"",//取票人手机号
 				discountcode:"",//优惠码
+				remark:"",//备注
 			},//订单信息
 
 			TicketPay:null,//服务器产生的订单信息
@@ -420,6 +243,9 @@ export default {
 				LineInfo:{},
 				PayInfo:{},
 			},//服务器返回的订单信息
+
+			passengerPopupVisible:false,//选择乘客
+			showaddpassenger:false,//默认不显示添加乘客信息
 		}
 	},
 	beforeCreate(){
@@ -582,6 +408,9 @@ export default {
 		 */
 		formatData(data){
 			return JSON.parse(JSON.stringify(data));
+		},
+		goback(){
+			this.$router.go(-1);
 		},
 		// haveDiscountCode(){
 		// 	this.havediscountcode = !this.havediscountcode;
@@ -1064,11 +893,6 @@ export default {
 			this.stationPopupVisible = true;
 		},
 		showDiscountWindow(){
-			// 如果没有优惠券就不显示
-			if(this.optionsDiscount.length===0){
-				return;
-			}
-			
 			let money = this.payInfoData.payMoney;//总额
 			//这里禁用所有不可用的优惠券,防止用户选择
 			for(let i=0;i<this.optionsDiscount.length;i++){
@@ -1128,6 +952,26 @@ export default {
 					},1000);
 				})
 			});
+		},
+		showPage(index,close=false){
+			switch(index){
+				case 1:
+					// 选择乘客
+					this.passengerPopupVisible = close?false:true;
+					break;
+				case 2:
+					// 乘车点
+					this.stationPopupVisible = close?false:true;
+					break;
+				case 3:
+					// 优惠券
+					this.discountPopupVisible = close?false:true;
+					break;
+			}
+		},
+		/** 点击显示隐藏添加乘客 */
+		showAddPassenger(){
+			this.showaddpassenger = !this.showaddpassenger;
 		}
 	}
 }

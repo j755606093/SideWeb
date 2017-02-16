@@ -30946,8 +30946,9 @@
 				this.handleConfirm(this.$store.getters.getInfo.startDate.server);
 				this.startTime = this.formatNow(this.$store.getters.getInfo.startDate.server);
 			} else {
-				this.handleConfirm(new Date(this.nowDate.getTime() + 24 * 60 * 60 * 1000));
-				this.startTime = this.formatNow(new Date(this.nowDate.getTime() + 24 * 60 * 60 * 1000));
+				var number = Date.now() + 24 * 60 * 60 * 1000;
+				this.handleConfirm(new Date(number));
+				this.startTime = this.formatNow(new Date(number));
 			}
 			// 获取本地历史搜索数据
 			this.localStorage = this.getLocalStore().reverse();
@@ -33240,7 +33241,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #fff; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  padding: 0;\n  background-color: #fafafa; }\n\n.header {\n  width: 100%;\n  height: 125px;\n  position: relative; }\n  .header > img {\n    width: 100%;\n    height: 125px;\n    position: absolute;\n    top: 0;\n    left: 0; }\n  .header .header-title {\n    height: 50px;\n    position: relative; }\n    .header .header-title > div {\n      width: 50px;\n      height: 50px;\n      position: absolute;\n      top: 0;\n      left: 0; }\n    .header .header-title img {\n      width: 19px;\n      height: 19px;\n      line-height: 50px;\n      position: absolute;\n      left: 25px;\n      top: 15.5px; }\n    .header .header-title > span {\n      font-size: 18px;\n      color: #fff;\n      font-weight: 900;\n      height: 50px;\n      line-height: 50px;\n      float: right;\n      margin-right: 25px; }\n  .header .header-router {\n    width: 96%;\n    padding: 0 2%;\n    text-align: center; }\n    .header .header-router .router {\n      height: 60px;\n      margin: 0 -10px;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .header .header-router .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .header .header-router .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n        .header .header-router .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n      .header .header-router .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #c8c8c8; }\n      .header .header-router .router > div:last-child:after {\n        content: \"\";\n        width: 0;\n        height: 0; }\n      .header .header-router .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .header .header-router .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #fff;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .header .header-router .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #fff; }\n      .header .header-router .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #6cb9f1;\n        z-index: 1; }\n      .header .header-router .router span.gray {\n        color: #c8c8c8; }\n        .header .header-router .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #c8c8c8; }\n      .header .header-router .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #fff;\n        border-radius: 10px;\n        background-color: #fff; }\n        .header .header-router .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #fff;\n          z-index: 3; }\n        .header .header-router .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #b1d5f0;\n          z-index: 2; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.station-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 15px;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0 2%;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .station-info span {\n    height: 40px;\n    line-height: 40px;\n    font-size: 1.4rem; }\n  .station-info span.center {\n    -ms-flex: 0.6;\n        flex: 0.6; }\n  .station-info span:first-child {\n    -ms-flex: 0.2;\n        flex: 0.2;\n    color: #5e5e5e; }\n  .station-info span:last-child {\n    -ms-flex: 0.2;\n        flex: 0.2; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .show-discount span:first-child {\n    color: #AAAAAA; }\n  .contact-info .show-discount span.center {\n    width: 50%; }\n  .contact-info .show-discount span.last {\n    width: 20%;\n    color: #0074D9; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px;\n    border-top: 1px solid #dddddd; }\n    .contact-info .discount-code input,\n    .contact-info .discount-code button,\n    .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center,\n    .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input,\n    .other-info .discount-code button,\n    .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #5e5e5e;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 30px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.mint-msgbox-input input {\n  height: 40px;\n  line-height: 40px;\n  font-size: 18px; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  padding: 0;\n  background-color: #fafafa;\n  padding-bottom: 50px; }\n\n.header {\n  width: 100%;\n  height: 125px;\n  position: relative; }\n  .header > img {\n    width: 100%;\n    height: 125px;\n    position: absolute;\n    top: 0;\n    left: 0; }\n  .header .header-title {\n    height: 50px;\n    position: relative; }\n    .header .header-title > div {\n      width: 50px;\n      height: 50px;\n      position: absolute;\n      top: 0;\n      left: 0; }\n    .header .header-title img {\n      width: 19px;\n      height: 19px;\n      line-height: 50px;\n      position: absolute;\n      left: 25px;\n      top: 15.5px; }\n    .header .header-title > span {\n      font-size: 18px;\n      color: #fff;\n      font-weight: 900;\n      height: 50px;\n      line-height: 50px;\n      float: right;\n      margin-right: 25px; }\n  .header .header-router {\n    width: 96%;\n    padding: 0 2%;\n    text-align: center; }\n    .header .header-router .router {\n      height: 60px;\n      margin: 0 -10px;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .header .header-router .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .header .header-router .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n        .header .header-router .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n      .header .header-router .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #c8c8c8; }\n      .header .header-router .router > div:last-child:after {\n        content: \"\";\n        width: 0;\n        height: 0; }\n      .header .header-router .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .header .header-router .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #fff;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .header .header-router .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #fff; }\n      .header .header-router .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #6cb9f1;\n        z-index: 1; }\n      .header .header-router .router span.gray {\n        color: #c8c8c8; }\n        .header .header-router .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #c8c8c8; }\n      .header .header-router .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #fff;\n        border-radius: 10px;\n        background-color: #fff; }\n        .header .header-router .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #fff;\n          z-index: 3; }\n        .header .header-router .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #b1d5f0;\n          z-index: 2; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0 10px; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 20px;\n          height: 20px;\n          margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .center {\n        -ms-flex: 6;\n            flex: 6;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px; }\n      .passenger-info .passenger-selected > .line .right {\n        -ms-flex: 2;\n            flex: 2;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.page-header {\n  height: 50px;\n  position: relative;\n  text-align: center;\n  background-color: #2196F3;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: center;\n      justify-content: center; }\n  .page-header > div {\n    height: 50px;\n    width: 50px;\n    position: absolute;\n    left: 10px;\n    top: 0;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center; }\n  .page-header img {\n    width: 19px;\n    height: 19px;\n    line-height: 50px; }\n  .page-header span.right {\n    font-size: 14px;\n    color: #fff;\n    height: 50px;\n    line-height: 50px;\n    position: absolute;\n    top: 0;\n    right: 25px;\n    width: 50px; }\n  .page-header span.center {\n    font-size: 18px;\n    color: #fff;\n    font-weight: 900;\n    height: 50px;\n    line-height: 50px; }\n\n.passenger-page {\n  width: 100%;\n  height: 100%;\n  background-color: #fafafa; }\n  .passenger-page .passenger .passenger-body {\n    margin-top: 10px; }\n    .passenger-page .passenger .passenger-body .add-passenger {\n      width: 100%; }\n      .passenger-page .passenger .passenger-body .add-passenger .line {\n        margin: 0 10px;\n        background-color: #fff;\n        border-radius: 10px;\n        height: 50px; }\n        .passenger-page .passenger .passenger-body .add-passenger .line input {\n          height: 50px;\n          display: block;\n          margin-right: 70px;\n          padding-left: 20px;\n          font-size: 16px; }\n  .passenger-page .passenger p.refresh {\n    height: 50px;\n    line-height: 50px;\n    font-size: 16px;\n    text-align: center;\n    color: #c8c8c8; }\n    .passenger-page .passenger p.refresh i {\n      color: #c8c8c8; }\n  .passenger-page .passenger .passenger-select {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .passenger-page .passenger .passenger-select .line {\n      margin: 0 10px;\n      margin-bottom: 10px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px;\n      border-radius: 10px;\n      background-color: #fff; }\n      .passenger-page .passenger .passenger-select .line .left {\n        -ms-flex: 2;\n            flex: 2;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-page .passenger .passenger-select .line .left > img {\n          width: 20px;\n          height: 20px;\n          margin-left: 20px;\n          z-index: 1; }\n        .passenger-page .passenger .passenger-select .line .left::after {\n          content: \"\";\n          position: absolute;\n          top: 20px;\n          left: 20px;\n          width: 20px;\n          height: 20px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 0; }\n      .passenger-page .passenger .passenger-select .line .center {\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: start;\n            align-items: flex-start; }\n        .passenger-page .passenger .passenger-select .line .center p {\n          height: 25px;\n          line-height: 25px;\n          color: #323232;\n          font-size: 15px;\n          margin-left: 10px; }\n      .passenger-page .passenger .passenger-select .line .right {\n        -ms-flex: 2;\n            flex: 2;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center; }\n        .passenger-page .passenger .passenger-select .line .right > img {\n          width: 20px;\n          height: 20px; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .show-discount span:first-child {\n    color: #AAAAAA; }\n  .contact-info .show-discount span.center {\n    width: 50%; }\n  .contact-info .show-discount span.last {\n    width: 20%;\n    color: #0074D9; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px;\n    border-top: 1px solid #dddddd; }\n    .contact-info .discount-code input,\n    .contact-info .discount-code button,\n    .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center,\n    .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input,\n    .other-info .discount-code button,\n    .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #c8c8c8;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #f35252;\n        font-size: 18px;\n        font-weight: 900; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #329be8;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 5px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.mint-msgbox-input input {\n  height: 40px;\n  line-height: 40px;\n  font-size: 18px; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
 
 	// exports
 
@@ -33277,184 +33278,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 	//
 	//
 	//
@@ -33681,7 +33504,8 @@
 					ticketMoney: 0, //票的单价
 					payMoney: 0, //总共支付的钱
 					contactPhone: "", //取票人手机号
-					discountcode: "" }, //订单信息
+					discountcode: "", //优惠码
+					remark: "" }, //订单信息
 
 				TicketPay: null, //服务器产生的订单信息
 				havediscountcode: false, //是否有优惠码
@@ -33693,7 +33517,10 @@
 					UsrInfo: {},
 					LineInfo: {},
 					PayInfo: {}
-				} };
+				}, //服务器返回的订单信息
+
+				passengerPopupVisible: false, //选择乘客
+				showaddpassenger: false };
 		},
 		beforeCreate: function beforeCreate() {
 			if (this.$store.getters.getIsFirst) {
@@ -33862,6 +33689,9 @@
 	   */
 			formatData: function formatData(data) {
 				return JSON.parse((0, _stringify2.default)(data));
+			},
+			goback: function goback() {
+				this.$router.go(-1);
 			},
 
 			// haveDiscountCode(){
@@ -34307,7 +34137,7 @@
 
 				var array = this.formatData(this.AllFare);
 
-				_mintUi.MessageBox.confirm('确定删除' + array[index].Name + '?').then(function (action) {
+				MessageBox.confirm('确定删除' + array[index].Name + '?').then(function (action) {
 					_this8.$store.dispatch("deletePassenger", array[index].Id).then(function (result) {
 						if (result.Data) {
 							_this8.AllFare.splice(index, 1);
@@ -34361,11 +34191,6 @@
 				this.stationPopupVisible = true;
 			},
 			showDiscountWindow: function showDiscountWindow() {
-				// 如果没有优惠券就不显示
-				if (this.optionsDiscount.length === 0) {
-					return;
-				}
-
 				var money = this.payInfoData.payMoney; //总额
 				//这里禁用所有不可用的优惠券,防止用户选择
 				for (var i = 0; i < this.optionsDiscount.length; i++) {
@@ -34417,7 +34242,7 @@
 			cancelOrder: function cancelOrder() {
 				var _this10 = this;
 
-				_mintUi.MessageBox.confirm('确定取消订单?').then(function (action) {
+				MessageBox.confirm('确定取消订单?').then(function (action) {
 					_this10.$store.dispatch("cancelOrder", _this10.serverPayInfo.OrderInfo.Id).then(function (result) {
 						_this10.popupMessage("取消订单成功!");
 						setTimeout(function () {
@@ -34425,6 +34250,29 @@
 						}, 1000);
 					});
 				});
+			},
+			showPage: function showPage(index) {
+				var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+				switch (index) {
+					case 1:
+						// 选择乘客
+						this.passengerPopupVisible = close ? false : true;
+						break;
+					case 2:
+						// 乘车点
+						this.stationPopupVisible = close ? false : true;
+						break;
+					case 3:
+						// 优惠券
+						this.discountPopupVisible = close ? false : true;
+						break;
+				}
+			},
+
+			/** 点击显示隐藏添加乘客 */
+			showAddPassenger: function showAddPassenger() {
+				this.showaddpassenger = !this.showaddpassenger;
 			}
 		}
 	};
@@ -34936,7 +34784,15 @@
 	    }
 	  }), " ", _vm._h('div', {
 	    staticClass: "header-title"
-	  }, [_vm._m(0), " ", _vm._h('span', {
+	  }, [_vm._h('div', {
+	    on: {
+	      "click": _vm.goback
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(124)
+	    }
+	  })]), " ", _vm._h('span', {
 	    domProps: {
 	      "textContent": _vm._s(_vm.startDate.date + ' ' + _vm.startDate.week)
 	    }
@@ -34966,7 +34822,7 @@
 	    domProps: {
 	      "textContent": _vm._s(_vm.busInfo.CoName)
 	    }
-	  }, ["东方快车"]), " ", _vm._h('span', [_vm._s(_vm.busInfo.Route)])]), " ", _vm._m(1), " ", _vm._h('div', {
+	  }, ["东方快车"]), " ", _vm._h('span', [_vm._s(_vm.busInfo.Route)])]), " ", _vm._m(0), " ", _vm._h('div', {
 	    staticClass: "right"
 	  }, [_vm._h('div', {
 	    staticClass: "top"
@@ -34996,117 +34852,48 @@
 	    attrs: {
 	      "src": __webpack_require__(205)
 	    }
-	  }), " ", _vm._h('p', [_vm._s(_vm.startDate.date)])])]), " "]), " ", " ", _vm._m(2), " ", " ", " ", " ", _vm._h('div', {
-	    staticClass: "people-info"
-	  }, [_vm._m(3), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
-	    staticClass: "info-list"
+	  }), " ", _vm._h('p', [_vm._s(_vm.startDate.date)])])]), " "]), " ", _vm._h('div', {
+	    staticClass: "passenger-info"
+	  }, [_vm._h('div', {
+	    staticClass: "passenger-selected"
 	  }, [_vm._l((_vm.AllFare), function(item, index) {
-	    return _vm._h('div', {
-	      staticClass: "list"
+	    return (item.active) ? _vm._h('div', {
+	      staticClass: "line"
 	    }, [_vm._h('div', {
-	      staticClass: "check",
 	      on: {
 	        "click": function($event) {
 	          _vm.setFare(index)
 	        }
 	      }
-	    }, [_vm._h('span', {
-	      class: [item.active ? 'active' : '']
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-check"
-	    })])]), " ", _vm._h('div', {
-	      staticClass: "list-body"
-	    }, [_vm._h('div', {
-	      staticClass: "list-top"
-	    }, [_vm._h('span', {
-	      staticClass: "name",
-	      domProps: {
-	        "textContent": _vm._s(item.Name)
-	      },
-	      on: {
-	        "click": function($event) {
-	          _vm.setFare(index)
-	        }
+	    }, [_vm._h('img', {
+	      attrs: {
+	        "src": __webpack_require__(213)
 	      }
-	    }), " ", _vm._h('span', {
-	      staticClass: "type"
-	    }, [_vm._s(item.Mobile)]), " ", (item.Mobile) ? [(item.isGetTicket) ? _vm._h('span', {
-	      staticClass: "get-ticket"
-	    }, ["联系人"]) : _vm._h('span', {
-	      staticClass: "set-ticket",
-	      on: {
-	        "click": function($event) {
-	          _vm.setGetTicketMan(index)
-	        }
-	      }
-	    }, ["设为联系人"]), " "] : _vm._e()]), " "]), " ", " ", _vm._h('span', {
-	      on: {
-	        "click": function($event) {
-	          _vm.trashMan(index)
-	        }
-	      }
-	    }, [_vm._h('i', {
-	      staticClass: "fa fa-trash"
-	    })])])
-	  })]) : _vm._e(), " ", " ", _vm._h('div', {
-	    staticClass: "info-man"
+	    })]), " ", _vm._h('span', {
+	      staticClass: "center"
+	    }, [_vm._s(item.Name)]), " ", _vm._h('span', {
+	      staticClass: "right"
+	    }, [_vm._s(item.Mobile)])]) : _vm._e()
+	  })]), " ", " ", _vm._h('div', {
+	    staticClass: "write-info"
 	  }, [_vm._h('div', {
-	    staticClass: "info-man-name info"
-	  }, [_vm._h('span', ["乘客姓名"]), " ", _vm._h('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.fareName),
-	      expression: "fareName"
-	    }],
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "请填写真实姓名"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.fareName)
-	    },
+	    staticClass: "line"
+	  }, [_vm._h('span', ["添加 / 修改乘车人"]), " ", _vm._h('div', {
+	    staticClass: "img",
 	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.fareName = $event.target.value
+	      "click": function($event) {
+	        _vm.showPage(1)
 	      }
 	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "info-man-card info"
-	  }, [_vm._h('span', ["手机号"]), " ", _vm._h('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.certificate),
-	      expression: "certificate"
-	    }],
+	  }, [_vm._h('img', {
 	    attrs: {
-	      "type": "text",
-	      "placeholder": "选填(可用于联系)"
-	    },
-	    domProps: {
-	      "value": _vm._s(_vm.certificate)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.certificate = $event.target.value
-	      }
+	      "src": __webpack_require__(207)
 	    }
-	  }), " ", _vm._h('button', {
-	    on: {
-	      "click": _vm.append
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-plus-circle"
-	  }), "添加"])])]), " "]), " ", " ", _vm._h('div', {
-	    staticClass: "people-info"
-	  }, [_vm._m(4), " ", _vm._h('div', {
-	    staticClass: "contact-info"
+	  })])])])]), " ", " ", _vm._h('div', {
+	    staticClass: "write-info"
 	  }, [_vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', ["联系人手机"]), " ", _vm._h('input', {
+	    staticClass: "line"
+	  }, [_vm._h('input', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -35115,7 +34902,8 @@
 	    }],
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "必填(用于联系)"
+	      "name": "phone",
+	      "placeholder": "手机号(用于联系)"
 	    },
 	    domProps: {
 	      "value": _vm._s(_vm.payInfoData.contactPhone)
@@ -35126,74 +34914,64 @@
 	        _vm.payInfoData.contactPhone = $event.target.value
 	      }
 	    }
-	  })])])]), " ", " ", _vm._h('div', {
-	    staticClass: "people-info"
+	  }), " ", _vm._m(1)])]), " ", " ", _vm._h('div', {
+	    staticClass: "write-info"
 	  }, [_vm._h('div', {
-	    staticClass: "contact-info"
-	  }, [_vm._m(5), " ", _vm._h('div', {
-	    staticClass: "info"
-	  }, [_vm._h('span', ["优惠券"]), " ", _vm._h('span', {
-	    staticClass: "center",
+	    staticClass: "line"
+	  }, [_vm._h('span', ["乘车点选择"]), " ", _vm._h('div', {
+	    staticClass: "img",
 	    on: {
-	      "click": _vm.showDiscountWindow
+	      "click": function($event) {
+	        _vm.showPage(2)
+	      }
 	    }
-	  }, ["你有" + _vm._s(_vm.optionsDiscount.length) + "个优惠券"]), " ", _vm._h('span', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.selectDiscount.length !== 0),
-	      expression: "selectDiscount.length!==0"
-	    }],
-	    staticClass: "last"
-	  }, [_vm._s(("已选" + (_vm.selectDiscount.length) + "个"))])]), " ", _vm._h('div', {
-	    staticClass: "info discount-code"
-	  }, [_vm._h('span', {
-	    staticClass: "first"
-	  }, ["优惠码"]), " ", _vm._h('input', {
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(209)
+	    }
+	  })])])]), " ", " ", _vm._h('div', {
+	    staticClass: "write-info"
+	  }, [_vm._h('div', {
+	    staticClass: "line"
+	  }, [(_vm.optionsDiscount.length === 0) ? _vm._h('span', ["没有可用优惠券"]) : _vm._h('span', [_vm._s('优惠券(' + _vm.optionsDiscount.length + '张可用')]), " ", " ", _vm._h('span', {
+	    staticClass: "info"
+	  }, ["未使用"]), " ", _vm._h('div', {
+	    staticClass: "img",
+	    on: {
+	      "click": function($event) {
+	        _vm.showPage(3)
+	      }
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(210)
+	    }
+	  })])])]), " ", " ", _vm._h('div', {
+	    staticClass: "write-info"
+	  }, [_vm._h('div', {
+	    staticClass: "line"
+	  }, [_vm._h('input', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.payInfoData.discountcode),
-	      expression: "payInfoData.discountcode"
+	      value: (_vm.payInfoData.remark),
+	      expression: "payInfoData.remark"
 	    }],
-	    staticClass: "center",
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "请输入您的优惠码"
+	      "name": "remark",
+	      "placeholder": "旅程备注"
 	    },
 	    domProps: {
-	      "value": _vm._s(_vm.payInfoData.discountcode)
+	      "value": _vm._s(_vm.payInfoData.remark)
 	    },
 	    on: {
 	      "input": function($event) {
 	        if ($event.target.composing) { return; }
-	        _vm.payInfoData.discountcode = $event.target.value
+	        _vm.payInfoData.remark = $event.target.value
 	      }
 	    }
-	  }), " ", " ", _vm._h('div', {
-	    staticClass: "last"
-	  }, [_vm._h('button', {
-	    staticClass: "right",
-	    on: {
-	      "click": _vm.checkCodeStatus
-	    }
-	  }, ["验证"]), " "])]), " ", (_vm.havediscountcode) ? _vm._h('div', {
-	    staticClass: "info show-discount animated fadeInDown"
-	  }, [_vm._h('span', ["优惠码信息"]), " ", _vm._h('span', {
-	    staticClass: "center"
-	  }, [_vm._s(_vm.discountCode.Name)]), " ", (_vm.isUseCode) ? _vm._h('span', {
-	    staticClass: "last",
-	    on: {
-	      "click": _vm.useDiscountCode
-	    }
-	  }, ["已使用"]) : _vm._h('span', {
-	    staticClass: "last",
-	    on: {
-	      "click": _vm.useDiscountCode
-	    }
-	  }, ["立即使用"]), " "]) : _vm._e()])]), " ", " ", " ", _vm._h('div', {
-	    staticClass: "root-tip-info"
-	  }), " ", " ", " ", _vm._h('div', {
+	  }), " ", _vm._m(2)])]), " ", " ", _vm._h('div', {
 	    staticClass: "submit-box"
 	  }, [_vm._h('div', {
 	    staticClass: "order-info"
@@ -35219,284 +34997,163 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.stationPopupVisible),
-	      expression: "stationPopupVisible"
+	      value: (_vm.passengerPopupVisible),
+	      expression: "passengerPopupVisible"
 	    }],
-	    staticClass: "station-popup-visible",
-	    domProps: {
-	      "value": (_vm.stationPopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.stationPopupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('div', {
-	    staticClass: "station"
-	  }, [_vm._h('mt-radio', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.selectStation),
-	      expression: "selectStation"
-	    }],
-	    attrs: {
-	      "title": "乘车点选择",
-	      "options": _vm.options
-	    },
-	    domProps: {
-	      "value": (_vm.selectStation)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.selectStation = $event
-	      }
-	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.checkSelectStation
-	    }
-	  }, ["确定"])])])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.discountPopupVisible),
-	      expression: "discountPopupVisible"
-	    }],
-	    staticClass: "station-popup-visible",
-	    domProps: {
-	      "value": (_vm.discountPopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.discountPopupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('div', {
-	    staticClass: "station"
-	  }, [_vm._h('mt-checklist', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.selectDiscount),
-	      expression: "selectDiscount"
-	    }],
-	    attrs: {
-	      "title": "优惠券选择",
-	      "options": _vm.optionsDiscount
-	    },
-	    domProps: {
-	      "value": (_vm.selectDiscount)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.selectDiscount = $event
-	      }
-	    }
-	  }), " ", _vm._h('button', {
-	    staticClass: "btn",
-	    on: {
-	      "click": _vm.checkSelectDiscount
-	    }
-	  }, ["确定"])])])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.tipPopupVisible),
-	      expression: "tipPopupVisible"
-	    }],
-	    staticClass: "tip-popup-visible",
-	    attrs: {
-	      "position": "top"
-	    },
-	    domProps: {
-	      "value": (_vm.tipPopupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.tipPopupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('div', {
-	    staticClass: "body"
-	  }, [_vm._h('h3', ["声明:"]), " ", _vm._h('p', ["1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。"]), " ", _vm._h('p', ["2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。"]), " ", _vm._h('p', ["3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。"]), " ", _vm._h('h3', ["取票说明"]), " ", _vm._h('p', ["提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票"]), " ", _vm._h('h3', ["退票、改签说明："]), " ", _vm._h('p', ["2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。"]), " ", _vm._h('p', ["5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理。"]), " ", _vm._h('button', {
-	    on: {
-	      "click": _vm.backTip
-	    }
-	  }, ["返回"])])])]), " ", " ", _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.popupVisible),
-	      expression: "popupVisible"
-	    }],
-	    staticClass: "message-popup-visible",
-	    attrs: {
-	      "position": "top"
-	    },
-	    domProps: {
-	      "value": (_vm.popupVisible)
-	    },
-	    on: {
-	      "input": function($event) {
-	        _vm.popupVisible = $event
-	      }
-	    }
-	  }, [_vm._t("default", [_vm._h('p', {
-	    staticClass: "popup",
-	    domProps: {
-	      "textContent": _vm._s(_vm.popupText)
-	    }
-	  })])]), " ", " ", (_vm.payInfoPopupVisible) ? _vm._h('mt-popup', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.payInfoPopupVisible),
-	      expression: "payInfoPopupVisible"
-	    }],
-	    staticClass: "payinfo-popup-visible",
+	    staticClass: "passenger-page",
 	    attrs: {
 	      "position": "right"
 	    },
 	    domProps: {
-	      "value": (_vm.payInfoPopupVisible)
+	      "value": (_vm.passengerPopupVisible)
 	    },
 	    on: {
 	      "input": function($event) {
-	        _vm.payInfoPopupVisible = $event
+	        _vm.passengerPopupVisible = $event
 	      }
 	    }
 	  }, [_vm._t("default", [_vm._h('div', {
-	    staticClass: "pay-body"
+	    staticClass: "passenger"
 	  }, [_vm._h('div', {
-	    staticClass: "info-body"
+	    staticClass: "page-header"
 	  }, [_vm._h('div', {
-	    staticClass: "status"
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-clock-o"
-	  }), " ", _vm._h('p', ["订单提交成功!"]), " ", _vm._h('p', {
-	    staticClass: "time"
-	  }, ["请在半小时之内支付订单 " + _vm._s(_vm.countdownTime)])])]), " ", _vm._h('div', {
-	    staticClass: "ticket-body"
-	  }, [_vm._h('div', {
-	    staticClass: "pay-info"
-	  }, [_vm._h('div', {
-	    staticClass: "address-info"
-	  }, [_vm._h('div', {
-	    staticClass: "start box"
-	  }, [_vm._h('p', {
-	    staticClass: "center",
-	    domProps: {
-	      "textContent": _vm._s(_vm.serverPayInfo.LineInfo.StartPoint)
-	    }
-	  }), " ", _vm._h('p', {
-	    staticClass: "last",
-	    domProps: {
-	      "textContent": _vm._s(_vm.serverPayInfo.LineInfo.StartCity)
-	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "center box"
-	  }, [_vm._h('p', {
-	    staticClass: "arrow-message",
-	    domProps: {
-	      "textContent": _vm._s(_vm.serverPayInfo.LineInfo.Route)
-	    }
-	  }), " ", _vm._h('p', {
-	    staticClass: "arrow"
-	  })]), " ", _vm._h('div', {
-	    staticClass: "end box"
-	  }, [_vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.serverPayInfo.LineInfo.EndPoint)
-	    }
-	  }), " ", _vm._h('p', [_vm._s(_vm.serverPayInfo.LineInfo.AcrossCity)])])]), " ", _vm._h('div', {
-	    staticClass: "info-box passager-info"
-	  }, [_vm._h('p', [_vm._h('span', {
-	    staticClass: "type"
-	  }, ["乘车日期:"]), " ", _vm._h('span', {
-	    staticClass: "name"
-	  }, [_vm._s(_vm.serverPayInfo.LineInfo.Date + " " + this.$store.getters.getInfo.startDate.week + " " + _vm.serverPayInfo.LineInfo.BoardTime)])])]), " ", _vm._h('div', {
-	    staticClass: "info-box passager-info"
-	  }, [_vm._h('p', [_vm._h('span', {
-	    staticClass: "type"
-	  }, ["乘车地址:"]), " ", "\n\t\t\t\t\t\t\t\t" + _vm._s(_vm.selectStation) + "\n\t\t\t\t\t\t\t"])]), " ", _vm._h('div', {
-	    staticClass: "info-box passager-info"
-	  }, [_vm._h('p', [_vm._h('span', {
-	    staticClass: "type"
-	  }, ["乘客:"]), " ", _vm._h('span', {
-	    staticClass: "name"
-	  }, [_vm._s(_vm.serverPayInfo.UsrInfo.Name.join(','))])])]), " ", " ", _vm._h('div', {
-	    staticClass: "info-box get-ticket"
-	  }, [_vm._h('p', [_vm._h('span', {
-	    staticClass: "type"
-	  }, ["联系方式:"]), " ", _vm._h('span', {
-	    staticClass: "name"
-	  }, [_vm._s(_vm.serverPayInfo.UsrInfo.Mobile)])])])]), " "]), " ", _vm._h('div', {
-	    staticClass: "pay-ticket-info"
-	  }, [_vm._h('div', {
-	    staticClass: "pay-ticket-info-header"
-	  }, [_vm._h('p', ["订单信息"])]), " ", _vm._h('div', {
-	    staticClass: "pay-ticket-info-body"
-	  }, [_vm._h('p', ["订单编号:" + _vm._s(_vm.serverPayInfo.OrderInfo.Id)]), " ", _vm._h('p', ["下单日期:" + _vm._s(_vm.serverPayInfo.OrderInfo.OrderTime)]), " ", _vm._h('p', {
-	    staticClass: "all"
-	  }, ["总额: ", _vm._h('span', {
-	    staticStyle: {
-	      "color": "red"
-	    }
-	  }, [_vm._s('¥' + _vm.serverPayInfo.OrderInfo.TotalPrice)])]), " ", _vm._h('span', {
-	    staticStyle: {
-	      "clear": "both"
-	    }
-	  })])]), " ", " ", _vm._h('div', {
-	    staticClass: "now-pay"
-	  }, [_vm._h('button', {
 	    on: {
-	      "click": _vm.payMoney
+	      "click": function($event) {
+	        _vm.showPage(1, true)
+	      }
 	    }
-	  }, ["立即支付"])]), " ", _vm._h('div', {
-	    staticClass: "out-order",
-	    staticStyle: {
-	      "margin-top": "20px",
-	      "margin-bottom": "20px"
-	    }
-	  }, [_vm._h('a', {
-	    on: {
-	      "click": _vm.cancelOrder
-	    }
-	  }, ["取消订单"])])])])]) : _vm._e()])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', [_vm._h('img', {
+	  }, [_vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(124)
 	    }
-	  })])
-	},function (){var _vm=this;
+	  })]), " ", _vm._h('span', {
+	    staticClass: "center"
+	  }, ["选择乘车人(" + _vm._s(_vm.AllFare.length) + ")"]), " ", _vm._h('span', {
+	    staticClass: "right",
+	    on: {
+	      "click": function($event) {
+	        _vm.showPage(1, true)
+	      }
+	    }
+	  }, ["确定"])]), " ", _vm._h('div', {
+	    staticClass: "passenger-body"
+	  }, [_vm._h('div', {
+	    staticClass: "write-info"
+	  }, [_vm._h('div', {
+	    staticClass: "line"
+	  }, [_vm._h('span', ["添加新乘车人"]), " ", _vm._h('div', {
+	    staticClass: "img",
+	    on: {
+	      "click": _vm.showAddPassenger
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(207)
+	    }
+	  })])])]), " ", " ", _vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showaddpassenger),
+	      expression: "showaddpassenger"
+	    }],
+	    staticClass: "add-passenger animated zoomIn"
+	  }, [_vm._h('div', {
+	    staticClass: "line"
+	  }, [_vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.fareName),
+	      expression: "fareName"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "name": "fareName",
+	      "placeholder": "请填写真实姓名"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.fareName)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.fareName = $event.target.value
+	      }
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "line"
+	  }, [_vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.certificate),
+	      expression: "certificate"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "name": "certificate",
+	      "placeholder": "选填(可用于联系)"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.certificate)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.certificate = $event.target.value
+	      }
+	    }
+	  })])])]), " ", _vm._h('p', {
+	    staticClass: "refresh"
+	  }, ["有新乘客没有出现?点击刷新一下啦 ", _vm._h('i', {
+	    staticClass: "fa fa-refresh"
+	  })]), " ", _vm._h('div', {
+	    staticClass: "passenger-select"
+	  }, [_vm._l((_vm.AllFare), function(item, index) {
+	    return _vm._h('div', {
+	      staticClass: "line"
+	    }, [_vm._h('div', {
+	      staticClass: "left",
+	      on: {
+	        "click": function($event) {
+	          _vm.setFare(index)
+	        }
+	      }
+	    }, [(item.active) ? _vm._h('img', {
+	      attrs: {
+	        "src": __webpack_require__(212)
+	      }
+	    }) : _vm._e()]), " ", _vm._h('div', {
+	      staticClass: "center"
+	    }, [_vm._h('p', [_vm._s(item.Name)]), " ", _vm._h('p', [_vm._s(item.Mobile)])]), " ", _vm._h('div', {
+	      staticClass: "right"
+	    }, [_vm._h('img', {
+	      attrs: {
+	        "src": __webpack_require__(211)
+	      }
+	    })])])
+	  })])])])])])
+	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "center"
 	  }, [_vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span')])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "write-info"
-	  }, [_vm._h('span', ["添加 / 修改乘车人"]), " ", _vm._h('div', {
 	    staticClass: "img"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(207)
+	      "src": __webpack_require__(208)
 	    }
-	  })])])
+	  })])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "info-head"
-	  }, [_vm._h('span', ["乘客信息"]), " "])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "info-head"
-	  }, [_vm._h('span', ["联系信息"]), " "])
-	},function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "info-head"
-	  }, [_vm._h('span', ["其它信息"]), " "])
+	    staticClass: "img"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(211)
+	    }
+	  })])
 	}]}
 	if (false) {
 	  module.hot.accept()
@@ -35620,6 +35277,8 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
+	var _mintUi = __webpack_require__(88);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ = __webpack_require__(111); //
@@ -35681,15 +35340,13 @@
 				secondTimeMaxDay: 0, //当前月份最大日期数
 				secondTimeWeek: 0, //星期
 
-				timeDate: {
-					first: {
-						year: 0,
-						month: 0
-					},
-					second: {
-						year: 0,
-						month: 0
-					}
+				firsttimeDate: {
+					year: 0,
+					month: 0
+				}, //记录两个月的数据
+				secondtimeDate: {
+					year: 0,
+					month: 0
 				}, //记录两个月的数据
 
 				white: [0, 1, 2, 3, 4, 5, 6], //方便循环用
@@ -35707,7 +35364,7 @@
 			//如果有数据
 			if (this.$store.getters.getInfo.startDate.server) {
 				var date = new Date(this.$store.getters.getInfo.startDate.server);
-				if (date.getMonth() + 1 === this.timeDate.first.month) {
+				if (date.getMonth() + 1 === this.firsttimeDate.month) {
 					//第一个月的
 					this.selected = date.getDate() + "_one";
 					this.side = "top";
@@ -35744,7 +35401,7 @@
 				this.secondTimeWeek = date_second.getDay();
 
 				this.firstTimeText = year + "\u5E74 " + month + "\u6708";
-				this.timeDate.first = {
+				this.firsttimeDate = {
 					year: year,
 					month: month
 				};
@@ -35753,14 +35410,14 @@
 				if (month + 1 > 12) {
 					this.secondTimeText = year + 1 + "\u5E74 1\u6708";
 					this.secondTimeMaxDay = this.getMaxMonth(year + 1, 1);
-					this.timeDate.second = {
+					this.secondtimeDate = {
 						year: year + 1,
 						month: 1
 					};
 				} else {
 					this.secondTimeText = year + "\u5E74 " + (month + 1) + "\u6708";
 					this.secondTimeMaxDay = this.getMaxMonth(year, month + 1);
-					this.timeDate.second = {
+					this.secondtimeDate = {
 						year: year,
 						month: month + 1
 					};
@@ -35790,20 +35447,26 @@
 				if (event.target.className.indexOf("active") > -1) {
 					//可以选中
 					this.selected = index;
+					var arrayTime = this.selected.split("_");
+					if (arrayTime[1] === "two") {
+						//下个月
+						this.side = "bottom";
+					} else {
+						//这个月
+						this.side = "top";
+					}
 				}
 			},
 			yes: function yes() {
 				var arrayTime = this.selected.split("_");
-				var date = "";
+				var date = void 0;
 
 				if (arrayTime[1] === "two") {
 					//下个月
-					date = new Date(this.timeDate.second.year + "-" + this.timeDate.second.month + "-" + arrayTime[0]);
-					this.side = "bottom";
+					date = new Date(this.secondtimeDate.year, this.secondtimeDate.month - 1, arrayTime[0]);
 				} else {
 					//这个月
-					date = new Date(this.timeDate.first.year + "-" + this.timeDate.first.month + "-" + arrayTime[0]);
-					this.side = "top";
+					date = new Date(this.firsttimeDate.year, this.firsttimeDate.month - 1, arrayTime[0]);
 				}
 
 				this.$store.dispatch("setStartDate", {
@@ -35817,6 +35480,7 @@
 				if (typeof date === "string") {
 					date = new Date(date);
 				}
+				console.log(date);
 				var year = date.getYear() - 100 + 2000;
 				var month = date.getMonth() + 1;
 				var day = date.getDate();
@@ -36003,6 +35667,42 @@
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 208 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 209 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAo5JREFUaAXtWj1PG0EQ9RE6pHxItAgnUqQoTX4CUFDQuUD8BX6AqyRS6jSR0uYPpEmktIQqTSSooaQwAgkqPlLQJLHzVrm1Rqebub2x8d3Is9Lq9uZj9719g3aNnY1Gow7XPnTWt+B7h/4CPePiWmI/AY73/c6PrxKejCMMsptI3ENfkCZooW8HpL9wuCQyrw2SDTzfcGSDfVFwPiO+7xgHtdva1gCsl4N7KoGUCNO8A5TJR2qIY5R+HDbyBK5OjiESFnFIJS0mWnWmKjzmh918hJeNsYEf3MG1z7ub8dQmDJjhb+RbAtxTxHQT4mYaMnclPXeENSV9hBp8klCH/BUuIfm+QmoTxjHwF2BuIqCmj6WII/XpJc3sVA9Kdhlfo+a8wl6mgkgt6VeYMHTzbe5K2gmbr9kKAq5wxQaZd2sUPgPrcNOKPbyXtdS4X0iOc4XncdlksBXjfjJxojn1WKKTDHHbojetIXWScbCP4zDm4sIVlMaFm1xZK8b9KQuqsmkUrpqz1X4n3Gp5pgDOFZ7CJrZ6Cle41fJMAZzmHF7AZ9DHZG2uSoI9JS4rxD0gc9NhMU6DXfyqhS5Gxyt4uaYGZpwa9zBxvtQ4Bs5/M6eOmGTZ6YSJeqq7KslvaijilhQ+bArxhOuKuCXCb7Hw5YSLzzr9Cgv2pUXZnzyEJBw/y3jsoj8P7xO2beQvlczxG7bPJfa6pgESPuGj64WUKBKWEqMv/79wfJWeAzhXSwJuYaPndUkIbwpfiNdpUknXmcdMrBM2I5USqCus3Dgzaa6wGamUQF1h5caZSXOFzUilBOoKKzfOTJorbEYqJVBXWLlxZtJcYTNSKYG6wsqNM5Om+gZOye6cyQs/R5pZ+wctKlk5kBJAMgAAAABJRU5ErkJggg=="
+
+/***/ },
+/* 210 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAA9tJREFUaAXtW01sTUEU7qORiJKILgg2qL8gRBGpLloJkXZRLRZC0A3ahRWJyKuFBSsWXTxsWLQIaQgRQqovdIHEv4hg5ScRv5EnBOH5vvae5PX2zbg/866+e+9JvjczZ845d745c+feO00T2Wy2JEoyLEpkyTUmHPaMxxmOMxyyGYjckk5kGhslh/WobAMWAiNFWeTld4z/HnC4rKvrPLmQcAJlO9BKRYglBW6tpfjZwEqIiQq17ajc4T3cIpoIlFtJuCICRIViBQlzWUdFEpF7LMWEw7624wwbyvBDxHnpIxZ9GcO4FCLDPRjlUqASeOxhxPShL2Nc9eCvdSkE4TZc8RvwHqgF7gJOhbb0oS9jMJZRKQThkxjhNGuUQvq2g1HTRsjSfBLQwYpJIeHPJgMiFgeaBmYAlC/ACiANqCSNDtrQlsIJuwlMZcOgZEi402BACTURlV5grqUgkTqA97ddqGOfkJ2JehpgDNNylISTAL+DXxmOXo541wBuQBTek6uAC2xYwjp17KNwgm4Apsm+RcxmfBPvI2GexB8BuIz2AL8AU0LS3cASK+APlGuAcxZYp46yCOAE0ceU/ESgvcAUkD3GoLknHmxTqoGLwGg2DEkGcRoAEqIM7y9KflslJ+QKMMZqmyjeIEg9iN7PDVaa27DqXFIbAWbBi/AohccqdqmEgvc1Z12I0mYEsAw4xIZN5qG92qZz0uQqrQPZB3bjfBkWm25UaqXhohwH208u7HWmYz3G6gRZnuQMEt7DKjmr6viHnmdkpsRrrOuqAeRb0mL7WiouSz7mnmp8TqBPXkQWo75eYyvPco1J3q53ebVQ6gh73S1XIi6hEm4iQng26jtUhj70E1S+uiVdpXIqAn2NaoyqTWs8HF4Ao1SOGv0Z9D3R9HP3l0fFfNQbNLaz0LdO06/q4lOgChvXLbtBPsIkeQmoths7bA+FXZpD/QDw0SS3T9/w7Ut6ObScFa9kGdTrzkpfu/iJxT2o92tT036gTAJLhvnMSgLTpcNHybepRxp/N7v0HMRhEvzKRwRIItspEl6Lxmm/EV34b4Htcct+M8q+d1yrXehiF5f0zkJfZQjFj9yfWsqZYT8bwxBKnrOh2HdpZ17+rHLf7gK/fu7F/dFw7t0GU34OUmr6i+B+/wfhyaC3KTiKA68U+JIaePngWzHh4Oc82CtGMsMmj2WDTZf7q/1hhp+59ytaj+ck3F60w3c/8HYSPgUccO9bdB4H8XnYIS8euzH8y0ALsADg4XgYhIf+PE5KgWwPCSXif/LgNIRYIvkcDnE+B1OLMzx4TsKliVyG/wJxi62fyEXuhAAAAABJRU5ErkJggg=="
+
+/***/ },
+/* 211 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 212 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 213 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAABCBJREFUaAXlm9tLFFEcx9eUItCUqKCMwCcLkajEULpsVlDQS3YR7A8IKqIXX3yyHnyIICgq6jkKjOqpi9FFzZLCICgJXxIkjKTCUogko+9nY5bZbRznTLPuzPiF7+5czvmd78dxd2Z2zxaMNzYmcqRS1a2Ta+QquUIul8vkYhlNyGPyiPxeHpD75T75mxy4igKuuFL1mmT+ihvlQtlNgGP61doaTmn5hXxLviEPy4GoIKAjvEVpWuTd8kyQpsGBvyefkbtNO2e3n5e9wXA9qfY9MkH2yEHDqmSqJrW7ZMZKyr7lF3i5RrwqP5E3+x7dvCNjMSZjk8FYfoAPaJR38iHj0YLrwNhkIIuRTIDnq/J5uUPmHTjfIgNZyLTAaxivwCUqeFc+5rXwLLYj0wN5sZcxvQAvVSFeN9u9FMxTG84Sj2WyumomYP5t7ssbXKuEY+daxeiUXV9ubsC8Zjnxr5ejonUKSmayO8oN+Kx6NDj2CvdGMpPdUdMB83Z/xLFHNDaS/aBTVCdgLvCvODWO2LbLyss1eoacgDmvcUcTdcFwLhsiG3ibGuzNbhThdVgyTqfZwKciDDdd9Db7DjswJ+9N9p0xWYYJtpTswC3Wxhg+p9ks4GWC3BVDUAsJNhgTFnCzloP+uIf6YRFsMKaB94UlWQ5zpBg5wlxs1+VwoLCUhrEU4Ho5F59FhQXUygFjPcBRuhuywvt9ruHFXG3ae2F7e6KwstK0W6DtpwYHEz9aW01rVnGE+UbASPmGJazPDBUArzCijXbjcoDjcGfk9TAsArjYa+sYtCsBeC5pEmC+spwrmgCY72fnisYBHpkrtOL8BPCQKTAn/XzLZ4YhrrTeyk0mAD6ucEzK57LtAEf4VS5HCFntfoCfy0wriLtg7AOY2TLMmom7YBwDGN38+xTrxxSjBXxNqL9ijAsbjOnPtEa13MmGmAo2GNPALJ/mIaZKs1n/0nD2yL0xBIYJtpTswGxoS22N18NJO0428CPtvG1vEPFlWB7aGbKB2XdcjsMdFAywZMgJ+INaHM5oFc0VGGDJkBMwDTrkSxkto7VCdhj+0XTANDwhd7EQMfUoL9kd5QY8qR775TeOPcO5kayNMtkd5QZMhy/yDvk1KyEXsGQl87SaCZiOo/JWmfmWYdVTBUvKZHWVF2AKfJeZ3n+BlZDpovLslL96yeUVmFo/ZabqMsONe+h8i4NAlqMy2TzJBNgqyK9M1sip2y1r4yw/X9d4q2WyGMkPMAN8lJmGz0S2Xnm29EwDNcjNMhmM5RfYGqhLC/zwIinfkX/LQYua1E7KzLn6rzfPIhUIQt0qglfJvK44F9bKfqdS8IHbS5m5z1wxDcuBKKgfajmFsSbL1GhntVwhL5HLZOsbywktj8mfZb4Q4FzaL/fJOXlj/AMZfqZ2tbUhrAAAAABJRU5ErkJggg=="
 
 /***/ }
 /******/ ]);

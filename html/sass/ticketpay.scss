@@ -1,11 +1,4 @@
 @import "./utils.scss";
-.position {
-  position: absolute;
-  width: 100%;
-  background-color: $white;
-  // background-color:lighten($gray, 30%);
-}
-
 #pay input {
   border: 0;
   outline: none;
@@ -14,6 +7,7 @@
 #pay {
   padding: 0;
   background-color: #fafafa;
+  padding-bottom: 50px;
 }
 
 .header {
@@ -379,159 +373,253 @@
       }
     }
   }
-  // .header {
-  //   width: 92%;
-  //   margin: 5px 4%;
-  //   border-bottom: 1px solid lighten($gray, 20%);
-  //   display: flex;
-  //   flex-direction: row;
-  //   span {
-  //     flex: 1;
-  //     height: 40px;
-  //     font-size: 1.3rem;
-  //     line-height: 40px;
-  //     display: inline-block;
-  //   }
-  //   span:first-child {
-  //     text-align: left;
-  //   }
-  //   span:last-child {
-  //     text-align: right;
-  //   }
-  // }
-  // .address-info {
-  //   width: 92%;
-  //   margin: 10px 4%;
-  //   height: 80px;
-  //   font-size: 1.2rem;
-  //   display: flex;
-  //   flex-direction: row;
-  //   .box {
-  //     flex: 1;
-  //     display: flex;
-  //     flex-direction: column;
-  //     justify-content: center;
-  //     align-items: center;
-  //   }
-  //   .start {
-  //     align-items: flex-start;
-  //     p {
-  //       font-size: 1.8rem;
-  //       color: $white;
-  //       // line-height:25px;
-  //       &.first {
-  //         // color:darken($gray, 10%);
-  //         font-size: 1.2rem;
-  //       }
-  //       &.center {
-  //         font-size: 1.8rem;
-  //         width: 100%;
-  //       }
-  //       &.last {
-  //         // color:$gray;
-  //         font-size: 1.2rem;
-  //       }
-  //     }
-  //   }
-  //   .center {
-  //     font-size: 1.5rem;
-  //     align-items: center;
-  //     width: 40%;
-  //     p.arrow {
-  //       color: $black;
-  //       position: relative;
-  //       width: 100%;
-  //       height: 0;
-  //       line-height: 0;
-  //       &::after {
-  //         width: 80%;
-  //         height: 10px;
-  //         background-color: $white;
-  //         position: absolute;
-  //         left: 0;
-  //         bottom: -20px;
-  //         content: "",
-  //       }
-  //       &::before {
-  //         width: 0;
-  //         height: 0;
-  //         border: 10px solid $white;
-  //         position: absolute;
-  //         right: 5px;
-  //         bottom: -20px;
-  //         content: "";
-  //         // border: 10px solid $white;
-  //         border-color: transparent transparent $white $white;
-  //       }
-  //     }
-  //     p.arrow-message {
-  //       color: $white;
-  //       // margin-top: -10px;
-  //     }
-  //     p.first {
-  //       color: $white;
-  //     }
-  //   }
-  //   .end {
-  //     align-items: flex-end;
-  //     justify-content: center;
-  //     p {
-  //       // color:darken($gray, 10%);
-  //       color: $white;
-  //       font-size: 1.2rem;
-  //       // line-height:25px;
-  //       // line-height:40px;
-  //       &:first-child {
-  //         font-size: 1.8rem;
-  //       }
-  //     }
-  //   }
-  // }
-  // .tip-info {
-  //   width: 92%;
-  //   margin: 0px 4%;
-  //   height: 30px;
-  //   line-height: 30px;
-  //   // background-color: lighten($blue, 50%);
-  //   background: transparent;
-  //   font-size: 1.2rem;
-  //   p {
-  //     padding: 0 5px;
-  //     display: inline-block;
-  //     // color:darken($gray,20%);
-  //     color: #eaeaea;
-  //     i {
-  //       margin-left: 5px;
-  //     }
-  //   }
-  //   span {
-  //     float: right;
-  //     color: $white;
-  //   }
-  // }
 }
 
-.station-info {
+//选择的乘客信息展示
+.passenger-info {
   width: 100%;
-  background-color: $white;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  .passenger-selected {
+    background-color: $white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin: 0 10px;
+    >.line {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px;
+      >div {
+        flex: 2;
+        height: 50px;
+        line-height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          width: 20px;
+          height: 20px;
+          margin-left: 10px;
+        }
+      }
+      .center {
+        flex: 6;
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+      }
+      .right {
+        flex: 2;
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.write-info {
+  width: 100%;
+  margin-bottom: 10px;
+  >.line {
+    margin: 0 10px;
+    background-color: $white;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+    >span {
+      height: 50px;
+      line-height: 50px;
+      display: block;
+      margin-right: 130px;
+      padding-left: 20px;
+      color: #c8c8c8;
+      font-size: 16px;
+    }
+    >span.info {
+      display: inline-block;
+      margin-right: 0;
+      padding-left: 0;
+      width: 60px;
+      height: 50px;
+      line-height: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 50px;
+    }
+    >input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+    }
+    div.img {
+      height: 50px;
+      line-height: 50px;
+      width: 70px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.page-header {
+  height: 50px;
+  position: relative;
+  text-align: center;
+  background-color: #2196F3;
   display: flex;
-  padding: 0 2%;
-  box-shadow: 0px 3px 5px 0px #ececec;
-  span {
-    height: 40px;
-    line-height: 40px;
-    font-size: 1.4rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  >div {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    width: 19px;
+    height: 19px;
+    line-height: 50px;
+  }
+  span.right {
+    font-size: 14px;
+    color: $white;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    width: 50px;
   }
   span.center {
-    flex: 0.6;
+    font-size: 18px;
+    color: $white;
+    font-weight: 900;
+    height: 50px;
+    line-height: 50px;
   }
-  span:first-child {
-    flex: 0.2;
-    color: darken($gray, 30%);
-  }
-  span:last-child {
-    flex: 0.2;
+}
+
+//选择乘客页
+.passenger-page {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  .passenger {
+    .passenger-body {
+      margin-top: 10px;
+      .add-passenger {
+        width: 100%;
+        .line {
+          margin: 0 10px;
+          background-color: $white;
+          border-radius: 10px;
+          height: 50px;
+          input {
+            height: 50px;
+            display: block;
+            margin-right: 70px;
+            padding-left: 20px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    p.refresh {
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      text-align: center;
+      color: #c8c8c8;
+      i {
+        color: #c8c8c8;
+      }
+    }
+    .passenger-select {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .line {
+        margin: 0 10px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 10px;
+        background-color: $white;
+        .left {
+          flex: 2;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          position: relative;
+          >img {
+            width: 20px;
+            height: 20px;
+            margin-left: 20px;
+            z-index: 1;
+          }
+          &::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: #fafafa;
+            border-radius: 50%;
+            z-index: 0;
+          }
+        }
+        .center {
+          flex: 6;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          p {
+            height: 25px;
+            line-height: 25px;
+            color: rgb(50, 50, 50);
+            font-size: 15px;
+            margin-left: 10px;
+          }
+        }
+        .right {
+          flex: 2;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          >img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -947,7 +1035,7 @@
     margin: 5px 0;
     p {
       // color:lighten($gray,20%);
-      color: darken($gray, 30%);
+      color: #c8c8c8;
       height: 20px;
       line-height: 20px;
       font-size: 1.1rem;
@@ -963,20 +1051,22 @@
       color: darken($gray, 30%);
       >span {
         margin: 10px;
-        color: $orange;
+        color: #f35252;
+        font-size: 18px;
+        font-weight: 900;
       }
     }
   }
   .submit-order {
     flex: 0.4;
     >button {
-      background-color: $orange;
+      background-color: #329be8;
       color: $white;
       font-size: 1.3rem;
       outline: none;
       border: 0;
-      height: 30px;
-      margin-top: 10px;
+      height: 40px;
+      margin-top: 5px;
       border-radius: 5px;
       width: 90%;
     }

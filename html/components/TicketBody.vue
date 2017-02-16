@@ -173,8 +173,9 @@ export default {
 				this.startTime = this.formatNow(this.$store.getters.getInfo.startDate.server);
 			}
 			else{
-				this.handleConfirm(new Date(this.nowDate.getTime()+24*60*60*1000));
-				this.startTime = this.formatNow(new Date(this.nowDate.getTime()+24*60*60*1000))
+				let number = Date.now()+24*60*60*1000;
+				this.handleConfirm(new Date(number));
+				this.startTime = this.formatNow(new Date(number))
 			}
 			// 获取本地历史搜索数据
 			this.localStorage = this.getLocalStore().reverse();

@@ -46,6 +46,7 @@
 <script type="text/babel">
 import Utils from "../Utils/utils";
 const _ = require("underscore");
+import { Toast } from 'mint-ui';
 
 export default {
 	data () {
@@ -60,15 +61,13 @@ export default {
 			secondTimeMaxDay:0,//当前月份最大日期数
 			secondTimeWeek:0,//星期
 
-			timeDate:{
-				first:{
-					year:0,
-					month:0
-				},
-				second:{
-					year:0,
-					month:0
-				},
+			firsttimeDate:{
+				year:0,
+				month:0
+			},//记录两个月的数据
+			secondtimeDate:{
+				year:0,
+				month:0
 			},//记录两个月的数据
 
 			white:[0,1,2,3,4,5,6],//方便循环用
@@ -87,7 +86,7 @@ export default {
 		//如果有数据
 		if(this.$store.getters.getInfo.startDate.server){
 			let date = new Date(this.$store.getters.getInfo.startDate.server);
-			if(date.getMonth()+1===this.timeDate.first.month){
+			if(date.getMonth()+1===this.firsttimeDate.month){
 				//第一个月的
 				this.selected = date.getDate()+"_one";
 				this.side = "top";
@@ -131,7 +130,7 @@ export default {
 			this.secondTimeWeek = date_second.getDay();
 
 			this.firstTimeText = `${year}年 ${month}月`;
-			this.timeDate.first={
+			this.firsttimeDate={
 				year:year,
 				month:month
 			}
@@ -140,7 +139,7 @@ export default {
 			if(month+1>12){
 				this.secondTimeText = `${year+1}年 1月`;
 				this.secondTimeMaxDay = this.getMaxMonth(year+1,1);
-				this.timeDate.second={
+				this.secondtimeDate={
 					year:year+1,
 					month:1
 				}
@@ -148,7 +147,7 @@ export default {
 			else{
 				this.secondTimeText = `${year}年 ${month+1}月`;
 				this.secondTimeMaxDay = this.getMaxMonth(year,month+1);
-				this.timeDate.second={
+				this.secondtimeDate={
 					year:year,
 					month:month+1
 				}
@@ -179,21 +178,28 @@ export default {
 			if(event.target.className.indexOf("active")>-1){
 				//可以选中
 				this.selected = index;
+				let arrayTime = this.selected.split("_");
+				if(arrayTime[1]==="two"){
+					//下个月
+					this.side = "bottom";
+				}
+				else{
+					//这个月
+					this.side = "top";
+				}
 			}
 		},
 		yes(){
 			let arrayTime = this.selected.split("_");
-			let date = "";
+			let date ;
 
 			if(arrayTime[1]==="two"){
 				//下个月
-				date = new Date(this.timeDate.second.year+"-"+this.timeDate.second.month+"-"+arrayTime[0]);
-				this.side = "bottom";
+				date = new Date(this.secondtimeDate.year,this.secondtimeDate.month-1,arrayTime[0]);
 			}
 			else{
 				//这个月
-				date = new Date(this.timeDate.first.year+"-"+this.timeDate.first.month+"-"+arrayTime[0]);
-				this.side = "top";
+				date = new Date(this.firsttimeDate.year,this.firsttimeDate.month-1,arrayTime[0]);
 			}
 
 			this.$store.dispatch("setStartDate",{
@@ -207,6 +213,7 @@ export default {
 			if(typeof date==="string"){
 				date = new Date(date);
 			}
+			console.log(date)
 			let year = date.getYear()-100+2000;
 			let month = date.getMonth()+1;
 			let day = date.getDate();
