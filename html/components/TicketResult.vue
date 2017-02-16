@@ -48,7 +48,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="router animated bounceIn" v-show="routerDetailShow===index">
+					<div class="router animated zoomIn" v-show="routerDetailShow===index">
 						<div :class="{active:list.NodeType===2||list.NodeType===1,other:list.NodeType===0,last:list.NodeType===2}" v-for="(list,index) in item.Stations">
 							<span :class="{gray:list.NodeType===0,active:list.NodeType===2||list.NodeType===1}">{{list.Point.length>3?list.Point.slice(0,3)+'..':list.Point}}</span>
 						</div>
@@ -133,7 +133,7 @@
 	</div>
 </template>
 
-<style lang="css" scoped>
+<style lang="css">
 @import "../css/ticketresult.css";
 .list-complete-item {
   transition: all 1s;

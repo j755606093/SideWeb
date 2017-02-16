@@ -66,40 +66,40 @@
 
 	var _mintUi2 = _interopRequireDefault(_mintUi);
 
-	__webpack_require__(112);
-
-	var _Ticket = __webpack_require__(114);
+	var _Ticket = __webpack_require__(112);
 
 	var _Ticket2 = _interopRequireDefault(_Ticket);
 
-	var _TicketBody = __webpack_require__(141);
+	var _TicketBody = __webpack_require__(139);
 
 	var _TicketBody2 = _interopRequireDefault(_TicketBody);
 
-	var _TicketStartCity = __webpack_require__(149);
+	var _TicketStartCity = __webpack_require__(147);
 
 	var _TicketStartCity2 = _interopRequireDefault(_TicketStartCity);
 
-	var _TicketEndCity = __webpack_require__(154);
+	var _TicketEndCity = __webpack_require__(152);
 
 	var _TicketEndCity2 = _interopRequireDefault(_TicketEndCity);
 
-	var _TicketResult = __webpack_require__(159);
+	var _TicketResult = __webpack_require__(158);
 
 	var _TicketResult2 = _interopRequireDefault(_TicketResult);
 
-	var _TicketPay = __webpack_require__(172);
+	var _TicketPay = __webpack_require__(171);
 
 	var _TicketPay2 = _interopRequireDefault(_TicketPay);
 
-	var _TicketDate = __webpack_require__(195);
+	var _TicketDate = __webpack_require__(194);
 
 	var _TicketDate2 = _interopRequireDefault(_TicketDate);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//导入状态库
-	_vue2.default.use(_mintUi2.default);
+	// import 'mint-ui/lib/style.css'
+
+	_vue2.default.use(_mintUi2.default); //导入状态库
+
 	_vue2.default.use(_vuex2.default);
 	// Vue.use(require('vue-resource'));//引用ajax库
 	_vue2.default.use(_vueRouter2.default);
@@ -11290,6 +11290,7 @@
 		isFirst: true, //第一次启动
 		HeaderIsHome: true,
 		showHeader: false, //不显示头部
+		showBack: true, //不显示返回键
 		HeaderTitle: "身边订票",
 		showFooter: true, //显示底部tab
 
@@ -11407,33 +11408,39 @@
 
 			commit("SET_SHOWHEADER", data);
 		},
-		ChangeFooter: function ChangeFooter(_ref3, data) {
+		SetShowBack: function SetShowBack(_ref3, data) {
 			var commit = _ref3.commit,
 			    state = _ref3.state;
 
-			commit("CHANGE_FOOTER", data);
+			commit("SET_SHOWBACK", data);
 		},
-		setStartCity: function setStartCity(_ref4, data) {
+		ChangeFooter: function ChangeFooter(_ref4, data) {
 			var commit = _ref4.commit,
 			    state = _ref4.state;
 
-			commit(_Type2.default.SET_STARTCITY, data);
+			commit("CHANGE_FOOTER", data);
 		},
-		setEndCity: function setEndCity(_ref5, data) {
+		setStartCity: function setStartCity(_ref5, data) {
 			var commit = _ref5.commit,
 			    state = _ref5.state;
 
-			commit(_Type2.default.SET_ENDCITY, data);
+			commit(_Type2.default.SET_STARTCITY, data);
 		},
-		setStartDate: function setStartDate(_ref6, data) {
+		setEndCity: function setEndCity(_ref6, data) {
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			commit(_Type2.default.SET_STARTDATE, data);
+			commit(_Type2.default.SET_ENDCITY, data);
 		},
-		getCityDefault: function getCityDefault(_ref7) {
+		setStartDate: function setStartDate(_ref7, data) {
 			var commit = _ref7.commit,
 			    state = _ref7.state;
+
+			commit(_Type2.default.SET_STARTDATE, data);
+		},
+		getCityDefault: function getCityDefault(_ref8) {
+			var commit = _ref8.commit,
+			    state = _ref8.state;
 
 			return fetch(state.serverUrl + "/api/Transport/Index").then(checkStatus).then(function (result) {
 				return result.json();
@@ -11458,9 +11465,9 @@
 				return data;
 			});
 		},
-		setStartCityList: function setStartCityList(_ref8) {
-			var commit = _ref8.commit,
-			    state = _ref8.state;
+		setStartCityList: function setStartCityList(_ref9) {
+			var commit = _ref9.commit,
+			    state = _ref9.state;
 
 			// if(state.startCityList){
 			// 	// 列表空
@@ -11475,9 +11482,9 @@
 				return result.Data;
 			});
 		},
-		setEndCityList: function setEndCityList(_ref9) {
-			var commit = _ref9.commit,
-			    state = _ref9.state;
+		setEndCityList: function setEndCityList(_ref10) {
+			var commit = _ref10.commit,
+			    state = _ref10.state;
 
 			// if(state.endCityList){
 			// 	// 列表空
@@ -11492,9 +11499,9 @@
 				return result.Data;
 			});
 		},
-		setResultList: function setResultList(_ref10) {
-			var commit = _ref10.commit,
-			    state = _ref10.state;
+		setResultList: function setResultList(_ref11) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
 
 			return fetch(state.serverUrl + "/api/Transport/GetLines", {
 				method: 'POST',
@@ -11521,15 +11528,15 @@
 				}
 			});
 		},
-		setBusInfo: function setBusInfo(_ref11, data) {
-			var commit = _ref11.commit,
-			    state = _ref11.state;
+		setBusInfo: function setBusInfo(_ref12, data) {
+			var commit = _ref12.commit,
+			    state = _ref12.state;
 
 			commit(_Type2.default.SET_BUSINFO, data);
 		},
-		payMoney: function payMoney(_ref12, data) {
-			var commit = _ref12.commit,
-			    state = _ref12.state;
+		payMoney: function payMoney(_ref13, data) {
+			var commit = _ref13.commit,
+			    state = _ref13.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/Create", {
@@ -11552,9 +11559,9 @@
 				return result.json();
 			});
 		},
-		showWXpay: function showWXpay(_ref13, data) {
-			var commit = _ref13.commit,
-			    state = _ref13.state;
+		showWXpay: function showWXpay(_ref14, data) {
+			var commit = _ref14.commit,
+			    state = _ref14.state;
 
 			// 微信付款
 			return fetch(state.serverUrl + "/api/Order/PayOrder", {
@@ -11570,9 +11577,9 @@
 				return result.json();
 			});
 		},
-		setLocationResult: function setLocationResult(_ref14, data) {
-			var commit = _ref14.commit,
-			    state = _ref14.state;
+		setLocationResult: function setLocationResult(_ref15, data) {
+			var commit = _ref15.commit,
+			    state = _ref15.state;
 
 			return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
@@ -11596,21 +11603,21 @@
 				}
 			});
 		},
-		setHaveLocation: function setHaveLocation(_ref15, data) {
-			var commit = _ref15.commit,
-			    state = _ref15.state;
-
-			commit(_Type2.default.SET_HAVELOCATION, data);
-		},
-		setisFirst: function setisFirst(_ref16, data) {
+		setHaveLocation: function setHaveLocation(_ref16, data) {
 			var commit = _ref16.commit,
 			    state = _ref16.state;
 
-			commit("SET_ISFIRST", data);
+			commit(_Type2.default.SET_HAVELOCATION, data);
 		},
-		getPassenger: function getPassenger(_ref17) {
+		setisFirst: function setisFirst(_ref17, data) {
 			var commit = _ref17.commit,
 			    state = _ref17.state;
+
+			commit("SET_ISFIRST", data);
+		},
+		getPassenger: function getPassenger(_ref18) {
+			var commit = _ref18.commit,
+			    state = _ref18.state;
 
 			return fetch(state.serverUrl + "/api/Transport/UserRelevant", {
 				headers: {
@@ -11634,15 +11641,15 @@
 				return data;
 			});
 		},
-		setPassenger: function setPassenger(_ref18, data) {
-			var commit = _ref18.commit,
-			    state = _ref18.state;
+		setPassenger: function setPassenger(_ref19, data) {
+			var commit = _ref19.commit,
+			    state = _ref19.state;
 
 			commit("SET_PASSENGER", data);
 		},
-		addPassenger: function addPassenger(_ref19, data) {
-			var commit = _ref19.commit,
-			    state = _ref19.state;
+		addPassenger: function addPassenger(_ref20, data) {
+			var commit = _ref20.commit,
+			    state = _ref20.state;
 
 			return fetch(state.serverUrl + "/api/Passenger/Add", {
 				method: 'POST',
@@ -11660,15 +11667,15 @@
 				return result;
 			});
 		},
-		setPhone: function setPhone(_ref20, data) {
-			var commit = _ref20.commit,
-			    state = _ref20.state;
+		setPhone: function setPhone(_ref21, data) {
+			var commit = _ref21.commit,
+			    state = _ref21.state;
 
 			commit("SET_PHONE", data);
 		},
-		checkRebateStatus: function checkRebateStatus(_ref21, data) {
-			var commit = _ref21.commit,
-			    state = _ref21.state;
+		checkRebateStatus: function checkRebateStatus(_ref22, data) {
+			var commit = _ref22.commit,
+			    state = _ref22.state;
 
 			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
 				headers: {
@@ -11681,9 +11688,9 @@
 				return result;
 			});
 		},
-		deletePassenger: function deletePassenger(_ref22, data) {
-			var commit = _ref22.commit,
-			    state = _ref22.state;
+		deletePassenger: function deletePassenger(_ref23, data) {
+			var commit = _ref23.commit,
+			    state = _ref23.state;
 
 			return fetch(state.serverUrl + "/api/Passenger/Delete/" + data, {
 				headers: {
@@ -11696,9 +11703,9 @@
 				return result;
 			});
 		},
-		getWXconfig: function getWXconfig(_ref23) {
-			var commit = _ref23.commit,
-			    state = _ref23.state;
+		getWXconfig: function getWXconfig(_ref24) {
+			var commit = _ref24.commit,
+			    state = _ref24.state;
 
 			return fetch(state.serverUrl + "/api/WxBasis/GetJsPackage/", {
 				method: "POST",
@@ -11715,9 +11722,9 @@
 				return result;
 			});
 		},
-		cancelOrder: function cancelOrder(_ref24, data) {
-			var commit = _ref24.commit,
-			    state = _ref24.state;
+		cancelOrder: function cancelOrder(_ref25, data) {
+			var commit = _ref25.commit,
+			    state = _ref25.state;
 
 			// /api/Order/Cancel
 			return fetch(state.serverUrl + "/api/Order/Cancel", {
@@ -11740,6 +11747,8 @@
 	// mutations
 	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, "SET_SHOWHEADER", function SET_SHOWHEADER(state, data) {
 		state.showHeader = data;
+	}), (0, _defineProperty3.default)(_mutations, "SET_SHOWBACK", function SET_SHOWBACK(state, data) {
+		state.showBack = data;
 	}), (0, _defineProperty3.default)(_mutations, _Type2.default.CHANGE_HEADER, function (state, data) {
 		// 设置头部状态显示
 		state.HeaderIsHome = data.isHome;
@@ -29302,57 +29311,17 @@
 /* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(113);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(93)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../css-loader/index.js!./style.css", function() {
-				var newContent = require("!!./../../css-loader/index.js!./style.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 113 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-header {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #26a2ff;\n    box-sizing: border-box;\n    color: #fff;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-size: 14px;\n    height: 40px;\n    line-height: 1;\n    padding: 0 10px;\n    position: relative;\n    text-align: center;\n    white-space: nowrap;\n}\n.mint-header .mint-button {\n    background-color: transparent;\n    border: 0;\n    box-shadow: none;\n    color: inherit;\n    display: inline-block;\n    padding: 0;\n    font-size: inherit\n}\n.mint-header .mint-button::after {\n    content: none;\n}\n.mint-header.is-fixed {\n    top: 0;\n    right: 0;\n    left: 0;\n    position: fixed;\n    z-index: 1;\n}\n.mint-header-button {\n    -webkit-box-flex: .5;\n        -ms-flex: .5;\n            flex: .5;\n}\n.mint-header-button > a {\n    color: inherit;\n}\n.mint-header-button.is-right {\n    text-align: right;\n}\n.mint-header-button.is-left {\n    text-align: left;\n}\n.mint-header-title {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    font-size: inherit;\n    font-weight: 400;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-button {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    border-radius: 4px;\n    border: 0;\n    box-sizing: border-box;\n    color: inherit;\n    display: block;\n    font-size: 18px;\n    height: 41px;\n    outline: 0;\n    overflow: hidden;\n    position: relative;\n    text-align: center\n}\n.mint-button::after {\n    background-color: #000;\n    content: \" \";\n    opacity: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    position: absolute\n}\n.mint-button:not(.is-disabled):active::after {\n    opacity: .4\n}\n.mint-button.is-disabled {\n    opacity: .6\n}\n.mint-button-icon {\n    vertical-align: middle;\n    display: inline-block\n}\n.mint-button--default {\n    color: #656b79;\n    background-color: #f6f8fa;\n    box-shadow: 0 0 1px #b8bbbf\n}\n.mint-button--default.is-plain {\n    border: 1px solid #5a5a5a;\n    background-color: transparent;\n    box-shadow: none;\n    color: #5a5a5a\n}\n.mint-button--primary {\n    color: #fff;\n    background-color: #26a2ff\n}\n.mint-button--primary.is-plain {\n    border: 1px solid #26a2ff;\n    background-color: transparent;\n    color: #26a2ff\n}\n.mint-button--danger {\n    color: #fff;\n    background-color: #ef4f4f\n}\n.mint-button--danger.is-plain {\n    border: 1px solid #ef4f4f;\n    background-color: transparent;\n    color: #ef4f4f\n}\n.mint-button--large {\n    display: block;\n    width: 100%\n}\n.mint-button--normal {\n    display: inline-block;\n    padding: 0 12px\n}\n.mint-button--small {\n    display: inline-block;\n    font-size: 14px;\n    padding: 0 12px;\n    height: 33px\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-cell {\n    background-color:#fff;\n    box-sizing:border-box;\n    color:inherit;\n    min-height:48px;\n    display:block;\n    overflow:hidden;\n    position:relative;\n    text-decoration:none;\n}\n.mint-cell img {\n    vertical-align:middle;\n}\n.mint-cell:first-child .mint-cell-wrapper {\n    background-origin:border-box;\n}\n.mint-cell:last-child {\n    background-image:-webkit-linear-gradient(bottom, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-image:linear-gradient(0deg, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-size:100% 1px;\n    background-repeat:no-repeat;\n    background-position:bottom;\n}\n.mint-cell-wrapper {\n    background-image:-webkit-linear-gradient(top, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-image:linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-size: 120% 1px;\n    background-repeat: no-repeat;\n    background-position: top left;\n    background-origin: content-box;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    box-sizing: border-box;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-size: 16px;\n    line-height: 1;\n    min-height: inherit;\n    overflow: hidden;\n    padding: 0 10px;\n    width: 100%;\n}\n.mint-cell-mask {}\n.mint-cell-mask::after {\n    background-color:#000;\n    content:\" \";\n    opacity:0;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    position:absolute;\n}\n.mint-cell-mask:active::after {\n    opacity:.1;\n}\n.mint-cell-text {\n    vertical-align: middle;\n}\n.mint-cell-label {\n    color: #888;\n    display: block;\n    font-size: 12px;\n    margin-top: 6px;\n}\n.mint-cell-title {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n.mint-cell-value {\n    color: #888;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.mint-cell-value.is-link {\n    margin-right:24px;\n}\n.mint-cell-left {\n    position: absolute;\n    height: 100%;\n    left: 0;\n    -webkit-transform: translate3d(-100%, 0, 0);\n            transform: translate3d(-100%, 0, 0);\n}\n.mint-cell-right {\n    position: absolute;\n    height: 100%;\n    right: 0;\n    top: 0;\n    -webkit-transform: translate3d(100%, 0, 0);\n            transform: translate3d(100%, 0, 0);\n}\n.mint-cell-allow-right::after {\n    border: solid 2px #c8c8cd;\n    border-bottom-width: 0;\n    border-left-width: 0;\n    content: \" \";\n    top:50%;\n    right:20px;\n    position: absolute;\n    width:5px;\n    height:5px;\n    -webkit-transform: translateY(-50%) rotate(45deg);\n            transform: translateY(-50%) rotate(45deg);\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-cell-swipe .mint-cell-wrapper, .mint-cell-swipe .mint-cell-left, .mint-cell-swipe .mint-cell-right {\n    -webkit-transition: -webkit-transform 150ms ease-in-out;\n    transition: -webkit-transform 150ms ease-in-out;\n    transition: transform 150ms ease-in-out;\n    transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;\n}\n.mint-cell-swipe-buttongroup {\n    height: 100%;\n}\n.mint-cell-swipe-button {\n    height: 100%;\n    display: inline-block;\n    padding: 0 10px;\n    line-height: 48px;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-field {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.mint-field .mint-cell-title {\n    width: 105px;\n    -webkit-box-flex: 0;\n        -ms-flex: none;\n            flex: none;\n}\n.mint-field .mint-cell-value {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    color: inherit;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.mint-field.is-nolabel .mint-cell-title {\n    display: none;\n}\n.mint-field.is-textarea {\n    -webkit-box-align: inherit;\n        -ms-flex-align: inherit;\n            align-items: inherit;\n}\n.mint-field.is-textarea .mint-cell-title {\n    padding: 10px 0;\n}\n.mint-field.is-textarea .mint-cell-value {\n    padding: 5px 0;\n}\n.mint-field-core {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    border-radius: 0;\n    border: 0;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    outline: 0;\n    line-height: 1.6;\n    font-size: inherit;\n    width: 100%;\n}\n.mint-field-clear {\n    opacity: .2;\n}\n.mint-field-state {\n    color: inherit;\n    margin-left: 20px;\n}\n.mint-field-state .mintui {\n    font-size: 20px;\n}\n.mint-field-state.is-default {\n    margin-left: 0;\n}\n.mint-field-state.is-success {\n    color: #4caf50;\n}\n.mint-field-state.is-warning {\n    color: #ffc107;\n}\n.mint-field-state.is-error {\n    color: #f44336;\n}\n.mint-field-other {\n    top: 0;\n    right: 0;\n    position: absolute;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-badge {\n    color: #fff;\n    text-align: center;\n    display: inline-block\n}\n.mint-badge.is-size-large {\n    border-radius: 14px;\n    font-size: 18px;\n    padding: 2px 10px\n}\n.mint-badge.is-size-small {\n    border-radius: 8px;\n    font-size: 12px;\n    padding: 2px 6px\n}\n.mint-badge.is-size-normal {\n    border-radius: 12px;\n    font-size: 15px;\n    padding: 2px 8px\n}\n.mint-badge.is-warning {\n    background-color: #ffc107\n}\n.mint-badge.is-error {\n    background-color: #f44336\n}\n.mint-badge.is-primary {\n    background-color: #26a2ff\n}\n.mint-badge.is-success {\n    background-color: #4caf50\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-switch {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    position: relative\n}\n.mint-switch-label {\n    margin-left: 10px;\n    display: inline-block\n}\n.mint-switch-label:empty {\n    margin-left: 0\n}\n.mint-switch-core {\n    display: inline-block;\n    position: relative;\n    width: 52px;\n    height: 32px;\n    border: 1px solid #d9d9d9;\n    border-radius: 16px;\n    box-sizing: border-box;\n    background: #d9d9d9\n}\n.mint-switch-core::after, .mint-switch-core::before {\n    content: \" \";\n    top: 0;\n    left: 0;\n    position: absolute;\n    -webkit-transition: -webkit-transform .3s;\n    transition: -webkit-transform .3s;\n    transition: transform .3s;\n    transition: transform .3s, -webkit-transform .3s;\n    border-radius: 15px\n}\n.mint-switch-core::after {\n    width: 30px;\n    height: 30px;\n    background-color: #fff;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, .4)\n}\n.mint-switch-core::before {\n    width: 50px;\n    height: 30px;\n    background-color: #fdfdfd\n}\n.mint-switch-input {\n    display: none\n}\n.mint-switch-input:checked + .mint-switch-core {\n    border-color: #26a2ff;\n    background-color: #26a2ff\n}\n.mint-switch-input:checked + .mint-switch-core::before {\n    -webkit-transform: scale(0);\n            transform: scale(0)\n}\n.mint-switch-input:checked + .mint-switch-core::after {\n    -webkit-transform: translateX(20px);\n            transform: translateX(20px)\n}\n\n.mint-spinner-snake {\n  -webkit-animation: mint-spinner-rotate 0.8s infinite linear;\n          animation: mint-spinner-rotate 0.8s infinite linear;\n  border: 4px solid transparent;\n  border-radius: 50%;\n}\n@-webkit-keyframes mint-spinner-rotate {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes mint-spinner-rotate {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n.mint-spinner-double-bounce {\nposition: relative;\n}\n.mint-spinner-double-bounce-bounce1, .mint-spinner-double-bounce-bounce2 {\nwidth: 100%;\nheight: 100%;\nborder-radius: 50%;\nopacity: 0.6;\nposition: absolute;\ntop: 0;\nleft: 0;\n-webkit-animation: mint-spinner-double-bounce 2.0s infinite ease-in-out;\n        animation: mint-spinner-double-bounce 2.0s infinite ease-in-out;\n}\n.mint-spinner-double-bounce-bounce2 {\n-webkit-animation-delay: -1.0s;\n        animation-delay: -1.0s;\n}\n@-webkit-keyframes mint-spinner-double-bounce {\n0%, 100% {\n    -webkit-transform: scale(0.0);\n            transform: scale(0.0);\n}\n50% {\n    -webkit-transform: scale(1.0);\n            transform: scale(1.0);\n}\n}\n@keyframes mint-spinner-double-bounce {\n0%, 100% {\n    -webkit-transform: scale(0.0);\n            transform: scale(0.0);\n}\n50% {\n    -webkit-transform: scale(1.0);\n            transform: scale(1.0);\n}\n}\n\n.mint-spinner-triple-bounce {}\n.mint-spinner-triple-bounce-bounce1, .mint-spinner-triple-bounce-bounce2, .mint-spinner-triple-bounce-bounce3 {\nborder-radius: 100%;\ndisplay: inline-block;\n-webkit-animation: mint-spinner-triple-bounce 1.4s infinite ease-in-out both;\n        animation: mint-spinner-triple-bounce 1.4s infinite ease-in-out both;\n}\n.mint-spinner-triple-bounce-bounce1 {\n-webkit-animation-delay: -0.32s;\n        animation-delay: -0.32s;\n}\n.mint-spinner-triple-bounce-bounce2 {\n-webkit-animation-delay: -0.16s;\n        animation-delay: -0.16s;\n}\n@-webkit-keyframes mint-spinner-triple-bounce {\n0%, 80%, 100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n}\n40% {\n    -webkit-transform: scale(1.0);\n            transform: scale(1.0);\n}\n}\n@keyframes mint-spinner-triple-bounce {\n0%, 80%, 100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n}\n40% {\n    -webkit-transform: scale(1.0);\n            transform: scale(1.0);\n}\n}\n\n.mint-spinner-fading-circle {\n    position: relative\n}\n.mint-spinner-fading-circle-circle {\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    position: absolute\n}\n.mint-spinner-fading-circle-circle::before {\n    content: \" \";\n    display: block;\n    margin: 0 auto;\n    width: 15%;\n    height: 15%;\n    border-radius: 100%;\n    -webkit-animation: mint-fading-circle 1.2s infinite ease-in-out both;\n            animation: mint-fading-circle 1.2s infinite ease-in-out both\n}\n.mint-spinner-fading-circle-circle.is-circle2 {\n    -webkit-transform: rotate(30deg);\n            transform: rotate(30deg)\n}\n.mint-spinner-fading-circle-circle.is-circle2::before {\n    -webkit-animation-delay: -1.1s;\n            animation-delay: -1.1s\n}\n.mint-spinner-fading-circle-circle.is-circle3 {\n    -webkit-transform: rotate(60deg);\n            transform: rotate(60deg)\n}\n.mint-spinner-fading-circle-circle.is-circle3::before {\n    -webkit-animation-delay: -1s;\n            animation-delay: -1s\n}\n.mint-spinner-fading-circle-circle.is-circle4 {\n    -webkit-transform: rotate(90deg);\n            transform: rotate(90deg)\n}\n.mint-spinner-fading-circle-circle.is-circle4::before {\n    -webkit-animation-delay: -0.9s;\n            animation-delay: -0.9s\n}\n.mint-spinner-fading-circle-circle.is-circle5 {\n    -webkit-transform: rotate(120deg);\n            transform: rotate(120deg)\n}\n.mint-spinner-fading-circle-circle.is-circle5::before {\n    -webkit-animation-delay: -0.8s;\n            animation-delay: -0.8s\n}\n.mint-spinner-fading-circle-circle.is-circle6 {\n    -webkit-transform: rotate(150deg);\n            transform: rotate(150deg)\n}\n.mint-spinner-fading-circle-circle.is-circle6::before {\n    -webkit-animation-delay: -0.7s;\n            animation-delay: -0.7s\n}\n.mint-spinner-fading-circle-circle.is-circle7 {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg)\n}\n.mint-spinner-fading-circle-circle.is-circle7::before {\n    -webkit-animation-delay: -0.6s;\n            animation-delay: -0.6s\n}\n.mint-spinner-fading-circle-circle.is-circle8 {\n    -webkit-transform: rotate(210deg);\n            transform: rotate(210deg)\n}\n.mint-spinner-fading-circle-circle.is-circle8::before {\n    -webkit-animation-delay: -0.5s;\n            animation-delay: -0.5s\n}\n.mint-spinner-fading-circle-circle.is-circle9 {\n    -webkit-transform: rotate(240deg);\n            transform: rotate(240deg)\n}\n.mint-spinner-fading-circle-circle.is-circle9::before {\n    -webkit-animation-delay: -0.4s;\n            animation-delay: -0.4s\n}\n.mint-spinner-fading-circle-circle.is-circle10 {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg)\n}\n.mint-spinner-fading-circle-circle.is-circle10::before {\n    -webkit-animation-delay: -0.3s;\n            animation-delay: -0.3s\n}\n.mint-spinner-fading-circle-circle.is-circle11 {\n    -webkit-transform: rotate(300deg);\n            transform: rotate(300deg)\n}\n.mint-spinner-fading-circle-circle.is-circle11::before {\n    -webkit-animation-delay: -0.2s;\n            animation-delay: -0.2s\n}\n.mint-spinner-fading-circle-circle.is-circle12 {\n    -webkit-transform: rotate(330deg);\n            transform: rotate(330deg)\n}\n.mint-spinner-fading-circle-circle.is-circle12::before {\n    -webkit-animation-delay: -0.1s;\n            animation-delay: -0.1s\n}\n@-webkit-keyframes mint-fading-circle {\n    0%, 39%, 100% {\n        opacity: 0\n    }\n    40% {\n        opacity: 1\n    }\n}\n@keyframes mint-fading-circle {\n    0%, 39%, 100% {\n        opacity: 0\n    }\n    40% {\n        opacity: 1\n    }\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-tab-item {\n    display: block;\n    padding: 7px 0;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    text-decoration: none\n}\n.mint-tab-item-icon {\n    width: 24px;\n    height: 24px;\n    margin: 0 auto 5px\n}\n.mint-tab-item-icon:empty {\n    display: none\n}\n.mint-tab-item-icon > * {\n    display: block;\n    width: 100%;\n    height: 100%\n}\n.mint-tab-item-label {\n    color: inherit;\n    font-size: 12px;\n    line-height: 1\n}\n\n.mint-tab-container-item {\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    width: 100%\n}\n\n.mint-tab-container {\n    overflow: hidden;\n    position: relative;\n}\n.mint-tab-container .swipe-transition {\n    -webkit-transition: -webkit-transform 150ms ease-in-out;\n    transition: -webkit-transform 150ms ease-in-out;\n    transition: transform 150ms ease-in-out;\n    transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;\n}\n.mint-tab-container-wrap {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-navbar {\n    background-color: #fff;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    text-align: center;\n}\n.mint-navbar .mint-tab-item {\n    padding: 17px 0;\n    font-size: 15px\n}\n.mint-navbar .mint-tab-item:last-child {\n    border-right: 0;\n}\n.mint-navbar .mint-tab-item.is-selected {\n    border-bottom: 3px solid #26a2ff;\n    color: #26a2ff;\n    margin-bottom: -3px;\n}\n.mint-navbar.is-fixed {\n    top: 0;\n    right: 0;\n    left: 0;\n    position: fixed;\n    z-index: 1;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-tabbar {\n    background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-image: linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);\n    background-size: 100% 1px;\n    background-repeat: no-repeat;\n    background-position: top left;\n    position: relative;\n    background-color: #fafafa;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    position: absolute;\n    text-align: center;\n}\n.mint-tabbar > .mint-tab-item.is-selected {\n    background-color: #eaeaea;\n    color: #26a2ff;\n}\n.mint-tabbar.is-fixed {\n    right: 0;\n    bottom: 0;\n    left: 0;\n    position: fixed;\n    z-index: 1;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-search {\n    height: 100%;\n    height: 100vh;\n    overflow: hidden;\n}\n.mint-searchbar {\n    position: relative;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #d9d9d9;\n    box-sizing: border-box;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding: 8px 10px;\n    z-index: 1;\n}\n.mint-searchbar-inner {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #fff;\n    border-radius: 2px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    height: 28px;\n    padding: 4px 6px;\n}\n.mint-searchbar-inner .mintui-search {\n    font-size: 12px;\n    color: #d9d9d9;\n}\n.mint-searchbar-core {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    border: 0;\n    box-sizing: border-box;\n    height: 100%;\n    outline: 0;\n}\n.mint-searchbar-placeholder {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    color: #9b9b9b;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-size: 12px;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    position: absolute;\n}\n.mint-searchbar-placeholder .mintui-search {\n    font-size: 12px;\n}\n.mint-searchbar-cancel {\n    color: #26a2ff;\n    margin-left: 10px;\n    text-decoration: none;\n}\n.mint-search-list {\n    overflow: auto;\n    padding-top: 44px;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    position: absolute;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-checklist .mint-cell {\n    padding: 0;\n}\n.mint-checklist.is-limit .mint-checkbox-core:not(:checked) {\n    background-color: #d9d9d9;\n    border-color: #d9d9d9;\n}\n.mint-checklist-label {\n    display: block;\n    padding: 0 10px;\n}\n.mint-checklist-title {\n    color: #888;\n    display: block;\n    font-size: 12px;\n    margin: 8px;\n}\n.mint-checkbox {}\n.mint-checkbox.is-right {\n    float: right;\n}\n.mint-checkbox-label {\n    vertical-align: middle;\n    margin-left: 6px;\n}\n.mint-checkbox-input {\n    display: none;\n}\n.mint-checkbox-input:checked + .mint-checkbox-core {\n    background-color: #26a2ff;\n    border-color: #26a2ff;\n}\n.mint-checkbox-input:checked + .mint-checkbox-core::after {\n    border-color: #fff;\n    -webkit-transform: rotate(45deg) scale(1);\n            transform: rotate(45deg) scale(1);\n}\n.mint-checkbox-input[disabled] + .mint-checkbox-core {\n    background-color: #d9d9d9;\n    border-color: #ccc;\n}\n.mint-checkbox-core {\n    display: inline-block;\n    background-color: #fff;\n    border-radius: 100%;\n    border: 1px solid #ccc;\n    position: relative;\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n}\n.mint-checkbox-core::after {\n    border: 2px solid transparent;\n    border-left: 0;\n    border-top: 0;\n    content: \" \";\n    top: 3px;\n    left: 6px;\n    position: absolute;\n    width: 4px;\n    height: 8px;\n    -webkit-transform: rotate(45deg) scale(0);\n            transform: rotate(45deg) scale(0);\n    -webkit-transition: -webkit-transform .2s;\n    transition: -webkit-transform .2s;\n    transition: transform .2s;\n    transition: transform .2s, -webkit-transform .2s;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-radiolist .mint-cell {\n    padding: 0;\n}\n.mint-radiolist-label {\n    display: block;\n    padding: 0 10px;\n}\n.mint-radiolist-title {\n    font-size: 12px;\n    margin: 8px;\n    display: block;\n    color: #888;\n}\n.mint-radio {}\n.mint-radio.is-right {\n    float: right;\n}\n.mint-radio-label {\n    vertical-align: middle;\n    margin-left: 6px;\n}\n.mint-radio-input {\n    display: none;\n}\n.mint-radio-input:checked + .mint-radio-core {\n    background-color: #26a2ff;\n    border-color: #26a2ff;\n}\n.mint-radio-input:checked + .mint-radio-core::after {\n    background-color: #fff;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n.mint-radio-input[disabled] + .mint-radio-core {\n    background-color: #d9d9d9;\n    border-color: #ccc;\n}\n.mint-radio-core {\n    display: inline-block;\n    background-color: #fff;\n    border-radius: 100%;\n    border: 1px solid #ccc;\n    position: relative;\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n}\n.mint-radio-core::after {\n    content: \" \";\n    border-radius: 100%;\n    top: 5px;\n    left: 5px;\n    position: absolute;\n    width: 8px;\n    height: 8px;\n    -webkit-transition: -webkit-transform .2s;\n    transition: -webkit-transform .2s;\n    transition: transform .2s;\n    transition: transform .2s, -webkit-transform .2s;\n    -webkit-transform: scale(0);\n            transform: scale(0);\n}\n\n.mint-loadmore {\n    overflow: hidden\n}\n.mint-loadmore-content {}\n.mint-loadmore-content.is-dropped {\n    -webkit-transition: .2s;\n    transition: .2s\n}\n.mint-loadmore-top, .mint-loadmore-bottom {\n    text-align: center;\n    height: 50px;\n    line-height: 50px\n}\n.mint-loadmore-top {\n    margin-top: -50px\n}\n.mint-loadmore-bottom {\n    margin-bottom: -50px\n}\n.mint-loadmore-spinner {\n    display: inline-block;\n    margin-right: 5px;\n    vertical-align: middle\n}\n.mint-loadmore-text {\n    vertical-align: middle\n}\n\n.mint-actionsheet {\n  position: fixed;\n  background: #e0e0e0;\n  width: 100%;\n  text-align: center;\n  bottom: 0;\n  left: 50%;\n  -webkit-transform: translate3d(-50%, 0, 0);\n          transform: translate3d(-50%, 0, 0);\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-transition: -webkit-transform .3s ease-out;\n  transition: -webkit-transform .3s ease-out;\n  transition: transform .3s ease-out;\n  transition: transform .3s ease-out, -webkit-transform .3s ease-out;\n}\n.mint-actionsheet-list {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.mint-actionsheet-listitem {\n  border-bottom: solid 1px #e0e0e0;\n}\n.mint-actionsheet-listitem, .mint-actionsheet-button {\n  display: block;\n  width: 100%;\n  height: 45px;\n  line-height: 45px;\n  font-size: 18px;\n  color: #333;\n  background-color: #fff;\n}\n.mint-actionsheet-listitem:active, .mint-actionsheet-button:active {\n  background-color: #f0f0f0;\n}\n.actionsheet-float-enter, .actionsheet-float-leave-active {\n  -webkit-transform: translate3d(-50%, 100%, 0);\n          transform: translate3d(-50%, 100%, 0);\n}\n.v-modal-enter{-webkit-animation:v-modal-in .2s ease;animation:v-modal-in .2s ease}.v-modal-leave{-webkit-animation:v-modal-out .2s ease forwards;animation:v-modal-out .2s ease forwards}@-webkit-keyframes v-modal-in{0%{opacity:0}}@keyframes v-modal-in{0%{opacity:0}}@-webkit-keyframes v-modal-out{to{opacity:0}}@keyframes v-modal-out{to{opacity:0}}.v-modal{position:fixed;left:0;top:0;width:100%;height:100%;opacity:.5;background:#000}\n.mint-popup {\n  position: fixed;\n  background: #fff;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate3d(-50%, -50%, 0);\n          transform: translate3d(-50%, -50%, 0);\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-transition: .2s ease-out;\n  transition: .2s ease-out;\n}\n.mint-popup-top {\n  top: 0;\n  right: auto;\n  bottom: auto;\n  left: 50%;\n  -webkit-transform: translate3d(-50%, 0, 0);\n          transform: translate3d(-50%, 0, 0);\n}\n.mint-popup-right {\n  top: 50%;\n  right: 0;\n  bottom: auto;\n  left: auto;\n  -webkit-transform: translate3d(0, -50%, 0);\n          transform: translate3d(0, -50%, 0);\n}\n.mint-popup-bottom {\n  top: auto;\n  right: auto;\n  bottom: 0;\n  left: 50%;\n  -webkit-transform: translate3d(-50%, 0, 0);\n          transform: translate3d(-50%, 0, 0);\n}\n.mint-popup-left {\n  top: 50%;\n  right: auto;\n  bottom: auto;\n  left: 0;\n  -webkit-transform: translate3d(0, -50%, 0);\n          transform: translate3d(0, -50%, 0);\n}\n.popup-slide-top-enter, .popup-slide-top-leave-active {\n  -webkit-transform: translate3d(-50%, -100%, 0);\n          transform: translate3d(-50%, -100%, 0);\n}\n.popup-slide-right-enter, .popup-slide-right-leave-active {\n  -webkit-transform: translate3d(100%, -50%, 0);\n          transform: translate3d(100%, -50%, 0);\n}\n.popup-slide-bottom-enter, .popup-slide-bottom-leave-active {\n  -webkit-transform: translate3d(-50%, 100%, 0);\n          transform: translate3d(-50%, 100%, 0);\n}\n.popup-slide-left-enter, .popup-slide-left-leave-active {\n  -webkit-transform: translate3d(-100%, -50%, 0);\n          transform: translate3d(-100%, -50%, 0);\n}\n.popup-fade-enter, .popup-fade-leave-active {\n  opacity: 0;\n}\n\n.mint-swipe {\n    overflow: hidden;\n    position: relative;\n    height: 100%;\n}\n.mint-swipe-items-wrap {\n    position: relative;\n    overflow: hidden;\n    height: 100%;\n}\n.mint-swipe-items-wrap > div {\n    position: absolute;\n    -webkit-transform: translateX(-100%);\n            transform: translateX(-100%);\n    width: 100%;\n    height: 100%;\n    display: none\n}\n.mint-swipe-items-wrap > div.is-active {\n    display: block;\n    -webkit-transform: none;\n            transform: none;\n}\n.mint-swipe-indicators {\n    position: absolute;\n    bottom: 10px;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%);\n}\n.mint-swipe-indicator {\n    width: 8px;\n    height: 8px;\n    display: inline-block;\n    border-radius: 100%;\n    background: #000;\n    opacity: 0.2;\n    margin: 0 3px;\n}\n.mint-swipe-indicator.is-active {\n    background: #fff;\n}\n\n\n.mt-range {\n    position: relative;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    height: 30px;\n    line-height: 30px\n}\n.mt-range > * {\n    display: -ms-flexbox;\n    display: flex;\n    display: -webkit-box\n}\n.mt-range *[slot=start] {\n    margin-right: 5px\n}\n.mt-range *[slot=end] {\n    margin-left: 5px\n}\n.mt-range-content {\n    position: relative;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    margin-right: 30px\n}\n.mt-range-runway {\n    position: absolute;\n    top: 50%;\n    -webkit-transform: translateY(-50%);\n            transform: translateY(-50%);\n    left: 0;\n    right: -30px;\n    border-top-color: #a9acb1;\n    border-top-style: solid\n}\n.mt-range-thumb {\n    background-color: #fff;\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 30px;\n    height: 30px;\n    border-radius: 100%;\n    cursor: move;\n    box-shadow: 0 1px 3px rgba(0,0,0,.4)\n}\n.mt-range-progress {\n    position: absolute;\n    display: block;\n    background-color: #26a2ff;\n    top: 50%;\n    -webkit-transform: translateY(-50%);\n            transform: translateY(-50%);\n    width: 0\n}\n.mt-range--disabled {\n    opacity: 0.5\n}\n\n.picker {\n  overflow: hidden;\n}\n.picker-toolbar {\n  height: 40px;\n}\n.picker-items {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  padding: 0;\n  text-align: right;\n  font-size: 24px;\n  position: relative;\n}\n.picker-center-highlight {\n  height: 36px;\n  box-sizing: border-box;\n  position: absolute;\n  left: 0;\n  width: 100%;\n  top: 50%;\n  margin-top: -18px;\n  pointer-events: none\n}\n.picker-center-highlight:before, .picker-center-highlight:after {\n  content: '';\n  position: absolute;\n  height: 1px;\n  width: 100%;\n  background-color: #eaeaea;\n  display: block;\n  z-index: 15;\n  -webkit-transform: scaleY(0.5);\n          transform: scaleY(0.5);\n}\n.picker-center-highlight:before {\n  left: 0;\n  top: 0;\n  bottom: auto;\n  right: auto;\n}\n.picker-center-highlight:after {\n  left: 0;\n  bottom: 0;\n  right: auto;\n  top: auto;\n}\n\n.picker-slot {\n  font-size: 18px;\n  overflow: hidden;\n  position: relative;\n  max-height: 100%\n}\n.picker-slot.picker-slot-left {\n  text-align: left;\n}\n.picker-slot.picker-slot-center {\n  text-align: center;\n}\n.picker-slot.picker-slot-right {\n  text-align: right;\n}\n.picker-slot.picker-slot-divider {\n  color: #000;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center\n}\n.picker-slot-wrapper {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-timing-function: ease-out;\n          transition-timing-function: ease-out;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n.picker-slot-wrapper.dragging, .picker-slot-wrapper.dragging .picker-item {\n  -webkit-transition-duration: 0s;\n          transition-duration: 0s;\n}\n.picker-item {\n  height: 36px;\n  line-height: 36px;\n  padding: 0 10px;\n  white-space: nowrap;\n  position: relative;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: #707274;\n  left: 0;\n  top: 0;\n  width: 100%;\n  box-sizing: border-box;\n  -webkit-transition-duration: .3s;\n          transition-duration: .3s;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n.picker-slot-absolute .picker-item {\n  position: absolute;\n}\n.picker-item.picker-item-far {\n  pointer-events: none\n}\n.picker-item.picker-selected {\n  color: #000;\n  -webkit-transform: translate3d(0, 0, 0) rotateX(0);\n          transform: translate3d(0, 0, 0) rotateX(0);\n}\n.picker-3d .picker-items {\n  overflow: hidden;\n  -webkit-perspective: 700px;\n          perspective: 700px;\n}\n.picker-3d .picker-item, .picker-3d .picker-slot, .picker-3d .picker-slot-wrapper {\n  -webkit-transform-style: preserve-3d;\n          transform-style: preserve-3d\n}\n.picker-3d .picker-slot {\n  overflow: visible\n}\n.picker-3d .picker-item {\n  -webkit-transform-origin: center center;\n          transform-origin: center center;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-transition-timing-function: ease-out;\n          transition-timing-function: ease-out\n}\n\n.mt-progress {\n    position: relative;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    height: 30px;\n    line-height: 30px\n}\n.mt-progress > * {\n    display: -ms-flexbox;\n    display: flex;\n    display: -webkit-box\n}\n.mt-progress *[slot=\"start\"] {\n    margin-right: 5px\n}\n.mt-progress *[slot=\"end\"] {\n    margin-left: 5px\n}\n.mt-progress-content {\n    position: relative;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1\n}\n.mt-progress-runway {\n    position: absolute;\n    -webkit-transform: translate(0, -50%);\n            transform: translate(0, -50%);\n    top: 50%;\n    left: 0;\n    right: 0;\n    background-color: #ebebeb;\n    height: 3px\n}\n.mt-progress-progress {\n    position: absolute;\n    display: block;\n    background-color: #26a2ff;\n    top: 50%;\n    -webkit-transform: translate(0, -50%);\n            transform: translate(0, -50%);\n    width: 0\n}\n\n.mint-toast {\n    position: fixed;\n    max-width: 80%;\n    border-radius: 5px;\n    background: rgba(0, 0, 0, 0.7);\n    color: #fff;\n    box-sizing: border-box;\n    text-align: center;\n    z-index: 1000;\n    -webkit-transition: opacity .3s linear;\n    transition: opacity .3s linear\n}\n.mint-toast.is-placebottom {\n    bottom: 50px;\n    left: 50%;\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0)\n}\n.mint-toast.is-placemiddle {\n    left: 50%;\n    top: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%)\n}\n.mint-toast.is-placetop {\n    top: 50px;\n    left: 50%;\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0)\n}\n.mint-toast-icon {\n    display: block;\n    text-align: center;\n    font-size: 56px\n}\n.mint-toast-text {\n    font-size: 14px;\n    display: block;\n    text-align: center\n}\n.mint-toast-pop-enter, .mint-toast-pop-leave-active {\n    opacity: 0\n}\n\n.mint-indicator {\n  -webkit-transition: opacity .2s linear;\n  transition: opacity .2s linear;\n}\n.mint-indicator-wrapper {\n  top: 50%;\n  left: 50%;\n  position: fixed;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  color: white;\n  box-sizing: border-box;\n  text-align: center;\n}\n.mint-indicator-text {\n  display: block;\n  color: #fff;\n  text-align: center;\n  margin-top: 10px;\n  font-size: 16px;\n}\n.mint-indicator-spin {\n  display: inline-block;\n  text-align: center;\n}\n.mint-indicator-mask {\n  top: 0;\n  left: 0;\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  opacity: 0;\n  background: transparent;\n}\n.mint-indicator-enter, .mint-indicator-leave-active {\n  opacity: 0;\n}\n\n.mint-msgbox {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate3d(-50%, -50%, 0);\n          transform: translate3d(-50%, -50%, 0);\n  background-color: #fff;\n  width: 85%;\n  border-radius: 3px;\n  font-size: 16px;\n  -webkit-user-select: none;\n  overflow: hidden;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-transition: .2s;\n  transition: .2s;\n}\n.mint-msgbox-header {\n  padding: 15px 0 0;\n}\n.mint-msgbox-content {\n  padding: 10px 20px 15px;\n  border-bottom: 1px solid #ddd;\n  min-height: 36px;\n  position: relative;\n}\n.mint-msgbox-input {\n  padding-top: 15px;\n}\n.mint-msgbox-input input {\n  border: 1px solid #dedede;\n  border-radius: 5px;\n  padding: 4px 5px;\n  width: 100%;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  outline: none;\n}\n.mint-msgbox-input input.invalid {\n  border-color: #ff4949;\n}\n.mint-msgbox-input input.invalid:focus {\n  border-color: #ff4949;\n}\n.mint-msgbox-errormsg {\n  color: red;\n  font-size: 12px;\n  min-height: 18px;\n  margin-top: 2px;\n}\n.mint-msgbox-title {\n  text-align: center;\n  padding-left: 0;\n  margin-bottom: 0;\n  font-size: 16px;\n  font-weight: 700;\n  color: #333;\n}\n.mint-msgbox-message {\n  color: #999;\n  margin: 0;\n  text-align: center;\n  line-height: 36px;\n}\n.mint-msgbox-btns {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 40px;\n  line-height: 40px;\n}\n.mint-msgbox-btn {\n  line-height: 35px;\n  display: block;\n  background-color: #fff;\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0;\n  border: 0;\n}\n.mint-msgbox-btn:focus {\n  outline: none;\n}\n.mint-msgbox-btn:active {\n  background-color: #fff;\n}\n.mint-msgbox-cancel {\n  width: 50%;\n  border-right: 1px solid #ddd;\n}\n.mint-msgbox-cancel:active {\n  color: #000;\n}\n.mint-msgbox-confirm {\n  color: #26a2ff;\n  width: 50%;\n}\n.mint-msgbox-confirm:active {\n  color: #26a2ff;\n}\n.msgbox-bounce-enter {\n  opacity: 0;\n  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.7);\n          transform: translate3d(-50%, -50%, 0) scale(0.7);\n}\n.msgbox-bounce-leave-active {\n  opacity: 0;\n  -webkit-transform: translate3d(-50%, -50%, 0) scale(0.9);\n          transform: translate3d(-50%, -50%, 0) scale(0.9);\n}\n\n.v-modal-enter{-webkit-animation:v-modal-in .2s ease;animation:v-modal-in .2s ease\n}\n.v-modal-leave{-webkit-animation:v-modal-out .2s ease forwards;animation:v-modal-out .2s ease forwards\n}\n@-webkit-keyframes v-modal-in{\n0%{opacity:0\n}\n}\n@keyframes v-modal-in{\n0%{opacity:0\n}\n}\n@-webkit-keyframes v-modal-out{\nto{opacity:0\n}\n}\n@keyframes v-modal-out{\nto{opacity:0\n}\n}\n.v-modal{position:fixed;left:0;top:0;width:100%;height:100%;opacity:.5;background:#000\n}/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-datetime {\n    width: 100%;\n}\n.mint-datetime .picker-slot-wrapper, .mint-datetime .picker-item {\n    -webkit-backface-visibility: hidden;\n            backface-visibility: hidden;\n}\n.mint-datetime .picker-toolbar {\n    border-bottom: solid 1px #eaeaea;\n}\n.mint-datetime-action {\n    display: inline-block;\n    width: 50%;\n    text-align: center;\n    line-height: 40px;\n    font-size: 16px;\n    color: #26a2ff;\n}\n.mint-datetime-cancel {\n    float: left;\n}\n.mint-datetime-confirm {\n    float: right;\n}\n/* Cell Component */\n/* Header Component */\n/* Button Component */\n/* Tab Item Component */\n/* Tabbar Component */\n/* Navbar Component */\n/* Checklist Component */\n/* Radio Component */\n/* z-index */\n.mint-indexlist {\n    width: 100%;\n    position: relative;\n    overflow: hidden\n}\n.mint-indexlist-content {\n    margin: 0;\n    padding: 0;\n    overflow: auto\n}\n.mint-indexlist-nav {\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    margin: 0;\n    background-color: #fff;\n    border-left: solid 1px #ddd;\n    text-align: center;\n    max-height: 100%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center\n}\n.mint-indexlist-navlist {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    max-height: 100%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column\n}\n.mint-indexlist-navitem {\n    padding: 2px 6px;\n    font-size: 12px;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    -webkit-touch-callout: none\n}\n.mint-indexlist-indicator {\n    position: absolute;\n    width: 50px;\n    height: 50px;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    text-align: center;\n    line-height: 50px;\n    background-color: rgba(0, 0, 0, .7);\n    border-radius: 5px;\n    color: #fff;\n    font-size: 22px\n}\n\n.mint-indexsection {\n    padding: 0;\n    margin: 0\n}\n.mint-indexsection-index {\n    margin: 0;\n    padding: 10px;\n    background-color: #fafafa\n}\n.mint-indexsection-index + ul {\n    padding: 0\n}\n\n.mint-palette-button{\n  display:inline-block;\n  position:relative;\n  border-radius:50%;\n  width: 56px;\n  height:56px;\n  line-height:56px;\n  text-align:center;\n  -webkit-transition:-webkit-transform .1s ease-in-out;\n  transition:-webkit-transform .1s ease-in-out;\n  transition:transform .1s ease-in-out;\n  transition:transform .1s ease-in-out, -webkit-transform .1s ease-in-out;\n}\n.mint-main-button{\n  position:absolute;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  border-radius:50%;\n  background-color:blue;\n  font-size:2em;\n}\n.mint-palette-button-active{\n  -webkit-animation: mint-zoom 0.5s ease-in-out;\n          animation: mint-zoom 0.5s ease-in-out;\n}\n.mint-sub-button-container>*{\n  position:absolute;\n  top:15px;\n  left:15px;\n  width:25px;\n  height:25px;\n  -webkit-transition:-webkit-transform .3s ease-in-out;\n  transition:-webkit-transform .3s ease-in-out;\n  transition:transform .3s ease-in-out;\n  transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;\n}\n@-webkit-keyframes mint-zoom{\n0% {-webkit-transform:scale(1);transform:scale(1)\n}\n10% {-webkit-transform:scale(1.1);transform:scale(1.1)\n}\n30% {-webkit-transform:scale(0.9);transform:scale(0.9)\n}\n50% {-webkit-transform:scale(1.05);transform:scale(1.05)\n}\n70% {-webkit-transform:scale(0.95);transform:scale(0.95)\n}\n90% {-webkit-transform:scale(1.01);transform:scale(1.01)\n}\n100% {-webkit-transform:scale(1);transform:scale(1)\n}\n}\n@keyframes mint-zoom{\n0% {-webkit-transform:scale(1);transform:scale(1)\n}\n10% {-webkit-transform:scale(1.1);transform:scale(1.1)\n}\n30% {-webkit-transform:scale(0.9);transform:scale(0.9)\n}\n50% {-webkit-transform:scale(1.05);transform:scale(1.05)\n}\n70% {-webkit-transform:scale(0.95);transform:scale(0.95)\n}\n90% {-webkit-transform:scale(1.01);transform:scale(1.01)\n}\n100% {-webkit-transform:scale(1);transform:scale(1)\n}\n}\n\n@font-face {font-family: \"mintui\";\n  src: url(data:application/x-font-ttf;base64,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)\n}\n\n.mintui {\n  font-family:\"mintui\" !important;\n  font-size:16px;\n  font-style:normal;\n  -webkit-font-smoothing: antialiased;\n  -webkit-text-stroke-width: 0.2px;\n  -moz-osx-font-smoothing: grayscale;\n}\n.mintui-search:before { content: \"\\E604\"; }\n.mintui-more:before { content: \"\\E601\"; }\n.mintui-back:before { content: \"\\E600\"; }\n.mintui-field-error:before { content: \"\\E605\"; }\n.mintui-field-warning:before { content: \"\\E608\"; }\n.mintui-success:before { content: \"\\E602\"; }\n.mintui-field-success:before { content: \"\\E609\"; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 114 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(115)
+	__webpack_require__(113)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(119)
+	__vue_exports__ = __webpack_require__(117)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(140)
+	var __vue_template__ = __webpack_require__(138)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -29386,16 +29355,16 @@
 
 
 /***/ },
-/* 115 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(116);
+	var content = __webpack_require__(114);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29412,12 +29381,12 @@
 	}
 
 /***/ },
-/* 116 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
 	// imports
-	exports.i(__webpack_require__(117), "");
+	exports.i(__webpack_require__(115), "");
 
 	// module
 	exports.push([module.id, "\n.body{\n\t/*padding-top:50px;*/\n\t/*position: absolute;\n\ttop:0;\n\tleft:0;\n\tright:0;\n\tbottom:0;*/\n}\n", ""]);
@@ -29426,7 +29395,7 @@
 
 
 /***/ },
-/* 117 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -29440,7 +29409,7 @@
 
 
 /***/ },
-/* 118 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29662,7 +29631,7 @@
 
 
 /***/ },
-/* 119 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29671,19 +29640,19 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _SideHeader = __webpack_require__(121);
+	var _SideHeader = __webpack_require__(119);
 
 	var _SideHeader2 = _interopRequireDefault(_SideHeader);
 
-	var _TicketInfo = __webpack_require__(127);
+	var _TicketInfo = __webpack_require__(125);
 
 	var _TicketInfo2 = _interopRequireDefault(_TicketInfo);
 
-	var _Footer = __webpack_require__(132);
+	var _Footer = __webpack_require__(130);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -29741,7 +29710,7 @@
 	};
 
 /***/ },
-/* 120 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29934,20 +29903,20 @@
 	};
 
 /***/ },
-/* 121 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(122)
+	__webpack_require__(120)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(124)
+	__vue_exports__ = __webpack_require__(122)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(125)
+	var __vue_template__ = __webpack_require__(123)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -29981,16 +29950,16 @@
 
 
 /***/ },
-/* 122 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(123);
+	var content = __webpack_require__(121);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30007,7 +29976,7 @@
 	}
 
 /***/ },
-/* 123 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -30021,7 +29990,7 @@
 
 
 /***/ },
-/* 124 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30036,7 +30005,7 @@
 
 	var _vuex = __webpack_require__(4);
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -30130,6 +30099,9 @@
 				}
 				return this.$store.state.tickets.HeaderIsHome;
 			},
+			showBack: function showBack() {
+				return this.$store.state.tickets.showBack;
+			},
 			showHeader: function showHeader() {
 				return this.$store.state.tickets.showHeader;
 			},
@@ -30149,7 +30121,7 @@
 	};
 
 /***/ },
-/* 125 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -30165,13 +30137,19 @@
 	  }, [_vm._h('span', ["身边订票"])]) : _vm._h('div', {
 	    staticClass: "other"
 	  }, [_vm._h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showBack),
+	      expression: "showBack"
+	    }],
 	    staticClass: "left",
 	    on: {
 	      "click": _vm.GoBack
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(126)
+	      "src": __webpack_require__(124)
 	    }
 	  }), " "]), " ", _vm._h('div', {
 	    staticClass: "center"
@@ -30185,26 +30163,26 @@
 	}
 
 /***/ },
-/* 126 */
+/* 124 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAzNJREFUaAXtmk+oDVEcx99VihCS0stGio2NlJToeS9SpPxbvbJULCxsnrJSxMJGyUt2r5SkRCIW/peykIWFkmz8KRIvf+Nxfb5Pp+6b5s6cc+/MnJlz51ff7pk5v5n7/czvnLnnzr2NZrPZ10sxrZdgxVoDh17xusJ1hTu7Als47CH6ht6ic2gR8h6NHD6WRqA6EUP2mn1r0JuYvsJ2ZT2HD+E8DlZAi9FJNXxGlhUW7PEUmJ/0z0ETKXm5dWdV4QM4TIMVxAw0Ww1fkQXwPsyfsgT4SN5ny9xc0roFFuwZB2dnHXJzSe1mDrvC3oFgM/qVC4nlSTutcCewW33D6pp0UuG9HOcyNB+TP4S+Iu/hCjyM4zFkOzIEuwmNo1KErXGZrTysIGyBg4C1BQ4GVsBpc9gV9innHEClmbN4mRJJwNvIvIxsh/0zcgfRB1TaaAcj2EuoXX8UqBKwMh0HZGCnR6nabFcGNg44aFgBt85hV9jfHH8YlXrO4u89uo8mV3oGWIv6q8h2GJNaqfiE2/3ogoCX0XiCZqGQ4y9wG3XT0kO30GFVSLEeUYWf01iuPT0QE6JWqXslmgK+1yu0cD7QkF5CQzeteYGD69HwelX4FdqBfqBQ4x1g29Ej8zks0EF0Dc3UhkVo4XEQ6SeUMocWRnryIr9TVlradoV+yTEDqOzQWPwfGtKtcZsNPV20Hd5Lyb2L9LtRJSIKLNNBQ8cBG+idNCbHvXakhKl0f0qe9+52wDJ2A+1CLtA3yV+IShtJwDKtb1Au0CvI15SwhW6QW2ikActMntCF/yvOBjhv6NJV2BhSpXcj2y8brsPbvE+ur7YVNiau0NiDXKB185trTuD71RVYfs8jF+hV5N9CpYBuXUvjySmGyR5DthdN69kN6DvyFrZm4wy6Vno1Jzkad6Ii93VTYePTpdJ6ergAFf5xZMx2U2FzDlVaj0BtYj5JXudyFsAC1V8gbKA1f7/oAF+RFbD8j6I06Ivk/FGyr8hiDke96x8+p1H0Yr5g31rk9aeZPIBh6luHRtBKNI6uo2NINy2vkRewV6ikN48Ou6TcIPpq4CDKmABRVzjh4gTR9Q8tuseIX8JTHQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 127 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(128)
+	__webpack_require__(126)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(130)
+	__vue_exports__ = __webpack_require__(128)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(131)
+	var __vue_template__ = __webpack_require__(129)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -30238,16 +30216,16 @@
 
 
 /***/ },
-/* 128 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(129);
+	var content = __webpack_require__(127);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30264,7 +30242,7 @@
 	}
 
 /***/ },
-/* 129 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -30278,7 +30256,7 @@
 
 
 /***/ },
-/* 130 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30287,7 +30265,7 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -30349,7 +30327,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -30370,20 +30348,20 @@
 	}
 
 /***/ },
-/* 132 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(133)
+	__webpack_require__(131)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(135)
+	__vue_exports__ = __webpack_require__(133)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(136)
+	var __vue_template__ = __webpack_require__(134)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -30417,16 +30395,16 @@
 
 
 /***/ },
-/* 133 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(134);
+	var content = __webpack_require__(132);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30443,7 +30421,7 @@
 	}
 
 /***/ },
-/* 134 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -30457,7 +30435,7 @@
 
 
 /***/ },
-/* 135 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30466,7 +30444,7 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -30578,7 +30556,7 @@
 	//
 
 /***/ },
-/* 136 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -30596,7 +30574,7 @@
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(137)
+	      "src": __webpack_require__(135)
 	    }
 	  }), " ", _vm._h('p', ["票务"])]), " ", _vm._h('a', {
 	    class: ['footer', _vm.getNoPay > 0 ? 'nopay' : ''],
@@ -30605,7 +30583,7 @@
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(138)
+	      "src": __webpack_require__(136)
 	    }
 	  }), " ", _vm._h('p', ["订单"])]), " ", _vm._h('a', {
 	    staticClass: "footer",
@@ -30614,7 +30592,7 @@
 	    }
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(139)
+	      "src": __webpack_require__(137)
 	    }
 	  }), " ", _vm._h('p', ["我的"])])])
 	},staticRenderFns: []}
@@ -30626,25 +30604,25 @@
 	}
 
 /***/ },
-/* 137 */
+/* 135 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 138 */
+/* 136 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 139 */
+/* 137 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 140 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -30669,20 +30647,20 @@
 	}
 
 /***/ },
-/* 141 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(142)
+	__webpack_require__(140)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(145)
+	__vue_exports__ = __webpack_require__(143)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(146)
+	var __vue_template__ = __webpack_require__(144)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -30697,7 +30675,6 @@
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketBody.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-17660273"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -30717,23 +30694,23 @@
 
 
 /***/ },
-/* 142 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(143);
+	var content = __webpack_require__(141);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-17660273!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketBody.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -30743,21 +30720,21 @@
 	}
 
 /***/ },
-/* 143 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
 	// imports
-	exports.i(__webpack_require__(144), "");
+	exports.i(__webpack_require__(142), "");
 
 	// module
-	exports.push([module.id, "\n.ticketbody[data-v-17660273]{\n\tposition:absolute;\n}\n.popup-visible[data-v-17660273]{\n\twidth:100%;\n}\n", ""]);
+	exports.push([module.id, "\n.ticketbody{\n\tposition:absolute;\n}\n.popup-visible{\n\twidth:100%;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 144 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -30771,7 +30748,7 @@
 
 
 /***/ },
-/* 145 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30788,7 +30765,7 @@
 
 	var _promise2 = _interopRequireDefault(_promise);
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -30961,6 +30938,7 @@
 			var nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
 			this.$store.commit("SET_SHOWHEADER", false);
+			this.$store.commit("SET_SHOWBACK", true);
 
 			// 设置初始时间
 			if (this.$store.getters.getInfo.startDate.server) {
@@ -31319,7 +31297,7 @@
 	};
 
 /***/ },
-/* 146 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -31389,7 +31367,7 @@
 	  }, [_vm._h('img', {
 	    staticClass: "slider-item",
 	    attrs: {
-	      "src": __webpack_require__(147)
+	      "src": __webpack_require__(145)
 	    }
 	  })]), " ", _vm._h('a', {
 	    attrs: {
@@ -31398,7 +31376,7 @@
 	  }, [_vm._h('img', {
 	    staticClass: "slider-item",
 	    attrs: {
-	      "src": __webpack_require__(148)
+	      "src": __webpack_require__(146)
 	    }
 	  })])])
 	},function (){var _vm=this;
@@ -31414,32 +31392,32 @@
 	}
 
 /***/ },
-/* 147 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "slider1.png?f09a930fb055332fd2c377fdf6021830";
 
 /***/ },
-/* 148 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "slider2.png?524c0bab94aa07b85ecee60f87223bd4";
 
 /***/ },
-/* 149 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(150)
+	__webpack_require__(200)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(152)
+	__vue_exports__ = __webpack_require__(150)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(153)
+	var __vue_template__ = __webpack_require__(151)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -31473,47 +31451,9 @@
 
 
 /***/ },
+/* 148 */,
+/* 149 */,
 /* 150 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(151);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 151 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n.mint-indexsection-index {\n  font-size: 16px;\n}\n.mint-indexlist-navitem {\n  padding-top: 5px;\n}\n.mint-indexsection > p.top-active + ul {\n  margin-top: 30px;\n}\n.mint-indexlist-nav {\n  z-index: 1002;\n}\n.top-active {\n  position: fixed;\n  top: 50px;\n  left: 0;\n  margin-right: 36px;\n  z-index: 1001;\n  width: 100%;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31522,89 +31462,9 @@
 		value: true
 	});
 
-	var _vuex = __webpack_require__(4);
-
-	var _utils = __webpack_require__(120);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
 	var _mintUi = __webpack_require__(88);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ = __webpack_require__(111); //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	// const _ = require("underscore");
 
 	exports.default = {
 		data: function data() {
@@ -31620,11 +31480,14 @@
 				nowElement: null, //目前固定的元素
 				content: null,
 				elementHeight: [], //各个元素距离顶部的高度
-				throttleFunction: null };
+				throttleFunction: null, //引用的函数
+
+				indexItem: 0 };
 		},
 		created: function created() {
 			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
 			this.$store.commit("SET_SHOWHEADER", true);
+			this.$store.commit("SET_SHOWBACK", true);
 
 			if (!this.$store.state.tickets.startCityList) {
 				// 提示加载中
@@ -31638,40 +31501,38 @@
 			}
 		},
 		mounted: function mounted() {
-			var _this = this;
-
 			//实现iphone通讯录中类似顶部显示当前块功能
-			var element = document.getElementsByClassName("mint-indexsection-index");
-			this.nowElement = element[0];
-			this.content = document.getElementsByClassName("mint-indexlist-content")[0]; //body
+			// let element = document.getElementsByClassName("mint-indexsection-index");
+			// this.nowElement = element[0];
+			// this.content = document.getElementsByClassName("mint-indexlist-content")[0];//body
 
-			this.nowElement.classList.add("top-active"); //给第一个头加上固定
-			for (var i = 0; i < element.length; i++) {
-				this.elementHeight.push(element[i].offsetTop);
-			}
+			// this.nowElement.classList.add("top-active");//给第一个头加上固定
+			// for(let i=0;i<element.length;i++){
+			// 	this.elementHeight.push(element[i].offsetTop);
+			// }
 
-			//记录函数引用,方便移除事件
-			this.throttleFunction = _.throttle(function () {
-				var contentHeight = _this.content.scrollTop;
-				var whoBig = 0;
+			// //记录函数引用,方便移除事件
+			// this.throttleFunction = _.throttle(()=>{
+			// 	let contentHeight = this.content.scrollTop;
+			// 	let whoBig = 0;
 
-				for (var _i = 0; _i < _this.elementHeight.length; _i++) {
-					var height = _this.elementHeight[_i];
-					if (contentHeight >= height) {
-						whoBig = _i; //记录大于contentHeight中最大的一个
-					}
-				}
+			// 	for(let i=0;i<this.elementHeight.length;i++){
+			// 		let height = this.elementHeight[i];
+			// 		if(contentHeight>=height){
+			// 			whoBig = i;//记录大于contentHeight中最大的一个
+			// 		}
+			// 	}
 
-				_this.nowElement.classList.remove("top-active"); //去掉之前的
-				_this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
-				_this.nowElement.classList.add("top-active"); //给头加上固定
-			}, 100, { leading: false });
+			// 	this.nowElement.classList.remove("top-active");//去掉之前的
+			// 	this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
+			// 	this.nowElement.classList.add("top-active");//给头加上固定
+			// },100,{leading: false})
 
-			//监听滚动
-			this.content.addEventListener("scroll", this.throttleFunction, false);
+			// //监听滚动
+			// this.content.addEventListener("scroll",this.throttleFunction,false);
 		},
 		beforeDestroy: function beforeDestroy() {
-			document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll", this.throttleFunction);
+			// document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll",this.throttleFunction);
 		},
 
 		computed: {
@@ -31711,6 +31572,9 @@
 				});
 				this.$router.go(-1);
 			},
+			selectCity: function selectCity(index) {
+				this.indexItem = index;
+			},
 			onStartValuesChange: function onStartValuesChange(picker, values) {
 				this.$store.dispatch("setStartCity", { Code: "00000", Name: this.startcity, Station: values[0] });
 			},
@@ -31721,37 +31585,70 @@
 				this.$router.go(-1);
 			}
 		}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	// import { mapGetters } from 'vuex'
+	// import Utils from "../Utils/utils";
 
 /***/ },
-/* 153 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    attrs: {
-	      "id": "startcity"
+	      "id": "citylist"
 	    }
-	  }, [_vm._h('mt-index-list', {
-	    staticClass: "fixed"
-	  }, [_vm._l((_vm.setStartCityList), function(list) {
-	    return _vm._h('mt-index-section', {
-	      attrs: {
-	        "index": list.ShortKey
-	      }
-	    }, [_vm._l((list.Content), function(item) {
-	      return _vm._h('mt-cell', {
-	        attrs: {
-	          "title": item.Name
-	        },
-	        nativeOn: {
+	  }, [_vm._h('div', {
+	    staticClass: "left"
+	  }, [_vm._l((_vm.setStartCityList), function(list, index) {
+	    return [_vm._l((list.Content), function(item) {
+	      return _vm._h('p', {
+	        directives: [{
+	          name: "show",
+	          rawName: "v-show",
+	          value: (_vm.indexItem === index),
+	          expression: "indexItem===index"
+	        }],
+	        on: {
 	          "click": function($event) {
 	            _vm.getStartCity(item.Id, item.Name)
 	          }
 	        }
-	      })
-	    }), " "])
-	  })]), " ", " "])
+	      }, [_vm._s(item.Name)])
+	    })]
+	  })]), " ", _vm._h('div', {
+	    staticClass: "right"
+	  }, [_vm._l((_vm.setStartCityList), function(list, index) {
+	    return _vm._h('div', [_vm._h('span', {
+	      class: {
+	        active: _vm.indexItem === index
+	      },
+	      on: {
+	        "click": function($event) {
+	          _vm.selectCity(index)
+	        }
+	      }
+	    }, [_vm._s(list.ShortKey)])])
+	  })])])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -31761,20 +31658,20 @@
 	}
 
 /***/ },
-/* 154 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(155)
+	__webpack_require__(153)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(157)
+	__vue_exports__ = __webpack_require__(156)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(158)
+	var __vue_template__ = __webpack_require__(157)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -31808,23 +31705,23 @@
 
 
 /***/ },
-/* 155 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(156);
+	var content = __webpack_require__(154);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-12b95ab6!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketEndCity.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -31834,7 +31731,21 @@
 	}
 
 /***/ },
-/* 156 */
+/* 154 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+	exports.i(__webpack_require__(155), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -31842,13 +31753,13 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\na,\nimg,\nbutton,\np,\nspan {\n  user-select: none;\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeOutLeft {\nfrom {\n    opacity: 1;\n    transform: none;\n}\nto {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\n}\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInLeft {\nfrom {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeInRight {\nfrom {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n}\nto {\n    opacity: 1;\n    transform: none;\n}\n}\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOutRight {\nfrom {\n    opacity: 0;\n    transform: none;\n}\nto {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0);\n}\n}\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.fixed {\n  position: fixed;\n  z-index: 1000;\n}\n.popup-visible {\n  width: 100%;\n  z-index: 1001;\n  position: fixed;\n}\n.query-start {\n  display: flex;\n  flex-dirction: row;\n  height: 40px;\n  border-bottom: 1px solid #eaeaea;\n  background-color: #d0d0d0;\n}\n.query-start button {\n    flex: 1;\n    font-size: 1.6rem;\n    border: 0;\n    outline: none;\n    color: #0074D9;\n    background-color: #fff;\n}\n.mint-indexsection-index {\n  font-size: 16px;\n}\n.mint-indexlist-navitem {\n  padding-top: 5px;\n}\n.mint-indexsection > p.top-active + ul {\n  margin-top: 30px;\n}\n.mint-indexlist-nav {\n  z-index: 1002;\n}\n.top-active {\n  position: fixed;\n  top: 50px;\n  left: 0;\n  margin-right: 36px;\n  z-index: 1001;\n  width: 100%;\n}\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n#citylist {\n  position: absolute;\n  top: 50px;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n  #citylist > .left {\n    border-right: 1px solid #c8c8c8;\n    position: fixed;\n    top: 50px;\n    right: 75px;\n    left: 0;\n    bottom: 0;\n    overflow-y: scroll; }\n    #citylist > .left p {\n      font-size: 14px;\n      color: #1e1e1e;\n      height: 50px;\n      line-height: 50px;\n      padding-left: 25px;\n      border-bottom: 0.5px solid #c8c8c8; }\n  #citylist > .right {\n    position: fixed;\n    top: 100px;\n    right: 0px;\n    width: 75px;\n    bottom: 50px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    #citylist > .right > div {\n      -ms-flex: 1;\n          flex: 1;\n      width: 75px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    #citylist > .right span {\n      font-size: 20px;\n      width: 75px;\n      font-weight: 900;\n      color: #c8c8c8;\n      display: inline-block;\n      height: 40px;\n      line-height: 40px;\n      text-align: center; }\n    #citylist > .right span.active {\n      color: #1e1e1e;\n      position: relative; }\n      #citylist > .right span.active::after {\n        content: \"\";\n        position: absolute;\n        bottom: 0;\n        left: 35px;\n        width: 5px;\n        height: 5px;\n        border-radius: 50%;\n        background-color: #329be8; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 157 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31857,89 +31768,9 @@
 		value: true
 	});
 
-	var _vuex = __webpack_require__(4);
-
-	var _utils = __webpack_require__(120);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
 	var _mintUi = __webpack_require__(88);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ = __webpack_require__(111); //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	// const _ = require("underscore");
 
 	exports.default = {
 		data: function data() {
@@ -31955,11 +31786,14 @@
 				nowElement: null, //目前固定的元素
 				content: null,
 				elementHeight: [], //各个元素距离顶部的高度
-				throttleFunction: null };
+				throttleFunction: null, //引用的函数
+
+				indexItem: 0 };
 		},
 		created: function created() {
 			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择到达地" });
 			this.$store.commit("SET_SHOWHEADER", true);
+			this.$store.commit("SET_SHOWBACK", true);
 
 			if (!this.$store.state.tickets.endCityList) {
 				// 提示加载中
@@ -31973,40 +31807,38 @@
 			}
 		},
 		mounted: function mounted() {
-			var _this = this;
-
 			//实现iphone通讯录中类似顶部显示当前块功能
-			var element = document.getElementsByClassName("mint-indexsection-index");
-			this.nowElement = element[0];
-			this.content = document.getElementsByClassName("mint-indexlist-content")[0]; //body
+			// let element = document.getElementsByClassName("mint-indexsection-index");
+			// this.nowElement = element[0];
+			// this.content = document.getElementsByClassName("mint-indexlist-content")[0];//body
 
-			this.nowElement.classList.add("top-active"); //给第一个头加上固定
-			for (var i = 0; i < element.length; i++) {
-				this.elementHeight.push(element[i].offsetTop);
-			}
+			// this.nowElement.classList.add("top-active");//给第一个头加上固定
+			// for(let i=0;i<element.length;i++){
+			// 	this.elementHeight.push(element[i].offsetTop);
+			// }
 
-			//记录函数引用,方便移除事件
-			this.throttleFunction = _.throttle(function () {
-				var contentHeight = _this.content.scrollTop;
-				var whoBig = 0;
+			// //记录函数引用,方便移除事件
+			// this.throttleFunction = _.throttle(()=>{
+			// 	let contentHeight = this.content.scrollTop;
+			// 	let whoBig = 0;
 
-				for (var _i = 0; _i < _this.elementHeight.length; _i++) {
-					var height = _this.elementHeight[_i];
-					if (contentHeight >= height) {
-						whoBig = _i; //记录大于contentHeight中最大的一个
-					}
-				}
+			// 	for(let i=0;i<this.elementHeight.length;i++){
+			// 		let height = this.elementHeight[i];
+			// 		if(contentHeight>=height){
+			// 			whoBig = i;//记录大于contentHeight中最大的一个
+			// 		}
+			// 	}
 
-				_this.nowElement.classList.remove("top-active"); //去掉之前的
-				_this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
-				_this.nowElement.classList.add("top-active"); //给头加上固定
-			}, 100, { leading: false });
+			// 	this.nowElement.classList.remove("top-active");//去掉之前的
+			// 	this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
+			// 	this.nowElement.classList.add("top-active");//给头加上固定
+			// },100,{leading: false})
 
-			//监听滚动
-			this.content.addEventListener("scroll", this.throttleFunction, false);
+			// //监听滚动
+			// this.content.addEventListener("scroll",this.throttleFunction,false);
 		},
 		beforeDestroy: function beforeDestroy() {
-			document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll", this.throttleFunction);
+			// document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll",this.throttleFunction);
 		},
 
 		computed: {
@@ -32046,9 +31878,13 @@
 				});
 				this.$router.go(-1);
 			},
-			onEndValuesChange: function onEndValuesChange(picker, values) {
-				this.$store.dispatch("setEndCity", { Code: "00000", Name: this.endcity, Station: values[0] });
+			selectCity: function selectCity(index) {
+				this.indexItem = index;
 			},
+
+			// onEndValuesChange(picker, values){
+			// 	this.$store.dispatch("setEndCity",{Code:"00000",Name:this.endcity,Station:values[0]});
+			// },
 			noData: function noData() {
 				this.endpopupVisible = false;
 			},
@@ -32056,37 +31892,70 @@
 				this.$router.go(-1);
 			}
 		}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	// import { mapGetters } from 'vuex'
+	// import Utils from "../Utils/utils";
 
 /***/ },
-/* 158 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    attrs: {
-	      "id": "endcity"
+	      "id": "citylist"
 	    }
-	  }, [_vm._h('mt-index-list', {
-	    staticClass: "fixed"
-	  }, [_vm._l((_vm.setEndCityList), function(list) {
-	    return _vm._h('mt-index-section', {
-	      attrs: {
-	        "index": list.ShortKey
-	      }
-	    }, [_vm._l((list.Content), function(item) {
-	      return _vm._h('mt-cell', {
-	        attrs: {
-	          "title": item.Name
-	        },
-	        nativeOn: {
+	  }, [_vm._h('div', {
+	    staticClass: "left"
+	  }, [_vm._l((_vm.setEndCityList), function(list, index) {
+	    return [_vm._l((list.Content), function(item) {
+	      return _vm._h('p', {
+	        directives: [{
+	          name: "show",
+	          rawName: "v-show",
+	          value: (_vm.indexItem === index),
+	          expression: "indexItem===index"
+	        }],
+	        on: {
 	          "click": function($event) {
 	            _vm.getEndCity(item.Id, item.Name)
 	          }
 	        }
-	      })
-	    }), " "])
-	  })]), " ", " "])
+	      }, [_vm._s(item.Name)])
+	    })]
+	  })]), " ", _vm._h('div', {
+	    staticClass: "right"
+	  }, [_vm._l((_vm.setEndCityList), function(list, index) {
+	    return _vm._h('div', [_vm._h('span', {
+	      class: {
+	        active: _vm.indexItem === index
+	      },
+	      on: {
+	        "click": function($event) {
+	          _vm.selectCity(index)
+	        }
+	      }
+	    }, [_vm._s(list.ShortKey)])])
+	  })])])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -32096,20 +31965,20 @@
 	}
 
 /***/ },
-/* 159 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(160)
+	__webpack_require__(159)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(163)
+	__vue_exports__ = __webpack_require__(162)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(169)
+	var __vue_template__ = __webpack_require__(168)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -32124,7 +31993,6 @@
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketResult.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-07fa1da4"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -32144,23 +32012,23 @@
 
 
 /***/ },
-/* 160 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(161);
+	var content = __webpack_require__(160);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-07fa1da4!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketResult.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -32170,15 +32038,29 @@
 	}
 
 /***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+	exports.i(__webpack_require__(161), "");
+
+	// module
+	exports.push([module.id, "\n.list-complete-item {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter, .list-complete-leave-active {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active {\n  position: absolute;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
 	// imports
-	exports.i(__webpack_require__(162), "");
+
 
 	// module
-	exports.push([module.id, "\n.list-complete-item[data-v-07fa1da4] {\n  transition: all 1s;\n  display: inline-block;\n}\n.list-complete-enter[data-v-07fa1da4], .list-complete-leave-active[data-v-07fa1da4] {\n  opacity: 0;\n  transform: translateY(30px);\n}\n.list-complete-leave-active[data-v-07fa1da4] {\n  position: absolute;\n}\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  position: absolute;\n  background-color: #fafafa;\n  top: 50px;\n  left: 0;\n  bottom: 0;\n  right: 0; }\n  .result .filter {\n    position: fixed;\n    top: 0px;\n    right: 0;\n    color: #fff;\n    font-size: 14px;\n    z-index: 100001;\n    text-align: center;\n    height: 50px;\n    line-height: 50px;\n    width: 70px; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    text-align: center;\n    padding: 0 10px; }\n    .result .date-control span {\n      height: 30px;\n      line-height: 30px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #323232;\n      font-size: 17px; }\n    .result .date-control span:first-child,\n    .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      font-size: 14px;\n      color: #323232; }\n    .result .date-control > span.no {\n      color: #c8c8c8; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    height: 50px;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    text-align: center; }\n    .result .data-set > div {\n      -ms-flex: 1;\n          flex: 1;\n      position: relative;\n      text-align: center; }\n    .result .data-set p {\n      margin-top: 10px;\n      font-size: 12px;\n      text-align: center; }\n    .result .data-set span.set.active {\n      display: inline-block;\n      height: 4px;\n      width: 16px;\n      background-color: #329be8; }\n    .result .data-set span.active {\n      color: #329be8; }\n  .result .result-list {\n    position: relative;\n    margin: 14px 10px;\n    margin-top: 7px;\n    text-align: center; }\n    .result .result-list .list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      position: relative;\n      height: 120px;\n      margin: 10px 0;\n      border-radius: 6px;\n      background-color: #fff;\n      border: 0.5px solid #c8c8c8; }\n      .result .result-list .list .bg-result {\n        position: absolute;\n        top: 0;\n        left: 0;\n        height: 120px;\n        z-index: 0; }\n      .result .result-list .list .left {\n        z-index: 1;\n        -ms-flex: 3;\n            flex: 3;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: center; }\n        .result .result-list .list .left > span {\n          font-size: 12px;\n          font-weight: 900;\n          color: #323232;\n          margin: 2px 0; }\n          .result .result-list .list .left > span:first-child {\n            font-size: 20px;\n            color: #2196f3; }\n          .result .result-list .list .left > span:last-child {\n            color: #c8c8c8; }\n      .result .result-list .list .center {\n        z-index: 1;\n        -ms-flex: 1;\n            flex: 1;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-pack: distribute;\n            justify-content: space-around;\n        -ms-flex-align: left;\n            align-items: left;\n        height: 100%;\n        padding: 13px 0;\n        position: relative; }\n        .result .result-list .list .center > span {\n          width: 9px;\n          height: 9px;\n          border-radius: 50%;\n          background-color: #fafafa;\n          border: 0.5px solid #c8c8c8; }\n          .result .result-list .list .center > span:first-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            content: \"\";\n            border-radius: 0 0 10px 10px;\n            border-top-color: #fafafa;\n            position: absolute;\n            top: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n          .result .result-list .list .center > span:last-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            border-bottom-color: #fafafa;\n            content: \"\";\n            border-radius: 10px 10px 0 0;\n            position: absolute;\n            bottom: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n      .result .result-list .list .right {\n        z-index: 1;\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        height: 120px; }\n        .result .result-list .list .right .top {\n          -ms-flex: 7;\n              flex: 7;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .result .result-list .list .right .top .name {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            -ms-flex-align: start;\n                align-items: flex-start;\n            -ms-flex-pack: end;\n                justify-content: flex-end; }\n            .result .result-list .list .right .top .name p {\n              font-weight: bold;\n              font-size: 20px;\n              position: relative;\n              text-align: left;\n              margin-left: 20px; }\n              .result .result-list .list .right .top .name p:first-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #8cff3f;\n                position: absolute;\n                top: 9px;\n                left: -17px; }\n              .result .result-list .list .right .top .name p:last-child {\n                line-height: 40px; }\n              .result .result-list .list .right .top .name p:last-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #f35252;\n                position: absolute;\n                top: 15px;\n                left: -17px; }\n          .result .result-list .list .right .top .info {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            text-align: right;\n            -ms-flex-pack: center;\n                justify-content: center; }\n            .result .result-list .list .right .top .info p {\n              height: 28px;\n              line-height: 28px;\n              margin-right: 25px; }\n              .result .result-list .list .right .top .info p:first-child {\n                font-weight: 900;\n                font-size: 20px;\n                color: #f35252; }\n              .result .result-list .list .right .top .info p:last-child {\n                font-size: 12px;\n                color: #323232;\n                padding-top: 8px; }\n        .result .result-list .list .right .bottom {\n          -ms-flex: 3;\n              flex: 3;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: start;\n              justify-content: flex-start;\n          position: relative;\n          margin-top: 4px; }\n          .result .result-list .list .right .bottom img:first-child {\n            position: absolute;\n            top: 2px;\n            left: 4px;\n            width: 10px;\n            height: 12.5px; }\n          .result .result-list .list .right .bottom img:last-child {\n            position: absolute;\n            top: 5px;\n            right: 25px;\n            width: 10px;\n            height: 8px; }\n          .result .result-list .list .right .bottom p {\n            margin-left: 20px; }\n    .result .result-list .router {\n      height: 60px;\n      margin: 0 -10px;\n      background-color: #fff;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .result .result-list .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .result .result-list .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n        .result .result-list .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n      .result .result-list .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router > div:last-child:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .result .result-list .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #323232;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .result .result-list .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #329be8; }\n      .result .result-list .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #d3eafd;\n        z-index: 1; }\n      .result .result-list .router span.gray {\n        color: #c8c8c8; }\n        .result .result-list .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #d3eafd; }\n      .result .result-list .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #c8c8c8;\n        border-radius: 10px; }\n        .result .result-list .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #329be8;\n          z-index: 3; }\n        .result .result-list .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #68b8f7;\n          z-index: 2; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 100%;\n      height: 70%; }\n      .result .result-list .popup-visible .popup-header {\n        height: 50px;\n        width: 100%;\n        line-height: 50px;\n        background-color: #329be8;\n        color: #fff;\n        text-align: center;\n        position: relative; }\n        .result .result-list .popup-visible .popup-header span {\n          display: inline-block;\n          height: 50px;\n          line-height: 50px;\n          font-size: 12px;\n          width: 60px; }\n        .result .result-list .popup-visible .popup-header span:last-child {\n          position: absolute;\n          top: 0;\n          right: 0; }\n        .result .result-list .popup-visible .popup-header span:first-child {\n          position: absolute;\n          top: 0;\n          left: 0; }\n\n.zoomIn {\n  animation-duration: 0.5s; }\n\n.mint-cell-title {\n  text-align: left; }\n\n.mint-cell-wrapper {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n\n.mint-cell:last-child {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n", ""]);
 
 	// exports
 
@@ -32187,33 +32069,19 @@
 /* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.result {\n  width: 100%;\n  position: absolute;\n  background-color: #fafafa;\n  top: 50px;\n  left: 0;\n  bottom: 0;\n  right: 0; }\n  .result .filter {\n    position: fixed;\n    top: 0px;\n    right: 0;\n    color: #fff;\n    font-size: 14px;\n    z-index: 100001;\n    text-align: center;\n    height: 50px;\n    line-height: 50px;\n    width: 70px; }\n  .result .date-control {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    text-align: center;\n    padding: 0 10px; }\n    .result .date-control span {\n      height: 30px;\n      line-height: 30px;\n      -ms-flex: 0.6;\n          flex: 0.6;\n      -ms-flex-pack: center;\n          justify-content: center;\n      color: #323232;\n      font-size: 17px; }\n    .result .date-control span:first-child,\n    .result .date-control span:last-child {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: center;\n          justify-content: center;\n      font-size: 14px;\n      color: #323232; }\n    .result .date-control > span.no {\n      color: #c8c8c8; }\n  .result .data-set {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    font-size: 1.4rem;\n    height: 50px;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    text-align: center; }\n    .result .data-set > div {\n      -ms-flex: 1;\n          flex: 1;\n      position: relative;\n      text-align: center; }\n    .result .data-set p {\n      margin-top: 10px;\n      font-size: 12px;\n      text-align: center; }\n    .result .data-set span.set.active {\n      display: inline-block;\n      height: 4px;\n      width: 16px;\n      background-color: #329be8; }\n    .result .data-set span.active {\n      color: #329be8; }\n  .result .result-list {\n    position: relative;\n    margin: 14px 10px;\n    margin-top: 7px;\n    text-align: center; }\n    .result .result-list .list {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      position: relative;\n      height: 120px;\n      margin: 10px 0;\n      border-radius: 6px;\n      background-color: #fff;\n      border: 0.5px solid #c8c8c8; }\n      .result .result-list .list .bg-result {\n        position: absolute;\n        top: 0;\n        left: 0;\n        height: 120px;\n        z-index: 0; }\n      .result .result-list .list .left {\n        z-index: 1;\n        -ms-flex: 3;\n            flex: 3;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: center; }\n        .result .result-list .list .left > span {\n          font-size: 12px;\n          font-weight: 900;\n          color: #323232;\n          margin: 2px 0; }\n          .result .result-list .list .left > span:first-child {\n            font-size: 20px;\n            color: #2196f3; }\n          .result .result-list .list .left > span:last-child {\n            color: #c8c8c8; }\n      .result .result-list .list .center {\n        z-index: 1;\n        -ms-flex: 1;\n            flex: 1;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-pack: distribute;\n            justify-content: space-around;\n        -ms-flex-align: left;\n            align-items: left;\n        height: 100%;\n        padding: 13px 0;\n        position: relative; }\n        .result .result-list .list .center > span {\n          width: 9px;\n          height: 9px;\n          border-radius: 50%;\n          background-color: #fafafa;\n          border: 0.5px solid #c8c8c8; }\n          .result .result-list .list .center > span:first-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            content: \"\";\n            border-radius: 0 0 10px 10px;\n            border-top-color: #fafafa;\n            position: absolute;\n            top: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n          .result .result-list .list .center > span:last-child::after {\n            width: 18px;\n            height: 9px;\n            background-color: #fafafa;\n            border: 0.5px solid #c8c8c8;\n            border-bottom-color: #fafafa;\n            content: \"\";\n            border-radius: 10px 10px 0 0;\n            position: absolute;\n            bottom: -0.7px;\n            left: -4.5px;\n            z-index: 10;\n            transform: rotate(0deg); }\n      .result .result-list .list .right {\n        z-index: 1;\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        height: 120px; }\n        .result .result-list .list .right .top {\n          -ms-flex: 7;\n              flex: 7;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .result .result-list .list .right .top .name {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            -ms-flex-align: start;\n                align-items: flex-start;\n            -ms-flex-pack: end;\n                justify-content: flex-end; }\n            .result .result-list .list .right .top .name p {\n              font-weight: bold;\n              font-size: 20px;\n              position: relative;\n              text-align: left;\n              margin-left: 20px; }\n              .result .result-list .list .right .top .name p:first-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #8cff3f;\n                position: absolute;\n                top: 9px;\n                left: -17px; }\n              .result .result-list .list .right .top .name p:last-child {\n                line-height: 40px; }\n              .result .result-list .list .right .top .name p:last-child::after {\n                content: \"\";\n                width: 10px;\n                height: 10px;\n                border-radius: 50%;\n                background-color: #f35252;\n                position: absolute;\n                top: 15px;\n                left: -17px; }\n          .result .result-list .list .right .top .info {\n            -ms-flex: 5;\n                flex: 5;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            text-align: right;\n            -ms-flex-pack: center;\n                justify-content: center; }\n            .result .result-list .list .right .top .info p {\n              height: 28px;\n              line-height: 28px;\n              margin-right: 25px; }\n              .result .result-list .list .right .top .info p:first-child {\n                font-weight: 900;\n                font-size: 20px;\n                color: #f35252; }\n              .result .result-list .list .right .top .info p:last-child {\n                font-size: 12px;\n                color: #323232;\n                padding-top: 8px; }\n        .result .result-list .list .right .bottom {\n          -ms-flex: 3;\n              flex: 3;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: start;\n              justify-content: flex-start;\n          position: relative;\n          margin-top: 4px; }\n          .result .result-list .list .right .bottom img:first-child {\n            position: absolute;\n            top: 2px;\n            left: 4px;\n            width: 10px;\n            height: 12.5px; }\n          .result .result-list .list .right .bottom img:last-child {\n            position: absolute;\n            top: 5px;\n            right: 25px;\n            width: 10px;\n            height: 8px; }\n          .result .result-list .list .right .bottom p {\n            margin-left: 20px; }\n    .result .result-list .router {\n      height: 60px;\n      margin: 0 -10px;\n      background-color: #fff;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .result .result-list .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .result .result-list .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n        .result .result-list .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #329be8;\n          z-index: 1; }\n      .result .result-list .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router > div:last-child:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .result .result-list .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #d3eafd; }\n      .result .result-list .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #323232;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .result .result-list .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #329be8; }\n      .result .result-list .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #d3eafd;\n        z-index: 1; }\n      .result .result-list .router span.gray {\n        color: #c8c8c8; }\n        .result .result-list .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #d3eafd; }\n      .result .result-list .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #c8c8c8;\n        border-radius: 10px; }\n        .result .result-list .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #329be8;\n          z-index: 3; }\n        .result .result-list .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #68b8f7;\n          z-index: 2; }\n    .result .result-list .change-set .btn {\n      background-color: #0074D9;\n      width: 90%;\n      margin: 0 5%;\n      padding: 10px 0;\n      border-radius: 10px;\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n    .result .result-list .no-data {\n      margin: 20px 5px;\n      text-align: center; }\n      .result .result-list .no-data p {\n        color: #999;\n        font-size: 1.8rem; }\n    .result .result-list .popup-visible {\n      width: 100%;\n      height: 70%; }\n      .result .result-list .popup-visible .popup-header {\n        height: 50px;\n        width: 100%;\n        line-height: 50px;\n        background-color: #329be8;\n        color: #fff;\n        text-align: center;\n        position: relative; }\n        .result .result-list .popup-visible .popup-header span {\n          display: inline-block;\n          height: 50px;\n          line-height: 50px;\n          font-size: 12px;\n          width: 60px; }\n        .result .result-list .popup-visible .popup-header span:last-child {\n          position: absolute;\n          top: 0;\n          right: 0; }\n        .result .result-list .popup-visible .popup-header span:first-child {\n          position: absolute;\n          top: 0;\n          left: 0; }\n\n.mint-cell-title {\n  text-align: left; }\n\n.mint-cell-wrapper {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n\n.mint-cell:last-child {\n  background-image: linear-gradient(180deg, #ffffff, #ffffff 50%, transparent 50%); }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _toConsumableArray2 = __webpack_require__(164);
+	var _toConsumableArray2 = __webpack_require__(163);
 
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 	var _vuex = __webpack_require__(4);
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -32890,14 +32758,14 @@
 	};
 
 /***/ },
-/* 164 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _from = __webpack_require__(165);
+	var _from = __webpack_require__(164);
 
 	var _from2 = _interopRequireDefault(_from);
 
@@ -32916,21 +32784,21 @@
 	};
 
 /***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(165), __esModule: true };
+
+/***/ },
 /* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(166), __esModule: true };
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
 	__webpack_require__(56);
-	__webpack_require__(167);
+	__webpack_require__(166);
 	module.exports = __webpack_require__(16).Array.from;
 
 /***/ },
-/* 167 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32940,7 +32808,7 @@
 	  , call           = __webpack_require__(77)
 	  , isArrayIter    = __webpack_require__(78)
 	  , toLength       = __webpack_require__(41)
-	  , createProperty = __webpack_require__(168)
+	  , createProperty = __webpack_require__(167)
 	  , getIterFn      = __webpack_require__(79);
 
 	$export($export.S + $export.F * !__webpack_require__(86)(function(iter){ Array.from(iter); }), 'Array', {
@@ -32973,7 +32841,7 @@
 
 
 /***/ },
-/* 168 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32986,7 +32854,7 @@
 	};
 
 /***/ },
-/* 169 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -33079,11 +32947,11 @@
 	      }
 	    }, [_vm._h('img', {
 	      attrs: {
-	        "src": __webpack_require__(170)
+	        "src": __webpack_require__(169)
 	      }
 	    }), " ", _vm._h('p', ["经过车站路线"]), " ", _vm._h('img', {
 	      attrs: {
-	        "src": __webpack_require__(171)
+	        "src": __webpack_require__(170)
 	      }
 	    })])])]), " ", _vm._h('div', {
 	      directives: [{
@@ -33092,7 +32960,7 @@
 	        value: (_vm.routerDetailShow === index),
 	        expression: "routerDetailShow===index"
 	      }],
-	      staticClass: "router animated bounceIn"
+	      staticClass: "router animated zoomIn"
 	    }, [_vm._l((item.Stations), function(list, index) {
 	      return _vm._h('div', {
 	        class: {
@@ -33303,32 +33171,32 @@
 	}
 
 /***/ },
-/* 170 */
+/* 169 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAqJJREFUaAXtWr9LXEEQ9iQRQxKI+CdoigTbpIkEIoJCsPNPsLnOIhBUCFoFK9NdY5EqqUTB0sZCQUijjYXYiI2EgD8iRDRwfmuy5zyYmdv3lLvbvXmwvNlvvt0338wc7927K1Wr1Q7pqFQqw/B9whjA6JR4LYI7IXsYn8vl8ooUU0kSDLFDWLSG0epCOW3jEL3EOTQxU5GKdTpd7OzxgEX/gc+J7wfsb2TeiuYoghr5H1i/FKAmmK7ZRYt8oYC30frebMoZcd1cF3E8g+EFi7FoLS0uitkRWuGaRmTyISbva4BubMD9S6c01ptbMMJ7jLEcGOY78NYDuQ2htV1Lt53gIi19it7rCey/80Bew2i5BeM24B7hTnyEzb4t+ThCz9bSQqYGUcmvgq+pMOmw1yGBhLZ0HzZzI/qj7VraBEffs3UEWIXrJCh6d9EKuyctP74rWRgjvGmFN094bxXeJuG5658pXNYVelvKLMbTFn3Susw4sxP3aOm5f7KuzOyC8H5nPNnJX8JzHvkNZHZdbVa0wrUNYjNMcGwVyxuvVThvxmLjW4Vjq1jeeAvdh/Ed1L309keXN5jzE2Ce+4jxe6ib8J56kDm7eP1+zl1iOCpUSDB2PFZ3vXWu3pqq9RFeN+odb0AIvTa7l32G2bQkBGoVvopYpxi7JngrYsFi7JrgGQg+jFD0T8T8QYpb/MuDW4DbTy9OExgv3PyOx0usfyXssQN8W/DlgfdBXsTX1yNpkSpYWkRx8l6Ywpw9CXCBcwCbw5gVfCrsfxBXScSptTShpWOa4HRqySuxCvN5SQe1CqdTS16JVZjPSzqoVTidWvJKrMJ8XtJBrcLp1JJXYhXm85IOahVOp5a8Eqswn5d00KI/phXJgPuL0YGw8ETA7x2+Bk8bYtxmhEPaAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 171 */
+/* 170 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAA3hJREFUaAXtm1tvDGEYxy298A0krnwGN3vpO5AIcYM2rEPQuNA43IiUxI04VkhQQlskgiBVNwi7hETqfEGzqiFOcYoSrP9/Y5rdyXTmmXfedw7v7JP8d96deZ/Db9/NzDyzbaFWq03Jk03NEyxZW8C2r3hrhW1f4bZKpeIwzsFgMTQbmgFNh7Js4yj+LXQfOlIsFq8TplAul6dhewhawh0W22Gwldrwsg6yHZbr2AEN86TVznc5saUEnpkTWGLOIvC7HAGPEXgoR8BDBN4D5aGD+APO/QR+DB2EbLceXIufEpjWBY3VR3a+jAJrI9Ec4M8Yr+IOS20FVvcL2Rxgjs9BZzmwzPoAe9FhagTmvtXQJ+egBduPYFjTyOEGfoOD6xsnZHzcidVtus9wA5PvKHSNg4zbIGB73QxewLwmL4N+uCdn6P131Lrcq14vYM57AW3xcsjIvs1Y3RGvWicD5txd0D0vp5Tvu4P6ePfoaX7AvBVj6/jb0zOdO1lrO1aXtXuaHzAdHkA7PT3TubMbsA/9SgsCpu9W6LlfkJQce4I6uoNqkQDzYRgfj6TZeGXpwOr+DCpSAswYN6CeoGAJHt8H2FuS/FJgxtoAvZYEjXnOK+Srd0KSvGGA2W2slASNeU4Jq/tVmjMMMGOehwakwWOYdwqwl8LkCQvM2Ow+2IUkbR9QwNqwRagA8+eLNHRUnaijqROSwKsAM+4xKMmnnVeQ/zgLCWuqwEl2VJN2QhJ4VWDGfgltkiTRPIeXoKpqzCjAzLkbuquaXMGvDJ+9Cn4TLlGB4+yofqFq3uL+naheYRAVmCmHoR0KucO6bIfDo7BO7vk6gBlzG/TMHVzje/46QuDIpguYXQq/bjx767Z6J4SggZ2QJLEuYOa6CZnoqHiSus0EOkwnMOvpgkZ1FPY/RhVbcSckyasbWHdHxUet3yQg0jm6gZn3AtQnLcBn3gkc4y2kVjMBzAKjdlTvEYPNgXYzBcwuJkrBbPsIrd1MAbPQXmhQoeLL8Dmp4CdyMQnMAnjSYXcjNZ6gStLJKvNMA4+gqDAdFR8UVlVApD6mgVkHOyr+dUGQncGEA0GToh6PA5i3hguh0z7F9uPYIsjErWlT2jiAmXAcmg/Ng/hoiA8BqavQXGgBxPbPuBVa/9Vi/DNONkFcX+lkKRuyt4AbPgwrh7lb4X8tkJ7eQOhmHQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 172 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(173)
+	__webpack_require__(172)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(176)
+	__vue_exports__ = __webpack_require__(175)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(194)
+	var __vue_template__ = __webpack_require__(193)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -33363,16 +33231,16 @@
 
 
 /***/ },
-/* 173 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(174);
+	var content = __webpack_require__(173);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -33389,12 +33257,12 @@
 	}
 
 /***/ },
-/* 174 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
 	// imports
-	exports.i(__webpack_require__(175), "");
+	exports.i(__webpack_require__(174), "");
 
 	// module
 	exports.push([module.id, "\n", ""]);
@@ -33403,7 +33271,7 @@
 
 
 /***/ },
-/* 175 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -33417,7 +33285,7 @@
 
 
 /***/ },
-/* 176 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33430,7 +33298,7 @@
 
 	var _assign2 = _interopRequireDefault(_assign);
 
-	var _typeof2 = __webpack_require__(177);
+	var _typeof2 = __webpack_require__(176);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -33440,7 +33308,7 @@
 
 	var _vuex = __webpack_require__(4);
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -34542,18 +34410,18 @@
 	};
 
 /***/ },
-/* 177 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _iterator = __webpack_require__(178);
+	var _iterator = __webpack_require__(177);
 
 	var _iterator2 = _interopRequireDefault(_iterator);
 
-	var _symbol = __webpack_require__(181);
+	var _symbol = __webpack_require__(180);
 
 	var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -34568,43 +34436,43 @@
 	};
 
 /***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(178), __esModule: true };
+
+/***/ },
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(179), __esModule: true };
+	__webpack_require__(56);
+	__webpack_require__(69);
+	module.exports = __webpack_require__(179).f('iterator');
 
 /***/ },
 /* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(56);
-	__webpack_require__(69);
-	module.exports = __webpack_require__(180).f('iterator');
+	exports.f = __webpack_require__(67);
 
 /***/ },
 /* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.f = __webpack_require__(67);
+	module.exports = { "default": __webpack_require__(181), __esModule: true };
 
 /***/ },
 /* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(182), __esModule: true };
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(183);
+	__webpack_require__(182);
 	__webpack_require__(55);
+	__webpack_require__(191);
 	__webpack_require__(192);
-	__webpack_require__(193);
 	module.exports = __webpack_require__(16).Symbol;
 
 /***/ },
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34614,24 +34482,24 @@
 	  , DESCRIPTORS    = __webpack_require__(24)
 	  , $export        = __webpack_require__(14)
 	  , redefine       = __webpack_require__(60)
-	  , META           = __webpack_require__(184).KEY
+	  , META           = __webpack_require__(183).KEY
 	  , $fails         = __webpack_require__(25)
 	  , shared         = __webpack_require__(45)
 	  , setToStringTag = __webpack_require__(66)
 	  , uid            = __webpack_require__(46)
 	  , wks            = __webpack_require__(67)
-	  , wksExt         = __webpack_require__(180)
-	  , wksDefine      = __webpack_require__(185)
-	  , keyOf          = __webpack_require__(186)
-	  , enumKeys       = __webpack_require__(187)
-	  , isArray        = __webpack_require__(188)
+	  , wksExt         = __webpack_require__(179)
+	  , wksDefine      = __webpack_require__(184)
+	  , keyOf          = __webpack_require__(185)
+	  , enumKeys       = __webpack_require__(186)
+	  , isArray        = __webpack_require__(187)
 	  , anObject       = __webpack_require__(21)
 	  , toIObject      = __webpack_require__(36)
 	  , toPrimitive    = __webpack_require__(27)
 	  , createDesc     = __webpack_require__(28)
 	  , _create        = __webpack_require__(63)
-	  , gOPNExt        = __webpack_require__(189)
-	  , $GOPD          = __webpack_require__(191)
+	  , gOPNExt        = __webpack_require__(188)
+	  , $GOPD          = __webpack_require__(190)
 	  , $DP            = __webpack_require__(20)
 	  , $keys          = __webpack_require__(33)
 	  , gOPD           = $GOPD.f
@@ -34756,7 +34624,7 @@
 
 	  $GOPD.f = $getOwnPropertyDescriptor;
 	  $DP.f   = $defineProperty;
-	  __webpack_require__(190).f = gOPNExt.f = $getOwnPropertyNames;
+	  __webpack_require__(189).f = gOPNExt.f = $getOwnPropertyNames;
 	  __webpack_require__(49).f  = $propertyIsEnumerable;
 	  __webpack_require__(48).f = $getOwnPropertySymbols;
 
@@ -34844,7 +34712,7 @@
 	setToStringTag(global.JSON, 'JSON', true);
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var META     = __webpack_require__(46)('meta')
@@ -34902,13 +34770,13 @@
 	};
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global         = __webpack_require__(15)
 	  , core           = __webpack_require__(16)
 	  , LIBRARY        = __webpack_require__(59)
-	  , wksExt         = __webpack_require__(180)
+	  , wksExt         = __webpack_require__(179)
 	  , defineProperty = __webpack_require__(20).f;
 	module.exports = function(name){
 	  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -34916,7 +34784,7 @@
 	};
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getKeys   = __webpack_require__(33)
@@ -34931,7 +34799,7 @@
 	};
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// all enumerable object keys, includes symbols
@@ -34951,7 +34819,7 @@
 	};
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.2.2 IsArray(argument)
@@ -34961,12 +34829,12 @@
 	};
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 	var toIObject = __webpack_require__(36)
-	  , gOPN      = __webpack_require__(190).f
+	  , gOPN      = __webpack_require__(189).f
 	  , toString  = {}.toString;
 
 	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -34986,7 +34854,7 @@
 
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
@@ -34998,7 +34866,7 @@
 	};
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pIE            = __webpack_require__(49)
@@ -35019,19 +34887,19 @@
 	};
 
 /***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(184)('asyncIterator');
+
+/***/ },
 /* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(185)('asyncIterator');
+	__webpack_require__(184)('observable');
 
 /***/ },
 /* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(185)('observable');
-
-/***/ },
-/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -35587,20 +35455,20 @@
 	}
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(196)
+	__webpack_require__(195)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(199)
+	__vue_exports__ = __webpack_require__(198)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(200)
+	var __vue_template__ = __webpack_require__(199)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -35634,16 +35502,16 @@
 
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(197);
+	var content = __webpack_require__(196);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(118)(content, {});
+	var update = __webpack_require__(116)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35660,12 +35528,12 @@
 	}
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
 	// imports
-	exports.i(__webpack_require__(198), "");
+	exports.i(__webpack_require__(197), "");
 
 	// module
 	exports.push([module.id, "\n", ""]);
@@ -35674,7 +35542,7 @@
 
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(92)();
@@ -35682,13 +35550,13 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketdate {\n  width: 100%;\n  margin-top: 50px; }\n  .ticketdate .date-header {\n    height: 40px;\n    padding: 0 10px;\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    background-color: #f7f7f7;\n    text-align: center; }\n    .ticketdate .date-header > span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      line-height: 40px;\n      font-size: 1.4rem; }\n  .ticketdate .date-body {\n    width: 100%;\n    padding: 0 10px; }\n    .ticketdate .date-body .date-body-header {\n      height: 60px;\n      line-height: 60px;\n      text-align: center; }\n      .ticketdate .date-body .date-body-header > p {\n        color: #329be8;\n        font-size: 2.4rem;\n        font-weight: 800; }\n      .ticketdate .date-body .date-body-header > p.gray {\n        color: #c8c8c8; }\n    .ticketdate .date-body .date-body-lists {\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      text-align: center; }\n      .ticketdate .date-body .date-body-lists > div {\n        width: 14.2857%;\n        height: 40px; }\n      .ticketdate .date-body .date-body-lists span {\n        display: inline-block;\n        width: 40px;\n        height: 40px;\n        line-height: 40px; }\n      .ticketdate .date-body .date-body-lists span.gray {\n        color: #c8c8c8; }\n      .ticketdate .date-body .date-body-lists span.active {\n        color: #000; }\n      .ticketdate .date-body .date-body-lists span.selected {\n        background-color: #f35252;\n        color: #fff;\n        border-radius: 50%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketdate {\n  width: 100%;\n  margin-top: 50px; }\n  .ticketdate .yes {\n    position: fixed;\n    top: 0px;\n    right: 0;\n    color: #fff;\n    font-size: 14px;\n    z-index: 100001;\n    text-align: center;\n    height: 50px;\n    line-height: 50px;\n    width: 70px; }\n  .ticketdate .date-header {\n    height: 40px;\n    padding: 0 10px;\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    background-color: #f7f7f7;\n    text-align: center; }\n    .ticketdate .date-header > span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      line-height: 40px;\n      font-size: 1.4rem; }\n  .ticketdate .date-body {\n    width: 100%;\n    padding: 0 10px; }\n    .ticketdate .date-body .date-body-header {\n      height: 60px;\n      line-height: 60px;\n      text-align: center; }\n      .ticketdate .date-body .date-body-header > p {\n        color: #329be8;\n        font-size: 2.4rem;\n        font-weight: 800; }\n      .ticketdate .date-body .date-body-header > p.gray {\n        color: #c8c8c8; }\n    .ticketdate .date-body .date-body-lists {\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      text-align: center; }\n      .ticketdate .date-body .date-body-lists > div {\n        width: 14.2857%;\n        height: 40px; }\n      .ticketdate .date-body .date-body-lists span {\n        display: inline-block;\n        width: 40px;\n        height: 40px;\n        line-height: 40px; }\n      .ticketdate .date-body .date-body-lists span.gray {\n        color: #c8c8c8; }\n      .ticketdate .date-body .date-body-lists span.active {\n        color: #000; }\n      .ticketdate .date-body .date-body-lists span.selected {\n        background-color: #f35252;\n        color: #fff;\n        border-radius: 50%; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35697,13 +35565,14 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(120);
+	var _utils = __webpack_require__(118);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ = __webpack_require__(111); //
+	//
 	//
 	//
 	//
@@ -35782,6 +35651,7 @@
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "选择日期" });
 			this.$store.commit("SET_SHOWHEADER", true);
 			this.initTime();
+			this.$store.commit("SET_SHOWBACK", false);
 
 			//如果有数据
 			if (this.$store.getters.getInfo.startDate.server) {
@@ -35869,25 +35739,28 @@
 				if (event.target.className.indexOf("active") > -1) {
 					//可以选中
 					this.selected = index;
-					var arrayTime = index.split("_");
-					var date = "";
-
-					if (arrayTime[1] === "two") {
-						//下个月
-						date = new Date(this.timeDate.second.year + "-" + this.timeDate.second.month + "-" + arrayTime[0]);
-						this.side = "bottom";
-					} else {
-						//这个月
-						date = new Date(this.timeDate.first.year + "-" + this.timeDate.first.month + "-" + arrayTime[0]);
-						this.side = "top";
-					}
-
-					this.$store.dispatch("setStartDate", {
-						date: this.formatNow(date),
-						week: _utils2.default.formatWeek(date),
-						server: date
-					});
 				}
+			},
+			yes: function yes() {
+				var arrayTime = this.selected.split("_");
+				var date = "";
+
+				if (arrayTime[1] === "two") {
+					//下个月
+					date = new Date(this.timeDate.second.year + "-" + this.timeDate.second.month + "-" + arrayTime[0]);
+					this.side = "bottom";
+				} else {
+					//这个月
+					date = new Date(this.timeDate.first.year + "-" + this.timeDate.first.month + "-" + arrayTime[0]);
+					this.side = "top";
+				}
+
+				this.$store.dispatch("setStartDate", {
+					date: this.formatNow(date),
+					week: _utils2.default.formatWeek(date),
+					server: date
+				});
+				this.$router.go(-1);
 			},
 			formatNow: function formatNow(date) {
 				if (typeof date === "string") {
@@ -35904,13 +35777,18 @@
 	};
 
 /***/ },
-/* 200 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "ticketdate"
-	  }, [_vm._m(0), " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "yes",
+	    on: {
+	      "click": _vm.yes
+	    }
+	  }, [_vm._h('span', ["确定"])]), " ", _vm._m(0), " ", _vm._h('div', {
 	    staticClass: "date-body"
 	  }, [_vm._h('div', {
 	    staticClass: "date-body-header"
@@ -35970,6 +35848,46 @@
 	     require("vue-hot-reload-api").rerender("data-v-1cc4d27f", module.exports)
 	  }
 	}
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(201);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(116)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-55a7ad28!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketStartCity.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+	exports.i(__webpack_require__(155), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

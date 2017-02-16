@@ -153,71 +153,71 @@ input {
   animation-duration: 0.5s;
   animation-fill-mode: both; }
 
-.ticketdate {
-  width: 100%;
-  margin-top: 50px; }
-  .ticketdate .yes {
+#citylist {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  #citylist > .left {
+    border-right: 1px solid #c8c8c8;
     position: fixed;
-    top: 0px;
-    right: 0;
-    color: #fff;
-    font-size: 14px;
-    z-index: 100001;
-    text-align: center;
-    height: 50px;
-    line-height: 50px;
-    width: 70px; }
-  .ticketdate .date-header {
-    height: 40px;
-    padding: 0 10px;
-    width: 100%;
+    top: 50px;
+    right: 75px;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll; }
+    #citylist > .left p {
+      font-size: 14px;
+      color: #1e1e1e;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 25px;
+      border-bottom: 0.5px solid #c8c8c8; }
+  #citylist > .right {
+    position: fixed;
+    top: 100px;
+    right: 0px;
+    width: 75px;
+    bottom: 50px;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    background-color: #f7f7f7;
-    text-align: center; }
-    .ticketdate .date-header > span {
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    #citylist > .right > div {
       -ms-flex: 1;
           flex: 1;
-      height: 40px;
-      line-height: 40px;
-      font-size: 1.4rem; }
-  .ticketdate .date-body {
-    width: 100%;
-    padding: 0 10px; }
-    .ticketdate .date-body .date-body-header {
-      height: 60px;
-      line-height: 60px;
-      text-align: center; }
-      .ticketdate .date-body .date-body-header > p {
-        color: #329be8;
-        font-size: 2.4rem;
-        font-weight: 800; }
-      .ticketdate .date-body .date-body-header > p.gray {
-        color: #c8c8c8; }
-    .ticketdate .date-body .date-body-lists {
-      width: 100%;
+      width: 75px;
       display: -ms-flexbox;
       display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+    #citylist > .right span {
+      font-size: 20px;
+      width: 75px;
+      font-weight: 900;
+      color: #c8c8c8;
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
       text-align: center; }
-      .ticketdate .date-body .date-body-lists > div {
-        width: 14.2857%;
-        height: 40px; }
-      .ticketdate .date-body .date-body-lists span {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        line-height: 40px; }
-      .ticketdate .date-body .date-body-lists span.gray {
-        color: #c8c8c8; }
-      .ticketdate .date-body .date-body-lists span.active {
-        color: #000; }
-      .ticketdate .date-body .date-body-lists span.selected {
-        background-color: #f35252;
-        color: #fff;
-        border-radius: 50%; }
+    #citylist > .right span.active {
+      color: #1e1e1e;
+      position: relative; }
+      #citylist > .right span.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 35px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #329be8; }

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import store from '../store/index.js'; //导入状态库
 import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
+// import 'mint-ui/lib/style.css'
 
 Vue.use(MintUI);
 Vue.use(Vuex);

@@ -1,0 +1,69 @@
+@import "./utils.scss";
+#citylist {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  >.left {
+    border-right: 1px solid #c8c8c8;
+    position: fixed;
+    top: 50px;
+    right: 75px;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    p {
+      font-size: 14px;
+      color: rgb(30, 30, 30);
+      height: 50px;
+      line-height: 50px;
+      padding-left: 25px;
+      border-bottom: 0.5px solid #c8c8c8;
+    }
+  }
+  >.right {
+    position: fixed;
+    top: 100px;
+    right: 0px;
+    width: 75px;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    >div {
+      flex: 1;
+      width: 75px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    span {
+      font-size: 20px;
+      width: 75px;
+      font-weight: 900;
+      color: rgb(200, 200, 200);
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      // padding: 5px 0;
+      text-align: center;
+    }
+    span.active {
+      color: rgb(30, 30, 30);
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 35px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #329be8;
+      }
+    }
+  }
+}

@@ -120,7 +120,7 @@
 	</div>
 </template>
 
-<style lang="css" scoped>
+<style lang="css">
 @import "../css/ticketbody.css";
 .ticketbody{
 	position:absolute;
@@ -164,6 +164,7 @@ export default {
 			let nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
 			this.$store.commit("SET_SHOWHEADER",false);
+			this.$store.commit("SET_SHOWBACK",true);
 			
 			// 设置初始时间
 			if(this.$store.getters.getInfo.startDate.server){

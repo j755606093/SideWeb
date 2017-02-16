@@ -1,5 +1,6 @@
 <template type="x/template" id="ticketorderlist">
 	<div class="ticketdate">
+		<div class="yes" @click="yes"><span>确定</span></div>
 		<div class="date-header">
 			<span>日</span>
 			<span>一</span>
@@ -81,6 +82,7 @@ export default {
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"选择日期"});
 		this.$store.commit("SET_SHOWHEADER",true);
 		this.initTime();
+		this.$store.commit("SET_SHOWBACK",false);
 
 		//如果有数据
 		if(this.$store.getters.getInfo.startDate.server){
@@ -177,26 +179,29 @@ export default {
 			if(event.target.className.indexOf("active")>-1){
 				//可以选中
 				this.selected = index;
-				let arrayTime = index.split("_");
-				let date = "";
-
-				if(arrayTime[1]==="two"){
-					//下个月
-					date = new Date(this.timeDate.second.year+"-"+this.timeDate.second.month+"-"+arrayTime[0]);
-					this.side = "bottom";
-				}
-				else{
-					//这个月
-					date = new Date(this.timeDate.first.year+"-"+this.timeDate.first.month+"-"+arrayTime[0]);
-					this.side = "top";
-				}
-
-				this.$store.dispatch("setStartDate",{
-					date:this.formatNow(date),
-					week:Utils.formatWeek(date),
-					server:date
-				});
 			}
+		},
+		yes(){
+			let arrayTime = this.selected.split("_");
+			let date = "";
+
+			if(arrayTime[1]==="two"){
+				//下个月
+				date = new Date(this.timeDate.second.year+"-"+this.timeDate.second.month+"-"+arrayTime[0]);
+				this.side = "bottom";
+			}
+			else{
+				//这个月
+				date = new Date(this.timeDate.first.year+"-"+this.timeDate.first.month+"-"+arrayTime[0]);
+				this.side = "top";
+			}
+
+			this.$store.dispatch("setStartDate",{
+				date:this.formatNow(date),
+				week:Utils.formatWeek(date),
+				server:date
+			});
+			this.$router.go(-1);
 		},
 		formatNow(date){
 			if(typeof date==="string"){

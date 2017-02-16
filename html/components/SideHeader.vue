@@ -4,7 +4,7 @@
 			<span>身边订票</span>
 		</div>
 		<div class="other" v-else>
-			<div @click="GoBack" class="left">
+			<div @click="GoBack" v-show="showBack" class="left">
 				<img src="../picture/back_icon.png">
 				<!-- <i class="fa fa-angle-left"></i> -->
 			</div>
@@ -89,6 +89,9 @@ export default {
 				console.log(this.formatData(this.$store.getters.Development));//测试
 			}
 			return this.$store.state.tickets.HeaderIsHome;
+		},
+		showBack(){
+			return this.$store.state.tickets.showBack;
 		},
 		showHeader(){
 			return this.$store.state.tickets.showHeader;

@@ -86,6 +86,7 @@ const state = {
 	isFirst: true, //第一次启动
 	HeaderIsHome: true,
 	showHeader: false, //不显示头部
+	showBack: true, //不显示返回键
 	HeaderTitle: "身边订票",
 	showFooter: true, //显示底部tab
 
@@ -172,6 +173,9 @@ const actions = {
 	},
 	SetShowHeader({ commit, state }, data) {
 		commit("SET_SHOWHEADER", data)
+	},
+	SetShowBack({ commit, state }, data) {
+		commit("SET_SHOWBACK", data)
 	},
 	ChangeFooter({ commit, state }, data) {
 		commit("CHANGE_FOOTER", data)
@@ -451,6 +455,9 @@ const actions = {
 const mutations = {
 	["SET_SHOWHEADER"](state, data) {
 		state.showHeader = data;
+	},
+	["SET_SHOWBACK"](state, data) {
+		state.showBack = data;
 	},
 	[types.CHANGE_HEADER](state, data) {
 		// 设置头部状态显示

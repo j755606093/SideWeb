@@ -1,81 +1,27 @@
 <template type="x/template" id="ticketstartcity">
-	<div id="startcity">
-		<mt-index-list class="fixed">
-		  <mt-index-section v-for="list in setStartCityList" :index="list.ShortKey">
-		  	<!-- <template v-for="station in list.Content"> -->
-		   	 <mt-cell v-for="item in list.Content" @click.native="getStartCity(item.Id,item.Name)" :title="item.Name"></mt-cell>
-		    <!-- </template> -->
-		  </mt-index-section>
-		</mt-index-list>
-		<!-- 出发地址 -->
-		<!-- <mt-popup
-		  v-model="startpopupVisible"
-		  position="bottom"
-		  class="popup-visible">
-		  <div class="query-start">
-		  	<button @click="noData">取消</button>
-		  	<button @click="yesData">确定</button>
-		  </div>
-		  <mt-picker :slots="startCitySlots" @change="onStartValuesChange"></mt-picker>
-		</mt-popup> -->
+	<div id="citylist">
+		<div class="left">
+			<template v-for="(list,index) in setStartCityList">
+				<p @click="getStartCity(item.Id,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
+			</template>
+		</div>
+		<div class="right">
+			<div v-for="(list,index) in setStartCityList">
+				<span :class="{active:indexItem===index}" @click="selectCity(index)">{{list.ShortKey}}</span>
+			</div>
+		</div>
 	</div>
 </template>
 
-<style lang="sass">
-@import "../sass/utils.scss";
-.fixed{
-	position:fixed;
-	z-index:1000;
-}
-.popup-visible{
-	width:100%;
-	z-index:1001;
-	position:fixed;
-}
-.query-start{
-	display:flex;
-	flex-dirction:row;
-	height:40px;
-	border-bottom:1px solid lighten($gray, 25%);
-	background-color:lighten($gray, 15%);
-	button{
-		flex:1;
-		font-size:1.6rem;
-		border:0;
-		outline:none;
-		color:$blue;
-		background-color:$white;
-	}
-}
-.mint-indexsection-index{
-	font-size:16px;
-}
-.mint-indexlist-navitem{
-	padding-top:5px;
-}
-.mint-indexsection{
-	>p.top-active+ul{
-		margin-top:30px;
-	}
-}
-.mint-indexlist-nav{
-	z-index:1002;
-}
-.top-active{
-	position: fixed;
-  top: 50px;
-  left: 0;
-  margin-right: 36px;
-  z-index: 1001;
-  width: 100%;
-}
+<style lang="css">
+@import "../css/ticketcity.css";
 </style>
 
 <script type="text/babel">
-import { mapGetters } from 'vuex'
-import Utils from "../Utils/utils";
+// import { mapGetters } from 'vuex'
+// import Utils from "../Utils/utils";
 import { Indicator,Toast } from 'mint-ui';
-const _ = require("underscore");
+// const _ = require("underscore");
 
 export default {
 	data () {
@@ -92,11 +38,14 @@ export default {
 			content:null,
 			elementHeight:[],//各个元素距离顶部的高度
 			throttleFunction:null,//引用的函数
+
+			indexItem:0,//默认显示的地址
 		}
 	},
 	created(){
 		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择出发地"});
 		this.$store.commit("SET_SHOWHEADER",true);
+		this.$store.commit("SET_SHOWBACK",true);
 
 		if(!this.$store.state.tickets.startCityList){
 			// 提示加载中
@@ -111,37 +60,37 @@ export default {
 	},
 	mounted(){
 		//实现iphone通讯录中类似顶部显示当前块功能
-		let element = document.getElementsByClassName("mint-indexsection-index");
-		this.nowElement = element[0];
-		this.content = document.getElementsByClassName("mint-indexlist-content")[0];//body
+		// let element = document.getElementsByClassName("mint-indexsection-index");
+		// this.nowElement = element[0];
+		// this.content = document.getElementsByClassName("mint-indexlist-content")[0];//body
 
-		this.nowElement.classList.add("top-active");//给第一个头加上固定
-		for(let i=0;i<element.length;i++){
-			this.elementHeight.push(element[i].offsetTop);
-		}
+		// this.nowElement.classList.add("top-active");//给第一个头加上固定
+		// for(let i=0;i<element.length;i++){
+		// 	this.elementHeight.push(element[i].offsetTop);
+		// }
 		
-		//记录函数引用,方便移除事件
-		this.throttleFunction = _.throttle(()=>{
-			let contentHeight = this.content.scrollTop;
-			let whoBig = 0;
+		// //记录函数引用,方便移除事件
+		// this.throttleFunction = _.throttle(()=>{
+		// 	let contentHeight = this.content.scrollTop;
+		// 	let whoBig = 0;
 			
-			for(let i=0;i<this.elementHeight.length;i++){
-				let height = this.elementHeight[i];
-				if(contentHeight>=height){
-					whoBig = i;//记录大于contentHeight中最大的一个
-				}
-			}
+		// 	for(let i=0;i<this.elementHeight.length;i++){
+		// 		let height = this.elementHeight[i];
+		// 		if(contentHeight>=height){
+		// 			whoBig = i;//记录大于contentHeight中最大的一个
+		// 		}
+		// 	}
 
-			this.nowElement.classList.remove("top-active");//去掉之前的
-			this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
-			this.nowElement.classList.add("top-active");//给头加上固定
-		},100,{leading: false})
+		// 	this.nowElement.classList.remove("top-active");//去掉之前的
+		// 	this.nowElement = document.getElementsByClassName("mint-indexsection-index")[whoBig];
+		// 	this.nowElement.classList.add("top-active");//给头加上固定
+		// },100,{leading: false})
 
-		//监听滚动
-		this.content.addEventListener("scroll",this.throttleFunction,false);
+		// //监听滚动
+		// this.content.addEventListener("scroll",this.throttleFunction,false);
 	},
 	beforeDestroy(){
-		document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll",this.throttleFunction);
+		// document.getElementsByClassName("mint-indexlist-content")[0].removeEventListener("scroll",this.throttleFunction);
 	},
 	computed:{
 		setStartCityList(){
@@ -179,6 +128,9 @@ export default {
 				Name:name,
 			});
 			this.$router.go(-1);
+		},
+		selectCity(index){
+			this.indexItem = index;
 		},
 		onStartValuesChange(picker, values){
 			this.$store.dispatch("setStartCity",{Code:"00000",Name:this.startcity,Station:values[0]});
