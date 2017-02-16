@@ -85,6 +85,7 @@ function checkStatus(response) {
 const state = {
 	isFirst: true, //第一次启动
 	HeaderIsHome: true,
+	showHeader: false, //不显示头部
 	HeaderTitle: "身边订票",
 	showFooter: true, //显示底部tab
 
@@ -168,6 +169,9 @@ let getData = (url, callback) => {
 const actions = {
 	ChangeHeader({ commit, state }, data) {
 		commit(types.CHANGE_HEADER, data)
+	},
+	SetShowHeader({ commit, state }, data) {
+		commit("SET_SHOWHEADER", data)
 	},
 	ChangeFooter({ commit, state }, data) {
 		commit("CHANGE_FOOTER", data)
@@ -445,6 +449,9 @@ const actions = {
 
 // mutations
 const mutations = {
+	["SET_SHOWHEADER"](state, data) {
+		state.showHeader = data;
+	},
 	[types.CHANGE_HEADER](state, data) {
 		// 设置头部状态显示
 		state.HeaderIsHome = data.isHome;

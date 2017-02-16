@@ -1,5 +1,5 @@
 <template type="x/template" id="ticketheader">
-	<header>
+	<header v-show="showHeader">
 		<div class="home" v-if="getHeaderState">
 			<span>身边订票</span>
 		</div>
@@ -27,7 +27,7 @@ header{
 	top:0;
 	left:0;
 	width:100%;
-	z-index:100;
+	z-index:100000;
 	padding:0;
 	margin:0;
 	// color:#000;
@@ -89,6 +89,9 @@ export default {
 				console.log(this.formatData(this.$store.getters.Development));//测试
 			}
 			return this.$store.state.tickets.HeaderIsHome;
+		},
+		showHeader(){
+			return this.$store.state.tickets.showHeader;
 		},
 		getHeaderTitle(){
 			return this.$store.state.tickets.HeaderTitle;

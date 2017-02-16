@@ -1,41 +1,69 @@
 <template type="x/template" id="ticketbody">
 	<div class="ticketbody">
-		<div @click="GoStartCity" class="go block">
+		<!-- 轮播图 -->
+		<div class="slider">
+			<a href="#">
+				<img class="slider-item" src="../picture/slider1.png">
+			</a>
+			<a href="#">
+				<img class="slider-item" src="../picture/slider2.png">
+			</a>
+		</div>
+		<div class="index-body">
+			<!-- 出发点和到达点 -->
+			<div class="location">
+				<span @click="GoStartCity">{{getStartCity}}</span>
+				<div><span></span></div>
+				<span @click="GoEndCity">{{getEndCity}}</span>
+			</div>
+			<!-- 选择时间 -->
+			<div class="date">
+				<span>出发时间</span>
+				<div @click="openDate"><span>{{showTime}}</span></div>
+				<p>
+					<span v-text="showWeek"></span>
+					<i class="fa fa-angle-right"></i>
+				</p>
+			</div>
+			<!-- 搜索按钮 -->
+			<button @click="query" class="btn">查询</button>
+			<!-- 历史搜索 -->
+			<div class="search-record" v-if="localStorage.length!==0">
+				<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index" @click="queryRecord(index)">
+					<span class="first">{{list.startCity}}</span>
+					<div><span></span></div>
+					<span>{{list.endCity}}</span>
+				</div>
+				<p @click="clearLocalStore">清除历史搜索</p>
+			</div>
+		</div>
+		<!-- <div @click="GoStartCity" class="go block">
 			<span>
-			<!-- <i class="fa fa-location-arrow"></i> -->
 			<img src="../picture/map_red.png">
 			出发点</span>
 			<span>
 				{{getStartCity}}
-				<!-- <i class="fa fa-search"></i> -->
 				<img class="right" src="../picture/search.png">
-				<!-- <span class="station">{{getStartCityStation}}</span> -->
 			</span>
 		</div>
 		<div @click="GoEndCity" class="to block">
 			<span>
-			<!-- <i class="fa fa-location-arrow"></i> -->
 			<img src="../picture/map_blue.png">
 			到达点</span>
 			<span>{{getEndCity}}
-			<!-- <i class="fa fa-search"></i> -->
 			<img class="right" src="../picture/search.png">
-			<!-- <span class="station">{{getEndCityStation}}</span> -->
 			</span>
-		</div>
-		<div @click="openPicker" class="data">
+		</div> -->
+		<!-- <div @click="openPicker" class="data">
 			<span>
-			<!-- <i class="fa fa-calendar"></i> -->
 			<img src="../picture/date.png">
 			出发日期</span>
-			<!-- <span v-text="showTime"></span> -->
 			<date-picker :date="startTime" :option="option" :limit="limit"></date-picker>
 			<span v-text="showWeek"></span>
-			
 		</div>
 		<div class="query">
 			<button @click="query" class="btn">查询</button>
-		</div>
+		</div> -->
 		<!-- 出发地址 -->
 		<!-- <mt-popup
 		  v-model="startpopupVisible"
@@ -77,19 +105,18 @@
 			</div> -->
 		</div>
 		<!-- 查询记录 -->
-		<div class="click-search">
+		<!-- <div class="click-search">
 			<p @click="showSearchRecord">历史查询<i class="fa fa-caret-down"></i></p>
-		</div>
-		<template v-if="searchrecord">
+		</div> -->
+		<!-- <template v-if="searchrecord">
 			<div class="search-record animated fadeInUp" v-if="localStorage.length!==0">
 				<p>历史查询</p>
 				<div class="list" v-for="(list,index) in localStorage.slice(0,5)" v-bind:key="index" @click="queryRecord(index)">
 					<span class="first">{{list.startCity}}</span>
 					<span>{{list.endCity}}</span>
-					<!-- <i @click="queryRecord(index)" class="fa fa-search">查询</i> -->
 				</div>
 			</div>
-		</template>
+		</template> -->
 	</div>
 </template>
 
@@ -105,7 +132,7 @@
 
 <script type="text/babel">
 import Utils from "../Utils/utils";
-import DatePicker from 'vue-datepicker'
+// import DatePicker from 'vue-datepicker'
 import { Indicator,Toast } from 'mint-ui';
 import "whatwg-fetch";
 const _ = require("underscore");
@@ -128,57 +155,7 @@ export default {
 			showRefresh:false,//是否显示刷新地理位置
 			searchrecord:false,//是否显示历史记录
 			canQuery:false,//是否可以查询
-      startTime: {
-        time: ""
-      },
-
-      option: {
-        type: 'day',
-        week: ['一', '二', '三', '四', '五', '六','日'],
-        month: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-        format: 'YYYY-MM-DD',
-        placeholder: '选择日期',
-        inputStyle: {
-          'display': 'inline-block',
-          'line-height': '60px',
-          'height':"60px",
-          'font-size': '1.8rem',
-          "background-color":"transparent",
-          'color': '#5F5F5F'
-        },
-        color: {
-          header: '#009688',
-          headerText: '#fff'
-        },
-        buttons: {
-          ok: '确定',
-          cancel: '取消'
-        },
-        overlayOpacity: 0.5, // 0.5 as default
-        dismissible: true // as true as default
-      },
-      // timeoption: {
-      //   type: 'min',
-      //   week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-      //   month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      //   format: 'YYYY-MM-DD HH:mm'
-      // },
-      // multiOption: {
-      //   type: 'multi-day',
-      //   week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-      //   month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      //   format:"YYYY-MM-DD HH:mm"
-      // },
-      limit: [{
-        type: 'weekday',
-        available: [1, 2, 3, 4, 5,6,7]
-      },
-      {
-        type: 'fromto',
-        from: '2016-02-01',
-        to: '2016-02-20'
-      }
-      ]
+      startTime: "",
 		}
 	},
 	created(){
@@ -186,21 +163,20 @@ export default {
 		// try{
 			let nowDate = new Date();
 			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
+			this.$store.commit("SET_SHOWHEADER",false);
 			
 			// 设置初始时间
-			this.handleConfirm(new Date(nowDate.getTime()+1000*60*60*24));
 			if(this.$store.getters.getInfo.startDate.server){
 				// 之前查过
-				this.startTime.time = this.formatNow(this.$store.getters.getInfo.startDate.server);
+				this.handleConfirm(this.$store.getters.getInfo.startDate.server);
+				this.startTime = this.formatNow(this.$store.getters.getInfo.startDate.server);
 			}
 			else{
-				this.startTime.time = this.formatNow(new Date())
+				this.handleConfirm(new Date());
+				this.startTime = this.formatNow(new Date())
 			}
 			// 获取本地历史搜索数据
 			this.localStorage = this.getLocalStore().reverse();
-			// 改变限制选择的日期
-			this.limit[1].from = this.formatNow(new Date(nowDate.getTime()-1000*60*60*24));
-			this.limit[1].to = this.formatNow(new Date(nowDate.getTime()+1000*60*60*24*30));
 			
 			// 获取位置
 			if(this.$store.getters.getIsFirst){
@@ -251,30 +227,30 @@ export default {
 		
 	},
 	watch:{
-		startTime:{
-			handler:function(newValue,oldValue){
-				let date = new Date(newValue.time);
-				let newDate = new Date();
-				this.showTime = this.formatNow(date);
-				this.showWeek = Utils.formatWeek(date);
+		// startTime:{
+		// 	handler:function(newValue,oldValue){
+		// 		let date = new Date(newValue.time);
+		// 		let newDate = new Date();
+		// 		this.showTime = this.formatNow(date);
+		// 		this.showWeek = Utils.formatWeek(date);
 
-				// 显示明天和今天
-				if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()){
-					this.showWeek = "今天";
-				}
-				if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()+1){
-					this.showWeek = "明天";
-				}
+		// 		// 显示明天和今天
+		// 		if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()){
+		// 			this.showWeek = "今天";
+		// 		}
+		// 		if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()+1){
+		// 			this.showWeek = "明天";
+		// 		}
 
-				//记录选取的时间
-				this.$store.dispatch("setStartDate",{
-					date:this.showTime,
-					week:this.showWeek,
-					server:date
-				});
-			},
-			deep: true
-		}
+		// 		//记录选取的时间
+		// 		this.$store.dispatch("setStartDate",{
+		// 			date:this.showTime,
+		// 			week:this.showWeek,
+		// 			server:date
+		// 		});
+		// 	},
+		// 	deep: true
+		// }
 	},
 	computed:{
 		getStartCity(){
@@ -388,6 +364,9 @@ export default {
 				});
 			});
 		},
+		openDate(){
+			this.$router.push({name:"ticketdate"});
+		},
 		GoEndCity(){
 			// if(this.$store.getters.getCityList.endCityList){
 			// 	this.startpopupVisible = true;
@@ -425,6 +404,7 @@ export default {
 		handleConfirm(date){
 			this.showTime = this.formatNow(date);
 			this.showWeek = Utils.formatWeek(date);
+
 			//记录选取的时间
 			this.$store.dispatch("setStartDate",{
 				date:this.showTime,
@@ -533,10 +513,11 @@ export default {
 		},
 		showSearchRecord(){
 			this.searchrecord = !this.searchrecord;
+		},
+		clearLocalStore(){
+			window.localStorage.clear("City");
+			this.localStorage = [];
 		}
 	},
-	components: {
-    'date-picker': DatePicker
-  }
 }
 </script>

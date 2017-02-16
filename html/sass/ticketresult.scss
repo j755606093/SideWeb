@@ -10,8 +10,8 @@
   bottom: 0;
   right: 0;
   .filter {
-    position: absolute;
-    top: -50px;
+    position: fixed;
+    top: 0px;
     right: 0;
     color: $white;
     font-size: 14px;

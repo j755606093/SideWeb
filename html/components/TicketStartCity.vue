@@ -96,6 +96,7 @@ export default {
 	},
 	created(){
 		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择出发地"});
+		this.$store.commit("SET_SHOWHEADER",true);
 
 		if(!this.$store.state.tickets.startCityList){
 			// 提示加载中

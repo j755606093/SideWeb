@@ -162,8 +162,8 @@ input {
   bottom: 0;
   right: 0; }
   .result .filter {
-    position: absolute;
-    top: -50px;
+    position: fixed;
+    top: 0px;
     right: 0;
     color: #fff;
     font-size: 14px;

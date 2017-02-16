@@ -154,210 +154,177 @@ input {
   animation-fill-mode: both; }
 
 .ticketbody {
-  width: 96%;
-  margin: 0 2%;
-  padding-bottom: 100px;
-  overflow-x: hidden;
+  width: 100%;
+  overflow-x: auto;
   background-color: #fff;
-  top: 50px;
-  left: 0;
-  bottom: 0;
-  right: 0; }
-  .ticketbody .block {
+  margin-top: 12px;
+  position: absolute;
+  top: 12px;
+  left: 0; }
+  .ticketbody .slider {
+    height: 160px;
+    padding-left: 25px;
+    overflow-x: scroll;
+    white-space: nowrap; }
+    .ticketbody .slider .slider-item {
+      width: 250px;
+      height: 150px;
+      border-radius: 10px; }
+  .ticketbody .index-body {
     width: 100%;
-    height: 60px;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 1;
-        flex: 1;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    border-bottom: 1px solid #f1f1f1; }
-    .ticketbody .block span {
+    padding: 0 25px; }
+    .ticketbody .index-body .location {
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
-      -ms-flex-align: center;
-          align-items: center;
-      font-size: 1.4rem;
-      color: #111111;
       height: 60px;
       line-height: 60px; }
-      .ticketbody .block span i {
-        margin-right: 5px; }
-      .ticketbody .block span img {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        margin-right: 5px; }
-      .ticketbody .block span img.right {
-        width: 25px;
-        height: 25px;
-        position: absolute;
-        right: 10px;
-        top: 18px; }
-    .ticketbody .block span:first-child {
-      -ms-flex: 0.3;
-          flex: 0.3;
-      width: 30%;
-      color: #AAAAAA; }
-    .ticketbody .block span:last-child {
-      -ms-flex: 0.7;
-          flex: 0.7;
-      width: 70%;
-      font-size: 1.8rem;
-      font-weight: 900;
-      position: relative; }
-      .ticketbody .block span:last-child > i {
-        position: absolute;
-        top: 20px;
-        right: 10px;
-        color: #AAAAAA; }
-    .ticketbody .block span.station {
-      margin-left: 10px;
-      font-size: 1.4rem;
-      height: 1.8rem; }
-  .ticketbody > .data {
-    width: 100%;
-    height: 60px;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 1;
-        flex: 1;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    border-bottom: 1px solid #f1f1f1; }
-    .ticketbody > .data > span {
+      .ticketbody .index-body .location > span {
+        -ms-flex: 4;
+            flex: 4;
+        font-size: 20px;
+        font-weight: 900;
+        color: #1e1e1e;
+        display: inline-block; }
+        .ticketbody .index-body .location > span:last-child {
+          text-align: right; }
+      .ticketbody .index-body .location > div {
+        -ms-flex: 2;
+            flex: 2;
+        text-align: center; }
+        .ticketbody .index-body .location > div span {
+          width: 32px;
+          height: 4px;
+          line-height: 12px;
+          background-color: #329be8;
+          display: inline-block;
+          border-radius: 2px;
+          position: relative; }
+          .ticketbody .index-body .location > div span::after {
+            content: "";
+            position: absolute;
+            bottom: 4px;
+            right: 0px;
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
+            transform: rotate(45deg);
+            background-color: #329be8; }
+          .ticketbody .index-body .location > div span::before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 0px;
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
+            transform: rotate(-45deg);
+            background-color: #329be8; }
+    .ticketbody .index-body .date {
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
-      -ms-flex-align: center;
-          align-items: center;
-      -ms-flex: 0.5;
-          flex: 0.5;
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #111111; }
-      .ticketbody > .data > span i {
-        margin-right: 5px; }
-      .ticketbody > .data > span img {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        margin-right: 5px; }
-    .ticketbody > .data > span:first-child {
-      width: 30%;
-      color: #AAAAAA;
-      font-size: 1.4rem;
-      font-weight: 400; }
-    .ticketbody > .data > span:last-child {
-      width: 30%;
-      font-size: 1.4rem;
-      font-weight: 400; }
-    .ticketbody > .data .cov-vue-date {
       height: 60px;
-      width: 40%; }
-  .ticketbody .query {
-    width: 100%; }
-    .ticketbody .query button {
-      width: 90%;
-      margin: 0 5%;
-      background-color: #e74c3c;
-      height: 50px;
-      color: #fff;
-      font-size: 1.6rem;
-      margin-top: 10px;
-      border-radius: 10px; }
-  .ticketbody .click-search {
-    width: 90%;
-    margin: 0 5%;
-    margin-top: 10px;
-    padding-top: 5px;
-    text-align: right; }
-    .ticketbody .click-search p {
-      font-size: 1.4rem;
-      color: #0074D9; }
-  .ticketbody .animated {
-    animation-duration: 0.5s; }
-  .ticketbody .search-record {
-    width: 90%;
-    margin: 0 5%;
-    margin-top: 10px;
-    padding-top: 5px;
-    text-align: center; }
-    .ticketbody .search-record p {
-      font-size: 1.6rem;
+      line-height: 60px; }
+      .ticketbody .index-body .date > span {
+        -ms-flex: 3;
+            flex: 3;
+        display: inline-block;
+        color: #c8c8c8;
+        font-size: 12px; }
+      .ticketbody .index-body .date > div {
+        text-align: center;
+        -ms-flex: 4;
+            flex: 4; }
+        .ticketbody .index-body .date > div span {
+          display: inline-block;
+          font-weight: 900;
+          font-size: 18px;
+          color: #1e1e1e; }
+      .ticketbody .index-body .date > p {
+        -ms-flex: 3;
+            flex: 3;
+        text-align: right; }
+        .ticketbody .index-body .date > p > span {
+          text-align: right;
+          font-size: 18px;
+          color: #329be8;
+          height: 60px;
+          line-height: 60px;
+          float: left;
+          margin-left: 20%; }
+        .ticketbody .index-body .date > p > i {
+          color: #c8c8c8;
+          height: 60px;
+          line-height: 60px; }
+    .ticketbody .index-body .btn {
+      width: 100%;
       height: 40px;
       line-height: 40px;
+      text-align: center;
       color: #fff;
-      background-color: #73777b;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px; }
-    .ticketbody .search-record .list {
-      width: 100%;
-      padding: 0 5%;
-      height: 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      background-color: #329be8;
+      margin-top: 20px; }
+    .ticketbody .index-body .search-record {
       display: -ms-flexbox;
       display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-align: center;
-          align-items: center;
-      background-color: #ecf0f1;
-      position: relative; }
-      .ticketbody .search-record .list span {
-        font-size: 1.4rem;
-        line-height: 20px;
-        color: #000;
-        -ms-flex: 0.5;
-            flex: 0.5;
-        display: inline-block;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      margin-top: 20px; }
+      .ticketbody .index-body .search-record .list {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+        .ticketbody .index-body .search-record .list > span {
+          -ms-flex: 4;
+              flex: 4;
+          color: #c8c8c8;
+          display: inline-block;
+          height: 25px;
+          line-height: 25px; }
+          .ticketbody .index-body .search-record .list > span:first-child {
+            text-align: right; }
+          .ticketbody .index-body .search-record .list > span:last-child {
+            text-align: left; }
+        .ticketbody .index-body .search-record .list > div {
+          -ms-flex: 2;
+              flex: 2;
+          text-align: center; }
+          .ticketbody .index-body .search-record .list > div > span {
+            width: 14px;
+            height: 2px;
+            line-height: 12px;
+            background-color: #c8c8c8;
+            display: inline-block;
+            border-radius: 2px;
+            position: relative; }
+            .ticketbody .index-body .search-record .list > div > span::after {
+              content: "";
+              position: absolute;
+              bottom: 2px;
+              right: 0px;
+              width: 4px;
+              height: 2px;
+              border-radius: 2px;
+              transform: rotate(45deg);
+              background-color: #c8c8c8; }
+            .ticketbody .index-body .search-record .list > div > span::before {
+              content: "";
+              position: absolute;
+              top: 2px;
+              right: 0px;
+              width: 4px;
+              height: 2px;
+              border-radius: 2px;
+              transform: rotate(-45deg);
+              background-color: #c8c8c8; }
+      .ticketbody .index-body .search-record p {
         text-align: center;
-        padding: 2px 5px; }
-      .ticketbody .search-record .list span.first::after {
-        content: "";
-        height: 3px;
-        width: 10%;
-        position: absolute;
-        top: 14px;
-        left: 45%;
-        background-color: #000; }
-      .ticketbody .search-record .list span.first::before {
-        content: "";
-        height: 0;
-        border: 4px solid #000;
-        border-color: transparent transparent #000 #000;
-        width: 0;
-        position: absolute;
-        top: 9px;
-        left: 55%; }
-      .ticketbody .search-record .list i {
-        -ms-flex: 0.4;
-            flex: 0.4;
-        font-size: 1.4rem;
-        color: #2980b9;
-        height: 30px;
-        line-height: 30px; }
-  .ticketbody .location {
-    width: 90%;
-    margin: 0 5%;
-    margin-top: 10px;
-    padding-top: 5px;
-    text-align: center; }
-    .ticketbody .location .showload span {
-      font-size: 1.4rem;
-      color: #555; }
-    .ticketbody .location .showload i {
-      font-size: 1.4rem; }
-    .ticketbody .location .location-result span {
-      font-size: 1.4rem; }
-    .ticketbody .location .location-result i {
-      font-size: 1.4rem; }
-    .ticketbody .location .location-result span.refresh-location {
-      color: #0074D9;
-      border: 1px solid #0074D9;
-      padding: 2px 5px;
-      border-radius: 5px;
-      margin-left: 10px; }
+        color: #c8c8c8;
+        height: 25px;
+        line-height: 25px; }

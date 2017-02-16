@@ -68,9 +68,9 @@
 			  class="popup-visible"
 			  position="bottom">
 			  <div class="popup-header">
-			  	<span>取消</span>
-			  	<span>清空已选</span>
-			  	<span>确定</span>
+			  	<span @click="Setcancel">取消</span>
+			  	<span @click="SetClear">清空已选</span>
+			  	<span @click="Setfilter">确定</span>
 			  </div>
 			  <!-- 列表头部 -->
 				<div class="data-set">
@@ -83,8 +83,8 @@
 						<span :class="{'set':true,active:isShowConame}"></span>
 					</div>
 					<div>
-						<p :class="{active:isShowPosition}" @click="setShowPosition">路线信息</p>
-						<span :class="{'set':true,active:isShowPosition}"></span>
+						<p :class="{active:isShowRouter}" @click="setShowPosition">路线信息</p>
+						<span :class="{'set':true,active:isShowRouter}"></span>
 					</div>
 					<div>
 						<p :class="{active:isShowPrice}" @click="setShowPrice">票价高低</p>
@@ -108,20 +108,20 @@
 					</mt-checklist>
 				</div>
 				<!-- 路线信息 -->
-				<div class="set-time" v-show="isShowPosition">
+				<div class="set-time" v-show="isShowRouter">
 					<mt-checklist
 						align="right"
-					  v-model="getTimeOptionsValue"
-					  :options="TimeOptions">
+					  v-model="getRouterOptionsValue"
+					  :options="RouterOptions">
 					</mt-checklist>
 				</div>
 				<!-- 票价高低 -->
 				<div class="set-time" v-show="isShowPrice">
-					<mt-checklist
+					<mt-radio
 						align="right"
-					  v-model="getTimeOptionsValue"
-					  :options="TimeOptions">
-					</mt-checklist>
+					  v-model="PriceOptionsValue"
+					  :options="PriceOptions">
+					</mt-radio>
 				</div>
 			</mt-popup>
 			
@@ -163,16 +163,16 @@ export default {
 			popupVisible:false,
 			isShowList:true,
 			isShowPrice:true,//价格
-			isShowTime:false,
-			isShowConame:false,
-			isShowPosition:false,
+			isShowTime:false,//时间
+			isShowConame:false,//公司名
+			isShowRouter:false,//路线信息
 			showNoData:false,
 			routerDetailShow:false,//显示公司信息
 			showCompanyInfo:{},//显示的公司信息
 			arrow:0,//默认票价排序
 			TimeOptions:[
 				{
-			    label: '不限时间段',
+			    label: '不限时段',
 			    value: '不限',
 			    disabled: false
 			  },
@@ -203,19 +203,35 @@ export default {
 			    value: '不限',
 			    disabled: false
 				},
-				// {
-				// 	label:"镇江汽车站",
-				// 	value:"镇江汽车站",
-				// 	disabled:false
-				// },
-				// {
-				// 	label:"其它汽车站",
-				// 	value:"其它汽车站",
-				// 	disabled:false
-				// }
+			],
+			RouterOptions:[
+				{
+					label: '不限',
+			    value: '不限',
+			    disabled: false
+				},
+			],
+			PriceOptions:[
+				{
+					label: '不限高低',
+			    value: '不限',
+			    disabled: false
+				},
+				{
+					label: '从低到高',
+			    value: '1',
+			    disabled: false
+				},
+				{
+					label: '从高到低',
+			    value: '2',
+			    disabled: false
+				},
 			],
 			TimeOptionsValue:["不限"],//结果
 			PositionOptionsValue:["不限"],//结果
+			RouterOptionsValue:["不限"],//结果
+			PriceOptionsValue:'不限',//结果
 		}
 	},
 	created(){
@@ -228,6 +244,7 @@ export default {
 		// console.log(this.getResultList)
 		//设置头部标题
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
+		this.$store.commit("SET_SHOWHEADER",true);
 
 		this.getResultList = [...this.$store.getters.getResultList];
 		
@@ -273,6 +290,50 @@ export default {
 				return this.TimeOptionsValue;
 			}
 		},
+		getRouterOptionsValue:{
+			set(value){
+				if(value.length===0){
+					this.RouterOptionsValue = ["不限"];
+				}
+				else{
+					if(value.indexOf("不限")>-1&&value.length!==1){
+						// 有不止不限的选项
+						this.RouterOptionsValue = value;
+						this.RouterOptions[0].disabled = true;
+					}
+					else{
+						if(value.length<this.RouterOptionsValue.length){
+							// 设置的值小于原来的值
+							this.RouterOptionsValue = ["不限"];
+						}
+						else{
+							this.RouterOptionsValue = value;
+							this.RouterOptions[0].disabled = false;
+						}
+					}
+					if(value.length===this.RouterOptions.length){
+						this.RouterOptions[0].disabled = false;
+					}
+				}
+			},
+			get(){
+				return this.RouterOptionsValue;
+			}
+		},
+		// getPriceOptionsValue:{
+		// 	set(value){
+		// 		if(value.length===0){
+		// 			this.PriceOptionsValue = ["不限"];
+		// 		}
+		// 		else{
+		// 			this.PriceOptionsValue = [1];
+		// 			console.log([value[value.length-1]])
+		// 		}
+		// 	},
+		// 	get(){
+		// 		return this.PriceOptionsValue;
+		// 	}
+		// },
 		getPositionOptionsValue:{
 			set(value){
 				if(value.length===0){
@@ -304,7 +365,16 @@ export default {
 			}
 		},
 		startDate(){
-			return this.$store.getters.getInfo.startDate;
+			let date = new Date(this.$store.getters.getInfo.startDate.server);
+			let year = date.getYear()-100+2000;
+			let month = date.getMonth()+1;
+			let day = date.getDate();
+
+			// return month+"月"+day+"日";
+			return {
+				date:year+"年"+(month>9?month:"0"+month)+"月"+(day>9?day:"0"+day)+"号",
+				week:this.$store.getters.getInfo.startDate.week
+			};
 		},
 		ResultBackUp(){
 			return this.$store.getters.getResultList;
@@ -322,7 +392,7 @@ export default {
 			// this.isShowList = false;//隐藏列表
 			//隐藏其他的tab
 			this.isShowTime = false;
-			this.isShowPosition = false;
+			this.isShowRouter = false;
 			this.isShowPrice = false;
 			this.isShowConame  = false;
 		},
@@ -336,7 +406,7 @@ export default {
 		},
 		setShowPosition(){
 			this.HideAll();
-			this.isShowPosition = true;
+			this.isShowRouter = true;
 		},
 		setShowPrice(){
 			this.HideAll();
@@ -367,32 +437,73 @@ export default {
 						});
 						filter.push(item.CoName);
 					}
-					// let stations = [];
-					// for(let i=0;i<item.Stations.length;i++){
-					// 	let a = item.Stations[i];
-					// 	if(a.Point.length>2){
-					// 		a.Point = a.Point.slice(0,2);
-					// 	}
-					// 	stations.push(a);
-					// }
-					// this.getResultList[index].Stations = stations;
+				})
+
+				let filterRouter = [];
+				this.getResultList.map((item,index)=>{
+					if(filterRouter.indexOf(item.Route)<=-1){
+						//不重复
+						this.RouterOptions.push({
+							label:item.Route,
+							value:item.Route,
+							disabled:false
+						})
+						filterRouter.push(item.Route);
+					}
 				})
 			}
+		},
+		/** 确定筛选 */
+		Setfilter(){
+			if(this.isShowPrice){
+				this.queryPrice();
+			}
+			if(this.isShowTime){
+				this.queryTime();
+			}
+			if(this.isShowConame){
+				this.queryConame();
+			}
+			if(this.isShowRouter){
+				this.queryRouter();
+			}
+
+			if(this.getResultList.length===0){
+				this.showNoData = true;
+			}
+			else{
+				this.showNoData = false;
+			}
+			this.popupVisible = false;
+		},
+		/** 取消 */
+		Setcancel(){
+			this.popupVisible = false;
+		},
+		/** 清空已选 */
+		SetClear(){
+			this.TimeOptionsValue=["不限"];//结果
+			this.PositionOptionsValue=["不限"];//结果
+			this.RouterOptionsValue=["不限"];//结果
+			this.PriceOptionsValue=['不限'];//结果
 		},
 		queryTime(){
 			//查找特定时间的车
 			// console.log(this.TimeOptionsValue);
+			// 判断是否值选择了一个不限
+			if(this.TimeOptionsValue[0]==="不限"&&this.TimeOptionsValue.length===1){
+				// 长度为一
+				this.getResultList = this.ResultBackUp;
+				return;
+			}
 			// 如果this.TimeOptionsValue长度超过1位,那就需要去掉'不限'
-			this.HideAll();
-			this.isShowList = true;//显示列表
-			
 			let filter = this.TimeOptionsValue.slice(1);
 			this.getResultList = _.filter(this.ResultBackUp,(item)=>{
 				let hour =parseInt(item.StartTime.split(":")[0]);
 				
 				let n = false;
-				for(let i=0;i<filter.length;i++){
-					switch(filter[i]){
+				filter.forEach(item=>{
+					switch(item){
 						case 6:
 							if(hour<=6&&hour>=0){
 								n = true;
@@ -414,24 +525,31 @@ export default {
 							}
 							break;
 					}
-				}
+				})
 				return n;
 			});
-			
-			// 最后判断是否值选择了一个不限
-			if(this.TimeOptionsValue.length===1&&this.getResultList.length===0){
-				// 长度为一
-				this.getResultList = this.ResultBackUp;
+		},
+		queryPrice(){
+			//设置价格高低
+			let lastData = this.getResultList;
+			if(this.PriceOptionsValue==="1"){
+				this.getResultList = _.sortBy(lastData,"Price");
+			}
+			if(this.PriceOptionsValue==="2"){
+				this.getResultList = _.sortBy(lastData,"Price").reverse();
 			}
 		},
-		queryPosition(){
-			// 查找查找
+		queryConame(){
 			// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
-			this.HideAll();
-			this.isShowList = true;//显示列表
+			if(this.PositionOptionsValue[0]==="不限"&&this.PositionOptionsValue.length===1){
+				// 长度为一
+				this.getResultList = this.ResultBackUp;
+				return;
+			}
 			// console.log(this.getResultList)
 			let filter = this.PositionOptionsValue.slice(1);
-			this.getResultList = _.filter(this.ResultBackUp,(item)=>{
+			let lastData = this.getResultList;
+			this.getResultList = _.filter(lastData,(item)=>{
 				let n =false;
 				for(let i=0;i<filter.length;i++){
 					if(item.CoName===filter[i]){
@@ -440,11 +558,25 @@ export default {
 				}
 				return n;
 			});
-
-			if(this.PositionOptionsValue.length===1&&this.getResultList.length===0){
+		},
+		queryRouter(){
+			if(this.RouterOptionsValue[0]==="不限"&&this.RouterOptionsValue.length===1){
 				// 长度为一
 				this.getResultList = this.ResultBackUp;
+				return;
 			}
+			// console.log(this.getResultList)
+			let filter = this.RouterOptionsValue.slice(1);
+			let lastData = this.getResultList;
+			this.getResultList = _.filter(lastData,(item)=>{
+				let n =false;
+				for(let i=0;i<filter.length;i++){
+					if(item.Route===filter[i]){
+						n=true;
+					}
+				}
+				return n;
+			});
 		},
 		GoToPay(index){
 			// 存储用户点击的列表
