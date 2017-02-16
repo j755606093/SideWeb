@@ -141,7 +141,8 @@
 		  	<div class="passenger">
 		  		<div class="page-header">
 		  			<div @click="showPage(1,true)"><img src="../picture/back_icon.png"></div>
-		  			<span class="center">选择乘车人({{AllFare.length}})</span>
+		  			<!-- <span class="center">选择乘车人({{AllFare.length}})</span> -->
+		  			<span class="center">选择乘车人</span>
 		  			<span @click="showPage(1,true)" class="right">确定</span>
 		  		</div>
 		  		<div class="passenger-body">
@@ -153,12 +154,23 @@
 							</div>
 						</div>
 		  			<!-- 添加乘客 -->
-		  			<div v-show="showaddpassenger" class="add-passenger animated zoomIn">
+		  			<div v-show="showpassengeraction===1" class="add-passenger animated zoomIn">
 							<div class="line">
 								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 							</div>
 							<div class="line">
 								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+								<button @click="append"><i class="fa fa-plus-circle"></i> 添加</button>
+							</div>
+						</div>
+						<!-- 修改乘客 -->
+		  			<div v-show="showpassengeraction===2" class="add-passenger animated zoomIn">
+							<div class="line">
+								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+							</div>
+							<div class="line">
+								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+								<button @click="append"><i class="fa fa-plus-circle"></i> 修改</button>
 							</div>
 						</div>
 		  		</div>
@@ -170,7 +182,7 @@
 		  					<p>{{item.Name}}</p>
 		  					<p>{{item.Mobile}}</p>
 		  				</div>
-		  				<div class="right"><img src="../picture/edit.png"></div>
+		  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
 		  			</div>
 		  		</div>
 		  	</div>
@@ -183,7 +195,7 @@
 import { mapGetters } from 'vuex'
 import Utils from "../Utils/utils";
 const _ = require("underscore");
-import { Indicator,Toast } from 'mint-ui';
+import { Indicator,Toast ,MessageBox} from 'mint-ui';
 
 export default {
 	data () {
@@ -245,7 +257,7 @@ export default {
 			},//服务器返回的订单信息
 
 			passengerPopupVisible:false,//选择乘客
-			showaddpassenger:false,//默认不显示添加乘客信息
+			showpassengeraction:0,//1显示添加乘客信息,2显示修改乘客
 		}
 	},
 	beforeCreate(){
@@ -971,7 +983,16 @@ export default {
 		},
 		/** 点击显示隐藏添加乘客 */
 		showAddPassenger(){
-			this.showaddpassenger = !this.showaddpassenger;
+			this.fareName = "";
+			this.certificate = "";
+			this.showpassengeraction = this.showpassengeraction===1?0:1;
+		},
+		/** 点击显示隐藏修改乘客 */
+		showChaPassenger(index){
+			this.showpassengeraction = 2;
+
+			this.fareName = this.AllFare[index].Name;
+			this.certificate = this.AllFare[index].Mobile;
 		}
 	}
 }
