@@ -33190,7 +33190,7 @@
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(172)
+	__webpack_require__(203)
 
 	/* script */
 	__vue_exports__ = __webpack_require__(175)
@@ -33211,7 +33211,6 @@
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/components/TicketPay.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-73a4cce7"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -33231,46 +33230,8 @@
 
 
 /***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(173);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(116)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7&scoped=true!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(92)();
-	// imports
-	exports.i(__webpack_require__(174), "");
-
-	// module
-	exports.push([module.id, "\n", ""]);
-
-	// exports
-
-
-/***/ },
+/* 172 */,
+/* 173 */,
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -33279,7 +33240,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #fff; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  margin-top: -10px;\n  padding: 0;\n  background-color: #f7f7f7;\n  padding-top: 50px; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.ticket-info {\n  width: 100%;\n  background-color: #2196F3;\n  margin-bottom: 5px;\n  padding-bottom: 10px; }\n  .ticket-info .header {\n    width: 92%;\n    margin: 5px 4%;\n    border-bottom: 1px solid #dddddd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .header span {\n      -ms-flex: 1;\n          flex: 1;\n      height: 40px;\n      font-size: 1.3rem;\n      line-height: 40px;\n      display: inline-block; }\n    .ticket-info .header span:first-child {\n      text-align: left; }\n    .ticket-info .header span:last-child {\n      text-align: right; }\n  .ticket-info .address-info {\n    width: 92%;\n    margin: 10px 4%;\n    height: 80px;\n    font-size: 1.2rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row; }\n    .ticket-info .address-info .box {\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    .ticket-info .address-info .start {\n      -ms-flex-align: start;\n          align-items: flex-start; }\n      .ticket-info .address-info .start p {\n        font-size: 1.8rem;\n        color: #fff; }\n        .ticket-info .address-info .start p.first {\n          font-size: 1.2rem; }\n        .ticket-info .address-info .start p.center {\n          font-size: 1.8rem;\n          width: 100%; }\n        .ticket-info .address-info .start p.last {\n          font-size: 1.2rem; }\n    .ticket-info .address-info .center {\n      font-size: 1.5rem;\n      -ms-flex-align: center;\n          align-items: center;\n      width: 40%; }\n      .ticket-info .address-info .center p.arrow {\n        color: #111111;\n        position: relative;\n        width: 100%;\n        height: 0;\n        line-height: 0; }\n        .ticket-info .address-info .center p.arrow::after {\n          width: 80%;\n          height: 10px;\n          background-color: #fff;\n          position: absolute;\n          left: 0;\n          bottom: -20px;\n          content: \"\"; }\n        .ticket-info .address-info .center p.arrow::before {\n          width: 0;\n          height: 0;\n          border: 10px solid #fff;\n          position: absolute;\n          right: 5px;\n          bottom: -20px;\n          content: \"\";\n          border-color: transparent transparent #fff #fff; }\n      .ticket-info .address-info .center p.arrow-message {\n        color: #fff; }\n      .ticket-info .address-info .center p.first {\n        color: #fff; }\n    .ticket-info .address-info .end {\n      -ms-flex-align: end;\n          align-items: flex-end;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .address-info .end p {\n        color: #fff;\n        font-size: 1.2rem; }\n        .ticket-info .address-info .end p:first-child {\n          font-size: 1.8rem; }\n  .ticket-info .tip-info {\n    width: 92%;\n    margin: 0px 4%;\n    height: 30px;\n    line-height: 30px;\n    background: transparent;\n    font-size: 1.2rem; }\n    .ticket-info .tip-info p {\n      padding: 0 5px;\n      display: inline-block;\n      color: #eaeaea; }\n      .ticket-info .tip-info p i {\n        margin-left: 5px; }\n    .ticket-info .tip-info span {\n      float: right;\n      color: #fff; }\n\n.station-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 15px;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0 2%;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .station-info span {\n    height: 40px;\n    line-height: 40px;\n    font-size: 1.4rem; }\n  .station-info span.center {\n    -ms-flex: 0.6;\n        flex: 0.6; }\n  .station-info span:first-child {\n    -ms-flex: 0.2;\n        flex: 0.2;\n    color: #5e5e5e; }\n  .station-info span:last-child {\n    -ms-flex: 0.2;\n        flex: 0.2; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .show-discount span:first-child {\n    color: #AAAAAA; }\n  .contact-info .show-discount span.center {\n    width: 50%; }\n  .contact-info .show-discount span.last {\n    width: 20%;\n    color: #0074D9; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px;\n    border-top: 1px solid #dddddd; }\n    .contact-info .discount-code input,\n    .contact-info .discount-code button,\n    .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center,\n    .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input,\n    .other-info .discount-code button,\n    .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #5e5e5e;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 30px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.mint-msgbox-input input {\n  height: 40px;\n  line-height: 40px;\n  font-size: 18px; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n    transform: none; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n.fadeLeft-out {\n  animation-name: fadeOutLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeLeft-in {\n  animation-name: fadeInLeft;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n.fadeRight-in {\n  animation-name: fadeInRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 0;\n    transform: none; }\n  to {\n    opacity: 1;\n    transform: translate3d(100%, 0, 0); } }\n\n.fadeRight-out {\n  animation-name: fadeOutRight;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.position {\n  position: absolute;\n  width: 100%;\n  background-color: #fff; }\n\n#pay input {\n  border: 0;\n  outline: none; }\n\n#pay {\n  padding: 0;\n  background-color: #fafafa; }\n\n.header {\n  width: 100%;\n  height: 125px;\n  position: relative; }\n  .header > img {\n    width: 100%;\n    height: 125px;\n    position: absolute;\n    top: 0;\n    left: 0; }\n  .header .header-title {\n    height: 50px;\n    position: relative; }\n    .header .header-title > div {\n      width: 50px;\n      height: 50px;\n      position: absolute;\n      top: 0;\n      left: 0; }\n    .header .header-title img {\n      width: 19px;\n      height: 19px;\n      line-height: 50px;\n      position: absolute;\n      left: 25px;\n      top: 15.5px; }\n    .header .header-title > span {\n      font-size: 18px;\n      color: #fff;\n      font-weight: 900;\n      height: 50px;\n      line-height: 50px;\n      float: right;\n      margin-right: 25px; }\n  .header .header-router {\n    width: 96%;\n    padding: 0 2%;\n    text-align: center; }\n    .header .header-router .router {\n      height: 60px;\n      margin: 0 -10px;\n      overflow-x: scroll;\n      white-space: nowrap; }\n      .header .header-router .router > div {\n        display: inline-block;\n        position: relative;\n        height: 50px;\n        width: 44px; }\n        .header .header-router .router > div:after {\n          content: \"\";\n          width: 25px;\n          height: 1px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n        .header .header-router .router > div:last-child::after {\n          content: \"\";\n          width: 25px;\n          height: 0px;\n          position: absolute;\n          bottom: 10px;\n          right: -14px;\n          background-color: #fff;\n          z-index: 1; }\n      .header .header-router .router > div.other:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #c8c8c8; }\n      .header .header-router .router > div:last-child:after {\n        content: \"\";\n        width: 0;\n        height: 0; }\n      .header .header-router .router > div.last:after {\n        content: \"\";\n        width: 25px;\n        height: 1px;\n        position: absolute;\n        bottom: 10px;\n        right: -14px;\n        background-color: #fff; }\n      .header .header-router .router span {\n        font-size: 12px;\n        width: 44px;\n        display: inline-block;\n        color: #fff;\n        font-weight: 900;\n        margin-top: 16px;\n        position: absolute;\n        top: 0;\n        left: 0; }\n        .header .header-router .router span::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #fff; }\n      .header .header-router .router > div.active::before {\n        content: \"\";\n        width: 13px;\n        height: 13px;\n        border-radius: 50%;\n        position: absolute;\n        bottom: 2px;\n        right: 15px;\n        background-color: #6cb9f1;\n        z-index: 1; }\n      .header .header-router .router span.gray {\n        color: #c8c8c8; }\n        .header .header-router .router span.gray::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -10px;\n          left: 19px;\n          background-color: #c8c8c8; }\n      .header .header-router .router span.active {\n        position: absolute;\n        top: 0;\n        left: 0;\n        color: #329be8;\n        height: 20px;\n        margin-top: 10px;\n        line-height: 20px;\n        border: 0.5px solid #fff;\n        border-radius: 10px;\n        background-color: #fff; }\n        .header .header-router .router span.active::after {\n          content: \"\";\n          width: 6px;\n          height: 6px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -15px;\n          left: 19px;\n          background-color: #fff;\n          z-index: 3; }\n        .header .header-router .router span.active::before {\n          content: \"\";\n          width: 10px;\n          height: 10px;\n          border-radius: 50%;\n          position: absolute;\n          bottom: -17px;\n          left: 17px;\n          background-color: #b1d5f0;\n          z-index: 2; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 5;\n            flex: 5;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.station-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 15px;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0 2%;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .station-info span {\n    height: 40px;\n    line-height: 40px;\n    font-size: 1.4rem; }\n  .station-info span.center {\n    -ms-flex: 0.6;\n        flex: 0.6; }\n  .station-info span:first-child {\n    -ms-flex: 0.2;\n        flex: 0.2;\n    color: #5e5e5e; }\n  .station-info span:last-child {\n    -ms-flex: 0.2;\n        flex: 0.2; }\n\n.people-info {\n  width: 96%;\n  margin: 0 2%;\n  background-color: #fff;\n  margin-bottom: 5px;\n  border-radius: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec; }\n  .people-info .info-head {\n    width: 100%;\n    padding: 0 2%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    border-bottom: 1px solid #dddddd; }\n    .people-info .info-head span {\n      font-size: 1.4rem;\n      color: #5e5e5e; }\n    .people-info .info-head span:first-child {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      font-size: 1.4rem; }\n    .people-info .info-head span:last-child {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.4rem; }\n  .people-info .info-list .list {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 50px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #f7f7f7; }\n    .people-info .info-list .list .check {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list .check > span {\n        border: 1px solid #0074D9;\n        border-radius: 5px;\n        padding: 3px 4px;\n        background-color: #fff; }\n        .people-info .info-list .list .check > span i {\n          color: #fff; }\n      .people-info .info-list .list .check > span.active {\n        background-color: #0074D9 !important; }\n    .people-info .info-list .list > span {\n      -ms-flex: 0.1;\n          flex: 0.1;\n      height: 50px;\n      line-height: 50px;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .people-info .info-list .list > span i {\n        color: #0074D9; }\n      .people-info .info-list .list > span i.fa-trash {\n        font-size: 1.7rem; }\n      .people-info .info-list .list > span i.fa-check {\n        height: 20px;\n        line-height: 20px; }\n    .people-info .info-list .list .list-body {\n      -ms-flex: 0.8;\n          flex: 0.8;\n      height: 40px;\n      margin: 5px 0; }\n      .people-info .info-list .list .list-body .list-top {\n        height: 40px; }\n        .people-info .info-list .list .list-body .list-top > span {\n          height: 40px;\n          line-height: 40px;\n          font-size: 1.1rem; }\n        .people-info .info-list .list .list-body .list-top span.name {\n          font-size: 1.4rem; }\n        .people-info .info-list .list .list-body .list-top span.type {\n          color: #AAAAAA;\n          margin: 0 5px; }\n        .people-info .info-list .list .list-body .list-top span.set-ticket {\n          color: #0074D9;\n          border: 1px solid #0074D9;\n          border-radius: 5px;\n          padding: 2px;\n          margin-left: 10px; }\n        .people-info .info-list .list .list-body .list-top span.get-ticket {\n          color: #0074D9;\n          margin-left: 10px; }\n  .people-info .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column; }\n    .people-info .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .people-info .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .people-info .info-man .info input {\n        -ms-flex: 0.5;\n            flex: 0.5;\n        font-size: 1.3rem; }\n      .people-info .info-man .info button {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        height: 40px;\n        outline: none;\n        border: 0;\n        color: #0074D9;\n        font-size: 1.3rem;\n        background: transparent;\n        text-align: right; }\n        .people-info .info-man .info button i {\n          margin-right: 5px; }\n    .people-info .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .people-info .click-append {\n    width: 96%;\n    margin: 0 2%;\n    height: 40px;\n    text-align: center; }\n    .people-info .click-append > button {\n      height: 30px;\n      outline: none;\n      border: 0;\n      color: #0074D9;\n      font-size: 1.3rem;\n      background: transparent;\n      margin-top: 5px; }\n    .people-info .click-append > i {\n      color: #0074D9;\n      font-size: 1.3rem;\n      margin-right: 5px; }\n\n.contact-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative;\n  box-shadow: 0px 3px 5px 0px #ececec;\n  border-radius: 10px; }\n  .contact-info .info {\n    height: 40px;\n    line-height: 40px;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    width: 96%;\n    margin: 0 2%; }\n    .contact-info .info span {\n      width: 30%;\n      font-size: 1.3rem; }\n    .contact-info .info span.last {\n      width: 30%;\n      text-align: right; }\n    .contact-info .info span.center {\n      width: 40%;\n      color: #AAAAAA; }\n    .contact-info .info input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .contact-info .show-discount span:first-child {\n    color: #AAAAAA; }\n  .contact-info .show-discount span.center {\n    width: 50%; }\n  .contact-info .show-discount span.last {\n    width: 20%;\n    color: #0074D9; }\n  .contact-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px;\n    border-top: 1px solid #dddddd; }\n    .contact-info .discount-code input,\n    .contact-info .discount-code button,\n    .contact-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .contact-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .contact-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .contact-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.other-info {\n  width: 100%;\n  background-color: #fff;\n  margin-bottom: 10px;\n  position: relative; }\n  .other-info .info {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    border-bottom: 1px solid #dddddd; }\n    .other-info .info span.first {\n      -ms-flex: 0.3;\n          flex: 0.3;\n      height: 40px;\n      font-size: 1.3rem; }\n    .other-info .info span.center,\n    .other-info .info input.center {\n      -ms-flex: 0.5;\n          flex: 0.5;\n      height: 39px;\n      font-size: 1.3rem;\n      color: #AAAAAA; }\n    .other-info .info .last {\n      -ms-flex: 0.2;\n          flex: 0.2;\n      height: 40px;\n      font-size: 1.3rem; }\n      .other-info .info .last span {\n        border: 1px solid #0074D9;\n        padding: 0 3px;\n        height: 25px;\n        line-height: 25px;\n        border-radius: 5px; }\n        .other-info .info .last span > i {\n          color: #fff; }\n      .other-info .info .last span.active {\n        background-color: #0074D9; }\n      .other-info .info .last span.right {\n        border: none; }\n        .other-info .info .last span.right > i {\n          color: #AAAAAA;\n          font-size: 1.8rem; }\n      .other-info .info .last button.right {\n        outline: none;\n        border: 0;\n        background-color: #fff;\n        color: #0074D9;\n        -ms-flex: 0.25;\n            flex: 0.25;\n        font-size: 1.3rem;\n        height: 30px;\n        line-height: 30px;\n        border-radius: 10px; }\n  .other-info .discount-code {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    height: 40px;\n    line-height: 40px;\n    width: 96%;\n    margin: 0 2%;\n    padding-top: 5px; }\n    .other-info .discount-code input,\n    .other-info .discount-code button,\n    .other-info .discount-code i {\n      font-size: 1.3rem;\n      height: 30px;\n      line-height: 30px; }\n    .other-info .discount-code input {\n      -ms-flex: 1;\n          flex: 1; }\n    .other-info .discount-code i {\n      -ms-flex: 0.1;\n          flex: 0.1; }\n    .other-info .discount-code button {\n      outline: none;\n      border: 0;\n      background-color: #fff;\n      color: #0074D9;\n      -ms-flex: 0.25;\n          flex: 0.25;\n      height: 30px;\n      line-height: 30px;\n      border-radius: 10px; }\n\n.root-tip-info {\n  width: 100%;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n  position: relative;\n  padding-bottom: 60px; }\n  .root-tip-info .text {\n    width: 92%;\n    margin: 0 4%;\n    border: 1px solid #FF851B;\n    border-radius: 5px;\n    padding: 5px 10px; }\n    .root-tip-info .text > p {\n      color: #FF851B;\n      line-height: 20px; }\n\n.submit-box {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  width: 100%;\n  background-color: #fff;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  box-shadow: 3px 0 3px 3px #efeeee; }\n  .submit-box .order-info {\n    -ms-flex: 0.6;\n        flex: 0.6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 0 10px;\n    margin: 5px 0; }\n    .submit-box .order-info p {\n      color: #5e5e5e;\n      height: 20px;\n      line-height: 20px;\n      font-size: 1.1rem; }\n      .submit-box .order-info p > span > span {\n        margin-left: 5px; }\n    .submit-box .order-info p:first-child {\n      font-size: 1.3rem;\n      color: #5e5e5e; }\n      .submit-box .order-info p:first-child > span {\n        margin: 10px;\n        color: #FF851B; }\n  .submit-box .submit-order {\n    -ms-flex: 0.4;\n        flex: 0.4; }\n    .submit-box .submit-order > button {\n      background-color: #FF851B;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 30px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 90%; }\n\n.station-popup-visible {\n  width: 80%;\n  height: 60%;\n  background-color: #fff;\n  border-radius: 10px; }\n  .station-popup-visible .station {\n    position: relative;\n    border-radius: 10px;\n    height: 100%;\n    overflow-y: scroll; }\n    .station-popup-visible .station .mint-checklist {\n      margin-bottom: 50px; }\n    .station-popup-visible .station button {\n      width: 100%;\n      padding: 10px;\n      color: #fff;\n      background-color: #0074D9;\n      font-size: 1.6rem;\n      position: fixed;\n      bottom: 0px;\n      left: 0;\n      border-bottom-right-radius: 10px;\n      border-bottom-left-radius: 10px; }\n\n.message-popup-visible {\n  width: 100%; }\n  .message-popup-visible .popup {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    color: #fff;\n    background-color: rgba(0, 0, 0, 0.6);\n    font-size: 1.2rem; }\n\n.tip-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: rgba(17, 17, 17, 0.5); }\n  .tip-popup-visible > .body {\n    text-align: center;\n    width: 96%;\n    margin: 10px 2%;\n    overflow-y: auto;\n    height: 100%;\n    padding-top: 0; }\n    @media (max-width: 320px) {\n      .tip-popup-visible > .body {\n        margin: 0px 2%; } }\n    .tip-popup-visible > .body h3 {\n      color: #fff;\n      font-size: 1.5rem;\n      margin-top: 10px; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body h3 {\n          margin-top: 5px;\n          font-size: 1.3rem; } }\n    .tip-popup-visible > .body p {\n      color: #fff;\n      font-size: 1.3rem;\n      text-align: left; }\n      @media (max-width: 320px) {\n        .tip-popup-visible > .body p {\n          font-size: 1.1rem; } }\n    .tip-popup-visible > .body button {\n      background-color: #0074D9;\n      color: #fff;\n      font-size: 1.3rem;\n      outline: none;\n      border: 0;\n      height: 40px;\n      margin-top: 10px;\n      border-radius: 5px;\n      width: 40%; }\n\n.payinfo-popup-visible {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0; }\n  .payinfo-popup-visible .pay-body {\n    width: 100%;\n    height: 100%;\n    overflow-y: auto; }\n  .payinfo-popup-visible .info-body {\n    height: 160px;\n    width: 100%;\n    background-color: #2196F3;\n    color: #fff; }\n    .payinfo-popup-visible .info-body .status {\n      text-align: center;\n      padding-top: 20px; }\n      .payinfo-popup-visible .info-body .status > i.fa {\n        font-size: 4rem;\n        color: #2ecc71; }\n      .payinfo-popup-visible .info-body .status > p {\n        font-size: 1.8rem;\n        color: #fff;\n        margin-top: 10px; }\n      .payinfo-popup-visible .info-body .status p.time {\n        font-size: 1.4rem; }\n  .payinfo-popup-visible .ticket-body {\n    margin-bottom: 10px;\n    width: 100%; }\n    .payinfo-popup-visible .ticket-body .pay-info {\n      background-color: #fff;\n      width: 100%;\n      padding: 0 3%; }\n      .payinfo-popup-visible .ticket-body .pay-info .address-info {\n        width: 96%;\n        margin: 10px 2%;\n        height: 100px;\n        font-size: 1.2rem;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {\n          -ms-flex: 1;\n              flex: 1;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: column;\n              flex-direction: column;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {\n          -ms-flex-align: start;\n              align-items: flex-start; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {\n            font-size: 1.8rem;\n            color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {\n              font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {\n              font-size: 1.8rem;\n              width: 100%; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {\n              color: #AAAAAA;\n              font-size: 1.2rem; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {\n          font-size: 1.5rem;\n          -ms-flex-align: center;\n              align-items: center;\n          width: 40%; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {\n            color: #0074D9;\n            position: relative;\n            width: 100%;\n            height: 0;\n            line-height: 0; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {\n              width: 80%;\n              height: 10px;\n              background-color: #0074D9;\n              position: absolute;\n              left: 0;\n              bottom: -20px;\n              content: \"\"; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {\n              width: 0;\n              height: 0;\n              border: 10px solid #0074D9;\n              position: absolute;\n              right: 5px;\n              bottom: -20px;\n              content: \"\";\n              border: 10px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {\n            color: #111111;\n            font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {\n            color: #111111; }\n        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {\n          -ms-flex-align: end;\n              align-items: flex-end;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {\n            font-size: 1.2rem; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {\n              font-size: 1.8rem;\n              color: #111111; }\n            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {\n              color: #919191; }\n      .payinfo-popup-visible .ticket-body .pay-info .info-box {\n        min-height: 40px;\n        border-top: 1px solid #f7f7f7; }\n        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {\n          font-size: 1.3rem; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {\n            font-size: 1.3rem;\n            color: #AAAAAA;\n            line-height: 40px;\n            min-height: 40px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {\n            width: 50px; }\n          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {\n            color: #111111; }\n  .payinfo-popup-visible .pay-ticket-info {\n    background-color: #fff;\n    width: 100%; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {\n      padding: 0 3%;\n      border-bottom: 1px solid #dddddd; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px; }\n    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {\n      padding: 0 3%; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {\n        font-size: 1.2rem;\n        color: #919191;\n        height: 30px;\n        line-height: 30px; }\n      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {\n        font-size: 1.4rem;\n        text-align: right; }\n  .payinfo-popup-visible .now-pay {\n    width: 100%;\n    padding: 0 2%;\n    margin-top: 10px; }\n    .payinfo-popup-visible .now-pay button {\n      outline: none;\n      border: 0;\n      background-color: #FF851B;\n      font-size: 1.5rem;\n      color: #fff;\n      width: 100%;\n      height: 40px;\n      border-radius: 10px; }\n  .payinfo-popup-visible .out-order {\n    width: 100%;\n    text-align: center; }\n    .payinfo-popup-visible .out-order a {\n      color: #AAAAAA; }\n\n.mint-msgbox-input input {\n  height: 40px;\n  line-height: 40px;\n  font-size: 18px; }\n\n.success {\n  color: #2ecc71; }\n", ""]);
 
 	// exports
 
@@ -33316,6 +33277,52 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -33699,16 +33706,17 @@
 
 			this.startCity = this.$store.state.tickets.startCity;
 			this.endCity = this.$store.state.tickets.endCity;
+			this.$store.commit("SET_SHOWHEADER", false);
 
 			if (!this.$store.getters.getIsFirst) {
 				this.busInfo = this.$store.getters.getBusInfo;
 				this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;
 
-				var startDate = this.$store.getters.getInfo.startDate;
-				this.$store.commit("CHANGE_HEADER", {
-					isHome: false,
-					Title: startDate.date + " " + startDate.week
-				});
+				// let startDate = this.$store.getters.getInfo.startDate;
+				// this.$store.commit("CHANGE_HEADER",{
+				// 	isHome:false,
+				// 	Title:this.startDate.date+" "+this.startDate.week
+				// });
 			}
 
 			//设置乘车点
@@ -33767,8 +33775,20 @@
 		},
 
 		computed: {
+			// startDate(){
+			// 	return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
+			// },
 			startDate: function startDate() {
-				return this.$store.getters.getInfo.startDate.date + this.$store.getters.getInfo.startDate.week;
+				var date = new Date(this.$store.getters.getInfo.startDate.server);
+				var year = date.getYear() - 100 + 2000;
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+
+				// return month+"月"+day+"日";
+				return {
+					date: year + "年 " + (month > 9 ? month : "0" + month) + "月 " + (day > 9 ? day : "0" + day) + "号 ",
+					week: this.$store.getters.getInfo.startDate.week
+				};
 			},
 			concatName: function concatName() {
 				// 获取乘客名字,逗号相连
@@ -34909,61 +34929,76 @@
 	      "id": "pay"
 	    }
 	  }, [_vm._h('div', {
-	    staticClass: "ticket-info"
-	  }, [_vm._h('div', {
-	    staticClass: "address-info"
-	  }, [_vm._h('div', {
-	    staticClass: "start box"
-	  }, [_vm._h('p', {
-	    staticClass: "center",
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.StartPoint)
+	    staticClass: "header"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(202)
 	    }
-	  }), " ", _vm._h('p', {
-	    staticClass: "last",
+	  }), " ", _vm._h('div', {
+	    staticClass: "header-title"
+	  }, [_vm._m(0), " ", _vm._h('span', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.StartCity)
+	      "textContent": _vm._s(_vm.startDate.date + ' ' + _vm.startDate.week)
 	    }
 	  })]), " ", _vm._h('div', {
-	    staticClass: "center box"
-	  }, [_vm._h('p', {
-	    staticClass: "first",
+	    staticClass: "header-router"
+	  }, [_vm._h('div', {
+	    staticClass: "router"
+	  }, [_vm._l((_vm.busInfo.Stations), function(list, index) {
+	    return _vm._h('div', {
+	      class: {
+	        active: list.NodeType === 2 || list.NodeType === 1, other: list.NodeType === 0, last: list.NodeType === 2
+	      }
+	    }, [_vm._h('span', {
+	      class: {
+	        gray: list.NodeType === 0, active: list.NodeType === 2 || list.NodeType === 1
+	      }
+	    }, [_vm._s(list.Point.length > 3 ? list.Point.slice(0, 3) + '..' : list.Point)])])
+	  })])])]), " ", " ", _vm._h('div', {
+	    staticClass: "ticket-info"
+	  }, [_vm._h('div', {
+	    staticClass: "left"
+	  }, [_vm._h('span', {
 	    domProps: {
 	      "textContent": _vm._s(_vm.busInfo.StartTime.slice(0, _vm.busInfo.StartTime.length - 3))
 	    }
-	  }), " ", _vm._h('p', {
-	    staticClass: "arrow-message",
+	  }, ["08:23"]), " ", _vm._h('span', {
 	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.Route)
+	      "textContent": _vm._s(_vm.busInfo.CoName)
 	    }
-	  }), " ", _vm._h('p', {
-	    staticClass: "arrow"
-	  })]), " ", _vm._h('div', {
-	    staticClass: "end box"
+	  }, ["东方快车"]), " ", _vm._h('span', [_vm._s(_vm.busInfo.Route)])]), " ", _vm._m(1), " ", _vm._h('div', {
+	    staticClass: "right"
+	  }, [_vm._h('div', {
+	    staticClass: "top"
+	  }, [_vm._h('div', {
+	    staticClass: "name"
+	  }, [_vm._h('p', [_vm._s(_vm.busInfo.StartPoint)]), " ", _vm._h('p', [_vm._s(_vm.busInfo.EndPoint)])]), " ", _vm._h('div', {
+	    staticClass: "info"
 	  }, [_vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.EndPoint)
-	    }
-	  }), " ", _vm._h('p', [_vm._s(_vm.busInfo.TargetAddr)])])]), " ", _vm._h('div', {
-	    staticClass: "tip-info",
 	    on: {
 	      "click": _vm.openTip
 	    }
-	  }, [_vm._m(0), " ", _vm._h('span', ["余票" + _vm._s(_vm.busInfo.TicketNum)])])]), " ", " ", _vm._h('div', {
-	    staticClass: "station-info"
-	  }, [_vm._h('span', ["乘车点:"]), " ", _vm._h('span', {
-	    staticClass: "center nowrap"
-	  }, [_vm._s(_vm.selectStation)]), " ", _vm._h('span', {
+	  }, [_vm._h('img', {
 	    staticStyle: {
-	      "color": "#0074D9",
-	      "text-align": "right"
+	      "width": "16px",
+	      "height": "16px"
 	    },
-	    on: {
-	      "click": _vm.showStation
+	    attrs: {
+	      "src": __webpack_require__(206)
 	    }
-	  }, ["其它"]), " "]), " ", " ", _vm._h('div', {
+	  })]), " ", _vm._h('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.busInfo.TicketNum + '张余票')
+	    }
+	  }, ["123张余票"])])]), " ", _vm._h('div', {
+	    staticClass: "bottom"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(205)
+	    }
+	  }), " ", _vm._h('p', [_vm._s(_vm.startDate.date)])])]), " "]), " ", " ", _vm._m(2), " ", " ", " ", " ", _vm._h('div', {
 	    staticClass: "people-info"
-	  }, [_vm._m(1), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
+	  }, [_vm._m(3), " ", " ", (_vm.AllFare.length !== 0) ? _vm._h('div', {
 	    staticClass: "info-list"
 	  }, [_vm._l((_vm.AllFare), function(item, index) {
 	    return _vm._h('div', {
@@ -35067,7 +35102,7 @@
 	    staticClass: "fa fa-plus-circle"
 	  }), "添加"])])]), " "]), " ", " ", _vm._h('div', {
 	    staticClass: "people-info"
-	  }, [_vm._m(2), " ", _vm._h('div', {
+	  }, [_vm._m(4), " ", _vm._h('div', {
 	    staticClass: "contact-info"
 	  }, [_vm._h('div', {
 	    staticClass: "info"
@@ -35095,7 +35130,7 @@
 	    staticClass: "people-info"
 	  }, [_vm._h('div', {
 	    staticClass: "contact-info"
-	  }, [_vm._m(3), " ", _vm._h('div', {
+	  }, [_vm._m(5), " ", _vm._h('div', {
 	    staticClass: "info"
 	  }, [_vm._h('span', ["优惠券"]), " ", _vm._h('span', {
 	    staticClass: "center",
@@ -35431,9 +35466,25 @@
 	    }
 	  }, ["取消订单"])])])])]) : _vm._e()])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('p', ["查看取票,退票说明,预订须知", _vm._h('i', {
-	    staticClass: "fa fa-caret-down"
+	  return _vm._h('div', [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(124)
+	    }
 	  })])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "center"
+	  }, [_vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span'), " ", _vm._h('span')])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "write-info"
+	  }, [_vm._h('span', ["添加 / 修改乘车人"]), " ", _vm._h('div', {
+	    staticClass: "img"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(207)
+	    }
+	  })])])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "info-head"
@@ -35888,6 +35939,70 @@
 
 	// exports
 
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "car_bg.png?5cd21f22d55c8a7f4e2459e6bc28f4fa";
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(204);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(116)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73a4cce7!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TicketPay.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(92)();
+	// imports
+	exports.i(__webpack_require__(174), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 205 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 206 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
+
+/***/ },
+/* 207 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,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"
 
 /***/ }
 /******/ ]);

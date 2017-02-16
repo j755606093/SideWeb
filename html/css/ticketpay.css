@@ -163,129 +163,347 @@ input {
   outline: none; }
 
 #pay {
-  margin-top: -10px;
   padding: 0;
-  background-color: #f7f7f7;
-  padding-top: 50px; }
+  background-color: #fafafa; }
+
+.header {
+  width: 100%;
+  height: 125px;
+  position: relative; }
+  .header > img {
+    width: 100%;
+    height: 125px;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .header .header-title {
+    height: 50px;
+    position: relative; }
+    .header .header-title > div {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 0;
+      left: 0; }
+    .header .header-title img {
+      width: 19px;
+      height: 19px;
+      line-height: 50px;
+      position: absolute;
+      left: 25px;
+      top: 15.5px; }
+    .header .header-title > span {
+      font-size: 18px;
+      color: #fff;
+      font-weight: 900;
+      height: 50px;
+      line-height: 50px;
+      float: right;
+      margin-right: 25px; }
+  .header .header-router {
+    width: 96%;
+    padding: 0 2%;
+    text-align: center; }
+    .header .header-router .router {
+      height: 60px;
+      margin: 0 -10px;
+      overflow-x: scroll;
+      white-space: nowrap; }
+      .header .header-router .router > div {
+        display: inline-block;
+        position: relative;
+        height: 50px;
+        width: 44px; }
+        .header .header-router .router > div:after {
+          content: "";
+          width: 25px;
+          height: 1px;
+          position: absolute;
+          bottom: 10px;
+          right: -14px;
+          background-color: #fff;
+          z-index: 1; }
+        .header .header-router .router > div:last-child::after {
+          content: "";
+          width: 25px;
+          height: 0px;
+          position: absolute;
+          bottom: 10px;
+          right: -14px;
+          background-color: #fff;
+          z-index: 1; }
+      .header .header-router .router > div.other:after {
+        content: "";
+        width: 25px;
+        height: 1px;
+        position: absolute;
+        bottom: 10px;
+        right: -14px;
+        background-color: #c8c8c8; }
+      .header .header-router .router > div:last-child:after {
+        content: "";
+        width: 0;
+        height: 0; }
+      .header .header-router .router > div.last:after {
+        content: "";
+        width: 25px;
+        height: 1px;
+        position: absolute;
+        bottom: 10px;
+        right: -14px;
+        background-color: #fff; }
+      .header .header-router .router span {
+        font-size: 12px;
+        width: 44px;
+        display: inline-block;
+        color: #fff;
+        font-weight: 900;
+        margin-top: 16px;
+        position: absolute;
+        top: 0;
+        left: 0; }
+        .header .header-router .router span::after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          position: absolute;
+          bottom: -10px;
+          left: 19px;
+          background-color: #fff; }
+      .header .header-router .router > div.active::before {
+        content: "";
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 2px;
+        right: 15px;
+        background-color: #6cb9f1;
+        z-index: 1; }
+      .header .header-router .router span.gray {
+        color: #c8c8c8; }
+        .header .header-router .router span.gray::after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          position: absolute;
+          bottom: -10px;
+          left: 19px;
+          background-color: #c8c8c8; }
+      .header .header-router .router span.active {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #329be8;
+        height: 20px;
+        margin-top: 10px;
+        line-height: 20px;
+        border: 0.5px solid #fff;
+        border-radius: 10px;
+        background-color: #fff; }
+        .header .header-router .router span.active::after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          position: absolute;
+          bottom: -15px;
+          left: 19px;
+          background-color: #fff;
+          z-index: 3; }
+        .header .header-router .router span.active::before {
+          content: "";
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          position: absolute;
+          bottom: -17px;
+          left: 17px;
+          background-color: #b1d5f0;
+          z-index: 2; }
 
 .mint-toast {
   z-index: 10000; }
 
 .ticket-info {
-  width: 100%;
-  background-color: #2196F3;
-  margin-bottom: 5px;
-  padding-bottom: 10px; }
-  .ticket-info .header {
-    width: 92%;
-    margin: 5px 4%;
-    border-bottom: 1px solid #dddddd;
+  margin: 10px 10px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: relative;
+  height: 120px;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 0.5px solid #c8c8c8; }
+  .ticket-info .left {
+    z-index: 1;
+    -ms-flex: 3;
+        flex: 3;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row; }
-    .ticket-info .header span {
-      -ms-flex: 1;
-          flex: 1;
-      height: 40px;
-      font-size: 1.3rem;
-      line-height: 40px;
-      display: inline-block; }
-    .ticket-info .header span:first-child {
-      text-align: left; }
-    .ticket-info .header span:last-child {
-      text-align: right; }
-  .ticket-info .address-info {
-    width: 92%;
-    margin: 10px 4%;
-    height: 80px;
-    font-size: 1.2rem;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    text-align: center; }
+    .ticket-info .left > span {
+      font-size: 12px;
+      font-weight: 900;
+      color: #323232;
+      margin: 2px 0; }
+      .ticket-info .left > span:first-child {
+        font-size: 20px;
+        color: #2196f3; }
+      .ticket-info .left > span:last-child {
+        color: #c8c8c8; }
+  .ticket-info .center {
+    z-index: 1;
+    -ms-flex: 1;
+        flex: 1;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row; }
-    .ticket-info .address-info .box {
-      -ms-flex: 1;
-          flex: 1;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -ms-flex-align: left;
+        align-items: left;
+    height: 100%;
+    padding: 13px 0;
+    position: relative; }
+    .ticket-info .center > span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: #fafafa;
+      border: 0.5px solid #c8c8c8; }
+      .ticket-info .center > span:first-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        content: "";
+        border-radius: 0 0 10px 10px;
+        border-top-color: #fafafa;
+        position: absolute;
+        top: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg); }
+      .ticket-info .center > span:last-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        border-bottom-color: #fafafa;
+        content: "";
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        bottom: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg); }
+  .ticket-info .right {
+    z-index: 1;
+    -ms-flex: 6;
+        flex: 6;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    height: 120px; }
+    .ticket-info .right .top {
+      -ms-flex: 7;
+          flex: 7;
       display: -ms-flexbox;
       display: flex;
-      -ms-flex-direction: column;
-          flex-direction: column;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
-    .ticket-info .address-info .start {
-      -ms-flex-align: start;
-          align-items: flex-start; }
-      .ticket-info .address-info .start p {
-        font-size: 1.8rem;
-        color: #fff; }
-        .ticket-info .address-info .start p.first {
-          font-size: 1.2rem; }
-        .ticket-info .address-info .start p.center {
-          font-size: 1.8rem;
-          width: 100%; }
-        .ticket-info .address-info .start p.last {
-          font-size: 1.2rem; }
-    .ticket-info .address-info .center {
-      font-size: 1.5rem;
-      -ms-flex-align: center;
-          align-items: center;
-      width: 40%; }
-      .ticket-info .address-info .center p.arrow {
-        color: #111111;
-        position: relative;
-        width: 100%;
-        height: 0;
-        line-height: 0; }
-        .ticket-info .address-info .center p.arrow::after {
-          width: 80%;
-          height: 10px;
-          background-color: #fff;
-          position: absolute;
-          left: 0;
-          bottom: -20px;
-          content: ""; }
-        .ticket-info .address-info .center p.arrow::before {
-          width: 0;
-          height: 0;
-          border: 10px solid #fff;
-          position: absolute;
-          right: 5px;
-          bottom: -20px;
-          content: "";
-          border-color: transparent transparent #fff #fff; }
-      .ticket-info .address-info .center p.arrow-message {
-        color: #fff; }
-      .ticket-info .address-info .center p.first {
-        color: #fff; }
-    .ticket-info .address-info .end {
-      -ms-flex-align: end;
-          align-items: flex-end;
+      -ms-flex-direction: row;
+          flex-direction: row;
       -ms-flex-pack: center;
           justify-content: center; }
-      .ticket-info .address-info .end p {
-        color: #fff;
-        font-size: 1.2rem; }
-        .ticket-info .address-info .end p:first-child {
-          font-size: 1.8rem; }
-  .ticket-info .tip-info {
-    width: 92%;
-    margin: 0px 4%;
-    height: 30px;
-    line-height: 30px;
-    background: transparent;
-    font-size: 1.2rem; }
-    .ticket-info .tip-info p {
-      padding: 0 5px;
-      display: inline-block;
-      color: #eaeaea; }
-      .ticket-info .tip-info p i {
-        margin-left: 5px; }
-    .ticket-info .tip-info span {
-      float: right;
-      color: #fff; }
+      .ticket-info .right .top .name {
+        -ms-flex: 5;
+            flex: 5;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        -ms-flex-align: start;
+            align-items: flex-start;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+        .ticket-info .right .top .name p {
+          font-weight: bold;
+          font-size: 20px;
+          position: relative;
+          text-align: left;
+          margin-left: 20px; }
+          .ticket-info .right .top .name p:first-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #8cff3f;
+            position: absolute;
+            top: 9px;
+            left: -17px; }
+          .ticket-info .right .top .name p:last-child {
+            line-height: 40px; }
+          .ticket-info .right .top .name p:last-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #f35252;
+            position: absolute;
+            top: 15px;
+            left: -17px; }
+      .ticket-info .right .top .info {
+        -ms-flex: 5;
+            flex: 5;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        text-align: right;
+        -ms-flex-pack: center;
+            justify-content: center; }
+        .ticket-info .right .top .info p {
+          height: 28px;
+          line-height: 28px;
+          margin-right: 25px; }
+          .ticket-info .right .top .info p:first-child {
+            font-weight: 900;
+            font-size: 20px;
+            color: #f35252; }
+          .ticket-info .right .top .info p:last-child {
+            font-size: 12px;
+            color: #323232;
+            padding-top: 8px; }
+    .ticket-info .right .bottom {
+      -ms-flex: 3;
+          flex: 3;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+      position: relative;
+      margin-top: 4px; }
+      .ticket-info .right .bottom img {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px; }
+      .ticket-info .right .bottom p {
+        margin-left: 20px; }
 
 .station-info {
   width: 100%;

@@ -1,14 +1,56 @@
 <template type="x/template" id="ticketpay">
 	<div id="pay" class="position">
+		<div class="header">	
+			<img src="../picture/car_bg.png">
+			<div class="header-title">
+				<div><img src="../picture/back_icon.png"></div>
+				<span v-text="startDate.date+' '+startDate.week"></span>
+			</div>
+			<div class="header-router">
+				<div class="router">
+					<div :class="{active:list.NodeType===2||list.NodeType===1,other:list.NodeType===0,last:list.NodeType===2}" v-for="(list,index) in busInfo.Stations">
+						<span :class="{gray:list.NodeType===0,active:list.NodeType===2||list.NodeType===1}">{{list.Point.length>3?list.Point.slice(0,3)+'..':list.Point}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- 车票信息 -->
 		<div class="ticket-info">
-			<!-- <div class="header">
-				<span v-text="busInfo.Route"></span>
-				<span class="font-red" v-text="'¥'+busInfo.Price"></span>
-			</div> -->
-			<div class="address-info">
+			<div class="left">
+				<span v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)">08:23</span>
+				<span v-text="busInfo.CoName">东方快车</span>
+				<span>{{busInfo.Route}}</span>
+			</div>
+			<div class="center">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<div class="right">
+				<div class="top">
+					<div class="name">
+						<p>{{busInfo.StartPoint}}</p>
+						<p>{{busInfo.EndPoint}}</p>
+					</div>
+					<div class="info">
+						<p @click="openTip">
+							<img src="../picture/problem.png" style="width: 16px;height:16px;">
+						</p>
+						<p v-text="busInfo.TicketNum+'张余票'">123张余票</p>
+					</div>
+				</div>
+				<div class="bottom">
+					<img src="../picture/time.png">
+					<p>{{startDate.date}}</p>
+				</div>
+			</div>
+			<!-- <div class="address-info">
 				<div class="start box">
-					<!-- <p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p> -->
 					<p class="center" v-text="busInfo.StartPoint"></p>
 					<p class="last" v-text="busInfo.StartCity"></p>
 				</div>
@@ -25,15 +67,19 @@
 			<div class="tip-info" @click="openTip">
 				<p>查看取票,退票说明,预订须知<i class="fa fa-caret-down"></i></p>
 				<span>余票{{busInfo.TicketNum}}</span>
-			</div>
+			</div> -->
+		</div>
+		<!-- 乘客信息 -->
+		<div class="write-info">
+			<span>添加 / 修改乘车人</span>
+			<div class="img"><img src="../picture/add_passenger.png"></div>
 		</div>
 		<!-- 车站信息 -->
-		<div class="station-info">
+		<!-- <div class="station-info">
 			<span>乘车点:</span>
 			<span class="center nowrap">{{selectStation}}</span>
 			<span @click="showStation" style="color:#0074D9;text-align:right;">其它</span>
-			<!-- <span>{{busInfo.StartAddress}}</span> -->
-		</div>
+		</div> -->
 		<!-- 乘客信息 -->
 		<div class="people-info">
 			<div class="info-head">
@@ -385,16 +431,17 @@ export default {
 	created(){
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
+		this.$store.commit("SET_SHOWHEADER",false);
 
 		if(!this.$store.getters.getIsFirst){
 			this.busInfo = this.$store.getters.getBusInfo;
 			this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;
 
-			let startDate = this.$store.getters.getInfo.startDate;
-			this.$store.commit("CHANGE_HEADER",{
-				isHome:false,
-				Title:startDate.date+" "+startDate.week
-			});
+			// let startDate = this.$store.getters.getInfo.startDate;
+			// this.$store.commit("CHANGE_HEADER",{
+			// 	isHome:false,
+			// 	Title:this.startDate.date+" "+this.startDate.week
+			// });
 		}
 
 		//设置乘车点
@@ -454,8 +501,20 @@ export default {
 		
 	},
 	computed:{
+		// startDate(){
+		// 	return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
+		// },
 		startDate(){
-			return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
+			let date = new Date(this.$store.getters.getInfo.startDate.server);
+			let year = date.getYear()-100+2000;
+			let month = date.getMonth()+1;
+			let day = date.getDate();
+
+			// return month+"月"+day+"日";
+			return {
+				date:year+"年 "+(month>9?month:"0"+month)+"月 "+(day>9?day:"0"+day)+"号 ",
+				week:this.$store.getters.getInfo.startDate.week
+			};
 		},
 		concatName(){
 			// 获取乘客名字,逗号相连
@@ -1074,6 +1133,6 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 @import "../css/ticketpay.css";
 </style>
