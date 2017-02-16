@@ -3,7 +3,7 @@
 		<div class="filter" @click="showFilter"><span>筛选</span></div>
 		<!-- 时间显示 -->
 		<div class="date-control">
-			<span @click="gobackdate">前一天</span>
+			<span :style="{color:isCanLast}" @click="gobackdate">前一天</span>
 			<span v-text="startDate.date+' '+startDate.week"></span>
 			<span @click="gofrontdate">后一天</span>
 		</div>
@@ -232,6 +232,8 @@ export default {
 			PositionOptionsValue:["不限"],//结果
 			RouterOptionsValue:["不限"],//结果
 			PriceOptionsValue:'不限',//结果
+
+			isCanLast:"#323232",//#c8c8c8
 		}
 	},
 	created(){
@@ -616,7 +618,7 @@ export default {
 		gobackdate(){
 			//前一天的车票信息
 			let now =new Date(this.$store.getters.getInfo.startDate.server).getTime();
-			let back = new Date(now - 1000*60*60*24);//昨天
+			let back = new Date(now - 1000*60*60*24);//前一天
 			// 检查日期
 			if(Date.now()>now){
 				// 当前日期大于昨天的日期(不允许查过期的车票)
@@ -625,8 +627,10 @@ export default {
 				  position: 'bottom',
 				  duration: 3000
 				});
+				this.isCanLast = "#c8c8c8";
 				return;
 			}
+			this.isCanLast = "#323232";
 			//开始加载数据
 			Indicator.open({
 				text: '加载中...',
@@ -658,6 +662,7 @@ export default {
 				text: '加载中...',
 				spinnerType: 'double-bounce'
 			});
+			this.isCanLast = "#323232";
 
 			let now =new Date(this.$store.getters.getInfo.startDate.server).getTime();
 			let back = new Date(now + 1000*60*60*24);//昨天
