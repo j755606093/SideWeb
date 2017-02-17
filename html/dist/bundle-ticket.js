@@ -33743,11 +33743,6 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
 
 	// import { mapGetters } from 'vuex'
 	exports.default = {
@@ -35886,23 +35881,7 @@
 	    staticClass: "name"
 	  }, [_vm._h('p', [_vm._s(_vm.busInfo.StartPoint)]), " ", _vm._h('p', [_vm._s(_vm.busInfo.EndPoint)])]), " ", _vm._h('div', {
 	    staticClass: "info"
-	  }, [_vm._h('p', {
-	    on: {
-	      "click": _vm.openTip
-	    }
-	  }, [_vm._h('img', {
-	    staticStyle: {
-	      "width": "16px",
-	      "height": "16px"
-	    },
-	    attrs: {
-	      "src": __webpack_require__(195)
-	    }
-	  })]), " ", _vm._h('p', {
-	    domProps: {
-	      "textContent": _vm._s(_vm.busInfo.TicketNum + '张余票')
-	    }
-	  }, ["123张余票"])])]), " ", _vm._h('div', {
+	  })]), " ", _vm._h('div', {
 	    staticClass: "bottom"
 	  }, [_vm._h('img', {
 	    attrs: {

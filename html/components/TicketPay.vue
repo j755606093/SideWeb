@@ -326,12 +326,7 @@
 										<p>{{busInfo.StartPoint}}</p>
 										<p>{{busInfo.EndPoint}}</p>
 									</div>
-									<div class="info">
-										<p @click="openTip">
-											<img src="../picture/problem.png" style="width: 16px;height:16px;">
-										</p>
-										<p v-text="busInfo.TicketNum+'张余票'">123张余票</p>
-									</div>
+									<div class="info"></div>
 								</div>
 								<div class="bottom">
 									<img src="../picture/time.png">
