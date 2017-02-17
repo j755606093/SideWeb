@@ -49,26 +49,8 @@
 					<p>{{startDate.date}}</p>
 				</div>
 			</div>
-			<!-- <div class="address-info">
-				<div class="start box">
-					<p class="center" v-text="busInfo.StartPoint"></p>
-					<p class="last" v-text="busInfo.StartCity"></p>
-				</div>
-				<div class="center box">
-					<p class="first" v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)"></p>
-					<p class="arrow-message" v-text="busInfo.Route"></p>
-					<p class="arrow"></p>
-				</div>
-				<div class="end box">
-					<p v-text="busInfo.EndPoint"></p>
-					<p>{{busInfo.TargetAddr}}</p>
-				</div>
-			</div>
-			<div class="tip-info" @click="openTip">
-				<p>查看取票,退票说明,预订须知<i class="fa fa-caret-down"></i></p>
-				<span>余票{{busInfo.TicketNum}}</span>
-			</div> -->
 		</div>
+		<!-- 乘客信息 -->
 		<div class="passenger-info">
 			<!-- 选择的乘客 -->
 			<div class="passenger-selected">
@@ -86,7 +68,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<!-- 手机号 -->
 		<div class="write-info">
 			<div class="line">
@@ -97,7 +78,7 @@
 		<!-- 上车点 -->
 		<div class="write-info">
 			<div class="line">
-				<span>乘车点选择</span>
+				<span style="color:rgb(20,20,20)">{{payInfoData.remark?payInfoData.remark:selectStation}}</span>
 				<div @click="showPage(2)" class="img"><img src="../picture/green_station.png"></div>
 			</div>
 		</div>
@@ -105,8 +86,9 @@
 		<div class="write-info">
 			<div class="line">
 				<span v-if="optionsDiscount.length===0">没有可用优惠券</span>
-				<span v-else>{{'优惠券('+optionsDiscount.length+'张可用'}}</span>
-				<span class="info">未使用</span>
+				<span v-else>{{'优惠券('+canuseOne.length+'张可用)'}}</span>
+				<span style="color:#000" v-if="discountMoney!==0" class="info">{{'- ¥'+discountMoney}}</span>
+				<span class="info" v-else>未使用</span>
 				<div @click="showPage(3)" class="img">
 					<img src="../picture/coupon.png"></div>
 			</div>
@@ -114,7 +96,7 @@
 		<!-- 备注 -->
 		<div class="write-info">
 			<div class="line">
-				<input type="text" v-model="payInfoData.remark" name="remark" placeholder="旅程备注">
+				<input type="text" v-model="payInfoData.playRemark" name="playRemark" placeholder="旅程备注">
 				<div class="img"><img src="../picture/edit.png"></div>
 			</div>
 		</div>
@@ -136,16 +118,16 @@
 		<mt-popup
 		  v-model="passengerPopupVisible"
 		  position="right"
-		  class="passenger-page">
+		  class="action-page">
 		  <slot>
-		  	<div class="passenger">
+		  	<div class="action">
 		  		<div class="page-header">
 		  			<div @click="showPage(1,true)"><img src="../picture/back_icon.png"></div>
 		  			<!-- <span class="center">选择乘车人({{AllFare.length}})</span> -->
 		  			<span class="center">选择乘车人</span>
 		  			<span @click="showPage(1,true)" class="right">确定</span>
 		  		</div>
-		  		<div class="passenger-body">
+		  		<div class="action-body">
 		  			<!-- 点击新增乘客 -->
 						<div class="write-info">
 							<div class="line">
@@ -154,7 +136,7 @@
 							</div>
 						</div>
 		  			<!-- 添加乘客 -->
-		  			<div v-show="showpassengeraction===1" class="add-passenger animated zoomIn">
+		  			<div v-show="showpassengeraction===1" class="add-action animated zoomIn">
 							<div class="line">
 								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 							</div>
@@ -164,7 +146,7 @@
 							</div>
 						</div>
 						<!-- 修改乘客 -->
-		  			<div v-show="showpassengeraction===2" class="add-passenger animated zoomIn">
+		  			<div v-show="showpassengeraction===2" class="add-action animated zoomIn">
 							<div class="line">
 								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 							</div>
@@ -175,7 +157,7 @@
 						</div>
 		  		</div>
 		  		<p class="refresh">有新乘客没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p>
-		  		<div class="passenger-select">
+		  		<div class="action-select">
 		  			<div class="line" v-for="(item,index) in AllFare">
 		  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
 		  				<div class="center">
@@ -188,11 +170,230 @@
 		  	</div>
 		  </slot>
 		</mt-popup>
+		<!-- 选择乘车点 -->
+		<mt-popup
+		  v-model="stationPopupVisible"
+		  position="right"
+		  class="action-page">
+		  <slot>
+		  	<div class="action">
+		  		<div class="page-header">
+		  			<div @click="showPage(2,true)"><img src="../picture/back_icon.png"></div>
+		  			<span class="center">选择上车地点</span>
+		  			<span @click="showPage(2,true)" class="right">确定</span>
+		  		</div>
+		  		<div class="action-body">
+		  			<!-- 备注上车点 -->
+						<div class="write-info">
+							<div class="line">
+								<input type="text" v-model="payInfoData.remark" name="remark" placeholder="备注更方便您的上车点">
+								<div class="img"><img src="../picture/edit.png"></div>
+							</div>
+						</div>
+		  		</div>
+		  		<p class="refresh">地址没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p>
+		  		<div class="action-select">
+		  			<div class="line" v-for="(item,index) in options">
+		  				<div @click="setUpCar(index)" class="left"><img v-if="item===selectStation" src="../picture/select.png"></div>
+		  				<div class="center">
+		  					<p>{{item}}</p>
+		  					<p style="color:#c8c8c8" v-if="item===selectStation">{{payInfoData.remark?payInfoData.remark:'系统默认备注'}}</p>
+		  				</div>
+		  			</div>
+		  		</div>
+		  	</div>
+		  </slot>
+		</mt-popup>
+		<!-- 优惠券选择 -->
+		<mt-popup
+		  v-model="discountPopupVisible"
+		  position="right"
+		  class="action-page">
+		  <slot>
+		  	<div class="action">
+		  		<div class="page-header">
+		  			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
+		  			<span class="center">我的优惠券</span>
+		  			<span @click="showPage(3,true)" class="right">确定</span>
+		  		</div>
+		  		<div class="action-use">
+		  			<!-- 头部切换 -->
+						<div class="popup-header">
+					  	<span :class="{active:canuseIndex===1}" @click="SetCanUse(1)">可用</span>
+					  	<span :class="{active:canuseIndex===2}" @click="SetCanUse(2)">不可用</span>
+					  </div>
+					  <!-- 内容 -->
+						<div v-show="canuseIndex===1" class="page animated fadeIn">
+							<!-- 可用优惠券 -->
+							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
+								<div class="left">
+									<div class="circle">
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+									<div class="title">
+										<p><span>¥</span>{{item.Money}}</p>
+										<span>{{'满'+item.LimitMoney+'可用'}}</span>
+									</div>
+								</div>
+								<div class="right">
+									<div class="info">
+										<span>{{item.Name}}</span>
+										<span>{{item.StartDate}} 至 {{item.EndDate}}</span>
+									</div>
+									<div @click="selectRebeat(index)" class="check">
+										<img src="../picture/select.png">
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div v-show="canuseIndex===2" class="page animated fadeIn">
+							<!-- 不可用优惠券 -->
+							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseTwo">
+								<div class="left">
+									<div class="circle">
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+									<div class="title">
+										<p><span>¥</span>{{item.Money}}</p>
+										<span>{{'满'+item.LimitMoney+'可用'}}</span>
+									</div>
+								</div>
+								<div class="right">
+									<div class="info">
+										<span>{{item.Name}}</span>
+										<span>{{item.StartDate}} 至 {{item.EndDate}}</span>
+									</div>
+									<div class="check">
+										<img src="../picture/select.png">
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+		  		</div>
+		  	</div>
+		  </slot>
+		</mt-popup>
+		<!-- 下单支付 -->
+		<mt-popup
+		  v-model="payInfoPopupVisible"
+		  position="right"
+		  class="action-page">
+		  <slot>
+		  	<div class="action">
+		  		<div style="background-color: #f35252" class="page-header">
+		  			<div @click="goback"><img src="../picture/back_icon.png"></div>
+		  			<span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
+		  		</div>
+		  		<div class="action-body">
+		  			<!-- 票信息 -->
+		  			<div class="ticket-info">
+							<div class="left">
+								<span v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)">08:23</span>
+								<span v-text="busInfo.CoName">东方快车</span>
+								<span>{{busInfo.Route}}</span>
+							</div>
+							<div class="center">
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+							<div class="right">
+								<div class="top">
+									<div class="name">
+										<p>{{busInfo.StartPoint}}</p>
+										<p>{{busInfo.EndPoint}}</p>
+									</div>
+									<div class="info">
+										<p @click="openTip">
+											<img src="../picture/problem.png" style="width: 16px;height:16px;">
+										</p>
+										<p v-text="busInfo.TicketNum+'张余票'">123张余票</p>
+									</div>
+								</div>
+								<div class="bottom">
+									<img src="../picture/time.png">
+									<p>{{startDate.date+" "+startDate.week}}</p>
+								</div>
+							</div>
+						</div>
+						<!-- 乘客信息 -->
+						<div class="passenger-info">
+							<div class="passenger-selected">
+								<div v-if="item.active" class="line" v-for="(item,index) in AllFare">
+									<span style="margin-left:10px;" class="center">{{item.Name}}</span>
+									<span style="margin-right:10px;" class="right">{{item.Mobile}}</span>
+								</div>
+							</div>
+						</div>
+						<!-- 手机号 -->
+						<div class="write-info">
+							<div class="line">
+								<span style="color:rgb(20,20,20)">{{payInfoData.contactPhone+' (取票人号码)'}}</span>
+								<div class="img"><img src="../picture/phone.png"></div>
+							</div>
+						</div>
+						<!-- 上车点备注 -->
+						<div class="write-info">
+							<div class="line">
+								<span style="color:rgb(20,20,20)">{{payInfoData.remark?payInfoData.remark:selectStation}}</span>
+								<div class="img"><img src="../picture/green_station.png"></div>
+							</div>
+						</div>
+						<!-- 旅行备注 -->
+						<div class="write-info">
+							<div class="line">
+								<span style="color:rgb(20,20,20)">{{payInfoData.playRemark?payInfoData.playRemark:'用户未备注'}}</span>
+								<div class="img"><img src="../picture/edit.png"></div>
+							</div>
+						</div>
+						<!-- 订单信息 -->
+						<div class="pay-ticket-info">
+							<p>订单信息</p>
+							<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
+							<p>下单日期:{{serverPayInfo.OrderInfo.OrderTime}}</p>
+						</div>
+						<!-- 立即支付 -->
+						<div class="pay">
+							<div class="left">
+								<p>订单总价<span v-text="'¥'+serverPayInfo.OrderInfo.TotalPrice"></span></p>
+							</div>
+							<div class="right">
+								<span @click="cancelOrder">取消订单</span>
+								<button @click="payMoney">立即支付</button>
+							</div>
+						</div>
+		  		</div>
+		  	</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
 <script type="text/babel">
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import Utils from "../Utils/utils";
 const _ = require("underscore");
 import { Indicator,Toast ,MessageBox} from 'mint-ui';
@@ -241,7 +442,8 @@ export default {
 				payMoney:0,//总共支付的钱
 				contactPhone:"",//取票人手机号
 				discountcode:"",//优惠码
-				remark:"",//备注
+				remark:"",//上车点备注
+				playRemark:"",//旅行备注
 			},//订单信息
 
 			TicketPay:null,//服务器产生的订单信息
@@ -258,6 +460,10 @@ export default {
 
 			passengerPopupVisible:false,//选择乘客
 			showpassengeraction:0,//1显示添加乘客信息,2显示修改乘客
+
+			canuseIndex:1,//默认是显示可用优惠券
+			canuseOne:[],//可使用的优惠券列表
+			canuseTwo:[],//不可使用的优惠券列表
 		}
 	},
 	beforeCreate(){
@@ -290,10 +496,11 @@ export default {
 		if(this.$store.getters.getRebate){
 			let rebate = this.$store.getters.getRebate;
 			_.map(rebate,item=>{
-				let data = item;
-				data.label = `${item.Name} (满${item.LimitMoney}元减${item.Money}元)`;
+				let data = Object.assign({},item);
 				data.value = item.Id;
 				data.disabled = false;
+				data.StartDate = this.formatNow(data.StartDate);
+				data.EndDate = this.formatNow(data.EndDate);
 				this.optionsDiscount.push(data);
 			})
 		}
@@ -365,6 +572,7 @@ export default {
 		},
 	},
 	watch:{
+		/** 观察选择的优惠券 */
 		selectDiscount(newval){
 			// console.log(newval)
 			let len = newval.length;
@@ -424,12 +632,6 @@ export default {
 		goback(){
 			this.$router.go(-1);
 		},
-		// haveDiscountCode(){
-		// 	this.havediscountcode = !this.havediscountcode;
-		// },
-		// pay(){
-		// 	console.log(this.formatData(this.busInfo))
-		// },
 		/**
 		 * 提示框里的信息
 		 * @param  {[type]} text [description]
@@ -601,6 +803,16 @@ export default {
 				return true;
 			}
 		},
+		formatNow(date){
+			let show = new Date(date);
+
+			let year = show.getYear()-100+2000;
+			let month = show.getMonth()+1;
+			let day = show.getDate();
+
+			// return month+"月"+day+"日";
+			return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)
+		},
 		CountDown(){
 			this.storeCountTime = 60*30-1;//半个小时
 			this.countdown = setInterval(()=>{
@@ -687,7 +899,9 @@ export default {
 							LinkmanId:this.payInfoData.contactPhone,
 							PassengerIds:arrayId,
 							RebateId:rebateid,
-							StartAddress:this.selectStation
+							StartAddress:this.selectStation,
+							Remark:this.payInfoData.remark,
+							JourneyRmk:this.payInfoData.playRemark
 						}).then(result=>{
 							Indicator.close();
 							if(result.Code!==200){
@@ -835,12 +1049,19 @@ export default {
 			let lastTicket = parseInt(this.busInfo.showTicketInfo);
 
 			if(this.getAllFare().length>lastTicket && !this.AllFare[index].active){
-				// 选中的已经超过3个人
+				// 选中的已经超过
 				this.popupMessage("乘客数已经超过余票数!");
 			}
 			else{
 				this.AllFare[index].active = !this.AllFare[index].active;
+				if(this.selectDiscount.length!==0){
+					this.popupMessage("请重新选择优惠券!");
+					this.selectDiscount=[];
+				}
+				
+				this.ClassifyRebeat();//重新分类优惠券
 				this.computeAll();
+				
 			}
 		},
 		/**
@@ -969,6 +1190,7 @@ export default {
 			switch(index){
 				case 1:
 					// 选择乘客
+					this.ClassifyRebeat();
 					this.passengerPopupVisible = close?false:true;
 					break;
 				case 2:
@@ -977,7 +1199,12 @@ export default {
 					break;
 				case 3:
 					// 优惠券
+					this.ClassifyRebeat();
 					this.discountPopupVisible = close?false:true;
+					break;
+				case 4:
+					//下单支付
+					this.payInfoPopupVisible = close?false:true;
 					break;
 			}
 		},
@@ -993,6 +1220,58 @@ export default {
 
 			this.fareName = this.AllFare[index].Name;
 			this.certificate = this.AllFare[index].Mobile;
+		},
+		/** 设置上车点 */
+		setUpCar(index){
+			this.selectStation = this.options[index];
+			// if(this.payInfoData.remark===""){
+			// 	this.payInfoData.remark = "系统默认备注";
+			// }
+		},
+		/** 设置优惠券列表页 */
+		SetCanUse(index){
+			this.canuseIndex = index;
+		},
+		/** 分类优惠券列表显示 */
+		ClassifyRebeat(){
+			let all = this.optionsDiscount;//所有的优惠券
+			this.canuseOne=[];
+			this.canuseTwo=[];
+			_.map(all,item=>{
+				if(this.payInfoData.payMoney>=item.LimitMoney){
+					this.canuseOne.push(item);
+				}
+				else{
+					this.canuseTwo.push(item);
+				}
+			})
+		},
+		/** 选择优惠券 */
+		selectRebeat(index){
+			let Id = this.canuseOne[index].Id;
+			let IsSingle = this.canuseOne[index].IsSingle;
+
+			if(this.selectDiscount.indexOf(Id)>-1){
+				let newdata = _.filter(this.selectDiscount,(item)=>{
+					if(item===Id){
+						return false;
+					}
+					return true;
+				})
+				this.selectDiscount = newdata;
+			}
+			else{
+				this.selectDiscount.push(Id);
+			}
+
+			_.map(this.optionsDiscount,(item)=>{
+				if(IsSingle !== item.IsSingle){
+					item.disabled = true;
+				}
+				else{
+					item.disabled = false;
+				}
+			})
 		}
 	}
 }

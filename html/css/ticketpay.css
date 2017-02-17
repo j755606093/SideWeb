@@ -566,7 +566,11 @@ input {
       margin-right: 130px;
       padding-left: 20px;
       color: #c8c8c8;
-      font-size: 16px; }
+      font-size: 16px;
+      width: 75%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .write-info > .line > span.info {
       display: inline-block;
       margin-right: 0;
@@ -651,30 +655,31 @@ input {
     height: 50px;
     line-height: 50px; }
 
-.passenger-page {
+.action-page {
   width: 100%;
   height: 100%;
-  background-color: #fafafa; }
-  .passenger-page .passenger {
+  background-color: #fafafa;
+  overflow-y: scroll; }
+  .action-page .action {
     padding-bottom: 50px; }
-    .passenger-page .passenger .passenger-body {
+    .action-page .action .action-body {
       margin-top: 10px; }
-      .passenger-page .passenger .passenger-body .add-passenger {
+      .action-page .action .action-body .add-action {
         width: 100%; }
-        .passenger-page .passenger .passenger-body .add-passenger .line {
+        .action-page .action .action-body .add-action .line {
           margin: 0 10px;
           background-color: #fff;
           border-radius: 10px;
           height: 50px;
           position: relative; }
-          .passenger-page .passenger .passenger-body .add-passenger .line input {
+          .action-page .action .action-body .add-action .line input {
             height: 50px;
             display: block;
             margin-right: 70px;
             padding-left: 20px;
             font-size: 16px;
             width: 70%; }
-          .passenger-page .passenger .passenger-body .add-passenger .line button {
+          .action-page .action .action-body .add-action .line button {
             position: absolute;
             top: 0;
             right: 20px;
@@ -685,24 +690,94 @@ input {
             outline: none;
             border: none;
             background-color: #fff; }
-            .passenger-page .passenger .passenger-body .add-passenger .line button i {
+            .action-page .action .action-body .add-action .line button i {
               font-size: 16px;
               color: #329be8; }
-    .passenger-page .passenger p.refresh {
+      .action-page .action .action-body .pay-ticket-info {
+        margin: 0 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        position: relative; }
+        .action-page .action .action-body .pay-ticket-info p {
+          font-size: 16px;
+          color: #c8c8c8;
+          height: 40px;
+          line-height: 40px;
+          margin-left: 20px; }
+        .action-page .action .action-body .pay-ticket-info p:nth-child(1) {
+          color: #000; }
+      .action-page .action .action-body .pay {
+        height: 50px;
+        line-height: 50px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        background-color: #fff;
+        box-shadow: 3px 0 3px 3px #efeeee; }
+        .action-page .action .action-body .pay .left {
+          -ms-flex: 5;
+              flex: 5; }
+          .action-page .action .action-body .pay .left p {
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #c8c8c8; }
+            .action-page .action .action-body .pay .left p span {
+              font-size: 18px;
+              color: #f35252;
+              font-weight: 900; }
+        .action-page .action .action-body .pay .right {
+          -ms-flex: 5;
+              flex: 5;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+          .action-page .action .action-body .pay .right span {
+            color: #c8c8c8;
+            font-size: 12px;
+            -ms-flex: 5;
+                flex: 5; }
+          .action-page .action .action-body .pay .right button {
+            background-color: #329be8;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            outline: none;
+            border: none;
+            color: #fff;
+            -ms-flex: 5;
+                flex: 5;
+            border-radius: 5px; }
+    .action-page .action p.refresh {
       height: 50px;
       line-height: 50px;
       font-size: 16px;
       text-align: center;
       color: #c8c8c8; }
-      .passenger-page .passenger p.refresh i {
+      .action-page .action p.refresh i {
         color: #c8c8c8; }
-    .passenger-page .passenger .passenger-select {
+    .action-page .action .action-select {
       width: 100%;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
           flex-direction: column; }
-      .passenger-page .passenger .passenger-select .line {
+      .action-page .action .action-select .line {
         margin: 0 10px;
         margin-bottom: 10px;
         display: -ms-flexbox;
@@ -713,7 +788,7 @@ input {
         line-height: 60px;
         border-radius: 10px;
         background-color: #fff; }
-        .passenger-page .passenger .passenger-select .line .left {
+        .action-page .action .action-select .line .left {
           -ms-flex: 2;
               flex: 2;
           display: -ms-flexbox;
@@ -725,12 +800,12 @@ input {
           -ms-flex-align: center;
               align-items: center;
           position: relative; }
-          .passenger-page .passenger .passenger-select .line .left > img {
+          .action-page .action .action-select .line .left > img {
             width: 20px;
             height: 20px;
             margin-left: 20px;
             z-index: 1; }
-          .passenger-page .passenger .passenger-select .line .left::after {
+          .action-page .action .action-select .line .left::after {
             content: "";
             position: absolute;
             top: 20px;
@@ -740,7 +815,7 @@ input {
             background-color: #fafafa;
             border-radius: 50%;
             z-index: 0; }
-        .passenger-page .passenger .passenger-select .line .center {
+        .action-page .action .action-select .line .center {
           -ms-flex: 6;
               flex: 6;
           display: -ms-flexbox;
@@ -751,13 +826,13 @@ input {
               justify-content: center;
           -ms-flex-align: start;
               align-items: flex-start; }
-          .passenger-page .passenger .passenger-select .line .center p {
+          .action-page .action .action-select .line .center p {
             height: 25px;
             line-height: 25px;
             color: #323232;
             font-size: 15px;
             margin-left: 10px; }
-        .passenger-page .passenger .passenger-select .line .right {
+        .action-page .action .action-select .line .right {
           -ms-flex: 2;
               flex: 2;
           display: -ms-flexbox;
@@ -768,330 +843,175 @@ input {
               justify-content: center;
           -ms-flex-align: center;
               align-items: center; }
-          .passenger-page .passenger .passenger-select .line .right > img {
+          .action-page .action .action-select .line .right > img {
             width: 20px;
             height: 20px; }
-
-.people-info {
-  width: 96%;
-  margin: 0 2%;
-  background-color: #fff;
-  margin-bottom: 5px;
-  border-radius: 10px;
-  position: relative;
-  box-shadow: 0px 3px 5px 0px #ececec; }
-  .people-info .info-head {
-    width: 100%;
-    padding: 0 2%;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px solid #dddddd; }
-    .people-info .info-head span {
-      font-size: 1.4rem;
-      color: #5e5e5e; }
-    .people-info .info-head span:first-child {
-      -ms-flex: 0.3;
-          flex: 0.3;
-      font-size: 1.4rem; }
-    .people-info .info-head span:last-child {
-      -ms-flex: 0.7;
-          flex: 0.7;
-      font-size: 1.4rem; }
-  .people-info .info-list .list {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    height: 50px;
-    width: 96%;
-    margin: 0 2%;
-    border-bottom: 1px solid #f7f7f7; }
-    .people-info .info-list .list .check {
-      -ms-flex: 0.1;
-          flex: 0.1;
+    .action-page .action .action-use .popup-header {
       height: 50px;
+      width: 100%;
       line-height: 50px;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
-      text-align: center; }
-      .people-info .info-list .list .check > span {
-        border: 1px solid #0074D9;
-        border-radius: 5px;
-        padding: 3px 4px;
-        background-color: #fff; }
-        .people-info .info-list .list .check > span i {
-          color: #fff; }
-      .people-info .info-list .list .check > span.active {
-        background-color: #0074D9 !important; }
-    .people-info .info-list .list > span {
-      -ms-flex: 0.1;
-          flex: 0.1;
-      height: 50px;
-      line-height: 50px;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
-      text-align: center; }
-      .people-info .info-list .list > span i {
-        color: #0074D9; }
-      .people-info .info-list .list > span i.fa-trash {
-        font-size: 1.7rem; }
-      .people-info .info-list .list > span i.fa-check {
-        height: 20px;
-        line-height: 20px; }
-    .people-info .info-list .list .list-body {
-      -ms-flex: 0.8;
-          flex: 0.8;
-      height: 40px;
-      margin: 5px 0; }
-      .people-info .info-list .list .list-body .list-top {
-        height: 40px; }
-        .people-info .info-list .list .list-body .list-top > span {
-          height: 40px;
-          line-height: 40px;
-          font-size: 1.1rem; }
-        .people-info .info-list .list .list-body .list-top span.name {
-          font-size: 1.4rem; }
-        .people-info .info-list .list .list-body .list-top span.type {
-          color: #AAAAAA;
-          margin: 0 5px; }
-        .people-info .info-list .list .list-body .list-top span.set-ticket {
-          color: #0074D9;
-          border: 1px solid #0074D9;
-          border-radius: 5px;
-          padding: 2px;
-          margin-left: 10px; }
-        .people-info .info-list .list .list-body .list-top span.get-ticket {
-          color: #0074D9;
-          margin-left: 10px; }
-  .people-info .info-man {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-        flex-direction: column; }
-    .people-info .info-man .info {
-      height: 40px;
-      line-height: 40px;
-      -ms-flex: 1;
-          flex: 1;
+      background-color: #fff;
+      color: #c8c8c8;
+      text-align: center;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
-      width: 96%;
-      margin: 0 2%;
-      border-bottom: 1px solid #dddddd; }
-      .people-info .info-man .info span {
-        -ms-flex: 0.3;
-            flex: 0.3;
-        font-size: 1.3rem; }
-      .people-info .info-man .info input {
-        -ms-flex: 0.5;
-            flex: 0.5;
-        font-size: 1.3rem; }
-      .people-info .info-man .info button {
-        -ms-flex: 0.2;
-            flex: 0.2;
-        height: 40px;
-        outline: none;
-        border: 0;
-        color: #0074D9;
-        font-size: 1.3rem;
-        background: transparent;
-        text-align: right; }
-        .people-info .info-man .info button i {
-          margin-right: 5px; }
-    .people-info .info-man .info-man-name input {
-      -ms-flex: 0.7;
-          flex: 0.7;
-      font-size: 1.3rem; }
-  .people-info .click-append {
-    width: 96%;
-    margin: 0 2%;
-    height: 40px;
-    text-align: center; }
-    .people-info .click-append > button {
-      height: 30px;
-      outline: none;
-      border: 0;
-      color: #0074D9;
-      font-size: 1.3rem;
-      background: transparent;
-      margin-top: 5px; }
-    .people-info .click-append > i {
-      color: #0074D9;
-      font-size: 1.3rem;
-      margin-right: 5px; }
-
-.contact-info {
-  width: 100%;
-  background-color: #fff;
-  margin-bottom: 10px;
-  position: relative;
-  box-shadow: 0px 3px 5px 0px #ececec;
-  border-radius: 10px; }
-  .contact-info .info {
-    height: 40px;
-    line-height: 40px;
-    -ms-flex: 1;
-        flex: 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    width: 96%;
-    margin: 0 2%; }
-    .contact-info .info span {
-      width: 30%;
-      font-size: 1.3rem; }
-    .contact-info .info span.last {
-      width: 30%;
-      text-align: right; }
-    .contact-info .info span.center {
-      width: 40%;
-      color: #AAAAAA; }
-    .contact-info .info input {
-      -ms-flex: 0.7;
-          flex: 0.7;
-      font-size: 1.3rem; }
-  .contact-info .show-discount span:first-child {
-    color: #AAAAAA; }
-  .contact-info .show-discount span.center {
-    width: 50%; }
-  .contact-info .show-discount span.last {
-    width: 20%;
-    color: #0074D9; }
-  .contact-info .discount-code {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    padding-top: 5px;
-    border-top: 1px solid #dddddd; }
-    .contact-info .discount-code input,
-    .contact-info .discount-code button,
-    .contact-info .discount-code i {
-      font-size: 1.3rem;
-      height: 30px;
-      line-height: 30px; }
-    .contact-info .discount-code input {
-      -ms-flex: 1;
-          flex: 1; }
-    .contact-info .discount-code i {
-      -ms-flex: 0.1;
-          flex: 0.1; }
-    .contact-info .discount-code button {
-      outline: none;
-      border: 0;
-      background-color: #fff;
-      color: #0074D9;
-      -ms-flex: 0.25;
-          flex: 0.25;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 10px; }
-
-.other-info {
-  width: 100%;
-  background-color: #fff;
-  margin-bottom: 10px;
-  position: relative; }
-  .other-info .info {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    border-bottom: 1px solid #dddddd; }
-    .other-info .info span.first {
-      -ms-flex: 0.3;
-          flex: 0.3;
-      height: 40px;
-      font-size: 1.3rem; }
-    .other-info .info span.center,
-    .other-info .info input.center {
-      -ms-flex: 0.5;
-          flex: 0.5;
-      height: 39px;
-      font-size: 1.3rem;
-      color: #AAAAAA; }
-    .other-info .info .last {
-      -ms-flex: 0.2;
-          flex: 0.2;
-      height: 40px;
-      font-size: 1.3rem; }
-      .other-info .info .last span {
-        border: 1px solid #0074D9;
-        padding: 0 3px;
-        height: 25px;
-        line-height: 25px;
-        border-radius: 5px; }
-        .other-info .info .last span > i {
-          color: #fff; }
-      .other-info .info .last span.active {
-        background-color: #0074D9; }
-      .other-info .info .last span.right {
-        border: none; }
-        .other-info .info .last span.right > i {
-          color: #AAAAAA;
-          font-size: 1.8rem; }
-      .other-info .info .last button.right {
-        outline: none;
-        border: 0;
-        background-color: #fff;
-        color: #0074D9;
-        -ms-flex: 0.25;
-            flex: 0.25;
-        font-size: 1.3rem;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 10px; }
-  .other-info .discount-code {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    padding-top: 5px; }
-    .other-info .discount-code input,
-    .other-info .discount-code button,
-    .other-info .discount-code i {
-      font-size: 1.3rem;
-      height: 30px;
-      line-height: 30px; }
-    .other-info .discount-code input {
-      -ms-flex: 1;
-          flex: 1; }
-    .other-info .discount-code i {
-      -ms-flex: 0.1;
-          flex: 0.1; }
-    .other-info .discount-code button {
-      outline: none;
-      border: 0;
-      background-color: #fff;
-      color: #0074D9;
-      -ms-flex: 0.25;
-          flex: 0.25;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 10px; }
+      -ms-flex-pack: center;
+          justify-content: center; }
+      .action-page .action .action-use .popup-header span {
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        -ms-flex: 1;
+            flex: 1;
+        font-weight: 900; }
+      .action-page .action .action-use .popup-header span.active {
+        color: #329be8;
+        position: relative; }
+        .action-page .action .action-use .popup-header span.active::after {
+          position: absolute;
+          bottom: 0px;
+          left: 45%;
+          width: 20px;
+          height: 4px;
+          background-color: #329be8;
+          content: ""; }
+    .action-page .action .action-use .page {
+      width: 100%; }
+      .action-page .action .action-use .page .rebate {
+        height: 130px;
+        display: -ms-flexbox;
+        display: flex;
+        margin: 0 10px;
+        margin-top: 10px;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center; }
+        .action-page .action .action-use .page .rebate .left {
+          -ms-flex: 3;
+              flex: 3;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+              flex-direction: column;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center;
+          background: linear-gradient(to bottom, #2196f3, #0e62e1);
+          position: relative; }
+          .action-page .action .action-use .page .rebate .left .circle {
+            position: absolute;
+            top: -3px;
+            left: -5px;
+            bottom: -3px;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+                flex-direction: column;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            -ms-flex-pack: distribute;
+                justify-content: space-around; }
+            .action-page .action .action-use .page .rebate .left .circle span {
+              width: 10px;
+              height: 10px;
+              background-color: #fff;
+              border-radius: 50%; }
+          .action-page .action .action-use .page .rebate .left .title {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+                flex-direction: column;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            color: #fff; }
+            .action-page .action .action-use .page .rebate .left .title p {
+              -ms-flex: 6;
+                  flex: 6;
+              font-size: 30px;
+              font-weight: 900;
+              color: #fff; }
+            .action-page .action .action-use .page .rebate .left .title span {
+              -ms-flex: 4;
+                  flex: 4;
+              font-size: 15px;
+              font-weight: 900; }
+        .action-page .action .action-use .page .rebate .right {
+          -ms-flex: 7;
+              flex: 7;
+          background-color: #fff;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+          .action-page .action .action-use .page .rebate .right .info {
+            -ms-flex: 7;
+                flex: 7;
+            height: 100px;
+            text-align: left;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+                flex-direction: column;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center; }
+            .action-page .action .action-use .page .rebate .right .info span {
+              font-size: 15px;
+              font-weight: 900;
+              height: 65px;
+              width: 100%;
+              padding: 10px 10px; }
+            .action-page .action .action-use .page .rebate .right .info span:last-child {
+              color: #c8c8c8;
+              font-weight: 400; }
+          .action-page .action .action-use .page .rebate .right .check {
+            -ms-flex: 3;
+                flex: 3;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+                flex-direction: row;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            height: 130px;
+            position: relative; }
+            .action-page .action .action-use .page .rebate .right .check img {
+              width: 20px;
+              height: 20px;
+              z-index: -1; }
+            .action-page .action .action-use .page .rebate .right .check span {
+              position: absolute;
+              top: 55px;
+              left: 37%;
+              width: 20px;
+              height: 20px;
+              background-color: #fafafa;
+              border-radius: 50%;
+              z-index: 0; }
+        .action-page .action .action-use .page .rebate.active .check img {
+          z-index: 1; }
+        .action-page .action .action-use .page .rebate.disabled .left {
+          background: linear-gradient(to bottom, #c2c2c2, #9a9a9a); }
+        .action-page .action .action-use .page .rebate.disabled .right .info span {
+          color: #c8c8c8; }
 
 .root-tip-info {
   width: 100%;
@@ -1159,41 +1079,6 @@ input {
       border-radius: 5px;
       width: 90%; }
 
-.station-popup-visible {
-  width: 80%;
-  height: 60%;
-  background-color: #fff;
-  border-radius: 10px; }
-  .station-popup-visible .station {
-    position: relative;
-    border-radius: 10px;
-    height: 100%;
-    overflow-y: scroll; }
-    .station-popup-visible .station .mint-checklist {
-      margin-bottom: 50px; }
-    .station-popup-visible .station button {
-      width: 100%;
-      padding: 10px;
-      color: #fff;
-      background-color: #0074D9;
-      font-size: 1.6rem;
-      position: fixed;
-      bottom: 0px;
-      left: 0;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px; }
-
-.message-popup-visible {
-  width: 100%; }
-  .message-popup-visible .popup {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.6);
-    font-size: 1.2rem; }
-
 .tip-popup-visible {
   width: 100%;
   height: 100%;
@@ -1233,174 +1118,6 @@ input {
       margin-top: 10px;
       border-radius: 5px;
       width: 40%; }
-
-.payinfo-popup-visible {
-  width: 100%;
-  height: 100%;
-  background-color: #f7f7f7;
-  position: fixed;
-  left: 0;
-  bottom: 0; }
-  .payinfo-popup-visible .pay-body {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto; }
-  .payinfo-popup-visible .info-body {
-    height: 160px;
-    width: 100%;
-    background-color: #2196F3;
-    color: #fff; }
-    .payinfo-popup-visible .info-body .status {
-      text-align: center;
-      padding-top: 20px; }
-      .payinfo-popup-visible .info-body .status > i.fa {
-        font-size: 4rem;
-        color: #2ecc71; }
-      .payinfo-popup-visible .info-body .status > p {
-        font-size: 1.8rem;
-        color: #fff;
-        margin-top: 10px; }
-      .payinfo-popup-visible .info-body .status p.time {
-        font-size: 1.4rem; }
-  .payinfo-popup-visible .ticket-body {
-    margin-bottom: 10px;
-    width: 100%; }
-    .payinfo-popup-visible .ticket-body .pay-info {
-      background-color: #fff;
-      width: 100%;
-      padding: 0 3%; }
-      .payinfo-popup-visible .ticket-body .pay-info .address-info {
-        width: 96%;
-        margin: 10px 2%;
-        height: 100px;
-        font-size: 1.2rem;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row; }
-        .payinfo-popup-visible .ticket-body .pay-info .address-info .box {
-          -ms-flex: 1;
-              flex: 1;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: column;
-              flex-direction: column;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center; }
-        .payinfo-popup-visible .ticket-body .pay-info .address-info .start {
-          -ms-flex-align: start;
-              align-items: flex-start; }
-          .payinfo-popup-visible .ticket-body .pay-info .address-info .start p {
-            font-size: 1.8rem;
-            color: #111111; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.first {
-              font-size: 1.2rem; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.center {
-              font-size: 1.8rem;
-              width: 100%; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .start p.last {
-              color: #AAAAAA;
-              font-size: 1.2rem; }
-        .payinfo-popup-visible .ticket-body .pay-info .address-info .center {
-          font-size: 1.5rem;
-          -ms-flex-align: center;
-              align-items: center;
-          width: 40%; }
-          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow {
-            color: #0074D9;
-            position: relative;
-            width: 100%;
-            height: 0;
-            line-height: 0; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::after {
-              width: 80%;
-              height: 10px;
-              background-color: #0074D9;
-              position: absolute;
-              left: 0;
-              bottom: -20px;
-              content: ""; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow::before {
-              width: 0;
-              height: 0;
-              border: 10px solid #0074D9;
-              position: absolute;
-              right: 5px;
-              bottom: -20px;
-              content: "";
-              border: 10px solid #fff;
-              border-color: transparent transparent #0074D9 #0074D9; }
-          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.arrow-message {
-            color: #111111;
-            font-size: 1.3rem; }
-          .payinfo-popup-visible .ticket-body .pay-info .address-info .center p.first {
-            color: #111111; }
-        .payinfo-popup-visible .ticket-body .pay-info .address-info .end {
-          -ms-flex-align: end;
-              align-items: flex-end;
-          -ms-flex-pack: center;
-              justify-content: center; }
-          .payinfo-popup-visible .ticket-body .pay-info .address-info .end p {
-            font-size: 1.2rem; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:first-child {
-              font-size: 1.8rem;
-              color: #111111; }
-            .payinfo-popup-visible .ticket-body .pay-info .address-info .end p:last-child {
-              color: #919191; }
-      .payinfo-popup-visible .ticket-body .pay-info .info-box {
-        min-height: 40px;
-        border-top: 1px solid #f7f7f7; }
-        .payinfo-popup-visible .ticket-body .pay-info .info-box > p {
-          font-size: 1.3rem; }
-          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span {
-            font-size: 1.3rem;
-            color: #AAAAAA;
-            line-height: 40px;
-            min-height: 40px; }
-          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.type {
-            width: 50px; }
-          .payinfo-popup-visible .ticket-body .pay-info .info-box > p span.name {
-            color: #111111; }
-  .payinfo-popup-visible .pay-ticket-info {
-    background-color: #fff;
-    width: 100%; }
-    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header {
-      padding: 0 3%;
-      border-bottom: 1px solid #dddddd; }
-      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-header p {
-        font-size: 1.4rem;
-        height: 40px;
-        line-height: 40px; }
-    .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body {
-      padding: 0 3%; }
-      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p {
-        font-size: 1.2rem;
-        color: #919191;
-        height: 30px;
-        line-height: 30px; }
-      .payinfo-popup-visible .pay-ticket-info .pay-ticket-info-body p.all {
-        font-size: 1.4rem;
-        text-align: right; }
-  .payinfo-popup-visible .now-pay {
-    width: 100%;
-    padding: 0 2%;
-    margin-top: 10px; }
-    .payinfo-popup-visible .now-pay button {
-      outline: none;
-      border: 0;
-      background-color: #FF851B;
-      font-size: 1.5rem;
-      color: #fff;
-      width: 100%;
-      height: 40px;
-      border-radius: 10px; }
-  .payinfo-popup-visible .out-order {
-    width: 100%;
-    text-align: center; }
-    .payinfo-popup-visible .out-order a {
-      color: #AAAAAA; }
 
 .mint-msgbox-input input {
   height: 40px;

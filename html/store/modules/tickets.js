@@ -288,7 +288,9 @@ const actions = {
 					LinkmanId: data.LinkmanId,
 					PassengerIds: data.PassengerIds,
 					RebateId: data.RebateId,
-					StartAddress: data.StartAddress
+					StartAddress: data.StartAddress,
+					Remark: data.Remark,
+					JourneyRmk: data.JourneyRmk
 				})
 			})
 			.then(checkStatus)

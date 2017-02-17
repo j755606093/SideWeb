@@ -438,6 +438,8 @@
       padding-left: 20px;
       color: #c8c8c8;
       font-size: 16px;
+      width: 75%;
+      @include text_nowrap;
     }
     >span.info {
       display: inline-block;
@@ -522,16 +524,17 @@
   }
 }
 
-//选择乘客页
-.passenger-page {
+//选择页
+.action-page {
   width: 100%;
   height: 100%;
   background-color: #fafafa;
-  .passenger {
+  overflow-y: scroll;
+  .action {
     padding-bottom: 50px;
-    .passenger-body {
+    .action-body {
       margin-top: 10px;
-      .add-passenger {
+      .add-action {
         width: 100%;
         .line {
           margin: 0 10px;
@@ -565,6 +568,68 @@
           }
         }
       }
+      .pay-ticket-info {
+        margin: 0 10px;
+        background-color: $white;
+        border-radius: 10px;
+        position: relative;
+        p {
+          font-size: 16px;
+          color: #c8c8c8;
+          height: 40px;
+          line-height: 40px;
+          margin-left: 20px;
+        }
+        p:nth-child(1) {
+          color: #000;
+        }
+      }
+      .pay {
+        height: 50px;
+        line-height: 50px;
+        @include display_flex('row');
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        background-color: $white;
+        box-shadow: 3px 0 3px 3px #efeeee;
+        .left {
+          flex: 5;
+          p {
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #c8c8c8;
+            span {
+              font-size: 18px;
+              color: #f35252;
+              font-weight: 900;
+            }
+          }
+        }
+        .right {
+          flex: 5;
+          @include display_flex('row');
+          span {
+            color: #c8c8c8;
+            font-size: 12px;
+            flex: 5;
+          }
+          button {
+            background-color: #329be8;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            outline: none;
+            border: none;
+            color: $white;
+            flex: 5;
+            border-radius: 5px;
+          }
+        }
+      }
     }
     p.refresh {
       height: 50px;
@@ -576,7 +641,7 @@
         color: #c8c8c8;
       }
     }
-    .passenger-select {
+    .action-select {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -641,380 +706,149 @@
         }
       }
     }
-  }
-}
-
-.people-info {
-  width: 96%;
-  margin: 0 2%;
-  background-color: $white;
-  margin-bottom: 5px;
-  border-radius: 10px;
-  position: relative;
-  box-shadow: 0px 3px 5px 0px #ececec;
-  .info-head {
-    width: 100%;
-    padding: 0 2%;
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px solid lighten($gray, 20%);
-    span {
-      font-size: 1.4rem;
-      color: darken($gray, 30%);
-    }
-    span:first-child {
-      flex: 0.3;
-      font-size: 1.4rem;
-    }
-    span:last-child {
-      flex: 0.7;
-      font-size: 1.4rem;
-    }
-  }
-  .info-list {
-    .list {
-      display: flex;
-      flex-direction: row;
-      height: 50px;
-      width: 96%;
-      margin: 0 2%;
-      border-bottom: 1px solid lighten($gray, 30%);
-      .check {
-        flex: 0.1;
+    .action-use {
+      .popup-header {
         height: 50px;
+        width: 100%;
         line-height: 50px;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        >span {
-          border: 1px solid $blue;
-          border-radius: 5px;
-          padding: 3px 4px;
-          background-color: $white;
-          i {
-            color: $white;
-          }
-        }
-        >span.active {
-          background-color: $blue !important;
-        }
-      }
-      >span {
-        flex: 0.1;
-        height: 50px;
-        line-height: 50px;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        i {
-          color: $blue;
-        }
-        i.fa-trash {
-          font-size: 1.7rem;
-        }
-        i.fa-check {
-          height: 20px;
-          line-height: 20px;
-        }
-      }
-      .list-body {
-        flex: 0.8;
-        height: 40px;
-        margin: 5px 0;
-        .list-top {
-          height: 40px;
-          >span {
-            height: 40px;
-            line-height: 40px;
-            font-size: 1.1rem;
-          }
-          span.name {
-            font-size: 1.4rem;
-          }
-          span.type {
-            color: $gray;
-            margin: 0 5px;
-          }
-          span.set-ticket {
-            color: $blue;
-            border: 1px solid $blue;
-            border-radius: 5px;
-            padding: 2px;
-            margin-left: 10px;
-          }
-          span.get-ticket {
-            color: $blue;
-            margin-left: 10px;
-          }
-        }
-        // .list-bottom{
-        //  height: 20px;
-        //  p{
-        //    height: 20px;
-        //    line-height:20px;
-        //    color:$gray;
-        //    span{
-        //      color:$gray;
-        //      margin-left:5px;
-        //    }
-        //  }
-        // }
-      }
-    }
-  }
-  .info-man {
-    display: flex;
-    flex-direction: column;
-    .info {
-      height: 40px;
-      line-height: 40px;
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      width: 96%;
-      margin: 0 2%;
-      border-bottom: 1px solid lighten($gray, 20%);
-      span {
-        flex: 0.3;
-        font-size: 1.3rem;
-      }
-      input {
-        flex: 0.5;
-        font-size: 1.3rem;
-      }
-      button {
-        flex: 0.2;
-        height: 40px;
-        outline: none;
-        border: 0;
-        color: $blue;
-        font-size: 1.3rem;
-        background: transparent;
-        text-align: right;
-        // margin-top:5px;
-        i {
-          margin-right: 5px;
-        }
-      }
-    }
-    .info-man-name {
-      input {
-        flex: 0.7;
-        font-size: 1.3rem;
-      }
-    }
-  }
-  .click-append {
-    width: 96%;
-    margin: 0 2%;
-    height: 40px;
-    text-align: center;
-    >button {
-      height: 30px;
-      outline: none;
-      border: 0;
-      color: $blue;
-      font-size: 1.3rem;
-      background: transparent;
-      margin-top: 5px;
-    }
-    >i {
-      color: $blue;
-      font-size: 1.3rem;
-      margin-right: 5px;
-    }
-  }
-}
-
-.contact-info {
-  width: 100%;
-  background-color: $white;
-  margin-bottom: 10px;
-  // padding-bottom:10px;
-  // height:40px;
-  position: relative;
-  box-shadow: 0px 3px 5px 0px #ececec;
-  border-radius: 10px;
-  .info {
-    height: 40px;
-    line-height: 40px;
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    width: 96%;
-    margin: 0 2%;
-    // border-bottom:1px solid lighten($gray, 20%);
-    span {
-      // flex:0.3;
-      width: 30%;
-      font-size: 1.3rem;
-    }
-    span.last {
-      // flex:0.3;
-      width: 30%;
-      text-align: right;
-    }
-    span.center {
-      // flex:0.4;
-      width: 40%;
-      color: $gray;
-    }
-    input {
-      flex: 0.7;
-      font-size: 1.3rem;
-    }
-  }
-  .show-discount {
-    span:first-child {
-      color: $gray;
-    }
-    span.center {
-      width: 50%;
-    }
-    span.last {
-      width: 20%;
-      color: $blue;
-    }
-  }
-  .discount-code {
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    padding-top: 5px;
-    border-top: 1px solid lighten($gray, 20%);
-    input,
-    button,
-    i {
-      font-size: 1.3rem;
-      height: 30px;
-      line-height: 30px;
-    }
-    input {
-      flex: 1;
-      // flex:0.65;
-    }
-    i {
-      flex: 0.1;
-    }
-    button {
-      outline: none;
-      border: 0;
-      background-color: $white;
-      color: $blue;
-      flex: 0.25;
-      // margin-top:5px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 10px;
-    }
-  }
-}
-
-.other-info {
-  width: 100%;
-  background-color: $white;
-  margin-bottom: 10px;
-  // padding-bottom:10px;
-  // height:40px;
-  position: relative;
-  .info {
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    border-bottom: 1px solid lighten($gray, 20%);
-    span.first {
-      flex: 0.3;
-      height: 40px;
-      font-size: 1.3rem;
-    }
-    span.center,
-    input.center {
-      flex: 0.5;
-      height: 39px;
-      font-size: 1.3rem;
-      color: $gray;
-    }
-    .last {
-      flex: 0.2;
-      height: 40px;
-      font-size: 1.3rem;
-      // display: flex;
-      // align-items:  center;
-      // justify-content: center;
-      span {
-        border: 1px solid $blue;
-        padding: 0 3px;
-        height: 25px;
-        line-height: 25px;
-        border-radius: 5px;
-        >i {
-          color: $white;
-        }
-      }
-      span.active {
-        background-color: $blue;
-      }
-      span.right {
-        border: none;
-        >i {
-          color: $gray;
-          font-size: 1.8rem;
-        }
-      }
-      button.right {
-        outline: none;
-        border: 0;
         background-color: $white;
-        color: $blue;
-        flex: 0.25;
-        font-size: 1.3rem;
-        // margin-top:5px;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 10px;
+        color: #c8c8c8;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        span {
+          display: inline-block;
+          height: 50px;
+          line-height: 50px;
+          font-size: 18px;
+          flex: 1;
+          font-weight: 900;
+        }
+        span.active {
+          color: #329be8;
+          position: relative;
+          &::after {
+            position: absolute;
+            bottom: 0px;
+            left: 45%;
+            width: 20px;
+            height: 4px;
+            background-color: #329be8;
+            content: "";
+          }
+        }
       }
-    }
-  }
-  .discount-code {
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    line-height: 40px;
-    width: 96%;
-    margin: 0 2%;
-    padding-top: 5px;
-    input,
-    button,
-    i {
-      font-size: 1.3rem;
-      height: 30px;
-      line-height: 30px;
-    }
-    input {
-      flex: 1;
-      // flex:0.65;
-    }
-    i {
-      flex: 0.1;
-    }
-    button {
-      outline: none;
-      border: 0;
-      background-color: $white;
-      color: $blue;
-      flex: 0.25;
-      // margin-top:5px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 10px;
+      .page {
+        width: 100%;
+        .rebate {
+          height: 130px;
+          display: flex;
+          margin: 0 10px;
+          margin-top: 10px;
+          flex-direction: row;
+          justify-content: center;
+          .left {
+            flex: 3;
+            @include display_flex('column');
+            background: linear-gradient(to bottom, #2196f3, #0e62e1);
+            position: relative;
+            .circle {
+              position: absolute;
+              top: -3px;
+              left: -5px;
+              bottom: -3px;
+              @include display_flex("column");
+              justify-content: space-around;
+              span {
+                width: 10px;
+                height: 10px;
+                background-color: $white;
+                border-radius: 50%;
+              }
+            }
+            .title {
+              @include display_flex('column');
+              color: $white;
+              p {
+                flex: 6;
+                font-size: 30px;
+                font-weight: 900;
+                color: $white;
+              }
+              span {
+                flex: 4;
+                font-size: 15px;
+                font-weight: 900;
+              }
+            }
+          }
+          .right {
+            flex: 7;
+            background-color: $white;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            @include display_flex('row');
+            .info {
+              flex: 7;
+              height: 100px;
+              text-align: left;
+              @include display_flex('column');
+              span {
+                font-size: 15px;
+                font-weight: 900;
+                height: 65px;
+                width: 100%;
+                padding: 10px 10px;
+              }
+              span:last-child {
+                color: #c8c8c8;
+                font-weight: 400;
+              }
+            }
+            .check {
+              flex: 3;
+              @include display_flex('row');
+              height: 130px;
+              position: relative;
+              img {
+                width: 20px;
+                height: 20px;
+                z-index: -1;
+              }
+              span {
+                position: absolute;
+                top: 55px;
+                left: 37%;
+                width: 20px;
+                height: 20px;
+                background-color: #fafafa;
+                border-radius: 50%;
+                z-index: 0;
+              }
+            }
+          }
+          &.active {
+            .check {
+              img {
+                z-index: 1;
+              }
+            }
+          }
+          &.disabled {
+            .left {
+              background: linear-gradient(to bottom, #c2c2c2, #9a9a9a);
+            }
+            .right {
+              .info {
+                span {
+                  color: #c8c8c8;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1094,47 +928,6 @@
   }
 }
 
-.station-popup-visible {
-  width: 80%;
-  height: 60%;
-  background-color: $white;
-  border-radius: 10px;
-  .station {
-    position: relative;
-    border-radius: 10px;
-    height: 100%;
-    overflow-y: scroll;
-    .mint-checklist {
-      margin-bottom: 50px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      color: $white;
-      background-color: $blue;
-      font-size: 1.6rem;
-      position: fixed;
-      bottom: 0px;
-      left: 0;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-    }
-  }
-}
-
-.message-popup-visible {
-  width: 100%;
-  .popup {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.6);
-    font-size: 1.2rem;
-  }
-}
-
 .tip-popup-visible {
   width: 100%;
   height: 100%;
@@ -1176,212 +969,6 @@
       margin-top: 10px;
       border-radius: 5px;
       width: 40%;
-    }
-  }
-}
-
-.payinfo-popup-visible {
-  width: 100%;
-  height: 100%;
-  background-color: lighten($gray, 30%);
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  .pay-body {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-  }
-  .info-body {
-    height: 160px;
-    width: 100%;
-    background-color: #2196F3;
-    color: $white;
-    .status {
-      text-align: center;
-      padding-top: 20px;
-      >i.fa {
-        font-size: 4rem;
-        color: #2ecc71;
-      }
-      >p {
-        font-size: 1.8rem;
-        color: $white;
-        margin-top: 10px;
-      }
-      p.time {
-        font-size: 1.4rem;
-      }
-    }
-  }
-  .ticket-body {
-    margin-bottom: 10px;
-    width: 100%;
-    .pay-info {
-      background-color: $white;
-      width: 100%;
-      padding: 0 3%;
-      .address-info {
-        width: 96%;
-        margin: 10px 2%;
-        height: 100px;
-        font-size: 1.2rem;
-        display: flex;
-        flex-direction: row;
-        .box {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        .start {
-          align-items: flex-start;
-          p {
-            font-size: 1.8rem;
-            color: $black;
-            // line-height:25px;
-            &.first {
-              // color:darken($gray, 10%);
-              font-size: 1.2rem;
-            }
-            &.center {
-              font-size: 1.8rem;
-              width: 100%;
-            }
-            &.last {
-              color: $gray;
-              font-size: 1.2rem;
-            }
-          }
-        }
-        .center {
-          font-size: 1.5rem;
-          align-items: center;
-          width: 40%;
-          p.arrow {
-            color: $blue;
-            position: relative;
-            width: 100%;
-            height: 0;
-            line-height: 0;
-            &::after {
-              width: 80%;
-              height: 10px;
-              background-color: $blue;
-              position: absolute;
-              left: 0;
-              bottom: -20px;
-              content: "",
-            }
-            &::before {
-              width: 0;
-              height: 0;
-              border: 10px solid $blue;
-              position: absolute;
-              right: 5px;
-              bottom: -20px;
-              content: "";
-              border: 10px solid $white;
-              border-color: transparent transparent $blue $blue;
-            }
-          }
-          p.arrow-message {
-            color: $black;
-            font-size: 1.3rem;
-            // margin-top: -10px;
-          }
-          p.first {
-            color: $black;
-          }
-        }
-        .end {
-          align-items: flex-end;
-          justify-content: center;
-          p {
-            // color:darken($gray, 10%);
-            // color:$black;
-            font-size: 1.2rem;
-            // line-height:25px;
-            // line-height:40px;
-            &:first-child {
-              font-size: 1.8rem;
-              color: $black;
-            }
-            &:last-child {
-              color: darken($gray, 10%);
-            }
-          }
-        }
-      }
-      .info-box {
-        min-height: 40px;
-        border-top: 1px solid lighten($gray, 30%);
-        >p {
-          font-size: 1.3rem;
-          span {
-            font-size: 1.3rem;
-            color: $gray;
-            line-height: 40px;
-            min-height: 40px;
-          }
-          span.type {
-            width: 50px;
-          }
-          span.name {
-            color: $black;
-          }
-        }
-      }
-    }
-  }
-  .pay-ticket-info {
-    background-color: $white;
-    width: 100%;
-    .pay-ticket-info-header {
-      padding: 0 3%;
-      border-bottom: 1px solid lighten($gray, 20%);
-      p {
-        font-size: 1.4rem;
-        height: 40px;
-        line-height: 40px;
-      }
-    }
-    .pay-ticket-info-body {
-      padding: 0 3%;
-      p {
-        font-size: 1.2rem;
-        color: darken($gray, 10%);
-        height: 30px;
-        line-height: 30px;
-      }
-      p.all {
-        font-size: 1.4rem;
-        text-align: right;
-      }
-    }
-  }
-  .now-pay {
-    width: 100%;
-    padding: 0 2%;
-    margin-top: 10px;
-    // background-color: $white;
-    button {
-      outline: none;
-      border: 0;
-      background-color: $orange;
-      font-size: 1.5rem;
-      color: $white;
-      width: 100%;
-      height: 40px;
-      border-radius: 10px;
-    }
-  }
-  .out-order {
-    width: 100%;
-    text-align: center;
-    a {
-      color: $gray;
     }
   }
 }
