@@ -61,10 +61,10 @@
 				</div>
 			</div>
 			<!-- 乘客信息 -->
-			<div class="write-info">
+			<div @click="showPage(1)" class="write-info">
 				<div class="line">
 					<span>添加 / 修改乘车人</span>
-					<div @click="showPage(1)" class="img"><img src="../picture/add_passenger.png"></div>
+					<div class="img"><img src="../picture/add_passenger.png"></div>
 				</div>
 			</div>
 		</div>
@@ -76,27 +76,27 @@
 			</div>
 		</div>
 		<!-- 上车点 -->
-		<div class="write-info">
+		<div @click="showPage(2)" class="write-info">
 			<div class="line">
 				<span style="color:rgb(20,20,20)">{{payInfoData.remark?payInfoData.remark:selectStation}}</span>
-				<div @click="showPage(2)" class="img"><img src="../picture/green_station.png"></div>
+				<div class="img"><img src="../picture/green_station.png"></div>
 			</div>
 		</div>
 		<!-- 优惠券 -->
-		<div class="write-info">
+		<div @click="showPage(3)" class="write-info">
 			<div class="line">
 				<span v-if="optionsDiscount.length===0">没有可用优惠券</span>
 				<span v-else>{{'优惠券('+canuseOne.length+'张可用)'}}</span>
 				<span style="color:#000" v-if="discountMoney!==0" class="info">{{'- ¥'+discountMoney}}</span>
 				<span class="info" v-else>未使用</span>
-				<div @click="showPage(3)" class="img">
+				<div class="img">
 					<img src="../picture/coupon.png"></div>
 			</div>
 		</div>
 		<!-- 备注 -->
 		<div class="write-info">
 			<div class="line">
-				<input type="text" v-model="payInfoData.playRemark" name="playRemark" placeholder="旅程备注">
+				<input type="text" v-model="payInfoData.playRemark" name="playRemark" placeholder="订单备注">
 				<div class="img"><img src="../picture/edit.png"></div>
 			</div>
 		</div>
@@ -118,7 +118,7 @@
 		<mt-popup
 		  v-model="passengerPopupVisible"
 		  position="right"
-		  class="action-page">
+		  class="action-page animated fadeIn">
 		  <slot>
 		  	<div class="action">
 		  		<div class="page-header">
@@ -127,12 +127,23 @@
 		  			<span class="center">选择乘车人</span>
 		  			<span @click="showPage(1,true)" class="right">确定</span>
 		  		</div>
+		  		<div class="action-select">
+		  			<div class="line" v-for="(item,index) in AllFare">
+		  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
+		  				<div @click="setFare(index)" class="center">
+		  					<p>{{item.Name}}</p>
+		  					<p>{{item.Mobile}}</p>
+		  				</div>
+		  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
+		  			</div>
+		  		</div>
+		  		<p class="refresh">没有乘客信息?来下面添加吧~ </p>
 		  		<div class="action-body">
 		  			<!-- 点击新增乘客 -->
 						<div class="write-info">
-							<div class="line">
+							<div @click="showAddPassenger" class="line">
 								<span>添加新乘车人</span>
-								<div @click="showAddPassenger" class="img"><img src="../picture/add_passenger.png"></div>
+								<div class="img"><img src="../picture/add_passenger.png"></div>
 							</div>
 						</div>
 		  			<!-- 添加乘客 -->
@@ -152,20 +163,9 @@
 							</div>
 							<div class="line">
 								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-								<button @click="append"><i class="fa fa-plus-circle"></i> 修改</button>
+								<button @click="append(1)"><i class="fa fa-plus-circle"></i> 修改</button>
 							</div>
 						</div>
-		  		</div>
-		  		<p class="refresh">有新乘客没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p>
-		  		<div class="action-select">
-		  			<div class="line" v-for="(item,index) in AllFare">
-		  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
-		  				<div class="center">
-		  					<p>{{item.Name}}</p>
-		  					<p>{{item.Mobile}}</p>
-		  				</div>
-		  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
-		  			</div>
 		  		</div>
 		  	</div>
 		  </slot>
@@ -174,7 +174,7 @@
 		<mt-popup
 		  v-model="stationPopupVisible"
 		  position="right"
-		  class="action-page">
+		  class="action-page animated fadeIn">
 		  <slot>
 		  	<div class="action">
 		  		<div class="page-header">
@@ -182,6 +182,18 @@
 		  			<span class="center">选择上车地点</span>
 		  			<span @click="showPage(2,true)" class="right">确定</span>
 		  		</div>
+		  		<!-- <p class="refresh">地址没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p> -->
+		  		<div class="action-select">
+		  			<div class="line" v-for="(item,index) in options">
+		  				<div @click="setUpCar(index)" class="left"><img v-if="item===selectStation" src="../picture/select.png"></div>
+		  				<div @click="setUpCar(index)" class="center">
+		  					<p>{{item}}</p>
+		  					<!-- <p style="color:#c8c8c8" v-if="item===selectStation">{{payInfoData.remark?payInfoData.remark:'系统默认备注'}}</p> -->
+		  				</div>
+		  			</div>
+		  		</div>
+		  		<p class="refresh">没有你要的上车点？在下面备注一个吧~</p>
+		  		<p class="refresh">注意不要备注离我们行程不在的范围哦~</p>
 		  		<div class="action-body">
 		  			<!-- 备注上车点 -->
 						<div class="write-info">
@@ -191,16 +203,6 @@
 							</div>
 						</div>
 		  		</div>
-		  		<p class="refresh">地址没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p>
-		  		<div class="action-select">
-		  			<div class="line" v-for="(item,index) in options">
-		  				<div @click="setUpCar(index)" class="left"><img v-if="item===selectStation" src="../picture/select.png"></div>
-		  				<div class="center">
-		  					<p>{{item}}</p>
-		  					<p style="color:#c8c8c8" v-if="item===selectStation">{{payInfoData.remark?payInfoData.remark:'系统默认备注'}}</p>
-		  				</div>
-		  			</div>
-		  		</div>
 		  	</div>
 		  </slot>
 		</mt-popup>
@@ -208,7 +210,7 @@
 		<mt-popup
 		  v-model="discountPopupVisible"
 		  position="right"
-		  class="action-page">
+		  class="action-page animated fadeIn">
 		  <slot>
 		  	<div class="action">
 		  		<div class="page-header">
@@ -295,7 +297,7 @@
 		<mt-popup
 		  v-model="payInfoPopupVisible"
 		  position="right"
-		  class="action-page">
+		  class="action-page animated fadeIn">
 		  <slot>
 		  	<div class="action">
 		  		<div style="background-color: #f35252" class="page-header">
@@ -396,7 +398,7 @@
 			  	<p>2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童）。</p>
 			  	<p>3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。</p>
 			  	<h3>取票说明</h3>
-			  	<p>提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票</p>
+			  	<p>提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。</p>
 			  	<h3>退票、改签说明：</h3>
 			  	<p>2.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准。</p>
 			  	<p>3.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
@@ -481,6 +483,8 @@ export default {
 			canuseIndex:1,//默认是显示可用优惠券
 			canuseOne:[],//可使用的优惠券列表
 			canuseTwo:[],//不可使用的优惠券列表
+
+			ChaPassengerIndex:0,//记录修改乘客信息的位置
 		}
 	},
 	beforeCreate(){
@@ -967,7 +971,7 @@ export default {
 		 * 添加乘客信息
 		 * @return {[type]} [description]
 		 */
-		append(){
+		append(index=0){
 			// 添加乘客至AllFare
 			// 首先检查输入是否正确
 			if(Utils.isChinaName(this.fareName)&&this.fareName.length>=2){
@@ -986,13 +990,16 @@ export default {
 						Name:this.fareName,
 						Mobile:this.certificate,
 						active:true,
-						isGetTicket:false
+						isGetTicket:false,
 					}
 					Indicator.open({
 						text: '加载中...',
 						spinnerType: 'double-bounce'
 					});
-					this.$store.dispatch("addPassenger",json)
+
+					if(index===0){
+						// 增加用户数据
+						this.$store.dispatch("addPassenger",json)
 						.then((result)=>{
 							Indicator.close();
 							if(result.Data){
@@ -1011,6 +1018,27 @@ export default {
 								this.popupMessage(result.Message);
 							}
 						})
+					}
+					else{
+						//修改用户数据
+						json.Id = this.AllFare[this.ChaPassengerIndex].Id;
+						this.$store.dispatch("updatePassenger",json)
+						.then((result)=>{
+							Indicator.close();
+							if(result.Data){
+								this.$store.dispatch("getPassenger");
+								this.AllFare[this.ChaPassengerIndex] = json;
+								this.fareName = "";
+								this.certificate = "";
+
+								this.popupMessage("修改成功!");
+								this.computeAll();
+							}
+							else{
+								this.popupMessage(result.Message);
+							}
+						})
+					}
 				}
 			}
 			else{
@@ -1234,6 +1262,7 @@ export default {
 		/** 点击显示隐藏修改乘客 */
 		showChaPassenger(index){
 			this.showpassengeraction = 2;
+			this.ChaPassengerIndex = index;//记录修改的位置
 
 			this.fareName = this.AllFare[index].Name;
 			this.certificate = this.AllFare[index].Mobile;

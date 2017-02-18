@@ -12,14 +12,14 @@
 <body>
   <div id="app" v-show="ready" style="display: none;">
     <!-- 头部 -->
-    <!-- <header v-show="showHeader">
+    <header class="animated fadeIn" v-show="showHeader">
       <div @click="GoBack" class="left">
-        <i class="fa fa-angle-left"></i>
+        <img src="../picture/back_icon.png">
       </div>
       <div class="home">
         <span v-text="headerTitle"></span>
       </div>
-    </header> -->
+    </header>
     <div class="body">
       <!-- 头部 -->
       <div class="header">
@@ -33,47 +33,27 @@
           <img :src="UserInfo.Headimgurl">
         </div>
       </div>
-      <!-- 订单和优惠券 -->
-      <div class="order-discount">
-        <div @click="showOrderList()" class="left content">
-          <img src="./picture/order_red.png">
-          <span>全部订单</span>
-        </div>
-        <div @click="showDiscountList" class="right content">
-          <img src="./picture/discount_red.png">
-          <span>优惠券</span>
-        </div>
-      </div>
       <!-- 其中的列表 -->
       <div class="lists">
-        <!-- 单个或多个选项 -->
-        <div class="list-body">
-          <!-- 单个 -->
-          <div class="list" @click="showPassengerList">
-            <i class="left fa fa-user"></i>
-            <span>常用联系人</span>
-            <i class="fa fa-chevron-right"></i>
-          </div>
+        <div @click="showOrderList()" class="line">
+          <p>全部订单</p>
+          <div><img src="../picture/orders_gray.png"></div>
         </div>
-        <!-- 单个或多个选项 -->
-        <div class="list-body">
-          <div class="list" @click="applyRefund">
-            <i class="left fa  fa-rebel"></i>
-            <span>申请退款</span>
-            <i class="fa fa-chevron-right"></i>
-          </div>
-          <!-- 单个 -->
-          <a class="list" href="tel:13871895108">
-            <i class="left fa fa-pencil-square"></i>
-            <span>联系客服</span>
-            <i class="fa fa-chevron-right"></i>
-          </a>
-          <!-- 单个 -->
-          <div class="list" @click="helpCenter">
-            <i class="left fa fa-question-circle"></i>
-            <span>帮助中心</span>
-            <i class="fa fa-chevron-right"></i>
-          </div>
+        <div @click="showDiscountList" class="line">
+          <p>优惠券</p>
+          <div><img src="../picture/coupon_gray.png"></div>
+        </div>
+        <div @click="showPassengerList" class="line">
+          <p>常用联系人</p>
+          <div><img src="../picture/contact_person_gray.png"></div>
+        </div>
+        <div class="line">
+          <p>联系客服</p>
+          <div><img src="../picture/phone_gray.png"></div>
+        </div>
+        <div @click="helpCenter" class="line">
+          <p>帮助中心</p>
+          <div><img src="../picture/question_gray.png"></div>
         </div>
       </div>
     </div>
@@ -81,36 +61,46 @@
     <mt-popup v-model="orderVisible" position="right" id="order-lists" class="order-lists">
       <div class="lists">
         <div class="order-lists-header">
-          <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部</span>
+          <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部订单</span>
           <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">未支付</span>
           <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">已支付</span>
           <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">待出行</span>
         </div>
         <!-- 订单 -->
         <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
-          <!-- 订单头部 -->
-          <div class="list-header">
-            <span class="time" v-text="'订单号:'+item.Id">1月16日 22:25</span>
-            <span class="type" v-text="item.Route">高铁大巴</span>
-          </div>
-          <!-- 订单中间 -->
-          <div class="list-center">
-            <div class="city">
-              <span class="start" v-text="item.StartPoint">揭阳</span>
-              <i class="start-time" v-text="item.Boardtime.slice(0,5)">12:50</i>
-              <span class="end" v-text="item.EndPoint">广州</span>
+          <div class="ticket-info">
+            <div class="left">
+              <span v-text="item.Boardtime">08:23</span>
+              <span v-text="item.CoName">东方快车</span>
+              <span>{{item.Route}}</span>
             </div>
-            <span class="money" v-text="'¥'+item.TotalPrice">¥402</span>
-          </div>
-          <div class="list-footer">
-            <span class="name" v-text="'乘车日期:'+item.Boarddate">岳飞</span>
-            <template v-if="item.Status===0">
-              <span class="order-pay order-no">订单失效</span>
-            </template>
-            <template v-else>
-              <span class="order-pay order-paying" v-if="item.IsPay===0">未支付</span>
-              <span class="order-pay order-payed" v-else>已支付</span>
-            </template>
+            <div class="center">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="right">
+              <div class="top">
+                <div class="name">
+                  <p>{{item.StartPoint}}</p>
+                  <p>{{item.EndPoint}}</p>
+                </div>
+                <div class="info">
+                  <p v-text="'¥'+item.TotalPrice"></p>
+                  <p v-if="item.IsPay===0">未支付</p>
+                  <p style="color:#329be8;" v-else>已支付</p>
+                </div>
+              </div>
+              <div class="bottom">
+                <img src="../picture/time.png">
+                <p>{{item.Boarddate}}</p>
+              </div>
+            </div>
           </div>
         </div>
         <div id="last"></div>

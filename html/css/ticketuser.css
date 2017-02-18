@@ -157,6 +157,43 @@ body {
   background-color: #f7f7f7;
   -webkit-overflow-scrolling: touch; }
 
+header {
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  text-align: center;
+  background-color: #2196F3;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  background-color: #329be8; }
+  header .left {
+    position: absolute;
+    width: 50px;
+    top: 0;
+    left: 0;
+    line-height: 50px; }
+    header .left > img {
+      width: 20px;
+      height: 20px;
+      line-height: 50px;
+      position: absolute;
+      left: 25px;
+      top: 15.5px; }
+  header .home {
+    text-align: center; }
+    header .home span {
+      color: #fff;
+      font-size: 20px; }
+
 .body {
   width: 100%; }
   .body .header {
@@ -170,7 +207,7 @@ body {
     -ms-flex-align: center;
         align-items: center;
     position: relative;
-    padding: 0 10px; }
+    padding: 0 20px; }
     .body .header > img {
       position: absolute;
       top: 0;
@@ -203,12 +240,29 @@ body {
     .body .header .right {
       -ms-flex: 5;
           flex: 5;
-      text-align: center; }
+      text-align: right; }
       .body .header .right img {
         width: 90px;
         height: 90px;
         border-radius: 50%; }
-  .body .order-discount {
+  .body .lists {
+    width: 100%;
+    padding: 0 10px; }
+
+.line {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  background-color: #fff;
+  margin-top: 10px;
+  border-radius: 5px; }
+  .line > div {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    position: absolute;
+    top: 0;
+    right: 0;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
@@ -216,90 +270,27 @@ body {
     -ms-flex-pack: center;
         justify-content: center;
     -ms-flex-align: center;
-        align-items: center;
-    height: 50px;
-    background-color: #fff;
-    margin-bottom: 20px; }
-    .body .order-discount .content {
-      -ms-flex: 1;
-          flex: 1;
-      height: 40px;
-      text-align: center;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
-      .body .order-discount .content:first-child {
-        border-right: 1px solid #eaeaea; }
-      .body .order-discount .content img {
-        width: 26px;
-        height: 26px; }
-      .body .order-discount .content span {
-        color: #111111;
-        font-size: 1.4rem;
-        margin-left: 10px; }
-  .body .lists {
-    width: 100%; }
-    .body .lists .list-body {
-      width: 100%;
-      padding: 0 2%;
-      margin-bottom: 10px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: column;
-          flex-direction: column;
-      background-color: #fff;
-      -ms-flex-pack: center;
-          justify-content: center; }
-      .body .lists .list-body .list {
-        width: 100%;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        height: 50px;
-        border-bottom: 1px solid #f7f7f7;
-        color: #111111; }
-        .body .lists .list-body .list i.left {
-          -ms-flex: 0.1;
-              flex: 0.1;
-          height: 50px;
-          line-height: 50px;
-          font-size: 1.8rem;
-          text-align: center;
-          color: #777777; }
-        .body .lists .list-body .list span {
-          -ms-flex: 0.8;
-              flex: 0.8;
-          height: 50px;
-          line-height: 50px;
-          font-size: 1.4rem; }
-        .body .lists .list-body .list i.fa-chevron-right {
-          -ms-flex: 0.1;
-              flex: 0.1;
-          height: 50px;
-          line-height: 50px;
-          font-size: 1.4rem;
-          color: #AAAAAA;
-          text-align: right; }
+        align-items: center; }
+    .line > div > img {
+      width: 20px;
+      height: 20px; }
+  .line p {
+    height: 60px;
+    line-height: 60px;
+    font-size: 15px;
+    color: #323232;
+    margin-left: 10px; }
 
 .order-lists {
   width: 100%;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: #fafafa;
   position: fixed;
   left: 0;
   bottom: 0;
   overflow-y: scroll; }
   .order-lists .lists {
-    width: 94%;
-    margin: 0 3%;
+    margin: 0 10px;
     margin-top: 100px;
     position: relative; }
     .order-lists .lists .order-lists-header {
@@ -319,18 +310,27 @@ body {
       height: 40px;
       line-height: 40px;
       text-align: center;
-      box-shadow: 3px 0 3px 3px #efeeee;
-      background-color: white; }
+      background-color: white;
+      padding: 0 20px; }
       .order-lists .lists .order-lists-header span {
         -ms-flex: 1;
             flex: 1;
-        font-size: 16px; }
+        font-size: 16px;
+        position: relative;
+        font-weight: 900;
+        color: #c8c8c8; }
       .order-lists .lists .order-lists-header span.active {
-        border-bottom: 2px solid #0074D9; }
+        color: #329be8; }
+        .order-lists .lists .order-lists-header span.active::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 38%;
+          background-color: #329be8;
+          width: 20px;
+          height: 4px; }
     .order-lists .lists .list {
       width: 100%;
-      padding: 5px 5px;
-      background-color: #fff;
       border-radius: 10px;
       margin-bottom: 10px; }
       .order-lists .lists .list .list-header {
@@ -439,6 +439,184 @@ body {
           color: #0074D9; }
         .order-lists .lists .list .list-footer span.order-payed {
           color: #2ecc71; }
+
+.ticket-info {
+  margin: 10px 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: relative;
+  height: 120px;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 0.5px solid #c8c8c8; }
+  .ticket-info .left {
+    z-index: 1;
+    -ms-flex: 3;
+        flex: 3;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    text-align: center; }
+    .ticket-info .left > span {
+      font-size: 12px;
+      font-weight: 900;
+      color: #323232;
+      margin: 2px 0; }
+      .ticket-info .left > span:first-child {
+        font-size: 20px;
+        color: #2196f3; }
+      .ticket-info .left > span:last-child {
+        color: #c8c8c8; }
+  .ticket-info .center {
+    z-index: 1;
+    -ms-flex: 1;
+        flex: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -ms-flex-align: left;
+        align-items: left;
+    height: 100%;
+    padding: 13px 0;
+    position: relative; }
+    .ticket-info .center > span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: #fafafa;
+      border: 0.5px solid #c8c8c8; }
+      .ticket-info .center > span:first-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        content: "";
+        border-radius: 0 0 10px 10px;
+        border-top-color: #fafafa;
+        position: absolute;
+        top: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg); }
+      .ticket-info .center > span:last-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        border-bottom-color: #fafafa;
+        content: "";
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        bottom: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg); }
+  .ticket-info .right {
+    z-index: 1;
+    -ms-flex: 6;
+        flex: 6;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    height: 120px; }
+    .ticket-info .right .top {
+      -ms-flex: 7;
+          flex: 7;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center; }
+      .ticket-info .right .top .name {
+        -ms-flex: 6;
+            flex: 6;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        -ms-flex-align: start;
+            align-items: flex-start;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+        .ticket-info .right .top .name p {
+          font-weight: bold;
+          font-size: 20px;
+          position: relative;
+          text-align: left;
+          margin-left: 20px; }
+          .ticket-info .right .top .name p:first-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #8cff3f;
+            position: absolute;
+            top: 9px;
+            left: -17px; }
+          .ticket-info .right .top .name p:last-child {
+            line-height: 40px; }
+          .ticket-info .right .top .name p:last-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #f35252;
+            position: absolute;
+            top: 15px;
+            left: -17px; }
+      .ticket-info .right .top .info {
+        -ms-flex: 4;
+            flex: 4;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        text-align: right;
+        -ms-flex-pack: center;
+            justify-content: center; }
+        .ticket-info .right .top .info p {
+          height: 28px;
+          line-height: 28px;
+          margin-right: 25px; }
+          .ticket-info .right .top .info p:first-child {
+            font-weight: 900;
+            font-size: 20px;
+            color: #f35252; }
+          .ticket-info .right .top .info p:last-child {
+            font-size: 12px;
+            color: #323232;
+            padding-top: 8px; }
+    .ticket-info .right .bottom {
+      -ms-flex: 3;
+          flex: 3;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+      position: relative;
+      margin-top: 4px; }
+      .ticket-info .right .bottom img {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px; }
+      .ticket-info .right .bottom p {
+        margin-left: 20px; }
 
 .discount-lists {
   width: 100%;
@@ -874,3 +1052,6 @@ footer {
     color: #0074D9; }
     footer .footer.active p {
       color: #0074D9; }
+
+.v-modal {
+  display: none; }

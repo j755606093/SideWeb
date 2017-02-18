@@ -188,7 +188,7 @@
           flex-direction: row;
           justify-content: center;
           .name {
-            flex: 5;
+            flex: 6;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -199,6 +199,7 @@
               position: relative;
               text-align: left;
               margin-left: 20px;
+              // @include text_nowrap;
               &:first-child::after {
                 content: "";
                 width: 10px;
@@ -225,7 +226,7 @@
             }
           }
           .info {
-            flex: 5;
+            flex: 4;
             display: flex;
             flex-direction: column;
             text-align: right;

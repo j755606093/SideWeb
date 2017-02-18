@@ -341,8 +341,8 @@ input {
           -ms-flex-pack: center;
               justify-content: center; }
           .result .result-list .list .right .top .name {
-            -ms-flex: 5;
-                flex: 5;
+            -ms-flex: 6;
+                flex: 6;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-direction: column;
@@ -378,8 +378,8 @@ input {
                 top: 15px;
                 left: -17px; }
           .result .result-list .list .right .top .info {
-            -ms-flex: 5;
-                flex: 5;
+            -ms-flex: 4;
+                flex: 4;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-direction: column;

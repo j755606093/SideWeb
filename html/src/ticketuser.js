@@ -25,11 +25,11 @@ const debug = (function() {
 })();
 
 window.getData = (data) => {
-	window.localStorage.setItem("UserInfo", data);
+	window.localStorage.setItem("UserInfo", "Bearer " + data);
 }
 
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", window.jgkj.getUserInfo());
+	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 }
 if (typeof window.webkit !== "undefined") {
@@ -89,7 +89,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxYTMxNmRjNC1lM2M4LTRkZTUtODE5NC01YjY1N2I4YzVjZTAiLCJpYXQiOjE0ODYxODcxODEsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NjE4NzE4MSwiZXhwIjoxNDg3Mzk2NzgxLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.0BgOqou-PbMFEnumMVanM8qaU74FgjomA74RxXF_cpQ" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxNTI5ODg0My0xZTFjLTQ3MTYtOTNkZC01ZTE4MTQ1MmNlMzEiLCJpYXQiOjE0ODc0MDM0OTUsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NzQwMzQ5NCwiZXhwIjoxNDg4NjEzMDk0LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.41txARQUeaY18pPFH-kl-gxmmY2Q0XYN9v9FMAASu4c" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
