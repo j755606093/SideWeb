@@ -12,9 +12,8 @@ body {
 header {
   height: 50px;
   // background-color:#14d67c;
-  background-color: #2196F3;
+  background-color: $white;
   color: $white;
-  font-size: 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -22,30 +21,196 @@ header {
   z-index: 100;
   padding: 0;
   margin: 0;
-  // color:#000;
-  .home {
-    text-align: center;
+  span {
+    width: 100px;
+    height: 50px;
     line-height: 50px;
-    font-size: 1.8rem;
+    color: #c8c8c8;
+    font-size: 18px;
     font-weight: 900;
-  }
-  .other {
+    display: inline-block;
     text-align: center;
-    .left {
-      height: 50px;
-      font-size: 1.5rem;
+  }
+  span.active {
+    color: #329be8;
+    position: relative;
+    &::after {
+      content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 50px;
-      i {
-        font-size: 3rem;
-        line-height: 50px;
+      bottom: 0;
+      left: 40px;
+      height: 4px;
+      width: 20px;
+      background-color: #329be8;
+    }
+  }
+}
+
+.ticket-info {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 120px;
+  border-radius: 6px;
+  background-color: $white;
+  border: 0.5px solid #c8c8c8;
+  .left {
+    z-index: 1;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    >span {
+      font-size: 12px;
+      font-weight: 900;
+      color: rgb(50, 50, 50);
+      margin: 2px 0;
+      &:first-child {
+        font-size: 20px;
+        color: rgb(33, 150, 243);
+      }
+      &:last-child {
+        color: rgb(200, 200, 200);
       }
     }
-    .center {
-      line-height: 50px;
-      font-size: 1.8rem;
+  }
+  .center {
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+    height: 100%;
+    padding: 13px 0;
+    position: relative;
+    >span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: #fafafa;
+      border: 0.5px solid #c8c8c8;
+      &:first-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        content: "";
+        border-radius: 0 0 10px 10px;
+        border-top-color: #fafafa;
+        position: absolute;
+        top: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg);
+      }
+      &:last-child::after {
+        width: 18px;
+        height: 9px;
+        background-color: #fafafa;
+        border: 0.5px solid #c8c8c8;
+        border-bottom-color: #fafafa;
+        content: "";
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        bottom: -0.7px;
+        left: -4.5px;
+        z-index: 10;
+        transform: rotate(0deg);
+      }
+    }
+  }
+  .right {
+    z-index: 1;
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    .top {
+      flex: 7;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .name {
+        flex: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        p {
+          font-weight: bold;
+          font-size: 20px;
+          position: relative;
+          text-align: left;
+          margin-left: 20px;
+          &:first-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #8cff3f;
+            position: absolute;
+            top: 9px;
+            left: -17px;
+          }
+          &:last-child {
+            line-height: 40px;
+          }
+          &:last-child::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #f35252;
+            position: absolute;
+            top: 15px;
+            left: -17px;
+          }
+        }
+      }
+      .info {
+        flex: 5;
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        justify-content: center;
+        p {
+          height: 28px;
+          line-height: 28px;
+          margin-right: 25px;
+          &:first-child {
+            font-weight: 900;
+            font-size: 20px;
+            color: rgb(243, 82, 82);
+          }
+          &:last-child {
+            font-size: 12px;
+            color: rgb(50, 50, 50);
+            padding-top: 8px;
+          }
+        }
+      }
+    }
+    .bottom {
+      flex: 3;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      position: relative;
+      margin-top: 4px;
+      img {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px;
+      }
+      p {
+        margin-left: 20px;
+      }
     }
   }
 }
@@ -88,122 +253,230 @@ header {
   }
   .order {
     width: 100%;
-    // background-color: lighten($gray, 20%);
-    .lists {
-      // background-color: $white;
-      width: 94%;
-      margin: 0 3%;
-      margin-top: 100px;
-      .list {
-        width: 100%;
-        padding: 5px 5px;
+    margin-top: 60px;
+  }
+}
+
+.page-header {
+  height: 50px;
+  position: relative;
+  text-align: center;
+  background-color: #2196F3;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #f35252;
+  >div {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    width: 19px;
+    height: 19px;
+    line-height: 50px;
+  }
+  span.right {
+    font-size: 14px;
+    color: $white;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    width: 50px;
+  }
+  span.center {
+    font-size: 18px;
+    color: $white;
+    font-weight: 900;
+    height: 50px;
+    line-height: 50px;
+  }
+}
+
+.page-header.active {
+  background-color: #329be8;
+}
+
+.write-info {
+  width: 100%;
+  margin-bottom: 10px;
+  >.line {
+    margin: 0 10px;
+    background-color: $white;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+    >span {
+      height: 50px;
+      line-height: 50px;
+      display: block;
+      margin-right: 130px;
+      padding-left: 20px;
+      color: #c8c8c8;
+      font-size: 16px;
+      width: 75%;
+      @include text_nowrap;
+    }
+    >span.info {
+      display: inline-block;
+      margin-right: 0;
+      padding-left: 0;
+      width: 60px;
+      height: 50px;
+      line-height: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 50px;
+    }
+    >input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%;
+    }
+    div.img {
+      height: 50px;
+      line-height: 50px;
+      width: 70px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.passenger-info {
+  width: 100%;
+  margin-bottom: 10px;
+  .passenger-selected {
+    background-color: $white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin: 0 10px;
+    >.line {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px;
+      >div {
+        flex: 2;
+        height: 50px;
+        line-height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          width: 20px;
+          height: 20px;
+          margin-left: 10px;
+        }
+      }
+      .center {
+        flex: 6;
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+      }
+      .right {
+        flex: 2;
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.action-page {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  overflow-y: scroll;
+  .action {
+    padding-bottom: 50px;
+    .action-body {
+      margin-top: 10px;
+      .pay-ticket-info {
+        margin: 0 10px;
         background-color: $white;
         border-radius: 10px;
-        margin-bottom: 10px;
-        .list-header {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          border-bottom: 1px solid lighten($gray, 20%);
-          padding: 5px 0;
-          span {
-            font-size: 1.4rem;
-            color: darken($gray, 40%);
-          }
-          span.time {
-            text-align: left;
-            flex: 0.7;
-            font-size: 1.2rem;
-          }
-          span.type {
-            text-align: right;
-            flex: 0.3;
+        position: relative;
+        p {
+          font-size: 16px;
+          color: #c8c8c8;
+          height: 40px;
+          line-height: 40px;
+          margin-left: 20px;
+        }
+        p:nth-child(1) {
+          color: #000;
+        }
+      }
+      .pay {
+        height: 50px;
+        line-height: 50px;
+        @include display_flex('row');
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        background-color: $white;
+        box-shadow: 3px 0 3px 3px #efeeee;
+        .left {
+          flex: 5;
+          p {
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #c8c8c8;
+            span {
+              font-size: 18px;
+              color: #f35252;
+              font-weight: 900;
+            }
           }
         }
-        .list-center {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          padding: 5px 0;
-          min-height: 50px;
-          align-items: center;
-          .city {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex: 0.8;
-            position: relative;
-            >span {
-              font-size: 1.6rem;
-              flex: 1;
-            }
-            >span.start {
-              position: relative;
-              &::before {
-                position: absolute;
-                bottom: 5px;
-                right: 20%;
-                height: 5px;
-                width: 30%;
-                background-color: $blue;
-                content: "";
-              }
-              &::after {
-                position: absolute;
-                bottom: 5px;
-                right: 12%;
-                height: 0;
-                width: 0;
-                border: 6px solid $white;
-                border-color: transparent transparent $blue $blue;
-                content: "";
-              }
-            }
-            i {
-              position: absolute;
-              top: 0;
-              left: 27%;
-            }
-          }
-          span.money {
-            font-size: 1.6rem;
-            flex: 0.2;
-            text-align: right;
-            color: $red;
-          }
-        }
-        .list-footer {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          padding: 5px 0;
-          min-height: 30px;
-          align-items: center;
+        .right {
+          flex: 5;
+          @include display_flex('row');
           span {
-            font-size: 1.2rem;
+            color: #c8c8c8;
+            font-size: 12px;
+            flex: 5;
           }
-          span.name {
-            text-align: left;
-            color: darken($gray, 20%);
-            flex: 0.7;
-          }
-          span.order-pay {
-            flex: 0.3;
-          }
-          span.order-status {
-            text-align: right;
-          }
-          span.order-pay {
-            text-align: right;
-          }
-          span.order-no {
-            color: $red;
-          }
-          span.order-paying {
-            color: $blue;
-          }
-          span.order-payed {
-            color: $green;
+          button {
+            background-color: #329be8;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            outline: none;
+            border: none;
+            color: $white;
+            flex: 5;
+            border-radius: 5px;
           }
         }
       }
@@ -430,6 +703,15 @@ header {
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
     }
+  }
+}
+
+.code-popup-visible {
+  text-align: center;
+  background: none;
+  img {
+    width: 200px;
+    height: 200px;
   }
 }
 

@@ -126,9 +126,9 @@ const Vue_Order = new Vue({
 		orderVisible: false,
 
 		OrderDetail: {}, //订单详细信息
-		passenger: "", //乘客名
+		passenger: [], //乘客数据
 
-		selected: "1", //默认选择未支付
+		selected: 1, //默认选择未支付
 
 		countdown: null, //倒计时
 		countdownTime: "", //倒计时显示
@@ -137,6 +137,7 @@ const Vue_Order = new Vue({
 		passengerPopupVisible: false, //退款人选择
 		selectPassenger: [],
 		optionsPassenger: [],
+		codePopupVisible: false, //二维码
 
 		refreshLink: refreshLink, //刷新页面地址
 	},
@@ -275,7 +276,7 @@ const Vue_Order = new Vue({
 		},
 		openOrder(index) {
 			this.loading();
-			if (this.selected === "1") {
+			if (this.selected === 1) {
 				this.getOrderInfo(this.OrderList[index].Id)
 			} else {
 				this.getOrderInfo(this.OrderList1[index].Id)
@@ -291,22 +292,25 @@ const Vue_Order = new Vue({
 				}).then(result => result.json())
 				.then(result => {
 					this.OrderDetail = result.Data;
-					this.passenger = "";
+					this.passenger = [];
 					this.optionsPassenger = [];
 					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
 						let item = this.OrderDetail.Passengers[i];
 						if (item.Status === -3) {
-							this.passenger = this.passenger + item.Name + "(已退款),";
+							item.Name = item.Name + "(已退款)";
+							this.passenger.push(item);
 							// continue; //这个乘客已经退款就不显示
 						}
 						if (item.Status === -1) {
-							this.passenger = this.passenger + item.Name + "(审核中),";
+							item.Name = item.Name + "(审核中)";
+							this.passenger.push(item);
 						}
 						if (item.Status === -2) {
-							this.passenger = this.passenger + item.Name + "(待退款),";
+							item.Name = item.Name + "(待退款)";
+							this.passenger.push(item);
 						}
 						if (item.Status === 1) {
-							this.passenger = this.passenger + item.Name + ",";
+							this.passenger.push(item);
 						}
 
 						this.optionsPassenger.push({ label: item.Name, value: item.DId }); //提供申请退款选择的用户名
@@ -314,7 +318,7 @@ const Vue_Order = new Vue({
 					this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					Indicator.close();
 					this.orderVisible = true;
-					if (this.selected === "1") {
+					if (this.selected === 1) {
 						// 只有未支付的情况下才倒计时
 						this.CountDown();
 					}
@@ -479,6 +483,12 @@ const Vue_Order = new Vue({
 				.catch(error => {
 					// MessageBox('提示', '取消申请退款');
 				})
+		},
+		selectPage(index) {
+			this.selected = index;
+		},
+		openCode() {
+			this.codePopupVisible = true;
 		}
 	},
 	components: {
