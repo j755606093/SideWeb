@@ -150,6 +150,7 @@ const Vue_User = new Vue({
 			noMoreData: false
 		},
 		helpContentShow: 0, //默认不显示任何一个
+		showpassengeraction: 0, //修改增加乘客
 	},
 	created() {
 		this.getUserInfo()
