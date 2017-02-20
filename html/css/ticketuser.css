@@ -249,14 +249,16 @@ header {
     width: 100%;
     padding: 0 10px; }
 
-.line {
+.linestyle {
   width: 100%;
   height: 60px;
   position: relative;
   background-color: #fff;
   margin-top: 10px;
-  border-radius: 5px; }
-  .line > div {
+  border-radius: 5px;
+  background-color: #fff;
+  display: block; }
+  .linestyle > div {
     width: 60px;
     height: 60px;
     line-height: 60px;
@@ -271,10 +273,10 @@ header {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center; }
-    .line > div > img {
+    .linestyle > div > img {
       width: 20px;
       height: 20px; }
-  .line p {
+  .linestyle p {
     height: 60px;
     line-height: 60px;
     font-size: 15px;
@@ -439,6 +441,64 @@ header {
           color: #0074D9; }
         .order-lists .lists .list .list-footer span.order-payed {
           color: #2ecc71; }
+
+.write-info {
+  width: 100%;
+  margin-bottom: 10px; }
+  .write-info > .line {
+    margin: 0 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    height: 50px;
+    position: relative; }
+    .write-info > .line > span {
+      height: 50px;
+      line-height: 50px;
+      display: block;
+      margin-right: 130px;
+      padding-left: 20px;
+      color: #c8c8c8;
+      font-size: 16px;
+      width: 75%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+    .write-info > .line > span.info {
+      display: inline-block;
+      margin-right: 0;
+      padding-left: 0;
+      width: 60px;
+      height: 50px;
+      line-height: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 50px; }
+    .write-info > .line > input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%; }
+    .write-info > .line div.img {
+      height: 50px;
+      line-height: 50px;
+      width: 70px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      text-align: center; }
+      .write-info > .line div.img img {
+        width: 20px;
+        height: 20px; }
 
 .ticket-info {
   margin: 10px 0;
@@ -692,26 +752,26 @@ header {
   height: 100%;
   background-color: #fafafa;
   overflow-y: scroll; }
-  .action-page .action {
+  .action-page > .action {
     padding-bottom: 50px; }
-    .action-page .action .action-body {
+    .action-page > .action .action-body {
       margin-top: 20px; }
-      .action-page .action .action-body .add-action {
+      .action-page > .action .action-body .add-action {
         width: 100%; }
-        .action-page .action .action-body .add-action .line {
+        .action-page > .action .action-body .add-action > .line {
           margin: 0 10px;
           background-color: #fff;
           border-radius: 10px;
           height: 50px;
           position: relative; }
-          .action-page .action .action-body .add-action .line input {
+          .action-page > .action .action-body .add-action > .line input {
             height: 50px;
             display: block;
             margin-right: 70px;
             padding-left: 20px;
             font-size: 16px;
             width: 70%; }
-          .action-page .action .action-body .add-action .line button {
+          .action-page > .action .action-body .add-action > .line button {
             position: absolute;
             top: 0;
             right: 20px;
@@ -722,23 +782,23 @@ header {
             outline: none;
             border: none;
             background-color: #fff; }
-            .action-page .action .action-body .add-action .line button i {
+            .action-page > .action .action-body .add-action > .line button i {
               font-size: 16px;
               color: #329be8; }
-      .action-page .action .action-body .pay-ticket-info {
+      .action-page > .action .action-body .pay-ticket-info {
         margin: 0 10px;
         background-color: #fff;
         border-radius: 10px;
         position: relative; }
-        .action-page .action .action-body .pay-ticket-info p {
+        .action-page > .action .action-body .pay-ticket-info p {
           font-size: 16px;
           color: #c8c8c8;
           height: 40px;
           line-height: 40px;
           margin-left: 20px; }
-        .action-page .action .action-body .pay-ticket-info p:nth-child(1) {
+        .action-page > .action .action-body .pay-ticket-info p:nth-child(1) {
           color: #000; }
-      .action-page .action .action-body .pay {
+      .action-page > .action .action-body .pay {
         height: 50px;
         line-height: 50px;
         display: -ms-flexbox;
@@ -756,19 +816,19 @@ header {
         padding: 0 20px;
         background-color: #fff;
         box-shadow: 3px 0 3px 3px #efeeee; }
-        .action-page .action .action-body .pay .left {
+        .action-page > .action .action-body .pay .left {
           -ms-flex: 5;
               flex: 5; }
-          .action-page .action .action-body .pay .left p {
+          .action-page > .action .action-body .pay .left p {
             height: 50px;
             line-height: 50px;
             font-size: 16px;
             color: #c8c8c8; }
-            .action-page .action .action-body .pay .left p span {
+            .action-page > .action .action-body .pay .left p span {
               font-size: 18px;
               color: #f35252;
               font-weight: 900; }
-        .action-page .action .action-body .pay .right {
+        .action-page > .action .action-body .pay .right {
           -ms-flex: 5;
               flex: 5;
           display: -ms-flexbox;
@@ -779,12 +839,12 @@ header {
               justify-content: center;
           -ms-flex-align: center;
               align-items: center; }
-          .action-page .action .action-body .pay .right span {
+          .action-page > .action .action-body .pay .right span {
             color: #c8c8c8;
             font-size: 12px;
             -ms-flex: 5;
                 flex: 5; }
-          .action-page .action .action-body .pay .right button {
+          .action-page > .action .action-body .pay .right button {
             background-color: #329be8;
             height: 40px;
             line-height: 40px;
@@ -795,22 +855,22 @@ header {
             -ms-flex: 5;
                 flex: 5;
             border-radius: 5px; }
-    .action-page .action p.refresh {
+    .action-page > .action p.refresh {
       height: 40px;
       line-height: 40px;
       font-size: 16px;
       text-align: center;
       color: #c8c8c8; }
-      .action-page .action p.refresh i {
+      .action-page > .action p.refresh i {
         color: #c8c8c8; }
-    .action-page .action .action-select {
+    .action-page > .action .action-select {
       width: 100%;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       margin-top: 60px; }
-      .action-page .action .action-select .line {
+      .action-page > .action .action-select .line {
         margin: 0 10px;
         margin-bottom: 10px;
         display: -ms-flexbox;
@@ -821,9 +881,9 @@ header {
         line-height: 60px;
         border-radius: 10px;
         background-color: #fff; }
-        .action-page .action .action-select .line .left {
-          -ms-flex: 2;
-              flex: 2;
+        .action-page > .action .action-select .line .left {
+          -ms-flex: 0.3;
+              flex: 0.3;
           display: -ms-flexbox;
           display: flex;
           -ms-flex-direction: row;
@@ -831,42 +891,29 @@ header {
           -ms-flex-pack: start;
               justify-content: flex-start;
           -ms-flex-align: center;
-              align-items: center;
-          position: relative; }
-          .action-page .action .action-select .line .left > img {
-            width: 25px;
-            height: 25px;
-            margin-left: 20px;
-            z-index: 1; }
-          .action-page .action .action-select .line .left::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 25px;
-            height: 25px;
-            background-color: #fafafa;
-            border-radius: 50%;
-            z-index: 0; }
-        .action-page .action .action-select .line .center {
-          -ms-flex: 6;
-              flex: 6;
+              align-items: center; }
+          .action-page > .action .action-select .line .left p {
+            margin-left: 10px;
+            font-size: 16px; }
+        .action-page > .action .action-select .line .center {
+          -ms-flex: 0.5;
+              flex: 0.5;
           display: -ms-flexbox;
           display: flex;
-          -ms-flex-direction: column;
-              flex-direction: column;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: start;
-              align-items: flex-start; }
-          .action-page .action .action-select .line .center p {
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+          -ms-flex-align: center;
+              align-items: center; }
+          .action-page > .action .action-select .line .center p {
             line-height: 25px;
             color: #323232;
             font-size: 15px;
             margin-left: 10px; }
-        .action-page .action .action-select .line .right {
-          -ms-flex: 2;
-              flex: 2;
+        .action-page > .action .action-select .line .right {
+          -ms-flex: 0.2;
+              flex: 0.2;
           display: -ms-flexbox;
           display: flex;
           -ms-flex-direction: row;
@@ -875,12 +922,12 @@ header {
               justify-content: center;
           -ms-flex-align: center;
               align-items: center; }
-          .action-page .action .action-select .line .right > img {
+          .action-page > .action .action-select .line .right > img {
             width: 20px;
             height: 20px; }
-    .action-page .action .action-use {
+    .action-page > .action .action-use {
       margin-top: 50px; }
-      .action-page .action .action-use .popup-header {
+      .action-page > .action .action-use .popup-header {
         height: 50px;
         width: 100%;
         line-height: 50px;
@@ -893,7 +940,7 @@ header {
             flex-direction: row;
         -ms-flex-pack: center;
             justify-content: center; }
-        .action-page .action .action-use .popup-header span {
+        .action-page > .action .action-use .popup-header span {
           display: inline-block;
           height: 50px;
           line-height: 50px;
@@ -901,10 +948,10 @@ header {
           -ms-flex: 1;
               flex: 1;
           font-weight: 900; }
-        .action-page .action .action-use .popup-header span.active {
+        .action-page > .action .action-use .popup-header span.active {
           color: #329be8;
           position: relative; }
-          .action-page .action .action-use .popup-header span.active::after {
+          .action-page > .action .action-use .popup-header span.active::after {
             position: absolute;
             bottom: 0px;
             left: 45%;
@@ -912,9 +959,9 @@ header {
             height: 4px;
             background-color: #329be8;
             content: ""; }
-      .action-page .action .action-use .page {
+      .action-page > .action .action-use .page {
         width: 100%; }
-        .action-page .action .action-use .page .rebate {
+        .action-page > .action .action-use .page .rebate {
           height: 130px;
           display: -ms-flexbox;
           display: flex;
@@ -924,7 +971,7 @@ header {
               flex-direction: row;
           -ms-flex-pack: center;
               justify-content: center; }
-          .action-page .action .action-use .page .rebate .left {
+          .action-page > .action .action-use .page .rebate .left {
             -ms-flex: 3;
                 flex: 3;
             display: -ms-flexbox;
@@ -937,7 +984,7 @@ header {
                 align-items: center;
             background-color: #329be8;
             position: relative; }
-            .action-page .action .action-use .page .rebate .left .circle {
+            .action-page > .action .action-use .page .rebate .left .circle {
               position: absolute;
               top: -3px;
               left: -5px;
@@ -952,12 +999,12 @@ header {
                   align-items: center;
               -ms-flex-pack: distribute;
                   justify-content: space-around; }
-              .action-page .action .action-use .page .rebate .left .circle span {
+              .action-page > .action .action-use .page .rebate .left .circle span {
                 width: 10px;
                 height: 10px;
                 background-color: #fff;
                 border-radius: 50%; }
-            .action-page .action .action-use .page .rebate .left .title {
+            .action-page > .action .action-use .page .rebate .left .title {
               display: -ms-flexbox;
               display: flex;
               -ms-flex-direction: column;
@@ -967,18 +1014,18 @@ header {
               -ms-flex-align: center;
                   align-items: center;
               color: #fff; }
-              .action-page .action .action-use .page .rebate .left .title p {
+              .action-page > .action .action-use .page .rebate .left .title p {
                 -ms-flex: 6;
                     flex: 6;
                 font-size: 30px;
                 font-weight: 900;
                 color: #fff; }
-              .action-page .action .action-use .page .rebate .left .title span {
+              .action-page > .action .action-use .page .rebate .left .title span {
                 -ms-flex: 4;
                     flex: 4;
                 font-size: 15px;
                 font-weight: 900; }
-          .action-page .action .action-use .page .rebate .right {
+          .action-page > .action .action-use .page .rebate .right {
             -ms-flex: 7;
                 flex: 7;
             background-color: #fff;
@@ -994,7 +1041,7 @@ header {
                 justify-content: center;
             -ms-flex-align: center;
                 align-items: center; }
-            .action-page .action .action-use .page .rebate .right .info {
+            .action-page > .action .action-use .page .rebate .right .info {
               -ms-flex: 7;
                   flex: 7;
               height: 100px;
@@ -1007,16 +1054,16 @@ header {
                   justify-content: center;
               -ms-flex-align: center;
                   align-items: center; }
-              .action-page .action .action-use .page .rebate .right .info span {
+              .action-page > .action .action-use .page .rebate .right .info span {
                 font-size: 15px;
                 font-weight: 900;
                 height: 65px;
                 width: 100%;
                 padding: 10px 10px; }
-              .action-page .action .action-use .page .rebate .right .info span:last-child {
+              .action-page > .action .action-use .page .rebate .right .info span:last-child {
                 color: #c8c8c8;
                 font-weight: 400; }
-            .action-page .action .action-use .page .rebate .right .check {
+            .action-page > .action .action-use .page .rebate .right .check {
               -ms-flex: 3;
                   flex: 3;
               display: -ms-flexbox;
@@ -1029,11 +1076,11 @@ header {
                   align-items: center;
               height: 130px;
               position: relative; }
-              .action-page .action .action-use .page .rebate .right .check img {
+              .action-page > .action .action-use .page .rebate .right .check img {
                 width: 25px;
                 height: 25px;
                 z-index: -1; }
-              .action-page .action .action-use .page .rebate .right .check span {
+              .action-page > .action .action-use .page .rebate .right .check span {
                 position: absolute;
                 top: 52px;
                 left: 33%;
@@ -1042,11 +1089,11 @@ header {
                 background-color: #fafafa;
                 border-radius: 50%;
                 z-index: 0; }
-          .action-page .action .action-use .page .rebate.active .check img {
+          .action-page > .action .action-use .page .rebate.active .check img {
             z-index: 1; }
-          .action-page .action .action-use .page .rebate.disabled .left {
+          .action-page > .action .action-use .page .rebate.disabled .left {
             background-color: #c8c8c8; }
-          .action-page .action .action-use .page .rebate.disabled .right .info span {
+          .action-page > .action .action-use .page .rebate.disabled .right .info span {
             color: #c8c8c8; }
 
 .passenger-lists {
@@ -1220,7 +1267,7 @@ header {
 .help-lists {
   width: 100%;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: #fafafa;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -1240,30 +1287,35 @@ header {
     .help-lists .lists .help {
       width: 100%; }
       .help-lists .lists .help .help-list {
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        padding-left: 10px;
-        padding-right: 0;
+        margin: 0 10px;
         background-color: #fff;
-        border-top: 1px solid #dddddd; }
-        .help-lists .lists .help .help-list span {
-          font-size: 1.4rem; }
-        .help-lists .lists .help .help-list span.right {
-          float: right;
-          width: 40px;
-          height: 40px;
-          line-height: 40px;
-          text-align: center; }
-      .help-lists .lists .help .help-content {
-        width: 100%;
-        padding: 5px 10px;
-        background-color: #444444;
-        color: white; }
-        .help-lists .lists .help .help-content p {
-          text-indent: 1em;
-          font-size: 1.3rem;
-          line-height: 25px; }
+        margin-top: 10px;
+        border-radius: 10px; }
+        .help-lists .lists .help .help-list .header {
+          height: 60px;
+          line-height: 60px;
+          position: relative; }
+          .help-lists .lists .help .help-list .header span {
+            font-size: 18px;
+            color: #323232; }
+          .help-lists .lists .help .help-list .header span.right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center; }
+            .help-lists .lists .help .help-list .header span.right i {
+              color: #c8c8c8; }
+        .help-lists .lists .help .help-list .help-content {
+          width: 100%;
+          padding: 15px 10px; }
+          .help-lists .lists .help .help-list .help-content p {
+            text-indent: 1em;
+            font-size: 18px;
+            line-height: 30px;
+            color: #323232; }
 
 .refund-lists {
   width: 100%;

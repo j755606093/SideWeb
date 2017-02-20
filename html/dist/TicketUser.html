@@ -35,23 +35,23 @@
       </div>
       <!-- 其中的列表 -->
       <div class="lists">
-        <div @click="showOrderList()" class="line">
+        <div @click="showOrderList()" class="linestyle">
           <p>全部订单</p>
           <div><img src="../picture/orders_gray.png"></div>
         </div>
-        <div @click="showDiscountList" class="line">
+        <div @click="showDiscountList" class="linestyle">
           <p>优惠券</p>
           <div><img src="../picture/coupon_gray.png"></div>
         </div>
-        <div @click="showPassengerList" class="line">
+        <div @click="showPassengerList" class="linestyle">
           <p>常用联系人</p>
           <div><img src="../picture/contact_person_gray.png"></div>
         </div>
-        <div class="line">
+        <a href="tel:13871895108" class="linestyle">
           <p>联系客服</p>
           <div><img src="../picture/phone_gray.png"></div>
-        </div>
-        <div @click="helpCenter" class="line">
+        </a>
+        <div @click="helpCenter" class="linestyle">
           <p>帮助中心</p>
           <div><img src="../picture/question_gray.png"></div>
         </div>
@@ -137,7 +137,7 @@
                     <span>{{item.StartDate}} 至 {{item.EndDate}}</span>
                   </div>
                   <div @click="selectRebeat(index)" class="check">
-                    <a href="#">去使用</a>
+                    <a :href="'https://ticket.samecity.com.cn/wx/ticket.html?rebateid='+item.Id">立即使用</a>
                   </div>
                 </div>
               </div>
@@ -204,9 +204,10 @@
         <div class="action">
           <div class="action-select">
             <div class="line" v-for="(item,index) in Passenger">
-              <div class="left"><img v-if="item.active" src="../picture/select.png"></div>
-              <div class="center">
+              <div class="left">
                 <p>{{item.Name}}</p>
+              </div>
+              <div class="center">
                 <p>{{item.Mobile}}</p>
               </div>
               <div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
@@ -216,7 +217,7 @@
           <div class="action-body">
             <!-- 点击新增乘客 -->
             <div class="write-info">
-              <div class="line">
+              <div @click="showAddPassenger" class="line">
                 <span>添加新乘车人</span>
                 <div class="img"><img src="../picture/add_passenger.png"></div>
               </div>
@@ -228,7 +229,7 @@
               </div>
               <div class="line">
                 <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="选填(可用于联系)">
-                <button @click="addPassenger"><i class="fa fa-plus-circle"></i> 添加</button>
+                <button @click="addPassenger(0)"><i class="fa fa-plus-circle"></i> 添加</button>
               </div>
             </div>
             <!-- 修改乘客 -->
@@ -244,7 +245,6 @@
           </div>
         </div>
       </slot>
-    </mt-popup>
     </mt-popup>
     <!-- 用户信息 -->
     <mt-popup v-model="userVisible" position="right" id="user-lists" class="user-lists">
@@ -286,72 +286,100 @@
         <!-- 列表 -->
         <div class="help">
           <div class="help-list" @click="showHelpContent(1)">
-            <span class="left">购票须知</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===1" class="help-content">
-            <p>1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。</p>
-            <p>2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童).</p>
-            <p>3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。</p>
-            <p>4.提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票.</p>
-            <p>5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理.</p>
+            <div class="header">
+              <span class="left">购票须知</span>
+              <span v-if="helpContentShow===1" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===1" class="help-content">
+              <p>1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。</p>
+              <p>2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童).</p>
+              <p>3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。</p>
+              <p>4.提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票.</p>
+              <p>5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理.</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(2)">
-            <span class="left">如何退票,需要什么条件?</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===2" class="help-content">
-            <p>1.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准</p>
-            <p>2.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
+            <div class="header">
+              <span class="left">
+            如何退票,需要什么条件?</span>
+              <span v-if="helpContentShow===2" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===2" class="help-content">
+              <p>1.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准</p>
+              <p>2.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(3)">
-            <span class="left">退款订单什么时候能退款到账？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===3" class="help-content">
-            <p>1.订单支付后,在发车前申请的退款将会人工审核并微信通知结果,后台确认退款后微信将会在1-3个工作日原路退款至支付账户.</p>
+            <div class="header">
+              <span class="left">退款订单什么时候能退款到账？</span>
+              <span v-if="helpContentShow===3" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===3" class="help-content">
+              <p>1.订单支付后,在发车前申请的退款将会人工审核并微信通知结果,后台确认退款后微信将会在1-3个工作日原路退款至支付账户.</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(4)">
-            <span class="left">订票成功后为什么没显示座位号信息？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===4" class="help-content">
-            <p>1.由于订票时无法在线选座，因此取票信息中不包含座位号，您去车站取票时取票系统会自动生成座位号。</p>
+            <div class="header">
+              <span class="left">订票成功后为什么没显示座位号信息？</span>
+              <span v-if="helpContentShow===4" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===4" class="help-content">
+              <p>1.由于订票时无法在线选座，因此取票信息中不包含座位号，您去车站取票时取票系统会自动生成座位号。</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(5)">
-            <span class="left">可以让亲朋好友代购票吗？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===5" class="help-content">
-            <p>1.目前购买汽车票无需实名制，只需提供购买取票手机号,乘客可以由亲友代为购票呢。</p>
+            <div class="header">
+              <span class="left">可以让亲朋好友代购票吗？</span>
+              <span v-if="helpContentShow===5" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===5" class="help-content">
+              <p>1.目前购买汽车票无需实名制，只需提供购买取票手机号,乘客可以由亲友代为购票呢。</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(6)">
-            <span class="left">订单支付完成后页面还是显示正在付款？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===6" class="help-content">
-            <p>1.这种情况一般是由于数据返回有延误，您可以登录用户中心后台查看订单状态，如果发现订单状态仍然显示为待付款，您可以联系客服人员解决问题。</p>
+            <div class="header">
+              <span class="left">订单支付完成后页面还是显示正在付款？</span>
+              <span v-if="helpContentShow===6" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===6" class="help-content">
+              <p>1.这种情况一般是由于数据返回有延误，您可以登录用户中心后台查看订单状态，如果发现订单状态仍然显示为待付款，您可以联系客服人员解决问题。</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(7)">
-            <span class="left">订票时乘客姓名写错了影响取票吗？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===7" class="help-content">
-            <p>1.姓名错误不影响取票,手机号如果错误可以在个人中心修改.</p>
+            <div class="header">
+              <span class="left">订票时乘客姓名写错了影响取票吗？</span>
+              <span v-if="helpContentShow===7" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===7" class="help-content">
+              <p>1.姓名错误不影响取票,手机号如果错误可以在个人中心修改.</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(8)">
-            <span class="left">怎么推掉订单中的其中一张票?</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===8" class="help-content">
-            <p>1.如果票未取,可以在订单页点击待使用,找到你需要退票的订单,再点击最下面的申请退款,选择你所需要退票的乘客,选择好后点击确定,然后输入申请理由,等待后台客服审核.</p>
+            <div class="header">
+              <span class="left">怎么推掉订单中的其中一张票?</span>
+              <span v-if="helpContentShow===8" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===8" class="help-content">
+              <p>1.如果票未取,可以在订单页点击待使用,找到你需要退票的订单,再点击最下面的申请退款,选择你所需要退票的乘客,选择好后点击确定,然后输入申请理由,等待后台客服审核.</p>
+            </div>
           </div>
           <div class="help-list" @click="showHelpContent(9)">
-            <span class="left">错过了发车时间，可以退改签吗？</span>
-            <span class="right"><i class="fa fa-angle-down"></i></span>
-          </div>
-          <div v-show="helpContentShow===9" class="help-content">
-            <p>1.错过发车时间后是无法退改签的,请注意自己的发车时间.</p>
+            <div class="header">
+              <span class="left">错过了发车时间，可以退改签吗？</span>
+              <span v-if="helpContentShow===9" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===9" class="help-content">
+              <p>1.错过发车时间后是无法退改签的,请注意自己的发车时间.</p>
+            </div>
           </div>
         </div>
       </div>

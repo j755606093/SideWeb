@@ -104,13 +104,15 @@ header {
   }
 }
 
-.line {
+.linestyle {
   width: 100%;
   height: 60px;
   position: relative;
   background-color: $white;
   margin-top: 10px;
   border-radius: 5px;
+  background-color: $white;
+  display: block;
   >div {
     width: 60px;
     height: 60px;
@@ -293,6 +295,65 @@ header {
         span.order-payed {
           color: $green;
         }
+      }
+    }
+  }
+}
+
+.write-info {
+  width: 100%;
+  margin-bottom: 10px;
+  >.line {
+    margin: 0 10px;
+    background-color: $white;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+    >span {
+      height: 50px;
+      line-height: 50px;
+      display: block;
+      margin-right: 130px;
+      padding-left: 20px;
+      color: #c8c8c8;
+      font-size: 16px;
+      width: 75%;
+      @include text_nowrap;
+    }
+    >span.info {
+      display: inline-block;
+      margin-right: 0;
+      padding-left: 0;
+      width: 60px;
+      height: 50px;
+      line-height: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 50px;
+    }
+    >input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%;
+    }
+    div.img {
+      height: 50px;
+      line-height: 50px;
+      width: 70px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      img {
+        width: 20px;
+        height: 20px;
       }
     }
   }
@@ -544,13 +605,13 @@ header {
   height: 100%;
   background-color: #fafafa;
   overflow-y: scroll;
-  .action {
+  >.action {
     padding-bottom: 50px;
     .action-body {
       margin-top: 20px;
       .add-action {
         width: 100%;
-        .line {
+        >.line {
           margin: 0 10px;
           background-color: $white;
           border-radius: 10px;
@@ -670,36 +731,22 @@ header {
         border-radius: 10px;
         background-color: $white;
         .left {
-          flex: 2;
+          flex: 0.3;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
-          position: relative;
-          >img {
-            width: 25px;
-            height: 25px;
-            margin-left: 20px;
-            z-index: 1;
-          }
-          &::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 25px;
-            height: 25px;
-            background-color: #fafafa;
-            border-radius: 50%;
-            z-index: 0;
+          p {
+            margin-left: 10px;
+            font-size: 16px;
           }
         }
         .center {
-          flex: 6;
+          flex: 0.5;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
           p {
             line-height: 25px;
             color: rgb(50, 50, 50);
@@ -708,7 +755,7 @@ header {
           }
         }
         .right {
-          flex: 2;
+          flex: 0.2;
           display: flex;
           flex-direction: row;
           justify-content: center;
@@ -1036,7 +1083,7 @@ header {
 .help-lists {
   width: 100%;
   height: 100%;
-  background-color: lighten($gray, 30%);
+  background-color: #fafafa;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -1052,33 +1099,40 @@ header {
     .help {
       width: 100%;
       .help-list {
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        padding-left: 10px;
-        padding-right: 0;
+        margin: 0 10px;
         background-color: $white;
-        border-top: 1px solid lighten($gray, 20%);
-        span {
-          font-size: 1.4rem;
+        margin-top: 10px;
+        border-radius: 10px;
+        .header {
+          height: 60px;
+          line-height: 60px;
+          position: relative;
+          span {
+            font-size: 18px;
+            color: rgb(50, 50, 50);
+          }
+          span.right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            i {
+              color: #c8c8c8;
+            }
+          }
         }
-        span.right {
-          float: right;
-          width: 40px;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
-        }
-      }
-      .help-content {
-        width: 100%;
-        padding: 5px 10px;
-        background-color: darken($gray, 40%);
-        color: white;
-        p {
-          text-indent: 1em;
-          font-size: 1.3rem;
-          line-height: 25px;
+        .help-content {
+          width: 100%;
+          padding: 15px 10px;
+          p {
+            text-indent: 1em;
+            font-size: 18px;
+            line-height: 30px;
+            color: rgb(50, 50, 50);
+          }
         }
       }
     }

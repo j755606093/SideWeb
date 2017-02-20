@@ -151,6 +151,7 @@ const Vue_User = new Vue({
 		},
 		helpContentShow: 0, //默认不显示任何一个
 		showpassengeraction: 0, //修改增加乘客
+		ChaPassengerIndex: 0,
 	},
 	created() {
 		this.getUserInfo()
@@ -305,7 +306,7 @@ const Vue_User = new Vue({
 			this.controlHeader(true, "乘客列表");
 		},
 		// 新增乘客按钮
-		addPassenger() {
+		addPassenger(index = 0) {
 			if (!Utils.isChinaName(this.passengerName) || this.passengerName.length < 2) {
 				this.toast("请输入正确的姓名!");
 				return;
@@ -315,29 +316,59 @@ const Vue_User = new Vue({
 				return;
 			}
 
-			fetch(config.serverUrl + "/api/Passenger/Add", {
-					method: 'POST',
-					headers: config.headers,
-					body: JSON.stringify({
-						Name: this.passengerName,
-						Mobile: this.passengerPhone,
+			if (index === 0) {
+				fetch(config.serverUrl + "/api/Passenger/Add", {
+						method: 'POST',
+						headers: config.headers,
+						body: JSON.stringify({
+							Name: this.passengerName,
+							Mobile: this.passengerPhone,
+						})
 					})
-				})
-				.then(checkStatus)
-				.then(result => result.json())
-				.then(result => {
-					if (result.Data) {
-						let json = {};
-						json.Name = this.passengerName;
-						json.Mobile = this.passengerPhone;
-						json.Id = result.Data;
-						this.passengerPhone = "";
-						this.passengerName = "";
-						this.Passenger.push(json);
-					} else {
-						this.toast(result.Message);
-					}
-				})
+					.then(checkStatus)
+					.then(result => result.json())
+					.then(result => {
+						if (result.Data) {
+							let json = {};
+							json.Name = this.passengerName;
+							json.Mobile = this.passengerPhone;
+							json.Id = result.Data;
+							this.passengerPhone = "";
+							this.passengerName = "";
+							this.Passenger.push(json);
+							this.toast("增加成功");
+						} else {
+							this.toast(result.Message);
+						}
+					})
+			} else {
+				fetch(config.serverUrl + "/api/Passenger/Modify", {
+						method: 'POST',
+						headers: config.headers,
+						body: JSON.stringify({
+							Name: this.passengerName,
+							Mobile: this.passengerPhone,
+							Id: this.Passenger[this.ChaPassengerIndex].Id
+						})
+					})
+					.then(checkStatus)
+					.then(result => result.json())
+					.then(result => {
+						if (result.Data) {
+							let json = {};
+							json.Name = this.passengerName;
+							json.Mobile = this.passengerPhone;
+							json.Id = this.Passenger[this.ChaPassengerIndex].Id;
+							this.Passenger[this.ChaPassengerIndex] = json;
+							this.passengerPhone = "";
+							this.passengerName = "";
+							this.toast("修改成功");
+						} else {
+							this.toast(result.Message);
+						}
+					})
+			}
+
 		},
 		trashPassenger(index) {
 			MessageBox.confirm('确定执行此操作?').then(action => {
@@ -469,6 +500,17 @@ const Vue_User = new Vue({
 
 				this.RefundOrder.isUse = false;
 			})
+		},
+		showAddPassenger(index) {
+			this.showpassengeraction = 1;
+			this.ChaPassengerIndex = index; //记录修改的位置
+		},
+		showChaPassenger(index) {
+			this.showpassengeraction = 2;
+			this.ChaPassengerIndex = index; //记录修改的位置
+
+			this.passengerName = this.Passenger[index].Name;
+			this.passengerPhone = this.Passenger[index].Mobile;
 		},
 		helpCenter() {
 			this.controlHeader(true, "帮助中心");
