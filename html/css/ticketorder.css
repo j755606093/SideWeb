@@ -416,7 +416,6 @@ header {
   z-index: 1000;
   width: 100%;
   text-align: center;
-  background-color: #2196F3;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
@@ -576,24 +575,42 @@ header {
   overflow-y: scroll; }
   .action-page .action {
     padding-bottom: 50px; }
-    .action-page .action .action-body {
-      margin-top: 60px; }
-      .action-page .action .action-body .pay-ticket-info {
-        margin: 0 10px;
-        background-color: #fff;
-        border-radius: 10px;
-        position: relative; }
-        .action-page .action .action-body .pay-ticket-info p {
-          font-size: 16px;
+  .action-page .action-body {
+    margin-top: 60px; }
+    .action-page .action-body .contact {
+      outline: none;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      margin: 0 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      height: 100px;
+      color: #323232; }
+      .action-page .action-body .contact .left {
+        -ms-flex: 8;
+            flex: 8; }
+        .action-page .action-body .contact .left p {
+          color: #323232;
+          font-size: 15px;
+          margin-left: 10px;
+          height: 30px;
+          line-height: 30px; }
+        .action-page .action-body .contact .left span {
+          display: inline-block;
+          font-size: 12px;
           color: #c8c8c8;
-          height: 40px;
-          line-height: 40px;
-          margin-left: 20px; }
-        .action-page .action .action-body .pay-ticket-info p:nth-child(1) {
-          color: #000; }
-      .action-page .action .action-body .pay {
-        height: 50px;
-        line-height: 50px;
+          margin-left: 10px;
+          height: 20px;
+          line-height: 20px; }
+      .action-page .action-body .contact .right {
+        -ms-flex: 2;
+            flex: 2;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
@@ -601,53 +618,98 @@ header {
         -ms-flex-pack: center;
             justify-content: center;
         -ms-flex-align: center;
-            align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0 20px;
-        background-color: #fff;
-        box-shadow: 3px 0 3px 3px #efeeee; }
-        .action-page .action .action-body .pay .left {
+            align-items: center; }
+        .action-page .action-body .contact .right > img {
+          width: 20px;
+          height: 20px; }
+    .action-page .action-body .refund {
+      height: 80px;
+      text-align: center;
+      background-color: #fff;
+      margin: 10px 10px;
+      border-radius: 5px; }
+      .action-page .action-body .refund p {
+        font-size: 15px;
+        font-weight: 900;
+        color: #323232;
+        height: 40px;
+        line-height: 40px; }
+      .action-page .action-body .refund span {
+        display: inline-block;
+        font-size: 12px;
+        color: #c8c8c8;
+        height: 40px;
+        line-height: 40px; }
+    .action-page .action-body .pay-ticket-info {
+      margin: 0 10px;
+      background-color: #fff;
+      border-radius: 10px;
+      position: relative; }
+      .action-page .action-body .pay-ticket-info p {
+        font-size: 16px;
+        color: #c8c8c8;
+        height: 40px;
+        line-height: 40px;
+        margin-left: 20px; }
+      .action-page .action-body .pay-ticket-info p:nth-child(1) {
+        color: #000; }
+    .action-page .action-body .pay {
+      height: 50px;
+      line-height: 50px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0 20px;
+      background-color: #fff;
+      box-shadow: 3px 0 3px 3px #efeeee; }
+      .action-page .action-body .pay .left {
+        -ms-flex: 5;
+            flex: 5; }
+        .action-page .action-body .pay .left p {
+          height: 50px;
+          line-height: 50px;
+          font-size: 16px;
+          color: #c8c8c8; }
+          .action-page .action-body .pay .left p span {
+            font-size: 18px;
+            color: #f35252;
+            font-weight: 900; }
+      .action-page .action-body .pay .right {
+        -ms-flex: 5;
+            flex: 5;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center; }
+        .action-page .action-body .pay .right span {
+          color: #c8c8c8;
+          font-size: 12px;
           -ms-flex: 5;
               flex: 5; }
-          .action-page .action .action-body .pay .left p {
-            height: 50px;
-            line-height: 50px;
-            font-size: 16px;
-            color: #c8c8c8; }
-            .action-page .action .action-body .pay .left p span {
-              font-size: 18px;
-              color: #f35252;
-              font-weight: 900; }
-        .action-page .action .action-body .pay .right {
+        .action-page .action-body .pay .right button {
+          background-color: #329be8;
+          height: 40px;
+          line-height: 40px;
+          font-size: 16px;
+          outline: none;
+          border: none;
+          color: #fff;
           -ms-flex: 5;
               flex: 5;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center; }
-          .action-page .action .action-body .pay .right span {
-            color: #c8c8c8;
-            font-size: 12px;
-            -ms-flex: 5;
-                flex: 5; }
-          .action-page .action .action-body .pay .right button {
-            background-color: #329be8;
-            height: 40px;
-            line-height: 40px;
-            font-size: 16px;
-            outline: none;
-            border: none;
-            color: #fff;
-            -ms-flex: 5;
-                flex: 5;
-            border-radius: 5px; }
+          border-radius: 5px; }
 
 .pay-order {
   width: 100%;

@@ -226,12 +226,33 @@
       </slot>
     </mt-popup>
     <!-- 退款人选择 -->
-    <mt-popup v-model="passengerPopupVisible" class="passenger-popup-visible">
+    <mt-popup v-model="refundPassenger" position="right" class="action-page">
       <slot>
-        <div class="passenger">
-          <mt-checklist title="退款人选择" v-model="selectPassenger" :options="optionsPassenger">
-          </mt-checklist>
-          <button @click="checkSelectPassenger" class="btn">确定</button>
+        <div class="action">
+          <div class="page-header" style="background-color: #2196F3;">
+            <div @click="goback"><img src="../picture/back_icon.png"></div>
+            <span style="font-size:16px;" class="center">退票服务</span>
+          </div>
+        </div>
+        <div class="action-body" style="margin-top: 10px;">
+          <a class="contact" href="tel:111111111111">
+            <div class="left">
+              <p>信息失误,联系客服修改乘车信息</p>
+              <span>其实上车点或者乘车人可以联系客服修改哦~</span>
+              <span>在这里可以修改乘车人,但是不能删减乘车人</span>
+            </div>
+            <div class="right"><img src="../picture/phone.png"></div>
+          </a>
+          <!-- 选择退款人 -->
+          <div class="refund">
+            <p>坚决退票,支付10%的服务费用</p>
+            <span>退票我们需要收取10%工本服务费哦~请三思</span>
+          </div>
+          <div class="passenger">
+            <mt-checklist title="退款人选择" v-model="selectPassenger" :options="optionsPassenger">
+            </mt-checklist>
+            <button @click="checkSelectPassenger" class="btn">确定</button>
+          </div>
         </div>
       </slot>
     </mt-popup>

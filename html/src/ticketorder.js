@@ -134,7 +134,7 @@ const Vue_Order = new Vue({
 		countdownTime: "", //倒计时显示
 		storeCountTime: "", //剩余支付时间
 
-		passengerPopupVisible: false, //退款人选择
+		refundPassenger: false, //退款人选择
 		selectPassenger: [],
 		optionsPassenger: [],
 		codePopupVisible: false, //二维码
@@ -379,6 +379,10 @@ const Vue_Order = new Vue({
 			}, 1000)
 		},
 		goback() {
+			if (this.refundPassenger) {
+				this.refundPassenger = false;
+				return;
+			}
 			clearInterval(this.countdown);
 			this.countdown = null;
 			this.orderVisible = false;
@@ -415,7 +419,7 @@ const Vue_Order = new Vue({
 			});
 		},
 		checkSelectPassenger() {
-			this.passengerPopupVisible = false;
+			this.refundPassenger = false;
 
 			if (this.selectPassenger.length === 0) {
 				MessageBox('提示', "你未选择退款乘客");
@@ -436,7 +440,7 @@ const Vue_Order = new Vue({
 				// 说明都不可以退款
 				MessageBox('提示', '订单中所有乘客都不满足退款条件!');
 			} else {
-				this.passengerPopupVisible = true;
+				this.refundPassenger = true;
 			}
 		},
 		refund() {

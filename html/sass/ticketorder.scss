@@ -265,7 +265,6 @@ header {
   z-index: 1000;
   width: 100%;
   text-align: center;
-  background-color: #2196F3;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -420,68 +419,124 @@ header {
   overflow-y: scroll;
   .action {
     padding-bottom: 50px;
-    .action-body {
-      margin-top: 60px;
-      .pay-ticket-info {
-        margin: 0 10px;
-        background-color: $white;
-        border-radius: 10px;
-        position: relative;
+  }
+  .action-body {
+    margin-top: 60px;
+    .contact {
+      outline: none;
+      @include display_flex('row');
+      margin: 0 10px;
+      background-color: $white;
+      border-radius: 5px;
+      height: 100px;
+      color: rgb(50, 50, 50);
+      .left {
+        flex: 8;
         p {
-          font-size: 16px;
-          color: #c8c8c8;
-          height: 40px;
-          line-height: 40px;
-          margin-left: 20px;
+          color: rgb(50, 50, 50);
+          font-size: 15px;
+          margin-left: 10px;
+          height: 30px;
+          line-height: 30px;
         }
-        p:nth-child(1) {
-          color: #000;
+        span {
+          display: inline-block;
+          font-size: 12px;
+          color: rgb(200, 200, 200);
+          margin-left: 10px;
+          height: 20px;
+          line-height: 20px;
         }
       }
-      .pay {
-        height: 50px;
-        line-height: 50px;
+      .right {
+        flex: 2;
         @include display_flex('row');
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0 20px;
-        background-color: $white;
-        box-shadow: 3px 0 3px 3px #efeeee;
-        .left {
-          flex: 5;
-          p {
-            height: 50px;
-            line-height: 50px;
-            font-size: 16px;
-            color: #c8c8c8;
-            span {
-              font-size: 18px;
-              color: #f35252;
-              font-weight: 900;
-            }
+        >img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    .refund {
+      height: 80px;
+      text-align: center;
+      background-color: $white;
+      margin: 10px 10px;
+      border-radius: 5px;
+      p {
+        font-size: 15px;
+        font-weight: 900;
+        color: rgb(50, 50, 50);
+        height: 40px;
+        line-height: 40px;
+      }
+      span {
+        display: inline-block;
+        font-size: 12px;
+        color: rgb(200, 200, 200);
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+    .pay-ticket-info {
+      margin: 0 10px;
+      background-color: $white;
+      border-radius: 10px;
+      position: relative;
+      p {
+        font-size: 16px;
+        color: #c8c8c8;
+        height: 40px;
+        line-height: 40px;
+        margin-left: 20px;
+      }
+      p:nth-child(1) {
+        color: #000;
+      }
+    }
+    .pay {
+      height: 50px;
+      line-height: 50px;
+      @include display_flex('row');
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0 20px;
+      background-color: $white;
+      box-shadow: 3px 0 3px 3px #efeeee;
+      .left {
+        flex: 5;
+        p {
+          height: 50px;
+          line-height: 50px;
+          font-size: 16px;
+          color: #c8c8c8;
+          span {
+            font-size: 18px;
+            color: #f35252;
+            font-weight: 900;
           }
         }
-        .right {
+      }
+      .right {
+        flex: 5;
+        @include display_flex('row');
+        span {
+          color: #c8c8c8;
+          font-size: 12px;
           flex: 5;
-          @include display_flex('row');
-          span {
-            color: #c8c8c8;
-            font-size: 12px;
-            flex: 5;
-          }
-          button {
-            background-color: #329be8;
-            height: 40px;
-            line-height: 40px;
-            font-size: 16px;
-            outline: none;
-            border: none;
-            color: $white;
-            flex: 5;
-            border-radius: 5px;
-          }
+        }
+        button {
+          background-color: #329be8;
+          height: 40px;
+          line-height: 40px;
+          font-size: 16px;
+          outline: none;
+          border: none;
+          color: $white;
+          flex: 5;
+          border-radius: 5px;
         }
       }
     }
