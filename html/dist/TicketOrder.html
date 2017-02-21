@@ -4,6 +4,7 @@
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta name="format-detection" content="telephone=no, email=no"/>
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <title>身边票务--订单</title>
@@ -116,25 +117,29 @@
       </div>
       <div id="last1"></div>
     </div>
+
+    <div v-show="orderVisible">
+      <!-- 未支付 -->
+      <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
+        <div class="page-header">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
+        </div>
+      </template>
+      <!-- 已支付 -->
+      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
+        <div class="page-header active">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span @click="openCode" style="font-size:16px;margin-left:5px;" class="center">扫描二维码可及时获取车票信息推送</span>
+          <p @click="openCode" style="height:50px;line-height: 50px;width:30px;"><img style="width:20px;height:20px;margin-top: 15px;" src="../picture/code.png"></span>
+          </p>
+      </template>
+    </div>
+
     <!-- 查看订单信息 -->
     <mt-popup v-model="orderVisible" position="right" class="action-page">
       <slot>
         <div class="action">
-          <!-- 未支付 -->
-          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
-            <div class="page-header">
-              <div @click="goback"><img src="../picture/back_icon.png"></div>
-              <span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
-            </div>
-          </template>
-          <!-- 已支付 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
-            <div class="page-header active">
-              <div @click="goback"><img src="../picture/back_icon.png"></div>
-              <span @click="openCode" style="font-size:16px;margin-left:5px;" class="center">扫描二维码可及时获取车票信息推送</span>
-              <p @click="openCode" style="height:50px;line-height: 50px;width:30px;"><img style="width:20px;height:20px;margin-top: 15px;" src="../picture/code.png"></span>
-              </p>
-          </template>
           <div class="action-body">
             <!-- 票信息 -->
             <div class="ticket-info">
@@ -203,38 +208,38 @@
               <p>订单编号:{{OrderDetail.Id}}</p>
               <p>下单日期:{{OrderDetail.CTime}}</p>
             </div>
-            <!-- 立即支付 -->
-            <div class="pay">
-              <div class="left">
-                <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
-              </div>
-              <div class="right">
-                <!-- 未支付 -->
-                <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
-                  <span @click="cancelOrder">取消订单</span>
-                  <button @click="payMoney">立即支付</button>
-                </template>
-                <!-- 已支付 -->
-                <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
-                  <span @click="showSelectPassenger">申请退款</span>
-                  <button>已支付</button>
-                </template>
-              </div>
-            </div>
           </div>
-          </div>
+        </div>
       </slot>
     </mt-popup>
+
+    <!-- 立即支付 -->
+    <div v-show="orderVisible" class="pay">
+      <div class="left">
+        <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
+      </div>
+      <div class="right">
+        <!-- 未支付 -->
+        <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
+          <span @click="cancelOrder">取消订单</span>
+          <button @click="payMoney">立即支付</button>
+        </template>
+        <!-- 已支付 -->
+        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
+          <span @click="showSelectPassenger">申请退款</span>
+          <button>已支付</button>
+        </template>
+      </div>
+    </div>
+
+    <div v-show="refundPassenger" class="page-header" style="background-color: #2196F3;z-index: 5000">
+      <div @click="goback"><img src="../picture/back_icon.png"></div>
+      <span style="font-size:16px;" class="center">退票服务</span>
+    </div>
     <!-- 退款人选择 -->
     <mt-popup v-model="refundPassenger" position="right" class="action-page">
       <slot>
-        <div class="action">
-          <div class="page-header" style="background-color: #2196F3;">
-            <div @click="goback"><img src="../picture/back_icon.png"></div>
-            <span style="font-size:16px;" class="center">退票服务</span>
-          </div>
-        </div>
-        <div class="action-body" style="margin-top: 10px;">
+        <div class="action-body">
           <a class="contact" href="tel:111111111111">
             <div class="left">
               <p>信息失误,联系客服修改乘车信息</p>
@@ -247,21 +252,38 @@
           <div class="refund">
             <p>坚决退票,支付10%的服务费用</p>
             <span>退票我们需要收取10%工本服务费哦~请三思</span>
-          </div>
-          <div class="passenger">
-            <mt-checklist title="退款人选择" v-model="selectPassenger" :options="optionsPassenger">
-            </mt-checklist>
-            <button @click="checkSelectPassenger" class="btn">确定</button>
+            <div class="passenger">
+              <div @click="selectRefund(index)" v-for="(item,index) in optionsPassenger" :class="{'passenger-line':true, active:item.active}">
+                <div class="img"><img src="../picture/select_pick.png"></div>
+                <div class="name"><span>{{item.Name}}</span></div>
+                <div class="info"><span>原价{{item.Price}},可退{{item.Price-item.Price*0.1}}</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </slot>
     </mt-popup>
+    <div v-show="refundPassenger" style="z-index: 5000" class="refund-footer">
+      <div @click="selectRefundAll" :class="{all:true,active:optionsPassenger.length===selectPassenger.length}">
+        <img src="../picture/select_pick.png">
+        <span>全选</span>
+      </div>
+      <div class="money">
+        <p>共退款<span>¥{{refunndMoney}}</span></p>
+      </div>
+      <div class="btn">
+        <button @click="checkSelectPassenger">果断退票</button>
+      </div>
+    </div>
+
     <!-- 扫描二维码 -->
     <mt-popup v-model="codePopupVisible" class="code-popup-visible">
       <slot>
-        <img src="./picture/qrcode_for_gh_c94040df86a5_430.jpg">
+        <img v-show="codePopupVisible" src="./picture/qrcode_for_gh_c94040df86a5_430.jpg">
+        <div @click="cancelModal" v-show="codePopupVisible" style="position: fixed;top:0;left:0;width:100%;height:100%;background-color: rgba(0,0,0,.6);z-index: -1"></div>
       </slot>
     </mt-popup>
+    
     <footer>
       <a :href="'./ticket.html?datetime='+refreshLink[0]" class="footer">
         <!-- <i class="fa fa-home"></i> -->

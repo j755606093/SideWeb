@@ -5,12 +5,14 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+  <meta name="format-detection" content="telephone=no, email=no"/>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <title>身边票务--我的</title>
 </head>
 
 <body>
   <div id="app" v-show="ready" style="display: none;">
+
     <!-- 头部 -->
     <header class="animated fadeIn" v-show="showHeader">
       <div @click="GoBack" class="left">
@@ -57,6 +59,7 @@
         </div>
       </div>
     </div>
+
     <!-- 全部订单信息 -->
     <mt-popup v-model="orderVisible" position="right" id="order-lists" class="order-lists">
       <div class="lists">
@@ -106,6 +109,7 @@
         <div id="last"></div>
       </div>
     </mt-popup>
+
     <!-- 优惠券 -->
     <mt-popup v-model="discountVisible" position="right" class="action-page">
       <slot>
@@ -146,6 +150,7 @@
         </div>
       </slot>
     </mt-popup>
+
     <!-- 申请退款 -->
     <mt-popup v-model="refundVisible" position="right" id="refund-lists" class="refund-lists">
       <div class="lists">
@@ -198,6 +203,7 @@
         <div id="last_refund"></div>
       </div>
     </mt-popup>
+
     <!-- 乘客 -->
     <mt-popup v-model="passengerVisible" position="right" class="action-page">
       <slot>
@@ -246,6 +252,7 @@
         </div>
       </slot>
     </mt-popup>
+
     <!-- 用户信息 -->
     <mt-popup v-model="userVisible" position="right" id="user-lists" class="user-lists">
       <div class="lists">
@@ -280,6 +287,7 @@
         </div>
       </div>
     </mt-popup>
+    
     <!-- 帮助中心 -->
     <mt-popup v-model="helpVisible" position="right" id="help-lists" class="help-lists">
       <div class="lists">

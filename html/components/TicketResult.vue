@@ -55,14 +55,7 @@
 					</div>
 				</div>
 			</transition-group>
-			<!-- 提示公司详情 -->
-			<!-- <mt-popup
-			  v-model="companyDetailShow"
-			  class="popup-visible"
-			  popup-transition="popup-fade">
-			  <p class="popup-header">{{showCompanyInfo.CoName}}</p>
 
-			</mt-popup> -->
 			<mt-popup
 			  v-model="popupVisible"
 			  class="popup-visible"
@@ -361,6 +354,7 @@ export default {
 						this.PositionOptions[0].disabled = false;
 					}
 				}
+				// console.log(this.PositionOptionsValue)
 			},
 			get(){
 				return this.PositionOptionsValue;
@@ -533,7 +527,7 @@ export default {
 		},
 		queryPrice(){
 			//设置价格高低
-			let lastData = this.getResultList;
+			let lastData = this.ResultBackUp;
 			if(this.PriceOptionsValue==="1"){
 				this.getResultList = _.sortBy(lastData,"Price");
 			}
@@ -550,7 +544,8 @@ export default {
 			}
 			// console.log(this.getResultList)
 			let filter = this.PositionOptionsValue.slice(1);
-			let lastData = this.getResultList;
+			// console.log(filter)
+			let lastData = this.ResultBackUp;
 			this.getResultList = _.filter(lastData,(item)=>{
 				let n =false;
 				for(let i=0;i<filter.length;i++){
@@ -569,7 +564,7 @@ export default {
 			}
 			// console.log(this.getResultList)
 			let filter = this.RouterOptionsValue.slice(1);
-			let lastData = this.getResultList;
+			let lastData = this.ResultBackUp;
 			this.getResultList = _.filter(lastData,(item)=>{
 				let n =false;
 				for(let i=0;i<filter.length;i++){

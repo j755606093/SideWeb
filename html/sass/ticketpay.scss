@@ -485,7 +485,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 4000;
   width: 100%;
   text-align: center;
   background-color: #2196F3;
@@ -586,52 +586,6 @@
         }
         p:nth-child(1) {
           color: #000;
-        }
-      }
-      .pay {
-        height: 50px;
-        line-height: 50px;
-        @include display_flex('row');
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0 20px;
-        background-color: $white;
-        box-shadow: 3px 0 3px 3px #efeeee;
-        .left {
-          flex: 5;
-          p {
-            height: 50px;
-            line-height: 50px;
-            font-size: 16px;
-            color: #c8c8c8;
-            span {
-              font-size: 18px;
-              color: #f35252;
-              font-weight: 900;
-            }
-          }
-        }
-        .right {
-          flex: 5;
-          @include display_flex('row');
-          span {
-            color: #c8c8c8;
-            font-size: 12px;
-            flex: 5;
-          }
-          button {
-            background-color: #329be8;
-            height: 40px;
-            line-height: 40px;
-            font-size: 16px;
-            outline: none;
-            border: none;
-            color: $white;
-            flex: 5;
-            border-radius: 5px;
-          }
         }
       }
     }
@@ -862,8 +816,63 @@
   }
 }
 
+/** 支付footer */
+.pay {
+  height: 50px;
+  line-height: 50px;
+  @include display_flex('row');
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  background-color: $white;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  z-index:4000;
+  .left {
+    flex: 5;
+    p {
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #c8c8c8;
+      span {
+        font-size: 18px;
+        color: #f35252;
+        font-weight: 900;
+      }
+    }
+  }
+  .right {
+    flex: 5;
+    @include display_flex('row');
+    span {
+      color: #c8c8c8;
+      font-size: 12px;
+      flex: 5;
+    }
+    button {
+      background-color: #329be8;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+      color: $white;
+      flex: 5;
+      border-radius: 5px;
+    }
+  }
+}
+
 .v-modal {
-  display: none;
+  // display: none;
+}
+
+.set-position {
+  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 100px;
 }
 
 .root-tip-info {

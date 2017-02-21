@@ -79,58 +79,6 @@ input {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch; }
 
-@keyframes fadeOutLeft {
-  from {
-    opacity: 1;
-    transform: none; }
-  to {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0); } }
-
-.fadeLeft-out {
-  animation-name: fadeOutLeft;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0); }
-  to {
-    opacity: 1;
-    transform: none; } }
-
-.fadeLeft-in {
-  animation-name: fadeInLeft;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0); }
-  to {
-    opacity: 1;
-    transform: none; } }
-
-.fadeRight-in {
-  animation-name: fadeInRight;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeOutRight {
-  from {
-    opacity: 0;
-    transform: none; }
-  to {
-    opacity: 1;
-    transform: translate3d(100%, 0, 0); } }
-
-.fadeRight-out {
-  animation-name: fadeOutRight;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
 @keyframes fadeIn {
   from {
     opacity: 0; }
@@ -613,7 +561,7 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 4000;
   width: 100%;
   text-align: center;
   background-color: #2196F3;
@@ -710,63 +658,6 @@ input {
           margin-left: 20px; }
         .action-page .action .action-body .pay-ticket-info p:nth-child(1) {
           color: #000; }
-      .action-page .action .action-body .pay {
-        height: 50px;
-        line-height: 50px;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0 20px;
-        background-color: #fff;
-        box-shadow: 3px 0 3px 3px #efeeee; }
-        .action-page .action .action-body .pay .left {
-          -ms-flex: 5;
-              flex: 5; }
-          .action-page .action .action-body .pay .left p {
-            height: 50px;
-            line-height: 50px;
-            font-size: 16px;
-            color: #c8c8c8; }
-            .action-page .action .action-body .pay .left p span {
-              font-size: 18px;
-              color: #f35252;
-              font-weight: 900; }
-        .action-page .action .action-body .pay .right {
-          -ms-flex: 5;
-              flex: 5;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center; }
-          .action-page .action .action-body .pay .right span {
-            color: #c8c8c8;
-            font-size: 12px;
-            -ms-flex: 5;
-                flex: 5; }
-          .action-page .action .action-body .pay .right button {
-            background-color: #329be8;
-            height: 40px;
-            line-height: 40px;
-            font-size: 16px;
-            outline: none;
-            border: none;
-            color: #fff;
-            -ms-flex: 5;
-                flex: 5;
-            border-radius: 5px; }
     .action-page .action p.refresh {
       height: 40px;
       line-height: 40px;
@@ -1021,8 +912,70 @@ input {
           .action-page .action .action-use .page .rebate.disabled .right .info span {
             color: #c8c8c8; }
 
-.v-modal {
-  display: none; }
+/** 支付footer */
+.pay {
+  height: 50px;
+  line-height: 50px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  z-index: 4000; }
+  .pay .left {
+    -ms-flex: 5;
+        flex: 5; }
+    .pay .left p {
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #c8c8c8; }
+      .pay .left p span {
+        font-size: 18px;
+        color: #f35252;
+        font-weight: 900; }
+  .pay .right {
+    -ms-flex: 5;
+        flex: 5;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    .pay .right span {
+      color: #c8c8c8;
+      font-size: 12px;
+      -ms-flex: 5;
+          flex: 5; }
+    .pay .right button {
+      background-color: #329be8;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+      color: #fff;
+      -ms-flex: 5;
+          flex: 5;
+      border-radius: 5px; }
+
+.set-position {
+  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 100px; }
 
 .root-tip-info {
   width: 100%;

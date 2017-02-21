@@ -79,58 +79,6 @@ input {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch; }
 
-@keyframes fadeOutLeft {
-  from {
-    opacity: 1;
-    transform: none; }
-  to {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0); } }
-
-.fadeLeft-out {
-  animation-name: fadeOutLeft;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0); }
-  to {
-    opacity: 1;
-    transform: none; } }
-
-.fadeLeft-in {
-  animation-name: fadeInLeft;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0); }
-  to {
-    opacity: 1;
-    transform: none; } }
-
-.fadeRight-in {
-  animation-name: fadeInRight;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
-@keyframes fadeOutRight {
-  from {
-    opacity: 0;
-    transform: none; }
-  to {
-    opacity: 1;
-    transform: translate3d(100%, 0, 0); } }
-
-.fadeRight-out {
-  animation-name: fadeOutRight;
-  animation-duration: 0.5s;
-  animation-fill-mode: both; }
-
 @keyframes fadeIn {
   from {
     opacity: 0; }
@@ -424,7 +372,8 @@ header {
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
-  background-color: #f35252; }
+  background-color: #f35252;
+  z-index: 4000; }
   .page-header > div {
     height: 50px;
     width: 50px;
@@ -623,11 +572,11 @@ header {
           width: 20px;
           height: 20px; }
     .action-page .action-body .refund {
-      height: 80px;
       text-align: center;
       background-color: #fff;
       margin: 10px 10px;
-      border-radius: 5px; }
+      border-radius: 5px;
+      padding: 10px 0; }
       .action-page .action-body .refund p {
         font-size: 15px;
         font-weight: 900;
@@ -640,6 +589,93 @@ header {
         color: #c8c8c8;
         height: 40px;
         line-height: 40px; }
+      .action-page .action-body .refund .passenger {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center; }
+        .action-page .action-body .refund .passenger .passenger-line {
+          width: 100%;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+              flex-direction: row;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center;
+          position: relative; }
+          .action-page .action-body .refund .passenger .passenger-line .img {
+            -ms-flex: 2;
+                flex: 2;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+                flex-direction: row;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+            text-align: left; }
+            .action-page .action-body .refund .passenger .passenger-line .img > img {
+              width: 25px;
+              height: 25px;
+              margin-left: 10px;
+              z-index: -1; }
+            .action-page .action-body .refund .passenger .passenger-line .img::after {
+              content: "";
+              position: absolute;
+              top: 7.5px;
+              left: 10px;
+              width: 25px;
+              height: 25px;
+              background-color: #fafafa;
+              border-radius: 50%;
+              z-index: 0; }
+          .action-page .action-body .refund .passenger .passenger-line .name {
+            -ms-flex: 3;
+                flex: 3;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+                flex-direction: row;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            -ms-flex-pack: start;
+                justify-content: flex-start; }
+          .action-page .action-body .refund .passenger .passenger-line .info {
+            -ms-flex: 5;
+                flex: 5;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+                flex-direction: row;
+            -ms-flex-pack: center;
+                justify-content: center;
+            -ms-flex-align: center;
+                align-items: center;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+            text-align: right;
+            margin-right: 10px; }
+            .action-page .action-body .refund .passenger .passenger-line .info > span {
+              color: #c8c8c8; }
+          .action-page .action-body .refund .passenger .passenger-line span {
+            font-size: 15px;
+            color: #323232; }
+        .action-page .action-body .refund .passenger .passenger-line.active .img > img {
+          z-index: 1; }
+        .action-page .action-body .refund .passenger .passenger-line.active span {
+          font-size: 15px;
+          color: #323232; }
     .action-page .action-body .pay-ticket-info {
       margin: 0 10px;
       background-color: #fff;
@@ -653,63 +689,145 @@ header {
         margin-left: 20px; }
       .action-page .action-body .pay-ticket-info p:nth-child(1) {
         color: #000; }
-    .action-page .action-body .pay {
+
+.refund-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  height: 50px;
+  line-height: 50px;
+  background-color: #fff; }
+  .refund-footer > div {
+    -ms-flex: 1;
+        flex: 1; }
+  .refund-footer .all {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    text-align: left;
+    position: relative; }
+    .refund-footer .all > img {
+      width: 20px;
+      height: 20px;
+      margin-left: 20px;
+      z-index: -1; }
+    .refund-footer .all::after {
+      content: "";
+      position: absolute;
+      top: 12.5px;
+      left: 20px;
+      background-color: #fafafa;
+      border-radius: 50%;
+      z-index: 0;
+      height: 25px;
+      width: 25px; }
+    .refund-footer .all span {
+      font-size: 12px;
+      margin-left: 10px;
+      color: #c8c8c8; }
+    .refund-footer .all span.active {
+      color: #323232; }
+  .refund-footer .all.active > img {
+    z-index: 1; }
+  .refund-footer .money p {
+    font-size: 15px;
+    color: #c8c8c8; }
+    .refund-footer .money p span {
+      color: #f35252;
+      font-size: 20px;
+      margin-left: 10px;
+      font-weight: 900; }
+  .refund-footer .btn {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    .refund-footer .btn button {
+      background-color: #f35252;
+      padding: 10px 20px;
+      color: #fff;
+      border: none;
+      outline: none;
+      border-radius: 5px; }
+
+.pay {
+  height: 50px;
+  line-height: 50px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  z-index: 4000; }
+  .pay .left {
+    -ms-flex: 5;
+        flex: 5; }
+    .pay .left p {
       height: 50px;
       line-height: 50px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 0 20px;
-      background-color: #fff;
-      box-shadow: 3px 0 3px 3px #efeeee; }
-      .action-page .action-body .pay .left {
-        -ms-flex: 5;
-            flex: 5; }
-        .action-page .action-body .pay .left p {
-          height: 50px;
-          line-height: 50px;
-          font-size: 16px;
-          color: #c8c8c8; }
-          .action-page .action-body .pay .left p span {
-            font-size: 18px;
-            color: #f35252;
-            font-weight: 900; }
-      .action-page .action-body .pay .right {
-        -ms-flex: 5;
-            flex: 5;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center; }
-        .action-page .action-body .pay .right span {
-          color: #c8c8c8;
-          font-size: 12px;
-          -ms-flex: 5;
-              flex: 5; }
-        .action-page .action-body .pay .right button {
-          background-color: #329be8;
-          height: 40px;
-          line-height: 40px;
-          font-size: 16px;
-          outline: none;
-          border: none;
-          color: #fff;
-          -ms-flex: 5;
-              flex: 5;
-          border-radius: 5px; }
+      font-size: 16px;
+      color: #c8c8c8; }
+      .pay .left p span {
+        font-size: 18px;
+        color: #f35252;
+        font-weight: 900; }
+  .pay .right {
+    -ms-flex: 5;
+        flex: 5;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    .pay .right span {
+      color: #c8c8c8;
+      font-size: 12px;
+      -ms-flex: 5;
+          flex: 5; }
+    .pay .right button {
+      background-color: #329be8;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+      color: #fff;
+      -ms-flex: 5;
+          flex: 5;
+      border-radius: 5px; }
 
 .pay-order {
   width: 100%;
@@ -901,7 +1019,17 @@ header {
 
 .code-popup-visible {
   text-align: center;
-  background: none; }
+  background: none;
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
   .code-popup-visible img {
     width: 200px;
     height: 200px; }
@@ -925,7 +1053,7 @@ footer {
   background-color: #fff;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 100; }
-  footer .footer {
+  footer > .footer {
     -ms-flex: 1;
         flex: 1;
     display: -ms-flexbox;
@@ -940,12 +1068,12 @@ footer {
     color: #AAAAAA;
     height: 50px;
     line-height: 50px; }
-    footer .footer i {
+    footer > .footer i {
       font-size: 1.8rem; }
-    footer .footer img {
+    footer > .footer img {
       width: 22px;
       height: 22px; }
-    footer .footer p {
+    footer > .footer p {
       font-size: 1.2rem;
       color: #AAAAAA;
       height: 20px;
@@ -983,3 +1111,6 @@ footer {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     padding: 25px !important; }
+
+.mint-msgbox {
+  border-radius: 10px; }

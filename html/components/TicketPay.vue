@@ -71,7 +71,7 @@
 		<!-- 手机号 -->
 		<div class="write-info">
 			<div class="line">
-				<input type="text" v-model="payInfoData.contactPhone" name="phone" placeholder="手机号(用于联系)">
+				<input type="tel" maxlength="11" v-model="payInfoData.contactPhone" name="phone" placeholder="手机号(用于联系)">
 				<div class="img"><img src="../picture/phone.png"></div>
 			</div>
 		</div>
@@ -113,12 +113,25 @@
 				<button @click="submitOrder">提交订单</button>
 			</div>
 		</div>
+		
+		<!-- 下单支付头部 -->
+		<div v-if="payInfoPopupVisible" style="background-color: #f35252" class="page-header">
+			<div @click="goback"><img src="../picture/back_icon.png"></div>
+			<span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
+		</div>
+		
+		<!-- 优惠券选择头部 -->
+		<div v-show="discountPopupVisible" class="page-header">
+			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
+			<span class="center">我的优惠券</span>
+			<span @click="showPage(3,true)" class="right">确定</span>
+		</div>
 
 		<!-- 选择乘客 -->
 		<mt-popup
 		  v-model="passengerPopupVisible"
 		  position="right"
-		  class="action-page animated fadeIn">
+		  class="action-page">
 		  <slot>
 		  	<div class="action">
 		  		<div class="page-header">
@@ -174,7 +187,7 @@
 		<mt-popup
 		  v-model="stationPopupVisible"
 		  position="right"
-		  class="action-page animated fadeIn">
+		  class="action-page">
 		  <slot>
 		  	<div class="action">
 		  		<div class="page-header">
@@ -210,14 +223,9 @@
 		<mt-popup
 		  v-model="discountPopupVisible"
 		  position="right"
-		  class="action-page animated fadeIn">
+		  class="action-page">
 		  <slot>
 		  	<div class="action">
-		  		<div class="page-header">
-		  			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
-		  			<span class="center">我的优惠券</span>
-		  			<span @click="showPage(3,true)" class="right">确定</span>
-		  		</div>
 		  		<div class="action-use">
 		  			<!-- 头部切换 -->
 						<div class="popup-header">
@@ -297,13 +305,9 @@
 		<mt-popup
 		  v-model="payInfoPopupVisible"
 		  position="right"
-		  class="action-page animated fadeIn">
+		  class="action-page">
 		  <slot>
 		  	<div class="action">
-		  		<div style="background-color: #f35252" class="page-header">
-		  			<div @click="goback"><img src="../picture/back_icon.png"></div>
-		  			<span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
-		  		</div>
 		  		<div class="action-body">
 		  			<!-- 票信息 -->
 		  			<div class="ticket-info">
@@ -348,7 +352,7 @@
 						<!-- 手机号 -->
 						<div class="write-info">
 							<div class="line">
-								<span style="color:rgb(20,20,20)">{{payInfoData.contactPhone+' (取票人号码)'}}</span>
+								<span style="color:rgb(20,20,20)">{{payInfoData.contactPhone+' (联系手机号)'}}</span>
 								<div class="img"><img src="../picture/phone.png"></div>
 							</div>
 						</div>
@@ -371,16 +375,6 @@
 							<p>订单信息</p>
 							<p>订单编号:{{serverPayInfo.OrderInfo.Id}}</p>
 							<p>下单日期:{{serverPayInfo.OrderInfo.OrderTime}}</p>
-						</div>
-						<!-- 立即支付 -->
-						<div class="pay">
-							<div class="left">
-								<p>订单总价<span v-text="'¥'+serverPayInfo.OrderInfo.TotalPrice"></span></p>
-							</div>
-							<div class="right">
-								<span @click="cancelOrder">取消订单</span>
-								<button @click="payMoney">立即支付</button>
-							</div>
 						</div>
 		  		</div>
 		  	</div>
@@ -408,6 +402,17 @@
 		  	</div>
 		  </slot>
 		</mt-popup>
+
+		<!-- 立即支付 -->
+		<div v-show="payInfoPopupVisible" class="pay">
+			<div class="left">
+				<p>订单总价<span v-text="'¥'+serverPayInfo.OrderInfo.TotalPrice"></span></p>
+			</div>
+			<div class="right">
+				<span @click="cancelOrder">取消订单</span>
+				<button @click="payMoney">立即支付</button>
+			</div>
+		</div>
 	</div>
 </template>
 

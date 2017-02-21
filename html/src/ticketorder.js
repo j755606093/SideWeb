@@ -135,6 +135,7 @@ const Vue_Order = new Vue({
 		storeCountTime: "", //剩余支付时间
 
 		refundPassenger: false, //退款人选择
+		refunndMoney: 0, //退款金额
 		selectPassenger: [],
 		optionsPassenger: [],
 		codePopupVisible: false, //二维码
@@ -313,9 +314,9 @@ const Vue_Order = new Vue({
 							this.passenger.push(item);
 						}
 
-						this.optionsPassenger.push({ label: item.Name, value: item.DId }); //提供申请退款选择的用户名
+						this.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 					}
-					this.passenger = this.passenger.slice(0, this.passenger.length - 1);
+					// this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					Indicator.close();
 					this.orderVisible = true;
 					if (this.selected === 1) {
@@ -383,6 +384,7 @@ const Vue_Order = new Vue({
 				this.refundPassenger = false;
 				return;
 			}
+			this.codePopupVisible = false;
 			clearInterval(this.countdown);
 			this.countdown = null;
 			this.orderVisible = false;
@@ -419,7 +421,7 @@ const Vue_Order = new Vue({
 			});
 		},
 		checkSelectPassenger() {
-			this.refundPassenger = false;
+			// this.refundPassenger = false;
 
 			if (this.selectPassenger.length === 0) {
 				MessageBox('提示', "你未选择退款乘客");
@@ -493,6 +495,32 @@ const Vue_Order = new Vue({
 		},
 		openCode() {
 			this.codePopupVisible = true;
+		},
+		selectRefund(index) {
+			this.optionsPassenger[index].active = !this.optionsPassenger[index].active;
+
+			this.refunndMoney = 0;
+			this.selectPassenger = [];
+			this.optionsPassenger.map((item, i) => {
+				if (item.active) {
+					let money = item.Price - item.Price * 0.1;
+					this.refunndMoney += money;
+					this.selectPassenger.push(item.DId);
+				}
+			})
+		},
+		selectRefundAll() {
+			this.refunndMoney = 0;
+			this.selectPassenger = [];
+			this.optionsPassenger.map((item, i) => {
+				item.active = true;
+				let money = item.Price - item.Price * 0.1;
+				this.refunndMoney += money;
+				this.selectPassenger.push(item.DId);
+			})
+		},
+		cancelModal(){
+			this.codePopupVisible = false;
 		}
 	},
 	components: {
