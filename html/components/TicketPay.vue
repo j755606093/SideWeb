@@ -153,7 +153,7 @@
 							</div>
 							<div class="line">
 								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-								<button @click="append"><i class="fa fa-plus-circle"></i> 添加</button>
+								<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
 							</div>
 						</div>
 						<!-- 修改乘客 -->

@@ -35567,7 +35567,9 @@
 	    }
 	  }), " ", _vm._h('button', {
 	    on: {
-	      "click": _vm.append
+	      "click": function($event) {
+	        _vm.append(0)
+	      }
 	    }
 	  }, [_vm._h('i', {
 	    staticClass: "fa fa-plus-circle"
