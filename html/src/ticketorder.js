@@ -140,6 +140,8 @@ const Vue_Order = new Vue({
 		optionsPassenger: [],
 		codePopupVisible: false, //二维码
 
+		myModal:false,//自己的蒙版
+
 		refreshLink: refreshLink, //刷新页面地址
 	},
 	created() {
@@ -390,6 +392,7 @@ const Vue_Order = new Vue({
 			this.orderVisible = false;
 		},
 		cancelOrder() {
+			this.myModal = true;
 			MessageBox.confirm('确定取消订单?').then(action => {
 				fetch(config.serverUrl + "/api/Order/Cancel", {
 						method: "POST",
@@ -401,8 +404,14 @@ const Vue_Order = new Vue({
 					.then(checkStatus)
 					.then(result => result.json())
 					.then(result => {
-						MessageBox('提示', '取消订单成功');
+						MessageBox.alert('取消订单成功').then(res=>{
+							this.myModal = false;
+						});
 						this.goback();
+						if(!this.OrderList1){
+							this.noMoreData = true;
+							return;
+						}
 						for (let i = 0; i < this.OrderList1.length; i++) {
 							if (this.OrderList[i].Id === this.OrderDetail.Id) {
 								this.OrderList.splice(i, 1);
@@ -413,6 +422,8 @@ const Vue_Order = new Vue({
 							}
 						}
 					})
+			}).catch(error=>{
+				this.myModal = false;
 			});
 		},
 		inputRefund() {
@@ -422,9 +433,11 @@ const Vue_Order = new Vue({
 		},
 		checkSelectPassenger() {
 			// this.refundPassenger = false;
-
+			this.myModal = true;
 			if (this.selectPassenger.length === 0) {
-				MessageBox('提示', "你未选择退款乘客");
+				MessageBox.alert( "你未选择退款乘客").then(result=>{
+					this.myModal = false;
+				})
 			} else {
 				this.refund();
 			}
@@ -440,7 +453,10 @@ const Vue_Order = new Vue({
 
 			if (number !== this.OrderDetail.Passengers.length) {
 				// 说明都不可以退款
-				MessageBox('提示', '订单中所有乘客都不满足退款条件!');
+				this.myModal = true;
+				MessageBox.alert('订单中所有乘客都不满足退款条件!').then(result=>{
+					this.myModal = false;
+				});
 			} else {
 				this.refundPassenger = true;
 			}

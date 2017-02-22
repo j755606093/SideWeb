@@ -993,6 +993,9 @@ header {
     .pay-order .out-order a {
       color: #AAAAAA; }
 
+.v-modal {
+  display: none; }
+
 .passenger-popup-visible {
   width: 80%;
   height: 60%;
@@ -1033,6 +1036,21 @@ header {
   .code-popup-visible img {
     width: 200px;
     height: 200px; }
+
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5000; }
+
+.mint-msgbox-wrapper {
+  z-index: 5001 !important; }
+  .mint-msgbox-wrapper .mint-msgbox-btn {
+    color: #0BB20C;
+    font-size: 18px; }
 
 footer {
   display: -ms-flexbox;
@@ -1113,4 +1131,4 @@ footer {
     padding: 25px !important; }
 
 .mint-msgbox {
-  border-radius: 10px; }
+  border-radius: 5px; }

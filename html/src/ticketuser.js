@@ -152,6 +152,8 @@ const Vue_User = new Vue({
 		helpContentShow: 0, //默认不显示任何一个
 		showpassengeraction: 0, //修改增加乘客
 		ChaPassengerIndex: 0,
+
+		myModal:false,//自己的蒙版
 	},
 	created() {
 		this.getUserInfo()
@@ -392,6 +394,7 @@ const Vue_User = new Vue({
 			this.userVisible = true;
 		},
 		edit(index) {
+			this.myModal = true;
 			let title = "";
 			let NickName = "";
 			let Mobile = "";
@@ -420,14 +423,22 @@ const Vue_User = new Vue({
 						// 	title = "姓名";
 						// 	break;
 					case 2:
-						Mobile = value;
+						if(/^1[23578][0-9]{9}$/.test(value)){
+							Mobile = value;
+						}
+						else{
+							Mobile = "";
+							value = "";
+						}
 						break;
 					case 3:
 						Sex = value;
 						break;
 				}
 				if (value === "") {
-					MessageBox("请输入正确的" + title);
+					MessageBox.alert("请输入正确的" + title).then(result=>{
+						this.myModal = false;
+					});
 					return;
 				} else {
 					fetch(config.serverUrl + "/api/Transport/UpdateUserInfo", {
@@ -450,10 +461,13 @@ const Vue_User = new Vue({
 									this.UserInfo.Mobile = value;
 								}
 							}
-							MessageBox.alert(result.Message);
+							MessageBox.alert(result.Message).then(result=>{
+								this.myModal = false;
+							});
 						});
 				}
 			}).catch(error => {
+				this.myModal = false;
 				console.log(error);
 			});
 			// MessageBox("修改数据", "第" + index + "项")

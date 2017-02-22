@@ -972,6 +972,9 @@ input {
           flex: 5;
       border-radius: 5px; }
 
+#pay .v-modal {
+  display: none; }
+
 .set-position {
   overflow-y: scroll;
   height: 100%;

@@ -140,7 +140,7 @@
                     <span>{{item.Name}}</span>
                     <span>{{item.StartDate}} 至 {{item.EndDate}}</span>
                   </div>
-                  <div @click="selectRebeat(index)" class="check">
+                  <div class="check">
                     <a :href="'https://ticket.samecity.com.cn/wx/ticket.html?rebateid='+item.Id">立即使用</a>
                   </div>
                 </div>
@@ -256,33 +256,30 @@
     <!-- 用户信息 -->
     <mt-popup v-model="userVisible" position="right" id="user-lists" class="user-lists">
       <div class="lists">
-        <!-- 列表 -->
         <div class="info-man">
           <div class="info-man-line info">
             <span class="left">ID:</span>
             <span class="gray" v-text="UserInfo.Alias_Id"></span>
           </div>
-        </div>
-        <div class="info-man">
-          <div class="info-man-line info">
+          <div @click="edit(0)" class="info-man-line info">
             <span class="left">昵称:</span>
             <span class="gray" v-text="UserInfo.Nickname"></span>
-            <div @click="edit(0)" class="right"><i class="fa fa-edit"></i></div>
+            <div class="right"><img src="../picture/edit.png"></div>
           </div>
           <!-- <div class="info-man-line info">
             <span class="left">姓名:</span>
             <span class="gray" v-text="UserInfo.Name?UserInfo.Name:'未设置'"></span>
             <div @click="edit(1)" class="right"><i class="fa fa-edit"></i></div>
           </div> -->
-          <div class="info-man-line info">
+          <div @click="edit(2)" class="info-man-line info">
             <span class="left">绑定手机:</span>
             <span class="gray" v-text="UserInfo.Mobile?UserInfo.Mobile:'未设置'"></span>
-            <div @click="edit(2)" class="right"><i class="fa fa-edit"></i></div>
+            <div class="right"><img src="../picture/edit.png"></div>
           </div>
-          <div class="info-man-line info">
+          <div @click="edit(3)" class="info-man-line info">
             <span class="left">性别:</span>
             <span class="gray" v-text="UserInfo.Sex===1?'男':'女'"></span>
-            <div @click="edit(3)" class="right"><i class="fa fa-edit"></i></div>
+            <div class="right"><img src="../picture/edit.png"></div>
           </div>
         </div>
       </div>
@@ -392,6 +389,8 @@
         </div>
       </div>
     </mt-popup>
+
+    <div v-show="myModal" class="my-modal"></div>
     <footer>
       <a :href="'./ticket.html?datetime='+Date.now()" class="footer" class="footer">
         <!-- <i class="fa fa-home"></i> -->

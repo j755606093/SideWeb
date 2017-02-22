@@ -1037,6 +1037,13 @@ header {
                 background-color: #fafafa;
                 border-radius: 50%;
                 z-index: 0; }
+              .action-page > .action .action-use .page .rebate .right .check a {
+                font-size: 14px;
+                height: 130px;
+                width: 100%;
+                text-align: center;
+                line-height: 130px;
+                color: #329be8; }
           .action-page > .action .action-use .page .rebate.active .check img {
             z-index: 1; }
           .action-page > .action .action-use .page .rebate.disabled .left {
@@ -1153,7 +1160,6 @@ header {
   overflow-y: scroll;
   margin-top: 50px; }
   .user-lists .lists {
-    width: 100%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -1162,39 +1168,39 @@ header {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    margin-top: 10px; }
+    margin: 0 10px; }
     .user-lists .lists .info-man {
       -ms-flex: 1;
           flex: 1;
       width: 100%;
-      padding: 0 2%;
-      margin-top: 10px;
-      background-color: white;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       border-bottom: 1px solid #dddddd; }
       .user-lists .lists .info-man .info-man-line {
-        height: 40px;
-        line-height: 40px;
-        border-bottom: 1px solid #dddddd;
+        height: 50px;
+        line-height: 50px;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+        background-color: white;
+        border-radius: 10px;
+        margin-top: 10px; }
         .user-lists .lists .info-man .info-man-line .left {
           -ms-flex: 0.3;
-              flex: 0.3; }
+              flex: 0.3;
+          margin-left: 10px; }
         .user-lists .lists .info-man .info-man-line .gray {
-          -ms-flex: 0.6;
-              flex: 0.6;
+          -ms-flex: 0.5;
+              flex: 0.5;
           color: #777777; }
         .user-lists .lists .info-man .info-man-line .right {
-          -ms-flex: 0.1;
-              flex: 0.1;
+          -ms-flex: 0.2;
+              flex: 0.2;
           height: 40px;
           line-height: 40px;
           display: -ms-flexbox;
@@ -1209,8 +1215,26 @@ header {
             float: right;
             color: #0074D9;
             font-size: 1.4rem; }
+          .user-lists .lists .info-man .info-man-line .right > img {
+            width: 20px;
+            height: 20px; }
       .user-lists .lists .info-man span {
         font-size: 1.4rem; }
+
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5000; }
+
+.mint-msgbox-wrapper {
+  z-index: 5001 !important; }
+  .mint-msgbox-wrapper .mint-msgbox-btn {
+    color: #0BB20C;
+    font-size: 18px; }
 
 .help-lists {
   width: 100%;
