@@ -175,6 +175,26 @@ gulp.task('ticketuser', function() {
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
 
+gulp.task('ticketsteward', function() {
+	return gulp.src('./html/src/steward.js')
+		.pipe(webpack({
+			watch: true,
+			output: {
+				filename: 'bundle-steward.js'
+			},
+			module: modules,
+			resolve: {
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+					'vue$': 'vue/dist/vue.js'
+				}
+			},
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		.pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
 gulp.task('wxlist', function() {
 	return gulp.src('./html/src/wxlist.js')
 		.pipe(webpack({

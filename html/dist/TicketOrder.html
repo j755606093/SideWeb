@@ -256,7 +256,7 @@
               <div @click="selectRefund(index)" v-for="(item,index) in optionsPassenger" :class="{'passenger-line':true, active:item.active}">
                 <div class="img"><img src="../picture/select_pick.png"></div>
                 <div class="name"><span>{{item.Name}}</span></div>
-                <div class="info"><span>原价{{item.Price}},可退{{item.Price-item.Price*0.1}}</span></div>
+                <div class="info"><span>原价{{item.Price}},可退{{(item.Price-item.Price*0.1).toFixed(2)}}</span></div>
               </div>
             </div>
           </div>
@@ -269,7 +269,8 @@
         <span>全选</span>
       </div>
       <div class="money">
-        <p>共退款<span>¥{{refunndMoney}}</span></p>
+        <span class="text">共退款</span>
+        <span class="money">¥{{refunndMoney}}</span>
       </div>
       <div class="btn">
         <button @click="checkSelectPassenger">果断退票</button>

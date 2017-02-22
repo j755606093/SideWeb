@@ -3,15 +3,9 @@ import Vue from "vue";
 require("../css/ticketuser.css");
 import "whatwg-fetch";
 const _ = require("underscore");
-import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem } from 'mint-ui';
+import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import Utils from "../Utils/utils";
-
-// Vue.component(TabContainer.name, TabContainer);
-// Vue.component(TabContainerItem.name, TabContainerItem);
-// Vue.component(Tabbar.name, Tabbar);
-// Vue.component(TabItem.name, TabItem);
-// Vue.component(Navbar.name, Navbar);
 
 const debug = (function() {
 	let debug = false;

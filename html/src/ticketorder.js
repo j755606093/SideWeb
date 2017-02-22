@@ -524,6 +524,7 @@ const Vue_Order = new Vue({
 					this.selectPassenger.push(item.DId);
 				}
 			})
+			this.refunndMoney = this.refunndMoney.toFixed(2);
 		},
 		selectRefundAll() {
 			this.refunndMoney = 0;

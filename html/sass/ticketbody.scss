@@ -3,7 +3,7 @@
   width: 100%;
   overflow-x: auto;
   background-color: #fff;
-  margin-top: 12px;
+  // margin-top: 12px;
   position: absolute;
   top: 12px;
   left: 0;
@@ -13,6 +13,10 @@
     padding-left: 25px;
     overflow-x: scroll;
     white-space: nowrap;
+    >a{
+    	display: inline-block;
+    	margin-right:5px;
+    }
     .slider-item {
       width: 250px;
       height: 150px;

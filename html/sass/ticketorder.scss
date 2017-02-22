@@ -569,10 +569,8 @@ header {
   height: 50px;
   line-height: 50px;
   background-color: $white;
-  >div {
-    flex: 1;
-  }
   .all {
+    flex: 2;
     @include display_flex('row');
     justify-content: flex-start;
     text-align: left;
@@ -597,6 +595,8 @@ header {
     span {
       font-size: 12px;
       margin-left: 10px;
+      height: 50px;
+      line-height: 50px;
       color: #c8c8c8;
     }
     span.active {
@@ -609,18 +609,23 @@ header {
     }
   }
   .money {
-    p {
+    flex: 5;
+    @include display_flex('row');
+    justify-content: flex-start;
+    span.text {
+      margin-left: 10px;
       font-size: 15px;
       color: #c8c8c8;
-      span {
-        color: #f35252;
-        font-size: 20px;
-        margin-left: 10px;
-        font-weight: 900;
-      }
+    }
+    span.money {
+      color: #f35252;
+      font-size: 20px;
+      margin-left: 10px;
+      font-weight: 900;
     }
   }
   .btn {
+    flex: 3;
     @include display_flex('row');
     button {
       background-color: #f35252;
@@ -918,20 +923,21 @@ header {
   }
 }
 
-.my-modal{
+.my-modal {
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color: rgba(0,0,0,.6);
-  z-index:5000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 5000;
 }
-.mint-msgbox-wrapper{
-  z-index:5001 !important;
-  .mint-msgbox-btn{
-    color:#0BB20C;
-    font-size:18px;
+
+.mint-msgbox-wrapper {
+  z-index: 5001 !important;
+  .mint-msgbox-btn {
+    color: #0BB20C;
+    font-size: 18px;
   }
 }
 

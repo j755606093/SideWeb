@@ -46,28 +46,28 @@
 
 	"use strict";
 
-	var _stringify = __webpack_require__(1);
+	var _stringify = __webpack_require__(30);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _vue = __webpack_require__(4);
+	var _vue = __webpack_require__(1);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	__webpack_require__(5);
+	__webpack_require__(2);
 
-	var _mintUi = __webpack_require__(6);
+	var _mintUi = __webpack_require__(3);
 
-	__webpack_require__(30);
+	__webpack_require__(27);
 
-	var _utils = __webpack_require__(32);
+	var _utils = __webpack_require__(29);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
-	__webpack_require__(33);
+	__webpack_require__(36);
 
 	var _ = __webpack_require__(35);
 
@@ -157,72 +157,19 @@
 		el: "#app",
 		data: {
 			ready: false, //页面为准备好
-			showHeader: false, //是否显示头部
-			headerTitle: "用户中心", //头部标题
-
-			Passenger: [], //乘客
-			Rebate: [], //优惠券
-			UserInfo: {}, //用户信息
-			discountVisible: false, //优惠券列表显示
-			isNoPay: 0, //未支付订单个数
-			OrderType: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //全部订单
-			OrderType1: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //未支付订单
-			OrderType2: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //已支付订单
-			OrderType3: {
-				OrderList: [], //订单数据
-				noMoreData: false, //是否还有订单数据
-				isUse: false, //刷新函数是否使用中
-				index: 1 }, //待出行订单
-
-			UseOrderType: 0, //使用中的订单列表,默认是全部订单0
-			OrderList: [], //显示订单数据,需要赋值
-
-			orderVisible: false, //是否显示订单列表
-			passengerVisible: false, //乘客列表
-			userVisible: false, //用户信息显示
-			refundVisible: false, //申请退款显示
-			helpVisible: false, //帮助中心显示
-
-			passengerName: "", //新增乘客姓名
-			passengerPhone: "", //新增乘客手机号
-
-			RefundOrder: {
-				RefundList: [],
-				index: 1,
-				isUse: false,
-				noMoreData: false
-			},
-			helpContentShow: 0, //默认不显示任何一个
-			showpassengeraction: 0, //修改增加乘客
-			ChaPassengerIndex: 0,
-
-			myModal: false },
+			headerTitle: "已验票乘客(0/3)",
+			haveId: false, //url上有这个id
+			optionsPassenger: [], //可以选择乘车的乘客
+			OrderDetail: {}, //订单详细信息
+			Passengers: [] },
 		created: function created() {
-			var _this = this;
-
-			this.getUserInfo().then(function (result) {
-				if (result.Passengers) {
-					_this.Passenger = result.Passengers;
-				}
-				if (result.Rebates) {
-					_this.Rebate = result.Rebates;
-				}
-				_this.UserInfo = result.Userinfo;
-				_this.isNoPay = result.NoPay;
-				_this.ready = true;
-			});
+			if (this.getQueryString("orderid")) {
+				// 需要显示订单详细信息
+				this.loading();
+				this.getOrderInfo(this.getQueryString("orderid"));
+				this.haveId = true;
+			}
+			this.ready = true;
 		},
 		mounted: function mounted() {},
 
@@ -240,29 +187,6 @@
 					duration: 3000
 				});
 			},
-
-			//回退界面
-			GoBack: function GoBack(event) {
-				var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-				var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "用户中心";
-
-				this.controlHeader();
-				this.orderVisible = false;
-				this.discountVisible = false;
-				this.passengerVisible = false;
-				this.userVisible = false;
-				this.refundVisible = false;
-				this.helpVisible = false;
-			},
-
-			//控制头部显示和标题
-			controlHeader: function controlHeader() {
-				var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-				var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "用户中心";
-
-				this.showHeader = status;
-				this.headerTitle = title;
-			},
 			getQueryString: function getQueryString(name) {
 				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 				var r = window.location.search.substr(1).match(reg);
@@ -271,350 +195,73 @@
 				}
 				return null;
 			},
+			getOrderInfo: function getOrderInfo(id) {
+				var _this = this;
 
-			// 获取用户信息,乘客信息,优惠券信息,是否有未支付订单的个数信息数据
-			getUserInfo: function getUserInfo() {
-				return fetch(config.serverUrl + "/api/Transport/UserRelevant", {
-					headers: config.headers
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				}).then(function (result) {
-					return result.Data;
-				});
-			},
-
-			/**
-	   * 显示订单列表
-	   * @return {[type]} [description]
-	   */
-			showOrderList: function showOrderList() {
-				var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-
-				this.controlHeader(true, "订单");
-				this.UseOrderType = type === '' ? 0 : type;
-				if (this["OrderType" + type].OrderList.length === 0) {
-					// 只有长度为0的时候也就是第一次才加载数据
-					// 否则每次点击都加载一次数据bug了
-					this.getOrderData(type);
-				}
-				this.OrderList = this["OrderType" + type].OrderList;
-				this.orderVisible = true; //显示订单
-			},
-
-			/**
-	   * 显示优惠券列表
-	   * @return {[type]} [description]
-	   */
-			showDiscountList: function showDiscountList() {
-				if (this.Rebate.length === 0) {
-					_mintUi.MessageBox.alert("你没有优惠券", "提示");
-					return;
-				}
-				this.controlHeader(true, "优惠券");
-				this.discountVisible = true; //显示
-			},
-
-			/**
-	   * 获取订单数据
-	   * @return {[type]} [description]
-	   */
-			getOrderData: function getOrderData() {
-				var _this2 = this;
-
-				var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-
-				if (type === 1 || type === 3) {
-					//这两个列表是返回的全部数据,不需要再次获取
-					if (this["OrderType" + type].OrderList.length !== 0) {
-						return;
-					}
-				}
-				if (this["OrderType" + type].noMoreData || this["OrderType" + type].isUse) {
-					return;
-				}
-				this["OrderType" + type].isUse = true; //锁住这个函数
-				this.loading();
-				fetch(config.serverUrl + "/api/Order/List", {
+				return fetch(config.serverUrl + "/api/Order/Get", {
 					method: "POST",
 					headers: config.headers,
 					body: (0, _stringify2.default)({
-						Index: this["OrderType" + type].index,
-						Size: 10,
-						Type: type === "" ? 0 : type
+						OrderId: id
 					})
-				}).then(checkStatus).then(function (result) {
+				}).then(function (result) {
 					return result.json();
 				}).then(function (result) {
-					if (result.Data) {
-						// if (result.Data.length < 10) {
-						// 	// 说明没有跟多数据了
-						// 	this["OrderType" + type].noMoreData = true;
-						// 	this.toast("已经没有的更多数据了...");
-						// }
-						for (var i = 0; i < result.Data.length; i++) {
-							_this2["OrderType" + type].OrderList.push(result.Data[i]);
+					_this.OrderDetail = result.Data;
+					// this.passenger = [];
+					_this.optionsPassenger = [];
+					for (var i = 0; i < _this.OrderDetail.Passengers.length; i++) {
+						var item = _this.OrderDetail.Passengers[i];
+						if (item.Status === -3) {
+							item.Name = item.Name + "(已退款)";
+							// this.passenger.push(item);
+							item.vaild = true; //不能上车
+							// continue; //这个乘客已经退款就不显示
 						}
-					} else {
-						_this2["OrderType" + type].noMoreData = true;
-						_this2.toast(result.Message);
-					}
+						if (item.Status === -1) {
+							item.Name = item.Name + "(审核中)";
+							// this.passenger.push(item);
+							item.vaild = true; //不能上车
+						}
+						if (item.Status === -2) {
+							item.Name = item.Name + "(待退款)";
+							// this.passenger.push(item);
+							item.vaild = true; //不能上车
+						}
+						if (item.Status === 1) {
+							// this.passenger.push(item);
+							item.vaild = false; //能上车
+						}
 
-					_this2["OrderType" + type].isUse = false; //释放这个函数
-					_this2["OrderType" + type].index++;
+						_this.optionsPassenger.push({ Name: item.Name, Mobile: item.Mobile, Price: item.Price, DId: item.DId, active: false, vaild: item.vaild }); //提供申请退款选择的用户名
+					}
 					_mintUi.Indicator.close();
 				});
 			},
-			openOrder: function openOrder(index) {
-				var type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
-				var Id = this["OrderType" + type].OrderList[index].Id;
-				window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
-			},
+			selectUp: function selectUp(index) {
+				var _this2 = this;
 
-			/**
-	   * 显示乘客
-	   * @return {[type]} [description]
-	   */
-			showPassengerList: function showPassengerList() {
-				this.passengerVisible = true;
-				this.controlHeader(true, "乘客列表");
-			},
+				if (this.optionsPassenger[index].vaild) {
+					// 不是可选的
+					return;
+				}
+				this.Passengers = [];
+				this.optionsPassenger[index].active = !this.optionsPassenger[index].active;
 
-			// 新增乘客按钮
-			addPassenger: function addPassenger() {
+				this.optionsPassenger.map(function (item, index) {
+					if (item.active) {
+						_this2.Passengers.push(item);
+					}
+				});
+			},
+			selectAll: function selectAll() {
 				var _this3 = this;
 
-				var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-				if (!_utils2.default.isChinaName(this.passengerName) || this.passengerName.length < 2) {
-					this.toast("请输入正确的姓名!");
-					return;
-				}
-				if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
-					this.toast("请输入正确的手机号!");
-					return;
-				}
-
-				if (index === 0) {
-					fetch(config.serverUrl + "/api/Passenger/Add", {
-						method: 'POST',
-						headers: config.headers,
-						body: (0, _stringify2.default)({
-							Name: this.passengerName,
-							Mobile: this.passengerPhone
-						})
-					}).then(checkStatus).then(function (result) {
-						return result.json();
-					}).then(function (result) {
-						if (result.Data) {
-							var json = {};
-							json.Name = _this3.passengerName;
-							json.Mobile = _this3.passengerPhone;
-							json.Id = result.Data;
-							_this3.passengerPhone = "";
-							_this3.passengerName = "";
-							_this3.Passenger.push(json);
-							_this3.toast("增加成功");
-						} else {
-							_this3.toast(result.Message);
-						}
-					});
-				} else {
-					fetch(config.serverUrl + "/api/Passenger/Modify", {
-						method: 'POST',
-						headers: config.headers,
-						body: (0, _stringify2.default)({
-							Name: this.passengerName,
-							Mobile: this.passengerPhone,
-							Id: this.Passenger[this.ChaPassengerIndex].Id
-						})
-					}).then(checkStatus).then(function (result) {
-						return result.json();
-					}).then(function (result) {
-						if (result.Data) {
-							var json = {};
-							json.Name = _this3.passengerName;
-							json.Mobile = _this3.passengerPhone;
-							json.Id = _this3.Passenger[_this3.ChaPassengerIndex].Id;
-							_this3.Passenger[_this3.ChaPassengerIndex] = json;
-							_this3.passengerPhone = "";
-							_this3.passengerName = "";
-							_this3.toast("修改成功");
-						} else {
-							_this3.toast(result.Message);
-						}
-					});
-				}
-			},
-			trashPassenger: function trashPassenger(index) {
-				var _this4 = this;
-
-				_mintUi.MessageBox.confirm('确定执行此操作?').then(function (action) {
-					fetch(config.serverUrl + "/api/Passenger/Delete/" + _this4.Passenger[index].Id, {
-						headers: config.headers
-					}).then(checkStatus).then(function (result) {
-						return result.json();
-					}).then(function (result) {
-						if (result.Data) {
-							_this4.Passenger.splice(index, 1);
-							_this4.toast("删除成功");
-						} else {
-							_this4.toast(result.Message);
-						}
-					});
+				this.Passengers = [];
+				this.optionsPassenger.map(function (item, index) {
+					item.active = true;
+					_this3.Passengers.push(item);
 				});
-			},
-			showUserInfo: function showUserInfo() {
-				this.controlHeader(true, "用户信息");
-				this.userVisible = true;
-			},
-			edit: function edit(index) {
-				var _this5 = this;
-
-				this.myModal = true;
-				var title = "";
-				var NickName = "";
-				var Mobile = "";
-				var Sex = "";
-				switch (index) {
-					case 0:
-						title = "昵称";
-						break;
-					// case 1:
-					// 	title = "姓名";
-					// 	break;
-					case 2:
-						title = "手机号";
-						break;
-					case 3:
-						title = "性别(男或女)";
-						break;
-				}
-
-				_mintUi.MessageBox.prompt("修改" + title).then(function (_ref) {
-					var value = _ref.value,
-					    action = _ref.action;
-
-					switch (index) {
-						case 0:
-							NickName = value;
-							break;
-						// case 1:
-						// 	title = "姓名";
-						// 	break;
-						case 2:
-							if (/^1[23578][0-9]{9}$/.test(value)) {
-								Mobile = value;
-							} else {
-								Mobile = "";
-								value = "";
-							}
-							break;
-						case 3:
-							Sex = value;
-							break;
-					}
-					if (value === "") {
-						_mintUi.MessageBox.alert("请输入正确的" + title).then(function (result) {
-							_this5.myModal = false;
-						});
-						return;
-					} else {
-						fetch(config.serverUrl + "/api/Transport/UpdateUserInfo", {
-							method: 'POST',
-							headers: config.headers,
-							body: (0, _stringify2.default)({
-								NickName: NickName,
-								Mobile: Mobile
-							})
-						}).then(checkStatus).then(function (result) {
-							return result.json();
-						}).then(function (result) {
-							if (result.Code === 200) {
-								if (index === 0) {
-									// 修改昵称
-									_this5.UserInfo.Nickname = value;
-								}
-								if (index === 2) {
-									_this5.UserInfo.Mobile = value;
-								}
-							}
-							_mintUi.MessageBox.alert(result.Message).then(function (result) {
-								_this5.myModal = false;
-							});
-						});
-					}
-				}).catch(function (error) {
-					_this5.myModal = false;
-					console.log(error);
-				});
-				// MessageBox("修改数据", "第" + index + "项")
-				// console.log(index)
-			},
-			getRefund: function getRefund() {
-				return fetch(config.serverUrl + "/api/Order/ListRefund", {
-					method: 'POST',
-					headers: config.headers,
-					body: (0, _stringify2.default)({
-						Index: this.RefundOrder.index,
-						Size: 10,
-						Status: -1 })
-				}).then(checkStatus).then(function (result) {
-					return result.json();
-				});
-			},
-
-			// 申请退款
-			applyRefund: function applyRefund() {
-				var _this6 = this;
-
-				this.controlHeader(true, "申请退款");
-				this.refundVisible = true;
-				if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
-					return;
-				}
-
-				this.RefundOrder.isUse = true;
-				this.loading();
-				this.getRefund().then(function (result) {
-					_mintUi.Indicator.close();
-
-					if (result.Data) {
-						for (var i = 0; i < result.Data.length; i++) {
-							_this6.RefundOrder.RefundList.push(result.Data[i]);
-						}
-						if (result.Data.length < 10) {
-							// 没有更多数据
-							_this6.RefundOrder.noMoreData = true;
-						}
-						_this6.RefundOrder.index++;
-					} else {
-						_this6.RefundOrder.noMoreData = true;
-					}
-
-					_this6.RefundOrder.isUse = false;
-				});
-			},
-			showAddPassenger: function showAddPassenger(index) {
-				this.showpassengeraction = 1;
-				this.ChaPassengerIndex = index; //记录修改的位置
-			},
-			showChaPassenger: function showChaPassenger(index) {
-				this.showpassengeraction = 2;
-				this.ChaPassengerIndex = index; //记录修改的位置
-
-				this.passengerName = this.Passenger[index].Name;
-				this.passengerPhone = this.Passenger[index].Mobile;
-			},
-			helpCenter: function helpCenter() {
-				this.controlHeader(true, "帮助中心");
-				this.helpVisible = true;
-			},
-			showHelpContent: function showHelpContent(index) {
-				if (index === this.helpContentShow) {
-					this.helpContentShow = 0;
-				} else {
-					this.helpContentShow = index;
-				}
 			}
 		},
 		components: {
@@ -622,50 +269,8 @@
 		}
 	});
 
-	document.getElementById("order-lists").addEventListener('scroll', _.throttle(function () {
-		var orderVisible = Vue_User.orderVisible;
-		var status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
-
-		if (status < 1000 && orderVisible) {
-			var id = Vue_User.UseOrderType;
-			Vue_User.getOrderData(id === 0 ? '' : id);
-		}
-	}, 100, { leading: false }));
-
-	document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function () {
-		var refundVisible = Vue_User.refundVisible;
-		var status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
-
-		if (status_refund < 1000 && refundVisible) {
-			Vue_User.applyRefund();
-		}
-	}, 100, { leading: false }));
-
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(2), __esModule: true };
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var core  = __webpack_require__(3)
-	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return $JSON.stringify.apply($JSON, arguments);
-	};
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -8763,7 +8368,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 5 */
+/* 2 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -9227,7 +8832,7 @@
 
 
 /***/ },
-/* 6 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -9307,13 +8912,13 @@
 	/* 1 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(7);
+	module.exports = __webpack_require__(4);
 
 	/***/ },
 	/* 2 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(12);
+	module.exports = __webpack_require__(9);
 
 	/***/ },
 	/* 3 */
@@ -9394,13 +8999,13 @@
 	/* 5 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(11);
 
 	/***/ },
 	/* 6 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(4);
+	module.exports = __webpack_require__(1);
 
 	/***/ },
 	/* 7 */
@@ -9560,7 +9165,7 @@
 	/* 11 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(5);
 
 	/***/ },
 	/* 12 */
@@ -18566,55 +18171,55 @@
 	/* 200 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(12);
 
 	/***/ },
 	/* 201 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(16);
+	module.exports = __webpack_require__(13);
 
 	/***/ },
 	/* 202 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(18);
+	module.exports = __webpack_require__(15);
 
 	/***/ },
 	/* 203 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(20);
+	module.exports = __webpack_require__(17);
 
 	/***/ },
 	/* 204 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(21);
+	module.exports = __webpack_require__(18);
 
 	/***/ },
 	/* 205 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(23);
+	module.exports = __webpack_require__(20);
 
 	/***/ },
 	/* 206 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(21);
 
 	/***/ },
 	/* 207 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(17);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 	/* 208 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(23);
 
 	/***/ },
 	/* 209 */
@@ -18627,7 +18232,7 @@
 	/******/ ]);
 
 /***/ },
-/* 7 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -18741,7 +18346,7 @@
 	/***/ 15:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(8);
+	module.exports = __webpack_require__(5);
 
 	/***/ },
 
@@ -18927,16 +18532,16 @@
 	/******/ });
 
 /***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(9);
+	var content = __webpack_require__(6);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18953,10 +18558,10 @@
 	}
 
 /***/ },
-/* 9 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -18967,7 +18572,7 @@
 
 
 /***/ },
-/* 10 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*
@@ -19023,7 +18628,7 @@
 
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -19275,16 +18880,16 @@
 
 
 /***/ },
-/* 12 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(13);
+	var content = __webpack_require__(10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -19301,10 +18906,10 @@
 	}
 
 /***/ },
-/* 13 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -19315,13 +18920,13 @@
 
 
 /***/ },
-/* 14 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t(__webpack_require__(4)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
+	!function(e,t){ true?module.exports=t(__webpack_require__(1)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
 
 /***/ },
-/* 15 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19352,7 +18957,7 @@
 
 
 /***/ },
-/* 16 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -19645,7 +19250,7 @@
 	/***/ 205:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(17);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 
@@ -20559,7 +20164,7 @@
 	/******/ });
 
 /***/ },
-/* 17 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/*
@@ -20606,16 +20211,16 @@
 
 
 /***/ },
-/* 18 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(19);
+	var content = __webpack_require__(16);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20632,10 +20237,10 @@
 	}
 
 /***/ },
-/* 19 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -20646,7 +20251,7 @@
 
 
 /***/ },
-/* 20 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -20809,7 +20414,7 @@
 	/***/ 5:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(11);
 
 	/***/ },
 
@@ -20975,16 +20580,16 @@
 	/******/ });
 
 /***/ },
-/* 21 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(22);
+	var content = __webpack_require__(19);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21001,10 +20606,10 @@
 	}
 
 /***/ },
-/* 22 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -21015,7 +20620,7 @@
 
 
 /***/ },
-/* 23 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -21666,16 +21271,16 @@
 	/******/ });
 
 /***/ },
-/* 24 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(25);
+	var content = __webpack_require__(22);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21692,10 +21297,10 @@
 	}
 
 /***/ },
-/* 25 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -21706,7 +21311,7 @@
 
 
 /***/ },
-/* 26 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -21720,7 +21325,7 @@
 	    (global.install = factory());
 	}(this, (function () { 'use strict';
 
-	var Promise = __webpack_require__(27).Promise;
+	var Promise = __webpack_require__(24).Promise;
 	var inBrowser = typeof window !== 'undefined';
 
 	if (!Array.prototype.$remove) {
@@ -21959,7 +21564,7 @@
 	})));
 
 /***/ },
-/* 27 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -22094,7 +21699,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(29);
+	    var vertx = __webpack_require__(26);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -23116,10 +22721,10 @@
 
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), (function() { return this; }())))
 
 /***/ },
-/* 28 */
+/* 25 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -23305,22 +22910,22 @@
 
 
 /***/ },
-/* 29 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 30 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(31);
+	var content = __webpack_require__(28);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23337,10 +22942,10 @@
 	}
 
 /***/ },
-/* 31 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -23351,7 +22956,7 @@
 
 
 /***/ },
-/* 32 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23360,7 +22965,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(1);
+	var _stringify = __webpack_require__(30);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -23544,46 +23149,31 @@
 	};
 
 /***/ },
-/* 33 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(34);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./ticketuser.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./ticketuser.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	module.exports = { "default": __webpack_require__(31), __esModule: true };
 
 /***/ },
-/* 34 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 10000;\n  width: 100%;\n  text-align: center;\n  background-color: #2196F3;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: center;\n      justify-content: center;\n  background-color: #329be8; }\n  header .left {\n    position: absolute;\n    width: 50px;\n    top: 0;\n    left: 0;\n    line-height: 50px; }\n    header .left > img {\n      width: 20px;\n      height: 20px;\n      line-height: 50px;\n      position: absolute;\n      left: 25px;\n      top: 15.5px; }\n  header .home {\n    text-align: center; }\n    header .home span {\n      color: #fff;\n      font-size: 20px; }\n\n.body {\n  width: 100%; }\n  .body .header {\n    height: 190px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    position: relative;\n    padding: 0 20px; }\n    .body .header > img {\n      position: absolute;\n      top: 0;\n      left: 0;\n      height: 190px;\n      width: 100%;\n      z-index: -1; }\n    .body .header .content {\n      height: 90px;\n      width: 100%; }\n    .body .header .left {\n      -ms-flex: 5;\n          flex: 5;\n      text-align: left; }\n      .body .header .left p {\n        color: #fff;\n        height: 45px;\n        line-height: 45px;\n        font-weight: 900;\n        font-size: 30px; }\n      .body .header .left span {\n        color: #fff;\n        font-size: 12px;\n        height: 20px;\n        line-height: 20px; }\n        .body .header .left span:last-child {\n          display: block;\n          font-size: 12px;\n          margin-top: 10px; }\n    .body .header .right {\n      -ms-flex: 5;\n          flex: 5;\n      text-align: right; }\n      .body .header .right img {\n        width: 90px;\n        height: 90px;\n        border-radius: 50%; }\n  .body .lists {\n    width: 100%;\n    padding: 0 10px; }\n\n.linestyle {\n  width: 100%;\n  height: 60px;\n  position: relative;\n  background-color: #fff;\n  margin-top: 10px;\n  border-radius: 5px;\n  background-color: #fff;\n  display: block; }\n  .linestyle > div {\n    width: 60px;\n    height: 60px;\n    line-height: 60px;\n    position: absolute;\n    top: 0;\n    right: 0;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .linestyle > div > img {\n      width: 20px;\n      height: 20px; }\n  .linestyle p {\n    height: 60px;\n    line-height: 60px;\n    font-size: 15px;\n    color: #323232;\n    margin-left: 10px; }\n\n.order-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #fafafa;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .order-lists .lists {\n    margin: 0 10px;\n    margin-top: 100px;\n    position: relative; }\n    .order-lists .lists .order-lists-header {\n      position: fixed;\n      top: 50px;\n      left: 0;\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-align: center;\n          align-items: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n      margin-bottom: 10px;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: white;\n      padding: 0 20px; }\n      .order-lists .lists .order-lists-header span {\n        -ms-flex: 1;\n            flex: 1;\n        font-size: 16px;\n        position: relative;\n        font-weight: 900;\n        color: #c8c8c8; }\n      .order-lists .lists .order-lists-header span.active {\n        color: #329be8; }\n        .order-lists .lists .order-lists-header span.active::after {\n          content: \"\";\n          position: absolute;\n          bottom: 0;\n          left: 38%;\n          background-color: #329be8;\n          width: 20px;\n          height: 4px; }\n    .order-lists .lists .list {\n      width: 100%;\n      border-radius: 10px;\n      margin-bottom: 10px; }\n      .order-lists .lists .list .list-header {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        border-bottom: 1px solid #dddddd;\n        padding: 5px 0; }\n        .order-lists .lists .list .list-header span {\n          font-size: 1.4rem;\n          color: #444444; }\n        .order-lists .lists .list .list-header span.time {\n          text-align: left;\n          -ms-flex: 0.7;\n              flex: 0.7;\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-header span.type {\n          text-align: right;\n          -ms-flex: 0.3;\n              flex: 0.3; }\n      .order-lists .lists .list .list-center {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 50px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-center .city {\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex: 0.8;\n              flex: 0.8;\n          position: relative; }\n          .order-lists .lists .list .list-center .city > span {\n            font-size: 1.6rem;\n            -ms-flex: 1;\n                flex: 1; }\n          .order-lists .lists .list .list-center .city > span.start {\n            position: relative; }\n            .order-lists .lists .list .list-center .city > span.start::before {\n              position: absolute;\n              bottom: 5px;\n              right: 20%;\n              height: 5px;\n              width: 30%;\n              background-color: #0074D9;\n              content: \"\"; }\n            .order-lists .lists .list .list-center .city > span.start::after {\n              position: absolute;\n              bottom: 5px;\n              right: 12%;\n              height: 0;\n              width: 0;\n              border: 6px solid #fff;\n              border-color: transparent transparent #0074D9 #0074D9;\n              content: \"\"; }\n          .order-lists .lists .list .list-center .city i {\n            position: absolute;\n            top: 0;\n            left: 27%; }\n        .order-lists .lists .list .list-center span.money {\n          font-size: 1.6rem;\n          -ms-flex: 0.2;\n              flex: 0.2;\n          text-align: right;\n          color: #db3652; }\n      .order-lists .lists .list .list-footer {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        padding: 5px 0;\n        min-height: 30px;\n        -ms-flex-align: center;\n            align-items: center; }\n        .order-lists .lists .list .list-footer span {\n          font-size: 1.2rem; }\n        .order-lists .lists .list .list-footer span.name {\n          text-align: left;\n          color: #777777;\n          -ms-flex: 0.7;\n              flex: 0.7; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          -ms-flex: 0.3;\n              flex: 0.3; }\n        .order-lists .lists .list .list-footer span.order-status {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-pay {\n          text-align: right; }\n        .order-lists .lists .list .list-footer span.order-no {\n          color: #db3652; }\n        .order-lists .lists .list .list-footer span.order-paying {\n          color: #0074D9; }\n        .order-lists .lists .list .list-footer span.order-payed {\n          color: #2ecc71; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.ticket-info {\n  margin: 10px 0;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.discount-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .discount-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center; }\n    .discount-lists .lists .list {\n      width: 100%;\n      padding: 0 2%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      margin-bottom: 10px;\n      background-color: #fff; }\n      .discount-lists .lists .list .left {\n        -ms-flex: 0.1;\n            flex: 0.1;\n        text-align: center; }\n        .discount-lists .lists .list .left img {\n          width: 40px;\n          height: 40px; }\n      .discount-lists .lists .list .center {\n        -ms-flex: 0.6;\n            flex: 0.6;\n        padding-left: 10px; }\n        .discount-lists .lists .list .center p {\n          font-size: 1.4rem;\n          height: 24px;\n          line-height: 24px; }\n          .discount-lists .lists .list .center p span.little {\n            font-size: 1rem; }\n          .discount-lists .lists .list .center p span.red {\n            color: #db3652; }\n          .discount-lists .lists .list .center p span.big {\n            font-size: 1.4rem; }\n        .discount-lists .lists .list .center span {\n          color: #AAAAAA;\n          height: 20px;\n          line-height: 20px; }\n      .discount-lists .lists .list .right {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        text-align: center; }\n        .discount-lists .lists .list .right a {\n          color: white;\n          background-color: #0074D9;\n          font-size: 1.2rem;\n          padding: 5px 10px;\n          outline: none;\n          border-radius: 10px; }\n\n.action-page {\n  width: 100%;\n  height: 100%;\n  background-color: #fafafa;\n  overflow-y: scroll; }\n  .action-page > .action {\n    padding-bottom: 50px; }\n    .action-page > .action .action-body {\n      margin-top: 20px; }\n      .action-page > .action .action-body .add-action {\n        width: 100%; }\n        .action-page > .action .action-body .add-action > .line {\n          margin: 0 10px;\n          background-color: #fff;\n          border-radius: 10px;\n          height: 50px;\n          position: relative; }\n          .action-page > .action .action-body .add-action > .line input {\n            height: 50px;\n            display: block;\n            margin-right: 70px;\n            padding-left: 20px;\n            font-size: 16px;\n            width: 70%; }\n          .action-page > .action .action-body .add-action > .line button {\n            position: absolute;\n            top: 0;\n            right: 20px;\n            height: 50px;\n            line-height: 50px;\n            font-size: 16px;\n            color: #329be8;\n            outline: none;\n            border: none;\n            background-color: #fff; }\n            .action-page > .action .action-body .add-action > .line button i {\n              font-size: 16px;\n              color: #329be8; }\n      .action-page > .action .action-body .pay-ticket-info {\n        margin: 0 10px;\n        background-color: #fff;\n        border-radius: 10px;\n        position: relative; }\n        .action-page > .action .action-body .pay-ticket-info p {\n          font-size: 16px;\n          color: #c8c8c8;\n          height: 40px;\n          line-height: 40px;\n          margin-left: 20px; }\n        .action-page > .action .action-body .pay-ticket-info p:nth-child(1) {\n          color: #000; }\n      .action-page > .action .action-body .pay {\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n        position: fixed;\n        bottom: 0;\n        left: 0;\n        width: 100%;\n        padding: 0 20px;\n        background-color: #fff;\n        box-shadow: 3px 0 3px 3px #efeeee; }\n        .action-page > .action .action-body .pay .left {\n          -ms-flex: 5;\n              flex: 5; }\n          .action-page > .action .action-body .pay .left p {\n            height: 50px;\n            line-height: 50px;\n            font-size: 16px;\n            color: #c8c8c8; }\n            .action-page > .action .action-body .pay .left p span {\n              font-size: 18px;\n              color: #f35252;\n              font-weight: 900; }\n        .action-page > .action .action-body .pay .right {\n          -ms-flex: 5;\n              flex: 5;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n          .action-page > .action .action-body .pay .right span {\n            color: #c8c8c8;\n            font-size: 12px;\n            -ms-flex: 5;\n                flex: 5; }\n          .action-page > .action .action-body .pay .right button {\n            background-color: #329be8;\n            height: 40px;\n            line-height: 40px;\n            font-size: 16px;\n            outline: none;\n            border: none;\n            color: #fff;\n            -ms-flex: 5;\n                flex: 5;\n            border-radius: 5px; }\n    .action-page > .action p.refresh {\n      height: 40px;\n      line-height: 40px;\n      font-size: 16px;\n      text-align: center;\n      color: #c8c8c8; }\n      .action-page > .action p.refresh i {\n        color: #c8c8c8; }\n    .action-page > .action .action-select {\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      margin-top: 60px; }\n      .action-page > .action .action-select .line {\n        margin: 0 10px;\n        margin-bottom: 10px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        height: 60px;\n        line-height: 60px;\n        border-radius: 10px;\n        background-color: #fff; }\n        .action-page > .action .action-select .line .left {\n          -ms-flex: 0.3;\n              flex: 0.3;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: start;\n              justify-content: flex-start;\n          -ms-flex-align: center;\n              align-items: center; }\n          .action-page > .action .action-select .line .left p {\n            margin-left: 10px;\n            font-size: 16px; }\n        .action-page > .action .action-select .line .center {\n          -ms-flex: 0.5;\n              flex: 0.5;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: start;\n              justify-content: flex-start;\n          -ms-flex-align: center;\n              align-items: center; }\n          .action-page > .action .action-select .line .center p {\n            line-height: 25px;\n            color: #323232;\n            font-size: 15px;\n            margin-left: 10px; }\n        .action-page > .action .action-select .line .right {\n          -ms-flex: 0.2;\n              flex: 0.2;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n          .action-page > .action .action-select .line .right > img {\n            width: 20px;\n            height: 20px; }\n    .action-page > .action .action-use {\n      margin-top: 50px; }\n      .action-page > .action .action-use .popup-header {\n        height: 50px;\n        width: 100%;\n        line-height: 50px;\n        background-color: #fff;\n        color: #c8c8c8;\n        text-align: center;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .action-page > .action .action-use .popup-header span {\n          display: inline-block;\n          height: 50px;\n          line-height: 50px;\n          font-size: 18px;\n          -ms-flex: 1;\n              flex: 1;\n          font-weight: 900; }\n        .action-page > .action .action-use .popup-header span.active {\n          color: #329be8;\n          position: relative; }\n          .action-page > .action .action-use .popup-header span.active::after {\n            position: absolute;\n            bottom: 0px;\n            left: 45%;\n            width: 20px;\n            height: 4px;\n            background-color: #329be8;\n            content: \"\"; }\n      .action-page > .action .action-use .page {\n        width: 100%; }\n        .action-page > .action .action-use .page .rebate {\n          height: 130px;\n          display: -ms-flexbox;\n          display: flex;\n          margin: 0 10px;\n          margin-top: 10px;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center; }\n          .action-page > .action .action-use .page .rebate .left {\n            -ms-flex: 3;\n                flex: 3;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: column;\n                flex-direction: column;\n            -ms-flex-pack: center;\n                justify-content: center;\n            -ms-flex-align: center;\n                align-items: center;\n            background-color: #329be8;\n            position: relative; }\n            .action-page > .action .action-use .page .rebate .left .circle {\n              position: absolute;\n              top: -3px;\n              left: -5px;\n              bottom: -3px;\n              display: -ms-flexbox;\n              display: flex;\n              -ms-flex-direction: column;\n                  flex-direction: column;\n              -ms-flex-pack: center;\n                  justify-content: center;\n              -ms-flex-align: center;\n                  align-items: center;\n              -ms-flex-pack: distribute;\n                  justify-content: space-around; }\n              .action-page > .action .action-use .page .rebate .left .circle span {\n                width: 10px;\n                height: 10px;\n                background-color: #fff;\n                border-radius: 50%; }\n            .action-page > .action .action-use .page .rebate .left .title {\n              display: -ms-flexbox;\n              display: flex;\n              -ms-flex-direction: column;\n                  flex-direction: column;\n              -ms-flex-pack: center;\n                  justify-content: center;\n              -ms-flex-align: center;\n                  align-items: center;\n              color: #fff; }\n              .action-page > .action .action-use .page .rebate .left .title p {\n                -ms-flex: 6;\n                    flex: 6;\n                font-size: 30px;\n                font-weight: 900;\n                color: #fff; }\n              .action-page > .action .action-use .page .rebate .left .title span {\n                -ms-flex: 4;\n                    flex: 4;\n                font-size: 15px;\n                font-weight: 900; }\n          .action-page > .action .action-use .page .rebate .right {\n            -ms-flex: 7;\n                flex: 7;\n            background-color: #fff;\n            border-top-right-radius: 10px;\n            border-bottom-right-radius: 10px;\n            border: 1px solid #c8c8c8;\n            border-left: none;\n            display: -ms-flexbox;\n            display: flex;\n            -ms-flex-direction: row;\n                flex-direction: row;\n            -ms-flex-pack: center;\n                justify-content: center;\n            -ms-flex-align: center;\n                align-items: center; }\n            .action-page > .action .action-use .page .rebate .right .info {\n              -ms-flex: 7;\n                  flex: 7;\n              height: 100px;\n              text-align: left;\n              display: -ms-flexbox;\n              display: flex;\n              -ms-flex-direction: column;\n                  flex-direction: column;\n              -ms-flex-pack: center;\n                  justify-content: center;\n              -ms-flex-align: center;\n                  align-items: center; }\n              .action-page > .action .action-use .page .rebate .right .info span {\n                font-size: 15px;\n                font-weight: 900;\n                height: 65px;\n                width: 100%;\n                padding: 10px 10px; }\n              .action-page > .action .action-use .page .rebate .right .info span:last-child {\n                color: #c8c8c8;\n                font-weight: 400; }\n            .action-page > .action .action-use .page .rebate .right .check {\n              -ms-flex: 3;\n                  flex: 3;\n              display: -ms-flexbox;\n              display: flex;\n              -ms-flex-direction: row;\n                  flex-direction: row;\n              -ms-flex-pack: center;\n                  justify-content: center;\n              -ms-flex-align: center;\n                  align-items: center;\n              height: 130px;\n              position: relative; }\n              .action-page > .action .action-use .page .rebate .right .check img {\n                width: 25px;\n                height: 25px;\n                z-index: -1; }\n              .action-page > .action .action-use .page .rebate .right .check span {\n                position: absolute;\n                top: 52px;\n                left: 33%;\n                width: 25px;\n                height: 25px;\n                background-color: #fafafa;\n                border-radius: 50%;\n                z-index: 0; }\n              .action-page > .action .action-use .page .rebate .right .check a {\n                font-size: 14px;\n                height: 130px;\n                width: 100%;\n                text-align: center;\n                line-height: 130px;\n                color: #329be8; }\n          .action-page > .action .action-use .page .rebate.active .check img {\n            z-index: 1; }\n          .action-page > .action .action-use .page .rebate.disabled .left {\n            background-color: #c8c8c8; }\n          .action-page > .action .action-use .page .rebate.disabled .right .info span {\n            color: #c8c8c8; }\n\n.passenger-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .passenger-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center;\n    background-color: white; }\n    .passenger-lists .lists .list {\n      -ms-flex: 1;\n          flex: 1;\n      width: 100%;\n      padding: 0 2%;\n      height: 40px;\n      line-height: 40px;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      border-bottom: 1px solid #dddddd; }\n      .passenger-lists .lists .list span {\n        font-size: 1.4rem; }\n      .passenger-lists .lists .list .passenger-name {\n        -ms-flex: 0.2;\n            flex: 0.2; }\n      .passenger-lists .lists .list .passenger-phone {\n        color: #777777;\n        font-size: 1.2rem;\n        -ms-flex: 0.5;\n            flex: 0.5; }\n      .passenger-lists .lists .list .passenger-operate {\n        font-size: 1.4rem;\n        height: 40px;\n        line-height: 40px;\n        color: #0074D9;\n        -ms-flex: 0.3;\n            flex: 0.3;\n        text-align: right; }\n        .passenger-lists .lists .list .passenger-operate i {\n          height: 40px;\n          width: 40px;\n          line-height: 40px; }\n  .passenger-lists .info-man {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    background-color: white;\n    margin-top: 20px; }\n    .passenger-lists .info-man .info {\n      height: 40px;\n      line-height: 40px;\n      -ms-flex: 1;\n          flex: 1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      width: 96%;\n      margin: 0 2%;\n      border-bottom: 1px solid #dddddd; }\n      .passenger-lists .info-man .info span {\n        -ms-flex: 0.3;\n            flex: 0.3;\n        font-size: 1.3rem; }\n      .passenger-lists .info-man .info input {\n        -ms-flex: 0.7;\n            flex: 0.7;\n        font-size: 1.3rem; }\n    .passenger-lists .info-man .info-man-name input {\n      -ms-flex: 0.7;\n          flex: 0.7;\n      font-size: 1.3rem; }\n  .passenger-lists .add-passenger {\n    color: white;\n    background-color: #FF851B;\n    width: 90%;\n    margin: 0 5%;\n    padding: 10px 0;\n    border: 0;\n    outline: none;\n    border-radius: 10px;\n    margin-top: 20px;\n    font-size: 1.4rem; }\n    .passenger-lists .add-passenger i {\n      margin-right: 5px; }\n\n.user-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll;\n  margin-top: 50px; }\n  .user-lists .lists {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    margin: 0 10px; }\n    .user-lists .lists .info-man {\n      -ms-flex: 1;\n          flex: 1;\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      border-bottom: 1px solid #dddddd; }\n      .user-lists .lists .info-man .info-man-line {\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-align: center;\n            align-items: center;\n        background-color: white;\n        border-radius: 10px;\n        margin-top: 10px; }\n        .user-lists .lists .info-man .info-man-line .left {\n          -ms-flex: 0.3;\n              flex: 0.3;\n          margin-left: 10px; }\n        .user-lists .lists .info-man .info-man-line .gray {\n          -ms-flex: 0.5;\n              flex: 0.5;\n          color: #777777; }\n        .user-lists .lists .info-man .info-man-line .right {\n          -ms-flex: 0.2;\n              flex: 0.2;\n          height: 40px;\n          line-height: 40px;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row;\n          -ms-flex-pack: center;\n              justify-content: center;\n          -ms-flex-align: center;\n              align-items: center; }\n          .user-lists .lists .info-man .info-man-line .right i {\n            float: right;\n            color: #0074D9;\n            font-size: 1.4rem; }\n          .user-lists .lists .info-man .info-man-line .right > img {\n            width: 20px;\n            height: 20px; }\n      .user-lists .lists .info-man span {\n        font-size: 1.4rem; }\n\n.my-modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.6);\n  z-index: 5000; }\n\n.mint-msgbox-wrapper {\n  z-index: 5001 !important; }\n  .mint-msgbox-wrapper .mint-msgbox-btn {\n    color: #0BB20C;\n    font-size: 18px; }\n\n.help-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #fafafa;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll;\n  margin-top: 50px; }\n  .help-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    margin-top: 10px; }\n    .help-lists .lists .help {\n      width: 100%; }\n      .help-lists .lists .help .help-list {\n        margin: 0 10px;\n        background-color: #fff;\n        margin-top: 10px;\n        border-radius: 10px; }\n        .help-lists .lists .help .help-list .header {\n          height: 60px;\n          line-height: 60px;\n          position: relative; }\n          .help-lists .lists .help .help-list .header span {\n            font-size: 18px;\n            color: #323232; }\n          .help-lists .lists .help .help-list .header span.right {\n            position: absolute;\n            top: 0;\n            right: 0;\n            width: 60px;\n            height: 60px;\n            line-height: 60px;\n            text-align: center; }\n            .help-lists .lists .help .help-list .header span.right i {\n              color: #c8c8c8; }\n        .help-lists .lists .help .help-list .help-content {\n          width: 100%;\n          padding: 15px 10px; }\n          .help-lists .lists .help .help-list .help-content p {\n            text-indent: 1em;\n            font-size: 18px;\n            line-height: 30px;\n            color: #323232; }\n\n.refund-lists {\n  width: 100%;\n  height: 100%;\n  background-color: #f7f7f7;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  overflow-y: scroll; }\n  .refund-lists .lists {\n    width: 100%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    margin-top: 60px;\n    -ms-flex-align: center;\n        align-items: center; }\n    .refund-lists .lists .list {\n      width: 96%;\n      margin: 0 2%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      background-color: white;\n      border-radius: 10px;\n      margin-bottom: 10px;\n      padding: 10px 10px;\n      color: #111111; }\n      .refund-lists .lists .list .left {\n        -ms-flex: 0.8;\n            flex: 0.8;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n        .refund-lists .lists .list .left .left-line {\n          height: 30px;\n          line-height: 30px;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-direction: row;\n              flex-direction: row; }\n          .refund-lists .lists .list .left .left-line .left-span {\n            -ms-flex: 0.3;\n                flex: 0.3; }\n          .refund-lists .lists .list .left .left-line span:last-child {\n            -ms-flex: 0.7;\n                flex: 0.7; }\n      .refund-lists .lists .list .right {\n        -ms-flex: 0.2;\n            flex: 0.2;\n        position: relative; }\n        .refund-lists .lists .list .right img.checking {\n          position: absolute;\n          right: 10px;\n          bottom: 10px;\n          width: 60px;\n          height: 60px;\n          transform: rotate(-30deg); }\n    .refund-lists .lists span {\n      font-size: 1.2rem; }\n    .refund-lists .lists .blue {\n      color: #0074D9; }\n    .refund-lists .lists .red {\n      color: #db3652; }\n\n.mint-indicator {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  text-align: center;\n  color: #fff;\n  font-size: 2rem;\n  z-index: 10000; }\n  .mint-indicator .mint-indicator-wrapper {\n    background-color: rgba(0, 0, 0, 0.7);\n    border-radius: 10px;\n    padding: 25px !important; }\n\n.mint-toast {\n  z-index: 10000; }\n\n.mint-msgbox-input input {\n  height: 40px;\n  line-height: 40px;\n  font-size: 18px; }\n\nfooter {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  background-color: #fff;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  z-index: 100; }\n  footer .footer {\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px; }\n    footer .footer i {\n      font-size: 1.8rem; }\n    footer .footer img {\n      width: 22px;\n      height: 22px; }\n    footer .footer p {\n      font-size: 1.2rem;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px; }\n  footer .footer.active {\n    color: #0074D9; }\n    footer .footer.active p {\n      color: #0074D9; }\n\n.v-modal {\n  display: none; }\n", ""]);
-
-	// exports
-
+	var core  = __webpack_require__(32)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
 
 /***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 33 */,
+/* 34 */,
 /* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25135,6 +24725,46 @@
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  }
 	}.call(this));
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(37);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./steward.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./steward.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch;\n  overflow: hidden; }\n\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #f35252;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  text-align: center; }\n  header span {\n    height: 50px;\n    line-height: 50px;\n    color: #f35252;\n    font-size: 18px;\n    font-weight: 900;\n    display: inline-block; }\n\n.nothing {\n  height: 50px;\n  width: 100%; }\n\n.body {\n  width: 100%;\n  overflow-y: scroll; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      padding: 0 10px;\n      width: 100%; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 25px;\n          height: 25px;\n          margin-left: 10px;\n          z-index: -1; }\n        .passenger-info .passenger-selected > .line > div span {\n          position: absolute;\n          top: 12.5px;\n          left: 10px;\n          width: 25px;\n          height: 25px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 1; }\n      .passenger-info .passenger-selected > .line .center {\n        width: 60%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .right {\n        width: 20%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        text-align: right;\n        margin-right: 10px; }\n    .passenger-info .passenger-selected .line.vaild > div img {\n      display: none; }\n    .passenger-info .passenger-selected .line.vaild .center {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.vaild .right {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.active > div img {\n      z-index: 1; }\n    .passenger-info .passenger-selected .line.active > div span {\n      z-index: -1; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.pay-ticket-info {\n  margin: 0 10px;\n  background-color: #fff;\n  border-radius: 10px;\n  position: relative; }\n  .pay-ticket-info p {\n    font-size: 16px;\n    color: #c8c8c8;\n    height: 40px;\n    line-height: 40px;\n    margin-left: 20px; }\n  .pay-ticket-info p:nth-child(1) {\n    color: #000; }\n", ""]);
+
+	// exports
 
 
 /***/ }

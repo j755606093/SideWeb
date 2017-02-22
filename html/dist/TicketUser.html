@@ -297,11 +297,29 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===1" class="help-content">
-              <p>1.汽车票产品因受全国各客运站的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-7个工作日内全额安全退还至原支付账户。</p>
-              <p>2.目前仅支持购买售卖全价票（含成人及身高超过1.50米的儿童).</p>
-              <p>3.暂不支持儿童票、免票（携儿童）、学生票、优待票等特殊票种的购买，请乘客根据需要在出发车站自行购买，携带儿童数量有限，请注意提前至车站报备。</p>
-              <p>4.提前至少30分钟（节假日等高峰期建议提前一小时）凭购票成功短信，或订单详情中显示的“取票订单号”、“取票号”、“取票密码”等信息前往出发车站取票，并请准备好预订时的身份证件以备查。建议优先在自助取票机取票，如无自助取票机，请将取票信息提供给售票窗口或服务台的工作人员取票.</p>
-              <p>5.套餐类产品中汽车票及附加的优惠券、门票等均不支持在线退改，如需退车票，请至车站取票后办理.</p>
+              <p>1.汽车票产品因受运输公司的不同规定和要求，无法承诺百分之百代购成功。如购票未成功，您的资金将在1-2个工作日内全额安全退还至原支付账户。</p>
+              <p>2.目前仅支持购买售卖全价票。</p>
+            </div>
+          </div>
+          <div class="help-list" @click="showHelpContent(10)">
+            <div class="header">
+              <span class="left">取票说明</span>
+              <span v-if="helpContentShow===10" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===10" class="help-content">
+              <p>提前至少10分钟（节假日等高峰期建议提前）前往选定的上车点，凭购票成功短信，或订单详情中显示的“二维码”、“验证码”等信息乘车。</p>
+            </div>
+          </div>
+          <div class="help-list" @click="showHelpContent(11)">
+            <div class="header">
+              <span class="left">退票、改签说明</span>
+              <span v-if="helpContentShow===11" class="right"><i class="fa fa-caret-up"></i></span>
+              <span v-else class="right"><i class="fa fa-caret-down"></i></span>
+            </div>
+            <div v-show="helpContentShow===11" class="help-content">
+              <p>1.若在我司平台申请在线退票，车站将收取10%退票手续费，实际请以平台显示的退款金额为准。</p>
+              <p>2.暂不支持改签。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(2)">
@@ -312,8 +330,7 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===2" class="help-content">
-              <p>1.若在我司申请在线退票，车站将收取10%-20%退票手续费，实际请以短信通知金额为准</p>
-              <p>2.暂不支持改签，如需改签，请在发车前到出发车站按规定办理或退票后重新购买。</p>
+              <p>发车时间大于1小时的订单可以申请退款，受运输公司、平台资源等原因影响，退票将收取实际支付金额的10%服务费。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(3)">
@@ -323,17 +340,17 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===3" class="help-content">
-              <p>1.订单支付后,在发车前申请的退款将会人工审核并微信通知结果,后台确认退款后微信将会在1-3个工作日原路退款至支付账户.</p>
+              <p>您的资金将在1-2个工作日内全额安全退还至原支付账户。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(4)">
             <div class="header">
-              <span class="left">订票成功后为什么没显示座位号信息？</span>
+              <span class="left">如何确认我的订单是否订票成功?</span>
               <span v-if="helpContentShow===4" class="right"><i class="fa fa-caret-up"></i></span>
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===4" class="help-content">
-              <p>1.由于订票时无法在线选座，因此取票信息中不包含座位号，您去车站取票时取票系统会自动生成座位号。</p>
+              <p>我司有专人负责确认，并与微信公众号、短信的方式通知到用户。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(5)">
@@ -343,40 +360,40 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===5" class="help-content">
-              <p>1.目前购买汽车票无需实名制，只需提供购买取票手机号,乘客可以由亲友代为购票呢。</p>
+              <p>可以的，只需在乘车人里填写您的姓名手机号即可。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(6)">
             <div class="header">
-              <span class="left">订单支付完成后页面还是显示正在付款？</span>
+              <span class="left">订票时乘客乘客姓名写错了影响乘车吗？</span>
               <span v-if="helpContentShow===6" class="right"><i class="fa fa-caret-up"></i></span>
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===6" class="help-content">
-              <p>1.这种情况一般是由于数据返回有延误，您可以登录用户中心后台查看订单状态，如果发现订单状态仍然显示为待付款，您可以联系客服人员解决问题。</p>
+              <p>不影响的，您的乘车人联系电话也可作为凭证。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(7)">
             <div class="header">
-              <span class="left">订票时乘客姓名写错了影响取票吗？</span>
+              <span class="left">怎么退掉订单中的其中一张票？</span>
               <span v-if="helpContentShow===7" class="right"><i class="fa fa-caret-up"></i></span>
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===7" class="help-content">
-              <p>1.姓名错误不影响取票,手机号如果错误可以在个人中心修改.</p>
+              <p>进入退款页面后，可选择需退票的乘车人。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(8)">
             <div class="header">
-              <span class="left">怎么推掉订单中的其中一张票?</span>
+              <span class="left">错过了发车时间，可以退改签吗？?</span>
               <span v-if="helpContentShow===8" class="right"><i class="fa fa-caret-up"></i></span>
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===8" class="help-content">
-              <p>1.如果票未取,可以在订单页点击待使用,找到你需要退票的订单,再点击最下面的申请退款,选择你所需要退票的乘客,选择好后点击确定,然后输入申请理由,等待后台客服审核.</p>
+              <p>目前暂不支持过期退，如有特殊情况请联系电话客服。</p>
             </div>
           </div>
-          <div class="help-list" @click="showHelpContent(9)">
+          <!-- <div class="help-list" @click="showHelpContent(9)">
             <div class="header">
               <span class="left">错过了发车时间，可以退改签吗？</span>
               <span v-if="helpContentShow===9" class="right"><i class="fa fa-caret-up"></i></span>
@@ -385,7 +402,7 @@
             <div v-show="helpContentShow===9" class="help-content">
               <p>1.错过发车时间后是无法退改签的,请注意自己的发车时间.</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </mt-popup>

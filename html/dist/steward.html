@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <title>身边票务--乘务员</title>
+</head>
+
+<body>
+  <div id="app" v-show="ready" style="display: none;">
+    <!-- 头部 -->
+    <header>
+      <span v-text="headerTitle"></span>
+    </header>
+    <div class="nothing"></div>
+    <div class="body">
+      <div v-if="haveId" class="action-body">
+        <!-- 票信息 -->
+        <div class="ticket-info">
+          <div class="left">
+            <span v-text="OrderDetail.Boardtime">08:23</span>
+            <span v-text="OrderDetail.CoName">东方快车</span>
+            <span>{{OrderDetail.Route}}</span>
+          </div>
+          <div class="center">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="right">
+            <div class="top">
+              <div class="name">
+                <p>{{OrderDetail.StartPoint}}</p>
+                <p>{{OrderDetail.EndPoint}}</p>
+              </div>
+              <div class="info"></div>
+            </div>
+            <div class="bottom">
+              <img src="../picture/time.png">
+              <p>{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- 乘客信息 -->
+        <div class="passenger-info">
+          <div class="passenger-selected">
+            <div @click="selectUp(index)" :class="{line:true,vaild:item.vaild,active:item.active}" v-for="(item,index) in optionsPassenger">
+              <div><img src="../picture/select.png"><span></span></div>
+              <span class="center">{{item.Name}}</span>
+              <span class="right">{{item.Mobile?item.Mobile:'无'}}</span>
+            </div>
+            <div @click="selectAll" :class="{line:true,active:Passengers.length===optionsPassenger.length}">
+              <div><img src="../picture/select.png"><span></span></div>
+              <span class="center">全选验证</span>
+              <span class="right"></span>
+            </div>
+          </div>
+        </div>
+        <!-- 手机号 -->
+        <div class="write-info">
+          <div class="line">
+            <span style="color:rgb(20,20,20)">{{OrderDetail.Linkmanid+' (联系号码)'}}</span>
+            <div class="img"><img src="../picture/phone.png"></div>
+          </div>
+        </div>
+        <!-- 上车点备注 -->
+        <div class="write-info">
+          <div class="line">
+            <span style="color:rgb(20,20,20)">{{OrderDetail.Remark?OrderDetail.Remark:OrderDetail.StartAddress}}</span>
+            <div class="img"><img src="../picture/green_station.png"></div>
+          </div>
+        </div>
+        <!-- 旅行备注 -->
+        <div class="write-info">
+          <div class="line">
+            <span style="color:rgb(20,20,20)">{{OrderDetail.JourneyRmk?OrderDetail.JourneyRmk:'系统默认备注'}}</span>
+            <div class="img"><img src="../picture/edit.png"></div>
+          </div>
+        </div>
+        <!-- 订单信息 -->
+        <div class="pay-ticket-info">
+          <p>订单信息</p>
+          <p>订单编号:{{OrderDetail.Id}}</p>
+          <p>下单日期:{{OrderDetail.CTime}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./bundle-steward.js"></script>
+</body>
+
+</html>
