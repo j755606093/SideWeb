@@ -6,7 +6,7 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
   <meta name="format-detection" content="telephone=no, email=no"/>
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
   <title>身边票务--乘务员</title>
 </head>
 
@@ -65,6 +65,13 @@
             </div>
           </div>
         </div>
+
+        <div class="line-other">
+          <span><hr /></span>
+          <span class="center">其它信息</span>
+          <span><hr /></span>
+        </div>
+
         <!-- 手机号 -->
         <div class="write-info">
           <div class="line">
@@ -94,6 +101,15 @@
         </div>
       </div>
     </div>
+    <footer>
+      <div class="price">
+        <span>订单单价</span>
+        <span>¥150</span>
+      </div>
+      <div class="yes">
+        <button @click="yes">确定乘客</button>
+      </div>
+    </footer>
   </div>
   <script src="./bundle-steward.js"></script>
 </body>

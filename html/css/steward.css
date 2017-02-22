@@ -103,8 +103,7 @@ input {
 
 body {
   background-color: #f7f7f7;
-  -webkit-overflow-scrolling: touch;
-  overflow: hidden; }
+  -webkit-overflow-scrolling: touch; }
 
 header {
   height: 50px;
@@ -129,10 +128,6 @@ header {
 .nothing {
   height: 50px;
   width: 100%; }
-
-.body {
-  width: 100%;
-  overflow-y: scroll; }
 
 .ticket-info {
   margin: 10px 10px;
@@ -312,6 +307,32 @@ header {
       .ticket-info .right .bottom p {
         margin-left: 20px; }
 
+.line-other {
+  width: 100%;
+  padding: 0 10px;
+  height: 40px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+  .line-other span {
+    -ms-flex: 4;
+        flex: 4; }
+    .line-other span hr {
+      background-color: #c8c8c8; }
+  .line-other span.center {
+    text-align: center;
+    -ms-flex: 2;
+        flex: 2;
+    line-height: 40px;
+    height: 40px;
+    color: #c8c8c8;
+    font-size: 12px; }
+
 .passenger-info {
   width: 100%;
   margin-bottom: 10px; }
@@ -459,3 +480,58 @@ header {
     margin-left: 20px; }
   .pay-ticket-info p:nth-child(1) {
     color: #000; }
+
+footer {
+  height: 50px;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+  footer .price {
+    -ms-flex: 5;
+        flex: 5;
+    margin-left: 10px; }
+    footer .price span:first-child {
+      color: #c8c8c8;
+      font-size: 15px; }
+    footer .price span:last-child {
+      margin-left: 5px;
+      color: #f35252;
+      font-size: 20px;
+      font-weight: 900; }
+  footer .yes {
+    -ms-flex: 5;
+        flex: 5;
+    margin-right: 10px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: end;
+        justify-content: flex-end; }
+    footer .yes button {
+      outline: none;
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #329be8;
+      border-radius: 5px;
+      font-size: 18px; }

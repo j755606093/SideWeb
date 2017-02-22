@@ -135,7 +135,7 @@ const Vue_User = new Vue({
 			return null;
 		},
 		getOrderInfo(id) {
-			return fetch(config.serverUrl + "/api/Order/Get", {
+			return fetch(config.serverUrl + "/api/Steward/GetOrder", {
 					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
@@ -184,7 +184,7 @@ const Vue_User = new Vue({
 			
 			this.optionsPassenger.map((item,index)=>{
 				if(item.active){
-					this.Passengers.push(item);
+					this.Passengers.push(item.DId);
 				}
 			})
 		},
@@ -192,11 +192,36 @@ const Vue_User = new Vue({
 			this.Passengers = [];
 			this.optionsPassenger.map((item,index)=>{
 				item.active = true;
-				this.Passengers.push(item);
+				this.Passengers.push(item.DId);
 			})
+		},
+		yes(){
+			if(this.Passengers.length!==0){
+				this.fetchYes();
+			}
+			else{
+				this.toast("请选择需要乘车的乘客!");
+			}
+		},
+		fetchYes(){
+			fetch(config.serverUrl + "/Steward/ConfirmRide", {
+					method: "POST",
+					headers: config.headers,
+					body: JSON.stringify({
+						DIds: this.Passengers
+					})
+				}).then(result => result.json())
+				.then(result => {
+					console.log(result);
+					Indicator.close();
+				})
 		}
 	},
 	components: {
 		"mt-popup": Popup,
 	}
 });
+
+// document.body.addEventListener('touchmove', function(event) { 
+// event.preventDefault(); 
+// }, false);

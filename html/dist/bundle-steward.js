@@ -46,28 +46,28 @@
 
 	"use strict";
 
-	var _stringify = __webpack_require__(30);
+	var _stringify = __webpack_require__(1);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _vue = __webpack_require__(1);
+	var _vue = __webpack_require__(4);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	__webpack_require__(2);
+	__webpack_require__(5);
 
-	var _mintUi = __webpack_require__(3);
+	var _mintUi = __webpack_require__(6);
 
-	__webpack_require__(27);
+	__webpack_require__(30);
 
-	var _utils = __webpack_require__(29);
+	var _utils = __webpack_require__(32);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
-	__webpack_require__(36);
+	__webpack_require__(33);
 
 	var _ = __webpack_require__(35);
 
@@ -198,7 +198,7 @@
 			getOrderInfo: function getOrderInfo(id) {
 				var _this = this;
 
-				return fetch(config.serverUrl + "/api/Order/Get", {
+				return fetch(config.serverUrl + "/api/Steward/GetOrder", {
 					method: "POST",
 					headers: config.headers,
 					body: (0, _stringify2.default)({
@@ -250,7 +250,7 @@
 
 				this.optionsPassenger.map(function (item, index) {
 					if (item.active) {
-						_this2.Passengers.push(item);
+						_this2.Passengers.push(item.DId);
 					}
 				});
 			},
@@ -260,7 +260,28 @@
 				this.Passengers = [];
 				this.optionsPassenger.map(function (item, index) {
 					item.active = true;
-					_this3.Passengers.push(item);
+					_this3.Passengers.push(item.DId);
+				});
+			},
+			yes: function yes() {
+				if (this.Passengers.length !== 0) {
+					this.fetchYes();
+				} else {
+					this.toast("请选择需要乘车的乘客!");
+				}
+			},
+			fetchYes: function fetchYes() {
+				fetch(config.serverUrl + "/Steward/ConfirmRide", {
+					method: "POST",
+					headers: config.headers,
+					body: (0, _stringify2.default)({
+						DIds: this.Passengers
+					})
+				}).then(function (result) {
+					return result.json();
+				}).then(function (result) {
+					console.log(result);
+					_mintUi.Indicator.close();
 				});
 			}
 		},
@@ -269,8 +290,35 @@
 		}
 	});
 
+	// document.body.addEventListener('touchmove', function(event) { 
+	// event.preventDefault(); 
+	// }, false);
+
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(2), __esModule: true };
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(3)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -8368,7 +8416,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 2 */
+/* 5 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -8832,7 +8880,7 @@
 
 
 /***/ },
-/* 3 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -8912,13 +8960,13 @@
 	/* 1 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(4);
+	module.exports = __webpack_require__(7);
 
 	/***/ },
 	/* 2 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(9);
+	module.exports = __webpack_require__(12);
 
 	/***/ },
 	/* 3 */
@@ -8999,13 +9047,13 @@
 	/* 5 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(11);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 	/* 6 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(4);
 
 	/***/ },
 	/* 7 */
@@ -9165,7 +9213,7 @@
 	/* 11 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(8);
 
 	/***/ },
 	/* 12 */
@@ -18171,55 +18219,55 @@
 	/* 200 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(12);
+	module.exports = __webpack_require__(15);
 
 	/***/ },
 	/* 201 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(13);
+	module.exports = __webpack_require__(16);
 
 	/***/ },
 	/* 202 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(18);
 
 	/***/ },
 	/* 203 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(17);
+	module.exports = __webpack_require__(20);
 
 	/***/ },
 	/* 204 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(18);
+	module.exports = __webpack_require__(21);
 
 	/***/ },
 	/* 205 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(20);
+	module.exports = __webpack_require__(23);
 
 	/***/ },
 	/* 206 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(21);
+	module.exports = __webpack_require__(24);
 
 	/***/ },
 	/* 207 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(17);
 
 	/***/ },
 	/* 208 */
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(23);
+	module.exports = __webpack_require__(26);
 
 	/***/ },
 	/* 209 */
@@ -18232,7 +18280,7 @@
 	/******/ ]);
 
 /***/ },
-/* 4 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -18346,7 +18394,7 @@
 	/***/ 15:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(8);
 
 	/***/ },
 
@@ -18532,16 +18580,16 @@
 	/******/ });
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(6);
+	var content = __webpack_require__(9);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18558,10 +18606,10 @@
 	}
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -18572,7 +18620,7 @@
 
 
 /***/ },
-/* 7 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/*
@@ -18628,7 +18676,7 @@
 
 
 /***/ },
-/* 8 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -18880,16 +18928,16 @@
 
 
 /***/ },
-/* 9 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(10);
+	var content = __webpack_require__(13);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18906,10 +18954,10 @@
 	}
 
 /***/ },
-/* 10 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -18920,13 +18968,13 @@
 
 
 /***/ },
-/* 11 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t(__webpack_require__(1)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
+	!function(e,t){ true?module.exports=t(__webpack_require__(4)):"function"==typeof define&&define.amd?define("VuePopup",["vue"],t):"object"==typeof exports?exports.VuePopup=t(require("vue")):e.VuePopup=t(e.vue)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var o={};return t.m=e,t.c=o,t.i=function(e){return e},t.d=function(e,t,o){Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var o=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/lib/",t(t.s=6)}([function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0,t.PopupManager=void 0;var i=o(5),l=n(i),s=o(3),d=o(2),a=n(d);o(4);var r=1,u=[],c=function(e){if(u.indexOf(e)===-1){var t=function(e){var t=e.__vue__;if(!t){var o=e.previousSibling;o.__vue__&&(t=o.__vue__)}return t};l["default"].transition(e,{afterEnter:function(e){var o=t(e);o&&o.doAfterOpen&&o.doAfterOpen()},afterLeave:function(e){var o=t(e);o&&o.doAfterClose&&o.doAfterClose()}})}},f=void 0,p=function(){if(void 0!==f)return f;var e=document.createElement("div");e.style.visibility="hidden",e.style.width="100px",e.style.position="absolute",e.style.top="-9999px",document.body.appendChild(e);var t=e.offsetWidth;e.style.overflow="scroll";var o=document.createElement("div");o.style.width="100%",e.appendChild(o);var n=o.offsetWidth;return e.parentNode.removeChild(e),t-n},h=function m(e){return 3===e.nodeType&&(e=e.nextElementSibling||e.nextSibling,m(e)),e};t["default"]={props:{value:{type:Boolean,"default":!1},transition:{type:String,"default":""},openDelay:{},closeDelay:{},zIndex:{},modal:{type:Boolean,"default":!1},modalFade:{type:Boolean,"default":!0},modalClass:{},lockScroll:{type:Boolean,"default":!0},closeOnPressEscape:{type:Boolean,"default":!1},closeOnClickModal:{type:Boolean,"default":!1}},created:function(){this.transition&&c(this.transition)},beforeMount:function(){this._popupId="popup-"+r++,a["default"].register(this._popupId,this)},beforeDestroy:function(){a["default"].deregister(this._popupId),a["default"].closeModal(this._popupId),this.modal&&null!==this.bodyOverflow&&"hidden"!==this.bodyOverflow&&(document.body.style.overflow=this.bodyOverflow,document.body.style.paddingRight=this.bodyPaddingRight),this.bodyOverflow=null,this.bodyPaddingRight=null},data:function(){return{opened:!1,bodyOverflow:null,bodyPaddingRight:null,rendered:!1}},watch:{value:function(e){var t=this;if(e){if(this._opening)return;this.rendered?this.open():(this.rendered=!0,l["default"].nextTick(function(){t.open()}))}else this.close()}},methods:{open:function(e){var t=this;this.rendered||(this.rendered=!0,this.$emit("input",!0));var o=(0,s.merge)({},this,e);this._closeTimer&&(clearTimeout(this._closeTimer),this._closeTimer=null),clearTimeout(this._openTimer);var n=Number(o.openDelay);n>0?this._openTimer=setTimeout(function(){t._openTimer=null,t.doOpen(o)},n):this.doOpen(o)},doOpen:function(e){if((!this.willOpen||this.willOpen())&&!this.opened){this._opening=!0,this.visible=!0,this.$emit("input",!0);var t=h(this.$el),o=e.modal,n=e.zIndex;if(n&&(a["default"].zIndex=n),o&&(this._closing&&(a["default"].closeModal(this._popupId),this._closing=!1),a["default"].openModal(this._popupId,a["default"].nextZIndex(),t,e.modalClass,e.modalFade),e.lockScroll)){this.bodyOverflow||(this.bodyPaddingRight=document.body.style.paddingRight,this.bodyOverflow=document.body.style.overflow),f=p();var i=document.documentElement.clientHeight<document.body.scrollHeight;f>0&&i&&(document.body.style.paddingRight=f+"px"),document.body.style.overflow="hidden"}"static"===getComputedStyle(t).position&&(t.style.position="absolute"),o?t.style.zIndex=a["default"].nextZIndex():n&&(t.style.zIndex=n),this.opened=!0,this.onOpen&&this.onOpen(),this.transition||this.doAfterOpen()}},doAfterOpen:function(){this._opening=!1},close:function(){var e=this;if(!this.willClose||this.willClose()){null!==this._openTimer&&(clearTimeout(this._openTimer),this._openTimer=null),clearTimeout(this._closeTimer);var t=Number(this.closeDelay);t>0?this._closeTimer=setTimeout(function(){e._closeTimer=null,e.doClose()},t):this.doClose()}},doClose:function(){var e=this;this.visible=!1,this.$emit("input",!1),this._closing=!0,this.onClose&&this.onClose(),this.lockScroll&&setTimeout(function(){e.modal&&"hidden"!==e.bodyOverflow&&(document.body.style.overflow=e.bodyOverflow,document.body.style.paddingRight=e.bodyPaddingRight),e.bodyOverflow=null,e.bodyPaddingRight=null},200),this.opened=!1,this.transition||this.doAfterClose()},doAfterClose:function(){a["default"].closeModal(this._popupId),this._closing=!1}}},t.PopupManager=a["default"]},function(e,t){var o=function(e){return(e||"").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,"")},n=function(e,t){if(!e||!t)return!1;if(t.indexOf(" ")!=-1)throw new Error("className should not contain space.");return e.classList?e.classList.contains(t):(" "+e.className+" ").indexOf(" "+t+" ")>-1},i=function(e,t){if(e){for(var o=e.className,i=(t||"").split(" "),l=0,s=i.length;l<s;l++){var d=i[l];d&&(e.classList?e.classList.add(d):n(e,d)||(o+=" "+d))}e.classList||(e.className=o)}},l=function(e,t){if(e&&t){for(var i=t.split(" "),l=" "+e.className+" ",s=0,d=i.length;s<d;s++){var a=i[s];a&&(e.classList?e.classList.remove(a):n(e,a)&&(l=l.replace(" "+a+" "," ")))}e.classList||(e.className=o(l))}};e.exports={hasClass:n,addClass:i,removeClass:l}},function(e,t,o){"use strict";t.__esModule=!0;var n=o(1),i=!1,l=function(){var e=d.modalDom;return e?i=!0:(i=!1,e=document.createElement("div"),d.modalDom=e,e.addEventListener("touchmove",function(e){e.preventDefault(),e.stopPropagation()}),e.addEventListener("click",function(){d.doOnModalClick&&d.doOnModalClick()})),e},s={},d={zIndex:2e3,modalFade:!0,getInstance:function(e){return s[e]},register:function(e,t){e&&t&&(s[e]=t)},deregister:function(e){e&&(s[e]=null,delete s[e])},nextZIndex:function(){return d.zIndex++},modalStack:[],doOnModalClick:function(){var e=d.modalStack[d.modalStack.length-1];if(e){var t=d.getInstance(e.id);t&&t.closeOnClickModal&&t.close()}},openModal:function(e,t,o,s,d){if(e&&void 0!==t){this.modalFade=d;for(var a=this.modalStack,r=0,u=a.length;r<u;r++){var c=a[r];if(c.id===e)return}var f=l();if((0,n.addClass)(f,"v-modal"),this.modalFade&&!i&&(0,n.addClass)(f,"v-modal-enter"),s){var p=s.trim().split(/\s+/);p.forEach(function(e){return(0,n.addClass)(f,e)})}setTimeout(function(){(0,n.removeClass)(f,"v-modal-enter")},200),o&&o.parentNode&&11!==o.parentNode.nodeType?o.parentNode.appendChild(f):document.body.appendChild(f),t&&(f.style.zIndex=t),f.style.display="",this.modalStack.push({id:e,zIndex:t,modalClass:s})}},closeModal:function(e){var t=this.modalStack,o=l();if(t.length>0){var i=t[t.length-1];if(i.id===e){if(i.modalClass){var s=i.modalClass.trim().split(/\s+/);s.forEach(function(e){return(0,n.removeClass)(o,e)})}t.pop(),t.length>0&&(o.style.zIndex=t[t.length-1].zIndex)}else for(var a=t.length-1;a>=0;a--)if(t[a].id===e){t.splice(a,1);break}}0===t.length&&(this.modalFade&&(0,n.addClass)(o,"v-modal-leave"),setTimeout(function(){0===t.length&&(o.parentNode&&o.parentNode.removeChild(o),o.style.display="none",d.modalDom=void 0),(0,n.removeClass)(o,"v-modal-leave")},200))}};window.addEventListener("keydown",function(e){if(27===e.keyCode&&d.modalStack.length>0){var t=d.modalStack[d.modalStack.length-1];if(!t)return;var o=d.getInstance(t.id);o.closeOnPressEscape&&o.close()}}),t["default"]=d},function(e,t){"use strict";function o(e){for(var t=1,o=arguments.length;t<o;t++){var n=arguments[t];for(var i in n)if(n.hasOwnProperty(i)){var l=n[i];void 0!==l&&(e[i]=l)}}return e}t.__esModule=!0,t.merge=o},function(e,t){},function(t,o){t.exports=e},function(e,t,o){e.exports=o(0)}])});
 
 /***/ },
-/* 12 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18957,7 +19005,7 @@
 
 
 /***/ },
-/* 13 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -19250,7 +19298,7 @@
 	/***/ 205:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(17);
 
 	/***/ },
 
@@ -20164,7 +20212,7 @@
 	/******/ });
 
 /***/ },
-/* 14 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/*
@@ -20211,16 +20259,16 @@
 
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(16);
+	var content = __webpack_require__(19);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20237,10 +20285,10 @@
 	}
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -20251,7 +20299,7 @@
 
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -20414,7 +20462,7 @@
 	/***/ 5:
 	/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(11);
+	module.exports = __webpack_require__(14);
 
 	/***/ },
 
@@ -20580,16 +20628,16 @@
 	/******/ });
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(19);
+	var content = __webpack_require__(22);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20606,10 +20654,10 @@
 	}
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -20620,7 +20668,7 @@
 
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -21271,16 +21319,16 @@
 	/******/ });
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(22);
+	var content = __webpack_require__(25);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21297,10 +21345,10 @@
 	}
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -21311,7 +21359,7 @@
 
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -21325,7 +21373,7 @@
 	    (global.install = factory());
 	}(this, (function () { 'use strict';
 
-	var Promise = __webpack_require__(24).Promise;
+	var Promise = __webpack_require__(27).Promise;
 	var inBrowser = typeof window !== 'undefined';
 
 	if (!Array.prototype.$remove) {
@@ -21564,7 +21612,7 @@
 	})));
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -21699,7 +21747,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(26);
+	    var vertx = __webpack_require__(29);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -22721,10 +22769,10 @@
 
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), (function() { return this; }())))
 
 /***/ },
-/* 25 */
+/* 28 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -22910,22 +22958,22 @@
 
 
 /***/ },
-/* 26 */
+/* 29 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 27 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(28);
+	var content = __webpack_require__(31);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -22942,10 +22990,10 @@
 	}
 
 /***/ },
-/* 28 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -22956,7 +23004,7 @@
 
 
 /***/ },
-/* 29 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22965,7 +23013,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(30);
+	var _stringify = __webpack_require__(1);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -23149,31 +23197,46 @@
 	};
 
 /***/ },
-/* 30 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(31), __esModule: true };
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(34);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(11)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./steward.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./steward.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
-/* 31 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(32)
-	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return $JSON.stringify.apply($JSON, arguments);
-	};
+	exports = module.exports = __webpack_require__(10)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #f35252;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  text-align: center; }\n  header span {\n    height: 50px;\n    line-height: 50px;\n    color: #f35252;\n    font-size: 18px;\n    font-weight: 900;\n    display: inline-block; }\n\n.nothing {\n  height: 50px;\n  width: 100%; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.line-other {\n  width: 100%;\n  padding: 0 10px;\n  height: 40px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  .line-other span {\n    -ms-flex: 4;\n        flex: 4; }\n    .line-other span hr {\n      background-color: #c8c8c8; }\n  .line-other span.center {\n    text-align: center;\n    -ms-flex: 2;\n        flex: 2;\n    line-height: 40px;\n    height: 40px;\n    color: #c8c8c8;\n    font-size: 12px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      padding: 0 10px;\n      width: 100%; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 25px;\n          height: 25px;\n          margin-left: 10px;\n          z-index: -1; }\n        .passenger-info .passenger-selected > .line > div span {\n          position: absolute;\n          top: 12.5px;\n          left: 10px;\n          width: 25px;\n          height: 25px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 1; }\n      .passenger-info .passenger-selected > .line .center {\n        width: 60%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .right {\n        width: 20%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        text-align: right;\n        margin-right: 10px; }\n    .passenger-info .passenger-selected .line.vaild > div img {\n      display: none; }\n    .passenger-info .passenger-selected .line.vaild .center {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.vaild .right {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.active > div img {\n      z-index: 1; }\n    .passenger-info .passenger-selected .line.active > div span {\n      z-index: -1; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.pay-ticket-info {\n  margin: 0 10px;\n  background-color: #fff;\n  border-radius: 10px;\n  position: relative; }\n  .pay-ticket-info p {\n    font-size: 16px;\n    color: #c8c8c8;\n    height: 40px;\n    line-height: 40px;\n    margin-left: 20px; }\n  .pay-ticket-info p:nth-child(1) {\n    color: #000; }\n\nfooter {\n  height: 50px;\n  background-color: #fff;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  footer .price {\n    -ms-flex: 5;\n        flex: 5;\n    margin-left: 10px; }\n    footer .price span:first-child {\n      color: #c8c8c8;\n      font-size: 15px; }\n    footer .price span:last-child {\n      margin-left: 5px;\n      color: #f35252;\n      font-size: 20px;\n      font-weight: 900; }\n  footer .yes {\n    -ms-flex: 5;\n        flex: 5;\n    margin-right: 10px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end; }\n    footer .yes button {\n      outline: none;\n      border: none;\n      padding: 10px 20px;\n      color: #fff;\n      background-color: #329be8;\n      border-radius: 5px;\n      font-size: 18px; }\n", ""]);
+
+	// exports
+
 
 /***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ },
-/* 33 */,
-/* 34 */,
 /* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24725,46 +24788,6 @@
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  }
 	}.call(this));
-
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(37);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./steward.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./steward.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(7)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\na,\nimg,\nbutton,\np,\nspan {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #f7f7f7;\n  -webkit-overflow-scrolling: touch;\n  overflow: hidden; }\n\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #f35252;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  text-align: center; }\n  header span {\n    height: 50px;\n    line-height: 50px;\n    color: #f35252;\n    font-size: 18px;\n    font-weight: 900;\n    display: inline-block; }\n\n.nothing {\n  height: 50px;\n  width: 100%; }\n\n.body {\n  width: 100%;\n  overflow-y: scroll; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      padding: 0 10px;\n      width: 100%; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 25px;\n          height: 25px;\n          margin-left: 10px;\n          z-index: -1; }\n        .passenger-info .passenger-selected > .line > div span {\n          position: absolute;\n          top: 12.5px;\n          left: 10px;\n          width: 25px;\n          height: 25px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 1; }\n      .passenger-info .passenger-selected > .line .center {\n        width: 60%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .right {\n        width: 20%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        text-align: right;\n        margin-right: 10px; }\n    .passenger-info .passenger-selected .line.vaild > div img {\n      display: none; }\n    .passenger-info .passenger-selected .line.vaild .center {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.vaild .right {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.active > div img {\n      z-index: 1; }\n    .passenger-info .passenger-selected .line.active > div span {\n      z-index: -1; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.pay-ticket-info {\n  margin: 0 10px;\n  background-color: #fff;\n  border-radius: 10px;\n  position: relative; }\n  .pay-ticket-info p {\n    font-size: 16px;\n    color: #c8c8c8;\n    height: 40px;\n    line-height: 40px;\n    margin-left: 20px; }\n  .pay-ticket-info p:nth-child(1) {\n    color: #000; }\n", ""]);
-
-	// exports
 
 
 /***/ }

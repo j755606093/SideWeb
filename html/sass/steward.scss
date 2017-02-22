@@ -2,7 +2,7 @@
 body {
   background-color: lighten($gray, 30%);
   -webkit-overflow-scrolling: touch;
-  overflow:hidden;
+  // overflow:hidden;
 }
 
 header {
@@ -28,15 +28,15 @@ header {
   }
 }
 
-.nothing{
-	height:50px;
-	width:100%;
-}
-.body{
-	width:100%;
-	overflow-y:scroll;
+.nothing {
+  height: 50px;
+  width: 100%;
 }
 
+// .body{
+// 	width:100%;
+// 	overflow-y:scroll;
+// }
 .ticket-info {
   margin: 10px 10px;
   display: flex;
@@ -206,6 +206,27 @@ header {
   }
 }
 
+.line-other{
+	width:100%;
+	padding:0 10px;
+	height:40px;
+	@include display_flex('row');
+	span{
+		flex:4;
+		hr{
+			background-color:#c8c8c8;
+		}
+	}
+	span.center{
+		text-align: center;
+		flex:2;
+		line-height:40px;
+		height:40px;
+		color:#c8c8c8;
+		font-size:12px;
+	}
+}
+
 .passenger-info {
   width: 100%;
   margin-bottom: 10px;
@@ -220,10 +241,10 @@ header {
       justify-content: center;
       align-items: center;
       padding: 0 10px;
-      width:100%;
+      width: 100%;
       >div {
         flex: 2;
-        width:20%;
+        width: 20%;
         height: 50px;
         line-height: 50px;
         display: flex;
@@ -235,59 +256,59 @@ header {
           width: 25px;
           height: 25px;
           margin-left: 10px;
-          z-index:-1;
+          z-index: -1;
         }
-        span{
-        	position: absolute;
-        	top:12.5px;
-        	left:10px;
-        	width:25px;
-        	height:25px;
-        	background-color: #fafafa;
-        	border-radius:50%;
-        	z-index:1;
+        span {
+          position: absolute;
+          top: 12.5px;
+          left: 10px;
+          width: 25px;
+          height: 25px;
+          background-color: #fafafa;
+          border-radius: 50%;
+          z-index: 1;
         }
       }
       .center {
-      	width:60%;
+        width: 60%;
         flex: 4;
         height: 50px;
         line-height: 50px;
         font-size: 16px;
-        margin-left:10px;
+        margin-left: 10px;
       }
       .right {
-      	width:20%;
+        width: 20%;
         flex: 4;
         height: 50px;
         line-height: 50px;
         font-size: 16px;
         text-align: right;
-        margin-right:10px;
+        margin-right: 10px;
       }
     }
-    .line.vaild{
-    	>div{
-    		img{
-    			display: none;
-    		}
-    	}
-    	.center{
-    		color:#c8c8c8;
-    	}
-    	.right{
-    		color:#c8c8c8;
-    	}
+    .line.vaild {
+      >div {
+        img {
+          display: none;
+        }
+      }
+      .center {
+        color: #c8c8c8;
+      }
+      .right {
+        color: #c8c8c8;
+      }
     }
-    .line.active{
-			>div{
-				img {
-          z-index:1;
+    .line.active {
+      >div {
+        img {
+          z-index: 1;
         }
-				span{
-        	z-index:-1;
+        span {
+          z-index: -1;
         }
-			}
+      }
     }
   }
 }
@@ -365,5 +386,49 @@ header {
   }
   p:nth-child(1) {
     color: #000;
+  }
+}
+
+footer {
+  height: 50px;
+  background-color: $white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-shadow: 3px 0 3px 3px #efeeee;
+  @include display_flex('row');
+  .price {
+    flex: 5;
+    margin-left:10px;
+    span:first-child {
+      color: #c8c8c8;
+      font-size: 15px;
+    }
+    span:last-child {
+    	margin-left:5px;
+      color: #f35252;
+      font-size: 20px;
+      font-weight: 900;
+    }
+  }
+  .yes {
+    flex: 5;
+    margin-right:10px;
+    @include display_flex('row');
+    justify-content: flex-end;
+    button {
+      outline: none;
+      border: none;
+      padding: 10px 20px;
+      color: $white;
+      background-color: #329be8;
+      border-radius: 5px;
+      font-size:18px;
+    }
   }
 }
