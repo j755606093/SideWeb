@@ -85,12 +85,13 @@
 					</div>
 				</div>
 				<!-- 时间段 -->
-				<div class="set-time" v-show="isShowTime">
+				<div class="set-position" v-show="isShowTime">
 					<mt-checklist
 						align="right"
 					  v-model="getTimeOptionsValue"
 					  :options="TimeOptions">
 					</mt-checklist>
+					<div style="height:200px;"></div>
 				</div>
 				<!-- 运输公司 -->
 				<div class="set-position" v-show="isShowConame">
@@ -99,22 +100,25 @@
 					  v-model="getPositionOptionsValue"
 					  :options="PositionOptions">
 					</mt-checklist>
+					<div style="height:300px;"></div>
 				</div>
 				<!-- 路线信息 -->
-				<div class="set-time" v-show="isShowRouter">
+				<div class="set-position" v-show="isShowRouter">
 					<mt-checklist
 						align="right"
 					  v-model="getRouterOptionsValue"
 					  :options="RouterOptions">
 					</mt-checklist>
+					<div style="height:300px;"></div>
 				</div>
 				<!-- 票价高低 -->
-				<div class="set-time" v-show="isShowPrice">
+				<div class="set-position" v-show="isShowPrice">
 					<mt-radio
 						align="right"
 					  v-model="PriceOptionsValue"
 					  :options="PriceOptions">
 					</mt-radio>
+					<div style="height:250px;"></div>
 				</div>
 			</mt-popup>
 			

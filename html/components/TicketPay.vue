@@ -78,7 +78,8 @@
 		<!-- 上车点 -->
 		<div @click="showPage(2)" class="write-info">
 			<div class="line">
-				<span style="color:rgb(20,20,20)">{{payInfoData.remark?payInfoData.remark:selectStation}}</span>
+				<span v-if="payInfoData.remark!==''" style="color:rgb(20,20,20)">{{payInfoData.remark}}</span>
+				<span v-else :style="{color:selectStation?'rgb(20,20,20)':'#c8c8c8'}">{{selectStation?selectStation:'请选择上车点'}}</span>
 				<div class="img"><img src="../picture/green_station.png"></div>
 			</div>
 		</div>
@@ -196,18 +197,17 @@
 		  			<span @click="showPage(2,true)" class="right">确定</span>
 		  		</div>
 		  		<!-- <p class="refresh">地址没有出现?点击刷新一下啦 <i class="fa fa-refresh"></i></p> -->
-		  		<div class="action-select">
-		  			<div class="line" v-for="(item,index) in options">
-		  				<div @click="setUpCar(index)" class="left"><img v-if="item===selectStation" src="../picture/select.png"></div>
-		  				<div @click="setUpCar(index)" class="center">
+		  		<div class="action-select-car">
+		  			<div @click="setUpCar(index)" class="line-car" v-for="(item,index) in options">
+		  				<div class="left"><img v-if="item===selectStation" src="../picture/select.png"></div>
+		  				<div class="center">
 		  					<p>{{item}}</p>
-		  					<!-- <p style="color:#c8c8c8" v-if="item===selectStation">{{payInfoData.remark?payInfoData.remark:'系统默认备注'}}</p> -->
 		  				</div>
 		  			</div>
 		  		</div>
-		  		<p class="refresh">没有你要的上车点？在下面备注一个吧~</p>
-		  		<p class="refresh">注意不要备注离我们行程不在的范围哦~</p>
-		  		<div class="action-body">
+		  		<p class="refresh" style="margin-top:25px;">没有你要的上车点？在下面备注一个吧~</p>
+		  		<p class="refresh">注意不要备注我们行程以外的范围哦~</p>
+		  		<div class="action-body" style="margin-top:25px;">
 		  			<!-- 备注上车点 -->
 						<div class="write-info">
 							<div class="line">
@@ -512,7 +512,7 @@ export default {
 		}
 
 		//设置乘车点
-		this.selectStation = this.busInfo.StartAddress?this.busInfo.StartAddress[0]:"";
+		// this.selectStation = this.busInfo.StartAddress?this.busInfo.StartAddress[0]:"";
 		this.options = this.busInfo.StartAddress?this.busInfo.StartAddress:[];
 
 		//设置优惠券

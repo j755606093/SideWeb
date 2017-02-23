@@ -16,16 +16,6 @@ p,
 div {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
 
-a,
-img,
-button,
-p,
-span {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
-
 .font-red {
   color: #db3652; }
 

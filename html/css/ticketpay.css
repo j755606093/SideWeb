@@ -16,16 +16,6 @@ p,
 div {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
 
-a,
-img,
-button,
-p,
-span {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
-
 .font-red {
   color: #db3652; }
 
@@ -599,13 +589,74 @@ input {
     position: absolute;
     top: 0;
     right: 25px;
-    width: 50px; }
+    width: 50px;
+    font-weight: 900; }
   .page-header span.center {
     font-size: 18px;
     color: #fff;
     font-weight: 900;
     height: 50px;
     line-height: 50px; }
+
+.action-select-car {
+  width: 100%;
+  margin-top: 60px;
+  padding: 0 10px; }
+  .action-select-car .line-car {
+    float: left;
+    height: 60px;
+    width: 49%;
+    line-height: 60px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 20px; }
+    .action-select-car .line-car .left {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+      -ms-flex-align: center;
+          align-items: center;
+      position: relative; }
+      .action-select-car .line-car .left > img {
+        width: 25px;
+        height: 25px;
+        margin-left: 5px;
+        z-index: 1;
+        position: absolute;
+        top: 18px;
+        left: 5px; }
+      .action-select-car .line-car .left::after {
+        content: "";
+        position: absolute;
+        top: 18px;
+        left: 5px;
+        width: 25px;
+        height: 25px;
+        background-color: #fafafa;
+        border-radius: 50%;
+        z-index: 0; }
+    .action-select-car .line-car .center {
+      margin-left: 30px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: start;
+          align-items: flex-start;
+      height: 60px; }
+      .action-select-car .line-car .center p {
+        line-height: 25px;
+        color: #323232;
+        font-size: 15px;
+        margin-left: 10px; }
+    .action-select-car .line-car:nth-child(2n) {
+      margin-left: 2%; }
 
 .action-page {
   width: 100%;
@@ -659,7 +710,8 @@ input {
         .action-page .action .action-body .pay-ticket-info p:nth-child(1) {
           color: #000; }
     .action-page .action p.refresh {
-      height: 40px;
+      clear: both;
+      height: 20px;
       line-height: 40px;
       font-size: 16px;
       text-align: center;

@@ -130,9 +130,10 @@
       <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
         <div class="page-header active">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
-          <span @click="openCode" style="font-size:16px;margin-left:5px;" class="center">扫描二维码可及时获取车票信息推送</span>
+          <span class="center">上车请准备好验证二维码</span>
+          <!-- <span @click="openCode" style="font-size:16px;margin-left:5px;" class="center">扫描二维码可及时获取车票信息推送</span>
           <p @click="openCode" style="height:50px;line-height: 50px;width:30px;"><img style="width:20px;height:20px;margin-top: 15px;" src="../picture/code.png"></span>
-          </p>
+          </p> -->
       </template>
     </div>
 
@@ -141,6 +142,15 @@
       <slot>
         <div class="action">
           <div class="action-body">
+            <!-- 验证码 -->
+            <div v-if="selected===2" class="code">
+              <div class="img"><img :src="code"></div>
+              <div class="right">
+                <p>车票验证码</p>
+                <p>{{OrderDetail.VerifyCode}}</p>
+                <p class="copy" data-clipboard-target="#copy">长按复制验证码</p>
+              </div>
+            </div>
             <!-- 票信息 -->
             <div class="ticket-info">
               <div class="left">
@@ -212,6 +222,8 @@
         </div>
       </slot>
     </mt-popup>
+
+    <!-- <input style="display: none;" id="copy" v-model="OrderDetail.VerifyCode"> -->
 
     <!-- 立即支付 -->
     <div v-show="orderVisible" class="pay">
@@ -305,6 +317,9 @@
       </a>
     </footer>
     </div>
+    <script src="https://cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <script type="text/javascript" src="./qrcode.js"></script>
+    <script type="text/javascript" src="./html5-qrcode.js"></script>
     <script src="./bundle-ticketorder.js"></script>
 </body>
 

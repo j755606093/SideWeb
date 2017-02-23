@@ -4,7 +4,7 @@ require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem, Checklist } from 'mint-ui';
-import 'mint-ui/lib/style.css'
+import 'mint-ui/lib/style.css';
 
 Vue.component(TabContainer.name, TabContainer);
 Vue.component(TabContainerItem.name, TabContainerItem);
@@ -143,6 +143,8 @@ const Vue_Order = new Vue({
 		myModal:false,//自己的蒙版
 
 		refreshLink: refreshLink, //刷新页面地址
+		code:"",//验证码的图片信息showQRCode(text).src
+		clipboard:null,//复制
 	},
 	created() {
 		this.ready = true;
@@ -159,17 +161,34 @@ const Vue_Order = new Vue({
 		// 设置第一个显示
 		// document.getElementsByClassName("mint-tab-container-item")[0].style.display = "block";
 		// document.getElementsByClassName("mint-tab-item")[0].click();
+
 	},
 	watch: {
 		// 监控tab的变化
 		// selected(val){
 		// 	console.log(val)
 		// }
+		orderVisible(val){
+			// if(val){
+			// 	//复制
+			// 	this.clipboard = new Clipboard('.copy');
+			// 	this.clipboard.on('success',(e)=>{
+			// 		this.toast("复制成功")
+			// 	})
+			// }
+		}
 	},
 	methods: {
 		loading() {
 			Indicator.open({
 				spinnerType: 'fading-circle'
+			});
+		},
+		toast(title) {
+			Toast({
+				message: title,
+				position: 'bottom',
+				duration: 3000
 			});
 		},
 		getQueryString(name) {
@@ -282,7 +301,9 @@ const Vue_Order = new Vue({
 			if (this.selected === 1) {
 				this.getOrderInfo(this.OrderList[index].Id)
 			} else {
-				this.getOrderInfo(this.OrderList1[index].Id)
+				let id = this.OrderList1[index].Id;
+				this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//生成二维码链接
+				this.getOrderInfo(this.OrderList1[index].Id);
 			}
 		},
 		getOrderInfo(id) {

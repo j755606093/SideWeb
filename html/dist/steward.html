@@ -112,7 +112,7 @@
     <!-- 没有订单号参数的页面 -->
     <div v-else v-show="ready" style="display: none;" class="codebody">
       <div class="input">
-        <div :class="{'input-code':true,first:codeArray.length===0}" :style="{left:left}"><input id="inputcode" type="tel" v-model="inputCode" autofocus maxlength="1" name="input1"></div>
+        <div :class="{'input-code':true,first:inputCodeNum===0,last:inputCodeNum===5}" :style="{left:left}"><input id="inputcode" type="tel" @keyup="inputCodeEvent($event)" v-model="inputCode" autofocus maxlength="1" @keyup.delete="backInput" name="input1"></div>
         <span v-text="codeArray[0]?codeArray[0]:''" class="first"></span>
         <span v-text="codeArray[1]?codeArray[1]:''"></span>
         <span v-text="codeArray[2]?codeArray[2]:''"></span>
@@ -132,7 +132,7 @@
         <div v-show="focusN===6" @click.stop="input"><input id="input6" type="tel" v-model="input6" maxlength="1" name="input6"></div> -->
       </div>
       <p>6位数验证码</p>
-      <button>验证</button>
+      <button @click="verifyCode">验证</button>
     </div>
     <footer v-if="haveId">
       <div class="price">

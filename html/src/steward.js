@@ -99,10 +99,13 @@ const Vue_User = new Vue({
 		Passengers: [], //乘客数据
 
 		checkedNum:0,//已经验票乘客数
-
-		// inputCode:"",//用户输入的值
+		
+		inputCode:"",
+		inputCodeNum:0,//用户输入的值
 		codeArray:[],//存储的值
 		left:"0",//输入框距离左边的距离
+
+
 	},
 	created() {
 		if (this.getQueryString("orderid")) {
@@ -116,86 +119,33 @@ const Vue_User = new Vue({
 		this.ready = true;
 	},
 	computed:{
-		inputCode:{
-			set(value){
-				// console.log(this.codeArray)
-				if(this.codeArray.length===5){
-					return;
-				}
-				if(value){
-					this.codeArray.push(value);
-					let n = 16.666*this.codeArray.length
-					this.left = n+"%";
-				}
-			},
-			get(){
-				if(this.codeArray.length===6){
-					return this.codeArray[6];
-				}
-				return "";
-			}
-		}
+		// inputCode:{
+		// 	set(value){
+		// 		// if(this.left==="66.6664%"){
+		// 		// 	return;
+		// 		// }
+		// 		if(this.inputCodeNum===6){
+		// 			return;
+		// 		}
+		// 		if(value!==''){
+		// 			this.codeArray.push(value);
+		// 			if(this.inputCodeNum<=5){
+		// 				this.inputCodeNum++;
+		// 				let n = 16.6666*this.inputCodeNum
+		// 				this.left = n+"%";
+		// 			}
+		// 		}
+		// 	},
+		// 	get(){
+		// 		if(this.codeArray.length===5){
+		// 			return this.codeArray[5];
+		// 		}
+		// 		return "";
+		// 	}
+		// }
 	},
 	watch: {
-		// inputCode:function(newval,oldval){
-		// 	console.log(newval)
-		// 	if(newval){
-		// 		this.codeArray.push(newval);
-		// 		this.left = "16.666%";
-		// 		this.inputCode = "";
-		// 	}
-		// 	else{
-		// 		this.codeArray.pop();//删除最后一个
-		// 		if(this.codeArray.length===6){
-		// 			//不用回退
-		// 		}
-		// 		else{
-		// 			// 需要回退
-		// 		}
-		// 	}
-		// }
-		// input1:function(newval,oldval){
-		// 	if(newval){
-		// 		document.getElementById("input2").focus();
-		// 	}
-		// },
-		// input2:function(newval,oldval){
-		// 	if(newval){
-		// 		document.getElementById("input3").focus();
-		// 	}
-		// 	else{
-		// 		document.getElementById("input1").focus();
-		// 	}
-		// },
-		// input3:function(newval,oldval){
-		// 	if(newval){
-		// 		document.getElementById("input4").focus();
-		// 	}
-		// 	else{
-		// 		document.getElementById("input2").focus();
-		// 	}
-		// },
-		// input4:function(newval,oldval){
-		// 	if(newval){
-		// 		document.getElementById("input5").focus();
-		// 	}
-		// 	else{
-		// 		document.getElementById("input3").focus();
-		// 	}
-		// },
-		// input5:function(newval,oldval){
-		// 	if(newval){
-		// 		document.getElementById("input6").focus();
-		// 	}
-		// 	else{
-		// 		document.getElementById("input4").focus();
-		// 	}
-		// },
-		// input6:function(newval,oldval){
-		// 	if(newval===""){
-		// 		document.getElementById("input5").focus();
-		// 	}
-		// }
+
 	},
 	methods: {
 		loading() {
@@ -346,6 +296,100 @@ const Vue_User = new Vue({
 				// document.getElementById("input6").focus();
 			}
 		},
+		backInput(){
+			if(this.inputCodeNum===5){
+				this.inputCodeNum--;
+				let n = 16.6666*(this.inputCodeNum);
+				this.left = n+"%";
+				this.codeArray.pop();
+				return;
+			}
+			if(this.inputCodeNum!==0){
+				this.inputCodeNum--;
+				this.codeArray.pop();
+				let n = 16.6666*(this.inputCodeNum);
+				this.left = n+"%";
+			}
+		},
+		inputCodeEvent(event){
+			if(event.keyCode>=48&&event.keyCode<=57){
+				let code = event.target.value;//code
+				
+				if(this.inputCodeNum<5){
+					this.codeArray.push(code);
+					this.inputCode = "";
+					this.inputCodeNum++;
+					let n = 16.6666*this.inputCodeNum
+					this.left = n+"%";
+				}
+				else{
+					if(this.inputCodeNum===5){
+						this.inputCodeNum++;
+						this.codeArray.push(code);
+					}
+				}
+			}
+		},
+		verifyCode(){
+			if(this.codeArray.length!==6){
+				this.toast("请输入完整验证码");
+				return;
+			}
+
+			let code = "";
+			this.codeArray.map(item=>{
+				code+=item;
+			})
+			// /api/Steward/GetOrderByCode
+			fetch(config.serverUrl + "/api/Steward/GetOrderByCode?code="+code, {
+					method: "GET",
+					headers: config.headers,
+				}).then(result => result.json())
+				.then(result => {
+					if(result.Code!==200){
+						// 没有权限查看
+						Indicator.close();
+						MessageBox.alert(result.Message)
+						// this.toast(result.Message);
+						return;
+					}
+					this.OrderDetail = result.Data[0];
+					// this.passenger = [];
+					this.optionsPassenger = [];
+					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
+						let item = this.OrderDetail.Passengers[i];
+						if (item.Status === -3) {
+							item.Name = item.Name + "(已退款)";
+							// this.passenger.push(item);
+							item.vaild = true;//不能上车
+							// continue; //这个乘客已经退款就不显示
+						}
+						if (item.Status === -1) {
+							item.Name = item.Name + "(审核中)";
+							// this.passenger.push(item);
+							item.vaild = true;//不能上车
+						}
+						if (item.Status === -2) {
+							item.Name = item.Name + "(待退款)";
+							// this.passenger.push(item);
+							item.vaild = true;//不能上车
+						}
+						if (item.Status === 1) {
+							// this.passenger.push(item);
+							item.vaild = false;//能上车
+						}
+						if(item.Status ===2){
+							item.vaild = true;
+							this.checkedNum++;
+							item.checked = true;//已经验证过
+						}
+
+						this.optionsPassenger.push({ Name: item.Name,Mobile:item.Mobile, Price: item.Price, DId: item.DId, active: false,vaild:item.vaild,checked:item.checked?true:false }); //提供申请退款选择的用户名
+					}
+					this.haveId = true;
+					Indicator.close();
+				})
+		}
 	},
 	directives:{
 		edit:{
