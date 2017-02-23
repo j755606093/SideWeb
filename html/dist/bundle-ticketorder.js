@@ -437,7 +437,10 @@
 						var _this4 = this;
 
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
+							this.myModal = true;
 							_mintUi.MessageBox.alert('支付成功').then(function (action) {
+								_this4.myModal = false;
+								_this4.goback();
 								_this4.moreOrderData(true);
 								_this4.moreOrderData1(true);
 							});
