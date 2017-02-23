@@ -382,6 +382,10 @@
 						if (item.Status === 1) {
 							_this3.passenger.push(item);
 						}
+						if (item.Status === 2) {
+							item.Name = item.Name + "(已验票)";
+							_this3.passenger.push(item);
+						}
 
 						_this3.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 					}

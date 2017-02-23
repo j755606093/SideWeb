@@ -315,6 +315,10 @@ const Vue_Order = new Vue({
 						if (item.Status === 1) {
 							this.passenger.push(item);
 						}
+						if (item.Status === 2) {
+							item.Name = item.Name + "(已验票)";
+							this.passenger.push(item);
+						}
 
 						this.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 					}

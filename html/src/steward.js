@@ -92,26 +92,110 @@ const Vue_User = new Vue({
 	el: "#app",
 	data: {
 		ready: false, //页面为准备好
-		headerTitle:"已验票乘客(0/3)",
+		// headerTitle:"已验票乘客(0/3)",
 		haveId:false,//url上有这个id
 		optionsPassenger:[],//可以选择乘车的乘客
 		OrderDetail: {}, //订单详细信息
 		Passengers: [], //乘客数据
+
+		checkedNum:0,//已经验票乘客数
+
+		// inputCode:"",//用户输入的值
+		codeArray:[],//存储的值
+		left:"0",//输入框距离左边的距离
 	},
 	created() {
 		if (this.getQueryString("orderid")) {
 			// 需要显示订单详细信息
 			this.loading();
 			this.getOrderInfo(this.getQueryString("orderid"));
-			this.haveId = true;
 		}
-		this.ready = true;
-	},
-	mounted() {
 		
 	},
+	mounted() {
+		this.ready = true;
+	},
+	computed:{
+		inputCode:{
+			set(value){
+				// console.log(this.codeArray)
+				if(this.codeArray.length===5){
+					return;
+				}
+				if(value){
+					this.codeArray.push(value);
+					let n = 16.666*this.codeArray.length
+					this.left = n+"%";
+				}
+			},
+			get(){
+				if(this.codeArray.length===6){
+					return this.codeArray[6];
+				}
+				return "";
+			}
+		}
+	},
 	watch: {
-
+		// inputCode:function(newval,oldval){
+		// 	console.log(newval)
+		// 	if(newval){
+		// 		this.codeArray.push(newval);
+		// 		this.left = "16.666%";
+		// 		this.inputCode = "";
+		// 	}
+		// 	else{
+		// 		this.codeArray.pop();//删除最后一个
+		// 		if(this.codeArray.length===6){
+		// 			//不用回退
+		// 		}
+		// 		else{
+		// 			// 需要回退
+		// 		}
+		// 	}
+		// }
+		// input1:function(newval,oldval){
+		// 	if(newval){
+		// 		document.getElementById("input2").focus();
+		// 	}
+		// },
+		// input2:function(newval,oldval){
+		// 	if(newval){
+		// 		document.getElementById("input3").focus();
+		// 	}
+		// 	else{
+		// 		document.getElementById("input1").focus();
+		// 	}
+		// },
+		// input3:function(newval,oldval){
+		// 	if(newval){
+		// 		document.getElementById("input4").focus();
+		// 	}
+		// 	else{
+		// 		document.getElementById("input2").focus();
+		// 	}
+		// },
+		// input4:function(newval,oldval){
+		// 	if(newval){
+		// 		document.getElementById("input5").focus();
+		// 	}
+		// 	else{
+		// 		document.getElementById("input3").focus();
+		// 	}
+		// },
+		// input5:function(newval,oldval){
+		// 	if(newval){
+		// 		document.getElementById("input6").focus();
+		// 	}
+		// 	else{
+		// 		document.getElementById("input4").focus();
+		// 	}
+		// },
+		// input6:function(newval,oldval){
+		// 	if(newval===""){
+		// 		document.getElementById("input5").focus();
+		// 	}
+		// }
 	},
 	methods: {
 		loading() {
@@ -143,6 +227,13 @@ const Vue_User = new Vue({
 					})
 				}).then(result => result.json())
 				.then(result => {
+					if(result.Code!==200){
+						// 没有权限查看
+						Indicator.close();
+						MessageBox.alert(result.Message)
+						// this.toast(result.Message);
+						return;
+					}
 					this.OrderDetail = result.Data;
 					// this.passenger = [];
 					this.optionsPassenger = [];
@@ -168,9 +259,15 @@ const Vue_User = new Vue({
 							// this.passenger.push(item);
 							item.vaild = false;//能上车
 						}
+						if(item.Status ===2){
+							item.vaild = true;
+							this.checkedNum++;
+							item.checked = true;//已经验证过
+						}
 
-						this.optionsPassenger.push({ Name: item.Name,Mobile:item.Mobile, Price: item.Price, DId: item.DId, active: false,vaild:item.vaild }); //提供申请退款选择的用户名
+						this.optionsPassenger.push({ Name: item.Name,Mobile:item.Mobile, Price: item.Price, DId: item.DId, active: false,vaild:item.vaild,checked:item.checked?true:false }); //提供申请退款选择的用户名
 					}
+					this.haveId = true;
 					Indicator.close();
 				})
 		},
@@ -191,8 +288,10 @@ const Vue_User = new Vue({
 		selectAll(){
 			this.Passengers = [];
 			this.optionsPassenger.map((item,index)=>{
-				item.active = true;
-				this.Passengers.push(item.DId);
+				if(!item.checked){
+					item.active = true;
+					this.Passengers.push(item.DId);
+				}
 			})
 		},
 		yes(){
@@ -204,7 +303,7 @@ const Vue_User = new Vue({
 			}
 		},
 		fetchYes(){
-			fetch(config.serverUrl + "/Steward/ConfirmRide", {
+			fetch(config.serverUrl + "/api/Steward/ConfirmRide", {
 					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
@@ -212,9 +311,50 @@ const Vue_User = new Vue({
 					})
 				}).then(result => result.json())
 				.then(result => {
-					console.log(result);
+					if(result.Data){
+						// 验证成功
+						this.Passengers.map((item,index)=>{
+							for(let i=0;i<this.optionsPassenger.length;i++){
+								if(item===this.optionsPassenger[i].Did){
+									// 已经验证的乘客
+									this.optionsPassenger[i].checked = true;
+								}
+							}
+						})
+					}
+					else{
+						this.toast(result.Message);
+					}
 					Indicator.close();
 				})
+		},
+		/** 选择输入 */
+		input(){
+			let n = 0;
+			for(let i=0;i<6;i++){
+				let m = i+1;
+				if(!this["input"+m]){
+					//空的
+					n = m;
+					document.getElementById("input"+m).focus();
+					break;
+				}
+			}
+			this.focusN = n;//保存当前输入的位置
+			if(n===0){
+				//说明输入完
+				// document.getElementById("input6").focus();
+			}
+		},
+	},
+	directives:{
+		edit:{
+			update(newval,oldval){
+				console.log(newval)
+				if(newval){
+					console.log(newval)
+				}
+			}
 		}
 	},
 	components: {

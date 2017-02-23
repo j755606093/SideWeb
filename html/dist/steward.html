@@ -13,12 +13,13 @@
 <body>
   <div id="app" v-show="ready" style="display: none;">
     <!-- 头部 -->
-    <header>
-      <span v-text="headerTitle"></span>
+    <header :class="{code:!haveId}">
+      <span v-if="haveId" v-text="'已验票乘客('+checkedNum+'/'+optionsPassenger.length+')'"></span>
+      <span v-else>乘务员验证码验票</span>
     </header>
     <div class="nothing"></div>
-    <div class="body">
-      <div v-if="haveId" class="action-body">
+    <div v-if="haveId" class="body">
+      <div class="action-body">
         <!-- 票信息 -->
         <div class="ticket-info">
           <div class="left">
@@ -54,22 +55,29 @@
         <div class="passenger-info">
           <div class="passenger-selected">
             <div @click="selectUp(index)" :class="{line:true,vaild:item.vaild,active:item.active}" v-for="(item,index) in optionsPassenger">
-              <div><img src="../picture/select.png"><span></span></div>
+              <div v-if="!item.checked">
+                <img src="../picture/select.png"><span></span>
+              </div>
+              <div style="color:#f35252" v-else>已验票</div>
               <span class="center">{{item.Name}}</span>
               <span class="right">{{item.Mobile?item.Mobile:'无'}}</span>
             </div>
-            <div @click="selectAll" :class="{line:true,active:Passengers.length===optionsPassenger.length}">
+            <div @click="selectAll" :class="{line:true,active:Passengers.length===optionsPassenger.length-checkedNum}">
               <div><img src="../picture/select.png"><span></span></div>
               <span class="center">全选验证</span>
               <span class="right"></span>
             </div>
           </div>
         </div>
-
+ 
         <div class="line-other">
-          <span><hr /></span>
+          <div>
+            <p></p>
+          </div>
           <span class="center">其它信息</span>
-          <span><hr /></span>
+          <div>
+            <p></p>
+          </div>
         </div>
 
         <!-- 手机号 -->
@@ -101,7 +109,32 @@
         </div>
       </div>
     </div>
-    <footer>
+    <!-- 没有订单号参数的页面 -->
+    <div v-else v-show="ready" style="display: none;" class="codebody">
+      <div class="input">
+        <div :class="{'input-code':true,first:codeArray.length===0}" :style="{left:left}"><input id="inputcode" type="tel" v-model="inputCode" autofocus maxlength="1" name="input1"></div>
+        <span v-text="codeArray[0]?codeArray[0]:''" class="first"></span>
+        <span v-text="codeArray[1]?codeArray[1]:''"></span>
+        <span v-text="codeArray[2]?codeArray[2]:''"></span>
+        <span v-text="codeArray[3]?codeArray[3]:''"></span>
+        <span v-text="codeArray[4]?codeArray[4]:''"></span>
+        <span class="last" v-text="codeArray[5]?codeArray[5]:''"></span>
+        <!-- <div v-show="focusN===1" @click.stop="input"><input id="input1" type="tel" v-model="input1" autofocus maxlength="1" name="input1"></div> 
+        <span></span>
+        <div v-show="focusN===2" @click.stop="input"><input id="input2" type="tel" v-model="input2" maxlength="1" name="input2"></div>
+        <span></span>
+        <div v-show="focusN===3" @click.stop="input"><input id="input3" type="tel" v-model="input3" maxlength="1" name="input3"></div>
+        <span></span>
+        <div v-show="focusN===4" @click.stop="input"><input id="input4" type="tel" v-model="input4" maxlength="1" name="input4"></div>
+        <span></span>
+        <div v-show="focusN===5" @click.stop="input"><input id="input5" type="tel" v-model="input5" maxlength="1" name="input5"></div>
+        <span></span>
+        <div v-show="focusN===6" @click.stop="input"><input id="input6" type="tel" v-model="input6" maxlength="1" name="input6"></div> -->
+      </div>
+      <p>6位数验证码</p>
+      <button>验证</button>
+    </div>
+    <footer v-if="haveId">
       <div class="price">
         <span>订单单价</span>
         <span>¥150</span>
