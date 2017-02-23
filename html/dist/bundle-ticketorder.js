@@ -536,7 +536,7 @@
 					    action = _ref.action;
 
 					return value;
-				});
+				}).catch(function (error) {});
 			},
 			checkSelectPassenger: function checkSelectPassenger() {
 				var _this7 = this;
@@ -605,10 +605,11 @@
 					}).then(function (result) {
 						if (result.Data) {
 							// 申请成功
-							(0, _mintUi.MessageBox)('提示', '申请退款已提交');
-							_this9.goback();
-							_this9.moreOrderData();
-							_this9.moreOrderData1();
+							_mintUi.MessageBox.alert('申请退款已提交').then(function (result) {
+								_this9.goback();
+								_this9.moreOrderData();
+								_this9.moreOrderData1();
+							});
 						} else {
 							_mintUi.MessageBox.alert(result.Message).then(function (result) {
 								_this9.goback();
@@ -617,7 +618,9 @@
 						}
 					});
 				}).catch(function (error) {
-					// MessageBox('提示', '取消申请退款');
+					_mintUi.MessageBox.alert('您取消申请退款').then(function (result) {
+						_this9.myModal = false;
+					});
 				});
 			},
 			selectPage: function selectPage(index) {

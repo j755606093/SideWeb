@@ -462,6 +462,8 @@ const Vue_Order = new Vue({
 		inputRefund() {
 			return MessageBox.prompt('请输入退款理由').then(({ value, action }) => {
 				return value;
+			}).catch(error=>{
+
 			});
 		},
 		checkSelectPassenger() {
@@ -526,10 +528,11 @@ const Vue_Order = new Vue({
 						.then(result => {
 							if (result.Data) {
 								// 申请成功
-								MessageBox('提示', '申请退款已提交');
-								this.goback();
-								this.moreOrderData();
-								this.moreOrderData1();
+								MessageBox.alert('申请退款已提交').then(result=>{
+									this.goback();
+									this.moreOrderData();
+									this.moreOrderData1();
+								});
 							} else {
 								MessageBox.alert(result.Message).then(result=>{
 									this.goback();
@@ -539,7 +542,9 @@ const Vue_Order = new Vue({
 						})
 				})
 				.catch(error => {
-					// MessageBox('提示', '取消申请退款');
+					MessageBox.alert('您取消申请退款').then(result=>{
+						this.myModal = false;
+					});
 				})
 		},
 		selectPage(index) {
