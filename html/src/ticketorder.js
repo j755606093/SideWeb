@@ -523,7 +523,10 @@ const Vue_Order = new Vue({
 								this.moreOrderData();
 								this.moreOrderData1();
 							} else {
-								MessageBox('提示', result.Message);
+								MessageBox.alert(result.Message).then(result=>{
+									this.goback();
+									this.myModal = false;
+								});
 							}
 						})
 				})
