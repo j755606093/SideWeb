@@ -382,12 +382,17 @@ const Vue_Order = new Vue({
 		CountDown() {
 			let time = new Date(this.OrderDetail.CTime).getTime() + 60 * 30 * 1000;
 			let nowTime = Date.now();
+			if(time-nowTime<1000){
+				this.countdownTime = "已经失效";
+				return;
+			}
 			this.storeCountTime = parseInt((time - nowTime) / 1000);
 			// this.storeCountTime = 60*30-1;//半个小时
 			this.countdown = setInterval(() => {
-				if (this.storeCountTime === 0) {
+				if (this.storeCountTime <= 0) {
 					clearInterval(this.countdown);
 					this.countdown = null;
+					this.countdownTime = "已经失效";
 					return;
 				}
 				let minth = parseInt(this.storeCountTime / 60);

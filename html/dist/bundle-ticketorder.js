@@ -452,12 +452,17 @@
 
 				var time = new Date(this.OrderDetail.CTime).getTime() + 60 * 30 * 1000;
 				var nowTime = Date.now();
+				if (time - nowTime < 1000) {
+					this.countdownTime = "已经失效";
+					return;
+				}
 				this.storeCountTime = parseInt((time - nowTime) / 1000);
 				// this.storeCountTime = 60*30-1;//半个小时
 				this.countdown = setInterval(function () {
-					if (_this5.storeCountTime === 0) {
+					if (_this5.storeCountTime <= 0) {
 						clearInterval(_this5.countdown);
 						_this5.countdown = null;
+						_this5.countdownTime = "已经失效";
 						return;
 					}
 					var minth = parseInt(_this5.storeCountTime / 60);
