@@ -870,7 +870,6 @@ export default {
 			// this.CountDown();
 			// this.payInfoPopupVisible = true;
 			// return;
-
 			if(this.getAllFare().length===0){
 				this.popupMessage("请先添加或者选择乘客!");
 				return;
@@ -933,11 +932,13 @@ export default {
 							else{
 								this.CountDown();
 								this.serverPayInfo = result.Data;
+								this.trashRebate()
 								// this.TicketPay = result.Data;
 								this.payInfoPopupVisible = true;
 							}
 						}).catch(error=>{
 							Indicator.close();
+							console.log(error);
 							this.popupMessage("服务器繁忙,请稍后再试...");
 						})
 					}
@@ -946,6 +947,25 @@ export default {
 					}
 				}
 			}
+		},
+		/** 删除已经使用过的优惠券 */
+		trashRebate(){
+			this.rebateid = this.rebateid+"";
+			let id = this.rebateid.split(",");
+			let rebate = this.$store.getters.getRebate;
+			let no = [];
+			rebate.map(item=>{
+				let n = 0;
+				for(let i=0;i<id.length;i++){
+					if(parseInt(id[i])===item.Id){
+						n++;//已经使用过
+					}
+				}
+				if(n===0){
+					no.push(item);
+				}
+			})
+			this.$store.commit("SET_REBATES",no);
 		},
 		/**
 		 * 退出提示框提示页(关闭)

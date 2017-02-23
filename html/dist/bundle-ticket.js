@@ -34192,7 +34192,6 @@
 				// this.CountDown();
 				// this.payInfoPopupVisible = true;
 				// return;
-
 				if (this.getAllFare().length === 0) {
 					this.popupMessage("请先添加或者选择乘客!");
 					return;
@@ -34250,11 +34249,13 @@
 								} else {
 									_this6.CountDown();
 									_this6.serverPayInfo = result.Data;
+									_this6.trashRebate();
 									// this.TicketPay = result.Data;
 									_this6.payInfoPopupVisible = true;
 								}
 							}).catch(function (error) {
 								_mintUi.Indicator.close();
+								console.log(error);
 								_this6.popupMessage("服务器繁忙,请稍后再试...");
 							});
 						} else {
@@ -34262,6 +34263,26 @@
 						}
 					}
 				}
+			},
+
+			/** 删除已经使用过的优惠券 */
+			trashRebate: function trashRebate() {
+				this.rebateid = this.rebateid + "";
+				var id = this.rebateid.split(",");
+				var rebate = this.$store.getters.getRebate;
+				var no = [];
+				rebate.map(function (item) {
+					var n = 0;
+					for (var i = 0; i < id.length; i++) {
+						if (parseInt(id[i]) === item.Id) {
+							n++; //已经使用过
+						}
+					}
+					if (n === 0) {
+						no.push(item);
+					}
+				});
+				this.$store.commit("SET_REBATES", no);
 			},
 
 			/**
