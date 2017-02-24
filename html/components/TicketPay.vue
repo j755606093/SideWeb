@@ -142,13 +142,25 @@
 		  			<span @click="showPage(1,true)" class="right">确定</span>
 		  		</div>
 		  		<div class="action-select">
-		  			<div class="line" v-for="(item,index) in AllFare">
-		  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
-		  				<div @click="setFare(index)" class="center">
-		  					<p>{{item.Name}}</p>
-		  					<p>{{item.Mobile}}</p>
-		  				</div>
-		  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
+		  			<div v-for="(item,index) in AllFare">
+		  				<div class="line">
+			  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
+			  				<div @click="setFare(index)" class="center">
+			  					<p>{{item.Name}}</p>
+			  					<p>{{item.Mobile}}</p>
+			  				</div>
+			  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
+			  			</div>
+			  			<!-- 修改乘客 -->
+			  			<div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
+								<div class="line change">
+									<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+								</div>
+								<div class="line change">
+									<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+									<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
+								</div>
+							</div>
 		  			</div>
 		  		</div>
 		  		<p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -168,16 +180,6 @@
 							<div class="line">
 								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
 								<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
-							</div>
-						</div>
-						<!-- 修改乘客 -->
-		  			<div v-show="showpassengeraction===2" class="add-action animated zoomIn">
-							<div class="line">
-								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-							</div>
-							<div class="line">
-								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-								<button @click="append(1)"><i class="fa fa-plus-circle"></i> 修改</button>
 							</div>
 						</div>
 		  		</div>
@@ -1035,6 +1037,8 @@ export default {
 
 								this.popupMessage("添加成功!");
 								this.computeAll();
+								this.showpassengeraction = 0;
+								this.ChaPassengerIndex = 0;
 							}
 							else{
 								this.popupMessage(result.Message);
@@ -1055,6 +1059,8 @@ export default {
 
 								this.popupMessage("修改成功!");
 								this.computeAll();
+								this.ChaPassengerIndex = 0;
+								this.showpassengeraction = 0;
 							}
 							else{
 								this.popupMessage(result.Message);

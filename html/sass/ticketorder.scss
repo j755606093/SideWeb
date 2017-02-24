@@ -696,7 +696,7 @@ header {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   background-color: $white;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000;
@@ -717,10 +717,15 @@ header {
   .right {
     flex: 5;
     @include display_flex('row');
+    p{
+      color:#329be8;
+      font-size:16px;
+      flex:1;
+    }
     span {
       color: #c8c8c8;
       font-size: 12px;
-      flex: 5;
+      flex: 3;
     }
     button {
       background-color: #329be8;
@@ -730,7 +735,7 @@ header {
       outline: none;
       border: none;
       color: $white;
-      flex: 5;
+      flex: 7;
       border-radius: 5px;
     }
   }

@@ -45,6 +45,7 @@ header {
 .body {
   width: 100%;
   // padding-top:49px;
+  padding-bottom: 60px;
   .header {
     height: 190px;
     // background-color: #2196F3;
@@ -68,6 +69,7 @@ header {
     }
     .left {
       flex: 5;
+      width:50%;
       text-align: left;
       p {
         color: $white;
@@ -90,6 +92,7 @@ header {
     }
     .right {
       flex: 5;
+      width:50%;
       text-align: right;
       img {
         width: 90px;
@@ -373,6 +376,7 @@ header {
   .left {
     z-index: 1;
     flex: 3;
+    width:30%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -393,6 +397,7 @@ header {
   .center {
     z-index: 1;
     flex: 1;
+    // width:10%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -439,16 +444,19 @@ header {
   .right {
     z-index: 1;
     flex: 6;
+    // width:60%;
     display: flex;
     flex-direction: column;
     height: 120px;
     .top {
       flex: 7;
+      // width:100%;
       display: flex;
       flex-direction: row;
       justify-content: center;
       .name {
-        flex: 6;
+        flex: 7;
+        // width:60%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -459,6 +467,7 @@ header {
           position: relative;
           text-align: left;
           margin-left: 20px;
+          display: inline-block;
           &:first-child::after {
             content: "";
             width: 10px;
@@ -485,7 +494,8 @@ header {
         }
       }
       .info {
-        flex: 4;
+        flex: 3;
+        // width:40%;
         display: flex;
         flex-direction: column;
         text-align: right;
@@ -493,7 +503,7 @@ header {
         p {
           height: 28px;
           line-height: 28px;
-          margin-right: 25px;
+          margin-right: 15px;
           &:first-child {
             font-weight: 900;
             font-size: 20px;
@@ -509,6 +519,7 @@ header {
     }
     .bottom {
       flex: 3;
+      // width:100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;

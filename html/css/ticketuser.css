@@ -133,7 +133,8 @@ header {
       font-size: 20px; }
 
 .body {
-  width: 100%; }
+  width: 100%;
+  padding-bottom: 60px; }
   .body .header {
     height: 190px;
     display: -ms-flexbox;
@@ -159,6 +160,7 @@ header {
     .body .header .left {
       -ms-flex: 5;
           flex: 5;
+      width: 50%;
       text-align: left; }
       .body .header .left p {
         color: #fff;
@@ -178,6 +180,7 @@ header {
     .body .header .right {
       -ms-flex: 5;
           flex: 5;
+      width: 50%;
       text-align: right; }
       .body .header .right img {
         width: 90px;
@@ -457,6 +460,7 @@ header {
     z-index: 1;
     -ms-flex: 3;
         flex: 3;
+    width: 30%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -538,8 +542,8 @@ header {
       -ms-flex-pack: center;
           justify-content: center; }
       .ticket-info .right .top .name {
-        -ms-flex: 6;
-            flex: 6;
+        -ms-flex: 7;
+            flex: 7;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -553,7 +557,8 @@ header {
           font-size: 20px;
           position: relative;
           text-align: left;
-          margin-left: 20px; }
+          margin-left: 20px;
+          display: inline-block; }
           .ticket-info .right .top .name p:first-child::after {
             content: "";
             width: 10px;
@@ -575,8 +580,8 @@ header {
             top: 15px;
             left: -17px; }
       .ticket-info .right .top .info {
-        -ms-flex: 4;
-            flex: 4;
+        -ms-flex: 3;
+            flex: 3;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -587,7 +592,7 @@ header {
         .ticket-info .right .top .info p {
           height: 28px;
           line-height: 28px;
-          margin-right: 25px; }
+          margin-right: 15px; }
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;

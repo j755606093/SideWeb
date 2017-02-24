@@ -964,6 +964,36 @@ input {
           .action-page .action .action-use .page .rebate.disabled .right .info span {
             color: #c8c8c8; }
 
+.add-action {
+  width: 100%; }
+  .add-action .line.change {
+    margin: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    height: 50px;
+    position: relative; }
+    .add-action .line.change input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%; }
+    .add-action .line.change button {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #329be8;
+      outline: none;
+      border: none;
+      background-color: #fff; }
+      .add-action .line.change button i {
+        font-size: 16px;
+        color: #329be8; }
+
 /** 支付footer */
 .pay {
   height: 50px;

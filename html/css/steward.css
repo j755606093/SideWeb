@@ -224,6 +224,7 @@ header.code {
     z-index: 1;
     -ms-flex: 3;
         flex: 3;
+    width: 30%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -243,6 +244,7 @@ header.code {
     z-index: 1;
     -ms-flex: 1;
         flex: 1;
+    width: 10%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -298,6 +300,7 @@ header.code {
     .ticket-info .right .top {
       -ms-flex: 7;
           flex: 7;
+      width: 70%;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
@@ -307,6 +310,7 @@ header.code {
       .ticket-info .right .top .name {
         -ms-flex: 6;
             flex: 6;
+        width: 60%;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -344,6 +348,7 @@ header.code {
       .ticket-info .right .top .info {
         -ms-flex: 4;
             flex: 4;
+        width: 40%;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -366,6 +371,7 @@ header.code {
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
+      width: 40%;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
@@ -465,7 +471,7 @@ header.code {
           border-radius: 50%;
           z-index: 1; }
       .passenger-info .passenger-selected > .line .center {
-        width: 60%;
+        width: 40%;
         -ms-flex: 4;
             flex: 4;
         height: 50px;
@@ -473,7 +479,7 @@ header.code {
         font-size: 16px;
         margin-left: 10px; }
       .passenger-info .passenger-selected > .line .right {
-        width: 20%;
+        width: 40%;
         -ms-flex: 4;
             flex: 4;
         height: 50px;

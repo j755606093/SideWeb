@@ -851,7 +851,7 @@ header {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   background-color: #fff;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000; }
@@ -878,11 +878,16 @@ header {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center; }
+    .pay .right p {
+      color: #329be8;
+      font-size: 16px;
+      -ms-flex: 1;
+          flex: 1; }
     .pay .right span {
       color: #c8c8c8;
       font-size: 12px;
-      -ms-flex: 5;
-          flex: 5; }
+      -ms-flex: 3;
+          flex: 3; }
     .pay .right button {
       background-color: #329be8;
       height: 40px;
@@ -891,8 +896,8 @@ header {
       outline: none;
       border: none;
       color: #fff;
-      -ms-flex: 5;
-          flex: 5;
+      -ms-flex: 7;
+          flex: 7;
       border-radius: 5px; }
 
 .pay-order {

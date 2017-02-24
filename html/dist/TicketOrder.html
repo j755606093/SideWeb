@@ -119,6 +119,20 @@
     </div>
 
     <div v-show="orderVisible">
+      <!-- 订票失败 -->
+      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
+        <div class="page-header">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span style="font-size:16px;" class="center">订票失败,工作人员正为你退款...</span>
+        </div>
+      </template>
+      <!-- 已失效 -->
+      <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
+        <div class="page-header">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span style="font-size:16px;" class="center">订单已经失效</span>
+        </div>
+      </template>
       <!-- 未支付 -->
       <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
         <div class="page-header">
@@ -127,7 +141,7 @@
         </div>
       </template>
       <!-- 已支付 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
+      <template v-if="OrderDetail.IsPay===1 && (OrderDetail.Status===1||OrderDetail.Status===2)">
         <div class="page-header active">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
           <span class="center">上车请准备好验证二维码</span>
@@ -231,24 +245,37 @@
         <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
       </div>
       <div class="right">
+        <!-- 已经失效 -->
+        <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
+          <p>订单已经失效,无法操作</p>
+        </template>
         <!-- 未支付 -->
         <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
           <span @click="cancelOrder">取消订单</span>
           <button @click="payMoney">立即支付</button>
         </template>
-        <!-- 已支付 -->
-        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status>0">
+        <!-- 已支付待确认 -->
+        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
           <span @click="showSelectPassenger">申请退款</span>
-          <button>已支付</button>
+          <button>已支付待确认</button>
+        </template>
+        <!-- 已支付已确认 -->
+        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
+          <span @click="showSelectPassenger">申请退款</span>
+          <button>已支付已确认</button>
+        </template>
+        <!-- 订票失败 -->
+        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
+          <p>订单已经失效,感谢您的支持</p>
         </template>
       </div>
     </div>
-
+    
+    <!-- 退款人选择 -->
     <div v-show="refundPassenger" class="page-header" style="background-color: #2196F3;z-index: 5000">
       <div @click="goback"><img src="../picture/back_icon.png"></div>
       <span style="font-size:16px;" class="center">退票服务</span>
     </div>
-    <!-- 退款人选择 -->
     <mt-popup v-model="refundPassenger" position="right" class="action-page">
       <slot>
         <div class="action-body">

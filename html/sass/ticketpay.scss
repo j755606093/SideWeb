@@ -879,6 +879,41 @@
   }
 }
 
+.add-action {
+  width: 100%;
+  .line.change {
+    margin:0;
+    background-color: $white;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+    input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%;
+    }
+    button {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #329be8;
+      outline: none;
+      border: none;
+      background-color: $white;
+      i {
+        font-size: 16px;
+        color: #329be8;
+      }
+    }
+  }
+}
+
 /** 支付footer */
 .pay {
   height: 50px;

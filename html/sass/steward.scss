@@ -150,6 +150,7 @@ header.code{
   .left {
     z-index: 1;
     flex: 3;
+    width:30%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -170,6 +171,7 @@ header.code{
   .center {
     z-index: 1;
     flex: 1;
+    width:10%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -221,11 +223,13 @@ header.code{
     height: 120px;
     .top {
       flex: 7;
+      width:70%;
       display: flex;
       flex-direction: row;
       justify-content: center;
       .name {
         flex: 6;
+        width:60%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -263,6 +267,7 @@ header.code{
       }
       .info {
         flex: 4;
+        width:40%;
         display: flex;
         flex-direction: column;
         text-align: right;
@@ -286,6 +291,7 @@ header.code{
     }
     .bottom {
       flex: 3;
+      width:40%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -350,7 +356,7 @@ header.code{
       margin-top:10px;
       >div {
         flex: 2;
-        width: 20%;
+        width:20%;
         height: 50px;
         line-height: 50px;
         display: flex;
@@ -376,7 +382,7 @@ header.code{
         }
       }
       .center {
-        width: 60%;
+        width: 40%;
         flex: 4;
         height: 50px;
         line-height: 50px;
@@ -384,7 +390,7 @@ header.code{
         margin-left: 10px;
       }
       .right {
-        width: 20%;
+        width: 40%;
         flex: 4;
         height: 50px;
         line-height: 50px;

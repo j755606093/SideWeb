@@ -529,6 +529,7 @@ const Vue_Order = new Vue({
 							if (result.Data) {
 								// 申请成功
 								MessageBox.alert('申请退款已提交').then(result=>{
+									this.myModal = false;
 									this.goback();
 									this.moreOrderData();
 									this.moreOrderData1();
