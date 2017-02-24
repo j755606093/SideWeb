@@ -65,12 +65,12 @@
       <div class="lists">
         <div class="order-lists-header">
           <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部订单</span>
-          <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">未支付</span>
+          <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">待支付</span>
           <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">已支付</span>
-          <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">待出行</span>
+          <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
         </div>
         <!-- 订单 -->
-        <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
+        <div v-if="!refundVisible" class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
           <div class="ticket-info">
             <div class="left">
               <span v-text="item.Boardtime">08:23</span>
@@ -100,7 +100,7 @@
                   <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
                   <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">已确认</p>
                   <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
-                  <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已使用</p>
+                  <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                 </div>
               </div>
               <div class="bottom">
@@ -111,6 +111,58 @@
           </div>
         </div>
         <div id="last"></div>
+        <!-- 退款订单 -->
+        <div v-show="refundVisible" id="refund-lists" class="refund-lists">
+          <div class="lists">
+            <!-- 列表 -->
+            <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?orderid='+item.OrderId">
+              <div class="left">
+                <div class="left-line">
+                  <span class="left-span">退款号:</span>
+                  <span class="nowrap" v-text="item.Id"></span>
+                </div>
+                <div class="left-line">
+                  <span class="left-span">退款理由:</span>
+                  <span class="nowrap" v-text="item.Remark"></span>
+                </div>
+                <div class="left-line">
+                  <span class="left-span">审核回复:</span>
+                  <span class="nowrap" v-text="item.Reply?item.Reply:'未回复'"></span>
+                </div>
+                <div class="left-line">
+                  <span class="left-span">申请状态:</span>
+                  <template v-if="item.Status===0">
+                    <span class="red">审核不过</span>
+                  </template>
+                  <template v-if="item.Status===1">
+                    <span class="blue">审核中</span>
+                  </template>
+                  <template v-if="item.Status===2">
+                    <span class="blue">审核通过待退款</span>
+                  </template>
+                  <template v-if="item.Status===3">
+                    <span class="blue">已退款</span>
+                  </template>
+                </div>
+              </div>
+              <div class="right">
+                <template v-if="item.Status===0">
+                  <img src="../picture/shenhebuguo.png" class="checking">
+                </template>
+                <template v-if="item.Status===1">
+                  <img src="../picture/shenhe.png" class="checking">
+                </template>
+                <template v-if="item.Status===2">
+                  <img src="../picture/shenhetongguo.png" class="checking">
+                </template>
+                <template v-if="item.Status===3">
+                  <img src="../picture/refund.png" class="checking">
+                </template>
+              </div>
+            </a>
+          </div>
+          <div id="last_refund"></div>
+        </div>
       </div>
     </mt-popup>
 
@@ -142,7 +194,7 @@
                 <div class="right">
                   <div class="info">
                     <span>{{item.Name}}</span>
-                    <span>{{item.StartDate}} 至 {{item.EndDate}}</span>
+                    <span>{{item.StartDate.slice(0,10)}} 至 {{item.EndDate.slice(0,10)}}</span>
                   </div>
                   <div class="check">
                     <a :href="'https://ticket.samecity.com.cn/wx/ticket.html?rebateid='+item.Id">立即使用</a>
@@ -156,57 +208,9 @@
     </mt-popup>
 
     <!-- 申请退款 -->
-    <mt-popup v-model="refundVisible" position="right" id="refund-lists" class="refund-lists">
-      <div class="lists">
-        <!-- 列表 -->
-        <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?orderid='+item.OrderId">
-          <div class="left">
-            <div class="left-line">
-              <span class="left-span">退款号:</span>
-              <span class="nowrap" v-text="item.Id"></span>
-            </div>
-            <div class="left-line">
-              <span class="left-span">退款理由:</span>
-              <span class="nowrap" v-text="item.Remark"></span>
-            </div>
-            <div class="left-line">
-              <span class="left-span">审核回复:</span>
-              <span class="nowrap" v-text="item.Reply?item.Reply:'未回复'"></span>
-            </div>
-            <div class="left-line">
-              <span class="left-span">申请状态:</span>
-              <template v-if="item.Status===0">
-                <span class="red">审核不过</span>
-              </template>
-              <template v-if="item.Status===1">
-                <span class="blue">审核中</span>
-              </template>
-              <template v-if="item.Status===2">
-                <span class="blue">审核通过待退款</span>
-              </template>
-              <template v-if="item.Status===3">
-                <span class="blue">已退款</span>
-              </template>
-            </div>
-          </div>
-          <div class="right">
-            <template v-if="item.Status===0">
-              <img src="../picture/shenhebuguo.png" class="checking">
-            </template>
-            <template v-if="item.Status===1">
-              <img src="../picture/shenhe.png" class="checking">
-            </template>
-            <template v-if="item.Status===2">
-              <img src="../picture/shenhetongguo.png" class="checking">
-            </template>
-            <template v-if="item.Status===3">
-              <img src="../picture/refund.png" class="checking">
-            </template>
-          </div>
-        </a>
-        <div id="last_refund"></div>
-      </div>
-    </mt-popup>
+    <!-- <mt-popup v-model="refundVisible" position="right" id="refund-lists" class="refund-lists">
+      
+    </mt-popup> -->
 
     <!-- 乘客 -->
     <mt-popup v-model="passengerVisible" position="right" class="action-page">

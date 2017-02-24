@@ -221,6 +221,14 @@ const Vue_User = new Vue({
 		showOrderList(type = "") {
 			this.controlHeader(true, "订单");
 			this.UseOrderType = type === '' ? 0 : type;
+			if(this.UseOrderType===3){
+				// 这是申请退款
+				this.applyRefund();
+				return;
+			}
+			else{
+				this.refundVisible = false;
+			}
 			if (this["OrderType" + type].OrderList.length === 0) {
 				// 只有长度为0的时候也就是第一次才加载数据
 				// 否则每次点击都加载一次数据bug了
@@ -482,7 +490,7 @@ const Vue_User = new Vue({
 		},
 		// 申请退款
 		applyRefund() {
-			this.controlHeader(true, "申请退款");
+			// this.controlHeader(true, "申请退款");
 			this.refundVisible = true;
 			if (this.RefundOrder.noMoreData || this.RefundOrder.isUse) {
 				return;
@@ -548,11 +556,11 @@ document.getElementById("order-lists").addEventListener('scroll', _.throttle(fun
 	}
 }, 100, { leading: false }));
 
-document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
-	let refundVisible = Vue_User.refundVisible;
-	let status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
+// document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
+// 	let refundVisible = Vue_User.refundVisible;
+// 	let status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
 
-	if (status_refund < 1000 && refundVisible) {
-		Vue_User.applyRefund();
-	}
-}, 100, { leading: false }));
+// 	if (status_refund < 1000 && refundVisible) {
+// 		Vue_User.applyRefund();
+// 	}
+// }, 100, { leading: false }));

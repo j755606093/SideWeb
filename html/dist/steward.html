@@ -119,21 +119,30 @@
         <span v-text="codeArray[3]?codeArray[3]:''"></span>
         <span v-text="codeArray[4]?codeArray[4]:''"></span>
         <span class="last" v-text="codeArray[5]?codeArray[5]:''"></span>
-        <!-- <div v-show="focusN===1" @click.stop="input"><input id="input1" type="tel" v-model="input1" autofocus maxlength="1" name="input1"></div> 
-        <span></span>
-        <div v-show="focusN===2" @click.stop="input"><input id="input2" type="tel" v-model="input2" maxlength="1" name="input2"></div>
-        <span></span>
-        <div v-show="focusN===3" @click.stop="input"><input id="input3" type="tel" v-model="input3" maxlength="1" name="input3"></div>
-        <span></span>
-        <div v-show="focusN===4" @click.stop="input"><input id="input4" type="tel" v-model="input4" maxlength="1" name="input4"></div>
-        <span></span>
-        <div v-show="focusN===5" @click.stop="input"><input id="input5" type="tel" v-model="input5" maxlength="1" name="input5"></div>
-        <span></span>
-        <div v-show="focusN===6" @click.stop="input"><input id="input6" type="tel" v-model="input6" maxlength="1" name="input6"></div> -->
       </div>
       <p>6位数验证码</p>
       <button @click="verifyCode">验证</button>
     </div>
+    
+    <!-- 选择需要查看的订单 -->
+    <div v-if="myModal" class="my-modal">
+      <div class="modal-body">
+        <div class="order-list">
+          <p>验证码有相同的情况,请验证乘车人的取票人的手机号码~</p>
+          <div @click="selectOrderAction(index)" class="line" v-for="(item,index) in AllOrder">
+            <div class="img">
+              <img v-if="selectOrderIndex===index" src="../picture/select.png">
+              <span></span>
+              </div>
+            <div class="center">
+              <p>{{item.Linkmanid}}</p>
+            </div>
+          </div>
+        </div>
+        <button @click="getOrder">选择</button>
+      </div>
+    </div>
+
     <footer v-if="haveId">
       <div class="price">
         <span>订单单价</span>

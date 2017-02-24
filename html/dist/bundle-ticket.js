@@ -94,6 +94,10 @@
 
 	var _TicketDate2 = _interopRequireDefault(_TicketDate);
 
+	var _TicketInfo = __webpack_require__(125);
+
+	var _TicketInfo2 = _interopRequireDefault(_TicketInfo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import 'mint-ui/lib/style.css'
@@ -112,6 +116,10 @@
 			path: "",
 			name: "ticketbody",
 			component: _TicketBody2.default
+		}, {
+			path: "/rebate/:id",
+			name: "rebate",
+			component: _TicketInfo2.default
 		}, {
 			path: "/startcity",
 			name: "ticketstartcity",
@@ -30321,14 +30329,16 @@
 	//
 	//
 	//
-	//
-	//
 
 	exports.default = {
 		data: function data() {
 			return {};
 		},
-		created: function created() {},
+		created: function created() {
+			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "优惠券" });
+			this.$store.commit("SET_SHOWHEADER", true);
+			console.log(this.$route.params.id);
+		},
 
 		filters: {},
 		watch: {},
@@ -30355,14 +30365,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return (_vm.getHeaderState) ? _vm._h('div', {
-	    staticClass: "order-info-btn animated slideInRight",
-	    on: {
-	      "click": _vm.goToOrderList
-	    }
-	  }, [_vm._h('i', {
-	    staticClass: "fa fa-sticky-note"
-	  })]) : _vm._e()
+	  return _vm._h("div")
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -30852,6 +30855,12 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -31031,6 +31040,11 @@
 					// this.locationName = "请稍后重试...";
 					// this.showRefresh = true;
 				});
+			},
+
+			/** 跳转红包页面 */
+			goToRebate: function goToRebate() {
+				this.$router.push({ name: "rebate" });
 			},
 			getPositionError: function getPositionError(error) {
 				// this.showPosition({
@@ -31248,7 +31262,27 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "ticketbody"
-	  }, [_vm._m(0), " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "slider"
+	  }, [_vm._h('router-link', {
+	    attrs: {
+	      "to": "/rebate/001"
+	    }
+	  }, [_vm._h('img', {
+	    staticClass: "slider-item",
+	    attrs: {
+	      "src": __webpack_require__(145)
+	    }
+	  })]), " ", _vm._h('router-link', {
+	    attrs: {
+	      "to": "/rebate/002"
+	    }
+	  }, [_vm._h('img', {
+	    staticClass: "slider-item",
+	    attrs: {
+	      "src": __webpack_require__(146)
+	    }
+	  })]), " "]), " ", _vm._h('div', {
 	    staticClass: "index-body"
 	  }, [_vm._h('div', {
 	    staticClass: "location"
@@ -31256,7 +31290,7 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._s(_vm.getStartCity)]), " ", _vm._m(1), " ", _vm._h('span', {
+	  }, [_vm._s(_vm.getStartCity)]), " ", _vm._m(0), " ", _vm._h('span', {
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
@@ -31290,35 +31324,13 @@
 	      }
 	    }, [_vm._h('span', {
 	      staticClass: "first"
-	    }, [_vm._s(list.startCity)]), " ", _vm._m(2, true), " ", _vm._h('span', [_vm._s(list.endCity)])])
+	    }, [_vm._s(list.startCity)]), " ", _vm._m(1, true), " ", _vm._h('span', [_vm._s(list.endCity)])])
 	  }), " ", _vm._h('p', {
 	    on: {
 	      "click": _vm.clearLocalStore
 	    }
 	  }, ["清除历史搜索"])]) : _vm._e()])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "slider"
-	  }, [_vm._h('a', {
-	    attrs: {
-	      "href": "#"
-	    }
-	  }, [_vm._h('img', {
-	    staticClass: "slider-item",
-	    attrs: {
-	      "src": __webpack_require__(145)
-	    }
-	  })]), " ", _vm._h('a', {
-	    attrs: {
-	      "href": "#"
-	    }
-	  }, [_vm._h('img', {
-	    staticClass: "slider-item",
-	    attrs: {
-	      "src": __webpack_require__(146)
-	    }
-	  })])])
-	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])

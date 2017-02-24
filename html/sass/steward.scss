@@ -223,7 +223,7 @@ header.code{
     height: 120px;
     .top {
       flex: 7;
-      width:70%;
+      width:100%;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -291,7 +291,7 @@ header.code{
     }
     .bottom {
       flex: 3;
-      width:40%;
+      width:100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -499,6 +499,96 @@ header.code{
   }
   p:nth-child(1) {
     color: #000;
+  }
+}
+
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 5000;
+  @include display_flex('row');
+  .modal-body{
+  	width:100%;
+  	margin:0 22px;
+  }
+  .order-list{
+  	width:100%;
+  	background-color: $white;
+  	padding:35px 10px;
+  	border-radius:5px;
+  	p{
+  		color:rgb(50,50,50);
+  		font-size:15px;
+  		font-weight:900;
+  		text-align: center;
+  		margin:0 10px;
+  	}
+  	.line{
+  		background-color: $white;
+	    border-radius: 10px;
+	    height: 50px;
+	    position: relative;
+	    div.img {
+	      height: 50px;
+	      line-height: 50px;
+	      width: 70px;
+	      position: absolute;
+	      bottom: 0;
+	      left: 0;
+	      display: flex;
+	      flex-direction: row;
+	      justify-content: center;
+	      align-items: center;
+	      text-align: center;
+	      img {
+	        width: 25px;
+	        height: 25px;
+	        z-index:1;
+	      }
+	      span{
+	      	position: absolute;
+	      	top:12.5px;
+	      	left:22.5px;
+	      	background-color: #fafafa;
+	      	width:25px;
+	      	height:25px;
+	      	border-radius: 50%;
+	      	z-index:0;
+	      }
+	    }
+	    .center {
+	      height: 50px;
+	      line-height: 50px;
+	      display: block;
+	      // margin-right: 130px;
+	      padding-left: 20px;
+	      color: #c8c8c8;
+	      font-size: 16px;
+	      width: 100%;
+	      @include text_nowrap;
+	      p{
+	      	font-size:15px;
+	      	text-align: right;
+	      	color:rgb(50,50,50);
+	      	margin-right:20px;
+	      }
+	    }
+  	}
+  }
+  button{
+  	background-color: #329be8;
+  	height:50px;
+  	width:100%;
+  	border:none;
+  	outline: none;
+  	color:$white;
+  	margin-top:10px;
+  	border-radius:5px;
+  	font-size:18px;
   }
 }
 

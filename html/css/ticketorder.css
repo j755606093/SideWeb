@@ -882,7 +882,8 @@ header {
       color: #329be8;
       font-size: 16px;
       -ms-flex: 1;
-          flex: 1; }
+          flex: 1;
+      text-align: right; }
     .pay .right span {
       color: #c8c8c8;
       font-size: 12px;

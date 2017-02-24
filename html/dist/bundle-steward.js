@@ -168,7 +168,11 @@
 			inputCode: "",
 			inputCodeNum: 0, //用户输入的值
 			codeArray: [], //存储的值
-			left: "0" },
+			left: "0", //输入框距离左边的距离
+
+			AllOrder: [], //多个订单
+			selectOrderIndex: 0, //默认第一个
+			myModal: false },
 		created: function created() {
 			if (this.getQueryString("orderid")) {
 				// 需要显示订单详细信息
@@ -180,32 +184,7 @@
 			this.ready = true;
 		},
 
-		computed: {
-			// inputCode:{
-			// 	set(value){
-			// 		// if(this.left==="66.6664%"){
-			// 		// 	return;
-			// 		// }
-			// 		if(this.inputCodeNum===6){
-			// 			return;
-			// 		}
-			// 		if(value!==''){
-			// 			this.codeArray.push(value);
-			// 			if(this.inputCodeNum<=5){
-			// 				this.inputCodeNum++;
-			// 				let n = 16.6666*this.inputCodeNum
-			// 				this.left = n+"%";
-			// 			}
-			// 		}
-			// 	},
-			// 	get(){
-			// 		if(this.codeArray.length===5){
-			// 			return this.codeArray[5];
-			// 		}
-			// 		return "";
-			// 	}
-			// }
-		},
+		computed: {},
 		watch: {},
 		methods: {
 			loading: function loading() {
@@ -321,6 +300,7 @@
 			fetchYes: function fetchYes() {
 				var _this4 = this;
 
+				this.loading();
 				fetch(config.serverUrl + "/api/Steward/ConfirmRide", {
 					method: "POST",
 					headers: config.headers,
@@ -334,9 +314,11 @@
 						// 验证成功
 						_this4.Passengers.map(function (item, index) {
 							for (var i = 0; i < _this4.optionsPassenger.length; i++) {
-								if (item === _this4.optionsPassenger[i].Did) {
+								if (item.DId === _this4.optionsPassenger[i].Did) {
 									// 已经验证的乘客
 									_this4.optionsPassenger[i].checked = true;
+									_this4.optionsPassenger[i].vaild = true;
+									_this4.optionsPassenger[i].active = false;
 								}
 							}
 						});
@@ -345,25 +327,6 @@
 					}
 					_mintUi.Indicator.close();
 				});
-			},
-
-			/** 选择输入 */
-			input: function input() {
-				var n = 0;
-				for (var i = 0; i < 6; i++) {
-					var m = i + 1;
-					if (!this["input" + m]) {
-						//空的
-						n = m;
-						document.getElementById("input" + m).focus();
-						break;
-					}
-				}
-				this.focusN = n; //保存当前输入的位置
-				if (n === 0) {
-					//说明输入完
-					// document.getElementById("input6").focus();
-				}
 			},
 			backInput: function backInput() {
 				if (this.inputCodeNum === 5) {
@@ -406,6 +369,8 @@
 					return;
 				}
 
+				this.loading(); //加载动画
+
 				var code = "";
 				this.codeArray.map(function (item) {
 					code += item;
@@ -417,49 +382,75 @@
 				}).then(function (result) {
 					return result.json();
 				}).then(function (result) {
+					_mintUi.Indicator.close();
 					if (result.Code !== 200) {
 						// 没有权限查看
-						_mintUi.Indicator.close();
 						_mintUi.MessageBox.alert(result.Message);
 						// this.toast(result.Message);
 						return;
 					}
+					// 如果订单不止一个
+					if (result.Data.length !== 1) {
+						_this5.AllOrder = result.Data;
+						_this5.selectOrder();
+						return;
+					}
 					_this5.OrderDetail = result.Data[0];
 					// this.passenger = [];
-					_this5.optionsPassenger = [];
-					for (var i = 0; i < _this5.OrderDetail.Passengers.length; i++) {
-						var item = _this5.OrderDetail.Passengers[i];
-						if (item.Status === -3) {
-							item.Name = item.Name + "(已退款)";
-							// this.passenger.push(item);
-							item.vaild = true; //不能上车
-							// continue; //这个乘客已经退款就不显示
-						}
-						if (item.Status === -1) {
-							item.Name = item.Name + "(审核中)";
-							// this.passenger.push(item);
-							item.vaild = true; //不能上车
-						}
-						if (item.Status === -2) {
-							item.Name = item.Name + "(待退款)";
-							// this.passenger.push(item);
-							item.vaild = true; //不能上车
-						}
-						if (item.Status === 1) {
-							// this.passenger.push(item);
-							item.vaild = false; //能上车
-						}
-						if (item.Status === 2) {
-							item.vaild = true;
-							_this5.checkedNum++;
-							item.checked = true; //已经验证过
-						}
-
-						_this5.optionsPassenger.push({ Name: item.Name, Mobile: item.Mobile, Price: item.Price, DId: item.DId, active: false, vaild: item.vaild, checked: item.checked ? true : false }); //提供申请退款选择的用户名
-					}
-					_this5.haveId = true;
-					_mintUi.Indicator.close();
+					_this5.initData();
 				});
+			},
+			initData: function initData() {
+				this.optionsPassenger = [];
+				for (var i = 0; i < this.OrderDetail.Passengers.length; i++) {
+					var item = this.OrderDetail.Passengers[i];
+					if (item.Status === -3) {
+						item.Name = item.Name + "(已退款)";
+						// this.passenger.push(item);
+						item.vaild = true; //不能上车
+						// continue; //这个乘客已经退款就不显示
+					}
+					if (item.Status === -1) {
+						item.Name = item.Name + "(审核中)";
+						// this.passenger.push(item);
+						item.vaild = true; //不能上车
+					}
+					if (item.Status === -2) {
+						item.Name = item.Name + "(待退款)";
+						// this.passenger.push(item);
+						item.vaild = true; //不能上车
+					}
+					if (item.Status === 1) {
+						// this.passenger.push(item);
+						item.vaild = false; //能上车
+					}
+					if (item.Status === 2) {
+						item.vaild = true;
+						this.checkedNum++;
+						item.checked = true; //已经验证过
+					}
+
+					this.optionsPassenger.push({ Name: item.Name, Mobile: item.Mobile, Price: item.Price, DId: item.DId, active: false, vaild: item.vaild, checked: item.checked ? true : false }); //提供申请退款选择的用户名
+				}
+				this.haveId = true;
+			},
+
+			/** 选择订单(如果有多个订单) */
+			selectOrder: function selectOrder() {
+				// console.log(this.AllOrder)
+				this.myModal = true;
+			},
+
+			/** 点击选择的订单 */
+			selectOrderAction: function selectOrderAction(index) {
+				this.selectOrderIndex = index;
+			},
+
+			/** 确定选择这个订单 */
+			getOrder: function getOrder() {
+				this.OrderDetail = this.AllOrder[this.selectOrderIndex];
+				this.myModal = false;
+				this.initData();
 			}
 		},
 		directives: {
@@ -23418,7 +23409,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #f35252;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  text-align: center; }\n  header span {\n    height: 50px;\n    line-height: 50px;\n    color: #f35252;\n    font-size: 18px;\n    font-weight: 900;\n    display: inline-block; }\n\nheader.code {\n  background-color: #329be8; }\n  header.code span {\n    color: #fff; }\n\n.nothing {\n  height: 50px;\n  width: 100%; }\n\n.codebody {\n  width: 100%;\n  padding: 0 20px; }\n  .codebody .input {\n    width: 100%;\n    margin-top: 36px;\n    position: relative;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .codebody .input > div {\n      width: 16.6666%;\n      height: 50px;\n      line-height: 50px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white; }\n      .codebody .input > div:nth-child(n) {\n        border-right: none; }\n      .codebody .input > div:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n      .codebody .input > div input {\n        font-size: 20px;\n        width: 100%;\n        color: #323232;\n        text-align: center;\n        font-weight: 900;\n        margin-top: 13px; }\n    .codebody .input > span {\n      width: 16.6666%;\n      height: 50px;\n      line-height: 50px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white;\n      display: inline-block;\n      text-align: center;\n      font-size: 20px; }\n      .codebody .input > span:nth-child(n) {\n        border-right: none; }\n      .codebody .input > span:first-child {\n        border-top-left-radius: 5px;\n        border-bottom-left-radius: 5px; }\n      .codebody .input > span:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n    .codebody .input > span.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n    .codebody .input .input-code {\n      position: absolute;\n      top: 0;\n      left: 0; }\n    .codebody .input .input-code.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n  .codebody > p {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    color: #c8c8c8;\n    text-align: center;\n    font-size: 18px; }\n  .codebody > button {\n    width: 100%;\n    height: 50px;\n    color: #fff;\n    font-size: 18px;\n    border: none;\n    outline: none;\n    background-color: #329be8;\n    border-radius: 5px; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    width: 30%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    width: 10%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      width: 70%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        width: 60%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      width: 40%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.line-other {\n  width: 100%;\n  padding: 0 10px;\n  height: 40px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  .line-other div {\n    -ms-flex: 4;\n        flex: 4;\n    width: 40%; }\n    .line-other div p {\n      background-color: #c8c8c8;\n      width: 100%;\n      height: 1px; }\n  .line-other span.center {\n    text-align: center;\n    -ms-flex: 2;\n        flex: 2;\n    width: 20%;\n    line-height: 40px;\n    height: 40px;\n    color: #c8c8c8;\n    font-size: 12px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px;\n    background-color: #fafafa; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      padding: 0 10px;\n      width: 100%;\n      background-color: #fff;\n      margin-top: 10px; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 25px;\n          height: 25px;\n          margin-left: 10px;\n          z-index: -1; }\n        .passenger-info .passenger-selected > .line > div span {\n          position: absolute;\n          top: 12.5px;\n          left: 10px;\n          width: 25px;\n          height: 25px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 1; }\n      .passenger-info .passenger-selected > .line .center {\n        width: 40%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .right {\n        width: 40%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        text-align: right;\n        margin-right: 10px; }\n    .passenger-info .passenger-selected .line.vaild > div img {\n      display: none; }\n    .passenger-info .passenger-selected .line.vaild .center {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.vaild .right {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.active > div img {\n      z-index: 1; }\n    .passenger-info .passenger-selected .line.active > div span {\n      z-index: -1; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.pay-ticket-info {\n  margin: 0 10px;\n  background-color: #fff;\n  border-radius: 10px;\n  position: relative;\n  padding-bottom: 50px; }\n  .pay-ticket-info p {\n    font-size: 16px;\n    color: #c8c8c8;\n    height: 40px;\n    line-height: 40px;\n    margin-left: 20px; }\n  .pay-ticket-info p:nth-child(1) {\n    color: #000; }\n\nfooter {\n  height: 50px;\n  background-color: #fff;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  footer .price {\n    -ms-flex: 5;\n        flex: 5;\n    margin-left: 10px; }\n    footer .price span:first-child {\n      color: #c8c8c8;\n      font-size: 15px; }\n    footer .price span:last-child {\n      margin-left: 5px;\n      color: #f35252;\n      font-size: 20px;\n      font-weight: 900; }\n  footer .yes {\n    -ms-flex: 5;\n        flex: 5;\n    margin-right: 10px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end; }\n    footer .yes button {\n      outline: none;\n      border: none;\n      padding: 10px 20px;\n      color: #fff;\n      background-color: #329be8;\n      border-radius: 5px;\n      font-size: 18px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa;\n  -webkit-overflow-scrolling: touch; }\n\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #f35252;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  text-align: center; }\n  header span {\n    height: 50px;\n    line-height: 50px;\n    color: #f35252;\n    font-size: 18px;\n    font-weight: 900;\n    display: inline-block; }\n\nheader.code {\n  background-color: #329be8; }\n  header.code span {\n    color: #fff; }\n\n.nothing {\n  height: 50px;\n  width: 100%; }\n\n.codebody {\n  width: 100%;\n  padding: 0 20px; }\n  .codebody .input {\n    width: 100%;\n    margin-top: 36px;\n    position: relative;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    .codebody .input > div {\n      width: 16.6666%;\n      height: 50px;\n      line-height: 50px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white; }\n      .codebody .input > div:nth-child(n) {\n        border-right: none; }\n      .codebody .input > div:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n      .codebody .input > div input {\n        font-size: 20px;\n        width: 100%;\n        color: #323232;\n        text-align: center;\n        font-weight: 900;\n        margin-top: 13px; }\n    .codebody .input > span {\n      width: 16.6666%;\n      height: 50px;\n      line-height: 50px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white;\n      display: inline-block;\n      text-align: center;\n      font-size: 20px; }\n      .codebody .input > span:nth-child(n) {\n        border-right: none; }\n      .codebody .input > span:first-child {\n        border-top-left-radius: 5px;\n        border-bottom-left-radius: 5px; }\n      .codebody .input > span:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n    .codebody .input > span.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n    .codebody .input .input-code {\n      position: absolute;\n      top: 0;\n      left: 0; }\n    .codebody .input .input-code.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n  .codebody > p {\n    width: 100%;\n    height: 50px;\n    line-height: 50px;\n    color: #c8c8c8;\n    text-align: center;\n    font-size: 18px; }\n  .codebody > button {\n    width: 100%;\n    height: 50px;\n    color: #fff;\n    font-size: 18px;\n    border: none;\n    outline: none;\n    background-color: #329be8;\n    border-radius: 5px; }\n\n.ticket-info {\n  margin: 10px 10px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  position: relative;\n  height: 120px;\n  border-radius: 6px;\n  background-color: #fff;\n  border: 0.5px solid #c8c8c8; }\n  .ticket-info .left {\n    z-index: 1;\n    -ms-flex: 3;\n        flex: 3;\n    width: 30%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    text-align: center; }\n    .ticket-info .left > span {\n      font-size: 12px;\n      font-weight: 900;\n      color: #323232;\n      margin: 2px 0; }\n      .ticket-info .left > span:first-child {\n        font-size: 20px;\n        color: #2196f3; }\n      .ticket-info .left > span:last-child {\n        color: #c8c8c8; }\n  .ticket-info .center {\n    z-index: 1;\n    -ms-flex: 1;\n        flex: 1;\n    width: 10%;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -ms-flex-align: left;\n        align-items: left;\n    height: 100%;\n    padding: 13px 0;\n    position: relative; }\n    .ticket-info .center > span {\n      width: 9px;\n      height: 9px;\n      border-radius: 50%;\n      background-color: #fafafa;\n      border: 0.5px solid #c8c8c8; }\n      .ticket-info .center > span:first-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        content: \"\";\n        border-radius: 0 0 10px 10px;\n        border-top-color: #fafafa;\n        position: absolute;\n        top: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n      .ticket-info .center > span:last-child::after {\n        width: 18px;\n        height: 9px;\n        background-color: #fafafa;\n        border: 0.5px solid #c8c8c8;\n        border-bottom-color: #fafafa;\n        content: \"\";\n        border-radius: 10px 10px 0 0;\n        position: absolute;\n        bottom: -0.7px;\n        left: -4.5px;\n        z-index: 10;\n        transform: rotate(0deg); }\n  .ticket-info .right {\n    z-index: 1;\n    -ms-flex: 6;\n        flex: 6;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    height: 120px; }\n    .ticket-info .right .top {\n      -ms-flex: 7;\n          flex: 7;\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center; }\n      .ticket-info .right .top .name {\n        -ms-flex: 6;\n            flex: 6;\n        width: 60%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        -ms-flex-align: start;\n            align-items: flex-start;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n        .ticket-info .right .top .name p {\n          font-weight: bold;\n          font-size: 20px;\n          position: relative;\n          text-align: left;\n          margin-left: 20px; }\n          .ticket-info .right .top .name p:first-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #8cff3f;\n            position: absolute;\n            top: 9px;\n            left: -17px; }\n          .ticket-info .right .top .name p:last-child {\n            line-height: 40px; }\n          .ticket-info .right .top .name p:last-child::after {\n            content: \"\";\n            width: 10px;\n            height: 10px;\n            border-radius: 50%;\n            background-color: #f35252;\n            position: absolute;\n            top: 15px;\n            left: -17px; }\n      .ticket-info .right .top .info {\n        -ms-flex: 4;\n            flex: 4;\n        width: 40%;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: column;\n            flex-direction: column;\n        text-align: right;\n        -ms-flex-pack: center;\n            justify-content: center; }\n        .ticket-info .right .top .info p {\n          height: 28px;\n          line-height: 28px;\n          margin-right: 25px; }\n          .ticket-info .right .top .info p:first-child {\n            font-weight: 900;\n            font-size: 20px;\n            color: #f35252; }\n          .ticket-info .right .top .info p:last-child {\n            font-size: 12px;\n            color: #323232;\n            padding-top: 8px; }\n    .ticket-info .right .bottom {\n      -ms-flex: 3;\n          flex: 3;\n      width: 100%;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n      position: relative;\n      margin-top: 4px; }\n      .ticket-info .right .bottom img {\n        position: absolute;\n        top: 4px;\n        left: 4px;\n        width: 10px;\n        height: 10px; }\n      .ticket-info .right .bottom p {\n        margin-left: 20px; }\n\n.line-other {\n  width: 100%;\n  padding: 0 10px;\n  height: 40px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  .line-other div {\n    -ms-flex: 4;\n        flex: 4;\n    width: 40%; }\n    .line-other div p {\n      background-color: #c8c8c8;\n      width: 100%;\n      height: 1px; }\n  .line-other span.center {\n    text-align: center;\n    -ms-flex: 2;\n        flex: 2;\n    width: 20%;\n    line-height: 40px;\n    height: 40px;\n    color: #c8c8c8;\n    font-size: 12px; }\n\n.passenger-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .passenger-info .passenger-selected {\n    background-color: #fff;\n    border-top-left-radius: 10px;\n    border-top-right-radius: 10px;\n    margin: 0 10px;\n    background-color: #fafafa; }\n    .passenger-info .passenger-selected > .line {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      padding: 0 10px;\n      width: 100%;\n      background-color: #fff;\n      margin-top: 10px; }\n      .passenger-info .passenger-selected > .line > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        height: 50px;\n        line-height: 50px;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n        -ms-flex-align: center;\n            align-items: center;\n        position: relative; }\n        .passenger-info .passenger-selected > .line > div img {\n          width: 25px;\n          height: 25px;\n          margin-left: 10px;\n          z-index: -1; }\n        .passenger-info .passenger-selected > .line > div span {\n          position: absolute;\n          top: 12.5px;\n          left: 10px;\n          width: 25px;\n          height: 25px;\n          background-color: #fafafa;\n          border-radius: 50%;\n          z-index: 1; }\n      .passenger-info .passenger-selected > .line .center {\n        width: 40%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        margin-left: 10px; }\n      .passenger-info .passenger-selected > .line .right {\n        width: 40%;\n        -ms-flex: 4;\n            flex: 4;\n        height: 50px;\n        line-height: 50px;\n        font-size: 16px;\n        text-align: right;\n        margin-right: 10px; }\n    .passenger-info .passenger-selected .line.vaild > div img {\n      display: none; }\n    .passenger-info .passenger-selected .line.vaild .center {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.vaild .right {\n      color: #c8c8c8; }\n    .passenger-info .passenger-selected .line.active > div img {\n      z-index: 1; }\n    .passenger-info .passenger-selected .line.active > div span {\n      z-index: -1; }\n\n.write-info {\n  width: 100%;\n  margin-bottom: 10px; }\n  .write-info > .line {\n    margin: 0 10px;\n    background-color: #fff;\n    border-radius: 10px;\n    height: 50px;\n    position: relative; }\n    .write-info > .line > span {\n      height: 50px;\n      line-height: 50px;\n      display: block;\n      margin-right: 130px;\n      padding-left: 20px;\n      color: #c8c8c8;\n      font-size: 16px;\n      width: 75%;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis; }\n    .write-info > .line > span.info {\n      display: inline-block;\n      margin-right: 0;\n      padding-left: 0;\n      width: 60px;\n      height: 50px;\n      line-height: 50px;\n      position: absolute;\n      bottom: 0;\n      right: 50px; }\n    .write-info > .line > input {\n      height: 50px;\n      display: block;\n      margin-right: 70px;\n      padding-left: 20px;\n      font-size: 16px;\n      width: 70%; }\n    .write-info > .line div.img {\n      height: 50px;\n      line-height: 50px;\n      width: 70px;\n      position: absolute;\n      bottom: 0;\n      right: 0;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center;\n      text-align: center; }\n      .write-info > .line div.img img {\n        width: 20px;\n        height: 20px; }\n\n.pay-ticket-info {\n  margin: 0 10px;\n  background-color: #fff;\n  border-radius: 10px;\n  position: relative;\n  padding-bottom: 50px; }\n  .pay-ticket-info p {\n    font-size: 16px;\n    color: #c8c8c8;\n    height: 40px;\n    line-height: 40px;\n    margin-left: 20px; }\n  .pay-ticket-info p:nth-child(1) {\n    color: #000; }\n\n.my-modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.6);\n  z-index: 5000;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  .my-modal .modal-body {\n    width: 100%;\n    margin: 0 22px; }\n  .my-modal .order-list {\n    width: 100%;\n    background-color: #fff;\n    padding: 35px 10px;\n    border-radius: 5px; }\n    .my-modal .order-list p {\n      color: #323232;\n      font-size: 15px;\n      font-weight: 900;\n      text-align: center;\n      margin: 0 10px; }\n    .my-modal .order-list .line {\n      background-color: #fff;\n      border-radius: 10px;\n      height: 50px;\n      position: relative; }\n      .my-modal .order-list .line div.img {\n        height: 50px;\n        line-height: 50px;\n        width: 70px;\n        position: absolute;\n        bottom: 0;\n        left: 0;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n        text-align: center; }\n        .my-modal .order-list .line div.img img {\n          width: 25px;\n          height: 25px;\n          z-index: 1; }\n        .my-modal .order-list .line div.img span {\n          position: absolute;\n          top: 12.5px;\n          left: 22.5px;\n          background-color: #fafafa;\n          width: 25px;\n          height: 25px;\n          border-radius: 50%;\n          z-index: 0; }\n      .my-modal .order-list .line .center {\n        height: 50px;\n        line-height: 50px;\n        display: block;\n        padding-left: 20px;\n        color: #c8c8c8;\n        font-size: 16px;\n        width: 100%;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n        .my-modal .order-list .line .center p {\n          font-size: 15px;\n          text-align: right;\n          color: #323232;\n          margin-right: 20px; }\n  .my-modal button {\n    background-color: #329be8;\n    height: 50px;\n    width: 100%;\n    border: none;\n    outline: none;\n    color: #fff;\n    margin-top: 10px;\n    border-radius: 5px;\n    font-size: 18px; }\n\nfooter {\n  height: 50px;\n  background-color: #fff;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100;\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  box-shadow: 3px 0 3px 3px #efeeee;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center; }\n  footer .price {\n    -ms-flex: 5;\n        flex: 5;\n    margin-left: 10px; }\n    footer .price span:first-child {\n      color: #c8c8c8;\n      font-size: 15px; }\n    footer .price span:last-child {\n      margin-left: 5px;\n      color: #f35252;\n      font-size: 20px;\n      font-weight: 900; }\n  footer .yes {\n    -ms-flex: 5;\n        flex: 5;\n    margin-right: 10px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end; }\n    footer .yes button {\n      outline: none;\n      border: none;\n      padding: 10px 20px;\n      color: #fff;\n      background-color: #329be8;\n      border-radius: 5px;\n      font-size: 18px; }\n", ""]);
 
 	// exports
 

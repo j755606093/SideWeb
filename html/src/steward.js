@@ -105,7 +105,9 @@ const Vue_User = new Vue({
 		codeArray:[],//存储的值
 		left:"0",//输入框距离左边的距离
 
-
+		AllOrder:[],//多个订单
+		selectOrderIndex:0,//默认第一个
+		myModal:false,//蒙版
 	},
 	created() {
 		if (this.getQueryString("orderid")) {
@@ -119,30 +121,7 @@ const Vue_User = new Vue({
 		this.ready = true;
 	},
 	computed:{
-		// inputCode:{
-		// 	set(value){
-		// 		// if(this.left==="66.6664%"){
-		// 		// 	return;
-		// 		// }
-		// 		if(this.inputCodeNum===6){
-		// 			return;
-		// 		}
-		// 		if(value!==''){
-		// 			this.codeArray.push(value);
-		// 			if(this.inputCodeNum<=5){
-		// 				this.inputCodeNum++;
-		// 				let n = 16.6666*this.inputCodeNum
-		// 				this.left = n+"%";
-		// 			}
-		// 		}
-		// 	},
-		// 	get(){
-		// 		if(this.codeArray.length===5){
-		// 			return this.codeArray[5];
-		// 		}
-		// 		return "";
-		// 	}
-		// }
+		
 	},
 	watch: {
 
@@ -253,6 +232,7 @@ const Vue_User = new Vue({
 			}
 		},
 		fetchYes(){
+			this.loading();
 			fetch(config.serverUrl + "/api/Steward/ConfirmRide", {
 					method: "POST",
 					headers: config.headers,
@@ -265,9 +245,11 @@ const Vue_User = new Vue({
 						// 验证成功
 						this.Passengers.map((item,index)=>{
 							for(let i=0;i<this.optionsPassenger.length;i++){
-								if(item===this.optionsPassenger[i].Did){
+								if(item.DId===this.optionsPassenger[i].Did){
 									// 已经验证的乘客
 									this.optionsPassenger[i].checked = true;
+									this.optionsPassenger[i].vaild = true;
+									this.optionsPassenger[i].active = false;
 								}
 							}
 						})
@@ -277,24 +259,6 @@ const Vue_User = new Vue({
 					}
 					Indicator.close();
 				})
-		},
-		/** 选择输入 */
-		input(){
-			let n = 0;
-			for(let i=0;i<6;i++){
-				let m = i+1;
-				if(!this["input"+m]){
-					//空的
-					n = m;
-					document.getElementById("input"+m).focus();
-					break;
-				}
-			}
-			this.focusN = n;//保存当前输入的位置
-			if(n===0){
-				//说明输入完
-				// document.getElementById("input6").focus();
-			}
 		},
 		backInput(){
 			if(this.inputCodeNum===5){
@@ -336,6 +300,8 @@ const Vue_User = new Vue({
 				return;
 			}
 
+			this.loading();//加载动画
+
 			let code = "";
 			this.codeArray.map(item=>{
 				code+=item;
@@ -346,49 +312,72 @@ const Vue_User = new Vue({
 					headers: config.headers,
 				}).then(result => result.json())
 				.then(result => {
+					Indicator.close();
 					if(result.Code!==200){
 						// 没有权限查看
-						Indicator.close();
 						MessageBox.alert(result.Message)
 						// this.toast(result.Message);
 						return;
 					}
+					// 如果订单不止一个
+					if(result.Data.length!==1){
+						this.AllOrder = result.Data;
+						this.selectOrder();
+						return;
+					}
 					this.OrderDetail = result.Data[0];
 					// this.passenger = [];
-					this.optionsPassenger = [];
-					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
-						let item = this.OrderDetail.Passengers[i];
-						if (item.Status === -3) {
-							item.Name = item.Name + "(已退款)";
-							// this.passenger.push(item);
-							item.vaild = true;//不能上车
-							// continue; //这个乘客已经退款就不显示
-						}
-						if (item.Status === -1) {
-							item.Name = item.Name + "(审核中)";
-							// this.passenger.push(item);
-							item.vaild = true;//不能上车
-						}
-						if (item.Status === -2) {
-							item.Name = item.Name + "(待退款)";
-							// this.passenger.push(item);
-							item.vaild = true;//不能上车
-						}
-						if (item.Status === 1) {
-							// this.passenger.push(item);
-							item.vaild = false;//能上车
-						}
-						if(item.Status ===2){
-							item.vaild = true;
-							this.checkedNum++;
-							item.checked = true;//已经验证过
-						}
-
-						this.optionsPassenger.push({ Name: item.Name,Mobile:item.Mobile, Price: item.Price, DId: item.DId, active: false,vaild:item.vaild,checked:item.checked?true:false }); //提供申请退款选择的用户名
-					}
-					this.haveId = true;
-					Indicator.close();
+					this.initData();
 				})
+		},
+		initData(){
+			this.optionsPassenger = [];
+			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
+				let item = this.OrderDetail.Passengers[i];
+				if (item.Status === -3) {
+					item.Name = item.Name + "(已退款)";
+					// this.passenger.push(item);
+					item.vaild = true;//不能上车
+					// continue; //这个乘客已经退款就不显示
+				}
+				if (item.Status === -1) {
+					item.Name = item.Name + "(审核中)";
+					// this.passenger.push(item);
+					item.vaild = true;//不能上车
+				}
+				if (item.Status === -2) {
+					item.Name = item.Name + "(待退款)";
+					// this.passenger.push(item);
+					item.vaild = true;//不能上车
+				}
+				if (item.Status === 1) {
+					// this.passenger.push(item);
+					item.vaild = false;//能上车
+				}
+				if(item.Status ===2){
+					item.vaild = true;
+					this.checkedNum++;
+					item.checked = true;//已经验证过
+				}
+
+				this.optionsPassenger.push({ Name: item.Name,Mobile:item.Mobile, Price: item.Price, DId: item.DId, active: false,vaild:item.vaild,checked:item.checked?true:false }); //提供申请退款选择的用户名
+			}
+			this.haveId = true;
+		},
+		/** 选择订单(如果有多个订单) */
+		selectOrder(){
+			// console.log(this.AllOrder)
+			this.myModal = true;
+		},
+		/** 点击选择的订单 */
+		selectOrderAction(index){
+			this.selectOrderIndex = index;
+		},
+		/** 确定选择这个订单 */
+		getOrder(){
+			this.OrderDetail = this.AllOrder[this.selectOrderIndex];
+			this.myModal = false;
+			this.initData();
 		}
 	},
 	directives:{

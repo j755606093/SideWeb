@@ -18,6 +18,7 @@ import TicketEndCity from "../components/TicketEndCity.vue";
 import TicketResult from "../components/TicketResult.vue";
 import TicketPay from "../components/TicketPay.vue";
 import TicketDate from "../components/TicketDate.vue";
+import TicketInfo from "../components/TicketInfo.vue";
 
 const routes = [{
 	path: '/',
@@ -27,6 +28,10 @@ const routes = [{
 		path: "",
 		name: "ticketbody",
 		component: TicketBody
+	},{
+		path: "/rebate/:id",
+		name: "rebate",
+		component: TicketInfo
 	}, {
 		path: "/startcity",
 		name: "ticketstartcity",

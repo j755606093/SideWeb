@@ -232,11 +232,11 @@ header {
   left: 0;
   bottom: 0;
   overflow-y: scroll; }
-  .order-lists .lists {
+  .order-lists > .lists {
     margin: 0 10px;
     margin-top: 100px;
     position: relative; }
-    .order-lists .lists .order-lists-header {
+    .order-lists > .lists .order-lists-header {
       position: fixed;
       top: 50px;
       left: 0;
@@ -253,18 +253,19 @@ header {
       height: 40px;
       line-height: 40px;
       text-align: center;
+      z-index: 10;
       background-color: white;
       padding: 0 20px; }
-      .order-lists .lists .order-lists-header span {
+      .order-lists > .lists .order-lists-header span {
         -ms-flex: 1;
             flex: 1;
         font-size: 16px;
         position: relative;
         font-weight: 900;
         color: #c8c8c8; }
-      .order-lists .lists .order-lists-header span.active {
+      .order-lists > .lists .order-lists-header span.active {
         color: #329be8; }
-        .order-lists .lists .order-lists-header span.active::after {
+        .order-lists > .lists .order-lists-header span.active::after {
           content: "";
           position: absolute;
           bottom: 0;
@@ -272,11 +273,11 @@ header {
           background-color: #329be8;
           width: 20px;
           height: 4px; }
-    .order-lists .lists .list {
+    .order-lists > .lists .list {
       width: 100%;
       border-radius: 10px;
       margin-bottom: 10px; }
-      .order-lists .lists .list .list-header {
+      .order-lists > .lists .list .list-header {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
@@ -285,19 +286,19 @@ header {
             justify-content: center;
         border-bottom: 1px solid #dddddd;
         padding: 5px 0; }
-        .order-lists .lists .list .list-header span {
+        .order-lists > .lists .list .list-header span {
           font-size: 1.4rem;
           color: #444444; }
-        .order-lists .lists .list .list-header span.time {
+        .order-lists > .lists .list .list-header span.time {
           text-align: left;
           -ms-flex: 0.7;
               flex: 0.7;
           font-size: 1.2rem; }
-        .order-lists .lists .list .list-header span.type {
+        .order-lists > .lists .list .list-header span.type {
           text-align: right;
           -ms-flex: 0.3;
               flex: 0.3; }
-      .order-lists .lists .list .list-center {
+      .order-lists > .lists .list .list-center {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
@@ -308,7 +309,7 @@ header {
         min-height: 50px;
         -ms-flex-align: center;
             align-items: center; }
-        .order-lists .lists .list .list-center .city {
+        .order-lists > .lists .list .list-center .city {
           display: -ms-flexbox;
           display: flex;
           -ms-flex-direction: row;
@@ -318,13 +319,13 @@ header {
           -ms-flex: 0.8;
               flex: 0.8;
           position: relative; }
-          .order-lists .lists .list .list-center .city > span {
+          .order-lists > .lists .list .list-center .city > span {
             font-size: 1.6rem;
             -ms-flex: 1;
                 flex: 1; }
-          .order-lists .lists .list .list-center .city > span.start {
+          .order-lists > .lists .list .list-center .city > span.start {
             position: relative; }
-            .order-lists .lists .list .list-center .city > span.start::before {
+            .order-lists > .lists .list .list-center .city > span.start::before {
               position: absolute;
               bottom: 5px;
               right: 20%;
@@ -332,7 +333,7 @@ header {
               width: 30%;
               background-color: #0074D9;
               content: ""; }
-            .order-lists .lists .list .list-center .city > span.start::after {
+            .order-lists > .lists .list .list-center .city > span.start::after {
               position: absolute;
               bottom: 5px;
               right: 12%;
@@ -341,17 +342,17 @@ header {
               border: 6px solid #fff;
               border-color: transparent transparent #0074D9 #0074D9;
               content: ""; }
-          .order-lists .lists .list .list-center .city i {
+          .order-lists > .lists .list .list-center .city i {
             position: absolute;
             top: 0;
             left: 27%; }
-        .order-lists .lists .list .list-center span.money {
+        .order-lists > .lists .list .list-center span.money {
           font-size: 1.6rem;
           -ms-flex: 0.2;
               flex: 0.2;
           text-align: right;
           color: #db3652; }
-      .order-lists .lists .list .list-footer {
+      .order-lists > .lists .list .list-footer {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
@@ -362,25 +363,25 @@ header {
         min-height: 30px;
         -ms-flex-align: center;
             align-items: center; }
-        .order-lists .lists .list .list-footer span {
+        .order-lists > .lists .list .list-footer span {
           font-size: 1.2rem; }
-        .order-lists .lists .list .list-footer span.name {
+        .order-lists > .lists .list .list-footer span.name {
           text-align: left;
           color: #777777;
           -ms-flex: 0.7;
               flex: 0.7; }
-        .order-lists .lists .list .list-footer span.order-pay {
+        .order-lists > .lists .list .list-footer span.order-pay {
           -ms-flex: 0.3;
               flex: 0.3; }
-        .order-lists .lists .list .list-footer span.order-status {
+        .order-lists > .lists .list .list-footer span.order-status {
           text-align: right; }
-        .order-lists .lists .list .list-footer span.order-pay {
+        .order-lists > .lists .list .list-footer span.order-pay {
           text-align: right; }
-        .order-lists .lists .list .list-footer span.order-no {
+        .order-lists > .lists .list .list-footer span.order-no {
           color: #db3652; }
-        .order-lists .lists .list .list-footer span.order-paying {
+        .order-lists > .lists .list .list-footer span.order-paying {
           color: #0074D9; }
-        .order-lists .lists .list .list-footer span.order-payed {
+        .order-lists > .lists .list .list-footer span.order-payed {
           color: #2ecc71; }
 
 .write-info {
@@ -1300,7 +1301,7 @@ header {
         flex-direction: column;
     -ms-flex-pack: center;
         justify-content: center;
-    margin-top: 60px;
+    margin-top: 100px;
     -ms-flex-align: center;
         align-items: center; }
     .refund-lists .lists .list {
@@ -1344,8 +1345,7 @@ header {
           right: 10px;
           bottom: 10px;
           width: 60px;
-          height: 60px;
-          transform: rotate(-30deg); }
+          height: 60px; }
     .refund-lists .lists span {
       font-size: 1.2rem; }
     .refund-lists .lists .blue {

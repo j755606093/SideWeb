@@ -1,7 +1,5 @@
 <template type="x/template" id="ticketinfo">
-	<div class="order-info-btn animated slideInRight" @click="goToOrderList" v-if="getHeaderState">
-		<i class="fa fa-sticky-note"></i>
-	</div>
+	
 </template>
 
 <style lang="sass">
@@ -37,7 +35,9 @@ export default {
 		}
 	},
 	created(){
-		
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"优惠券"});
+		this.$store.commit("SET_SHOWHEADER",true);
+		console.log(this.$route.params.id)
 	},
 	filters:{
 		
