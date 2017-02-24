@@ -772,6 +772,7 @@
           justify-content: center;
           .left {
             flex: 3;
+            height: 130px;
             @include display_flex('column');
             // background: linear-gradient(to bottom, #2196f3, #0e62e1);
             background-color: #329be8;
@@ -807,6 +808,7 @@
             }
           }
           .right {
+            height: 130px;
             flex: 7;
             background-color: $white;
             border-top-right-radius: 10px;

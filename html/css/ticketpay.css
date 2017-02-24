@@ -842,6 +842,7 @@ input {
           .action-page .action .action-use .page .rebate .left {
             -ms-flex: 3;
                 flex: 3;
+            height: 130px;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-direction: column;
@@ -894,6 +895,7 @@ input {
                 font-size: 15px;
                 font-weight: 900; }
           .action-page .action .action-use .page .rebate .right {
+            height: 130px;
             -ms-flex: 7;
                 flex: 7;
             background-color: #fff;
