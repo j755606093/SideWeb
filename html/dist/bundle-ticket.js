@@ -30323,7 +30323,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.rebate {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 60px;\n}\n.rebate-header {\n  width: 100%;\n}\n.rebate-header img {\n    width: 100%;\n    height: 200px;\n}\n.rebate-body {\n  width: 100%;\n  border: 0.5px solid #c8c8c8;\n  border-top: none;\n  text-align: center;\n}\n.rebate-body section {\n    margin: 0 20px;\n}\n.rebate-body p.empty {\n    border-bottom: 0.5px solid #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.money {\n    margin-top: 10px;\n    height: 50px;\n    font-size: 12px;\n    font-weight: 900;\n    color: #323232;\n    font-weight: 900;\n}\n.rebate-body p.money span {\n      font-size: 36px;\n      margin-left: 5px;\n}\n.rebate-body p.limit {\n    font-weight: 900;\n    color: #323232;\n    font-size: 12px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.name {\n    font-weight: 900;\n    color: #323232;\n    font-size: 15px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.time {\n    color: #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.time:last-child {\n      margin-bottom: 20px;\n}\n.get-rebate {\n  position: absolute;\n  bottom: 10px;\n  left: 0;\n  width: 100%;\n  padding: 0 20px;\n}\n.get-rebate button {\n    height: 40px;\n    border: none;\n    outline: none;\n    color: #fff;\n    font-size: 16px;\n    border-radius: 5px;\n    background-color: #329be8;\n    width: 100%;\n}\n.get-rebate button.isuse {\n    background-color: #c8c8c8;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.rebate {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 60px;\n  padding-bottom: 60px;\n}\n.rebate-header {\n  width: 100%;\n}\n.rebate-header img {\n    width: 100%;\n    height: 200px;\n}\n.rebate-body {\n  width: 100%;\n  border: 0.5px solid #c8c8c8;\n  border-top: none;\n  text-align: center;\n}\n.rebate-body section {\n    margin: 0 20px;\n}\n.rebate-body p.empty {\n    border-bottom: 0.5px solid #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.money {\n    margin-top: 10px;\n    height: 50px;\n    font-size: 12px;\n    font-weight: 900;\n    color: #323232;\n    font-weight: 900;\n}\n.rebate-body p.money span {\n      font-size: 36px;\n      margin-left: 5px;\n}\n.rebate-body p.limit {\n    font-weight: 900;\n    color: #323232;\n    font-size: 12px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.name {\n    font-weight: 900;\n    color: #323232;\n    font-size: 15px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.time {\n    color: #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.time:last-child {\n      margin-bottom: 20px;\n}\n.get-rebate {\n  position: absolute;\n  bottom: 10px;\n  left: 0;\n  width: 100%;\n  padding: 0 20px;\n}\n.get-rebate button {\n    height: 40px;\n    border: none;\n    outline: none;\n    color: #fff;\n    font-size: 16px;\n    border-radius: 5px;\n    background-color: #329be8;\n    width: 100%;\n}\n.get-rebate button.isuse {\n    background-color: #c8c8c8;\n}\n", ""]);
 
 	// exports
 
@@ -30453,6 +30453,7 @@
 	//
 	//
 	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -30462,6 +30463,7 @@
 			};
 		},
 		created: function created() {
+			this.loading();
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "优惠券" });
 			this.$store.commit("SET_SHOWHEADER", true);
 			this.rebateid = this.$route.params.id;
@@ -30492,11 +30494,12 @@
 
 				// /api/Rebate/GetQrcodeRebate?id=15250485
 				this.$store.dispatch("getRebateInfo", this.rebateid).then(function (result) {
+					_mintUi.Indicator.close();
 					if (result.Data) {
 						_this.rebateInfo = result.Data;
 					} else {
 						_mintUi.MessageBox.alert(result.Message).then(function (result) {
-							_this.$router.push({ name: "ticketbody" });
+							_this.$router.replace({ name: "ticketbody" });
 							// this.$router.go(-1);
 						});
 					}
@@ -31452,18 +31455,7 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "ticketbody"
-	  }, [_vm._h('div', {
-	    staticClass: "slider"
-	  }, [_vm._h('router-link', {
-	    attrs: {
-	      "to": "/rebate/15250485"
-	    }
-	  }, [_vm._h('img', {
-	    staticClass: "slider-item",
-	    attrs: {
-	      "src": __webpack_require__(145)
-	    }
-	  })]), " ", " ", " ", _vm._m(0)]), " ", _vm._h('div', {
+	  }, [_vm._m(0), " ", _vm._h('div', {
 	    staticClass: "index-body"
 	  }, [_vm._h('div', {
 	    staticClass: "location"
@@ -31512,7 +31504,9 @@
 	    }
 	  }, ["清除历史搜索"])]) : _vm._e()])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('a', {
+	  return _vm._h('div', {
+	    staticClass: "slider"
+	  }, [_vm._h('a', {
 	    attrs: {
 	      "href": "#"
 	    }
@@ -31521,7 +31515,7 @@
 	    attrs: {
 	      "src": __webpack_require__(146)
 	    }
-	  })])
+	  })])])
 	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;
@@ -31535,12 +31529,7 @@
 	}
 
 /***/ },
-/* 145 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "slider1.png?0db16bbb8e83aaab538d0696fca94af5";
-
-/***/ },
+/* 145 */,
 /* 146 */
 /***/ function(module, exports, __webpack_require__) {
 

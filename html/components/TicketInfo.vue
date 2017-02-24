@@ -27,6 +27,7 @@
 	width:100%;
 	padding:0 10px;
 	margin-top:60px;
+	padding-bottom: 60px;
 }
 .rebate-header{
 	width:100%;
@@ -118,6 +119,7 @@ export default {
 		}
 	},
 	created(){
+		this.loading();
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"优惠券"});
 		this.$store.commit("SET_SHOWHEADER",true);
 		this.rebateid = this.$route.params.id;
@@ -151,12 +153,13 @@ export default {
 		fetchRebate(){
 			// /api/Rebate/GetQrcodeRebate?id=15250485
 			this.$store.dispatch("getRebateInfo",this.rebateid).then(result=>{
+				Indicator.close();
 				if(result.Data){
 					this.rebateInfo = result.Data;
 				}
 				else{
 					MessageBox.alert(result.Message).then(result=>{
-						this.$router.push({name:"ticketbody"});
+						this.$router.replace({name:"ticketbody"});
 						// this.$router.go(-1);
 					})
 				}

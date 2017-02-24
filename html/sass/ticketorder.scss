@@ -244,11 +244,34 @@ header {
   // margin-top:50px;
   padding-bottom: 50px;
   .no-data {
-    padding-top: 100px;
+    padding-top: 80px;
     text-align: center;
+    .img {
+      width: 100%;
+      margin-bottom: 20px;
+      img {
+        width: 195px;
+        height: 195px;
+      }
+    }
     p {
-      color: $gray;
-      font-size: 1.8rem;
+      color: rgb(200, 200, 200);
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    a {
+      width: 90px;
+      height: 35px;
+      line-height: 35px;
+      color: $white;
+      text-decoration: none;
+      background-color: #329be8;
+      text-align: center;
+      display:inline-block;
+      border-radius: 5px;
+      margin-top:10px;
+      font-size:18px;
     }
   }
   .order {
@@ -560,51 +583,51 @@ header {
   }
 }
 
-.code{
+.code {
   @include display_flex("row");
   background-color: $white;
-  margin:5px 10px;
-  border:0.5px solid #c8c8c8;
+  margin: 5px 10px;
+  border: 0.5px solid #c8c8c8;
   border-radius: 5px;
   // padding:5px 10px;
-  .img{
-    flex:4;
-    width:40%;
-    padding:5px;
-    >img{
-      width:100px;
-      height:100px;
-      margin-left:10px;
+  .img {
+    flex: 4;
+    width: 40%;
+    padding: 5px;
+    >img {
+      width: 100px;
+      height: 100px;
+      margin-left: 10px;
     }
   }
-  .right{
-    flex:6;
-    width:60%;
+  .right {
+    flex: 6;
+    width: 60%;
     @include display_flex('column');
     align-items: flex-start;
-    margin-right:5px;
-    >p{
-      height:40px;
-      line-height:40px;
-      color:#000;
-      font-weight:900;
-      font-size:24px;
-      flex:1;
-      width:100%;
+    margin-right: 5px;
+    >p {
+      height: 40px;
+      line-height: 40px;
+      color: #000;
+      font-weight: 900;
+      font-size: 24px;
+      flex: 1;
+      width: 100%;
       text-align: left;
-      &:nth-child(2n){
+      &:nth-child(2n) {
         letter-spacing: 8px;
       }
-      &:first-child{
-        color:#c8c8c8;
-        font-size:15px;
+      &:first-child {
+        color: #c8c8c8;
+        font-size: 15px;
         text-align: left;
       }
-      &:last-child{
-        color:#c8c8c8;
-        font-size:12px;
+      &:last-child {
+        color: #c8c8c8;
+        font-size: 12px;
         text-align: right;
-        padding-right:20px;
+        padding-right: 20px;
       }
     }
   }
@@ -717,10 +740,10 @@ header {
   .right {
     flex: 5;
     @include display_flex('row');
-    p{
-      color:#329be8;
-      font-size:16px;
-      flex:1;
+    p {
+      color: #329be8;
+      font-size: 16px;
+      flex: 1;
       text-align: right;
     }
     span {
@@ -1075,8 +1098,8 @@ footer {
   }
 }
 
-.mint-toast{
-  z-index:10000;
+.mint-toast {
+  z-index: 10000;
 }
 
 .mint-msgbox {

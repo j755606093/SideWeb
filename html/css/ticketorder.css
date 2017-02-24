@@ -337,11 +337,31 @@ header {
   width: 100%;
   padding-bottom: 50px; }
   .body .no-data {
-    padding-top: 100px;
+    padding-top: 80px;
     text-align: center; }
+    .body .no-data .img {
+      width: 100%;
+      margin-bottom: 20px; }
+      .body .no-data .img img {
+        width: 195px;
+        height: 195px; }
     .body .no-data p {
-      color: #AAAAAA;
-      font-size: 1.8rem; }
+      color: #c8c8c8;
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 10px; }
+    .body .no-data a {
+      width: 90px;
+      height: 35px;
+      line-height: 35px;
+      color: #fff;
+      text-decoration: none;
+      background-color: #329be8;
+      text-align: center;
+      display: inline-block;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 18px; }
   .body .order {
     width: 100%;
     margin-top: 60px; }

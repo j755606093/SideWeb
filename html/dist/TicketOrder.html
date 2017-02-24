@@ -22,7 +22,12 @@
       <div class="body">
         <!-- 没有订单数据 -->
         <div class="no-data" v-if="noDataShow">
-          <p>这里空空如也</p>
+          <div class="img">
+            <img src="../picture/nodata.png">
+          </div>
+          <p>这里空空如也~</p>
+          <p>吓得我赶紧下一单呀</p>
+          <a :href="'./ticket.html?datetime='+refreshLink[0]">去下单</a>
         </div>
         <!-- 订单数据 -->
         <div class="order" v-else>
@@ -55,7 +60,7 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">已确认</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>
@@ -76,7 +81,12 @@
       <div class="body">
         <!-- 没有订单数据 -->
         <div class="no-data" v-if="noDataShow1">
-          <p>这里空空如也</p>
+          <div class="img">
+            <img src="../picture/nodata.png">
+          </div>
+          <p>这里空空如也~</p>
+          <p>吓得我赶紧下一单呀</p>
+          <a :href="'./ticket.html?datetime='+refreshLink[0]">去下单</a>
         </div>
         <!-- 订单数据 -->
         <div class="order" v-else>
@@ -109,7 +119,7 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">已确认</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>

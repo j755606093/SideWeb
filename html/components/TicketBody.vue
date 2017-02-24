@@ -2,9 +2,9 @@
 	<div class="ticketbody">
 		<!-- 轮播图 -->
 		<div class="slider">
-			<router-link to="/rebate/15250485">
+			<!-- <router-link to="/rebate/15250485">
 				<img class="slider-item" src="../picture/slider1.png">
-			</router-link>
+			</router-link> -->
 			<!-- <router-link to="/rebate/002">
 				<img class="slider-item" src="../picture/slider2.png">
 			</router-link> -->
