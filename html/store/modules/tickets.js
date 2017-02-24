@@ -470,6 +470,41 @@ const actions = {
 			.then(result => {
 				return result;
 			})
+	},
+	/** 获取优惠券信息 */
+	getRebateInfo({ commit, state }, data) {
+		// /api/Order/Cancel
+		return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id="+data, {
+				method: "GET",
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
+				},
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				return result;
+			})
+	},
+	/** 领取优惠券 */
+	getRebate({ commit, state }, data) {
+		// /api/Order/Cancel
+		return fetch(state.serverUrl + "/api/Rebate/ReceiveQrcodeRebate", {
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
+				},
+				body:JSON.stringify({
+					Id:data
+				})
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				return result;
+			})
 	}
 }
 

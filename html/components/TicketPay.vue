@@ -237,7 +237,7 @@
 					  <!-- 内容 -->
 						<div v-show="canuseIndex===1" class="page animated fadeIn">
 							<!-- 可用优惠券 -->
-							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
+							<div @click="selectRebeat(index)" :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
 								<div class="left">
 									<div class="circle">
 										<span></span>
@@ -260,7 +260,7 @@
 										<span>{{item.Name}}</span>
 										<span>{{item.StartDate}} 至 {{item.EndDate}}</span>
 									</div>
-									<div @click="selectRebeat(index)" class="check">
+									<div class="check">
 										<img src="../picture/select.png">
 										<span></span>
 									</div>
