@@ -8,9 +8,9 @@
 			<!-- <router-link to="/rebate/002">
 				<img class="slider-item" src="../picture/slider2.png">
 			</router-link> -->
-		<!-- 	<a @click="goToRebate('123445')" href="#">
+			<a href="#">
 				<img class="slider-item" src="../picture/slider1.png">
-			</a> -->
+			</a>
 			<a href="#">
 				<img class="slider-item" src="../picture/slider2.png">
 			</a>

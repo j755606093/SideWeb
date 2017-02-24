@@ -31513,6 +31513,15 @@
 	  }, [_vm._h('img', {
 	    staticClass: "slider-item",
 	    attrs: {
+	      "src": __webpack_require__(145)
+	    }
+	  })]), " ", _vm._h('a', {
+	    attrs: {
+	      "href": "#"
+	    }
+	  }, [_vm._h('img', {
+	    staticClass: "slider-item",
+	    attrs: {
 	      "src": __webpack_require__(146)
 	    }
 	  })])])
@@ -31529,7 +31538,12 @@
 	}
 
 /***/ },
-/* 145 */,
+/* 145 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "slider1.png?0db16bbb8e83aaab538d0696fca94af5";
+
+/***/ },
 /* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
