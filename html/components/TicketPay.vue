@@ -238,65 +238,41 @@
 						<div v-show="canuseIndex===1" class="page animated fadeIn">
 							<!-- 可用优惠券 -->
 							<div @click="selectRebeat(index)" :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
-								<div class="left">
-									<div class="circle">
+								<div class="top">
+                  <img src="../picture/rebate_bg.png">
+                </div>
+                <div class="bottom">
+                  <div class="left">
+                    <p><span>¥</span>{{item.Money}}</p>
+                    <p class="limit">{{'满'+item.LimitMoney+'可用'}}</p>
+                    <p class="name">{{item.Name}}</p>
+                    <p class="time">{{item.StartDate.slice(0,10)}} 至 {{item.EndDate.slice(0,10)}}</p>
+                  </div>
+                  <div class="right check">
+                    <img src="../picture/select.png">
 										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-									</div>
-									<div class="title">
-										<p><span>¥</span>{{item.Money}}</p>
-										<span>{{'满'+item.LimitMoney+'可用'}}</span>
-									</div>
-								</div>
-								<div class="right">
-									<div class="info">
-										<span>{{item.Name}}</span>
-										<span>{{item.StartDate}} 至 {{item.EndDate}}</span>
-									</div>
-									<div class="check">
-										<img src="../picture/select.png">
-										<span></span>
-									</div>
-								</div>
+                  </div>
+                </div>
 							</div>
 						</div>
 						<div v-show="canuseIndex===2" class="page animated fadeIn">
 							<!-- 不可用优惠券 -->
 							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseTwo">
-								<div class="left">
-									<div class="circle">
+								<div class="top">
+                  <img src="../picture/rebate_bg.png">
+                </div>
+                <div class="bottom">
+                  <div class="left">
+                    <p><span>¥</span>{{item.Money}}</p>
+                    <p class="limit">{{'满'+item.LimitMoney+'可用'}}</p>
+                    <p class="name">{{item.Name}}</p>
+                    <p class="time">{{item.StartDate.slice(0,10)}} 至 {{item.EndDate.slice(0,10)}}</p>
+                  </div>
+                  <div class="right check">
+                    <img src="../picture/select.png">
 										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-										<span></span>
-									</div>
-									<div class="title">
-										<p><span>¥</span>{{item.Money}}</p>
-										<span>{{'满'+item.LimitMoney+'可用'}}</span>
-									</div>
-								</div>
-								<div class="right">
-									<div class="info">
-										<span>{{item.Name}}</span>
-										<span>{{item.StartDate}} 至 {{item.EndDate}}</span>
-									</div>
-									<div class="check">
-										<img src="../picture/select.png">
-										<span></span>
-									</div>
-								</div>
+                  </div>
+                </div>
 							</div>
 						</div>
 		  		</div>
@@ -1351,6 +1327,6 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scrop>
 @import "../css/ticketpay.css";
 </style>

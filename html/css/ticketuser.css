@@ -702,20 +702,20 @@ header {
       margin-top: 20px; }
       .action-page > .action .action-body .add-action {
         width: 100%; }
-        .action-page > .action .action-body .add-action > .line {
+        .action-page > .action .action-body .add-action .line {
           margin: 0 10px;
           background-color: #fff;
           border-radius: 10px;
           height: 50px;
           position: relative; }
-          .action-page > .action .action-body .add-action > .line input {
+          .action-page > .action .action-body .add-action .line input {
             height: 50px;
             display: block;
             margin-right: 70px;
             padding-left: 20px;
             font-size: 16px;
             width: 70%; }
-          .action-page > .action .action-body .add-action > .line button {
+          .action-page > .action .action-body .add-action .line button {
             position: absolute;
             top: 0;
             right: 20px;
@@ -726,7 +726,7 @@ header {
             outline: none;
             border: none;
             background-color: #fff; }
-            .action-page > .action .action-body .add-action > .line button i {
+            .action-page > .action .action-body .add-action .line button i {
               font-size: 16px;
               color: #329be8; }
       .action-page > .action .action-body .pay-ticket-info {
@@ -869,183 +869,146 @@ header {
           .action-page > .action .action-select .line .right > img {
             width: 20px;
             height: 20px; }
-    .action-page > .action .action-use {
-      margin-top: 50px; }
-      .action-page > .action .action-use .popup-header {
-        height: 50px;
+
+.add-action {
+  width: 100%; }
+  .add-action .line {
+    margin: 0 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    height: 50px;
+    position: relative; }
+    .add-action .line input {
+      height: 50px;
+      display: block;
+      margin-right: 70px;
+      padding-left: 20px;
+      font-size: 16px;
+      width: 70%; }
+    .add-action .line button {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #329be8;
+      outline: none;
+      border: none;
+      background-color: #fff; }
+      .add-action .line button i {
+        font-size: 16px;
+        color: #329be8; }
+
+.action-use {
+  margin-top: 50px; }
+  .action-use .popup-header {
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    background-color: #fff;
+    color: #c8c8c8;
+    text-align: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center; }
+    .action-use .popup-header span {
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+      font-size: 18px;
+      -ms-flex: 1;
+          flex: 1;
+      font-weight: 900; }
+    .action-use .popup-header span.active {
+      color: #329be8;
+      position: relative; }
+      .action-use .popup-header span.active::after {
+        position: absolute;
+        bottom: 0px;
+        left: 45%;
+        width: 20px;
+        height: 4px;
+        background-color: #329be8;
+        content: ""; }
+  .action-use .page {
+    width: 100%;
+    padding: 0 10px; }
+    .action-use .page .rebate {
+      height: 200px;
+      display: -ms-flexbox;
+      display: flex;
+      margin-top: 10px;
+      background-color: #fff;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      width: 50%;
+      float: left; }
+      .action-use .page .rebate .top {
         width: 100%;
-        line-height: 50px;
-        background-color: #fff;
-        color: #c8c8c8;
-        text-align: center;
+        height: 100px; }
+        .action-use .page .rebate .top img {
+          width: 100%;
+          height: 100px; }
+      .action-use .page .rebate .bottom {
+        border: 0.5px solid #c8c8c8;
+        border-top: none;
+        height: 100px;
+        width: 100%;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: center;
-            justify-content: center; }
-        .action-page > .action .action-use .popup-header span {
-          display: inline-block;
-          height: 50px;
-          line-height: 50px;
-          font-size: 18px;
-          -ms-flex: 1;
-              flex: 1;
-          font-weight: 900; }
-        .action-page > .action .action-use .popup-header span.active {
-          color: #329be8;
-          position: relative; }
-          .action-page > .action .action-use .popup-header span.active::after {
-            position: absolute;
-            bottom: 0px;
-            left: 45%;
-            width: 20px;
-            height: 4px;
-            background-color: #329be8;
-            content: ""; }
-      .action-page > .action .action-use .page {
-        width: 100%; }
-        .action-page > .action .action-use .page .rebate {
-          height: 130px;
-          display: -ms-flexbox;
-          display: flex;
-          margin: 0 10px;
-          margin-top: 10px;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center; }
-          .action-page > .action .action-use .page .rebate .left {
-            -ms-flex: 3;
-                flex: 3;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-                flex-direction: column;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center;
-            background-color: #329be8;
-            position: relative; }
-            .action-page > .action .action-use .page .rebate .left .circle {
-              position: absolute;
-              top: -3px;
-              left: -5px;
-              bottom: -3px;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              -ms-flex-pack: distribute;
-                  justify-content: space-around; }
-              .action-page > .action .action-use .page .rebate .left .circle span {
-                width: 10px;
-                height: 10px;
-                background-color: #fff;
-                border-radius: 50%; }
-            .action-page > .action .action-use .page .rebate .left .title {
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              color: #fff; }
-              .action-page > .action .action-use .page .rebate .left .title p {
-                -ms-flex: 6;
-                    flex: 6;
-                font-size: 30px;
-                font-weight: 900;
-                color: #fff; }
-              .action-page > .action .action-use .page .rebate .left .title span {
-                -ms-flex: 4;
-                    flex: 4;
-                font-size: 15px;
-                font-weight: 900; }
-          .action-page > .action .action-use .page .rebate .right {
-            -ms-flex: 7;
-                flex: 7;
-            background-color: #fff;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            border: 1px solid #c8c8c8;
-            border-left: none;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-                flex-direction: row;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center; }
-            .action-page > .action .action-use .page .rebate .right .info {
-              -ms-flex: 7;
-                  flex: 7;
-              height: 100px;
-              text-align: left;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center; }
-              .action-page > .action .action-use .page .rebate .right .info span {
-                font-size: 15px;
-                font-weight: 900;
-                height: 65px;
-                width: 100%;
-                padding: 10px 10px; }
-              .action-page > .action .action-use .page .rebate .right .info span:last-child {
-                color: #c8c8c8;
-                font-weight: 400; }
-            .action-page > .action .action-use .page .rebate .right .check {
-              -ms-flex: 3;
-                  flex: 3;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: row;
-                  flex-direction: row;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              height: 130px;
-              position: relative; }
-              .action-page > .action .action-use .page .rebate .right .check img {
-                width: 25px;
-                height: 25px;
-                z-index: -1; }
-              .action-page > .action .action-use .page .rebate .right .check span {
-                position: absolute;
-                top: 52px;
-                left: 33%;
-                width: 25px;
-                height: 25px;
-                background-color: #fafafa;
-                border-radius: 50%;
-                z-index: 0; }
-              .action-page > .action .action-use .page .rebate .right .check a {
-                font-size: 14px;
-                height: 130px;
-                width: 100%;
-                text-align: center;
-                line-height: 130px;
-                color: #329be8; }
-          .action-page > .action .action-use .page .rebate.active .check img {
-            z-index: 1; }
-          .action-page > .action .action-use .page .rebate.disabled .left {
-            background-color: #c8c8c8; }
-          .action-page > .action .action-use .page .rebate.disabled .right .info span {
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center; }
+        .action-use .page .rebate .bottom .left {
+          -ms-flex: 6;
+              flex: 6;
+          padding-left: 10px; }
+          .action-use .page .rebate .bottom .left p {
+            font-size: 23px;
+            color: #323232;
+            font-weight: 900; }
+            .action-use .page .rebate .bottom .left p > span {
+              font-size: 12px;
+              margin-right: 5px; }
+          .action-use .page .rebate .bottom .left .limit, .action-use .page .rebate .bottom .left .name {
+            font-size: 12px;
+            font-weight: 900;
+            color: #323232; }
+          .action-use .page .rebate .bottom .left .time {
+            font-size: 12px;
+            font-weight: 900;
             color: #c8c8c8; }
+        .action-use .page .rebate .bottom .right {
+          -ms-flex: 4;
+              flex: 4; }
+          .action-use .page .rebate .bottom .right a {
+            color: #329be8;
+            text-align: center;
+            height: 100px;
+            line-height: 100px;
+            display: block; }
+      .action-use .page .rebate:nth-child(1+2n) {
+        padding-right: 5px; }
+      .action-use .page .rebate:nth-child(2n) {
+        padding-left: 5px; }
+      .action-use .page .rebate.active .check img {
+        z-index: 1; }
+      .action-use .page .rebate.disabled .left {
+        background-color: #c8c8c8; }
+      .action-use .page .rebate.disabled .right .info span {
+        color: #c8c8c8; }
 
 .passenger-lists {
   width: 100%;

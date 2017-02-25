@@ -827,143 +827,89 @@ input {
             height: 4px;
             background-color: #329be8;
             content: ""; }
-      .action-page .action .action-use .page {
-        width: 100%; }
-        .action-page .action .action-use .page .rebate {
-          height: 130px;
+      .action-page .action .action-use .rebate {
+        height: 200px;
+        display: -ms-flexbox;
+        display: flex;
+        margin-top: 10px;
+        background-color: #fff;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        width: 50%;
+        padding-bottom: 0;
+        float: left; }
+        .action-page .action .action-use .rebate .top {
+          width: 100%;
+          height: 100px; }
+          .action-page .action .action-use .rebate .top img {
+            width: 100%;
+            height: 100px; }
+        .action-page .action .action-use .rebate .bottom {
+          border: 0.5px solid #c8c8c8;
+          border-top: none;
+          height: 100px;
+          width: 100%;
           display: -ms-flexbox;
           display: flex;
-          margin-top: 10px;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
-              justify-content: center; }
-          .action-page .action .action-use .page .rebate .left {
-            -ms-flex: 3;
-                flex: 3;
-            height: 130px;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-                flex-direction: column;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center;
-            background-color: #329be8;
+              justify-content: center;
+          -ms-flex-align: center;
+              align-items: center; }
+          .action-page .action .action-use .rebate .bottom .left {
+            -ms-flex: 6;
+                flex: 6;
+            padding-left: 10px; }
+            .action-page .action .action-use .rebate .bottom .left p {
+              font-size: 23px;
+              color: #323232;
+              font-weight: 900; }
+              .action-page .action .action-use .rebate .bottom .left p > span {
+                font-size: 12px;
+                margin-right: 5px; }
+            .action-page .action .action-use .rebate .bottom .left .limit, .action-page .action .action-use .rebate .bottom .left .name {
+              font-size: 12px;
+              font-weight: 900;
+              color: #323232; }
+            .action-page .action .action-use .rebate .bottom .left .time {
+              font-size: 12px;
+              font-weight: 900;
+              color: #c8c8c8; }
+          .action-page .action .action-use .rebate .bottom .right {
+            -ms-flex: 4;
+                flex: 4;
+            text-align: center;
             position: relative; }
-            .action-page .action .action-use .page .rebate .left .circle {
+            .action-page .action .action-use .rebate .bottom .right img {
+              width: 30px;
+              height: 30px;
+              z-index: -1; }
+            .action-page .action .action-use .rebate .bottom .right span {
+              width: 30px;
+              height: 30px;
+              background-color: #fafafa;
+              border-radius: 50%;
+              z-index: 1;
               position: absolute;
-              top: -3px;
-              left: -5px;
-              bottom: -3px;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              -ms-flex-pack: distribute;
-                  justify-content: space-around; }
-              .action-page .action .action-use .page .rebate .left .circle span {
-                width: 10px;
-                height: 10px;
-                background-color: #fff;
-                border-radius: 50%; }
-            .action-page .action .action-use .page .rebate .left .title {
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              color: #fff; }
-              .action-page .action .action-use .page .rebate .left .title p {
-                -ms-flex: 6;
-                    flex: 6;
-                font-size: 30px;
-                font-weight: 900;
-                color: #fff; }
-              .action-page .action .action-use .page .rebate .left .title span {
-                -ms-flex: 4;
-                    flex: 4;
-                font-size: 15px;
-                font-weight: 900; }
-          .action-page .action .action-use .page .rebate .right {
-            height: 130px;
-            -ms-flex: 7;
-                flex: 7;
-            background-color: #fff;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            border: 1px solid #c8c8c8;
-            border-left: none;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-                flex-direction: row;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center; }
-            .action-page .action .action-use .page .rebate .right .info {
-              -ms-flex: 7;
-                  flex: 7;
-              height: 100px;
-              text-align: left;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center; }
-              .action-page .action .action-use .page .rebate .right .info span {
-                font-size: 15px;
-                font-weight: 900;
-                height: 65px;
-                width: 100%;
-                padding: 10px 10px; }
-              .action-page .action .action-use .page .rebate .right .info span:last-child {
-                color: #c8c8c8;
-                font-weight: 400; }
-            .action-page .action .action-use .page .rebate .right .check {
-              -ms-flex: 3;
-                  flex: 3;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-direction: row;
-                  flex-direction: row;
-              -ms-flex-pack: center;
-                  justify-content: center;
-              -ms-flex-align: center;
-                  align-items: center;
-              height: 130px;
-              position: relative; }
-              .action-page .action .action-use .page .rebate .right .check img {
-                width: 25px;
-                height: 25px;
-                z-index: -1; }
-              .action-page .action .action-use .page .rebate .right .check span {
-                position: absolute;
-                top: 52px;
-                left: 33%;
-                width: 25px;
-                height: 25px;
-                background-color: #fafafa;
-                border-radius: 50%;
-                z-index: 0; }
-          .action-page .action .action-use .page .rebate.active .check img {
-            z-index: 1; }
-          .action-page .action .action-use .page .rebate.disabled .left {
-            background-color: #c8c8c8; }
-          .action-page .action .action-use .page .rebate.disabled .right .info span {
-            color: #c8c8c8; }
+              top: 0;
+              right: 27%; }
+        .action-page .action .action-use .rebate:nth-child(1+2n) {
+          padding-right: 5px; }
+        .action-page .action .action-use .rebate:nth-child(2n) {
+          padding-left: 5px; }
+        .action-page .action .action-use .rebate.active .check img {
+          z-index: 2; }
+        .action-page .action .action-use .rebate.active span {
+          background-color: #fafafa;
+          z-index: -1 !important; }
+        .action-page .action .action-use .rebate.disabled .bottom p {
+          color: #c8c8c8 !important; }
 
 .add-action {
   width: 100%; }
