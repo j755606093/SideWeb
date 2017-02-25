@@ -70,8 +70,8 @@
           <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
         </div>
         <!-- 订单 -->
-        <div v-if="!refundVisible" class="list" @click="openOrder(index)" v-for="(item,index) in OrderList">
-          <div class="ticket-info">
+        <div v-if="!refundVisible" class="list" >
+          <div v-if="!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
             <div class="left">
               <span v-text="item.Boardtime">08:23</span>
               <span v-text="item.CoName">东方快车</span>
