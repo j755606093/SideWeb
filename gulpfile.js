@@ -100,7 +100,7 @@ gulp.task('ticket', ['sass'], function() {
 				}
 			},
 			plugins: [new HtmlWebpackPlugin({
-				title: "身边订票",
+				title: "揭西大巴订票平台",
 				filename: "ticket.html",
 				hash: true,
 				template: "!!ejs!html/default.ejs",

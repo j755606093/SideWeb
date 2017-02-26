@@ -4,10 +4,10 @@
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <meta name="format-detection" content="telephone=no, email=no"/>
+  <meta name="format-detection" content="telephone=no, email=no" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <title>身边票务--订单</title>
+  <title>揭西大巴订票平台--订单</title>
 </head>
 
 <body>
@@ -135,7 +135,6 @@
       </div>
       <div id="last1"></div>
     </div>
-
     <div v-show="orderVisible">
       <!-- 已验票 -->
       <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
@@ -174,204 +173,197 @@
           <p @click="openCode" style="height:50px;line-height: 50px;width:30px;"><img style="width:20px;height:20px;margin-top: 15px;" src="../picture/code.png"></span>
           </p> -->
       </template>
-    </div>
-
-    <!-- 查看订单信息 -->
-    <mt-popup v-model="orderVisible" position="right" class="action-page">
-      <slot>
-        <div class="action">
-          <div class="action-body">
-            <!-- 验证码 -->
-            <div v-if="selected===2" class="code">
-              <div class="img"><img :src="code"></div>
-              <div class="right">
-                <p>车票验证码</p>
-                <p>{{OrderDetail.VerifyCode}}</p>
-                <p class="copy" data-clipboard-target="#copy">长按复制验证码</p>
+      </div>
+      <!-- 查看订单信息 -->
+      <mt-popup v-model="orderVisible" position="right" class="action-page">
+        <slot>
+          <div class="action">
+            <div class="action-body">
+              <!-- 验证码 -->
+              <div v-if="selected===2" class="code">
+                <div class="img"><img :src="code"></div>
+                <div class="right">
+                  <p>车票验证码</p>
+                  <p>{{OrderDetail.VerifyCode}}</p>
+                  <p class="copy" data-clipboard-target="#copy">长按复制验证码</p>
+                </div>
               </div>
-            </div>
-            <!-- 票信息 -->
-            <div class="ticket-info">
-              <div class="left">
-                <span v-text="OrderDetail.Boardtime">08:23</span>
-                <span v-text="OrderDetail.CoName">东方快车</span>
-                <span>{{OrderDetail.Route}}</span>
-              </div>
-              <div class="center">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="right">
-                <div class="top">
-                  <div class="name">
-                    <p>{{OrderDetail.StartPoint}}</p>
-                    <p>{{OrderDetail.EndPoint}}</p>
+              <!-- 票信息 -->
+              <div class="ticket-info">
+                <div class="left">
+                  <span v-text="OrderDetail.Boardtime">08:23</span>
+                  <span v-text="OrderDetail.CoName">东方快车</span>
+                  <span>{{OrderDetail.Route}}</span>
+                </div>
+                <div class="center">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="right">
+                  <div class="top">
+                    <div class="name">
+                      <p>{{OrderDetail.StartPoint}}</p>
+                      <p>{{OrderDetail.EndPoint}}</p>
+                    </div>
+                    <div class="info"></div>
                   </div>
-                  <div class="info"></div>
-                </div>
-                <div class="bottom">
-                  <img src="../picture/time.png">
-                  <p>{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</p>
-                </div>
-              </div>
-            </div>
-            <!-- 乘客信息 -->
-            <div class="passenger-info">
-              <div class="passenger-selected">
-                <div class="line" v-for="(item,index) in passenger">
-                  <span style="margin-left:10px;" class="center">{{item.Name}}</span>
-                  <span style="margin-right:10px;" class="right">{{item.Mobile}}</span>
+                  <div class="bottom">
+                    <img src="../picture/time.png">
+                    <p>{{OrderDetail.Boarddate+" "+OrderDetail.Boardtime}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- 手机号 -->
-            <div class="write-info">
-              <div class="line">
-                <span style="color:rgb(20,20,20)">{{OrderDetail.Linkmanid+' (联系号码)'}}</span>
-                <div class="img"><img src="../picture/phone.png"></div>
+              <!-- 乘客信息 -->
+              <div class="passenger-info">
+                <div class="passenger-selected">
+                  <div class="line" v-for="(item,index) in passenger">
+                    <span style="margin-left:10px;" class="center">{{item.Name}}</span>
+                    <span style="margin-right:10px;" class="right">{{item.Mobile}}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <!-- 上车点备注 -->
-            <div class="write-info">
-              <div class="line">
-                <span style="color:rgb(20,20,20)">{{OrderDetail.Remark?OrderDetail.Remark:OrderDetail.StartAddress}}</span>
-                <div class="img"><img src="../picture/green_station.png"></div>
+              <!-- 手机号 -->
+              <div class="write-info">
+                <div class="line">
+                  <span style="color:rgb(20,20,20)">{{OrderDetail.Linkmanid+' (联系号码)'}}</span>
+                  <div class="img"><img src="../picture/phone.png"></div>
+                </div>
               </div>
-            </div>
-            <!-- 旅行备注 -->
-            <div class="write-info">
-              <div class="line">
-                <span style="color:rgb(20,20,20)">{{OrderDetail.JourneyRmk?OrderDetail.JourneyRmk:'系统默认备注'}}</span>
-                <div class="img"><img src="../picture/edit.png"></div>
+              <!-- 上车点备注 -->
+              <div class="write-info">
+                <div class="line">
+                  <span style="color:rgb(20,20,20)">{{OrderDetail.Remark?OrderDetail.Remark:OrderDetail.StartAddress}}</span>
+                  <div class="img"><img src="../picture/green_station.png"></div>
+                </div>
               </div>
-            </div>
-            <!-- 订单信息 -->
-            <div class="pay-ticket-info">
-              <p>订单信息</p>
-              <p>订单编号:{{OrderDetail.Id}}</p>
-              <p>下单日期:{{OrderDetail.CTime}}</p>
-            </div>
-          </div>
-        </div>
-      </slot>
-    </mt-popup>
-
-    <!-- <input style="display: none;" id="copy" v-model="OrderDetail.VerifyCode"> -->
-
-    <!-- 立即支付 -->
-    <div v-show="orderVisible" class="pay">
-      <div class="left">
-        <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
-      </div>
-      <div class="right">
-        <!-- 已经失效 -->
-        <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
-          <p>订单已经失效,无法操作</p>
-        </template>
-        <!-- 未支付 -->
-        <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
-          <span @click="cancelOrder">取消订单</span>
-          <button @click="payMoney">立即支付</button>
-        </template>
-        <!-- 已支付待确认 -->
-        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
-          <span @click="showSelectPassenger">申请退款</span>
-          <button>已支付待确认</button>
-        </template>
-        <!-- 已支付已确认 -->
-        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
-          <span @click="showSelectPassenger">申请退款</span>
-          <button>已支付已确认</button>
-        </template>
-        <!-- 订票失败 -->
-        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
-          <p>订单已经失效</p>
-        </template>
-        <!-- 已经验票 -->
-        <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
-          <p>感谢您的支持</p>
-        </template>
-      </div>
-    </div>
-    
-    <!-- 退款人选择 -->
-    <div v-show="refundPassenger" class="page-header" style="background-color: #2196F3;z-index: 5000">
-      <div @click="goback"><img src="../picture/back_icon.png"></div>
-      <span style="font-size:16px;" class="center">退票服务</span>
-    </div>
-    <mt-popup v-model="refundPassenger" position="right" class="action-page">
-      <slot>
-        <div class="action-body">
-          <a class="contact" href="tel:111111111111">
-            <div class="left">
-              <p>信息失误,联系客服修改乘车信息</p>
-              <span>其实上车点或者乘车人可以联系客服修改哦~</span>
-              <span>在这里可以修改乘车人,但是不能删减乘车人</span>
-            </div>
-            <div class="right"><img src="../picture/phone.png"></div>
-          </a>
-          <!-- 选择退款人 -->
-          <div class="refund">
-            <p>坚决退票,支付10%的服务费用</p>
-            <span>退票我们需要收取10%工本服务费哦~请三思</span>
-            <div class="passenger">
-              <div @click="selectRefund(index)" v-for="(item,index) in optionsPassenger" :class="{'passenger-line':true, active:item.active}">
-                <div class="img"><img src="../picture/select_pick.png"></div>
-                <div class="name"><span>{{item.Name}}</span></div>
-                <div class="info"><span>原价{{item.Price}},可退{{(item.Price-item.Price*0.1).toFixed(2)}}</span></div>
+              <!-- 旅行备注 -->
+              <div class="write-info">
+                <div class="line">
+                  <span style="color:rgb(20,20,20)">{{OrderDetail.JourneyRmk?OrderDetail.JourneyRmk:'系统默认备注'}}</span>
+                  <div class="img"><img src="../picture/edit.png"></div>
+                </div>
+              </div>
+              <!-- 订单信息 -->
+              <div class="pay-ticket-info">
+                <p>订单信息</p>
+                <p>订单编号:{{OrderDetail.Id}}</p>
+                <p>下单日期:{{OrderDetail.CTime}}</p>
               </div>
             </div>
           </div>
+        </slot>
+      </mt-popup>
+      <!-- <input style="display: none;" id="copy" v-model="OrderDetail.VerifyCode"> -->
+      <!-- 立即支付 -->
+      <div v-show="orderVisible" class="pay">
+        <div class="left">
+          <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
         </div>
-      </slot>
-    </mt-popup>
-    <div v-show="refundPassenger" style="z-index: 5000" class="refund-footer">
-      <div @click="selectRefundAll" :class="{all:true,active:optionsPassenger.length===selectPassenger.length}">
-        <img src="../picture/select_pick.png">
-        <span>全选</span>
+        <div class="right">
+          <!-- 已经失效 -->
+          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
+            <p>订单已经失效,无法操作</p>
+          </template>
+          <!-- 未支付 -->
+          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
+            <span @click="cancelOrder">取消订单</span>
+            <button @click="payMoney">立即支付</button>
+          </template>
+          <!-- 已支付待确认 -->
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
+            <span @click="showSelectPassenger">申请退款</span>
+            <button>已支付待确认</button>
+          </template>
+          <!-- 已支付已确认 -->
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
+            <span @click="showSelectPassenger">申请退款</span>
+            <button>已支付已确认</button>
+          </template>
+          <!-- 订票失败 -->
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
+            <p>订单已经失效</p>
+          </template>
+          <!-- 已经验票 -->
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
+            <p>感谢您的支持</p>
+          </template>
+        </div>
       </div>
-      <div class="money">
-        <span class="text">共退款</span>
-        <span class="money">¥{{refunndMoney}}</span>
+      <!-- 退款人选择 -->
+      <div v-show="refundPassenger" class="page-header" style="background-color: #2196F3;z-index: 5000">
+        <div @click="goback"><img src="../picture/back_icon.png"></div>
+        <span style="font-size:16px;" class="center">退票服务</span>
       </div>
-      <div class="btn">
-        <button @click="checkSelectPassenger">果断退票</button>
+      <mt-popup v-model="refundPassenger" position="right" class="action-page">
+        <slot>
+          <div class="action-body">
+            <a class="contact" href="tel:111111111111">
+              <div class="left">
+                <p>信息失误,联系客服修改乘车信息</p>
+                <span>其实上车点或者乘车人可以联系客服修改哦~</span>
+                <span>在这里可以修改乘车人,但是不能删减乘车人</span>
+              </div>
+              <div class="right"><img src="../picture/phone.png"></div>
+            </a>
+            <!-- 选择退款人 -->
+            <div class="refund">
+              <p>坚决退票,支付10%的服务费用</p>
+              <span>退票我们需要收取10%工本服务费哦~请三思</span>
+              <div class="passenger">
+                <div @click="selectRefund(index)" v-for="(item,index) in optionsPassenger" :class="{'passenger-line':true, active:item.active}">
+                  <div class="img"><img src="../picture/select_pick.png"></div>
+                  <div class="name"><span>{{item.Name}}</span></div>
+                  <div class="info"><span>原价{{item.Price}},可退{{(item.Price-item.Price*0.1).toFixed(2)}}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </slot>
+      </mt-popup>
+      <div v-show="refundPassenger" style="z-index: 5000" class="refund-footer">
+        <div @click="selectRefundAll" :class="{all:true,active:optionsPassenger.length===selectPassenger.length}">
+          <img src="../picture/select_pick.png">
+          <span>全选</span>
+        </div>
+        <div class="money">
+          <span class="text">共退款</span>
+          <span class="money">¥{{refunndMoney}}</span>
+        </div>
+        <div class="btn">
+          <button @click="checkSelectPassenger">果断退票</button>
+        </div>
       </div>
-    </div>
-
-    <!-- 扫描二维码 -->
-    <mt-popup v-model="codePopupVisible" class="code-popup-visible">
-      <slot>
-        <img v-show="codePopupVisible" src="../picture/qrcode_for_gh_c94040df86a5_430.jpg">
-        <div @click="cancelModal" v-show="codePopupVisible" style="position: fixed;top:0;left:0;width:100%;height:100%;background-color: rgba(0,0,0,.6);z-index: -1"></div>
-      </slot>
-    </mt-popup>
-
-    <div v-show="myModal" class="my-modal"></div>
-    
-    <footer>
-      <a :href="'./ticket.html?datetime='+refreshLink[0]" class="footer">
-        <!-- <i class="fa fa-home"></i> -->
-        <img src="../picture/ticket.png">
-        <p>票务</p>
-      </a>
-      <a :href="'./TicketOrder.html?datetime='+refreshLink[1]" class="footer active">
-        <!-- <i class="fa fa-sticky-note"></i> -->
-        <img src="../picture/cart_order_active.png">
-        <p>订单</p>
-      </a>
-      <a :href="'./TicketUser.html?datetime='+refreshLink[2]" class="footer">
-        <!-- <i class="fa fa-user"></i> -->
-        <img src="../picture/user.png">
-        <p>我的</p>
-      </a>
-    </footer>
+      <!-- 扫描二维码 -->
+      <mt-popup v-model="codePopupVisible" class="code-popup-visible">
+        <slot>
+          <img v-show="codePopupVisible" src="../picture/qrcode_for_gh_c94040df86a5_430.jpg">
+          <div @click="cancelModal" v-show="codePopupVisible" style="position: fixed;top:0;left:0;width:100%;height:100%;background-color: rgba(0,0,0,.6);z-index: -1"></div>
+        </slot>
+      </mt-popup>
+      <div v-show="myModal" class="my-modal"></div>
+      <footer>
+        <a :href="'./ticket.html?datetime='+refreshLink[0]" class="footer">
+          <!-- <i class="fa fa-home"></i> -->
+          <img src="../picture/ticket.png">
+          <p>票务</p>
+        </a>
+        <a :href="'./TicketOrder.html?datetime='+refreshLink[1]" class="footer active">
+          <!-- <i class="fa fa-sticky-note"></i> -->
+          <img src="../picture/cart_order_active.png">
+          <p>订单</p>
+        </a>
+        <a :href="'./TicketUser.html?datetime='+refreshLink[2]" class="footer">
+          <!-- <i class="fa fa-user"></i> -->
+          <img src="../picture/user.png">
+          <p>我的</p>
+        </a>
+      </footer>
     </div>
     <script src="https://cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
     <script type="text/javascript" src="./qrcode.js"></script>

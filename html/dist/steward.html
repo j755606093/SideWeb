@@ -5,9 +5,9 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
-  <meta name="format-detection" content="telephone=no, email=no"/>
+  <meta name="format-detection" content="telephone=no, email=no" />
   <!-- <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
-  <title>身边票务--乘务员</title>
+  <title>揭西大巴订票平台--乘务员</title>
 </head>
 
 <body>
@@ -69,7 +69,6 @@
             </div>
           </div>
         </div>
- 
         <div class="line-other">
           <div>
             <p></p>
@@ -79,7 +78,6 @@
             <p></p>
           </div>
         </div>
-
         <!-- 手机号 -->
         <div class="write-info">
           <div class="line">
@@ -112,7 +110,9 @@
     <!-- 没有订单号参数的页面 -->
     <div v-else v-show="ready" style="display: none;" class="codebody">
       <div class="input">
-        <div :class="{'input-code':true,first:inputCodeNum===0,last:inputCodeNum===5}" :style="{left:left}"><input id="inputcode" type="tel" @keyup="inputCodeEvent($event)" v-model="inputCode" autofocus maxlength="1" @keyup.delete="backInput" name="input1"></div>
+        <div :class="{'input-code':true,first:inputCodeNum===0,last:inputCodeNum===5}" :style="{left:left}">
+          <input id="inputcode" type="tel" @keyup="inputCodeEvent($event)" v-model="inputCode" autofocus maxlength="1" @keyup.delete="backInput" name="input1">
+        </div>
         <span v-text="codeArray[0]?codeArray[0]:''" class="first"></span>
         <span v-text="codeArray[1]?codeArray[1]:''"></span>
         <span v-text="codeArray[2]?codeArray[2]:''"></span>
@@ -123,7 +123,6 @@
       <p>6位数验证码</p>
       <button @click="verifyCode">验证</button>
     </div>
-    
     <!-- 选择需要查看的订单 -->
     <div v-if="myModal" class="my-modal">
       <div class="modal-body">
@@ -133,7 +132,7 @@
             <div class="img">
               <img v-if="selectOrderIndex===index" src="../picture/select.png">
               <span></span>
-              </div>
+            </div>
             <div class="center">
               <p>{{item.Linkmanid}}</p>
             </div>
@@ -142,7 +141,6 @@
         <button @click="getOrder">选择</button>
       </div>
     </div>
-
     <footer v-if="haveId">
       <div class="price">
         <span>订单单价</span>

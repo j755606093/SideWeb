@@ -5,14 +5,13 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
-  <meta name="format-detection" content="telephone=no, email=no"/>
+  <meta name="format-detection" content="telephone=no, email=no" />
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <title>身边票务--我的</title>
+  <title>揭西大巴订票平台票务--我的</title>
 </head>
 
 <body>
   <div id="app" v-show="ready" style="display: none;">
-
     <!-- 头部 -->
     <header class="animated fadeIn" v-show="showHeader">
       <div @click="GoBack" class="left">
@@ -59,7 +58,6 @@
         </div>
       </div>
     </div>
-
     <!-- 全部订单信息 -->
     <mt-popup v-model="orderVisible" position="right" id="order-lists" class="order-lists">
       <div class="lists">
@@ -70,7 +68,7 @@
           <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
         </div>
         <!-- 订单 -->
-        <div v-if="!refundVisible" class="list" >
+        <div v-if="!refundVisible" class="list">
           <div v-if="!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
             <div class="left">
               <span v-text="item.Boardtime">08:23</span>
@@ -165,7 +163,6 @@
         </div>
       </div>
     </mt-popup>
-
     <!-- 优惠券 -->
     <mt-popup v-model="discountVisible" position="right" class="action-page">
       <slot>
@@ -194,14 +191,13 @@
         </div>
       </slot>
     </mt-popup>
-
     <!-- 乘客 -->
     <mt-popup v-model="passengerVisible" position="right" class="action-page">
       <slot>
         <div class="action">
           <div class="action-select">
             <div v-for="(item,index) in Passenger">
-              <div class="line" >
+              <div class="line">
                 <div class="left">
                   <p>{{item.Name}}</p>
                 </div>
@@ -245,7 +241,6 @@
         </div>
       </slot>
     </mt-popup>
-
     <!-- 用户信息 -->
     <mt-popup v-model="userVisible" position="right" id="user-lists" class="user-lists">
       <div class="lists">
@@ -277,7 +272,6 @@
         </div>
       </div>
     </mt-popup>
-    
     <!-- 帮助中心 -->
     <mt-popup v-model="helpVisible" position="right" id="help-lists" class="help-lists">
       <div class="lists">
@@ -399,7 +393,6 @@
         </div>
       </div>
     </mt-popup>
-
     <div v-show="myModal" class="my-modal"></div>
     <footer>
       <a :href="'./ticket.html?datetime='+Date.now()" class="footer" class="footer">
