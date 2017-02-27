@@ -1218,7 +1218,8 @@ header {
         align-items: center;
     margin-top: 10px; }
     .help-lists .lists .help {
-      width: 100%; }
+      width: 100%;
+      padding-bottom: 60px; }
       .help-lists .lists .help .help-list {
         margin: 0 10px;
         background-color: #fff;
