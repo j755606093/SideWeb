@@ -879,7 +879,8 @@ input {
               color: #323232; }
             .action-page .action .action-use .rebate .bottom .left .time {
               font-size: 12px;
-              font-weight: 900;
+              font-weight: 400;
+              line-height: 12px;
               color: #c8c8c8; }
           .action-page .action .action-use .rebate .bottom .right {
             -ms-flex: 4;
@@ -887,8 +888,8 @@ input {
             text-align: center;
             position: relative; }
             .action-page .action .action-use .rebate .bottom .right img {
-              width: 30px;
-              height: 30px;
+              width: 28px;
+              height: 28px;
               z-index: -1; }
             .action-page .action .action-use .rebate .bottom .right span {
               width: 30px;
@@ -897,7 +898,7 @@ input {
               border-radius: 50%;
               z-index: 1;
               position: absolute;
-              top: 0;
+              top: -1px;
               right: 27%; }
         .action-page .action .action-use .rebate:nth-child(1+2n) {
           padding-right: 5px; }

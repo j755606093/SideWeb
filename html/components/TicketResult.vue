@@ -616,9 +616,11 @@ export default {
 			// console.log(index)
 		},
 		gobackdate(){
-			//前一天的车票信息
+			// 获取前一天的车票信息
 			let now =new Date(this.$store.getters.getInfo.startDate.server).getTime();
+
 			let back = new Date(now - 1000*60*60*24);//前一天
+			
 			// 检查日期
 			if(Date.now()>now){
 				// 当前日期大于昨天的日期(不允许查过期的车票)
@@ -655,6 +657,11 @@ export default {
 				  duration: 3000
 				});
 			});
+
+			let abs = new Date();
+			if(abs.getDate()===back.getDate()){
+				this.isCanLast = "#c8c8c8";
+			}
 		},
 		gofrontdate(){
 			//后一天的车票信息

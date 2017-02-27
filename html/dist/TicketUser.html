@@ -172,7 +172,7 @@
       <slot>
         <div class="action">
           <!-- 有优惠券 -->
-          <div v-if="Rebate.length===0" class="action-use">
+          <div v-if="Rebate.length!==0" class="action-use">
             <div style="padding-top: 5px;" class="page">
               <!-- 可用优惠券 -->
               <div class="rebate" v-for="(item,index) in Rebate">

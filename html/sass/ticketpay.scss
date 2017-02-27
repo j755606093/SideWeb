@@ -803,7 +803,8 @@
             }
             .time{
               font-size:12px;
-              font-weight:900;
+              font-weight:400;
+              line-height:12px;
               color:#c8c8c8;
             }
           }
@@ -812,8 +813,8 @@
             text-align: center;
             position: relative;
             img{
-              width:30px;
-              height:30px;
+              width:28px;
+              height:28px;
               z-index: -1;
             }
             span{
@@ -823,7 +824,7 @@
               border-radius: 50%;
               z-index:1;
               position: absolute;
-              top:0;
+              top:-1px;
               right:27%;
             }
           }
