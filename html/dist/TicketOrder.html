@@ -136,6 +136,13 @@
       <div id="last1"></div>
     </div>
     <div v-show="orderVisible">
+      <!-- 已申请退款 -->
+      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
+        <div class="page-header">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span style="font-size:16px;" class="center">已申请退款</span>
+        </div>
+      </template>
       <!-- 已验票 -->
       <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
         <div class="page-header">
@@ -266,6 +273,10 @@
           <p>订单总价<span v-text="'¥'+OrderDetail.TotalPrice"></span></p>
         </div>
         <div class="right">
+          <!-- 已申请退款 -->
+          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
+            <p>订单已申请退款</p>
+          </template>
           <!-- 已经失效 -->
           <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
             <p>订单已经失效,无法操作</p>
