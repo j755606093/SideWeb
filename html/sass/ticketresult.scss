@@ -263,7 +263,7 @@
               width: 10px;
               height: 12.5px;
             }
-            &:last-child {
+            &.right {
               position: absolute;
               top: 5px;
               right: 25px;
@@ -297,7 +297,7 @@
           width: 25px;
           height: 1px;
           position: absolute;
-          bottom: 10px;
+          bottom: 8px;
           right: -14px;
           background-color: #329be8;
           z-index: 1;
@@ -307,7 +307,7 @@
           width: 25px;
           height: 0px;
           position: absolute;
-          bottom: 10px;
+          bottom: 8px;
           right: -14px;
           background-color: #329be8;
           z-index: 1;
@@ -319,7 +319,7 @@
           width: 25px;
           height: 1px;
           position: absolute;
-          bottom: 10px;
+          bottom: 9px;
           right: -14px;
           background-color: #d3eafd;
         }

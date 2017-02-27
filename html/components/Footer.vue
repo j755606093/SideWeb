@@ -50,11 +50,11 @@ footer{
 			font-size:1.8rem;
 		}
 		img{
-			width:22px;
-			height:22px;
+			width:16px;
+			height:16px;
 		}
 		p{
-			font-size:1.2rem;
+			font-size:12px;
 			color:$gray;
 			height:20px;
 			line-height:20px;

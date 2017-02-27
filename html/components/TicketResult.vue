@@ -44,7 +44,8 @@
 							<div class="bottom" v-on:click.stop="showCompanyDeatil(index,$event)">
 								<img src="../picture/station.png">
 								<p>经过车站路线</p>
-								<img src="../picture/drop_down.png">
+								<img class="right" style="transform:rotate(180deg)" v-show="routerDetailShow===index" src="../picture/drop_down.png">
+								<img class="right" v-show="routerDetailShow!==index" src="../picture/drop_down.png">
 							</div>
 						</div>
 					</div>
