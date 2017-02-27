@@ -68,46 +68,49 @@
           <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
         </div>
         <!-- 订单 -->
-        <div v-if="!refundVisible" class="list">
-          <div v-if="!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
-            <div class="left">
-              <span v-text="item.Boardtime">08:23</span>
-              <span v-text="item.CoName">东方快车</span>
-              <span>{{item.Route}}</span>
-            </div>
-            <div class="center">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="right">
-              <div class="top">
-                <div class="name">
-                  <p>{{item.StartPoint}}</p>
-                  <p>{{item.EndPoint}}</p>
-                </div>
-                <div class="info">
-                  <p v-text="'¥'+item.TotalPrice"></p>
-                  <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
-                  <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
-                  <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
-                  <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
-                  <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
-                  <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
-                </div>
+        <div v-show="!refundVisible" id="refund-lists" class="refund-lists">
+          <div class="list">
+            <div v-if="!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
+              <div class="left">
+                <span v-text="item.Boardtime">08:23</span>
+                <span v-text="item.CoName">东方快车</span>
+                <span>{{item.Route}}</span>
               </div>
-              <div class="bottom">
-                <img src="../picture/time.png">
-                <p>{{item.Boarddate}}</p>
+              <div class="center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="right">
+                <div class="top">
+                  <div class="name">
+                    <p>{{item.StartPoint}}</p>
+                    <p>{{item.EndPoint}}</p>
+                  </div>
+                  <div class="info">
+                    <p v-text="'¥'+item.TotalPrice"></p>
+                    <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
+                    <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <img src="../picture/time.png">
+                  <p>{{item.Boarddate}}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
         <div id="last"></div>
         <!-- 退款订单 -->
         <div v-show="refundVisible" id="refund-lists" class="refund-lists">

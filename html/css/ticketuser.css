@@ -275,6 +275,7 @@ header {
           height: 4px; }
     .order-lists > .lists .list {
       width: 100%;
+      padding: 0 10px;
       border-radius: 10px;
       margin-bottom: 10px; }
       .order-lists > .lists .list .list-header {
@@ -1255,7 +1256,8 @@ header {
   position: fixed;
   left: 0;
   bottom: 0;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  padding-top: 90px; }
   .refund-lists .lists {
     width: 100%;
     display: -ms-flexbox;
@@ -1264,7 +1266,7 @@ header {
         flex-direction: column;
     -ms-flex-pack: center;
         justify-content: center;
-    margin-top: 100px;
+    margin-top: 10px;
     -ms-flex-align: center;
         align-items: center; }
     .refund-lists .lists .list {

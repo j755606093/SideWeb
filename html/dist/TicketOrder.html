@@ -91,7 +91,7 @@
         <!-- 订单数据 -->
         <div class="order" v-else>
           <!-- 订单列表 -->
-          <div class="list" @click="openOrder(index)" v-for="(item,index) in OrderList1">
+          <div class="list" @click="openOrder(index)" v-if="!(item.IsPay===1&&item.Status===3)" v-for="(item,index) in OrderList1">
             <div class="ticket-info">
               <div class="left">
                 <span v-text="item.Boardtime">08:23</span>

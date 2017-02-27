@@ -190,6 +190,7 @@ header {
     }
     .list {
       width: 100%;
+      padding:0 10px;
       // padding: 5px 5px;
       // background-color: $white;
       border-radius: 10px;
@@ -1194,12 +1195,13 @@ header {
   left: 0;
   bottom: 0;
   overflow-y: scroll;
+  padding-top: 90px;
   .lists {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 10px;
     align-items: center;
     .list {
       width: 96%;
