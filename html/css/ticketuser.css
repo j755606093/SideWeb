@@ -989,7 +989,8 @@ header {
             color: #323232; }
           .action-use .page .rebate .bottom .left .time {
             font-size: 12px;
-            font-weight: 900;
+            font-weight: 400;
+            line-height: 12px;
             color: #c8c8c8; }
         .action-use .page .rebate .bottom .right {
           -ms-flex: 4;
@@ -1229,7 +1230,8 @@ header {
           position: relative; }
           .help-lists .lists .help .help-list .header span {
             font-size: 18px;
-            color: #323232; }
+            color: #323232;
+            margin-left: 10px; }
           .help-lists .lists .help .help-list .header span.right {
             position: absolute;
             top: 0;

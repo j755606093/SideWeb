@@ -242,10 +242,10 @@ const Vue_User = new Vue({
 		 * @return {[type]} [description]
 		 */
 		showDiscountList() {
-			if (this.Rebate.length === 0) {
-				MessageBox.alert("你没有优惠券", "提示")
-				return;
-			}
+			// if (this.Rebate.length === 0) {
+			// 	MessageBox.alert("你没有优惠券", "提示")
+			// 	return;
+			// }
 			this.controlHeader(true, "优惠券");
 			this.discountVisible = true; //显示
 		},

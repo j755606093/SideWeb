@@ -896,7 +896,8 @@ header {
           }
           .time{
             font-size:12px;
-            font-weight:900;
+            font-weight:400;
+            line-height:12px;
             color:#c8c8c8;
           }
         }
@@ -1158,6 +1159,7 @@ header {
           span {
             font-size: 18px;
             color: rgb(50, 50, 50);
+            margin-left:10px;
           }
           span.right {
             position: absolute;
