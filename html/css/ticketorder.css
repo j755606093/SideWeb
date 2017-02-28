@@ -920,6 +920,14 @@ header {
       -ms-flex: 7;
           flex: 7;
       border-radius: 5px; }
+    @media (max-width: 320px) {
+      .pay .right span {
+        -ms-flex: 5;
+            flex: 5; }
+      .pay .right button {
+        font-size: 14px;
+        -ms-flex: 5;
+            flex: 5; } }
 
 .pay-order {
   width: 100%;

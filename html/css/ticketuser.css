@@ -939,7 +939,6 @@ header {
     width: 100%;
     padding: 0 10px; }
     .action-use .page .rebate {
-      height: 200px;
       display: -ms-flexbox;
       display: flex;
       margin-top: 10px;
@@ -962,7 +961,6 @@ header {
       .action-use .page .rebate .bottom {
         border: 0.5px solid #c8c8c8;
         border-top: none;
-        height: 100px;
         width: 100%;
         display: -ms-flexbox;
         display: flex;
@@ -1243,6 +1241,9 @@ header {
             text-align: center; }
             .help-lists .lists .help .help-list .header span.right i {
               color: #c8c8c8; }
+          @media (max-width: 320px) {
+            .help-lists .lists .help .help-list .header span {
+              font-size: 16px; } }
         .help-lists .lists .help .help-list .help-content {
           width: 100%;
           padding: 15px 10px; }

@@ -118,7 +118,7 @@
 		<!-- 下单支付头部 -->
 		<div v-if="payInfoPopupVisible" style="background-color: #f35252" class="page-header">
 			<div @click="goback"><img src="../picture/back_icon.png"></div>
-			<span style="font-size:16px;" class="center">预订成功,请在半小时内支付订单 {{countdownTime}}</span>
+			<span style="font-size:16px;" class="center">请在半小时内支付订单 {{countdownTime}}</span>
 		</div>
 		
 		<!-- 优惠券选择头部 -->

@@ -856,7 +856,7 @@ header {
     width: 100%;
     padding:0 10px;
     .rebate {
-      height: 200px;
+      // height: 200px;
       display: flex;
       margin-top: 10px;
       background-color: #fff;
@@ -874,7 +874,7 @@ header {
       .bottom{
         border:0.5px solid #c8c8c8;
         border-top:none;
-        height:100px;
+        // height:100px;
         width:100%;
         @include display_flex("row");
         .left{
@@ -1172,6 +1172,11 @@ header {
             text-align: center;
             i {
               color: #c8c8c8;
+            }
+          }
+          @include responsive('iphone5'){
+            span{
+              font-size:16px;
             }
           }
         }

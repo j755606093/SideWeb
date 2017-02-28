@@ -420,6 +420,9 @@ input {
             font-size: 12px;
             color: #323232;
             padding-top: 8px; }
+        @media (max-width: 320px) {
+          .ticket-info .right .top .info p {
+            margin-right: 15px; } }
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
@@ -863,8 +866,8 @@ input {
           -ms-flex-align: center;
               align-items: center; }
           .action-page .action .action-use .rebate .bottom .left {
-            -ms-flex: 6;
-                flex: 6;
+            -ms-flex: 7;
+                flex: 7;
             padding-left: 10px; }
             .action-page .action .action-use .rebate .bottom .left p {
               font-size: 23px;
@@ -883,8 +886,8 @@ input {
               line-height: 12px;
               color: #c8c8c8; }
           .action-page .action .action-use .rebate .bottom .right {
-            -ms-flex: 4;
-                flex: 4;
+            -ms-flex: 3;
+                flex: 3;
             text-align: center;
             position: relative; }
             .action-page .action .action-use .rebate .bottom .right img {
@@ -899,7 +902,10 @@ input {
               z-index: 1;
               position: absolute;
               top: -1px;
-              right: 27%; }
+              right: 20%; }
+            @media (max-width: 320px) {
+              .action-page .action .action-use .rebate .bottom .right span {
+                right: 4px; } }
         .action-page .action .action-use .rebate:nth-child(1+2n) {
           padding-right: 5px; }
         .action-page .action .action-use .rebate:nth-child(2n) {
@@ -911,6 +917,11 @@ input {
           z-index: -1 !important; }
         .action-page .action .action-use .rebate.disabled .bottom p {
           color: #c8c8c8 !important; }
+      @media (max-width: 320px) {
+        .action-page .action .action-use .rebate {
+          height: 220px; }
+        .action-page .action .action-use .bottom {
+          height: 120px; } }
 
 .add-action {
   width: 100%; }

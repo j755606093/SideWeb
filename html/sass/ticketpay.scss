@@ -353,6 +353,11 @@
             padding-top: 8px;
           }
         }
+        @include responsive('iphone5'){
+          p{
+            margin-right: 15px;
+          }
+        }
       }
     }
     .bottom {
@@ -785,7 +790,7 @@
           width:100%;
           @include display_flex("row");
           .left{
-            flex:6;
+            flex:7;
             padding-left: 10px;
             p{
               font-size:23px;
@@ -809,7 +814,7 @@
             }
           }
           .right{
-            flex:4;
+            flex:3;
             text-align: center;
             position: relative;
             img{
@@ -825,7 +830,12 @@
               z-index:1;
               position: absolute;
               top:-1px;
-              right:27%;
+              right:20%;
+            }
+            @include responsive('iphone5'){
+              span{
+                right:4px;
+              }
             }
           }
         }
@@ -852,6 +862,14 @@
               color:#c8c8c8 !important;
             }
           }
+        }
+      }
+      @include responsive('iphone5'){
+        .rebate{
+          height:220px;
+        }
+        .bottom{
+          height:120px;
         }
       }
     }

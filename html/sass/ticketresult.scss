@@ -246,6 +246,11 @@
                 padding-top: 8px;
               }
             }
+            @include responsive('iphone5'){
+              p{
+                margin-right: 15px;
+              }
+            }
           }
         }
         .bottom {

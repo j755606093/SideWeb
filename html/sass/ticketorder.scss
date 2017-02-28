@@ -762,6 +762,15 @@ header {
       flex: 7;
       border-radius: 5px;
     }
+    @include responsive("iphone5"){
+      span{
+        flex:5;
+      }
+      button{
+        font-size: 14px;
+        flex: 5;
+      }
+    }
   }
 }
 
