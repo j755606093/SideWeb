@@ -560,7 +560,8 @@ header {
           position: relative;
           text-align: left;
           margin-left: 20px;
-          display: inline-block; }
+          display: inline-block;
+          white-space: nowrap; }
           .ticket-info .right .top .name p:first-child::after {
             content: "";
             width: 10px;
@@ -581,6 +582,9 @@ header {
             position: absolute;
             top: 15px;
             left: -17px; }
+        @media (max-width: 320px) {
+          .ticket-info .right .top .name p {
+            font-size: 16px; } }
       .ticket-info .right .top .info {
         -ms-flex: 3;
             flex: 3;
@@ -603,6 +607,9 @@ header {
             font-size: 12px;
             color: #323232;
             padding-top: 8px; }
+        @media (max-width: 320px) {
+          .ticket-info .right .top .info p:first-child {
+            font-size: 18px; } }
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
