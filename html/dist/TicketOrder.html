@@ -289,12 +289,12 @@
           <!-- 已支付待确认 -->
           <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
             <span @click="showSelectPassenger">申请退款</span>
-            <button>待确认</button>
+            <button style="background-color: #c8c8c8;color:#fff;">待确认</button>
           </template>
           <!-- 已支付已确认 -->
           <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
             <span @click="showSelectPassenger">申请退款</span>
-            <button>已确认</button>
+            <button style="background-color: #c8c8c8;color:#fff;">已确认</button>
           </template>
           <!-- 订票失败 -->
           <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">

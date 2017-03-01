@@ -247,6 +247,7 @@ const Vue_User = new Vue({
 							for(let i=0;i<this.optionsPassenger.length;i++){
 								if(item.DId===this.optionsPassenger[i].Did){
 									// 已经验证的乘客
+									this.checkedNum++;
 									this.optionsPassenger[i].checked = true;
 									this.optionsPassenger[i].vaild = true;
 									this.optionsPassenger[i].active = false;
@@ -263,7 +264,7 @@ const Vue_User = new Vue({
 		backInput(){
 			if(this.inputCodeNum===5){
 				this.inputCodeNum--;
-				let n = 16.6666*(this.inputCodeNum);
+				let n = 15.6666*(this.inputCodeNum);
 				this.left = n+"%";
 				this.codeArray.pop();
 				return;
@@ -271,7 +272,7 @@ const Vue_User = new Vue({
 			if(this.inputCodeNum!==0){
 				this.inputCodeNum--;
 				this.codeArray.pop();
-				let n = 16.6666*(this.inputCodeNum);
+				let n = 16.5666*(this.inputCodeNum);
 				this.left = n+"%";
 			}
 		},
@@ -283,7 +284,7 @@ const Vue_User = new Vue({
 					this.codeArray.push(code);
 					this.inputCode = "";
 					this.inputCodeNum++;
-					let n = 16.6666*this.inputCodeNum
+					let n = 16.5666*this.inputCodeNum
 					this.left = n+"%";
 				}
 				else{

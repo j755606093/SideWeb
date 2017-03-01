@@ -316,6 +316,7 @@
 							for (var i = 0; i < _this4.optionsPassenger.length; i++) {
 								if (item.DId === _this4.optionsPassenger[i].Did) {
 									// 已经验证的乘客
+									_this4.checkedNum++;
 									_this4.optionsPassenger[i].checked = true;
 									_this4.optionsPassenger[i].vaild = true;
 									_this4.optionsPassenger[i].active = false;
@@ -331,7 +332,7 @@
 			backInput: function backInput() {
 				if (this.inputCodeNum === 5) {
 					this.inputCodeNum--;
-					var n = 16.6666 * this.inputCodeNum;
+					var n = 15.6666 * this.inputCodeNum;
 					this.left = n + "%";
 					this.codeArray.pop();
 					return;
@@ -339,7 +340,7 @@
 				if (this.inputCodeNum !== 0) {
 					this.inputCodeNum--;
 					this.codeArray.pop();
-					var _n = 16.6666 * this.inputCodeNum;
+					var _n = 16.5666 * this.inputCodeNum;
 					this.left = _n + "%";
 				}
 			},
@@ -351,7 +352,7 @@
 						this.codeArray.push(code);
 						this.inputCode = "";
 						this.inputCodeNum++;
-						var n = 16.6666 * this.inputCodeNum;
+						var n = 16.5666 * this.inputCodeNum;
 						this.left = n + "%";
 					} else {
 						if (this.inputCodeNum === 5) {
