@@ -21,14 +21,14 @@
 							<span>{{item.Route}}</span>
 						</div>
 						<div class="center">
+							<canvas class="canvas-top" width="36" height="20"></canvas>
 							<span></span>
 							<span></span>
 							<span></span>
 							<span></span>
 							<span></span>
 							<span></span>
-							<span></span>
-							<span></span>
+							<canvas class="canvas-bottom" width="36" height="20"></canvas>
 						</div>
 						<div class="right">
 							<div class="top">
@@ -379,6 +379,28 @@ export default {
 		},
 		ResultBackUp(){
 			return this.$store.getters.getResultList;
+		}
+	},
+	mounted(){
+		let topbody = document.getElementsByClassName("canvas-top");
+		let bottombody = document.getElementsByClassName("canvas-bottom");
+
+		for(let i=0;i<topbody.length;i++){
+			let con = con = topbody[i].getContext("2d");
+			con.arc(18,0,18,0,Math.PI*2);
+			con.lineWidth = 2;
+			con.fillStyle="#fafafa";
+			con.strokeStyle="#c8c8c8";
+			con.stroke();
+			con.fill();
+
+			let content = content = bottombody[i].getContext("2d");
+			content.arc(18,20,18,0,Math.PI*2);
+			content.lineWidth = 2;
+			content.fillStyle="#fafafa";
+			content.strokeStyle="#c8c8c8";
+			content.stroke();
+			content.fill();
 		}
 	},
 	methods:{

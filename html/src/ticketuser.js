@@ -236,6 +236,7 @@ const Vue_User = new Vue({
 			}
 			this.OrderList = this["OrderType" + type].OrderList;
 			this.orderVisible = true; //显示订单
+			this.canvas();
 		},
 		/**
 		 * 显示优惠券列表
@@ -257,6 +258,7 @@ const Vue_User = new Vue({
 			if (type === 1 || type === 3) {
 				//这两个列表是返回的全部数据,不需要再次获取
 				if (this["OrderType" + type].OrderList.length !== 0) {
+					this.canvas();
 					return;
 				}
 			}
@@ -278,11 +280,6 @@ const Vue_User = new Vue({
 				.then(result => result.json())
 				.then(result => {
 					if (result.Data) {
-						// if (result.Data.length < 10) {
-						// 	// 说明没有跟多数据了
-						// 	this["OrderType" + type].noMoreData = true;
-						// 	this.toast("已经没有的更多数据了...");
-						// }
 						for (let i = 0; i < result.Data.length; i++) {
 							this["OrderType" + type].OrderList.push(result.Data[i]);
 						}
@@ -294,6 +291,9 @@ const Vue_User = new Vue({
 					this["OrderType" + type].isUse = false; //释放这个函数
 					this["OrderType" + type].index++;
 					Indicator.close();
+				})
+				.then(()=>{
+					this.canvas();
 				})
 		},
 		openOrder(index) {
@@ -539,6 +539,28 @@ const Vue_User = new Vue({
 				this.helpContentShow = index;
 			}
 
+		},
+		canvas(){
+			let topbody = document.getElementsByClassName("canvas-top");
+			let bottombody = document.getElementsByClassName("canvas-bottom");
+
+			for(let i=0;i<topbody.length;i++){
+				let con = topbody[i].getContext("2d");
+				con.arc(18,0,18,0,Math.PI*2);
+				con.lineWidth = 2;
+				con.fillStyle="#fafafa";
+				con.strokeStyle="#c8c8c8";
+				con.stroke();
+				con.fill();
+
+				let content = bottombody[i].getContext("2d");
+				content.arc(18,20,18,0,Math.PI*2);
+				content.lineWidth = 2;
+				content.fillStyle="#fafafa";
+				content.strokeStyle="#c8c8c8";
+				content.stroke();
+				content.fill();
+			}
 		}
 	},
 	components: {

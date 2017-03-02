@@ -499,32 +499,18 @@ header {
       border-radius: 50%;
       background-color: #fafafa;
       border: 0.5px solid #c8c8c8; }
-      .ticket-info .center > span:first-child::after {
-        width: 18px;
-        height: 9px;
-        background-color: #fafafa;
-        border: 0.5px solid #c8c8c8;
-        content: "";
-        border-radius: 0 0 10px 10px;
-        border-top-color: #fafafa;
-        position: absolute;
-        top: -0.7px;
-        left: -4.5px;
-        z-index: 10;
-        transform: rotate(0deg); }
-      .ticket-info .center > span:last-child::after {
-        width: 18px;
-        height: 9px;
-        background-color: #fafafa;
-        border: 0.5px solid #c8c8c8;
-        border-bottom-color: #fafafa;
-        content: "";
-        border-radius: 10px 10px 0 0;
-        position: absolute;
-        bottom: -0.7px;
-        left: -4.5px;
-        z-index: 10;
-        transform: rotate(0deg); }
+    .ticket-info .center canvas.canvas-top {
+      position: absolute;
+      top: -2px;
+      left: -5px;
+      width: 18px;
+      height: 9; }
+    .ticket-info .center canvas.canvas-bottom {
+      position: absolute;
+      bottom: -2px;
+      left: -5px;
+      width: 18px;
+      height: 9; }
   .ticket-info .right {
     z-index: 1;
     -ms-flex: 6;

@@ -158,10 +158,7 @@ const Vue_Order = new Vue({
 
 	},
 	mounted() {
-		// 设置第一个显示
-		// document.getElementsByClassName("mint-tab-container-item")[0].style.display = "block";
-		// document.getElementsByClassName("mint-tab-item")[0].click();
-
+		
 	},
 	watch: {
 		// 监控tab的变化
@@ -246,6 +243,9 @@ const Vue_Order = new Vue({
 					this.index++;
 					Indicator.close();
 				})
+				.then(()=>{
+					this.canvas();
+				})
 		},
 		moreOrderData1(empty = false) {
 			if (this.noMoreData1 || this.isUse1) {
@@ -294,6 +294,9 @@ const Vue_Order = new Vue({
 					this.isUse1 = false; //释放这个函数
 					this.index1++;
 					Indicator.close();
+				})
+				.then(()=>{
+					this.canvas();
 				})
 		},
 		openOrder(index) {
@@ -580,6 +583,29 @@ const Vue_Order = new Vue({
 		},
 		cancelModal(){
 			this.codePopupVisible = false;
+		},
+		/** 画图 */
+		canvas(){
+			let topbody = document.getElementsByClassName("canvas-top");
+			let bottombody = document.getElementsByClassName("canvas-bottom");
+
+			for(let i=0;i<topbody.length;i++){
+				let con = topbody[i].getContext("2d");
+				con.arc(18,0,18,0,Math.PI*2);
+				con.lineWidth = 2;
+				con.fillStyle="#fafafa";
+				con.strokeStyle="#c8c8c8";
+				con.stroke();
+				con.fill();
+
+				let content = bottombody[i].getContext("2d");
+				content.arc(18,20,18,0,Math.PI*2);
+				content.lineWidth = 2;
+				content.fillStyle="#fafafa";
+				content.strokeStyle="#c8c8c8";
+				content.stroke();
+				content.fill();
+			}
 		}
 	},
 	components: {
