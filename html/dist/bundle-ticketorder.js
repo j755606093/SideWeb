@@ -213,6 +213,9 @@
 				// 需要显示订单详细信息
 				this.loading();
 				this.getOrderInfo(this.getQueryString("orderid"));
+				var id = this.getQueryString("orderid");
+				this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid=" + id).src; //生成二维码链接
+				this.selected = 2;
 			}
 			this.moreOrderData();
 			this.moreOrderData1();
