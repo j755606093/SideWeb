@@ -60,7 +60,7 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>
@@ -119,7 +119,7 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待确认</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待出票</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">订票失败</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>
