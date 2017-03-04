@@ -83,7 +83,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxNTI5ODg0My0xZTFjLTQ3MTYtOTNkZC01ZTE4MTQ1MmNlMzEiLCJpYXQiOjE0ODc0MDM0OTUsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NzQwMzQ5NCwiZXhwIjoxNDg4NjEzMDk0LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.41txARQUeaY18pPFH-kl-gxmmY2Q0XYN9v9FMAASu4c" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
@@ -160,7 +160,7 @@ const Vue_User = new Vue({
 				}
 				this.UserInfo = result.Userinfo;
 				this.isNoPay = result.NoPay;
-				this.ready = true;
+				this.ready = true;//显示网页
 			})
 	},
 	mounted() {
@@ -374,6 +374,7 @@ const Vue_User = new Vue({
 			}
 
 		},
+		/** 删除乘客 */
 		trashPassenger(index) {
 			MessageBox.confirm('确定执行此操作?').then(action => {
 				fetch(config.serverUrl + "/api/Passenger/Delete/" + this.Passenger[index].Id, {
@@ -391,10 +392,12 @@ const Vue_User = new Vue({
 					})
 			});
 		},
+		/** 显示用户信息页面 */
 		showUserInfo() {
 			this.controlHeader(true, "用户信息");
 			this.userVisible = true;
 		},
+		/** 编辑用户信息 */
 		edit(index) {
 			this.myModal = true;
 			let title = "";
@@ -475,6 +478,7 @@ const Vue_User = new Vue({
 			// MessageBox("修改数据", "第" + index + "项")
 			// console.log(index)
 		},
+		/** 获取退款订单信息 */
 		getRefund() {
 			return fetch(config.serverUrl + "/api/Order/ListRefund", {
 					method: 'POST',
@@ -517,10 +521,12 @@ const Vue_User = new Vue({
 				this.RefundOrder.isUse = false;
 			})
 		},
+		/** 显示增加乘客 */
 		showAddPassenger(index) {
 			this.showpassengeraction = 1;
 			this.ChaPassengerIndex = index; //记录修改的位置
 		},
+		/** 显示改变乘客 */
 		showChaPassenger(index) {
 			this.showpassengeraction = 2;
 			this.ChaPassengerIndex = index; //记录修改的位置
@@ -528,10 +534,12 @@ const Vue_User = new Vue({
 			this.passengerName = this.Passenger[index].Name;
 			this.passengerPhone = this.Passenger[index].Mobile;
 		},
+		/** 显示帮助中心 */
 		helpCenter() {
 			this.controlHeader(true, "帮助中心");
 			this.helpVisible = true;
 		},
+		/** 显示帮助内容 */
 		showHelpContent(index) {
 			if (index === this.helpContentShow) {
 				this.helpContentShow = 0;
@@ -540,6 +548,7 @@ const Vue_User = new Vue({
 			}
 
 		},
+		/** 半圆显示 */
 		canvas(){
 			let topbody = document.getElementsByClassName("canvas-top");
 			let bottombody = document.getElementsByClassName("canvas-bottom");
@@ -568,9 +577,10 @@ const Vue_User = new Vue({
 	}
 });
 
-document.getElementById("order-lists").addEventListener('scroll', _.throttle(function() {
+/** 监听订单滚动然后加载更多数据 */
+document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
 	let orderVisible = Vue_User.orderVisible;
-	let status = document.getElementById("last").offsetTop - document.getElementById("order-lists").scrollTop;
+	let status = document.getElementById("last").offsetTop - document.getElementById("refund-lists").scrollTop;
 
 	if (status < 1000 && orderVisible) {
 		let id = Vue_User.UseOrderType;

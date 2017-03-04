@@ -92,7 +92,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxNTI5ODg0My0xZTFjLTQ3MTYtOTNkZC01ZTE4MTQ1MmNlMzEiLCJpYXQiOjE0ODc0MDM0OTUsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NzQwMzQ5NCwiZXhwIjoxNDg4NjEzMDk0LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.41txARQUeaY18pPFH-kl-gxmmY2Q0XYN9v9FMAASu4c" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
@@ -188,6 +188,7 @@ const Vue_Order = new Vue({
 				duration: 3000
 			});
 		},
+		/** 查看url上数据 */
 		getQueryString(name) {
 			let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 			let r = window.location.search.substr(1).match(reg);
@@ -196,6 +197,7 @@ const Vue_Order = new Vue({
 			}
 			return null;
 		},
+		/** 加载更多数据 */
 		moreOrderData(empty = false) {
 			if (this.noMoreData || this.isUse) {
 				return;
@@ -247,6 +249,7 @@ const Vue_Order = new Vue({
 					this.canvas();
 				})
 		},
+		/** 加载更多数据 */
 		moreOrderData1(empty = false) {
 			if (this.noMoreData1 || this.isUse1) {
 				return;
@@ -299,6 +302,7 @@ const Vue_Order = new Vue({
 					this.canvas();
 				})
 		},
+		/** 打开一个订单 */
 		openOrder(index) {
 			this.loading();
 			if (this.selected === 1) {
@@ -309,6 +313,7 @@ const Vue_Order = new Vue({
 				this.getOrderInfo(this.OrderList1[index].Id);
 			}
 		},
+		/** 获取订单信息 */
 		getOrderInfo(id) {
 			return fetch(config.serverUrl + "/api/Order/Get", {
 					method: "POST",
@@ -319,8 +324,8 @@ const Vue_Order = new Vue({
 				}).then(result => result.json())
 				.then(result => {
 					this.OrderDetail = result.Data;
-					this.passenger = [];
-					this.optionsPassenger = [];
+					this.passenger = [];//显示乘客状态
+					this.optionsPassenger = [];//提供申请退款选择的用户名
 					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
 						let item = this.OrderDetail.Passengers[i];
 						if (item.Status === -3) {
@@ -551,9 +556,11 @@ const Vue_Order = new Vue({
 					});
 				})
 		},
+		/** 选择页面 */
 		selectPage(index) {
 			this.selected = index;
 		},
+		/** 打开验证码 */
 		openCode() {
 			this.codePopupVisible = true;
 		},
@@ -613,17 +620,17 @@ const Vue_Order = new Vue({
 	}
 });
 
-// window.addEventListener('scroll',_.throttle(function(){
-// 	let selected = Vue_Order.selected;
-// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
-// 	if(status<1000 && selected==="1"){
-// 		Vue_Order.moreOrderData();
-// 		// console.log('yes');
-// 	}
+window.addEventListener('scroll',_.throttle(function(){
+	let selected = Vue_Order.selected;
+	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+	if(status<1000 && selected===1){
+		Vue_Order.moreOrderData();
+		// console.log('yes');
+	}
 
-// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
-// 	if(status1<1000 && selected==="2"){
-// 		Vue_Order.moreOrderData1();
-// 		// console.log('yes');
-// 	}
-// },100,{leading: false}));
+	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+	if(status1<1000 && selected===2){
+		Vue_Order.moreOrderData1();
+		// console.log('yes');
+	}
+},100,{leading: false}));

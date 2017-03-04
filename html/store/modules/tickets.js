@@ -1,8 +1,14 @@
+/**
+ * 数据中心
+ * 这里包含了几乎所有的网络操作,因为需要token
+ * 并且包含了调用公司app用户的token操作
+ */
 import types from '../Type'; //数据类型
 import "whatwg-fetch";
 const _ = require("underscore");
 import { Toast } from 'mint-ui';
 
+/** 判断是本地测试还是线上生产环环境 */
 const debug = (function() {
 	let debug = false;
 	let url = window.location.href;
@@ -14,16 +20,18 @@ const debug = (function() {
 	return debug;
 })();
 
+/** ios端回调传送回本地js的token,然后保存到本地 */
 window.getData = (data) => {
 	window.localStorage.setItem("UserInfo", "Bearer " + data);
 }
 
+/** 如果是app中android */
 if (typeof window.jgkj !== "undefined") {
 	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
-	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 }
+/** 如果是ios的app */
 if (typeof window.webkit !== "undefined") {
-	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);//第一个参数是回调函数名,用于接受ios返回的数据
 }
 
 /**
@@ -35,14 +43,9 @@ let Authorization = (function() {
 	if (window.localStorage.getItem("UserInfo")) {
 		// app中
 		let string = window.localStorage.getItem("UserInfo");
-		// Toast({
-		// 	message: JSON.parse(string).Access_Token,
-		// 	position: 'center',
-		// 	duration: 10000
-		// })
-		return JSON.parse(string).Access_Token;
+		return JSON.parse(string).Access_Token;//格式为json
 	}
-	let cookie = document.cookie;
+	let cookie = document.cookie;//获取浏览器的token
 	if (cookie === "") {
 		return cookie;
 	}
@@ -80,17 +83,15 @@ function checkStatus(response) {
 	}
 }
 
-// initial state
-// shape: [{ id, quantity }]
+// 初始化数据 state
 const state = {
 	isFirst: true, //第一次启动
-	HeaderIsHome: true,
+	HeaderIsHome: true,//是否是主页
 	showHeader: false, //不显示头部
 	showBack: true, //不显示返回键
-	HeaderTitle: "身边订票",
+	HeaderTitle: "身边订票",//头部标题显示
 	showFooter: true, //显示底部tab
 
-	// 正式数据库
 	startCity: {
 		Code: "3385299",
 		Name: "五经富",
@@ -120,10 +121,12 @@ const state = {
 
 	busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 	serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxNTI5ODg0My0xZTFjLTQ3MTYtOTNkZC01ZTE4MTQ1MmNlMzEiLCJpYXQiOjE0ODc0MDM0OTUsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NzQwMzQ5NCwiZXhwIjoxNDg4NjEzMDk0LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.41txARQUeaY18pPFH-kl-gxmmY2Q0XYN9v9FMAASu4c" : Authorization,
+	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization,
 }
 
 // getters,获取数据
+// 调用方法
+// this.$store.getters.getIsFirst
 const getters = {
 	getIsFirst: state => state.isFirst,
 	getHeaderState: state => state.HeaderIsHome,
@@ -167,6 +170,8 @@ let getData = (url, callback) => {
 }
 
 // actions
+// 调用方法:
+// this.$store.dispatch("cancelOrder",数据)
 const actions = {
 	ChangeHeader({ commit, state }, data) {
 		commit(types.CHANGE_HEADER, data)
@@ -509,6 +514,7 @@ const actions = {
 }
 
 // mutations
+// 改变数据,每一个类型对应一个操作
 const mutations = {
 	["SET_SHOWHEADER"](state, data) {
 		state.showHeader = data;

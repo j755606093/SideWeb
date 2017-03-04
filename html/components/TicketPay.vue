@@ -392,7 +392,8 @@
 </template>
 
 <script type="text/babel">
-// import { mapGetters } from 'vuex'
+/** 下单和支付页面 */
+/** 此页面包含众多子页面,包括乘客界面,上车点页面,优惠券页面,每个页面包含众多逻辑,相互独立几乎没有干扰,因为开始构建时候UI没有确定,导致可能有部分注释是遗留代码,或者是死代码,几乎没有用处..或者部分代码数据格式改变,并未标明. */
 import Utils from "../Utils/utils";
 const _ = require("underscore");
 import { Indicator,Toast ,MessageBox} from 'mint-ui';
@@ -414,7 +415,6 @@ export default {
 			AllFare:[
 				// {
 				// 	Name:"周岳谢",
-				// 	// code:"440802199406011519",
 				// 	active:false,
 				// 	isGetTicket:false
 				// },
@@ -479,47 +479,36 @@ export default {
 		this.$store.commit("SET_SHOWHEADER",false);
 
 		if(!this.$store.getters.getIsFirst){
+			// 不是直接跳转进来的话就有路线信息
 			this.busInfo = this.$store.getters.getBusInfo;
-			this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;
-
-			// let startDate = this.$store.getters.getInfo.startDate;
-			// this.$store.commit("CHANGE_HEADER",{
-			// 	isHome:false,
-			// 	Title:this.startDate.date+" "+this.startDate.week
-			// });
+			this.payInfoData.ticketMoney = this.$store.getters.getBusInfo.Price;//获取单价
 		}
 
 		//设置乘车点
-		// this.selectStation = this.busInfo.StartAddress?this.busInfo.StartAddress[0]:"";
 		this.options = this.busInfo.StartAddress?this.busInfo.StartAddress:[];
 
 		//设置优惠券
 		if(this.$store.getters.getRebate){
+			// 如果有优惠券,就遍历一次增加部分属性
 			let rebate = this.$store.getters.getRebate;
 			_.map(rebate,item=>{
 				let data = Object.assign({},item);
 				data.value = item.Id;
-				data.disabled = false;
-				data.StartDate = this.formatNow(data.StartDate);
-				data.EndDate = this.formatNow(data.EndDate);
-				this.optionsDiscount.push(data);
+				data.disabled = false;//不可选
+				data.StartDate = this.formatNow(data.StartDate);// 优惠券开始时间
+				data.EndDate = this.formatNow(data.EndDate);//过期时间
+				this.optionsDiscount.push(data);//推进数据中
 			})
 		}
 		
 		
-		//获取本地的取票人数据....现在冲服务器获取
-		// this.getLocalStorePhone();
+		//获取本地的取票人数据....现在从服务器获取
 		this.payInfoData.contactPhone = this.$store.getters.getPhone;//获取服务器上的取票人手机号
 
-		let passenger = this.$store.getters.getPassenger;
-		//获取乘客信息
-		let rebate = this.$store.getters.getRebate;//获取优惠码
+		let passenger = this.$store.getters.getPassenger;//获取乘客信息
 		for(let i=0;i<passenger.length;i++){
 			passenger[i].active = false;
 			passenger[i].isGetTicket = false;
-			// if(passenger[i].Mobile!==''){
-			// 	passenger[i].isGetTicket = false;
-			// }
 			this.AllFare.push(passenger[i]);
 			//如果乘客信息中有默认的取票人
 			// if(passenger[i].IsDefault===1){
@@ -527,32 +516,13 @@ export default {
 			// 	this.payInfoData.contactPhone = passenger[i].Mobile;
 			// }
 		}
-		// this.AllFare = this.getLocalStorePassager();
 
-		this.computeAll();
-		
-		// this.$store.dispatch("getWXconfig")
-		// 	.then(result=>{
-		// 		let data = result.Data;
-		// 		data.debug = true;
-		// 		data.jsApiList = ["chooseWXPay","openLocation","getLocation"];
-		// 		wx.config(data);
-		// 		wx.ready(function(){
-		// 			alert("ready");
-		// 		});
-		// 		wx.error(function(res){
-		// 			alert(res)
-		// 		})
-		// 	})
-		
+		this.computeAll();//计算价格
 	},
 	mounted(){
 		this.canvas();
 	},
 	computed:{
-		// startDate(){
-		// 	return this.$store.getters.getInfo.startDate.date+this.$store.getters.getInfo.startDate.week;
-		// },
 		startDate(){
 			let date = new Date(this.$store.getters.getInfo.startDate.server);
 			let year = date.getYear()-100+2000;
@@ -647,28 +617,8 @@ export default {
 			  position: 'bottom',
 			  duration: 3000
 			});
-			// this.popupText = text;
-			// this.popupVisible = true;
 		},
-		// postCode(){
-		// 	// 提示加载中
-		// 	Indicator.open({
-		// 		text: '加载中...',
-		// 		spinnerType: 'double-bounce'
-		// 	});
-		// 	this.$http.post("http://wx.1yhp.net/api/Order/WxPay",{Code:this.Code}).then(res=>{
-		// 		Indicator.close();
-		// 		if(res.data.Status===0){
-		// 			this.popupMessage(res.data.Message);
-		// 		}
-		// 		else{
-		// 			this.popupMessage(JSON.stringify(res.data));
-		// 			this.payMoney(res.data.Data);
-		// 		}
-		// 	}).catch(error=>{
-		// 		this.popupMessage(error);
-		// 	})
-		// },
+		/** 吊起微信支付 */
 		payMoney(){
 				Indicator.open({
 					text: '加载中...',
@@ -685,26 +635,12 @@ export default {
 						return;
 					}
 
-					// paydata.success = function(res){
-					// 	Toast({
-					// 	  message: '支付成功!',
-					// 	  iconClass: 'fa fa-check',
-					// 	  duration:3000,
-					// 	  className:"success"
-					// 	});
-					// }
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest",paydata,(r)=>{
 						if(r.err_msg==="get_brand_wcpay_request:ok"){
 							Indicator.open({
 								text: '支付成功,准备跳转至订单页!',
 								spinnerType: 'double-bounce'
 							});
-							// Toast({
-							//   message: '支付成功,准备跳转至订单页!',
-							//   iconClass: 'fa fa-check',
-							//   duration:1000,
-							//   className:"success"
-							// });
 							setTimeout(()=>{
 								window.location.href="./TicketOrder.html?orderid="+id
 							},2000);
@@ -717,7 +653,6 @@ export default {
 							});
 						}
 					});
-					// wx.chooseWXPay(paydata)
 				})
 		},
 		/**
@@ -787,6 +722,7 @@ export default {
 				this.discountMoney += this.discountCode.Money;
 			}
 		},
+		/** 计算所有的总额 */
 		computeAll(){
 			this.computeInsureMoney();
 			this.computeDiscound();
@@ -817,6 +753,7 @@ export default {
 			// return month+"月"+day+"日";
 			return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)
 		},
+		/** 下单完成后需要半小时内支付完成,这里是倒计时 */
 		CountDown(){
 			this.storeCountTime = 60*30-1;//半个小时
 			this.countdown = setInterval(()=>{
@@ -913,9 +850,9 @@ export default {
 							else{
 								this.CountDown();
 								this.serverPayInfo = result.Data;
-								this.trashRebate()
+								this.trashRebate();//删除已经使用过的优惠券,防止用户返回后又再次使用(虽然后天提示无法使用),提高体验
 								// this.TicketPay = result.Data;
-								this.payInfoPopupVisible = true;
+								this.payInfoPopupVisible = true;//跳转到支付页面
 							}
 						}).catch(error=>{
 							Indicator.close();

@@ -260,6 +260,7 @@ export default {
 		// getResultList(){
 		// 	return this.$store.getters.getResultList;
 		// },
+		/** 选取时间逻辑显示控制 */
 		getTimeOptionsValue:{
 			set(value){
 				if(value.length===0){
@@ -290,6 +291,7 @@ export default {
 				return this.TimeOptionsValue;
 			}
 		},
+		/** 筛选路线控制 */
 		getRouterOptionsValue:{
 			set(value){
 				if(value.length===0){
@@ -320,6 +322,7 @@ export default {
 				return this.RouterOptionsValue;
 			}
 		},
+		/** 筛选位置控制 */
 		getPositionOptionsValue:{
 			set(value){
 				if(value.length===0){
@@ -368,6 +371,7 @@ export default {
 		}
 	},
 	mounted(){
+		/** 加载完成后将页面上所有的canvas制作成上半圆和下半圆显示,因为UI图做不出来,而使用border-radius也只能在ios端完美显示,android端显示会异常 */
 		let topbody = document.getElementsByClassName("canvas-top");
 		let bottombody = document.getElementsByClassName("canvas-bottom");
 
@@ -394,9 +398,11 @@ export default {
 			//隐藏显示列表
 			this.isShowList = !this.isShowList;
 		},
+		/** 显示筛选 */
 		showFilter(){
 			this.popupVisible = !this.popupVisible;
 		},
+		/** 隐藏所有筛选 */
 		HideAll(){
 			// this.isShowList = false;//隐藏列表
 			//隐藏其他的tab
@@ -405,6 +411,7 @@ export default {
 			this.isShowPrice = false;
 			this.isShowConame  = false;
 		},
+		/** 只显示时间筛选 */
 		setShowTime(){
 			this.HideAll();
 			this.isShowTime = true;
@@ -421,6 +428,7 @@ export default {
 			this.HideAll();
 			this.isShowPrice = true;
 		},
+		/** 获取结果,比如点击了上一天或者下一天 */
 		refresh(){
 			if(this.$store.getters.getResultList.length===0){
 				// 没有数据
@@ -485,7 +493,7 @@ export default {
 			}
 			this.popupVisible = false;
 		},
-		/** 取消 */
+		/** 取消显示 */
 		Setcancel(){
 			this.popupVisible = false;
 		},
@@ -496,8 +504,8 @@ export default {
 			this.RouterOptionsValue=["不限"];//结果
 			this.PriceOptionsValue='不限';//结果
 		},
+		/** 查找特定时间的车 */
 		queryTime(){
-			//查找特定时间的车
 			// console.log(this.TimeOptionsValue);
 			// 判断是否值选择了一个不限
 			if(this.TimeOptionsValue[0]==="不限"&&this.TimeOptionsValue.length===1){
@@ -538,6 +546,7 @@ export default {
 				return n;
 			});
 		},
+		/** 筛选价格 */
 		queryPrice(){
 			//设置价格高低
 			let lastData = this.ResultBackUp;
@@ -548,6 +557,7 @@ export default {
 				this.getResultList = _.sortBy(lastData,"Price").reverse();
 			}
 		},
+		/** 筛选运营公司 */
 		queryConame(){
 			// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
 			if(this.PositionOptionsValue[0]==="不限"&&this.PositionOptionsValue.length===1){
@@ -569,6 +579,7 @@ export default {
 				return n;
 			});
 		},
+		/** 筛选路线 */
 		queryRouter(){
 			if(this.RouterOptionsValue[0]==="不限"&&this.RouterOptionsValue.length===1){
 				// 长度为一
@@ -588,12 +599,14 @@ export default {
 				return n;
 			});
 		},
+		/** 选择一条路线去下单 */
 		GoToPay(index){
 			// 存储用户点击的列表
 			this.$store.dispatch("setBusInfo",this.getResultList[index]);
 			// 去支付页面
 			this.$router.push({name:"ticketpay"});
 		},
+		/** 排序日期 */
 		sortTime(){
 			let data = Utils.formatJsonData(this.getResultList);
 			if(this.arrow===0){
@@ -611,8 +624,8 @@ export default {
 
 			this.getResultList = data;
 		},
+		/** 显示路线详情 */
 		showCompanyDeatil(index,event){
-			//显示路线详情
 			if(index===this.routerDetailShow){
 				this.routerDetailShow = -1;
 			}

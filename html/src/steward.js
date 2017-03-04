@@ -147,6 +147,7 @@ const Vue_User = new Vue({
 			}
 			return null;
 		},
+		/** 获取订单信息 */
 		getOrderInfo(id) {
 			return fetch(config.serverUrl + "/api/Steward/GetOrder", {
 					method: "POST",
@@ -200,6 +201,7 @@ const Vue_User = new Vue({
 					Indicator.close();
 				})
 		},
+		/** 选择乘客 */
 		selectUp(index){
 			if(this.optionsPassenger[index].vaild){
 				// 不是可选的
@@ -214,6 +216,7 @@ const Vue_User = new Vue({
 				}
 			})
 		},
+		/** 选择全部 */
 		selectAll(){
 			this.Passengers = [];
 			this.optionsPassenger.map((item,index)=>{
@@ -223,6 +226,7 @@ const Vue_User = new Vue({
 				}
 			})
 		},
+		/** 确定乘客 */
 		yes(){
 			if(this.Passengers.length!==0){
 				this.fetchYes();
@@ -231,6 +235,7 @@ const Vue_User = new Vue({
 				this.toast("请选择需要乘车的乘客!");
 			}
 		},
+		/** 发送乘客的信息过去 */
 		fetchYes(){
 			this.loading();
 			fetch(config.serverUrl + "/api/Steward/ConfirmRide", {
@@ -261,6 +266,7 @@ const Vue_User = new Vue({
 					Indicator.close();
 				})
 		},
+		/** 输入 */
 		backInput(){
 			if(this.inputCodeNum===5){
 				this.inputCodeNum--;
@@ -276,6 +282,7 @@ const Vue_User = new Vue({
 				this.left = n+"%";
 			}
 		},
+		/** 每次输入的事件 */
 		inputCodeEvent(event){
 			if(event.keyCode>=48&&event.keyCode<=57){
 				let code = event.target.value;//code
@@ -295,6 +302,10 @@ const Vue_User = new Vue({
 				}
 			}
 		},
+		/**
+		 * 确定验证码
+		 * @return {[type]} [description]
+		 */
 		verifyCode(){
 			if(this.codeArray.length!==6){
 				this.toast("请输入完整验证码");
@@ -331,6 +342,7 @@ const Vue_User = new Vue({
 					this.initData();
 				})
 		},
+		/** 初始化订单数据 */
 		initData(){
 			this.optionsPassenger = [];
 			for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
