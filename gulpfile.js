@@ -115,6 +115,13 @@ gulp.task('ticket', ['sass'], function() {
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
 
+gulp.task('compress', function() {
+	return gulp.src('./html/dist/bundle-*.js')
+		.pipe(uglify())//生产的时候再启用压缩
+		.pipe(gulp.dest('html/dist/compress'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
 gulp.task('app', function() {
 	return gulp.src('./html/js/commenting.js')
 		.pipe(webpack({

@@ -83,7 +83,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiIxNTI5ODg0My0xZTFjLTQ3MTYtOTNkZC01ZTE4MTQ1MmNlMzEiLCJpYXQiOjE0ODc0MDM0OTUsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4NzQwMzQ5NCwiZXhwIjoxNDg4NjEzMDk0LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.41txARQUeaY18pPFH-kl-gxmmY2Q0XYN9v9FMAASu4c" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }

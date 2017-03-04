@@ -320,20 +320,6 @@ export default {
 				return this.RouterOptionsValue;
 			}
 		},
-		// getPriceOptionsValue:{
-		// 	set(value){
-		// 		if(value.length===0){
-		// 			this.PriceOptionsValue = ["不限"];
-		// 		}
-		// 		else{
-		// 			this.PriceOptionsValue = [1];
-		// 			console.log([value[value.length-1]])
-		// 		}
-		// 	},
-		// 	get(){
-		// 		return this.PriceOptionsValue;
-		// 	}
-		// },
 		getPositionOptionsValue:{
 			set(value){
 				if(value.length===0){

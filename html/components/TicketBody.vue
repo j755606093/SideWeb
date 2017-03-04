@@ -86,29 +86,31 @@ export default {
 	created(){
 			history.replaceState({},"","#/home/ticketbody");//修复部分url一开始就有"#/"导致无法支付的bug(url未注册)
 		// try{
+			
 			let nowDate = new Date();
-			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
-			this.$store.commit("SET_SHOWHEADER",false);
-			this.$store.commit("SET_SHOWBACK",true);
+			// this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});// 设置头部标题
+			this.$store.commit("SET_SHOWHEADER",false);//不显示头部
+			this.$store.commit("SET_SHOWBACK",true);//显示返回按钮(这里没什么用)
 			
 			// 设置初始时间
 			if(this.$store.getters.getInfo.startDate.server){
-				// 之前查过
-				this.handleConfirm(this.$store.getters.getInfo.startDate.server);
-				this.startTime = this.formatNow(this.$store.getters.getInfo.startDate.server);
+				// 如果之前查过(初始化时候server是null)
+				this.handleConfirm(this.$store.getters.getInfo.startDate.server);//记录时间
+				this.startTime = this.formatNow(this.$store.getters.getInfo.startDate.server);//格式化显示时间
 			}
 			else{
-				let number = Date.now()+24*60*60*1000;
+				// 开始进入首页
+				let number = Date.now()+24*60*60*1000;//默认时间是明天
 				this.handleConfirm(new Date(number));
 				this.startTime = this.formatNow(new Date(number))
 			}
 			// 获取本地历史搜索数据
 			this.localStorage = this.getLocalStore().reverse();
 			
-			// 获取位置
+			// 获取位置(如果是第一次进来就获取位置)
 			if(this.$store.getters.getIsFirst){
 				// 还没有获取过,说明第一个打开网页
-				this.$store.dispatch("setisFirst",false);
+				this.$store.dispatch("setisFirst",false);//再设置不是第一次进来
 				
 				// 获取默认的出发地址
 				this.$store.dispatch("getCityDefault").then(result=>{
@@ -121,14 +123,14 @@ export default {
 				
 			}
 			else{
-				// 不需要再次获取地理位置
-				this.locationLoad = false;
-				if(this.$store.getters.getLocationResult){
-					this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;
-				}
-				else{
-					this.locationName = "";
-				}
+				// 不是第一次进入就不需要再次获取地理位置(此部分因为功能迭代后不需要显示就废弃了)
+				// this.locationLoad = false;
+				// if(this.$store.getters.getLocationResult){
+				// 	this.locationName = "最近上车点:"+this.$store.getters.getLocationResult.Name;//显示已经定位的位置
+				// }
+				// else{
+				// 	this.locationName = "";
+				// }
 			}
 		// }
 		// catch(error){
@@ -139,68 +141,34 @@ export default {
 		
 	},
 	watch:{
-		// startTime:{
-		// 	handler:function(newValue,oldValue){
-		// 		let date = new Date(newValue.time);
-		// 		let newDate = new Date();
-		// 		this.showTime = this.formatNow(date);
-		// 		this.showWeek = Utils.formatWeek(date);
-
-		// 		// 显示明天和今天
-		// 		if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()){
-		// 			this.showWeek = "今天";
-		// 		}
-		// 		if(date.getMonth()===newDate.getMonth()&&date.getDate()===newDate.getDate()+1){
-		// 			this.showWeek = "明天";
-		// 		}
-
-		// 		//记录选取的时间
-		// 		this.$store.dispatch("setStartDate",{
-		// 			date:this.showTime,
-		// 			week:this.showWeek,
-		// 			server:date
-		// 		});
-		// 	},
-		// 	deep: true
-		// }
+		
 	},
 	computed:{
 		getStartCity(){
+			// 获取开始地址(需要保持和store同步)
 			this.startCity = this.$store.state.tickets.startCity;
 			return this.startCity.Name;
 		},
-		// getStartCityStation(){
-		// 	if(this.startCity.Station!==""){
-		// 		return this.startCity.Station;
-		// 	}
-		// 	else{
-		// 		return "无站台";
-		// 	}
-		// },
 		getEndCity(){
+			// 获取到达地址(需要保持和store同步)
 			this.endCity = this.$store.state.tickets.endCity;
 			return this.endCity.Name;
 		},
-		// getEndCityStation(){
-		// 	if(this.endCity.Station!==""){
-		// 		return this.endCity.Station;
-		// 	}
-		// 	else{
-		// 		return "无站台";
-		// 	}
-		// },
 	},
 	methods:{
+		/** 格式化时间 */
 		formatDate(data){
 			return Utils.formatDate(data);
 		},
+		/** 接受浏览器返回的定位位置 */
 		showPosition(position){
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
+			// 返回定位位置给服务器判断最近上车点
 			this.$store.dispatch("setLocationResult",{
 				latitude:latitude,
 				longitude:longitude
 			}).then(data=>{
-				this.locationLoad = false;//停止界面加载提示
+				// this.locationLoad = false;//停止界面加载提示
 				if(data){
 					this.locationName = "最近上车点:"+data.Name;
 					this.$store.dispatch("setStartCity",{
@@ -212,44 +180,32 @@ export default {
 					  position: 'bottom',
 					  duration: 3000,
 					});
-					
 				}
 				else{
 					//没有数据
-					this.locationName = "";
-					// Toast({
-					//   message: "没有数据",
-					//   position: 'bottom',
-					//   duration: 3000,
-					// });
+					// this.locationName = "";
 				}
 
-				this.showRefresh = false;//正常返回就不要显示重新加载了
-				return Promise.resolve();
+				// this.showRefresh = false;//正常返回就不要显示重新加载了
+				// return Promise.resolve();
 			}).catch(error=>{
-				this.locationLoad = false;//停止界面加载提示
-				// this.locationName = "请稍后重试...";
-				// this.showRefresh = true;
+				// this.locationLoad = false;//停止界面加载提示
 			})
 		},
+		/** 定位数据获取失败调用的函数 */
 		getPositionError(error){
-			// this.showPosition({
-			// 	coords:{
-			// 		latitude:"23.018639699999998",
-			// 		longitude:"113.3086585"
-			// 	}
-			// })
 			if(error){
 				// 获取位置出错
-				this.locationLoad = false;//停止界面加载提示
-				this.locationName = "";
-				// this.showRefresh = true;
+				// this.locationLoad = false;//停止界面加载提示
+				// this.locationName = "";
 			}
 		},
+		/** 刷新定位(弃用) */
 		refreshLocation(){
 			//重新定位
 			navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		},
+		/** 获取出发地点(跳转页面) */
 		GoStartCity(){
 			// 提示加载中
 			Indicator.open({
@@ -258,15 +214,8 @@ export default {
 			});
 
 			this.$store.dispatch("setStartCityList").then((data)=>{
-				Indicator.close();
+				Indicator.close();//关闭加载提示
 				this.$router.push({name:"ticketstartcity"});
-				// this.$store.getters.getCityList.startCityList.map((item,index)=>{
-				// 	item.Content.map(content=>{
-				// 		this.startCitySlots[0].values.push(content.Name)
-				// 	});
-				// });
-				// Indicator.close();
-				// this.startpopupVisible = true;
 			}).catch(error=>{
 				Indicator.close();
 				Toast({
@@ -276,14 +225,12 @@ export default {
 				});
 			});
 		},
+		/** 跳转选取出发日期页面 */
 		openDate(){
 			this.$router.push({name:"ticketdate"});
 		},
+		/** 获取到达地点(跳转页面) */
 		GoEndCity(){
-			// if(this.$store.getters.getCityList.endCityList){
-			// 	this.startpopupVisible = true;
-			// 	return;
-			// }
 			// 提示加载中
 			Indicator.open({
 				text: '加载中...',
@@ -293,14 +240,6 @@ export default {
 			this.$store.dispatch("setEndCityList").then((data)=>{
 				Indicator.close();
 				this.$router.push({name:"ticketendcity"});
-				// this.$store.getters.getCityList.endCityList.map((item,index)=>{
-				// 	item.Content.map(content=>{
-				// 		this.endCitySlots[0].values.push(content.Name)
-				// 	});
-				// });
-				// Indicator.close();
-				// this.endpopupVisible = true;
-				// this.$router.push({name:"ticketendcity"});
 			}).catch(error=>{
 				Indicator.close();
 				Toast({
@@ -310,9 +249,7 @@ export default {
 				});
 			});
 		},
-		openPicker() {
-			this.$refs.picker.open();
-		},
+		/** 格式化时间显示到页面上和记录这个时间 */
 		handleConfirm(date){
 			this.showTime = this.formatNow(date);
 			this.showWeek = Utils.formatWeek(date);
@@ -324,6 +261,7 @@ export default {
 				server:date
 			});
 		},
+		/** 返回格式化日期 */
 		formatNow(date){
 			if(typeof date==="string"){
 				date = new Date(date);
@@ -335,6 +273,7 @@ export default {
 			// return month+"月"+day+"日";
 			return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)
 		},
+		/** 点击查询按钮 */
 		query(){
 			if(this.startCity.Name===this.endCity.Name){
 				// 地点相同
@@ -417,15 +356,15 @@ export default {
 
 			window.localStorage.setItem("City",JSON.stringify(newData));
 		},
-		onStartValuesChange(picker, values){
-			this.$store.dispatch("setStartCity",{Code:"00000",Name:values[0]});
-		},
-		onEndValuesChange(picker, values){
-			this.$store.dispatch("setEndCity",{Code:"00000",Name:values[0]});
-		},
-		showSearchRecord(){
-			this.searchrecord = !this.searchrecord;
-		},
+		// onStartValuesChange(picker, values){
+		// 	this.$store.dispatch("setStartCity",{Code:"00000",Name:values[0]});
+		// },
+		// onEndValuesChange(picker, values){
+		// 	this.$store.dispatch("setEndCity",{Code:"00000",Name:values[0]});
+		// },
+		// showSearchRecord(){
+		// 	this.searchrecord = !this.searchrecord;
+		// },
 		clearLocalStore(){
 			window.localStorage.clear("City");
 			this.localStorage = [];
