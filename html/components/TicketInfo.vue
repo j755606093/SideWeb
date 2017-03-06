@@ -26,7 +26,7 @@
 .rebate{
 	width:100%;
 	padding:0 10px;
-	margin-top:60px;
+	padding-top:60px;
 	padding-bottom: 60px;
 }
 .rebate-header{
@@ -34,6 +34,12 @@
 	img{
 		width:100%;
 		height:200px;
+	}
+	@include responsive("iphone5"){
+		img{
+			width:100%;
+			height:160px;
+		}
 	}
 }
 .rebate-body{
@@ -84,7 +90,7 @@
 	}
 }
 .get-rebate{
-	position:absolute;
+	position:fixed;
 	bottom:10px;
 	left:0;
 	width:100%;
@@ -121,6 +127,7 @@ export default {
 	created(){
 		this.loading();
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"优惠券"});
+		this.$store.commit("SET_SHOWBACK",true);
 		this.$store.commit("SET_SHOWHEADER",true);
 		this.rebateid = this.$route.params.id;
 		this.fetchRebate();

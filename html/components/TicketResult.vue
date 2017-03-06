@@ -244,6 +244,7 @@ export default {
 		// console.log(this.getResultList)
 		//设置头部标题
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
+		this.$store.commit("SET_SHOWBACK",true);
 		this.$store.commit("SET_SHOWHEADER",true);
 
 		this.getResultList = [...this.$store.getters.getResultList];

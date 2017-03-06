@@ -30329,7 +30329,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.rebate {\n  width: 100%;\n  padding: 0 10px;\n  margin-top: 60px;\n  padding-bottom: 60px;\n}\n.rebate-header {\n  width: 100%;\n}\n.rebate-header img {\n    width: 100%;\n    height: 200px;\n}\n.rebate-body {\n  width: 100%;\n  border: 0.5px solid #c8c8c8;\n  border-top: none;\n  text-align: center;\n}\n.rebate-body section {\n    margin: 0 20px;\n}\n.rebate-body p.empty {\n    border-bottom: 0.5px solid #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.money {\n    margin-top: 10px;\n    height: 50px;\n    font-size: 12px;\n    font-weight: 900;\n    color: #323232;\n    font-weight: 900;\n}\n.rebate-body p.money span {\n      font-size: 36px;\n      margin-left: 5px;\n}\n.rebate-body p.limit {\n    font-weight: 900;\n    color: #323232;\n    font-size: 12px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.name {\n    font-weight: 900;\n    color: #323232;\n    font-size: 15px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.time {\n    color: #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.time:last-child {\n      margin-bottom: 20px;\n}\n.get-rebate {\n  position: absolute;\n  bottom: 10px;\n  left: 0;\n  width: 100%;\n  padding: 0 20px;\n}\n.get-rebate button {\n    height: 40px;\n    border: none;\n    outline: none;\n    color: #fff;\n    font-size: 16px;\n    border-radius: 5px;\n    background-color: #329be8;\n    width: 100%;\n}\n.get-rebate button.isuse {\n    background-color: #c8c8c8;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.rebate {\n  width: 100%;\n  padding: 0 10px;\n  padding-top: 60px;\n  padding-bottom: 60px;\n}\n.rebate-header {\n  width: 100%;\n}\n.rebate-header img {\n    width: 100%;\n    height: 200px;\n}\n@media (max-width: 320px) {\n.rebate-header img {\n      width: 100%;\n      height: 160px;\n}\n}\n.rebate-body {\n  width: 100%;\n  border: 0.5px solid #c8c8c8;\n  border-top: none;\n  text-align: center;\n}\n.rebate-body section {\n    margin: 0 20px;\n}\n.rebate-body p.empty {\n    border-bottom: 0.5px solid #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.money {\n    margin-top: 10px;\n    height: 50px;\n    font-size: 12px;\n    font-weight: 900;\n    color: #323232;\n    font-weight: 900;\n}\n.rebate-body p.money span {\n      font-size: 36px;\n      margin-left: 5px;\n}\n.rebate-body p.limit {\n    font-weight: 900;\n    color: #323232;\n    font-size: 12px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.name {\n    font-weight: 900;\n    color: #323232;\n    font-size: 15px;\n    height: 30px;\n    line-height: 30px;\n}\n.rebate-body p.time {\n    color: #c8c8c8;\n    height: 20px;\n}\n.rebate-body p.time:last-child {\n      margin-bottom: 20px;\n}\n.get-rebate {\n  position: fixed;\n  bottom: 10px;\n  left: 0;\n  width: 100%;\n  padding: 0 20px;\n}\n.get-rebate button {\n    height: 40px;\n    border: none;\n    outline: none;\n    color: #fff;\n    font-size: 16px;\n    border-radius: 5px;\n    background-color: #329be8;\n    width: 100%;\n}\n.get-rebate button.isuse {\n    background-color: #c8c8c8;\n}\n", ""]);
 
 	// exports
 
@@ -30460,6 +30460,12 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -30471,6 +30477,7 @@
 		created: function created() {
 			this.loading();
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "优惠券" });
+			this.$store.commit("SET_SHOWBACK", true);
 			this.$store.commit("SET_SHOWHEADER", true);
 			this.rebateid = this.$route.params.id;
 			this.fetchRebate();
@@ -31095,9 +31102,10 @@
 			// try{
 
 			var nowDate = new Date();
-			// this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});// 设置头部标题
+			this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" }); // 设置头部标题(目前没用,留着是因为底部tabbar需要根据是否是首页而显示)
+			this.$store.commit("SET_SHOWBACK", false); //不显示返回按钮(这里没什么用)
 			this.$store.commit("SET_SHOWHEADER", false); //不显示头部
-			this.$store.commit("SET_SHOWBACK", true); //显示返回按钮(这里没什么用)
+
 
 			// 设置初始时间
 			if (this.$store.getters.getInfo.startDate.server) {
@@ -32449,6 +32457,7 @@
 			// console.log(this.getResultList)
 			//设置头部标题
 			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: this.startCity.Name + " 到 " + this.endCity.Name });
+			this.$store.commit("SET_SHOWBACK", true);
 			this.$store.commit("SET_SHOWHEADER", true);
 
 			this.getResultList = [].concat((0, _toConsumableArray3.default)(this.$store.getters.getResultList));
@@ -34011,6 +34020,7 @@
 			this.startCity = this.$store.state.tickets.startCity;
 			this.endCity = this.$store.state.tickets.endCity;
 			this.$store.commit("SET_SHOWHEADER", false);
+			this.$store.commit("SET_SHOWBACK", true);
 
 			if (!this.$store.getters.getIsFirst) {
 				// 不是直接跳转进来的话就有路线信息

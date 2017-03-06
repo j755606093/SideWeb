@@ -477,7 +477,8 @@ export default {
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
 		this.$store.commit("SET_SHOWHEADER",false);
-
+		this.$store.commit("SET_SHOWBACK",true);
+		
 		if(!this.$store.getters.getIsFirst){
 			// 不是直接跳转进来的话就有路线信息
 			this.busInfo = this.$store.getters.getBusInfo;
