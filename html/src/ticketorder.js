@@ -442,7 +442,8 @@ const Vue_Order = new Vue({
 			if(this.getQueryString("orderid")){
 				// 如果有这个说明是其他页面跳转过来的
 				// 就直接跳转回去
-				history.back();
+				// history.back();
+				window.location.href="./TicketUser.html?type="+this.getQueryString("type");
 				return;
 			}
 			if (this.refundPassenger) {

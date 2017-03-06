@@ -161,7 +161,16 @@ const Vue_User = new Vue({
 				this.UserInfo = result.Userinfo;
 				this.isNoPay = result.NoPay;
 				this.ready = true;//显示网页
-			})
+			});
+
+		let type = this.getQueryString("type");
+		if(type){
+			// 说明是查看订单后返回的数据
+			let some = type==="0"?"":type;
+
+			this.showOrderList(some);
+			this.UseOrderType = parseInt(type);
+		}
 	},
 	mounted() {
 
@@ -299,7 +308,7 @@ const Vue_User = new Vue({
 		openOrder(index) {
 			let type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
 			let Id = this["OrderType" + type].OrderList[index].Id;
-			window.location.href = "/wx/TicketOrder.html?orderid=" + Id;
+			window.location.href = "./TicketOrder.html?orderid=" + Id+"&type="+this.UseOrderType;
 		},
 		/**
 		 * 显示乘客
