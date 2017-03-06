@@ -144,7 +144,7 @@ const Vue_Order = new Vue({
 
 		refreshLink: refreshLink, //刷新页面地址
 		code:"",//验证码的图片信息showQRCode(text).src
-		clipboard:null,//复制
+		showCode:false,//是否显示验证码
 	},
 	created() {
 		this.ready = true;
@@ -360,13 +360,13 @@ const Vue_Order = new Vue({
 						// 只有未支付的情况下才倒计时
 						this.CountDown();
 					}
-					if(this.OrderDetail.IsPay===1&&this.OrderDetail.Status===1){
-						// 已支付未确认,不显示验证码
-						this.selected = 1;
+					if(this.OrderDetail.IsPay===1&&(this.OrderDetail.Status===2||this.OrderDetail.Status===4)){
+						// 显示验证码
+						this.showCode = true;
 					}
 					else{
-						// 显示验证码
-						this.selected = 2;
+						// 其它情况,不显示验证码
+						this.showCode = false;
 					}
 				})
 		},
@@ -436,7 +436,7 @@ const Vue_Order = new Vue({
 			if(this.getQueryString("orderid")){
 				// 如果有这个说明是其他页面跳转过来的
 				// 就直接跳转回去
-				history.Go(-1);
+				history.back();
 				return;
 			}
 			if (this.refundPassenger) {

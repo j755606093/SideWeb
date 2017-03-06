@@ -206,7 +206,7 @@
 
 			refreshLink: refreshLink, //刷新页面地址
 			code: "", //验证码的图片信息showQRCode(text).src
-			clipboard: null },
+			showCode: false },
 		created: function created() {
 			this.ready = true;
 			if (this.getQueryString("orderid")) {
@@ -428,12 +428,12 @@
 						// 只有未支付的情况下才倒计时
 						_this3.CountDown();
 					}
-					if (_this3.OrderDetail.IsPay === 1 && _this3.OrderDetail.Status === 1) {
-						// 已支付未确认,不显示验证码
-						_this3.selected = 1;
-					} else {
+					if (_this3.OrderDetail.IsPay === 1 && (_this3.OrderDetail.Status === 2 || _this3.OrderDetail.Status === 4)) {
 						// 显示验证码
-						_this3.selected = 2;
+						_this3.showCode = true;
+					} else {
+						// 其它情况,不显示验证码
+						_this3.showCode = false;
 					}
 				});
 			},
@@ -506,7 +506,7 @@
 				if (this.getQueryString("orderid")) {
 					// 如果有这个说明是其他页面跳转过来的
 					// 就直接跳转回去
-					history.Go(-1);
+					history.back();
 					return;
 				}
 				if (this.refundPassenger) {

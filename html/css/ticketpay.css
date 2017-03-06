@@ -897,7 +897,7 @@ input {
               right: 20%; }
             @media (max-width: 320px) {
               .action-page .action .action-use .rebate .bottom .right span {
-                right: 4px; } }
+                right: 6px; } }
         .action-page .action .action-use .rebate:nth-child(1+2n) {
           padding-right: 5px; }
         .action-page .action .action-use .rebate:nth-child(2n) {
