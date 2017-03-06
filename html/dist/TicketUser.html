@@ -70,7 +70,7 @@
         <!-- 订单 -->
         <div v-show="!refundVisible" id="refund-lists" class="refund-lists">
           <div class="list">
-            <div v-if="!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
+            <div v-if="UseOrderType===0||!(item.IsPay===1&&item.Status===3)" @click="openOrder(index)" v-for="(item,index) in OrderList" class="ticket-info">
               <div class="left">
                 <span v-text="item.Boardtime">08:23</span>
                 <span v-text="item.CoName">东方快车</span>

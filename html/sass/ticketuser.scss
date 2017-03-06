@@ -1169,21 +1169,21 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0px;
     .help {
       width: 100%;
       padding-bottom: 60px;
       .help-list {
         margin: 0 10px;
         background-color: $white;
-        margin-top: 10px;
         border-radius: 10px;
+        margin-top: 6px;
         .header {
-          height: 60px;
-          line-height: 60px;
+          height: 48px;
+          line-height: 48px;
           position: relative;
           span {
-            font-size: 18px;
+            font-size: 15px;
             color: rgb(50, 50, 50);
             margin-left:10px;
           }
@@ -1210,7 +1210,7 @@ header {
           padding: 15px 10px;
           p {
             text-indent: 1em;
-            font-size: 18px;
+            font-size: 15px;
             line-height: 30px;
             color: rgb(50, 50, 50);
           }

@@ -1207,21 +1207,21 @@ header {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    margin-top: 10px; }
+    margin-top: 0px; }
     .help-lists .lists .help {
       width: 100%;
       padding-bottom: 60px; }
       .help-lists .lists .help .help-list {
         margin: 0 10px;
         background-color: #fff;
-        margin-top: 10px;
-        border-radius: 10px; }
+        border-radius: 10px;
+        margin-top: 6px; }
         .help-lists .lists .help .help-list .header {
-          height: 60px;
-          line-height: 60px;
+          height: 48px;
+          line-height: 48px;
           position: relative; }
           .help-lists .lists .help .help-list .header span {
-            font-size: 18px;
+            font-size: 15px;
             color: #323232;
             margin-left: 10px; }
           .help-lists .lists .help .help-list .header span.right {
@@ -1242,7 +1242,7 @@ header {
           padding: 15px 10px; }
           .help-lists .lists .help .help-list .help-content p {
             text-indent: 1em;
-            font-size: 18px;
+            font-size: 15px;
             line-height: 30px;
             color: #323232; }
 
