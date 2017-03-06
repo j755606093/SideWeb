@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div id="app" v-show="ready" style="display: none;">
+  <div id="app" v-show="ready" >
     <!-- 头部 -->
     <header :class="{code:!haveId}">
       <span v-if="haveId" v-text="'已验票乘客('+checkedNum+'/'+optionsPassenger.length+')'"></span>

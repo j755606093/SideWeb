@@ -11242,8 +11242,8 @@
 		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 	}
 	/** 如果是ios的app */
-	if (typeof window.webkit !== "undefined") {
-		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']); //第一个参数是回调函数名,用于接受ios返回的数据
+	if (typeof window.webkit !== "undefined" && typeof window.webkit.messageHandlers !== "undefined" && typeof window.webkit.messageHandlers.getUserInfo !== "undefined") {
+		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']);
 	}
 
 	/**
@@ -11337,7 +11337,7 @@
 	};
 
 	// getters,获取数据
-	// 调用方法
+	// 调用方法()
 	// this.$store.getters.getIsFirst
 	var getters = {
 		getIsFirst: function getIsFirst(state) {

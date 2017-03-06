@@ -94,7 +94,7 @@
 		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 		// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 	}
-	if (typeof window.webkit !== "undefined") {
+	if (typeof window.webkit !== "undefined" && typeof window.webkit.messageHandlers !== "undefined" && typeof window.webkit.messageHandlers.getUserInfo !== "undefined") {
 		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']);
 	}
 
