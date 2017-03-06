@@ -202,7 +202,10 @@ const Vue_Order = new Vue({
 		/** 加载更多数据 */
 		moreOrderData(empty = false) {
 			if (this.noMoreData || this.isUse) {
-				return;
+				if(!empty){
+					return;
+				}
+				this.index = 1;
 			}
 			this.isUse = true; //锁住这个函数
 			this.loading();
@@ -224,6 +227,7 @@ const Vue_Order = new Vue({
 							this.noMoreData = true;
 						}
 						if (empty) {
+							// 是否是刷新数据
 							this.OrderList1 = result.Data;
 						} else {
 							for (let i = 0; i < result.Data.length; i++) {
@@ -254,7 +258,10 @@ const Vue_Order = new Vue({
 		/** 加载更多数据 */
 		moreOrderData1(empty = false) {
 			if (this.noMoreData1 || this.isUse1) {
-				return;
+				if(!empty){
+					return;
+				}
+				this.index1 = 1;
 			}
 			this.isUse1 = true; //锁住这个函数
 			this.loading();
@@ -345,13 +352,12 @@ const Vue_Order = new Vue({
 						}
 						if (item.Status === 1) {
 							this.passenger.push(item);
+							this.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 						}
 						if (item.Status === 2) {
 							item.Name = item.Name + "(已验票)";
 							this.passenger.push(item);
 						}
-
-						this.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 					}
 					// this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					Indicator.close();
@@ -510,8 +516,8 @@ const Vue_Order = new Vue({
 				}
 			}
 
-			if (number !== this.OrderDetail.Passengers.length) {
-				// 说明都不可以退款
+			if (number===0) {
+				// 说明没有乘客可以退款
 				this.myModal = true;
 				MessageBox.alert('订单中所有乘客都不满足退款条件!').then(result=>{
 					this.myModal = false;
@@ -554,10 +560,12 @@ const Vue_Order = new Vue({
 								// 申请成功
 								MessageBox.alert('申请退款已提交').then(result=>{
 									this.myModal = false;
-									this.goback();
-									this.moreOrderData();
-									this.moreOrderData1();
+									this.goback();//返回上一层
 								});
+								// 重新加载数据
+								this.moreOrderData(true);
+								this.moreOrderData1(true);
+								this.orderVisible = false;//退出详情
 							} else {
 								MessageBox.alert(result.Message).then(result=>{
 									this.goback();

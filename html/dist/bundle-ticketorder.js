@@ -267,7 +267,10 @@
 				var empty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 				if (this.noMoreData || this.isUse) {
-					return;
+					if (!empty) {
+						return;
+					}
+					this.index = 1;
 				}
 				this.isUse = true; //锁住这个函数
 				this.loading();
@@ -288,6 +291,7 @@
 							_this.noMoreData = true;
 						}
 						if (empty) {
+							// 是否是刷新数据
 							_this.OrderList1 = result.Data;
 						} else {
 							for (var i = 0; i < result.Data.length; i++) {
@@ -321,7 +325,10 @@
 				var empty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 				if (this.noMoreData1 || this.isUse1) {
-					return;
+					if (!empty) {
+						return;
+					}
+					this.index1 = 1;
 				}
 				this.isUse1 = true; //锁住这个函数
 				this.loading();
@@ -413,13 +420,12 @@
 						}
 						if (item.Status === 1) {
 							_this3.passenger.push(item);
+							_this3.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 						}
 						if (item.Status === 2) {
 							item.Name = item.Name + "(已验票)";
 							_this3.passenger.push(item);
 						}
-
-						_this3.optionsPassenger.push({ Name: item.Name, Price: item.Price, DId: item.DId, active: false }); //提供申请退款选择的用户名
 					}
 					// this.passenger = this.passenger.slice(0, this.passenger.length - 1);
 					_mintUi.Indicator.close();
@@ -586,8 +592,8 @@
 					}
 				}
 
-				if (number !== this.OrderDetail.Passengers.length) {
-					// 说明都不可以退款
+				if (number === 0) {
+					// 说明没有乘客可以退款
 					this.myModal = true;
 					_mintUi.MessageBox.alert('订单中所有乘客都不满足退款条件!').then(function (result) {
 						_this8.myModal = false;
@@ -631,10 +637,12 @@
 							// 申请成功
 							_mintUi.MessageBox.alert('申请退款已提交').then(function (result) {
 								_this9.myModal = false;
-								_this9.goback();
-								_this9.moreOrderData();
-								_this9.moreOrderData1();
+								_this9.goback(); //返回上一层
 							});
+							// 重新加载数据
+							_this9.moreOrderData(true);
+							_this9.moreOrderData1(true);
+							_this9.orderVisible = false; //退出详情
 						} else {
 							_mintUi.MessageBox.alert(result.Message).then(function (result) {
 								_this9.goback();

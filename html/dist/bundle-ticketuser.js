@@ -591,6 +591,7 @@
 				this.loading();
 				this.getRefund().then(function (result) {
 					_mintUi.Indicator.close();
+					// console.log(result)
 
 					if (result.Data) {
 						for (var i = 0; i < result.Data.length; i++) {

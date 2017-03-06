@@ -118,7 +118,8 @@
         <div v-show="refundVisible" id="refund-lists" class="refund-lists">
           <div class="lists">
             <!-- 列表 -->
-            <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?orderid='+item.OrderId">
+            <!-- <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?orderid='+item.OrderId"> -->
+            <a class="list" v-for="(item,index) in RefundOrder.RefundList" href="##">
               <div class="left">
                 <div class="left-line">
                   <span class="left-span">退款号:</span>

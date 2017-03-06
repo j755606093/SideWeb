@@ -504,6 +504,7 @@ const Vue_User = new Vue({
 			this.loading();
 			this.getRefund().then(result => {
 				Indicator.close();
+				// console.log(result)
 
 				if (result.Data) {
 					for (let i = 0; i < result.Data.length; i++) {
