@@ -215,7 +215,6 @@
 				this.getOrderInfo(this.getQueryString("orderid"));
 				var id = this.getQueryString("orderid");
 				this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid=" + id).src; //生成二维码链接
-				this.selected = 2;
 			}
 			this.moreOrderData();
 			this.moreOrderData1();
@@ -428,6 +427,13 @@
 					if (_this3.selected === 1) {
 						// 只有未支付的情况下才倒计时
 						_this3.CountDown();
+					}
+					if (_this3.OrderDetail.IsPay === 1 && _this3.OrderDetail.Status === 1) {
+						// 已支付未确认,不显示验证码
+						_this3.selected = 1;
+					} else {
+						// 显示验证码
+						_this3.selected = 2;
 					}
 				});
 			},

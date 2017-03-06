@@ -112,7 +112,8 @@ input {
       border-radius: 10px; }
   .ticketbody .index-body {
     width: 100%;
-    padding: 0 25px; }
+    padding: 0 25px;
+    padding-bottom: 50px; }
     .ticketbody .index-body .location {
       display: -ms-flexbox;
       display: flex;

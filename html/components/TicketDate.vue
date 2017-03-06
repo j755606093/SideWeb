@@ -20,7 +20,7 @@
 					<span class="white"></span>
 				</div>
 				<div v-for="(item,index) in day" v-if="item<=firstTimeMaxDay">
-					<span @click="selectDate(item+'_one',$event)" :class="{gray:item<=firstTimeMaxDay,active:item>=firstTimeDay,selected:selected===item+'_one'}">{{item===firstTimeDay?'今天':item}}</span>
+					<span @click="selectDate(item+'_one',$event)" :class="{gray:item<=firstTimeMaxDay,active:item>=firstTimeDay && item<=firstTimeDay+10,selected:selected===item+'_one'}">{{item===firstTimeDay?'今天':item}}</span>
 				</div>
 			</div>
 			<!-- 下个月 -->
@@ -32,7 +32,7 @@
 					<span class="white"></span>
 				</div>
 				<div v-for="(item,index) in day" v-if="item<=secondTimeMaxDay">
-					<span @click="selectDate(item+'_two',$event)" :class="{gray:item<=secondTimeMaxDay,active:item<secondTimeDay,selected:selected===item+'_two'}">{{item}}</span>
+					<span @click="selectDate(item+'_two',$event)" :class="{gray:item<=secondTimeMaxDay,active:item<secondTimeDay&&twoMonth.indexOf(index)>-1,selected:selected===item+'_two'}">{{item}}</span>
 				</div>
 			</div>
 		</div>
@@ -55,9 +55,9 @@ export default {
 			firstTimeDay:0,//当前日期号
 			firstTimeMaxDay:0,//当前月份最大日期数
 			firstTimeWeek:0,//当前一号星期
-
+			
 			secondTimeText:"",
-			secondTimeDay:0,
+			secondTimeDay:0,//最远的一天
 			secondTimeMaxDay:0,//当前月份最大日期数
 			secondTimeWeek:0,//星期
 
@@ -74,6 +74,7 @@ export default {
 			day:[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,31],
 			selected:"15_one",
 			side:"top",//或者bottom
+			twoMonth:[],//第二个月可以显示的日期
 		}
 	},
 	created(){
@@ -113,7 +114,7 @@ export default {
 	methods:{
 		initTime(){
 			let date = new Date();
-			let date_second = new Date(date.getTime()+30*24*60*60*1000);//可以买最远一个月之内的票
+			let date_second = new Date(Date.now()+10*24*60*60*1000);//可以买最远十天之内的票
 
 			let year = date.getYear()-100+2000;
 			let month = date.getMonth()+1;
@@ -124,7 +125,7 @@ export default {
 			this.firstTimeWeek = date.getDay();//获取当前月一号星期
 			this.firstTimeMaxDay = this.getMaxMonth(year,month);//获取当前一号星期
 			
-			//第二个月
+			//第二个月(可能没有第二个月)
 			this.secondTimeDay = date_second.getDate();
 			date_second.setDate(1);//设置为当前月1号
 			this.secondTimeWeek = date_second.getDay();
@@ -152,6 +153,23 @@ export default {
 					month:month+1
 				}
 			}
+			this.showMonth();
+		},
+		/** 判断第二个月是否有需要显示的日期 */
+		showMonth(){
+			let date_second = new Date(Date.now()+30*24*60*60*1000);//设置下个月
+			date_second.setDate(1);//设置为下个月1号
+			let time = Date.now()+10*24*60*60*1000;//可以购买最远的日期(十天)
+			
+			// 下个月可以选择的日期都推送到twoMonth中
+			for(let i=0;i<=31;i++){
+				let se = date_second.getTime()+i*24*60*60*1000;
+
+				if(se<=time){
+					this.twoMonth.push(i);
+				}
+			}
+			console.log(this.twoMonth)
 		},
 		/** 获取当前月最大天数 */
 		getMaxMonth(year,month){
@@ -187,6 +205,7 @@ export default {
 					//这个月
 					this.side = "top";
 				}
+				this.yes();//点击直接确定然后返回
 			}
 		},
 		yes(){

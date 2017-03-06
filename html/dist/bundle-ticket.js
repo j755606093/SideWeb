@@ -30979,7 +30979,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 100%;\n  overflow-x: auto;\n  background-color: #fff;\n  position: absolute;\n  top: 12px;\n  left: 0; }\n  .ticketbody .slider {\n    height: 160px;\n    padding-left: 25px;\n    overflow-x: scroll;\n    white-space: nowrap; }\n    .ticketbody .slider > a {\n      display: inline-block;\n      margin-right: 5px; }\n    .ticketbody .slider .slider-item {\n      width: 250px;\n      height: 150px;\n      border-radius: 10px; }\n  .ticketbody .index-body {\n    width: 100%;\n    padding: 0 25px; }\n    .ticketbody .index-body .location {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .location > span {\n        -ms-flex: 4;\n            flex: 4;\n        font-size: 20px;\n        font-weight: 900;\n        color: #1e1e1e;\n        display: inline-block; }\n        .ticketbody .index-body .location > span:last-child {\n          text-align: right; }\n      .ticketbody .index-body .location > div {\n        -ms-flex: 2;\n            flex: 2;\n        text-align: center; }\n        .ticketbody .index-body .location > div span {\n          width: 32px;\n          height: 4px;\n          line-height: 12px;\n          background-color: #329be8;\n          display: inline-block;\n          border-radius: 2px;\n          position: relative; }\n          .ticketbody .index-body .location > div span::after {\n            content: \"\";\n            position: absolute;\n            bottom: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(45deg);\n            background-color: #329be8; }\n          .ticketbody .index-body .location > div span::before {\n            content: \"\";\n            position: absolute;\n            top: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(-45deg);\n            background-color: #329be8; }\n    .ticketbody .index-body .date {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .date > span {\n        -ms-flex: 3;\n            flex: 3;\n        display: inline-block;\n        color: #c8c8c8;\n        font-size: 12px; }\n      .ticketbody .index-body .date > div {\n        text-align: center;\n        -ms-flex: 4;\n            flex: 4; }\n        .ticketbody .index-body .date > div span {\n          display: inline-block;\n          font-weight: 900;\n          font-size: 18px;\n          color: #1e1e1e; }\n      .ticketbody .index-body .date > p {\n        -ms-flex: 3;\n            flex: 3;\n        text-align: right; }\n        .ticketbody .index-body .date > p > span {\n          text-align: right;\n          font-size: 18px;\n          color: #329be8;\n          height: 60px;\n          line-height: 60px;\n          float: left;\n          margin-left: 20%; }\n        .ticketbody .index-body .date > p > i {\n          color: #c8c8c8;\n          height: 60px;\n          line-height: 60px; }\n    .ticketbody .index-body .btn {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      color: #fff;\n      font-size: 18px;\n      border-radius: 5px;\n      background-color: #329be8;\n      margin-top: 20px; }\n    .ticketbody .index-body .search-record {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      margin-top: 20px; }\n      .ticketbody .index-body .search-record .list {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .ticketbody .index-body .search-record .list > span {\n          -ms-flex: 4;\n              flex: 4;\n          color: #c8c8c8;\n          display: inline-block;\n          height: 25px;\n          line-height: 25px; }\n          .ticketbody .index-body .search-record .list > span:first-child {\n            text-align: right; }\n          .ticketbody .index-body .search-record .list > span:last-child {\n            text-align: left; }\n        .ticketbody .index-body .search-record .list > div {\n          -ms-flex: 2;\n              flex: 2;\n          text-align: center; }\n          .ticketbody .index-body .search-record .list > div > span {\n            width: 14px;\n            height: 2px;\n            line-height: 12px;\n            background-color: #c8c8c8;\n            display: inline-block;\n            border-radius: 2px;\n            position: relative; }\n            .ticketbody .index-body .search-record .list > div > span::after {\n              content: \"\";\n              position: absolute;\n              bottom: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(45deg);\n              background-color: #c8c8c8; }\n            .ticketbody .index-body .search-record .list > div > span::before {\n              content: \"\";\n              position: absolute;\n              top: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(-45deg);\n              background-color: #c8c8c8; }\n      .ticketbody .index-body .search-record p {\n        text-align: center;\n        color: #c8c8c8;\n        height: 25px;\n        line-height: 25px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 100%;\n  overflow-x: auto;\n  background-color: #fff;\n  position: absolute;\n  top: 12px;\n  left: 0; }\n  .ticketbody .slider {\n    height: 160px;\n    padding-left: 25px;\n    overflow-x: scroll;\n    white-space: nowrap; }\n    .ticketbody .slider > a {\n      display: inline-block;\n      margin-right: 5px; }\n    .ticketbody .slider .slider-item {\n      width: 250px;\n      height: 150px;\n      border-radius: 10px; }\n  .ticketbody .index-body {\n    width: 100%;\n    padding: 0 25px;\n    padding-bottom: 50px; }\n    .ticketbody .index-body .location {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .location > span {\n        -ms-flex: 4;\n            flex: 4;\n        font-size: 20px;\n        font-weight: 900;\n        color: #1e1e1e;\n        display: inline-block; }\n        .ticketbody .index-body .location > span:last-child {\n          text-align: right; }\n      .ticketbody .index-body .location > div {\n        -ms-flex: 2;\n            flex: 2;\n        text-align: center; }\n        .ticketbody .index-body .location > div span {\n          width: 32px;\n          height: 4px;\n          line-height: 12px;\n          background-color: #329be8;\n          display: inline-block;\n          border-radius: 2px;\n          position: relative; }\n          .ticketbody .index-body .location > div span::after {\n            content: \"\";\n            position: absolute;\n            bottom: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(45deg);\n            background-color: #329be8; }\n          .ticketbody .index-body .location > div span::before {\n            content: \"\";\n            position: absolute;\n            top: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(-45deg);\n            background-color: #329be8; }\n    .ticketbody .index-body .date {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .date > span {\n        -ms-flex: 3;\n            flex: 3;\n        display: inline-block;\n        color: #c8c8c8;\n        font-size: 12px; }\n      .ticketbody .index-body .date > div {\n        text-align: center;\n        -ms-flex: 4;\n            flex: 4; }\n        .ticketbody .index-body .date > div span {\n          display: inline-block;\n          font-weight: 900;\n          font-size: 18px;\n          color: #1e1e1e; }\n      .ticketbody .index-body .date > p {\n        -ms-flex: 3;\n            flex: 3;\n        text-align: right; }\n        .ticketbody .index-body .date > p > span {\n          text-align: right;\n          font-size: 18px;\n          color: #329be8;\n          height: 60px;\n          line-height: 60px;\n          float: left;\n          margin-left: 20%; }\n        .ticketbody .index-body .date > p > i {\n          color: #c8c8c8;\n          height: 60px;\n          line-height: 60px; }\n    .ticketbody .index-body .btn {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      color: #fff;\n      font-size: 18px;\n      border-radius: 5px;\n      background-color: #329be8;\n      margin-top: 20px; }\n    .ticketbody .index-body .search-record {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      margin-top: 20px; }\n      .ticketbody .index-body .search-record .list {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .ticketbody .index-body .search-record .list > span {\n          -ms-flex: 4;\n              flex: 4;\n          color: #c8c8c8;\n          display: inline-block;\n          height: 25px;\n          line-height: 25px; }\n          .ticketbody .index-body .search-record .list > span:first-child {\n            text-align: right; }\n          .ticketbody .index-body .search-record .list > span:last-child {\n            text-align: left; }\n        .ticketbody .index-body .search-record .list > div {\n          -ms-flex: 2;\n              flex: 2;\n          text-align: center; }\n          .ticketbody .index-body .search-record .list > div > span {\n            width: 14px;\n            height: 2px;\n            line-height: 12px;\n            background-color: #c8c8c8;\n            display: inline-block;\n            border-radius: 2px;\n            position: relative; }\n            .ticketbody .index-body .search-record .list > div > span::after {\n              content: \"\";\n              position: absolute;\n              bottom: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(45deg);\n              background-color: #c8c8c8; }\n            .ticketbody .index-body .search-record .list > div > span::before {\n              content: \"\";\n              position: absolute;\n              top: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(-45deg);\n              background-color: #c8c8c8; }\n      .ticketbody .index-body .search-record p {\n        text-align: center;\n        color: #c8c8c8;\n        height: 25px;\n        line-height: 25px; }\n", ""]);
 
 	// exports
 
@@ -31405,7 +31405,18 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "ticketbody"
-	  }, [_vm._m(0), " ", _vm._h('div', {
+	  }, [_vm._h('div', {
+	    staticClass: "slider"
+	  }, [_vm._h('router-link', {
+	    attrs: {
+	      "to": "/rebate/15250485"
+	    }
+	  }, [_vm._h('img', {
+	    staticClass: "slider-item",
+	    attrs: {
+	      "src": __webpack_require__(146)
+	    }
+	  })]), " ", " ", " ", _vm._m(0)]), " ", _vm._h('div', {
 	    staticClass: "index-body"
 	  }, [_vm._h('div', {
 	    staticClass: "location"
@@ -31454,18 +31465,7 @@
 	    }
 	  }, ["清除历史搜索"])]) : _vm._e()])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('div', {
-	    staticClass: "slider"
-	  }, [_vm._h('a', {
-	    attrs: {
-	      "href": "#"
-	    }
-	  }, [_vm._h('img', {
-	    staticClass: "slider-item",
-	    attrs: {
-	      "src": __webpack_require__(146)
-	    }
-	  })]), " ", _vm._h('a', {
+	  return _vm._h('a', {
 	    attrs: {
 	      "href": "#"
 	    }
@@ -31474,7 +31474,7 @@
 	    attrs: {
 	      "src": __webpack_require__(147)
 	    }
-	  })])])
+	  })])
 	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;
@@ -36524,7 +36524,7 @@
 				firstTimeWeek: 0, //当前一号星期
 
 				secondTimeText: "",
-				secondTimeDay: 0,
+				secondTimeDay: 0, //最远的一天
 				secondTimeMaxDay: 0, //当前月份最大日期数
 				secondTimeWeek: 0, //星期
 
@@ -36540,7 +36540,8 @@
 				white: [0, 1, 2, 3, 4, 5, 6], //方便循环用
 				day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
 				selected: "15_one",
-				side: "top" };
+				side: "top", //或者bottom
+				twoMonth: [] };
 		},
 		created: function created() {
 			// let nowDate = new Date();
@@ -36572,7 +36573,7 @@
 		methods: {
 			initTime: function initTime() {
 				var date = new Date();
-				var date_second = new Date(date.getTime() + 30 * 24 * 60 * 60 * 1000); //可以买最远一个月之内的票
+				var date_second = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); //可以买最远十天之内的票
 
 				var year = date.getYear() - 100 + 2000;
 				var month = date.getMonth() + 1;
@@ -36583,7 +36584,7 @@
 				this.firstTimeWeek = date.getDay(); //获取当前月一号星期
 				this.firstTimeMaxDay = this.getMaxMonth(year, month); //获取当前一号星期
 
-				//第二个月
+				//第二个月(可能没有第二个月)
 				this.secondTimeDay = date_second.getDate();
 				date_second.setDate(1); //设置为当前月1号
 				this.secondTimeWeek = date_second.getDay();
@@ -36610,6 +36611,24 @@
 						month: month + 1
 					};
 				}
+				this.showMonth();
+			},
+
+			/** 判断第二个月是否有需要显示的日期 */
+			showMonth: function showMonth() {
+				var date_second = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); //设置下个月
+				date_second.setDate(1); //设置为下个月1号
+				var time = Date.now() + 10 * 24 * 60 * 60 * 1000; //可以购买最远的日期(十天)
+
+				// 下个月可以选择的日期都推送到twoMonth中
+				for (var i = 0; i <= 31; i++) {
+					var se = date_second.getTime() + i * 24 * 60 * 60 * 1000;
+
+					if (se <= time) {
+						this.twoMonth.push(i);
+					}
+				}
+				console.log(this.twoMonth);
 			},
 
 			/** 获取当前月最大天数 */
@@ -36643,6 +36662,7 @@
 						//这个月
 						this.side = "top";
 					}
+					this.yes(); //点击直接确定然后返回
 				}
 			},
 			yes: function yes() {
@@ -36708,7 +36728,7 @@
 	  }), " ", _vm._l((_vm.day), function(item, index) {
 	    return (item <= _vm.firstTimeMaxDay) ? _vm._h('div', [_vm._h('span', {
 	      class: {
-	        gray: item <= _vm.firstTimeMaxDay, active: item >= _vm.firstTimeDay, selected: _vm.selected === item + '_one'
+	        gray: item <= _vm.firstTimeMaxDay, active: item >= _vm.firstTimeDay && item <= _vm.firstTimeDay + 10, selected: _vm.selected === item + '_one'
 	      },
 	      on: {
 	        "click": function($event) {
@@ -36731,7 +36751,7 @@
 	  }), " ", _vm._l((_vm.day), function(item, index) {
 	    return (item <= _vm.secondTimeMaxDay) ? _vm._h('div', [_vm._h('span', {
 	      class: {
-	        gray: item <= _vm.secondTimeMaxDay, active: item < _vm.secondTimeDay, selected: _vm.selected === item + '_two'
+	        gray: item <= _vm.secondTimeMaxDay, active: item < _vm.secondTimeDay && _vm.twoMonth.indexOf(index) > -1, selected: _vm.selected === item + '_two'
 	      },
 	      on: {
 	        "click": function($event) {

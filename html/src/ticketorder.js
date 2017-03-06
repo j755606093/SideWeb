@@ -154,7 +154,6 @@ const Vue_Order = new Vue({
 			this.getOrderInfo(this.getQueryString("orderid"));
 			let id = this.getQueryString("orderid");
 			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//生成二维码链接
-			this.selected = 2;
 		}
 		this.moreOrderData();
 		this.moreOrderData1();
@@ -360,6 +359,14 @@ const Vue_Order = new Vue({
 					if (this.selected === 1) {
 						// 只有未支付的情况下才倒计时
 						this.CountDown();
+					}
+					if(this.OrderDetail.IsPay===1&&this.OrderDetail.Status===1){
+						// 已支付未确认,不显示验证码
+						this.selected = 1;
+					}
+					else{
+						// 显示验证码
+						this.selected = 2;
 					}
 				})
 		},
