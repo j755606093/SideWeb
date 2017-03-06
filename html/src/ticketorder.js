@@ -433,6 +433,12 @@ const Vue_Order = new Vue({
 			}, 1000)
 		},
 		goback() {
+			if(this.getQueryString("orderid")){
+				// 如果有这个说明是其他页面跳转过来的
+				// 就直接跳转回去
+				history.Go(-1);
+				return;
+			}
 			if (this.refundPassenger) {
 				this.refundPassenger = false;
 				return;

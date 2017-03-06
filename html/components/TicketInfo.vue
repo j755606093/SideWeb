@@ -1,5 +1,5 @@
-<template type="x/template" id="ticketinfo">
-	<div class="rebate">
+<template type="x/template">
+	<div class="rebatepage">
 		<div class="rebate-header">
 			<img src="../picture/rebate_img.png">
 		</div>
@@ -23,7 +23,7 @@
 
 <style lang="sass">
 @import "../sass/utils.scss";
-.rebate{
+.rebatepage{
 	width:100%;
 	padding:0 10px;
 	padding-top:60px;

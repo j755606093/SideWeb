@@ -364,6 +364,10 @@ input {
           position: relative;
           text-align: left;
           margin-left: 20px; }
+          @media (max-width: 320px) {
+            .ticket-info .right .top .name p {
+              font-size: 16px;
+              margin-left: 10px; } }
           .ticket-info .right .top .name p:first-child::after {
             content: "";
             width: 10px;
@@ -406,6 +410,11 @@ input {
             font-size: 12px;
             color: #323232;
             padding-top: 8px; }
+          @media (max-width: 320px) {
+            .ticket-info .right .top .info p:first-child {
+              font-size: 16px; }
+            .ticket-info .right .top .info p:last-child {
+              padding-top: 6px; } }
         @media (max-width: 320px) {
           .ticket-info .right .top .info p {
             margin-right: 15px; } }
@@ -817,7 +826,6 @@ input {
             background-color: #329be8;
             content: ""; }
       .action-page .action .action-use .rebate {
-        height: 200px;
         display: -ms-flexbox;
         display: flex;
         margin-top: 10px;
@@ -830,7 +838,6 @@ input {
         -ms-flex-align: center;
             align-items: center;
         width: 50%;
-        padding-bottom: 0;
         float: left; }
         .action-page .action .action-use .rebate .top {
           width: 100%;
@@ -841,7 +848,6 @@ input {
         .action-page .action .action-use .rebate .bottom {
           border: 0.5px solid #c8c8c8;
           border-top: none;
-          height: 100px;
           width: 100%;
           display: -ms-flexbox;
           display: flex;

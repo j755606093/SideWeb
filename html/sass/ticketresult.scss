@@ -213,6 +213,10 @@
               position: relative;
               text-align: left;
               margin-left: 20px;
+              @include responsive("iphone5"){
+                font-size: 16px;
+                margin-left: 10px;
+              }
               // @include text_nowrap;
               &:first-child::after {
                 content: "";
@@ -258,6 +262,15 @@
                 font-size: 12px;
                 color: rgb(50, 50, 50);
                 padding-top: 8px;
+              }
+              @include responsive("iphone5"){
+                margin-right: 15px;
+                &:first-child {
+                  font-size: 16px;
+                }
+                &:last-child {
+                  padding-top: 6px;
+                }
               }
             }
             @include responsive('iphone5'){

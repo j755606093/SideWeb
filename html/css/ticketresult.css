@@ -281,6 +281,10 @@ input {
               position: relative;
               text-align: left;
               margin-left: 20px; }
+              @media (max-width: 320px) {
+                .result .result-list .list .right .top .name p {
+                  font-size: 16px;
+                  margin-left: 10px; } }
               .result .result-list .list .right .top .name p:first-child::after {
                 content: "";
                 width: 10px;
@@ -323,6 +327,13 @@ input {
                 font-size: 12px;
                 color: #323232;
                 padding-top: 8px; }
+              @media (max-width: 320px) {
+                .result .result-list .list .right .top .info p {
+                  margin-right: 15px; }
+                  .result .result-list .list .right .top .info p:first-child {
+                    font-size: 16px; }
+                  .result .result-list .list .right .top .info p:last-child {
+                    padding-top: 6px; } }
             @media (max-width: 320px) {
               .result .result-list .list .right .top .info p {
                 margin-right: 15px; } }
