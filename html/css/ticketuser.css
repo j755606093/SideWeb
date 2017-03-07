@@ -530,8 +530,8 @@ header {
       -ms-flex-pack: center;
           justify-content: center; }
       .ticket-info .right .top .name {
-        -ms-flex: 7;
-            flex: 7;
+        -ms-flex: 6;
+            flex: 6;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -572,8 +572,8 @@ header {
           .ticket-info .right .top .name p {
             font-size: 16px; } }
       .ticket-info .right .top .info {
-        -ms-flex: 3;
-            flex: 3;
+        -ms-flex: 4;
+            flex: 4;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
