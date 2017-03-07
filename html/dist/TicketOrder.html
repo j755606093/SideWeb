@@ -290,7 +290,7 @@
             <p>订单已经失效,无法操作</p>
           </template>
           <!-- 未支付 -->
-          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1" @click="payMoney">
+          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
             <span @click="cancelOrder">取消订单</span>
             <button @click="payMoney">立即支付</button>
           </template>

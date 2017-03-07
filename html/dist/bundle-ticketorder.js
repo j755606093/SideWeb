@@ -292,7 +292,7 @@
 						}
 						if (empty) {
 							// 是否是刷新数据
-							_this.OrderList1 = result.Data;
+							_this.OrderList = result.Data;
 						} else {
 							for (var i = 0; i < result.Data.length; i++) {
 								_this.OrderList.push(result.Data[i]);
@@ -355,7 +355,6 @@
 								_this2.OrderList1.push(result.Data[i]);
 							}
 						}
-
 						_this2.noDataShow1 = false; //显示订单
 					} else {
 						_this2.noMoreData1 = true;
@@ -468,8 +467,6 @@
 								_this4.moreOrderData(true);
 								_this4.moreOrderData1(true);
 							});
-
-							// MessageBox('提示', '支付成功');
 						}
 					});
 				});

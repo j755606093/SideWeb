@@ -228,7 +228,7 @@ const Vue_Order = new Vue({
 						}
 						if (empty) {
 							// 是否是刷新数据
-							this.OrderList1 = result.Data;
+							this.OrderList = result.Data;
 						} else {
 							for (let i = 0; i < result.Data.length; i++) {
 								this.OrderList.push(result.Data[i]);
@@ -289,8 +289,6 @@ const Vue_Order = new Vue({
 								this.OrderList1.push(result.Data[i]);
 							}
 						}
-
-
 						this.noDataShow1 = false; //显示订单
 					} else {
 						this.noMoreData1 = true;
@@ -400,8 +398,6 @@ const Vue_Order = new Vue({
 								this.moreOrderData(true);
 								this.moreOrderData1(true);
 							});
-
-							// MessageBox('提示', '支付成功');
 						}
 					});
 				})

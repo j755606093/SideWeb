@@ -825,6 +825,8 @@ input {
             height: 4px;
             background-color: #329be8;
             content: ""; }
+      .action-page .action .action-use > .page {
+        padding: 0 10px; }
       .action-page .action .action-use .rebate {
         display: -ms-flexbox;
         display: flex;
