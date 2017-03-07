@@ -67,9 +67,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
-	__webpack_require__(34);
+	__webpack_require__(33);
 
-	var _ = __webpack_require__(36);
+	var _ = __webpack_require__(35);
 
 	// import VueInputCode from 'vue-input-code';
 	// Vue.component('vue-input-code', VueInputCode);
@@ -23394,14 +23394,13 @@
 	};
 
 /***/ },
-/* 33 */,
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(35);
+	var content = __webpack_require__(34);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(11)(content, {});
@@ -23421,7 +23420,7 @@
 	}
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(10)();
@@ -23435,7 +23434,7 @@
 
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
