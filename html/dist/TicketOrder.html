@@ -57,14 +57,15 @@
                   </div>
                   <div class="info">
                     <p v-text="'¥'+item.TotalPrice"></p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已失效</p>
+                    <p style="color:#f35252">{{item.StatusExplain}}</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待出票</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p> -->
                     <!-- 订票失败(显示退款成功) -->
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p> -->
                   </div>
                 </div>
                 <div class="bottom">
@@ -118,14 +119,15 @@
                   </div>
                   <div class="info">
                     <p v-text="'¥'+item.TotalPrice"></p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已失效</p>
+                    <p style="color:#f35252">{{item.StatusExplain}}</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待出票</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p> -->
                     <!-- 订票失败(显示退款成功) -->
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p> -->
                   </div>
                 </div>
                 <div class="bottom">
@@ -141,33 +143,33 @@
     </div>
     <div v-show="orderVisible">
       <!-- 已申请退款 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
+      <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
         <div class="page-header">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
-          <span style="font-size:16px;" class="center">已失效</span>
+          <span style="font-size:16px;" class="center">已过期</span>
         </div>
-      </template>
+      </template> -->
       <!-- 已验票 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
+      <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
         <div class="page-header">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
           <span style="font-size:16px;" class="center">已验票</span>
         </div>
-      </template>
+      </template> -->
       <!-- 订票失败 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
+      <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
         <div class="page-header">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
           <span style="font-size:16px;" class="center">订票失败,已退款</span>
         </div>
-      </template>
+      </template> -->
       <!-- 已失效 -->
-      <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
+      <!-- <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
         <div class="page-header">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
-          <span style="font-size:16px;" class="center">订单已经失效</span>
+          <span style="font-size:16px;" class="center">订单已经过期</span>
         </div>
-      </template>
+      </template> -->
       <!-- 未支付 -->
       <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
         <div class="page-header">
@@ -175,19 +177,25 @@
           <span style="font-size:16px;" class="center">请在半小时内支付订单 {{countdownTime}}</span>
         </div>
       </template>
+      <template v-else>
+        <div class="page-header">
+          <div @click="goback"><img src="../picture/back_icon.png"></div>
+          <span style="font-size:16px;" class="center">{{OrderDetail.StatusExplain}}</span>
+        </div>
+      </template>
       <!-- 已支付未确认 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
+      <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
         <div class="page-header">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
           <span style="font-size:16px;" class="center">工作人员将尽快为你出票</span>
         </div>
-      </template>
+      </template> -->
       <!-- 已支付已确认 -->
-      <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
+      <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
         <div class="page-header active">
           <div @click="goback"><img src="../picture/back_icon.png"></div>
           <span class="center">上车请准备好验证二维码</span>
-      </template>
+      </template> -->
       </div>
       <!-- 查看订单信息 -->
       <mt-popup v-model="orderVisible" position="right" class="action-page">
@@ -282,36 +290,40 @@
         </div>
         <div class="right">
           <!-- 已申请退款 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
-            <p>已失效</p>
-          </template>
+          <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===0">
+            <p>已过期</p>
+          </template> -->
           <!-- 已经失效 -->
-          <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
-            <p>订单已经失效,无法操作</p>
-          </template>
+          <!-- <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===0">
+            <p>订单已经过期,无法操作</p>
+          </template> -->
           <!-- 未支付 -->
           <template v-if="OrderDetail.IsPay===0 && OrderDetail.Status===1">
             <span @click="cancelOrder">取消订单</span>
             <button @click="payMoney">立即支付</button>
           </template>
+          <template v-else>
+            <span @click="showSelectPassenger">申请退款</span>
+            <button style="background-color: #c8c8c8;color:#fff;">{{OrderDetail.StatusExplain}}</button>
+          </template>
           <!-- 已支付待确认 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
+          <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===1">
             <span @click="showSelectPassenger">申请退款</span>
             <button style="background-color: #c8c8c8;color:#fff;">待出票</button>
-          </template>
+          </template> -->
           <!-- 已支付已确认 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
+          <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===2">
             <span @click="showSelectPassenger">申请退款</span>
             <button style="background-color: #c8c8c8;color:#fff;">待使用</button>
-          </template>
+          </template> -->
           <!-- 订票失败 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
-            <p>订单已经失效</p>
-          </template>
+          <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===3">
+            <p>出票失败,已退款</p>
+          </template> -->
           <!-- 已经验票 -->
-          <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
+          <!-- <template v-if="OrderDetail.IsPay===1 && OrderDetail.Status===4">
             <p>感谢您的支持</p>
-          </template>
+          </template> -->
         </div>
       </div>
       <!-- 退款人选择 -->

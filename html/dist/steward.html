@@ -110,6 +110,7 @@
     </div>
     <!-- 没有订单号参数的页面 -->
     <div v-else v-show="ready" style="display: none;" class="codebody">
+      <!-- <vue-input-code :code="codeArray"></vue-input-code> -->
       <div class="input">
         <div :class="{'input-code':true,first:inputCodeNum===0,last:inputCodeNum===5}" :style="{left:left}">
           <input id="inputcode" type="tel" @keyup="inputCodeEvent($event)" v-model="inputCode" autofocus maxlength="1" @keyup.delete="backInput" name="input1">
@@ -144,8 +145,8 @@
     </div>
     <footer v-if="haveId">
       <div class="price">
-        <span>订单单价</span>
-        <span>¥150</span>
+        <span>订单总价</span>
+        <span>¥{{OrderDetail.TotalPrice}}</span>
       </div>
       <div class="yes">
         <button @click="yes">确定乘客</button>

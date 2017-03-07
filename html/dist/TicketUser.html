@@ -64,8 +64,8 @@
         <div class="order-lists-header">
           <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部订单</span>
           <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">待支付</span>
-          <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">已支付</span>
-          <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
+          <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">待使用</span>
+          <!-- <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span> -->
         </div>
         <!-- 订单 -->
         <div v-show="!refundVisible" id="refund-lists" class="refund-lists">
@@ -94,14 +94,15 @@
                   </div>
                   <div class="info">
                     <p v-text="'¥'+item.TotalPrice"></p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已失效</p>
+                    <p style="color:#f35252">{{item.StatusExplain}}</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===0">已申请退款(全部)</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===0">已失效</p>
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待出票</p>
-                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
+                    <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p> -->
                     <!-- 订票失败(显示退款成功) -->
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
+                    <!-- <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p> -->
                   </div>
                 </div>
                 <div class="bottom">
@@ -261,7 +262,7 @@
         <div class="info-man">
           <div class="info-man-line info">
             <span class="left">ID:</span>
-            <span class="gray" v-text="UserInfo.Alias_Id"></span>
+            <span class="gray" style="flex:0.7;" v-text="UserInfo.Alias_Id"></span>
           </div>
           <div @click="edit(0)" class="info-man-line info">
             <span class="left">昵称:</span>

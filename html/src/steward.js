@@ -7,6 +7,8 @@ const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import Utils from "../Utils/utils";
+// import VueInputCode from 'vue-input-code';
+// Vue.component('vue-input-code', VueInputCode);
 
 const debug = (function() {
 	let debug = false;
@@ -27,9 +29,9 @@ if (typeof window.jgkj !== "undefined") {
 	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 }
-if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-}
+// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
+// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
@@ -401,6 +403,7 @@ const Vue_User = new Vue({
 	},
 	components: {
 		"mt-popup": Popup,
+		// "vue-input-code":VueInputCode
 	}
 });
 

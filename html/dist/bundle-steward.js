@@ -67,10 +67,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
-	__webpack_require__(33);
+	__webpack_require__(34);
 
-	var _ = __webpack_require__(35);
+	var _ = __webpack_require__(36);
 
+	// import VueInputCode from 'vue-input-code';
+	// Vue.component('vue-input-code', VueInputCode);
 
 	var debug = function () {
 		var debug = false;
@@ -91,9 +93,9 @@
 		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 		// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 	}
-	if (typeof window.webkit !== "undefined" && typeof window.webkit.messageHandlers !== "undefined" && typeof window.webkit.messageHandlers.getUserInfo !== "undefined") {
-		window.webkit.messageHandlers.getUserInfo.postMessage(['getData']);
-	}
+	// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
+	// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+	// }
 
 	/**
 	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
@@ -23392,13 +23394,14 @@
 	};
 
 /***/ },
-/* 33 */
+/* 33 */,
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(34);
+	var content = __webpack_require__(35);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(11)(content, {});
@@ -23418,7 +23421,7 @@
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(10)();
@@ -23432,7 +23435,7 @@
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3

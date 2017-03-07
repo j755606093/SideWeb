@@ -30,9 +30,9 @@ if (typeof window.jgkj !== "undefined") {
 	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 }
 /** 如果是ios的app */
-if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-}
+// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
+// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie

@@ -26,9 +26,9 @@ if (typeof window.jgkj !== "undefined") {
 	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
 	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
 }
-if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-}
+// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
+// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
+// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
@@ -533,12 +533,18 @@ const Vue_User = new Vue({
 		},
 		/** 显示增加乘客 */
 		showAddPassenger(index) {
+			this.passengerName = "";
+			this.passengerPhone = "";
 			this.showpassengeraction = 1;
 			this.ChaPassengerIndex = index; //记录修改的位置
 		},
 		/** 显示改变乘客 */
 		showChaPassenger(index) {
 			this.showpassengeraction = 2;
+			if(this.ChaPassengerIndex===index){
+				this.ChaPassengerIndex = -1;
+				return;
+			}
 			this.ChaPassengerIndex = index; //记录修改的位置
 
 			this.passengerName = this.Passenger[index].Name;
