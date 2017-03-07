@@ -21,6 +21,7 @@
 | getAllApi | null | Object | 获取所有的可用api. |
 | loadPageUrl | url | null | 打开一个网页 |
 | openNativePage | androidPageName,iosPageName,json | null | 打开一个原生页面 |
+| getUserInfo | null | null | 获取用户信息 |
 
 `使用:jgkj.loadPageUrl(url);`
 
