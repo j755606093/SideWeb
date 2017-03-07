@@ -31417,9 +31417,18 @@
 	  }, [_vm._h('img', {
 	    staticClass: "slider-item",
 	    attrs: {
-	      "src": __webpack_require__(146)
+	      "src": '../picture/slider1.png?' + Date.now()
 	    }
-	  })]), " ", " ", " ", _vm._m(0)]), " ", _vm._h('div', {
+	  })]), " ", " ", " ", _vm._h('a', {
+	    attrs: {
+	      "href": "#"
+	    }
+	  }, [_vm._h('img', {
+	    staticClass: "slider-item",
+	    attrs: {
+	      "src": '../picture/slider2.png?' + Date.now()
+	    }
+	  })])]), " ", _vm._h('div', {
 	    staticClass: "index-body"
 	  }, [_vm._h('div', {
 	    staticClass: "location"
@@ -31427,7 +31436,7 @@
 	    on: {
 	      "click": _vm.GoStartCity
 	    }
-	  }, [_vm._s(_vm.getStartCity)]), " ", _vm._m(1), " ", _vm._h('span', {
+	  }, [_vm._s(_vm.getStartCity)]), " ", _vm._m(0), " ", _vm._h('span', {
 	    on: {
 	      "click": _vm.GoEndCity
 	    }
@@ -31461,24 +31470,13 @@
 	      }
 	    }, [_vm._h('span', {
 	      staticClass: "first"
-	    }, [_vm._s(list.startCity)]), " ", _vm._m(2, true), " ", _vm._h('span', [_vm._s(list.endCity)])])
+	    }, [_vm._s(list.startCity)]), " ", _vm._m(1, true), " ", _vm._h('span', [_vm._s(list.endCity)])])
 	  }), " ", _vm._h('p', {
 	    on: {
 	      "click": _vm.clearLocalStore
 	    }
 	  }, ["清除历史搜索"])]) : _vm._e()])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('a', {
-	    attrs: {
-	      "href": "#"
-	    }
-	  }, [_vm._h('img', {
-	    staticClass: "slider-item",
-	    attrs: {
-	      "src": __webpack_require__(147)
-	    }
-	  })])
-	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
@@ -31491,18 +31489,8 @@
 	}
 
 /***/ },
-/* 146 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "slider1.png?57e82bb57d86d2f370bc9d6a8c922d08";
-
-/***/ },
-/* 147 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "slider2.png?766682c01685e6b014a51bbd7d336fb7";
-
-/***/ },
+/* 146 */,
+/* 147 */,
 /* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
