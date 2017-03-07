@@ -62,8 +62,8 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待出票</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
-                    <!-- 订票失败(显示退款中) -->
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款中</p>
+                    <!-- 订票失败(显示退款成功) -->
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>
                 </div>
@@ -123,8 +123,8 @@
                     <p style="color:#f35252" v-if="item.IsPay===0&&item.Status===1">待支付</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===1">待出票</p>
                     <p style="color:#329be8;" v-if="item.IsPay===1&&item.Status===2">待使用</p>
-                    <!-- 订票失败(显示退款中) -->
-                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款中</p>
+                    <!-- 订票失败(显示退款成功) -->
+                    <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===3">退款成功</p>
                     <p style="color:#f35252" v-if="item.IsPay===1&&item.Status===4">已验票</p>
                   </div>
                 </div>
