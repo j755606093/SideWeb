@@ -410,7 +410,7 @@
 							// continue; //这个乘客已经退款就不显示
 						}
 						if (item.Status === -1) {
-							item.Name = item.Name + "(审核中)";
+							item.Name = item.Name + "(退款审核中)";
 							_this3.passenger.push(item);
 						}
 						if (item.Status === -2) {
