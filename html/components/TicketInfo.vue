@@ -15,8 +15,8 @@
 			</section>
 		</div>
 		<div class="get-rebate">
-			<button @click="getRebate" v-if="rebateInfo.IsReceive===0">领取</button>
-			<button class="isuse" v-else>你已经领取过</button>
+			<button @click="getRebate">领取</button>
+			<!-- <button class="isuse" v-else>你已经领取过</button> -->
 		</div>
 	</div>
 </template>
@@ -158,7 +158,7 @@ export default {
 			return Utils.formatDate(data);
 		},
 		fetchRebate(){
-			// /api/Rebate/GetQrcodeRebate?id=15250485
+			// /api/Rebate/GetCodeInfo?code=lvdzju
 			this.$store.dispatch("getRebateInfo",this.rebateid).then(result=>{
 				Indicator.close();
 				if(result.Data){

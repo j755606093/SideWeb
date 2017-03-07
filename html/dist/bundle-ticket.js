@@ -11786,7 +11786,7 @@
 			    state = _ref27.state;
 
 			// /api/Order/Cancel
-			return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id=" + data, {
+			return fetch(state.serverUrl + "/api/Rebate/GetCodeInfo?code=" + data, {
 				method: "GET",
 				headers: {
 					'Content-Type': 'application/json',
@@ -11805,15 +11805,12 @@
 			    state = _ref28.state;
 
 			// /api/Order/Cancel
-			return fetch(state.serverUrl + "/api/Rebate/ReceiveQrcodeRebate", {
-				method: "POST",
+			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
+				method: "GET",
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: state.Authorization
-				},
-				body: (0, _stringify2.default)({
-					Id: data
-				})
+				}
 			}).then(checkStatus).then(function (result) {
 				return result.json();
 			}).then(function (result) {
@@ -30505,7 +30502,7 @@
 			fetchRebate: function fetchRebate() {
 				var _this = this;
 
-				// /api/Rebate/GetQrcodeRebate?id=15250485
+				// /api/Rebate/GetCodeInfo?code=lvdzju
 				this.$store.dispatch("getRebateInfo", this.rebateid).then(function (result) {
 					_mintUi.Indicator.close();
 					if (result.Data) {
@@ -30562,13 +30559,11 @@
 	    staticClass: "time"
 	  }, [_vm._s(_vm.rebateInfo.EndDate)])])]), " ", _vm._h('div', {
 	    staticClass: "get-rebate"
-	  }, [(_vm.rebateInfo.IsReceive === 0) ? _vm._h('button', {
+	  }, [_vm._h('button', {
 	    on: {
 	      "click": _vm.getRebate
 	    }
-	  }, ["领取"]) : _vm._h('button', {
-	    staticClass: "isuse"
-	  }, ["你已经领取过"]), " "])])
+	  }, ["领取"]), " "])])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "rebate-header"
@@ -31417,7 +31412,7 @@
 	    staticClass: "slider"
 	  }, [_vm._h('router-link', {
 	    attrs: {
-	      "to": "/rebate/15250485"
+	      "to": "/rebate/lvdzju"
 	    }
 	  }, [_vm._h('img', {
 	    staticClass: "slider-item",
@@ -31499,13 +31494,13 @@
 /* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "slider1.png?0db16bbb8e83aaab538d0696fca94af5";
+	module.exports = __webpack_require__.p + "slider1.png?57e82bb57d86d2f370bc9d6a8c922d08";
 
 /***/ },
 /* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "slider2.png?6f39877c9d2425d8472928f6191a430c";
+	module.exports = __webpack_require__.p + "slider2.png?766682c01685e6b014a51bbd7d336fb7";
 
 /***/ },
 /* 148 */
