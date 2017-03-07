@@ -389,7 +389,7 @@ const Vue_Order = new Vue({
 				.then(result => {
 					Indicator.close();
 					let paydata = result.Data;
-					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function(r) {
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, (r)=> {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							this.myModal = true;
 							MessageBox.alert('支付成功').then(action => {

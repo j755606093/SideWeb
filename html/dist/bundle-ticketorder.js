@@ -443,6 +443,8 @@
 				});
 			},
 			payMoney: function payMoney() {
+				var _this4 = this;
+
 				this.loading();
 				var id = this.OrderDetail.Id;
 				fetch(config.serverUrl + "/api/Order/PayOrder", {
@@ -457,10 +459,8 @@
 					_mintUi.Indicator.close();
 					var paydata = result.Data;
 					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, function (r) {
-						var _this4 = this;
-
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
-							this.myModal = true;
+							_this4.myModal = true;
 							_mintUi.MessageBox.alert('支付成功').then(function (action) {
 								_this4.myModal = false;
 								_this4.goback();
