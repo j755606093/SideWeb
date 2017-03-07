@@ -125,7 +125,7 @@ const state = {
 }
 
 // getters,获取数据
-// 调用方法()
+// 调用方法如下
 // this.$store.getters.getIsFirst
 const getters = {
 	getIsFirst: state => state.isFirst,
@@ -173,27 +173,35 @@ let getData = (url, callback) => {
 // 调用方法:
 // this.$store.dispatch("cancelOrder",数据)
 const actions = {
+	/** 更改头部的标题 */
 	ChangeHeader({ commit, state }, data) {
 		commit(types.CHANGE_HEADER, data)
 	},
+	/** 是否显示头部 */
 	SetShowHeader({ commit, state }, data) {
 		commit("SET_SHOWHEADER", data)
 	},
+	/** 是否显示头部返回按钮 */
 	SetShowBack({ commit, state }, data) {
 		commit("SET_SHOWBACK", data)
 	},
+	/** 改变首页tabbar显示状态 */
 	ChangeFooter({ commit, state }, data) {
 		commit("CHANGE_FOOTER", data)
 	},
+	/** 在出发点页面选择了一个出发点 */
 	setStartCity({ commit, state }, data) {
 		commit(types.SET_STARTCITY, data)
 	},
+	/** 在到达点页面选择了一个到达点 */
 	setEndCity({ commit, state }, data) {
 		commit(types.SET_ENDCITY, data)
 	},
+	/** 设置开始时间 */
 	setStartDate({ commit, state }, data) {
 		commit(types.SET_STARTDATE, data)
 	},
+	/** 获取默认的出发点(没有到达点) */
 	getCityDefault({ commit, state }) {
 		return fetch(state.serverUrl + "/api/Transport/Index")
 			.then(checkStatus)
@@ -219,6 +227,7 @@ const actions = {
 				return data;
 			})
 	},
+	/** 获取出发点 */
 	setStartCityList({ commit, state }) {
 		// if(state.startCityList){
 		// 	// 列表空
@@ -232,6 +241,7 @@ const actions = {
 				return result.Data;
 			})
 	},
+	/** 获取后台可选的到达点 */
 	setEndCityList({ commit, state }) {
 		// if(state.endCityList){
 		// 	// 列表空
@@ -247,6 +257,7 @@ const actions = {
 				return result.Data;
 			})
 	},
+	/** 获取搜索结果 */
 	setResultList({ commit, state }) {
 		return fetch(state.serverUrl + "/api/Transport/GetLines", {
 				method: 'POST',
@@ -274,9 +285,11 @@ const actions = {
 				}
 			})
 	},
+	/** 设置汽车信息 */
 	setBusInfo({ commit, state }, data) {
 		commit(types.SET_BUSINFO, data);
 	},
+	/** 创建订单(函数名可能会有误解) */
 	payMoney({ commit, state }, data) {
 		// 微信付款
 		return fetch(state.serverUrl + "/api/Order/Create", {
@@ -301,6 +314,7 @@ const actions = {
 			.then(checkStatus)
 			.then(result => result.json())
 	},
+	/** 获取下单后的微信支付数据用来支付 */
 	showWXpay({ commit, state }, data) {
 		// 微信付款
 		return fetch(state.serverUrl + "/api/Order/PayOrder", {
@@ -316,6 +330,7 @@ const actions = {
 			.then(checkStatus)
 			.then(result => result.json())
 	},
+	/** 获取定位位置后获取后台返回的最近上车点 */
 	setLocationResult({ commit, state }, data) {
 		return fetch(state.serverUrl + "/api/Transport/NearestStartPoints", {
 				method: 'POST',
@@ -340,12 +355,15 @@ const actions = {
 				}
 			})
 	},
+	/** 设置定位点 */
 	setHaveLocation({ commit, state }, data) {
 		commit(types.SET_HAVELOCATION, data);
 	},
+	/** 设置第一次启动 */
 	setisFirst({ commit, state }, data) {
 		commit("SET_ISFIRST", data);
 	},
+	/** 进入首页就获取关于乘客和优惠券和购票人的信息 */
 	getPassenger({ commit, state }) {
 		return fetch(state.serverUrl + "/api/Transport/UserRelevant", {
 				headers: {
@@ -358,11 +376,6 @@ const actions = {
 			.then(result => {
 				// console.log(result)
 				let data = result.Data;
-				// _.map(data,item=>{
-				// 	if(data.Mobile!==''){
-				// 		item.isGetTicket = false;
-				// 	}
-				// })
 				commit("SET_PASSENGER", data.Passengers);
 				commit("SET_REBATES", data.Rebates);
 				commit("SET_NOPAY", data.NoPay);
@@ -370,9 +383,11 @@ const actions = {
 				return data;
 			})
 	},
+	/** 设置乘客信息 */
 	setPassenger({ commit, state }, data) {
 		commit("SET_PASSENGER", data);
 	},
+	/** 增加乘客信息 */
 	addPassenger({ commit, state }, data) {
 		return fetch(state.serverUrl + "/api/Passenger/Add", {
 				method: 'POST',
@@ -392,6 +407,7 @@ const actions = {
 				return result;
 			})
 	},
+	/** 更新乘客信息 */
 	updatePassenger({ commit, state }, data) {
 		return fetch(state.serverUrl + "/api/Passenger/Modify", {
 				method: 'POST',
@@ -412,9 +428,11 @@ const actions = {
 				return result;
 			})
 	},
+	/** 设置手机号 */
 	setPhone({ commit, state }, data) {
 		commit("SET_PHONE", data);
 	},
+	/** 检查优惠券状态,是否可用 */
 	checkRebateStatus({ commit, state }, data) {
 		return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
 				headers: {
@@ -428,6 +446,7 @@ const actions = {
 				return result;
 			})
 	},
+	/** 删除乘客,但是目前没有使用到此api */
 	deletePassenger({ commit, state }, data) {
 		return fetch(state.serverUrl + "/api/Passenger/Delete/" + data, {
 				headers: {
@@ -441,6 +460,7 @@ const actions = {
 				return result;
 			})
 	},
+	/** 使用微信jssdk的时候需要从服务器获取配置,但是目前已经弃用这种方式,因为不需要那么多功能 */
 	getWXconfig({ commit, state }) {
 		return fetch(state.serverUrl + "/api/WxBasis/GetJsPackage/", {
 				method: "POST",
@@ -458,6 +478,7 @@ const actions = {
 				return result;
 			})
 	},
+	/** 下单后取消订单 */
 	cancelOrder({ commit, state }, data) {
 		// /api/Order/Cancel
 		return fetch(state.serverUrl + "/api/Order/Cancel", {

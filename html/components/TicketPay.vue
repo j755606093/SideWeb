@@ -621,10 +621,10 @@ export default {
 		},
 		/** 吊起微信支付 */
 		payMoney(){
-				Indicator.open({
-					text: '加载中...',
-					spinnerType: 'double-bounce'
-				});
+			Indicator.open({
+				text: '加载中...',
+				spinnerType: 'double-bounce'
+			});
 			let id = this.serverPayInfo.OrderInfo.Id;
 			this.$store.dispatch("showWXpay",id)
 				.then(data=>{

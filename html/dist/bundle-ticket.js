@@ -11337,7 +11337,7 @@
 	};
 
 	// getters,获取数据
-	// 调用方法()
+	// 调用方法如下
 	// this.$store.getters.getIsFirst
 	var getters = {
 		getIsFirst: function getIsFirst(state) {
@@ -11409,48 +11409,63 @@
 	// 调用方法:
 	// this.$store.dispatch("cancelOrder",数据)
 	var actions = {
+		/** 更改头部的标题 */
 		ChangeHeader: function ChangeHeader(_ref, data) {
 			var commit = _ref.commit,
 			    state = _ref.state;
 
 			commit(_Type2.default.CHANGE_HEADER, data);
 		},
+
+		/** 是否显示头部 */
 		SetShowHeader: function SetShowHeader(_ref2, data) {
 			var commit = _ref2.commit,
 			    state = _ref2.state;
 
 			commit("SET_SHOWHEADER", data);
 		},
+
+		/** 是否显示头部返回按钮 */
 		SetShowBack: function SetShowBack(_ref3, data) {
 			var commit = _ref3.commit,
 			    state = _ref3.state;
 
 			commit("SET_SHOWBACK", data);
 		},
+
+		/** 改变首页tabbar显示状态 */
 		ChangeFooter: function ChangeFooter(_ref4, data) {
 			var commit = _ref4.commit,
 			    state = _ref4.state;
 
 			commit("CHANGE_FOOTER", data);
 		},
+
+		/** 在出发点页面选择了一个出发点 */
 		setStartCity: function setStartCity(_ref5, data) {
 			var commit = _ref5.commit,
 			    state = _ref5.state;
 
 			commit(_Type2.default.SET_STARTCITY, data);
 		},
+
+		/** 在到达点页面选择了一个到达点 */
 		setEndCity: function setEndCity(_ref6, data) {
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
 			commit(_Type2.default.SET_ENDCITY, data);
 		},
+
+		/** 设置开始时间 */
 		setStartDate: function setStartDate(_ref7, data) {
 			var commit = _ref7.commit,
 			    state = _ref7.state;
 
 			commit(_Type2.default.SET_STARTDATE, data);
 		},
+
+		/** 获取默认的出发点(没有到达点) */
 		getCityDefault: function getCityDefault(_ref8) {
 			var commit = _ref8.commit,
 			    state = _ref8.state;
@@ -11478,6 +11493,8 @@
 				return data;
 			});
 		},
+
+		/** 获取出发点 */
 		setStartCityList: function setStartCityList(_ref9) {
 			var commit = _ref9.commit,
 			    state = _ref9.state;
@@ -11495,6 +11512,8 @@
 				return result.Data;
 			});
 		},
+
+		/** 获取后台可选的到达点 */
 		setEndCityList: function setEndCityList(_ref10) {
 			var commit = _ref10.commit,
 			    state = _ref10.state;
@@ -11512,6 +11531,8 @@
 				return result.Data;
 			});
 		},
+
+		/** 获取搜索结果 */
 		setResultList: function setResultList(_ref11) {
 			var commit = _ref11.commit,
 			    state = _ref11.state;
@@ -11541,12 +11562,16 @@
 				}
 			});
 		},
+
+		/** 设置汽车信息 */
 		setBusInfo: function setBusInfo(_ref12, data) {
 			var commit = _ref12.commit,
 			    state = _ref12.state;
 
 			commit(_Type2.default.SET_BUSINFO, data);
 		},
+
+		/** 创建订单(函数名可能会有误解) */
 		payMoney: function payMoney(_ref13, data) {
 			var commit = _ref13.commit,
 			    state = _ref13.state;
@@ -11574,6 +11599,8 @@
 				return result.json();
 			});
 		},
+
+		/** 获取下单后的微信支付数据用来支付 */
 		showWXpay: function showWXpay(_ref14, data) {
 			var commit = _ref14.commit,
 			    state = _ref14.state;
@@ -11592,6 +11619,8 @@
 				return result.json();
 			});
 		},
+
+		/** 获取定位位置后获取后台返回的最近上车点 */
 		setLocationResult: function setLocationResult(_ref15, data) {
 			var commit = _ref15.commit,
 			    state = _ref15.state;
@@ -11618,18 +11647,24 @@
 				}
 			});
 		},
+
+		/** 设置定位点 */
 		setHaveLocation: function setHaveLocation(_ref16, data) {
 			var commit = _ref16.commit,
 			    state = _ref16.state;
 
 			commit(_Type2.default.SET_HAVELOCATION, data);
 		},
+
+		/** 设置第一次启动 */
 		setisFirst: function setisFirst(_ref17, data) {
 			var commit = _ref17.commit,
 			    state = _ref17.state;
 
 			commit("SET_ISFIRST", data);
 		},
+
+		/** 进入首页就获取关于乘客和优惠券和购票人的信息 */
 		getPassenger: function getPassenger(_ref18) {
 			var commit = _ref18.commit,
 			    state = _ref18.state;
@@ -11644,11 +11679,6 @@
 			}).then(function (result) {
 				// console.log(result)
 				var data = result.Data;
-				// _.map(data,item=>{
-				// 	if(data.Mobile!==''){
-				// 		item.isGetTicket = false;
-				// 	}
-				// })
 				commit("SET_PASSENGER", data.Passengers);
 				commit("SET_REBATES", data.Rebates);
 				commit("SET_NOPAY", data.NoPay);
@@ -11656,12 +11686,16 @@
 				return data;
 			});
 		},
+
+		/** 设置乘客信息 */
 		setPassenger: function setPassenger(_ref19, data) {
 			var commit = _ref19.commit,
 			    state = _ref19.state;
 
 			commit("SET_PASSENGER", data);
 		},
+
+		/** 增加乘客信息 */
 		addPassenger: function addPassenger(_ref20, data) {
 			var commit = _ref20.commit,
 			    state = _ref20.state;
@@ -11682,6 +11716,8 @@
 				return result;
 			});
 		},
+
+		/** 更新乘客信息 */
 		updatePassenger: function updatePassenger(_ref21, data) {
 			var commit = _ref21.commit,
 			    state = _ref21.state;
@@ -11704,12 +11740,16 @@
 				return result;
 			});
 		},
+
+		/** 设置手机号 */
 		setPhone: function setPhone(_ref22, data) {
 			var commit = _ref22.commit,
 			    state = _ref22.state;
 
 			commit("SET_PHONE", data);
 		},
+
+		/** 检查优惠券状态,是否可用 */
 		checkRebateStatus: function checkRebateStatus(_ref23, data) {
 			var commit = _ref23.commit,
 			    state = _ref23.state;
@@ -11725,6 +11765,8 @@
 				return result;
 			});
 		},
+
+		/** 删除乘客,但是目前没有使用到此api */
 		deletePassenger: function deletePassenger(_ref24, data) {
 			var commit = _ref24.commit,
 			    state = _ref24.state;
@@ -11740,6 +11782,8 @@
 				return result;
 			});
 		},
+
+		/** 使用微信jssdk的时候需要从服务器获取配置,但是目前已经弃用这种方式,因为不需要那么多功能 */
 		getWXconfig: function getWXconfig(_ref25) {
 			var commit = _ref25.commit,
 			    state = _ref25.state;
@@ -11759,6 +11803,8 @@
 				return result;
 			});
 		},
+
+		/** 下单后取消订单 */
 		cancelOrder: function cancelOrder(_ref26, data) {
 			var commit = _ref26.commit,
 			    state = _ref26.state;
@@ -32362,6 +32408,10 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -33171,7 +33221,7 @@
 	        }
 	      }, [_vm._s(list.Point.length > 3 ? list.Point.slice(0, 3) + '..' : list.Point)])])
 	    })])])
-	  })]), " ", _vm._h('mt-popup', {
+	  })]), " ", " ", _vm._h('mt-popup', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",

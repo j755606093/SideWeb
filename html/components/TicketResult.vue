@@ -1,7 +1,10 @@
 <template  id="ticketresult">
 	<div class="result">
+
+		<!-- 筛选按钮显示 -->
 		<div class="filter" @click="showFilter"><span>筛选</span></div>
-		<!-- 时间显示 -->
+
+		<!-- 时间和选择时间显示 -->
 		<div class="date-control">
 			<span :style="{color:isCanLast}" @click="gobackdate">前一天</span>
 			<span v-text="startDate.date+' '+startDate.week"></span>
@@ -56,7 +59,8 @@
 					</div>
 				</div>
 			</transition-group>
-
+			
+			<!-- 筛选页面层 -->
 			<mt-popup
 			  v-model="popupVisible"
 			  class="popup-visible"
