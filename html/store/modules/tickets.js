@@ -500,6 +500,22 @@ const actions = {
 	/** 获取二维码的优惠信息 */
 	getQRRebateInfo({ commit, state }, data) {
 		// /api/Order/Cancel
+		return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id="+data, {
+				method: "GET",
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
+				},
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				return result;
+			})
+	},
+	/** 领取二维码优惠 */
+	getQRRebate({ commit, state }, data) {
+		// /api/Order/Cancel
 		return fetch(state.serverUrl + "/api/Rebate/ReceiveQrcodeRebate", {
 				method: "POST",
 				headers: {

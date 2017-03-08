@@ -11840,6 +11840,25 @@
 			    state = _ref27.state;
 
 			// /api/Order/Cancel
+			return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id=" + data, {
+				method: "GET",
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: state.Authorization
+				}
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				return result;
+			});
+		},
+
+		/** 领取二维码优惠 */
+		getQRRebate: function getQRRebate(_ref28, data) {
+			var commit = _ref28.commit,
+			    state = _ref28.state;
+
+			// /api/Order/Cancel
 			return fetch(state.serverUrl + "/api/Rebate/ReceiveQrcodeRebate", {
 				method: "POST",
 				headers: {
@@ -11857,9 +11876,9 @@
 		},
 
 		/** 获取优惠券信息 */
-		getRebateInfo: function getRebateInfo(_ref28, data) {
-			var commit = _ref28.commit,
-			    state = _ref28.state;
+		getRebateInfo: function getRebateInfo(_ref29, data) {
+			var commit = _ref29.commit,
+			    state = _ref29.state;
 
 			// /api/Order/Cancel
 			return fetch(state.serverUrl + "/api/Rebate/GetCodeInfo?code=" + data, {
@@ -11876,9 +11895,9 @@
 		},
 
 		/** 领取优惠券 */
-		getRebate: function getRebate(_ref29, data) {
-			var commit = _ref29.commit,
-			    state = _ref29.state;
+		getRebate: function getRebate(_ref30, data) {
+			var commit = _ref30.commit,
+			    state = _ref30.state;
 
 			// /api/Order/Cancel
 			return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
@@ -37219,7 +37238,7 @@
 				var _this2 = this;
 
 				this.loading();
-				this.$store.dispatch("getRebate", this.rebateid).then(function (result) {
+				this.$store.dispatch("getQRRebate", this.rebateid).then(function (result) {
 					_mintUi.Indicator.close();
 					if (result.Code === 200) {
 						_this2.toast("领取成功,返回首页立即使用吧!");

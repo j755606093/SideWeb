@@ -175,7 +175,7 @@ export default {
 		/** 领取优惠券 */
 		getRebate(){
 			this.loading();
-			this.$store.dispatch("getRebate",this.rebateid).then(result=>{
+			this.$store.dispatch("getQRRebate",this.rebateid).then(result=>{
 				Indicator.close();
 				if(result.Code===200){
 					this.toast("领取成功,返回首页立即使用吧!");
