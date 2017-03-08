@@ -303,7 +303,7 @@
             <button @click="payMoney">立即支付</button>
           </template>
           <template v-else>
-            <span @click="showSelectPassenger">申请退款</span>
+            <span v-if="OrderDetail.IsPay===1 && (OrderDetail.Status===1 || OrderDetail.Status===2)" @click="showSelectPassenger">申请退款</span>
             <button style="background-color: #c8c8c8;color:#fff;">{{OrderDetail.StatusExplain}}</button>
           </template>
           <!-- 已支付待确认 -->
