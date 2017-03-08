@@ -64,15 +64,18 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
+	var _vueInputCode = __webpack_require__(33);
+
+	var _vueInputCode2 = _interopRequireDefault(_vueInputCode);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Vue.use(require('vue-resource'));//引用ajax库
-	__webpack_require__(33);
+	__webpack_require__(40);
 
-	var _ = __webpack_require__(35);
+	var _ = __webpack_require__(42);
 
-	// import VueInputCode from 'vue-input-code';
-	// Vue.component('vue-input-code', VueInputCode);
+	// Vue.component('VueInputCode', VueInputCode);
 
 	var debug = function () {
 		var debug = false;
@@ -483,7 +486,8 @@
 			}
 		},
 		components: {
-			"mt-popup": _mintUi.Popup
+			"mt-popup": _mintUi.Popup,
+			"vue-input-code": _vueInputCode2.default
 		}
 	});
 
@@ -23397,10 +23401,543 @@
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+
+	/* styles */
+	__webpack_require__(34)
+
+	/* script */
+	__vue_exports__ = __webpack_require__(38)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(39)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/node_modules/vue-input-code/inputcode.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-69f63438", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-69f63438", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] inputcode.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(34);
+	var content = __webpack_require__(35);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(37)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-69f63438!./../vue-loader/lib/selector.js?type=styles&index=0!./inputcode.vue", function() {
+				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-69f63438!./../vue-loader/lib/selector.js?type=styles&index=0!./inputcode.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(10)();
+	// imports
+	exports.i(__webpack_require__(36), "");
+
+	// module
+	exports.push([module.id, "\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(10)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#vue_input_code {\n  width: 100%; }\n  #vue_input_code .input {\n    width: 100%;\n    position: relative;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center; }\n    #vue_input_code .input > div {\n      width: 16.6666%;\n      height: 40px;\n      line-height: 40px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white; }\n      #vue_input_code .input > div:nth-child(n) {\n        border-right: none; }\n      #vue_input_code .input > div:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n      #vue_input_code .input > div input {\n        font-size: 20px;\n        width: 90%;\n        color: #323232;\n        text-align: center;\n        outline: none;\n        border: none; }\n    #vue_input_code .input .input-code {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 16.66667%;\n      border-right: 1px solid #333333 !important;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      -ms-flex-pack: center;\n          justify-content: center;\n      -ms-flex-align: center;\n          align-items: center; }\n    #vue_input_code .input > span {\n      width: 16.66667%;\n      height: 40px;\n      line-height: 40px;\n      border: 1px solid #323232;\n      font-weight: 900;\n      background-color: white;\n      display: inline-block;\n      text-align: center;\n      font-size: 20px; }\n      #vue_input_code .input > span:nth-child(n) {\n        border-right: none; }\n      #vue_input_code .input > span:first-child {\n        border-top-left-radius: 5px;\n        border-bottom-left-radius: 5px; }\n      #vue_input_code .input > span:last-child {\n        border-top-right-radius: 5px;\n        border-bottom-right-radius: 5px;\n        border-right: 1px solid #323232; }\n    #vue_input_code .input > span.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n    #vue_input_code .input .input-code.first {\n      border-top-left-radius: 5px;\n      border-bottom-left-radius: 5px; }\n    #vue_input_code .input .input-code.last {\n      border-top-right-radius: 5px;\n      border-bottom-right-radius: 5px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+
+		if (media) {
+			styleElement.setAttribute("media", media);
+		}
+
+		if (sourceMap) {
+			// https://developer.chrome.com/devtools/docs/javascript-debugging
+			// this makes source maps inside style tags work properly in Chrome
+			css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		props: {
+			code: {
+				type: Array,
+				default: function _default() {
+					return [];
+				},
+				required: true
+			}, //接收一个可以改变父组件的数据(引用类型才可以修改,所以这里是引用类型)
+			success: {
+				type: Function,
+				default: function _default() {}
+			}, //用户输入完成后的回调
+			getinput: {
+				type: Function,
+				default: function _default() {}
+			} },
+		data: function data() {
+			return {
+				inputCodeNum: 0, //输入框的位置
+				left: "0", //输入框距离左边的距离
+				inputCode: "", //单次输入的值
+				codeArray: [] };
+		},
+		created: function created() {},
+
+		filters: {},
+		watch: {},
+		computed: {
+			codeString: function codeString() {
+				var data = "";
+				this.codeArray.map(function (item) {
+					data += item;
+				});
+				return data;
+			}
+		},
+		methods: {
+			/** 删除输入 */
+			deleteInput: function deleteInput() {
+				if (this.inputCodeNum === 5) {
+					this.inputCodeNum--;
+					var n = 16.6666 * this.inputCodeNum;
+					this.left = n + "%";
+					this.codeArray.pop();
+					this.code.pop();
+					return;
+				}
+				if (this.inputCodeNum !== 0) {
+					this.inputCodeNum--;
+					this.codeArray.pop();
+					this.code.pop();
+					var _n = 16.5666 * this.inputCodeNum;
+					this.left = _n + "%";
+				}
+			},
+
+			/** 每次输入的事件 */
+			inputCodeEvent: function inputCodeEvent(event) {
+				if (event.keyCode >= 48 && event.keyCode <= 57) {
+					var code = event.target.value; //code
+
+					if (this.inputCodeNum < 5) {
+						this.codeArray.push(code);
+						this.code.push(code);
+						this.inputCode = "";
+						this.inputCodeNum++;
+						var n = 16.5666 * this.inputCodeNum;
+						this.left = n + "%";
+
+						this.getinput(this.codeString); //回调
+					} else {
+						if (this.inputCodeNum === 5) {
+							this.inputCodeNum++;
+							this.codeArray.push(code);
+							this.code.push(code);
+							this.success(this.codeString); //输入完成后回调
+							this.getinput(this.codeString); //回调
+						}
+					}
+				}
+			}
+		}
+	};
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    attrs: {
+	      "id": "vue_input_code"
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "input"
+	  }, [_vm._h('div', {
+	    class: {
+	      'input-code': true, first: _vm.inputCodeNum === 0, last: _vm.inputCodeNum === 6
+	    },
+	    style: ({
+	      left: _vm.left
+	    })
+	  }, [_vm._h('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.inputCode),
+	      expression: "inputCode"
+	    }],
+	    attrs: {
+	      "type": "tel",
+	      "autofocus": "",
+	      "maxlength": "1",
+	      "name": "input1"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.inputCode)
+	    },
+	    on: {
+	      "keyup": [function($event) {
+	        _vm.inputCodeEvent($event)
+	      }, function($event) {
+	        if ($event.keyCode !== 8 && $event.keyCode !== 46) { return; }
+	        _vm.deleteInput($event)
+	      }],
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.inputCode = $event.target.value
+	      }
+	    }
+	  })]), " ", _vm._h('span', {
+	    staticClass: "first",
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 0 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[0] ? _vm.codeArray[0] : '')
+	    }
+	  }), " ", _vm._h('span', {
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 1 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[1] ? _vm.codeArray[1] : '')
+	    }
+	  }), " ", _vm._h('span', {
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 2 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[2] ? _vm.codeArray[2] : '')
+	    }
+	  }), " ", _vm._h('span', {
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 3 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[3] ? _vm.codeArray[3] : '')
+	    }
+	  }), " ", _vm._h('span', {
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 4 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[4] ? _vm.codeArray[4] : '')
+	    }
+	  }), " ", _vm._h('span', {
+	    staticClass: "last",
+	    style: ({
+	      'border-left': _vm.inputCodeNum === 5 ? 'none' : ''
+	    }),
+	    domProps: {
+	      "textContent": _vm._s(_vm.codeArray[5] ? _vm.codeArray[5] : '')
+	    }
+	  })])])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-69f63438", module.exports)
+	  }
+	}
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(41);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(11)(content, {});
@@ -23420,7 +23957,7 @@
 	}
 
 /***/ },
-/* 34 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(10)();
@@ -23434,7 +23971,7 @@
 
 
 /***/ },
-/* 35 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3

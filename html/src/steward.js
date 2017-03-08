@@ -7,8 +7,8 @@ const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import Utils from "../Utils/utils";
-// import VueInputCode from 'vue-input-code';
-// Vue.component('vue-input-code', VueInputCode);
+import VueInputCode from 'vue-input-code';
+// Vue.component('VueInputCode', VueInputCode);
 
 const debug = (function() {
 	let debug = false;
@@ -403,7 +403,7 @@ const Vue_User = new Vue({
 	},
 	components: {
 		"mt-popup": Popup,
-		// "vue-input-code":VueInputCode
+		"vue-input-code":VueInputCode
 	}
 });
 

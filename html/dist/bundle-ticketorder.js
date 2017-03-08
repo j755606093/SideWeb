@@ -338,7 +338,7 @@
 					body: (0, _stringify2.default)({
 						Index: this.index1,
 						Size: 10,
-						Type: 2
+						Type: 3
 					})
 				}).then(checkStatus).then(function (result) {
 					return result.json();

@@ -271,7 +271,7 @@ const Vue_Order = new Vue({
 					body: JSON.stringify({
 						Index: this.index1,
 						Size: 10,
-						Type: 2
+						Type: 3
 					})
 				})
 				.then(checkStatus)
