@@ -117,7 +117,7 @@
 		
 		<!-- 下单支付头部 -->
 		<div v-if="payInfoPopupVisible" style="background-color: #f35252" class="page-header">
-			<div @click="goback"><img src="../picture/back_icon.png"></div>
+			<div @click="payMoneygoback"><img src="../picture/back_icon.png"></div>
 			<span style="font-size:16px;" class="center">请在半小时内支付订单 {{countdownTime}}</span>
 		</div>
 		
@@ -151,16 +151,6 @@
 			  				</div>
 			  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
 			  			</div>
-			  			<!-- 修改乘客 -->
-			  			<div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
-								<div class="line change">
-									<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-								</div>
-								<div class="line change">
-									<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-									<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
-								</div>
-							</div>
 		  			</div>
 		  		</div>
 		  		<p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -172,20 +162,47 @@
 								<div class="img"><img src="../picture/add_passenger.png"></div>
 							</div>
 						</div>
-		  			<!-- 添加乘客 -->
-		  			<div v-show="showpassengeraction===1" class="add-action animated zoomIn">
-							<div class="line">
-								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-							</div>
-							<div class="line">
-								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-								<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
-							</div>
-						</div>
 		  		</div>
 		  	</div>
 		  </slot>
 		</mt-popup>
+		
+		<!-- 修改乘客 -->
+		<mt-popup
+			v-model="showpassengeraction===2"
+		  position="right"
+		  class="action-page">
+			<slot>
+  			<div style="padding:10px" class="add-action animated zoomIn">
+					<div class="line change">
+						<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+					</div>
+					<div class="line change">
+						<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+						<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
+					</div>
+				</div>
+			</slot>
+		</mt-popup>
+
+		<!-- 添加乘客 -->
+		<mt-popup
+			v-model="showpassengeraction===1"
+		  position="right"
+		  class="action-page">
+			<slot>
+  			<div class="add-action animated zoomIn">
+					<div class="line">
+						<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+					</div>
+					<div class="line">
+						<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+						<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
+					</div>
+				</div>
+			</slot>
+		</mt-popup>
+
 		<!-- 选择乘车点 -->
 		<mt-popup
 		  v-model="stationPopupVisible"
@@ -606,6 +623,14 @@ export default {
 		},
 		goback(){
 			this.$router.go(-1);
+		},
+		/** 下单页返回提示 */
+		payMoneygoback(){
+			MessageBox.confirm('订单未支付,你确定回退?').then(action => {
+				this.$router.go(-1);
+			}).catch(error=>{
+				// 用户点击取消
+			})
 		},
 		/**
 		 * 提示框里的信息

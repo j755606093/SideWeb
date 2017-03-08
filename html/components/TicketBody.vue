@@ -24,9 +24,9 @@
 			</div>
 			<!-- 选择时间 -->
 			<div class="date">
-				<span>出发时间</span>
+				<span @click="openDate">出发时间</span>
 				<div @click="openDate"><span>{{showTime}}</span></div>
-				<p>
+				<p @click="openDate">
 					<span v-text="showWeek"></span>
 					<i class="fa fa-angle-right"></i>
 				</p>

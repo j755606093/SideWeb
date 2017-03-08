@@ -608,7 +608,7 @@ input {
     border-radius: 10px;
     background-color: #fff;
     margin-top: 10px;
-    margin-bottom: 20px; }
+    margin-bottom: 5px; }
     .action-select-car .line-car .left {
       display: -ms-flexbox;
       display: flex;
