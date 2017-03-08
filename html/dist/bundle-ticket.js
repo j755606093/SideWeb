@@ -33998,6 +33998,15 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	/** 下单和支付页面 */
 	/** 此页面包含众多子页面,包括乘客界面,上车点页面,优惠券页面,每个页面包含众多逻辑,相互独立几乎没有干扰,因为开始构建时候UI没有确定,导致可能有部分注释是遗留代码,或者是死代码,几乎没有用处..或者部分代码数据格式改变,并未标明. */
@@ -35767,7 +35776,72 @@
 	      attrs: {
 	        "src": __webpack_require__(198)
 	      }
-	    })])])])
+	    })])]), " ", " ", _vm._h('div', {
+	      directives: [{
+	        name: "show",
+	        rawName: "v-show",
+	        value: (_vm.showpassengeraction === 2 && index === _vm.ChaPassengerIndex),
+	        expression: "showpassengeraction===2&&index===ChaPassengerIndex"
+	      }],
+	      staticClass: "add-action animated zoomIn",
+	      staticStyle: {
+	        "padding": "10px"
+	      }
+	    }, [_vm._h('div', {
+	      staticClass: "line change"
+	    }, [_vm._h('input', {
+	      directives: [{
+	        name: "model",
+	        rawName: "v-model",
+	        value: (_vm.fareName),
+	        expression: "fareName"
+	      }],
+	      attrs: {
+	        "type": "text",
+	        "name": "fareName",
+	        "placeholder": "请填写真实姓名"
+	      },
+	      domProps: {
+	        "value": _vm._s(_vm.fareName)
+	      },
+	      on: {
+	        "input": function($event) {
+	          if ($event.target.composing) { return; }
+	          _vm.fareName = $event.target.value
+	        }
+	      }
+	    })]), " ", _vm._h('div', {
+	      staticClass: "line change"
+	    }, [_vm._h('input', {
+	      directives: [{
+	        name: "model",
+	        rawName: "v-model",
+	        value: (_vm.certificate),
+	        expression: "certificate"
+	      }],
+	      attrs: {
+	        "type": "text",
+	        "name": "certificate",
+	        "placeholder": "选填(可用于联系)"
+	      },
+	      domProps: {
+	        "value": _vm._s(_vm.certificate)
+	      },
+	      on: {
+	        "input": function($event) {
+	          if ($event.target.composing) { return; }
+	          _vm.certificate = $event.target.value
+	        }
+	      }
+	    }), " ", _vm._h('button', {
+	      on: {
+	        "click": function($event) {
+	          _vm.append(1)
+	        }
+	      }
+	    }, [_vm._h('i', {
+	      staticClass: "fa fa-plus-circle"
+	    }), " 确定"])])])])
 	  })]), " ", _vm._h('p', {
 	    staticClass: "refresh"
 	  }, ["没有乘客信息?来下面添加吧~ "]), " ", _vm._h('div', {

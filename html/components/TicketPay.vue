@@ -151,6 +151,16 @@
 			  				</div>
 			  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
 			  			</div>
+			  			<!-- 修改乘客 -->
+			  			<div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
+								<div class="line change">
+									<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+								</div>
+								<div class="line change">
+									<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+									<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
+								</div>
+							</div>
 		  			</div>
 		  		</div>
 		  		<p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -176,7 +186,6 @@
 		  	</div>
 		  </slot>
 		</mt-popup>
-
 		<!-- 选择乘车点 -->
 		<mt-popup
 		  v-model="stationPopupVisible"
