@@ -71,7 +71,7 @@
 		<!-- 手机号 -->
 		<div class="write-info">
 			<div class="line">
-				<input type="tel" maxlength="11" v-model="payInfoData.contactPhone" name="phone" placeholder="手机号(用于联系)">
+				<input type="tel" maxlength="11" v-model="payInfoData.contactPhone" name="phone" placeholder="手机号(用于接收订票信息)">
 				<div class="img"><img src="../picture/phone.png"></div>
 			</div>
 		</div>
@@ -151,16 +151,6 @@
 			  				</div>
 			  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
 			  			</div>
-			  			<!-- 修改乘客 -->
-			  			<div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
-								<div class="line change">
-									<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-								</div>
-								<div class="line change">
-									<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-									<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
-								</div>
-							</div>
 		  			</div>
 		  		</div>
 		  		<p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -172,20 +162,53 @@
 								<div class="img"><img src="../picture/add_passenger.png"></div>
 							</div>
 						</div>
-		  			<!-- 添加乘客 -->
-		  			<div v-show="showpassengeraction===1" class="add-action animated zoomIn">
-							<div class="line">
-								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-							</div>
-							<div class="line">
-								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-								<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
-							</div>
-						</div>
 		  		</div>
 		  	</div>
 		  </slot>
 		</mt-popup>
+
+		<!-- 修改乘客信息 -->
+		<mt-popup
+			v-model="isShowChangePassenger"
+		  class="change-page">
+			<slot>
+				<div class="change-page-body">
+					<!-- 修改乘客信息 -->
+					<div style="padding:10px" v-show="showpassengeraction===2" class="add-action animated zoomIn">
+						<div class="line-header">
+							<span>修改乘客信息</span>
+						</div>
+						<div class="line change">
+							<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+						</div>
+						<div class="line change">
+							<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+						</div>
+						<div class="line-btn">
+							<button @click="hideChangePassenger" class="left-btn">取消</button>
+							<button class="right-btn" @click="append(1)">确定</button>
+						</div>
+					</div>
+					<!-- 增加乘客信息 -->
+					<div style="padding:10px" v-show="showpassengeraction===1" class="add-action animated zoomIn">
+						<div class="line-header">
+							<span>增加乘客信息</span>
+						</div>
+						<div class="line change">
+							<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+						</div>
+						<div class="line change">
+							<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+						</div>
+						<div class="line-btn">
+							<button @click="hideChangePassenger" class="left-btn">取消</button>
+							<button class="right-btn" @click="append(0)">确定</button>
+						</div>
+					</div>
+				</div>
+			</slot>
+		</mt-popup>
+
 		<!-- 选择乘车点 -->
 		<mt-popup
 		  v-model="stationPopupVisible"
@@ -459,6 +482,7 @@ export default {
 
 			passengerPopupVisible:false,//选择乘客
 			showpassengeraction:0,//1显示添加乘客信息,2显示修改乘客
+			isShowChangePassenger:false,//是否显示修改乘客信息弹窗
 
 			canuseIndex:1,//默认是显示可用优惠券
 			canuseOne:[],//可使用的优惠券列表
@@ -964,6 +988,7 @@ export default {
 								this.computeAll();
 								this.showpassengeraction = 0;
 								this.ChaPassengerIndex = 0;
+								this.hideChangePassenger();
 							}
 							else{
 								this.popupMessage(result.Message);
@@ -986,6 +1011,7 @@ export default {
 								this.computeAll();
 								this.ChaPassengerIndex = 0;
 								this.showpassengeraction = 0;
+								this.hideChangePassenger();
 							}
 							else{
 								this.popupMessage(result.Message);
@@ -1210,15 +1236,20 @@ export default {
 		showAddPassenger(){
 			this.fareName = "";
 			this.certificate = "";
-			this.showpassengeraction = this.showpassengeraction===1?0:1;
+			this.isShowChangePassenger = true;
+			this.showpassengeraction = 1;
 		},
 		/** 点击显示隐藏修改乘客 */
 		showChaPassenger(index){
 			this.showpassengeraction = 2;
 			this.ChaPassengerIndex = index;//记录修改的位置
+			this.isShowChangePassenger = true;
 
 			this.fareName = this.AllFare[index].Name;
 			this.certificate = this.AllFare[index].Mobile;
+		},
+		hideChangePassenger(){
+			this.isShowChangePassenger = false;
 		},
 		/** 设置上车点 */
 		setUpCar(index){

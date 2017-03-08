@@ -947,6 +947,57 @@ input {
         font-size: 16px;
         color: #329be8; }
 
+/** 修改修改乘客弹窗 */
+.change-page {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+  .change-page .change-page-body {
+    width: 80%;
+    background-color: #fff;
+    border-radius: 10px; }
+    .change-page .change-page-body .line-header {
+      height: 40px;
+      font-size: 20px;
+      text-align: center;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+    .change-page .change-page-body .line-btn {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+      .change-page .change-page-body .line-btn > button {
+        -ms-flex: 1;
+            flex: 1;
+        background-color: #fff;
+        border: none;
+        outline: none;
+        height: 40px;
+        font-size: 16px; }
+        .change-page .change-page-body .line-btn > button.left-btn {
+          color: #999; }
+        .change-page .change-page-body .line-btn > button.right-btn {
+          color: #0074D9; }
+
 /** 支付footer */
 .pay {
   height: 50px;
