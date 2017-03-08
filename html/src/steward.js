@@ -8,7 +8,7 @@ import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import Utils from "../Utils/utils";
 import VueInputCode from 'vue-input-code';
-// Vue.component('VueInputCode', VueInputCode);
+Vue.component('VueInputCode', VueInputCode);
 
 const debug = (function() {
 	let debug = false;
