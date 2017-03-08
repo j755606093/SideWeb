@@ -65,7 +65,7 @@
           <span @click="showOrderList()" :class="UseOrderType===0?'active':''">全部订单</span>
           <span @click="showOrderList(1)" :class="UseOrderType===1?'active':''">待支付</span>
           <span @click="showOrderList(2)" :class="UseOrderType===2?'active':''">已支付</span>
-          <!-- <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span> -->
+          <span @click="showOrderList(3)" :class="UseOrderType===3?'active':''">退款</span>
         </div>
         <!-- 订单 -->
         <div v-show="!refundVisible" id="refund-lists" class="refund-lists">
@@ -119,12 +119,12 @@
         <div v-show="refundVisible" id="refund-lists" class="refund-lists">
           <div class="lists">
             <!-- 列表 -->
-            <!-- <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?orderid='+item.OrderId"> -->
-            <a class="list" v-for="(item,index) in RefundOrder.RefundList" href="##">
+            <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?type=3&orderid='+item.OrderId">
+            <!-- <a class="list" v-for="(item,index) in RefundOrder.RefundList" href="##"> -->
               <div class="left">
                 <div class="left-line">
-                  <span class="left-span">退款号:</span>
-                  <span class="nowrap" v-text="item.Id"></span>
+                  <span class="left-span">订单号:</span>
+                  <span class="nowrap" v-text="item.OrderId"></span>
                 </div>
                 <div class="left-line">
                   <span class="left-span">退款理由:</span>
