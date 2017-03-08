@@ -162,45 +162,19 @@
 								<div class="img"><img src="../picture/add_passenger.png"></div>
 							</div>
 						</div>
+		  			<!-- 添加乘客 -->
+		  			<div v-show="showpassengeraction===1" class="add-action animated zoomIn">
+							<div class="line">
+								<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
+							</div>
+							<div class="line">
+								<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+								<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
+							</div>
+						</div>
 		  		</div>
 		  	</div>
 		  </slot>
-		</mt-popup>
-		
-		<!-- 修改乘客 -->
-		<mt-popup
-			v-model="showpassengeraction===2"
-		  position="right"
-		  class="action-page">
-			<slot>
-  			<div style="padding:10px" class="add-action animated zoomIn">
-					<div class="line change">
-						<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-					</div>
-					<div class="line change">
-						<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-						<button @click="append(1)"><i class="fa fa-plus-circle"></i> 确定</button>
-					</div>
-				</div>
-			</slot>
-		</mt-popup>
-
-		<!-- 添加乘客 -->
-		<mt-popup
-			v-model="showpassengeraction===1"
-		  position="right"
-		  class="action-page">
-			<slot>
-  			<div class="add-action animated zoomIn">
-					<div class="line">
-						<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
-					</div>
-					<div class="line">
-						<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
-						<button @click="append(0)"><i class="fa fa-plus-circle"></i> 添加</button>
-					</div>
-				</div>
-			</slot>
 		</mt-popup>
 
 		<!-- 选择乘车点 -->
