@@ -34945,10 +34945,12 @@
 
 			/** 选择优惠券 */
 			selectRebeat: function selectRebeat(index) {
-				var Id = this.canuseOne[index].Id;
-				var IsSingle = this.canuseOne[index].IsSingle;
+				var Id = this.canuseOne[index].Id; //获取点击的id
+				var IsSingle = this.canuseOne[index].IsSingle; //是否是单独使用
 
+				// 是否已经选择过这个优惠券
 				if (this.selectDiscount.indexOf(Id) > -1) {
+					//领取过就反选
 					var newdata = _.filter(this.selectDiscount, function (item) {
 						if (item === Id) {
 							return false;
@@ -34956,10 +34958,24 @@
 						return true;
 					});
 					this.selectDiscount = newdata;
+					// 按理说这里应该可以return的,但是我selectDiscount监控了数据,如果为空则默认负责最后一个,所以就去掉了这个return
+					// console.log(this.selectDiscount)
+					// return;
+				}
+
+				// 如果已选长度大于1
+				if (this.selectDiscount.length >= 1) {
+					if (IsSingle === 1) {
+						// 现在选择的是单选
+						this.selectDiscount = [Id];
+					} else {
+						this.selectDiscount.push(Id);
+					}
 				} else {
 					this.selectDiscount.push(Id);
 				}
 
+				// 判断其它可选的优惠券是否可以选择
 				_.map(this.optionsDiscount, function (item) {
 					if (IsSingle !== item.IsSingle) {
 						item.disabled = true;
@@ -35651,7 +35667,7 @@
 	    }
 	  }, [_vm._h('div', {
 	    staticClass: "line"
-	  }, [(_vm.optionsDiscount.length === 0) ? _vm._h('span', ["没有可用优惠券"]) : _vm._h('span', [_vm._s('优惠券(' + _vm.canuseOne.length + '张可用)')]), " ", " ", (_vm.discountMoney !== 0) ? _vm._h('span', {
+	  }, [(_vm.optionsDiscount.length === 0) ? _vm._h('span', ["没有可用优惠券"]) : _vm._h('span', [_vm._s('优惠券(' + _vm.canuseOne.length + '张可用),共' + _vm.optionsDiscount.length + '张')]), " ", " ", (_vm.discountMoney !== 0) ? _vm._h('span', {
 	    staticClass: "info",
 	    staticStyle: {
 	      "color": "#000"

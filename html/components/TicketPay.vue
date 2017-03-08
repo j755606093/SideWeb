@@ -87,7 +87,7 @@
 		<div @click="showPage(3)" class="write-info">
 			<div class="line">
 				<span v-if="optionsDiscount.length===0">没有可用优惠券</span>
-				<span v-else>{{'优惠券('+canuseOne.length+'张可用)'}}</span>
+				<span v-else>{{'优惠券('+canuseOne.length+'张可用),共'+optionsDiscount.length+'张'}}</span>
 				<span style="color:#000" v-if="discountMoney!==0" class="info">{{'- ¥'+discountMoney}}</span>
 				<span class="info" v-else>未使用</span>
 				<div class="img">
@@ -1278,10 +1278,12 @@ export default {
 		},
 		/** 选择优惠券 */
 		selectRebeat(index){
-			let Id = this.canuseOne[index].Id;
-			let IsSingle = this.canuseOne[index].IsSingle;
-
+			let Id = this.canuseOne[index].Id;//获取点击的id
+			let IsSingle = this.canuseOne[index].IsSingle;//是否是单独使用
+			
+			// 是否已经选择过这个优惠券
 			if(this.selectDiscount.indexOf(Id)>-1){
+				//领取过就反选
 				let newdata = _.filter(this.selectDiscount,(item)=>{
 					if(item===Id){
 						return false;
@@ -1289,11 +1291,26 @@ export default {
 					return true;
 				})
 				this.selectDiscount = newdata;
+				// 按理说这里应该可以return的,但是我selectDiscount监控了数据,如果为空则默认负责最后一个,所以就去掉了这个return
+				// console.log(this.selectDiscount)
+				// return;
+			}
+
+			// 如果已选长度大于1
+			if(this.selectDiscount.length>=1){
+				if(IsSingle===1){
+					// 现在选择的是单选
+					this.selectDiscount = [Id];
+				}
+				else{
+					this.selectDiscount.push(Id)
+				}
 			}
 			else{
 				this.selectDiscount.push(Id);
 			}
-
+			
+			// 判断其它可选的优惠券是否可以选择
 			_.map(this.optionsDiscount,(item)=>{
 				if(IsSingle !== item.IsSingle){
 					item.disabled = true;
@@ -1301,7 +1318,7 @@ export default {
 				else{
 					item.disabled = false;
 				}
-			})
+			});
 		},
 		/** 画图 */
 		canvas(){
