@@ -399,6 +399,13 @@
 				}).then(function (result) {
 					return result.json();
 				}).then(function (result) {
+					if (!result.Data) {
+						_this3.myModal = true;
+						_mintUi.MessageBox.alert(result.Message).then(function (action) {
+							_this3.myModal = false;
+						});
+						return;
+					}
 					_this3.OrderDetail = result.Data;
 					_this3.passenger = []; //显示乘客状态
 					_this3.optionsPassenger = []; //提供申请退款选择的用户名
@@ -440,6 +447,8 @@
 						// 其它情况,不显示验证码
 						_this3.showCode = false;
 					}
+				}).catch(function (error) {
+					console.log(error);
 				});
 			},
 			payMoney: function payMoney() {

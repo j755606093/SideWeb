@@ -330,6 +330,13 @@ const Vue_Order = new Vue({
 					})
 				}).then(result => result.json())
 				.then(result => {
+					if(!result.Data){
+						this.myModal = true;
+						MessageBox.alert(result.Message).then(action => {
+							this.myModal = false;
+						});
+						return;
+					}
 					this.OrderDetail = result.Data;
 					this.passenger = [];//显示乘客状态
 					this.optionsPassenger = [];//提供申请退款选择的用户名
@@ -372,6 +379,9 @@ const Vue_Order = new Vue({
 						// 其它情况,不显示验证码
 						this.showCode = false;
 					}
+				})
+				.catch(error=>{
+					console.log(error);
 				})
 		},
 		payMoney() {
