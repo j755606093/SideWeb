@@ -182,7 +182,7 @@
 							<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 						</div>
 						<div class="line change">
-							<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+							<input type="text" v-model="certificate" name="certificate" placeholder="手机号选填(可用于联系)">
 						</div>
 						<div class="line-btn">
 							<button @click="hideChangePassenger" class="left-btn">取消</button>
@@ -198,7 +198,7 @@
 							<input type="text" v-model="fareName" name="fareName" placeholder="请填写真实姓名">
 						</div>
 						<div class="line change">
-							<input type="text" v-model="certificate" name="certificate" placeholder="选填(可用于联系)">
+							<input type="text" v-model="certificate" name="certificate" placeholder="手机号选填(可用于联系)">
 						</div>
 						<div class="line-btn">
 							<button @click="hideChangePassenger" class="left-btn">取消</button>

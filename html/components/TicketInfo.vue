@@ -2,6 +2,7 @@
 	<div class="rebatepage">
 		<div class="rebate-header">
 			<img src="../picture/rebate_img.png">
+			<p class="header-money">¥<span>{{rebateInfo.Money}}</span></p>
 		</div>
 		<div class="rebate-body">
 			<section>
@@ -31,9 +32,25 @@
 }
 .rebate-header{
 	width:100%;
+	position:relative;
 	img{
 		width:100%;
 		height:200px;
+	}
+	.header-money{
+		position:absolute;
+		top:10px;
+		right:30px;
+		width:40px;
+		height:40px;
+		font-size:12px;
+		font-weight:900;
+		color:#fff;
+		font-weight: 900;
+		span{
+			font-size: 40px;
+			margin-left:5px;
+		}
 	}
 	@include responsive("iphone5"){
 		img{
