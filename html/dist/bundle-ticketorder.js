@@ -440,12 +440,18 @@
 						// 只有未支付的情况下才倒计时
 						_this3.CountDown();
 					}
+					/** 判断订单状态来显示二维码 */
 					if (_this3.OrderDetail.IsPay === 1 && (_this3.OrderDetail.Status === 2 || _this3.OrderDetail.Status === 4)) {
 						// 显示验证码
 						_this3.showCode = true;
 					} else {
 						// 其它情况,不显示验证码
 						_this3.showCode = false;
+					}
+
+					//判断订单是否支付,选择页面显示
+					if (_this3.OrderDetail.IsPay === 1) {
+						_this3.selected = 2;
 					}
 				}).catch(function (error) {
 					console.log(error);

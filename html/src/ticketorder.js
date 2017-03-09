@@ -371,6 +371,7 @@ const Vue_Order = new Vue({
 						// 只有未支付的情况下才倒计时
 						this.CountDown();
 					}
+					/** 判断订单状态来显示二维码 */
 					if(this.OrderDetail.IsPay===1&&(this.OrderDetail.Status===2||this.OrderDetail.Status===4)){
 						// 显示验证码
 						this.showCode = true;
@@ -378,6 +379,11 @@ const Vue_Order = new Vue({
 					else{
 						// 其它情况,不显示验证码
 						this.showCode = false;
+					}
+					
+					//判断订单是否支付,选择页面显示
+					if(this.OrderDetail.IsPay===1){
+						this.selected = 2;
 					}
 				})
 				.catch(error=>{
