@@ -34467,6 +34467,7 @@
 					if (_this6.storeCountTime === 0) {
 						clearInterval(_this6.countdown);
 						_this6.countdown = null;
+						_this6.goback(); //返回
 						return;
 					}
 					var minth = parseInt(_this6.storeCountTime / 60);

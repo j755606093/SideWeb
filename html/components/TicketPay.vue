@@ -796,6 +796,7 @@ export default {
 				if(this.storeCountTime===0){
 					clearInterval(this.countdown);
 					this.countdown = null;
+					this.goback();//返回
 					return;
 				}
 				let minth = parseInt(this.storeCountTime/60);
