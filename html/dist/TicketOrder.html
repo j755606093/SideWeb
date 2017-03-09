@@ -396,10 +396,15 @@
         </a>
       </footer>
     </div>
-    <script src="https://cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
     <script type="text/javascript" src="./qrcode.js"></script>
     <script type="text/javascript" src="./html5-qrcode.js"></script>
-    <script src="./bundle-ticketorder.js"></script>
+    <script type="text/javascript">
+      var url = "./bundle-ticketorder.js?"+Date.now();
+      var script = document.createElement("script");
+      script.src = url;
+      document.body.appendChild(script);
+    </script>
+    <!-- <script src="./bundle-ticketorder.js"></script> -->
 </body>
 
 </html>

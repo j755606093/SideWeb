@@ -429,7 +429,13 @@
       </a>
     </footer>
   </div>
-  <script src="./bundle-ticketuser.js"></script>
+  <script type="text/javascript">
+    var url = "./bundle-ticketuser.js?"+Date.now();
+    var script = document.createElement("script");
+    script.src = url;
+    document.body.appendChild(script);
+  </script>
+  <!-- <script src="./bundle-ticketuser.js"></script> -->
 </body>
 
 </html>
