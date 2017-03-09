@@ -119,7 +119,13 @@ const Vue_User = new Vue({
 		this.ready = true;
 	},
 	computed:{
-		
+		code(){
+			let code = "";
+			this.codeArray.map(item=>{
+				code+=item;
+			});
+			return code;
+		}
 	},
 	watch: {
 
@@ -248,12 +254,14 @@ const Vue_User = new Vue({
 						// 验证成功
 						this.Passengers.map((item,index)=>{
 							for(let i=0;i<this.optionsPassenger.length;i++){
-								if(item.DId===this.optionsPassenger[i].Did){
+								if(item===this.optionsPassenger[i].DId){
 									// 已经验证的乘客
 									this.checkedNum++;
-									this.optionsPassenger[i].checked = true;
-									this.optionsPassenger[i].vaild = true;
-									this.optionsPassenger[i].active = false;
+									let data = this.optionsPassenger[i];
+									data.checked = true;
+									data.vaild = true;
+									data.active = false;
+									this.$set(this.optionsPassenger,i,data);
 								}
 							}
 						})
@@ -263,42 +271,6 @@ const Vue_User = new Vue({
 					}
 					Indicator.close();
 				})
-		},
-		/** 输入 */
-		backInput(){
-			if(this.inputCodeNum===5){
-				this.inputCodeNum--;
-				let n = 15.6666*(this.inputCodeNum);
-				this.left = n+"%";
-				this.codeArray.pop();
-				return;
-			}
-			if(this.inputCodeNum!==0){
-				this.inputCodeNum--;
-				this.codeArray.pop();
-				let n = 16.5666*(this.inputCodeNum);
-				this.left = n+"%";
-			}
-		},
-		/** 每次输入的事件 */
-		inputCodeEvent(event){
-			if(event.keyCode>=48&&event.keyCode<=57){
-				let code = event.target.value;//code
-				
-				if(this.inputCodeNum<5){
-					this.codeArray.push(code);
-					this.inputCode = "";
-					this.inputCodeNum++;
-					let n = 16.5666*this.inputCodeNum
-					this.left = n+"%";
-				}
-				else{
-					if(this.inputCodeNum===5){
-						this.inputCodeNum++;
-						this.codeArray.push(code);
-					}
-				}
-			}
 		},
 		/**
 		 * 确定验证码
@@ -312,12 +284,8 @@ const Vue_User = new Vue({
 
 			this.loading();//加载动画
 
-			let code = "";
-			this.codeArray.map(item=>{
-				code+=item;
-			})
 			// /api/Steward/GetOrderByCode
-			fetch(config.serverUrl + "/api/Steward/GetOrderByCode?code="+code, {
+			fetch(config.serverUrl + "/api/Steward/GetOrderByCode?code="+this.code, {
 					method: "GET",
 					headers: config.headers,
 				}).then(result => result.json())

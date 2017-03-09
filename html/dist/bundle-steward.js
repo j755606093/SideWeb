@@ -184,7 +184,15 @@
 			this.ready = true;
 		},
 
-		computed: {},
+		computed: {
+			code: function code() {
+				var code = "";
+				this.codeArray.map(function (item) {
+					code += item;
+				});
+				return code;
+			}
+		},
 		watch: {},
 		methods: {
 			loading: function loading() {
@@ -324,12 +332,14 @@
 						// 验证成功
 						_this4.Passengers.map(function (item, index) {
 							for (var i = 0; i < _this4.optionsPassenger.length; i++) {
-								if (item.DId === _this4.optionsPassenger[i].Did) {
+								if (item === _this4.optionsPassenger[i].DId) {
 									// 已经验证的乘客
 									_this4.checkedNum++;
-									_this4.optionsPassenger[i].checked = true;
-									_this4.optionsPassenger[i].vaild = true;
-									_this4.optionsPassenger[i].active = false;
+									var data = _this4.optionsPassenger[i];
+									data.checked = true;
+									data.vaild = true;
+									data.active = false;
+									_this4.$set(_this4.optionsPassenger, i, data);
 								}
 							}
 						});
@@ -338,43 +348,6 @@
 					}
 					_mintUi.Indicator.close();
 				});
-			},
-
-			/** 输入 */
-			backInput: function backInput() {
-				if (this.inputCodeNum === 5) {
-					this.inputCodeNum--;
-					var n = 15.6666 * this.inputCodeNum;
-					this.left = n + "%";
-					this.codeArray.pop();
-					return;
-				}
-				if (this.inputCodeNum !== 0) {
-					this.inputCodeNum--;
-					this.codeArray.pop();
-					var _n = 16.5666 * this.inputCodeNum;
-					this.left = _n + "%";
-				}
-			},
-
-			/** 每次输入的事件 */
-			inputCodeEvent: function inputCodeEvent(event) {
-				if (event.keyCode >= 48 && event.keyCode <= 57) {
-					var code = event.target.value; //code
-
-					if (this.inputCodeNum < 5) {
-						this.codeArray.push(code);
-						this.inputCode = "";
-						this.inputCodeNum++;
-						var n = 16.5666 * this.inputCodeNum;
-						this.left = n + "%";
-					} else {
-						if (this.inputCodeNum === 5) {
-							this.inputCodeNum++;
-							this.codeArray.push(code);
-						}
-					}
-				}
 			},
 
 			/**
@@ -391,12 +364,8 @@
 
 				this.loading(); //加载动画
 
-				var code = "";
-				this.codeArray.map(function (item) {
-					code += item;
-				});
 				// /api/Steward/GetOrderByCode
-				fetch(config.serverUrl + "/api/Steward/GetOrderByCode?code=" + code, {
+				fetch(config.serverUrl + "/api/Steward/GetOrderByCode?code=" + this.code, {
 					method: "GET",
 					headers: config.headers
 				}).then(function (result) {
