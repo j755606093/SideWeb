@@ -34066,6 +34066,8 @@
 	//
 	//
 	//
+	//
+	//
 
 	/** 下单和支付页面 */
 	/** 此页面包含众多子页面,包括乘客界面,上车点页面,优惠券页面,每个页面包含众多逻辑,相互独立几乎没有干扰,因为开始构建时候UI没有确定,导致可能有部分注释是遗留代码,或者是死代码,几乎没有用处..或者部分代码数据格式改变,并未标明. */
@@ -36102,7 +36104,7 @@
 	    }) : _vm._e()]), " ", _vm._h('div', {
 	      staticClass: "center"
 	    }, [_vm._h('p', [_vm._s(item)])])])
-	  })]), " ", _vm._h('p', {
+	  })]), " ", (_vm.selectStation) ? [_vm._h('p', {
 	    staticClass: "refresh",
 	    staticStyle: {
 	      "margin-top": "25px"
@@ -36145,7 +36147,7 @@
 	    attrs: {
 	      "src": __webpack_require__(198)
 	    }
-	  })])])])])])])]), " ", " ", _vm._h('mt-popup', {
+	  })])])])])] : _vm._e()])])]), " ", " ", _vm._h('mt-popup', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
