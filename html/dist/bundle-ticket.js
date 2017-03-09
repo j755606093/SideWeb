@@ -31122,7 +31122,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import DatePicker from 'vue-datepicker'
 	var _ = __webpack_require__(111); //
 	//
 	//

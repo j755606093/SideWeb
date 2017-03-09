@@ -58,7 +58,6 @@
 
 <script type="text/babel">
 import Utils from "../Utils/utils";
-// import DatePicker from 'vue-datepicker'
 import { Indicator,Toast } from 'mint-ui';
 import "whatwg-fetch";
 const _ = require("underscore");
