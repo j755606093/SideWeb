@@ -982,7 +982,8 @@ header {
             font-size: 12px;
             font-weight: 400;
             line-height: 12px;
-            color: #c8c8c8; }
+            color: #c8c8c8;
+            margin-bottom: 8px; }
         .action-use .page .rebate .bottom .right {
           -ms-flex: 4;
               flex: 4; }

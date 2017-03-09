@@ -571,7 +571,7 @@
     line-height: 60px;
     border-radius: 10px;
     background-color: $white;
-    margin-top:10px;
+    margin-top:2px;
     margin-bottom:5px;
     .left{
       display: flex;
@@ -839,6 +839,7 @@
               font-weight:400;
               line-height:12px;
               color:#c8c8c8;
+              margin-bottom: 8px;
             }
           }
           .right{

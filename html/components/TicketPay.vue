@@ -578,6 +578,7 @@ export default {
 			// console.log(newval)
 			let len = newval.length;
 			if(len===0){
+				this.rebateid = "";
 				this.computeAll();
 				return;
 			}
@@ -1294,8 +1295,8 @@ export default {
 				})
 				this.selectDiscount = newdata;
 				// 按理说这里应该可以return的,但是我selectDiscount监控了数据,如果为空则默认负责最后一个,所以就去掉了这个return
-				// console.log(this.selectDiscount)
-				// return;
+				console.log(this.selectDiscount)
+				return;
 			}
 
 			// 如果已选长度大于1
