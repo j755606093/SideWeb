@@ -14,15 +14,17 @@
   <div id="app" v-show="ready" style="display: none;">
     <!-- 头部 -->
     <header class="animated fadeIn" v-show="showHeader">
+      <!-- 返回键 -->
       <div @click="GoBack" class="left">
         <img src="../picture/back_icon.png">
       </div>
+      <!-- 标题 -->
       <div class="home">
         <span v-text="headerTitle"></span>
       </div>
     </header>
     <div class="body">
-      <!-- 头部 -->
+      <!-- 页面头部 -->
       <div class="header">
         <img src="../picture/user_bg.png">
         <div @click="showUserInfo" class="left content">

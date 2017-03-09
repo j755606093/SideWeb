@@ -36109,7 +36109,7 @@
 	    staticStyle: {
 	      "margin-top": "25px"
 	    }
-	  }, ["没有你要的上车点？在下面备注一个吧~"]), " ", _vm._h('p', {
+	  }, ["想要详细的上车点？在下面备注一个吧~"]), " ", _vm._h('p', {
 	    staticClass: "refresh"
 	  }, ["注意不要备注我们行程以外的范围哦~"]), " ", _vm._h('div', {
 	    staticClass: "action-body",
