@@ -224,7 +224,7 @@
                 <div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
               </div>
               <!-- 修改乘客 -->
-              <div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
+              <!-- <div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
                 <div class="line">
                   <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
                 </div>
@@ -232,7 +232,7 @@
                   <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="选填(可用于联系)">
                   <button @click="addPassenger(1)"><i class="fa fa-plus-circle"></i> 确定</button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -245,7 +245,7 @@
               </div>
             </div>
             <!-- 添加乘客 -->
-            <div v-show="showpassengeraction===1" class="add-action animated zoomIn">
+            <!-- <div v-show="showpassengeraction===1" class="add-action animated zoomIn">
               <div class="line">
                 <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
               </div>
@@ -253,6 +253,47 @@
                 <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="选填(可用于联系)">
                 <button @click="addPassenger(0)"><i class="fa fa-plus-circle"></i> 添加</button>
               </div>
+            </div> -->
+          </div>
+        </div>
+      </slot>
+    </mt-popup>
+    <!-- 修改乘客信息 -->
+    <mt-popup
+      v-model="isShowChangePassenger"
+      class="change-page">
+      <slot>
+        <div class="change-page-body">
+          <!-- 修改乘客信息 -->
+          <div style="padding:10px" v-show="showpassengeraction===2" class="add-action animated zoomIn">
+            <div class="line-header">
+              <span>修改乘客信息</span>
+            </div>
+            <div class="line change">
+              <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
+            </div>
+            <div class="line change">
+              <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="手机号选填(可用于联系)">
+            </div>
+            <div class="line-btn">
+              <button @click="hideChangePassenger" class="left-btn">取消</button>
+              <button class="right-btn" @click="addPassenger(1)">确定</button>
+            </div>
+          </div>
+          <!-- 增加乘客信息 -->
+          <div style="padding:10px" v-show="showpassengeraction===1" class="add-action animated zoomIn">
+            <div class="line-header">
+              <span>增加乘客信息</span>
+            </div>
+            <div class="line change">
+              <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
+            </div>
+            <div class="line change">
+              <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="手机号选填(可用于联系)">
+            </div>
+            <div class="line-btn">
+              <button @click="hideChangePassenger" class="left-btn">取消</button>
+              <button class="right-btn" @click="addPassenger(0)">确定</button>
             </div>
           </div>
         </div>

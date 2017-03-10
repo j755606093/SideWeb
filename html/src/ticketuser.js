@@ -148,6 +148,7 @@ const Vue_User = new Vue({
 		ChaPassengerIndex: 0,
 
 		myModal:false,//自己的蒙版
+		isShowChangePassenger:false,//是否显示修改乘客弹窗
 	},
 	created() {
 		this.getUserInfo()
@@ -200,6 +201,10 @@ const Vue_User = new Vue({
 			this.userVisible = false;
 			this.refundVisible = false;
 			this.helpVisible = false;
+			this.hideChangePassenger();
+		},
+		hideChangePassenger(){
+			this.isShowChangePassenger = false;
 		},
 		//控制头部显示和标题
 		controlHeader(status = false, title = "用户中心") {
@@ -353,6 +358,7 @@ const Vue_User = new Vue({
 						} else {
 							this.toast(result.Message);
 						}
+						this.hideChangePassenger();
 					})
 			} else {
 				fetch(config.serverUrl + "/api/Passenger/Modify", {
@@ -379,6 +385,7 @@ const Vue_User = new Vue({
 						} else {
 							this.toast(result.Message);
 						}
+						this.hideChangePassenger();
 					})
 			}
 
@@ -537,6 +544,7 @@ const Vue_User = new Vue({
 			this.passengerPhone = "";
 			this.showpassengeraction = 1;
 			this.ChaPassengerIndex = index; //记录修改的位置
+			this.isShowChangePassenger = true;
 		},
 		/** 显示改变乘客 */
 		showChaPassenger(index) {
@@ -546,6 +554,7 @@ const Vue_User = new Vue({
 				return;
 			}
 			this.ChaPassengerIndex = index; //记录修改的位置
+			this.isShowChangePassenger = true;
 
 			this.passengerName = this.Passenger[index].Name;
 			this.passengerPhone = this.Passenger[index].Mobile;

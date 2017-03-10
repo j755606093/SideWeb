@@ -1178,5 +1178,21 @@ input {
   line-height: 40px;
   font-size: 18px; }
 
+/** 弹出框 */
+.mint-msgbox-wrapper {
+  z-index: 5001 !important; }
+  .mint-msgbox-wrapper .mint-msgbox {
+    border-radius: 10px; }
+  .mint-msgbox-wrapper .mint-msgbox-btn {
+    font-size: 18px; }
+  .mint-msgbox-wrapper .mint-msgbox-content {
+    border: none; }
+  .mint-msgbox-wrapper .mint-msgbox-cancel {
+    color: #c8c8c8;
+    border: none; }
+  .mint-msgbox-wrapper .mint-msgbox-confirm {
+    color: #0074D9;
+    border: none; }
+
 .success {
   color: #2ecc71; }

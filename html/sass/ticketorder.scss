@@ -1035,11 +1035,25 @@ header {
   z-index: 5000;
 }
 
+/** 弹出框 */
 .mint-msgbox-wrapper {
   z-index: 5001 !important;
+  .mint-msgbox{
+    border-radius:10px;
+  }
   .mint-msgbox-btn {
-    color: #0BB20C;
     font-size: 18px;
+  }
+  .mint-msgbox-content{
+    border:none;
+  }
+  .mint-msgbox-cancel{
+    color:#c8c8c8;
+    border:none;
+  }
+  .mint-msgbox-confirm{
+    color:$blue;
+    border:none;
   }
 }
 
