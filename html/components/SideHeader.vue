@@ -102,8 +102,17 @@ export default {
 	},
 	methods:{
 		GoBack(){
+			if(this.getHeaderTitle==="优惠券"){
+				// 如果是优惠券页面返回主页,就需要使用replace
+				// 因为有可能进入优惠券页面的人是直接url上进入的
+				// 此时路由栈中并没有ticketbody的路由,如果直接
+				// 返回上一层,会产生问题并且不会执行预料的操作
+				this.$router.replace({name:"ticketbody"});
+			}
+			else{
+				this.$router.go(-1);
+			}
 			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
-			this.$router.go(-1);
 		},
 		formatData(data){
 			return JSON.parse(JSON.stringify(data));

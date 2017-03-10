@@ -30282,8 +30282,16 @@
 		},
 		methods: {
 			GoBack: function GoBack() {
+				if (this.getHeaderTitle === "优惠券") {
+					// 如果是优惠券页面返回主页,就需要使用replace
+					// 因为有可能进入优惠券页面的人是直接url上进入的
+					// 此时路由栈中并没有ticketbody的路由,如果直接
+					// 返回上一层,会产生问题并且不会执行预料的操作
+					this.$router.replace({ name: "ticketbody" });
+				} else {
+					this.$router.go(-1);
+				}
 				this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
-				this.$router.go(-1);
 			},
 			formatData: function formatData(data) {
 				return JSON.parse((0, _stringify2.default)(data));
@@ -30585,11 +30593,11 @@
 		},
 		created: function created() {
 			this.loading();
-			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "优惠券" });
-			this.$store.commit("SET_SHOWBACK", true);
-			this.$store.commit("SET_SHOWHEADER", true);
+			this.$store.commit("CHANGE_HEADER", { isHome: false, Title: "优惠券" }); //修改标题为优惠券
+			this.$store.commit("SET_SHOWBACK", true); //显示返回键
+			this.$store.commit("SET_SHOWHEADER", true); //显示头部
 			this.rebateid = this.$route.params.id;
-			this.fetchRebate();
+			this.fetchRebate(); //获取优惠券信息
 		},
 
 		filters: {},
@@ -34065,8 +34073,6 @@
 	//
 	//
 	//
-	//
-	//
 
 	/** 下单和支付页面 */
 	/** 此页面包含众多子页面,包括乘客界面,上车点页面,优惠券页面,每个页面包含众多逻辑,相互独立几乎没有干扰,因为开始构建时候UI没有确定,导致可能有部分注释是遗留代码,或者是死代码,几乎没有用处..或者部分代码数据格式改变,并未标明. */
@@ -36105,7 +36111,7 @@
 	    }) : _vm._e()]), " ", _vm._h('div', {
 	      staticClass: "center"
 	    }, [_vm._h('p', [_vm._s(item)])])])
-	  })]), " ", (_vm.selectStation) ? [_vm._h('p', {
+	  })]), " ", _vm._h('p', {
 	    staticClass: "refresh",
 	    staticStyle: {
 	      "margin-top": "25px"
@@ -36148,7 +36154,7 @@
 	    attrs: {
 	      "src": __webpack_require__(198)
 	    }
-	  })])])])])] : _vm._e()])])]), " ", " ", _vm._h('mt-popup', {
+	  })])])])])])])]), " ", " ", _vm._h('mt-popup', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",

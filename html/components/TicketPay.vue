@@ -230,19 +230,17 @@
 		  				</div>
 		  			</div>
 		  		</div>
-		  		<template v-if="selectStation">
-		  			<p class="refresh" style="margin-top:25px;">想要详细的上车点？在下面备注一个吧~</p>
-			  		<p class="refresh">注意不要备注我们行程以外的范围哦~</p>
-			  		<div class="action-body" style="margin-top:25px;">
-			  			<!-- 备注上车点 -->
-							<div class="write-info">
-								<div class="line">
-									<input type="text" v-model="payInfoData.remark" name="remark" placeholder="备注更方便您的上车点">
-									<div class="img"><img src="../picture/edit.png"></div>
-								</div>
+		  		<p class="refresh" style="margin-top:25px;">想要详细的上车点？在下面备注一个吧~</p>
+		  		<p class="refresh">注意不要备注我们行程以外的范围哦~</p>
+		  		<div class="action-body" style="margin-top:25px;">
+		  			<!-- 备注上车点 -->
+						<div class="write-info">
+							<div class="line">
+								<input type="text" v-model="payInfoData.remark" name="remark" placeholder="备注更方便您的上车点">
+								<div class="img"><img src="../picture/edit.png"></div>
 							</div>
-			  		</div>
-		  		</template>
+						</div>
+		  		</div>
 		  	</div>
 		  </slot>
 		</mt-popup>
