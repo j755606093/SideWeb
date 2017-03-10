@@ -29,7 +29,7 @@
         <img src="../picture/user_bg.png">
         <div @click="showUserInfo" class="left content">
           <p class="nowrap" v-text="UserInfo.Nickname"></p>
-          <span v-text="UserInfo.Mobile?UserInfo.Mobile:UserInfo.Province+UserInfo.City"></span>
+          <span v-text="UserInfo.Alias_Id"></span>
           <span>查看并编辑个人信息</span>
         </div>
         <div class="right content">
