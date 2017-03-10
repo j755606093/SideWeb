@@ -10,9 +10,9 @@
 				<p class="money">¥<span>{{rebateInfo.Money}}</span></p>
 				<p class="limit">满 {{rebateInfo.LimitMoney}} 元可用</p>
 				<p class="name">{{rebateInfo.Name}}</p>
-				<p class="time">{{rebateInfo.StartDate}}</p>
+				<p class="time">{{formatDate(rebateInfo.StartDate)}}</p>
 				<p class="time">至</p>
-				<p class="time">{{rebateInfo.EndDate}}</p>
+				<p class="time">{{formatDate(rebateInfo.EndDate)}}</p>
 			</section>
 		</div>
 		<div class="get-rebate">
@@ -172,7 +172,7 @@ export default {
 			});
 		},
 		formatDate(data){
-			return Utils.formatDate(data);
+			return Utils.formatDateTypeOne(data);
 		},
 		fetchRebate(){
 			// /api/Rebate/GetCodeInfo?code=lvdzju

@@ -30617,7 +30617,7 @@
 				});
 			},
 			formatDate: function formatDate(data) {
-				return _utils2.default.formatDate(data);
+				return _utils2.default.formatDateTypeOne(data);
 			},
 			fetchRebate: function fetchRebate() {
 				var _this = this;
@@ -30681,11 +30681,11 @@
 	    staticClass: "name"
 	  }, [_vm._s(_vm.rebateInfo.Name)]), " ", _vm._h('p', {
 	    staticClass: "time"
-	  }, [_vm._s(_vm.rebateInfo.StartDate)]), " ", _vm._h('p', {
+	  }, [_vm._s(_vm.formatDate(_vm.rebateInfo.StartDate))]), " ", _vm._h('p', {
 	    staticClass: "time"
 	  }, ["至"]), " ", _vm._h('p', {
 	    staticClass: "time"
-	  }, [_vm._s(_vm.rebateInfo.EndDate)])])]), " ", _vm._h('div', {
+	  }, [_vm._s(_vm.formatDate(_vm.rebateInfo.EndDate))])])]), " ", _vm._h('div', {
 	    staticClass: "get-rebate"
 	  }, [_vm._h('button', {
 	    on: {
@@ -37272,7 +37272,7 @@
 				});
 			},
 			formatDate: function formatDate(data) {
-				return _utils2.default.formatDate(data);
+				return _utils2.default.formatDateTypeOne(data);
 			},
 			fetchRebate: function fetchRebate() {
 				var _this = this;

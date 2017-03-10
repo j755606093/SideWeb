@@ -171,7 +171,7 @@ export default {
 			});
 		},
 		formatDate(data){
-			return Utils.formatDate(data);
+			return Utils.formatDateTypeOne(data);
 		},
 		fetchRebate(){
 			// /api/Rebate/GetCodeInfo?code=lvdzju
