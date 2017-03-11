@@ -330,6 +330,7 @@
 				}).then(function (result) {
 					if (result.Data) {
 						// 验证成功
+						_this4.toast("验证成功!");
 						_this4.Passengers.map(function (item, index) {
 							for (var i = 0; i < _this4.optionsPassenger.length; i++) {
 								if (item === _this4.optionsPassenger[i].DId) {

@@ -252,6 +252,7 @@ const Vue_User = new Vue({
 				.then(result => {
 					if(result.Data){
 						// 验证成功
+						this.toast("验证成功!");
 						this.Passengers.map((item,index)=>{
 							for(let i=0;i<this.optionsPassenger.length;i++){
 								if(item===this.optionsPassenger[i].DId){
