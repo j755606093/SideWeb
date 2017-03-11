@@ -213,6 +213,7 @@
 		created: function created() {
 			var _this = this;
 
+			this.loading();
 			this.getUserInfo().then(function (result) {
 				if (result.Passengers) {
 					_this.Passenger = result.Passengers;
@@ -222,6 +223,7 @@
 				}
 				_this.UserInfo = result.Userinfo;
 				_this.isNoPay = result.NoPay;
+				_mintUi.Indicator.close();
 				_this.ready = true; //显示网页
 			});
 
@@ -294,6 +296,10 @@
 					return result.json();
 				}).then(function (result) {
 					return result.Data;
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
+					document.getElementById("server_break").style.display = "block";
+					// alert("服务器繁忙,请稍后再试");
 				});
 			},
 

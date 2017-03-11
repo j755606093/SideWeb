@@ -151,6 +151,7 @@ const Vue_User = new Vue({
 		isShowChangePassenger:false,//是否显示修改乘客弹窗
 	},
 	created() {
+		this.loading();
 		this.getUserInfo()
 			.then(result => {
 				if (result.Passengers) {
@@ -161,6 +162,7 @@ const Vue_User = new Vue({
 				}
 				this.UserInfo = result.Userinfo;
 				this.isNoPay = result.NoPay;
+				Indicator.close();
 				this.ready = true;//显示网页
 			});
 
@@ -226,7 +228,12 @@ const Vue_User = new Vue({
 				})
 				.then(checkStatus)
 				.then(result => result.json())
-				.then(result => result.Data);
+				.then(result => result.Data)
+				.catch(error=>{
+					Indicator.close();
+					document.getElementById("server_break").style.display = "block";
+					// alert("服务器繁忙,请稍后再试");
+				});
 		},
 		/**
 		 * 显示订单列表

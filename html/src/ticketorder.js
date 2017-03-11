@@ -147,17 +147,24 @@ const Vue_Order = new Vue({
 		showCode:false,//是否显示验证码
 	},
 	created() {
-		this.ready = true;
+		this.loading();
 		if (this.getQueryString("orderid")) {
 			// 需要显示订单详细信息
-			this.loading();
 			this.getOrderInfo(this.getQueryString("orderid"));
 			let id = this.getQueryString("orderid");
 			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//生成二维码链接
 		}
-		this.moreOrderData();
-		this.moreOrderData1();
 
+		// 顺序请求服务器,防止服务器请求过多报错
+		this.moreOrderData().then(result=>{
+				this.ready = true;
+				this.moreOrderData1()
+			}).catch(error=>{
+				Indicator.close();
+				this.ready = false;
+				document.getElementById("server_break").style.display = "block";
+				// alert("服务器繁忙,请稍后再试");
+			});
 	},
 	mounted() {
 		
@@ -201,59 +208,63 @@ const Vue_Order = new Vue({
 		},
 		/** 加载更多数据 */
 		moreOrderData(empty = false) {
-			if (this.noMoreData || this.isUse) {
-				if(!empty){
-					return;
+			return new Promise((resolve,reject)=>{
+				if (this.noMoreData || this.isUse) {
+					if(!empty){
+						resolve();
+					}
+					this.index = 1;
 				}
-				this.index = 1;
-			}
-			this.isUse = true; //锁住这个函数
-			this.loading();
-			fetch(config.serverUrl + "/api/Order/List", {
-					method: "POST",
-					headers: config.headers,
-					body: JSON.stringify({
-						Index: this.index,
-						Size: 10,
-						Type: 1
+				this.isUse = true; //锁住这个函数
+				this.loading();
+				fetch(config.serverUrl + "/api/Order/List", {
+						method: "POST",
+						headers: config.headers,
+						body: JSON.stringify({
+							Index: this.index,
+							Size: 10,
+							Type: 1
+						})
 					})
-				})
-				.then(checkStatus)
-				.then(result => result.json())
-				.then(result => {
-					if (result.Data) {
-						if (result.Data.length < 10) {
-							// 说明没有跟多数据了
-							this.noMoreData = true;
-						}
-						if (empty) {
-							// 是否是刷新数据
-							this.OrderList = result.Data;
+					.then(checkStatus)
+					.then(result => result.json())
+					.then(result => {
+						if (result.Data) {
+							if (result.Data.length < 10) {
+								// 说明没有跟多数据了
+								this.noMoreData = true;
+							}
+							if (empty) {
+								// 是否是刷新数据
+								this.OrderList = result.Data;
+							} else {
+								for (let i = 0; i < result.Data.length; i++) {
+									this.OrderList.push(result.Data[i]);
+								}
+							}
+							this.noDataShow = false; //显示订单
 						} else {
-							for (let i = 0; i < result.Data.length; i++) {
-								this.OrderList.push(result.Data[i]);
+							this.noMoreData = true;
+							if (this.index !== 1) {
+								Toast({
+									message: result.Message,
+									position: 'bottom',
+									duration: 3000
+								});
 							}
 						}
 
-
-						this.noDataShow = false; //显示订单
-					} else {
-						this.noMoreData = true;
-						if (this.index !== 1) {
-							Toast({
-								message: result.Message,
-								position: 'bottom',
-								duration: 3000
-							});
-						}
-					}
-					this.isUse = false; //释放这个函数
-					this.index++;
-					Indicator.close();
-				})
-				.then(()=>{
-					this.canvas();
-				})
+						this.isUse = false; //释放这个函数
+						this.index++;
+						Indicator.close();
+					})
+					.then(()=>{
+						this.canvas();
+						resolve();
+					}).catch(error=>{
+						reject(error);
+					})
+			});
 		},
 		/** 加载更多数据 */
 		moreOrderData1(empty = false) {
@@ -299,7 +310,6 @@ const Vue_Order = new Vue({
 								duration: 3000
 							});
 						}
-
 					}
 					this.isUse1 = false; //释放这个函数
 					this.index1++;
@@ -659,6 +669,9 @@ const Vue_Order = new Vue({
 });
 
 window.addEventListener('scroll',_.throttle(function(){
+	if(!Vue_Order.ready){
+		return;
+	}
 	let selected = Vue_Order.selected;
 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
 	if(status<1000 && selected===1){

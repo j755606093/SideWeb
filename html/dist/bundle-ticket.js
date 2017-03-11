@@ -31247,7 +31247,9 @@
 				});
 
 				// 获取乘客信息和优惠信息
-				this.$store.dispatch("getPassenger");
+				this.$store.dispatch("getPassenger").catch(function (error) {
+					alert("服务器繁忙,可能无法操作页面,请稍后重试进入页面购票...");
+				});
 			} else {}
 			// 不是第一次进入就不需要再次获取地理位置(此部分因为功能迭代后不需要显示就废弃了)
 			// this.locationLoad = false;

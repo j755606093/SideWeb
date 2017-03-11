@@ -119,7 +119,9 @@ export default {
 				})
 
 				// 获取乘客信息和优惠信息
-				this.$store.dispatch("getPassenger");
+				this.$store.dispatch("getPassenger").catch(error=>{
+					alert("服务器繁忙,可能无法操作页面,请稍后重试进入页面购票...")
+				});
 				
 			}
 			else{
