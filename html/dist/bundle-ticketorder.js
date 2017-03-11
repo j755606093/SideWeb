@@ -674,7 +674,7 @@
 							});
 							// 重新加载数据
 							_this10.moreOrderData(true);
-							_this10.moreOrderData1(true);
+							// this.moreOrderData1(true);
 							_this10.orderVisible = false; //退出详情
 						} else {
 							_mintUi.MessageBox.alert(result.Message).then(function (result) {
@@ -760,23 +760,23 @@
 		}
 	});
 
-	window.addEventListener('scroll', _.throttle(function () {
-		if (!Vue_Order.ready) {
-			return;
-		}
-		var selected = Vue_Order.selected;
-		var status = document.getElementById("last").offsetTop - document.body.scrollTop;
-		if (status < 1000 && selected === 1) {
-			Vue_Order.moreOrderData();
-			// console.log('yes');
-		}
+	// window.addEventListener('scroll',_.throttle(function(){
+	// 	if(!Vue_Order.ready){
+	// 		return;
+	// 	}
+	// 	let selected = Vue_Order.selected;
+	// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+	// 	if(status<1000 && selected===1){
+	// 		Vue_Order.moreOrderData();
+	// 		// console.log('yes');
+	// 	}
 
-		var status1 = document.getElementById("last1").offsetTop - document.body.scrollTop;
-		if (status1 < 1000 && selected === 2) {
-			Vue_Order.moreOrderData1();
-			// console.log('yes');
-		}
-	}, 100, { leading: false }));
+	// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+	// 	if(status1<1000 && selected===2){
+	// 		Vue_Order.moreOrderData1();
+	// 		// console.log('yes');
+	// 	}
+	// },100,{leading: false}));
 
 /***/ },
 /* 1 */

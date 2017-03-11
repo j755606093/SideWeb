@@ -588,7 +588,7 @@ const Vue_Order = new Vue({
 								});
 								// 重新加载数据
 								this.moreOrderData(true);
-								this.moreOrderData1(true);
+								// this.moreOrderData1(true);
 								this.orderVisible = false;//退出详情
 							} else {
 								MessageBox.alert(result.Message).then(result=>{
@@ -668,20 +668,20 @@ const Vue_Order = new Vue({
 	}
 });
 
-window.addEventListener('scroll',_.throttle(function(){
-	if(!Vue_Order.ready){
-		return;
-	}
-	let selected = Vue_Order.selected;
-	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
-	if(status<1000 && selected===1){
-		Vue_Order.moreOrderData();
-		// console.log('yes');
-	}
+// window.addEventListener('scroll',_.throttle(function(){
+// 	if(!Vue_Order.ready){
+// 		return;
+// 	}
+// 	let selected = Vue_Order.selected;
+// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+// 	if(status<1000 && selected===1){
+// 		Vue_Order.moreOrderData();
+// 		// console.log('yes');
+// 	}
 
-	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
-	if(status1<1000 && selected===2){
-		Vue_Order.moreOrderData1();
-		// console.log('yes');
-	}
-},100,{leading: false}));
+// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
+// 	if(status1<1000 && selected===2){
+// 		Vue_Order.moreOrderData1();
+// 		// console.log('yes');
+// 	}
+// },100,{leading: false}));
