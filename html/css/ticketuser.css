@@ -1394,10 +1394,18 @@ header {
 .mint-toast {
   z-index: 10000; }
 
-.mint-msgbox-input input {
-  height: 40px;
-  line-height: 40px;
-  font-size: 18px; }
+.mint-msgbox {
+  border-radius: 10px; }
+  .mint-msgbox .mint-msgbox-content {
+    border: none; }
+  .mint-msgbox .mint-msgbox-input input {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px; }
+  .mint-msgbox .mint-msgbox-btns .mint-msgbox-cancel {
+    color: #c8c8c8; }
+  .mint-msgbox .mint-msgbox-btns .mint-msgbox-confirm {
+    color: #0074D9; }
 
 footer {
   display: -ms-flexbox;
