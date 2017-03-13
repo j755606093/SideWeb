@@ -36231,7 +36231,7 @@
 	      staticClass: "left"
 	    }, [_vm._h('p', [_vm._h('span', ["¥"]), _vm._s(item.Money)]), " ", _vm._h('p', {
 	      staticClass: "limit"
-	    }, [_vm._s('满' + item.LimitMoney + '可用')]), " ", _vm._h('p', {
+	    }, [_vm._s('满' + item.LimitMoney + '元可用')]), " ", _vm._h('p', {
 	      staticClass: "name"
 	    }, [_vm._s(item.Name)]), " ", _vm._h('p', {
 	      staticClass: "time"
@@ -36267,7 +36267,7 @@
 	      staticClass: "left"
 	    }, [_vm._h('p', [_vm._h('span', ["¥"]), _vm._s(item.Money)]), " ", _vm._h('p', {
 	      staticClass: "limit"
-	    }, [_vm._s('满' + item.LimitMoney + '可用')]), " ", _vm._h('p', {
+	    }, [_vm._s('满' + item.LimitMoney + '元可用')]), " ", _vm._h('p', {
 	      staticClass: "name"
 	    }, [_vm._s(item.Name)]), " ", _vm._h('p', {
 	      staticClass: "time"
