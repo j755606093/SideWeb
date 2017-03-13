@@ -316,6 +316,7 @@
 							_this2.noDataShow = false; //显示订单
 						} else {
 							_this2.noMoreData = true;
+							_this2.selected = 2; //如果未支付没有数据就显示已待使用
 							if (_this2.index !== 1) {
 								(0, _mintUi.Toast)({
 									message: result.Message,

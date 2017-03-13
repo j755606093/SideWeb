@@ -245,6 +245,7 @@ const Vue_Order = new Vue({
 							this.noDataShow = false; //显示订单
 						} else {
 							this.noMoreData = true;
+							this.selected = 2;//如果未支付没有数据就显示已待使用
 							if (this.index !== 1) {
 								Toast({
 									message: result.Message,
