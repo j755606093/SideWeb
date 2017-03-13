@@ -457,8 +457,7 @@ input {
           align-items: center;
       margin: 0 10px; }
       .passenger-info .passenger-selected > .line > div {
-        -ms-flex: 2;
-            flex: 2;
+        width: 60px;
         height: 50px;
         line-height: 50px;
         display: -ms-flexbox;
@@ -474,8 +473,8 @@ input {
           height: 20px;
           margin-left: 10px; }
       .passenger-info .passenger-selected > .line .center {
-        -ms-flex: 6;
-            flex: 6;
+        -ms-flex: 8;
+            flex: 8;
         height: 50px;
         line-height: 50px;
         font-size: 16px; }
