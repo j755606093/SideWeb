@@ -1270,7 +1270,7 @@ export default {
 			this.canuseOne=[];
 			this.canuseTwo=[];
 			_.map(all,item=>{
-				if(this.payInfoData.payMoney>=item.LimitMoney){
+				if(this.getAllFare().length*this.payInfoData.ticketMoney>=item.LimitMoney){
 					this.canuseOne.push(item);
 				}
 				else{

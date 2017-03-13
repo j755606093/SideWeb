@@ -34965,7 +34965,7 @@
 				this.canuseOne = [];
 				this.canuseTwo = [];
 				_.map(all, function (item) {
-					if (_this12.payInfoData.payMoney >= item.LimitMoney) {
+					if (_this12.getAllFare().length * _this12.payInfoData.ticketMoney >= item.LimitMoney) {
 						_this12.canuseOne.push(item);
 					} else {
 						_this12.canuseTwo.push(item);
