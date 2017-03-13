@@ -29947,13 +29947,14 @@
 	 * @return {[type]}      [description]
 	 */
 	var formatDateTypeOne = function formatDateTypeOne(date) {
-		var t = date;
-		if (typeof t === "string") {
-			t = new Date(t);
+		var show = date;
+		if (typeof date === "string") {
+			show = new Date(date);
 		}
-		var year = t.getYear() - 100 + 2000;
-		var month = t.getMonth() + 1;
-		var day = t.getDate();
+
+		var year = show.getYear() - 100 + 2000;
+		var month = show.getMonth() + 1;
+		var day = show.getDate();
 
 		// return month+"月"+day+"日";
 		return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
@@ -30589,7 +30590,7 @@
 		data: function data() {
 			return {
 				rebateid: "",
-				rebateInfo: {}
+				rebateInfo: null
 			};
 		},
 		created: function created() {
@@ -30660,7 +30661,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
+	  return (_vm.rebateInfo) ? _vm._h('div', {
 	    staticClass: "rebatepage"
 	  }, [_vm._h('div', {
 	    staticClass: "rebate-header"
@@ -30692,7 +30693,7 @@
 	    on: {
 	      "click": _vm.getRebate
 	    }
-	  }, ["领取"]), " "])])
+	  }, ["领取 (限领" + _vm._s(_vm.rebateInfo.LimitTime) + "次,已领" + _vm._s(_vm.rebateInfo.GainTime) + "次)"]), " "])]) : _vm._e()
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -37246,7 +37247,7 @@
 		data: function data() {
 			return {
 				rebateid: "",
-				rebateInfo: {}
+				rebateInfo: null
 			};
 		},
 		created: function created() {
@@ -37317,7 +37318,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
-	  return _vm._h('div', {
+	  return (_vm.rebateInfo) ? _vm._h('div', {
 	    staticClass: "rebatepage"
 	  }, [_vm._h('div', {
 	    staticClass: "rebate-header"
@@ -37349,7 +37350,7 @@
 	    on: {
 	      "click": _vm.getRebate
 	    }
-	  }, ["领取"]), " "])])
+	  }, ["领取 (限领" + _vm._s(_vm.rebateInfo.LimitTime) + "次,已领" + _vm._s(_vm.rebateInfo.GainTime) + "次)"]), " "])]) : _vm._e()
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()

@@ -1,5 +1,5 @@
 <template type="x/template">
-	<div class="rebatepage">
+	<div class="rebatepage"  v-if="rebateInfo">
 		<div class="rebate-header">
 			<img src="../picture/rebate_img.png">
 			<p class="header-money">¥<span>{{rebateInfo.Money}}</span></p>
@@ -16,7 +16,7 @@
 			</section>
 		</div>
 		<div class="get-rebate">
-			<button @click="getRebate">领取</button>
+			<button  @click="getRebate">领取 (限领{{rebateInfo.LimitTime}}次,已领{{rebateInfo.GainTime}}次)</button>
 			<!-- <button class="isuse" v-else>你已经领取过</button> -->
 		</div>
 	</div>
@@ -138,7 +138,7 @@ export default {
 	data () {
 		return {
 			rebateid:"",
-			rebateInfo:{}
+			rebateInfo:null
 		}
 	},
 	created(){

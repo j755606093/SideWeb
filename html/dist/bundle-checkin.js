@@ -11128,13 +11128,14 @@
 	 * @return {[type]}      [description]
 	 */
 	var formatDateTypeOne = function formatDateTypeOne(date) {
-		var t = date;
-		if (typeof t === "string") {
-			t = new Date(t);
+		var show = date;
+		if (typeof date === "string") {
+			show = new Date(date);
 		}
-		var year = t.getYear() - 100 + 2000;
-		var month = t.getMonth() + 1;
-		var day = t.getDate();
+
+		var year = show.getYear() - 100 + 2000;
+		var month = show.getMonth() + 1;
+		var day = show.getDate();
 
 		// return month+"月"+day+"日";
 		return year + "-" + (month > 9 ? month : "0" + month) + "-" + (day > 9 ? day : "0" + day);
