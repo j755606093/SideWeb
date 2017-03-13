@@ -36273,11 +36273,7 @@
 	      staticClass: "time"
 	    }, [_vm._s(item.StartDate.slice(0, 10)) + " 至 " + _vm._s(item.EndDate.slice(0, 10))])]), " ", _vm._h('div', {
 	      staticClass: "right check"
-	    }, [_vm._h('img', {
-	      attrs: {
-	        "src": __webpack_require__(197)
-	      }
-	    }), " ", _vm._h('span')])])])
+	    }, [_vm._h('span')])])])
 	  })])])])])]), " ", " ", _vm._h('mt-popup', {
 	    directives: [{
 	      name: "model",

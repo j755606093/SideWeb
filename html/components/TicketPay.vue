@@ -292,7 +292,7 @@
                     <p class="time">{{item.StartDate.slice(0,10)}} 至 {{item.EndDate.slice(0,10)}}</p>
                   </div>
                   <div class="right check">
-                    <img src="../picture/select.png">
+                    <!-- <img src="../picture/select.png"> -->
 										<span></span>
                   </div>
                 </div>
