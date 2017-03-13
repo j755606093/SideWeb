@@ -53,12 +53,13 @@ let formatDate = (date) =>{
  * @return {[type]}      [description]
  */
 let formatDateTypeOne = date =>{
-	if(typeof date==="string"){
-		date = new Date(date);
+	let t = date;
+	if(typeof t==="string"){
+		t = new Date(t);
 	}
-	let year = date.getYear()-100+2000;
-	let month = date.getMonth()+1;
-	let day = date.getDate();
+	let year = t.getYear()-100+2000;
+	let month = t.getMonth()+1;
+	let day = t.getDate();
 
 	// return month+"月"+day+"日";
 	return year+"-"+(month>9?month:"0"+month)+"-"+(day>9?day:"0"+day)

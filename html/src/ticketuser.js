@@ -336,7 +336,7 @@ const Vue_User = new Vue({
 				this.toast("请输入正确的姓名!");
 				return;
 			}
-			if (!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
+			if (this.passengerPhone!==""&&!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
 				this.toast("请输入正确的手机号!");
 				return;
 			}

@@ -1208,10 +1208,12 @@ header {
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    margin-top: 0px; }
+    margin-top: 0px;
+    overflow-y: scroll; }
     .help-lists .lists .help {
       width: 100%;
-      padding-bottom: 60px; }
+      padding-bottom: 80px;
+      overflow-y: scroll; }
       .help-lists .lists .help .help-list {
         margin: 0 10px;
         background-color: #fff;
@@ -1229,9 +1231,9 @@ header {
             position: absolute;
             top: 0;
             right: 0;
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
+            width: 48px;
+            height: 48px;
+            line-height: 48px;
             text-align: center; }
             .help-lists .lists .help .help-list .header span.right i {
               color: #c8c8c8; }
