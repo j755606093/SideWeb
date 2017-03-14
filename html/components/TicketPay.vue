@@ -247,6 +247,11 @@
 			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
 			<span class="center">我的优惠券</span>
 			<span @click="showPage(3,true)" class="right">确定</span>
+			<!-- 头部切换 -->
+			<div class="popup-header">
+		  	<span :class="{active:canuseIndex===1}" @click="SetCanUse(1)">可用</span>
+		  	<span :class="{active:canuseIndex===2}" @click="SetCanUse(2)">不可用</span>
+		  </div>
 		</div>
 
 		<!-- 优惠券选择 -->
@@ -257,13 +262,8 @@
 		  <slot>
 		  	<div class="action">
 		  		<div class="action-use">
-		  			<!-- 头部切换 -->
-						<div class="popup-header">
-					  	<span :class="{active:canuseIndex===1}" @click="SetCanUse(1)">可用</span>
-					  	<span :class="{active:canuseIndex===2}" @click="SetCanUse(2)">不可用</span>
-					  </div>
 					  <!-- 内容 -->
-						<div v-show="canuseIndex===1" class="page animated fadeIn">
+						<div v-show="canuseIndex===1" class="page animated fadeIn" style="margin-top:100px;">
 							<!-- 可用优惠券 -->
 							<div @click="selectRebeat(index)" :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
 								<div class="top">
@@ -284,7 +284,7 @@
                 </div>
 							</div>
 						</div>
-						<div v-show="canuseIndex===2" class="page animated fadeIn">
+						<div v-show="canuseIndex===2" class="page animated fadeIn" style="margin-top:100px;">
 							<!-- 不可用优惠券 -->
 							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseTwo">
 								<div class="top">

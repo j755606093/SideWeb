@@ -516,7 +516,7 @@
 }
 
 .page-header {
-  height: 50px;
+  // height: 50px;
   position: fixed;
   top: 0;
   left: 0;
@@ -544,7 +544,7 @@
     height: 19px;
     line-height: 50px;
   }
-  span.right {
+  >span.right {
     font-size: 14px;
     color: $white;
     height: 50px;
@@ -555,12 +555,47 @@
     width: 50px;
     font-weight:900;
   }
-  span.center {
+  >span.center {
     font-size: 18px;
     color: $white;
     font-weight: 900;
     height: 50px;
     line-height: 50px;
+  }
+  >.popup-header {
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    background-color: $white;
+    color: #c8c8c8;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position:fixed;
+    top:50px;
+    left:0;
+    span {
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+      font-size: 18px;
+      flex: 1;
+      font-weight: 900;
+    }
+    span.active {
+      color: #329be8;
+      position: relative;
+      &::after {
+        position: absolute;
+        bottom: 0px;
+        left: 45%;
+        width: 20px;
+        height: 4px;
+        background-color: #329be8;
+        content: "";
+      }
+    }
   }
 }
 
