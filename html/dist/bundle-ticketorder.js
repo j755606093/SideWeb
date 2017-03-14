@@ -575,15 +575,17 @@
 						_mintUi.MessageBox.alert('取消订单成功').then(function (res) {
 							_this7.myModal = false;
 						});
-						_this7.goback();
+						_this7.goback(); //返回上一层
 						if (!_this7.OrderList1) {
+							// 没有数据
 							_this7.noMoreData = true;
 							return;
 						}
-						for (var i = 0; i < _this7.OrderList1.length; i++) {
+						// 删除取消订单的数据
+						for (var i = 0; i < _this7.OrderList.length; i++) {
 							if (_this7.OrderList[i].Id === _this7.OrderDetail.Id) {
 								_this7.OrderList.splice(i, 1);
-								if (_this7.OrderList[i].length === 0) {
+								if (_this7.OrderList.length === 0) {
 									_this7.noMoreData = true;
 								}
 								break;

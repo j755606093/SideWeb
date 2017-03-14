@@ -495,15 +495,17 @@ const Vue_Order = new Vue({
 						MessageBox.alert('取消订单成功').then(res=>{
 							this.myModal = false;
 						});
-						this.goback();
+						this.goback();//返回上一层
 						if(!this.OrderList1){
+							// 没有数据
 							this.noMoreData = true;
 							return;
 						}
-						for (let i = 0; i < this.OrderList1.length; i++) {
+						// 删除取消订单的数据
+						for (let i = 0; i < this.OrderList.length; i++) {
 							if (this.OrderList[i].Id === this.OrderDetail.Id) {
 								this.OrderList.splice(i, 1);
-								if (this.OrderList[i].length === 0) {
+								if (this.OrderList.length === 0) {
 									this.noMoreData = true;
 								}
 								break;
