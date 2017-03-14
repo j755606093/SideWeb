@@ -13,8 +13,11 @@
 .header {
   width: 100%;
   height: 125px;
-  position: relative;
+  position: fixed;
+  top:0;
+  left:0;
   background-color: #41a1e7;
+  z-index:100;
   >img {
     width: 100%;
     height: 125px;
@@ -807,9 +810,20 @@
         .top{
           width:100%;
           height:100px;
+          position:relative;
           img{
             width:100%;
             height:100px;
+          }
+          p{
+            // width:100%;
+            bottom:5px;
+            right:5px;
+            left:5px;
+            text-align: right;
+            color:#fff;
+            position:absolute;
+            font-weight:900;
           }
         }
         .bottom{

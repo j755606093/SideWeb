@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<!-- 车票信息 -->
-		<div class="ticket-info">
+		<div class="ticket-info" style="margin-top: 140px;">
 			<div class="left">
 				<span v-text="busInfo.StartTime.slice(0,busInfo.StartTime.length-3)">08:23</span>
 				<span v-text="busInfo.CoName">东方快车</span>
@@ -120,12 +120,14 @@
 			<div @click="payMoneygoback"><img src="../picture/back_icon.png"></div>
 			<span style="font-size:16px;" class="center">请在半小时内支付订单 {{countdownTime}}</span>
 		</div>
-		
-		<!-- 优惠券选择头部 -->
-		<div v-show="discountPopupVisible" class="page-header">
-			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
-			<span class="center">我的优惠券</span>
-			<span @click="showPage(3,true)" class="right">确定</span>
+
+		<!-- 选择乘客头部 -->
+		<!-- 为何会放这里呢?这是因为fixed在动画dom下会失效 -->
+		<div v-show="passengerPopupVisible" class="page-header">
+			<div @click="showPage(1,true)"><img src="../picture/back_icon.png"></div>
+			<!-- <span class="center">选择乘车人({{AllFare.length}})</span> -->
+			<span class="center">选择乘车人</span>
+			<span @click="showPage(1,true)" class="right">确定</span>
 		</div>
 
 		<!-- 选择乘客 -->
@@ -135,12 +137,6 @@
 		  class="action-page">
 		  <slot>
 		  	<div class="action">
-		  		<div class="page-header">
-		  			<div @click="showPage(1,true)"><img src="../picture/back_icon.png"></div>
-		  			<!-- <span class="center">选择乘车人({{AllFare.length}})</span> -->
-		  			<span class="center">选择乘车人</span>
-		  			<span @click="showPage(1,true)" class="right">确定</span>
-		  		</div>
 		  		<div class="action-select">
 		  			<div v-for="(item,index) in AllFare">
 		  				<div class="line">
@@ -244,6 +240,15 @@
 		  	</div>
 		  </slot>
 		</mt-popup>
+
+		<!-- 优惠券选择头部 -->
+		<!-- 为何会放这里呢?这是因为fixed在动画dom下会失效 -->
+		<div v-show="discountPopupVisible" class="page-header">
+			<div @click="showPage(3,true)"><img src="../picture/back_icon.png"></div>
+			<span class="center">我的优惠券</span>
+			<span @click="showPage(3,true)" class="right">确定</span>
+		</div>
+
 		<!-- 优惠券选择 -->
 		<mt-popup
 		  v-model="discountPopupVisible"
@@ -263,6 +268,7 @@
 							<div @click="selectRebeat(index)" :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseOne">
 								<div class="top">
                   <img src="../picture/rebate_bg.png">
+                  <p v-if="item.IsSingle===0">可多张使用</p>
                 </div>
                 <div class="bottom">
                   <div class="left">
@@ -283,6 +289,7 @@
 							<div :class="{rebate:true,disabled:item.disabled,active:selectDiscount.indexOf(item.value)>-1}" v-for="(item,index) in canuseTwo">
 								<div class="top">
                   <img src="../picture/rebate_bg.png">
+                  <p v-if="item.IsSingle===0">可多张使用</p>
                 </div>
                 <div class="bottom">
                   <div class="left">
@@ -675,9 +682,7 @@ export default {
 								text: '支付成功,准备跳转至订单页!',
 								spinnerType: 'double-bounce'
 							});
-							setTimeout(()=>{
-								window.location.href="./TicketOrder.html?orderid="+id
-							},2000);
+							window.location.href="./TicketOrder.html?orderid="+id
 						}
 						else{
 							Toast({

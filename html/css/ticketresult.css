@@ -117,7 +117,13 @@ input {
         flex-direction: row;
     font-size: 1.4rem;
     text-align: center;
-    padding: 0 10px; }
+    padding: 0 10px;
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    left: 0;
+    z-index: 100;
+    background-color: #fafafa; }
     .result .date-control span {
       height: 30px;
       line-height: 30px;
@@ -171,7 +177,7 @@ input {
   .result .result-list {
     position: relative;
     margin: 14px 10px;
-    margin-top: 7px;
+    margin-top: 35px;
     text-align: center; }
     .result .result-list .list {
       display: -ms-flexbox;
