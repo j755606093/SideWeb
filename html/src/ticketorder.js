@@ -666,15 +666,7 @@ const Vue_Order = new Vue({
 // 		Vue_Order.moreOrderData();
 // 		// console.log('yes');
 // 	}
-function quick(array){
-	let len = array.length;
-	let half = Math.floor(len/2);//中间值
 
-	let left = array.slice(0,half);
-	let right = array.slice(half);
-
-	
-}
 // 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
 // 	if(status1<1000 && selected===2){
 // 		Vue_Order.moreOrderData1();

@@ -758,13 +758,7 @@
 	// 		Vue_Order.moreOrderData();
 	// 		// console.log('yes');
 	// 	}
-	function quick(array) {
-		var len = array.length;
-		var half = Math.floor(len / 2); //中间值
 
-		var left = array.slice(0, half);
-		var right = array.slice(half);
-	}
 	// 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
 	// 	if(status1<1000 && selected===2){
 	// 		Vue_Order.moreOrderData1();
