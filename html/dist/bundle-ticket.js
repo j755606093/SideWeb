@@ -32329,6 +32329,10 @@
 		value: true
 	});
 
+	var _assign = __webpack_require__(29);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
 	var _toConsumableArray2 = __webpack_require__(162);
 
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
@@ -32804,18 +32808,23 @@
 
 			/** 确定筛选 */
 			Setfilter: function Setfilter() {
-				if (this.isShowPrice) {
-					this.queryPrice();
-				}
-				if (this.isShowTime) {
-					this.queryTime();
-				}
-				if (this.isShowConame) {
-					this.queryConame();
-				}
-				if (this.isShowRouter) {
-					this.queryRouter();
-				}
+				// if(this.isShowPrice){
+				// 	this.queryPrice();
+				// }
+				// if(this.isShowTime){
+				// 	this.queryTime();
+				// }
+				// if(this.isShowConame){
+				// 	this.queryConame();
+				// }
+				// if(this.isShowRouter){
+				// 	this.queryRouter();
+				// }
+				/** 顺序来筛选数据 */
+				this.queryTime();
+				this.queryConame();
+				this.queryRouter();
+				this.queryPrice();
 
 				if (this.getResultList.length === 0) {
 					this.showNoData = true;
@@ -32881,30 +32890,18 @@
 				});
 			},
 
-			/** 筛选价格 */
-			queryPrice: function queryPrice() {
-				//设置价格高低
-				var lastData = this.ResultBackUp;
-				if (this.PriceOptionsValue === "1") {
-					this.getResultList = _.sortBy(lastData, "Price");
-				}
-				if (this.PriceOptionsValue === "2") {
-					this.getResultList = _.sortBy(lastData, "Price").reverse();
-				}
-			},
-
 			/** 筛选运营公司 */
 			queryConame: function queryConame() {
 				// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
 				if (this.PositionOptionsValue[0] === "不限" && this.PositionOptionsValue.length === 1) {
 					// 长度为一
-					this.getResultList = this.ResultBackUp;
+					// this.getResultList = this.ResultBackUp;
 					return;
 				}
 				// console.log(this.getResultList)
 				var filter = this.PositionOptionsValue.slice(1);
 				// console.log(filter)
-				var lastData = this.ResultBackUp;
+				var lastData = (0, _assign2.default)({}, this.getResultList);
 				this.getResultList = _.filter(lastData, function (item) {
 					var n = false;
 					for (var i = 0; i < filter.length; i++) {
@@ -32920,12 +32917,12 @@
 			queryRouter: function queryRouter() {
 				if (this.RouterOptionsValue[0] === "不限" && this.RouterOptionsValue.length === 1) {
 					// 长度为一
-					this.getResultList = this.ResultBackUp;
+					// this.getResultList = this.ResultBackUp;
 					return;
 				}
 				// console.log(this.getResultList)
 				var filter = this.RouterOptionsValue.slice(1);
-				var lastData = this.ResultBackUp;
+				var lastData = (0, _assign2.default)({}, this.getResultList);
 				this.getResultList = _.filter(lastData, function (item) {
 					var n = false;
 					for (var i = 0; i < filter.length; i++) {
@@ -32935,6 +32932,18 @@
 					}
 					return n;
 				});
+			},
+
+			/** 筛选价格 */
+			queryPrice: function queryPrice() {
+				//设置价格高低
+				var lastData = (0, _assign2.default)({}, this.getResultList);
+				if (this.PriceOptionsValue === "1") {
+					this.getResultList = _.sortBy(lastData, "Price");
+				}
+				if (this.PriceOptionsValue === "2") {
+					this.getResultList = _.sortBy(lastData, "Price").reverse();
+				}
 			},
 
 			/** 选择一条路线去下单 */

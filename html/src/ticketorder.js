@@ -109,26 +109,26 @@ const refreshLink = (function() {
 const Vue_Order = new Vue({
 	el: "#app",
 	data: {
-		OrderList: [],
+		OrderList: [],// 待支付页
 		index: 1, //页数
 		noMoreData: false, //没有更多数据
 		isUse: false, //是否使用中
 		noDataShow: true, //没有订单数据
 
-		OrderList1: [],
+		OrderList1: [],//待使用页
 		index1: 1, //页数
 		noMoreData1: false, //没有更多数据
 		isUse1: false, //是否使用中
 		noDataShow1: true, //没有订单数据
 
-		ready: false, //是否准备显示
-		Passengers: [], //乘客名数据,方便使用
-		orderVisible: false,
+		ready: false, //是否准备显示真个页面(防止数据未准备就显示凌乱的页面)
+		Passengers: [], //订单详情中乘客名数据
+		orderVisible: false,//控制订单详情页显示隐藏
 
 		OrderDetail: {}, //订单详细信息
-		passenger: [], //乘客数据
+		passenger: [], //乘客数据(显示前需要从Passengers判断状态)
 
-		selected: 1, //默认选择未支付
+		selected: 1, //默认选择未支付页面显示
 
 		countdown: null, //倒计时
 		countdownTime: "", //倒计时显示
@@ -140,19 +140,20 @@ const Vue_Order = new Vue({
 		optionsPassenger: [],
 		codePopupVisible: false, //二维码
 
-		myModal:false,//自己的蒙版
+		myModal:false,//自己的蒙版,控制隐藏显示
 
-		refreshLink: refreshLink, //刷新页面地址
-		code:"",//验证码的图片信息showQRCode(text).src
+		refreshLink: refreshLink, //刷新页面地址(增加hash防止缓存)
+		code:"",//验证码的图片信息(base64)showQRCode(text).src
 		showCode:false,//是否显示验证码
 	},
 	created() {
 		this.loading();
 		if (this.getQueryString("orderid")) {
+			// 如果url上有参数
 			// 需要显示订单详细信息
 			this.getOrderInfo(this.getQueryString("orderid"));
 			let id = this.getQueryString("orderid");
-			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//生成二维码链接
+			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//根据订单id生成二维码链接(不一定显示)
 		}
 
 		// 顺序请求服务器,防止服务器请求过多报错
@@ -170,26 +171,16 @@ const Vue_Order = new Vue({
 		
 	},
 	watch: {
-		// 监控tab的变化
-		// selected(val){
-		// 	console.log(val)
-		// }
-		orderVisible(val){
-			// if(val){
-			// 	//复制
-			// 	this.clipboard = new Clipboard('.copy');
-			// 	this.clipboard.on('success',(e)=>{
-			// 		this.toast("复制成功")
-			// 	})
-			// }
-		}
+
 	},
 	methods: {
+		/** 加载动画(需要手动关闭) */
 		loading() {
 			Indicator.open({
 				spinnerType: 'fading-circle'
 			});
 		},
+		/** 提示 */
 		toast(title) {
 			Toast({
 				message: title,
@@ -206,7 +197,7 @@ const Vue_Order = new Vue({
 			}
 			return null;
 		},
-		/** 加载更多数据 */
+		/** 加载更多数据,empty是否强制刷新 */
 		moreOrderData(empty = false) {
 			return new Promise((resolve,reject)=>{
 				if (this.noMoreData || this.isUse) {
@@ -238,20 +229,17 @@ const Vue_Order = new Vue({
 								// 是否是刷新数据
 								this.OrderList = result.Data;
 							} else {
+								// 否则一个个的添加到原来的数组中
 								for (let i = 0; i < result.Data.length; i++) {
 									this.OrderList.push(result.Data[i]);
 								}
 							}
-							this.noDataShow = false; //显示订单
+							this.noDataShow = false; //隐藏没有订单的信息
 						} else {
 							this.noMoreData = true;
 							this.selected = 2;//如果未支付没有数据就显示已待使用
 							if (this.index !== 1) {
-								Toast({
-									message: result.Message,
-									position: 'bottom',
-									duration: 3000
-								});
+								this.toast(result.Message);
 							}
 						}
 
@@ -305,11 +293,7 @@ const Vue_Order = new Vue({
 					} else {
 						this.noMoreData1 = true;
 						if (this.index1 !== 1) {
-							Toast({
-								message: result.Message,
-								position: 'bottom',
-								duration: 3000
-							});
+							this.toast(result.Message);
 						}
 					}
 					this.isUse1 = false; //释放这个函数
@@ -523,6 +507,7 @@ const Vue_Order = new Vue({
 
 			});
 		},
+		/** 查看选择乘客是否合法 */
 		checkSelectPassenger() {
 			// this.refundPassenger = false;
 			this.myModal = true;
@@ -681,7 +666,15 @@ const Vue_Order = new Vue({
 // 		Vue_Order.moreOrderData();
 // 		// console.log('yes');
 // 	}
+function quick(array){
+	let len = array.length;
+	let half = Math.floor(len/2);//中间值
 
+	let left = array.slice(0,half);
+	let right = array.slice(half);
+
+	
+}
 // 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
 // 	if(status1<1000 && selected===2){
 // 		Vue_Order.moreOrderData1();

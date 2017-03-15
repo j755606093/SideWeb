@@ -477,18 +477,23 @@ export default {
 		},
 		/** 确定筛选 */
 		Setfilter(){
-			if(this.isShowPrice){
-				this.queryPrice();
-			}
-			if(this.isShowTime){
-				this.queryTime();
-			}
-			if(this.isShowConame){
-				this.queryConame();
-			}
-			if(this.isShowRouter){
-				this.queryRouter();
-			}
+			// if(this.isShowPrice){
+			// 	this.queryPrice();
+			// }
+			// if(this.isShowTime){
+			// 	this.queryTime();
+			// }
+			// if(this.isShowConame){
+			// 	this.queryConame();
+			// }
+			// if(this.isShowRouter){
+			// 	this.queryRouter();
+			// }
+			/** 顺序来筛选数据 */
+			this.queryTime();
+			this.queryConame();
+			this.queryRouter();
+			this.queryPrice();
 
 			if(this.getResultList.length===0){
 				this.showNoData = true;
@@ -551,29 +556,18 @@ export default {
 				return n;
 			});
 		},
-		/** 筛选价格 */
-		queryPrice(){
-			//设置价格高低
-			let lastData = this.ResultBackUp;
-			if(this.PriceOptionsValue==="1"){
-				this.getResultList = _.sortBy(lastData,"Price");
-			}
-			if(this.PriceOptionsValue==="2"){
-				this.getResultList = _.sortBy(lastData,"Price").reverse();
-			}
-		},
 		/** 筛选运营公司 */
 		queryConame(){
 			// 如果this.PositionOptionsValue长度超过1位,那就需要去掉'不限'
 			if(this.PositionOptionsValue[0]==="不限"&&this.PositionOptionsValue.length===1){
 				// 长度为一
-				this.getResultList = this.ResultBackUp;
+				// this.getResultList = this.ResultBackUp;
 				return;
 			}
 			// console.log(this.getResultList)
 			let filter = this.PositionOptionsValue.slice(1);
 			// console.log(filter)
-			let lastData = this.ResultBackUp;
+			let lastData = Object.assign({},this.getResultList);
 			this.getResultList = _.filter(lastData,(item)=>{
 				let n =false;
 				for(let i=0;i<filter.length;i++){
@@ -588,12 +582,12 @@ export default {
 		queryRouter(){
 			if(this.RouterOptionsValue[0]==="不限"&&this.RouterOptionsValue.length===1){
 				// 长度为一
-				this.getResultList = this.ResultBackUp;
+				// this.getResultList = this.ResultBackUp;
 				return;
 			}
 			// console.log(this.getResultList)
 			let filter = this.RouterOptionsValue.slice(1);
-			let lastData = this.ResultBackUp;
+			let lastData = Object.assign({},this.getResultList);
 			this.getResultList = _.filter(lastData,(item)=>{
 				let n =false;
 				for(let i=0;i<filter.length;i++){
@@ -603,6 +597,17 @@ export default {
 				}
 				return n;
 			});
+		},
+		/** 筛选价格 */
+		queryPrice(){
+			//设置价格高低
+			let lastData = Object.assign({},this.getResultList);
+			if(this.PriceOptionsValue==="1"){
+				this.getResultList = _.sortBy(lastData,"Price");
+			}
+			if(this.PriceOptionsValue==="2"){
+				this.getResultList = _.sortBy(lastData,"Price").reverse();
+			}
 		},
 		/** 选择一条路线去下单 */
 		GoToPay(index){
