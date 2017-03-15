@@ -616,24 +616,6 @@ export default {
 			// 去支付页面
 			this.$router.push({name:"ticketpay"});
 		},
-		/** 排序日期 */
-		sortTime(){
-			let data = Utils.formatJsonData(this.getResultList);
-			if(this.arrow===0){
-				data.sort((a,b)=>{
-					return b.Price-a.Price;
-				});
-				this.arrow = 1;
-			}
-			else{
-				data.sort((a,b)=>{
-					return a.Price-b.Price;
-				});
-				this.arrow = 0;
-			}
-
-			this.getResultList = data;
-		},
 		/** 显示路线详情 */
 		showCompanyDeatil(index,event){
 			if(index===this.routerDetailShow){

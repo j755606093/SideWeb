@@ -269,7 +269,7 @@
 
 						_this.optionsPassenger.push({ Name: item.Name, Mobile: item.Mobile, Price: item.Price, DId: item.DId, active: false, vaild: item.vaild, checked: item.checked ? true : false }); //提供申请退款选择的用户名
 					}
-					_this.haveId = true;
+					_this.haveId = true; //扫码进来的
 					_mintUi.Indicator.close();
 				});
 			},

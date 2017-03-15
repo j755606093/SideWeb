@@ -32954,24 +32954,6 @@
 				this.$router.push({ name: "ticketpay" });
 			},
 
-			/** 排序日期 */
-			sortTime: function sortTime() {
-				var data = _utils2.default.formatJsonData(this.getResultList);
-				if (this.arrow === 0) {
-					data.sort(function (a, b) {
-						return b.Price - a.Price;
-					});
-					this.arrow = 1;
-				} else {
-					data.sort(function (a, b) {
-						return a.Price - b.Price;
-					});
-					this.arrow = 0;
-				}
-
-				this.getResultList = data;
-			},
-
 			/** 显示路线详情 */
 			showCompanyDeatil: function showCompanyDeatil(index, event) {
 				if (index === this.routerDetailShow) {

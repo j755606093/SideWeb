@@ -111,7 +111,7 @@ const Vue_User = new Vue({
 			noMoreData: false, //是否还有订单数据
 			isUse: false, //刷新函数是否使用中
 			index: 1, //数据页面
-		}, //未支付订单
+		}, //待支付订单
 		OrderType2: {
 			OrderList: [], //订单数据
 			noMoreData: false, //是否还有订单数据
@@ -142,7 +142,7 @@ const Vue_User = new Vue({
 			index: 1,
 			isUse: false,
 			noMoreData: false
-		},
+		},//退款单
 		helpContentShow: 0, //默认不显示任何一个
 		showpassengeraction: 0, //修改增加乘客
 		ChaPassengerIndex: 0,

@@ -264,7 +264,7 @@
 				return null;
 			},
 
-			/** 加载更多数据,empty是否强制刷新 */
+			/** 待支付加载更多数据,empty是否强制刷新 */
 			moreOrderData: function moreOrderData() {
 				var _this2 = this;
 
@@ -325,7 +325,7 @@
 				});
 			},
 
-			/** 加载更多数据 */
+			/** 待使用加载更多数据 */
 			moreOrderData1: function moreOrderData1() {
 				var _this3 = this;
 
@@ -460,6 +460,8 @@
 					console.log(error);
 				});
 			},
+
+			/** 支付订单 */
 			payMoney: function payMoney() {
 				var _this5 = this;
 
@@ -489,6 +491,8 @@
 					});
 				});
 			},
+
+			/** 倒计时支付时间 */
 			CountDown: function CountDown() {
 				var _this6 = this;
 
@@ -523,11 +527,13 @@
 					_this6.storeCountTime--;
 				}, 1000);
 			},
+
+			/** 返回键 */
 			goback: function goback() {
 				if (this.getQueryString("orderid")) {
 					// 如果有这个说明是其他页面跳转过来的
-					// 就直接跳转回去
 					if (this.getQueryString("type")) {
+						// 有type说明是个人中心调整过来的,就直接跳转回去
 						window.location.href = "./TicketUser.html?type=" + this.getQueryString("type");
 						return;
 					}
@@ -541,6 +547,8 @@
 				this.countdown = null;
 				this.orderVisible = false;
 			},
+
+			/** 申请取消订单 */
 			cancelOrder: function cancelOrder() {
 				var _this7 = this;
 
@@ -579,6 +587,8 @@
 					_this7.myModal = false;
 				});
 			},
+
+			/** 输入退款理由 */
 			inputRefund: function inputRefund() {
 				return _mintUi.MessageBox.prompt('请输入退款理由').then(function (_ref) {
 					var value = _ref.value,
@@ -602,6 +612,8 @@
 					this.refund();
 				}
 			},
+
+			/** 点击申请退款就立即查看是否有资格退款 */
 			showSelectPassenger: function showSelectPassenger() {
 				var _this9 = this;
 
@@ -609,6 +621,7 @@
 				for (var i = 0; i < this.OrderDetail.Passengers.length; i++) {
 					var item = this.OrderDetail.Passengers[i];
 					if (item.Status === 1) {
+						// Status===1说明可以退款
 						number++;
 					}
 				}
@@ -623,6 +636,8 @@
 					this.refundPassenger = true;
 				}
 			},
+
+			/** 点击退款 */
 			refund: function refund() {
 				var _this10 = this;
 
@@ -642,6 +657,7 @@
 					}
 				}
 
+				/** 要求输入退款理由 */
 				this.inputRefund().then(function (result) {
 					fetch(config.serverUrl + "/api/Order/Refund", {
 						method: "POST",
@@ -687,27 +703,31 @@
 			openCode: function openCode() {
 				this.codePopupVisible = true;
 			},
+
+			/** 选择退款人 */
 			selectRefund: function selectRefund(index) {
 				var _this11 = this;
 
-				this.optionsPassenger[index].active = !this.optionsPassenger[index].active;
+				this.optionsPassenger[index].active = !this.optionsPassenger[index].active; // 是否选中
 
-				this.refunndMoney = 0;
-				this.selectPassenger = [];
+				this.refunndMoney = 0; //清空退款金额
+				this.selectPassenger = []; //清空选择的乘客
 				this.optionsPassenger.map(function (item, i) {
 					if (item.active) {
-						var money = item.Price - item.Price * 0.1;
+						var money = item.Price - item.Price * 0.1; //默认收取10%手续费
 						_this11.refunndMoney += money;
 						_this11.selectPassenger.push(item.DId);
 					}
 				});
-				this.refunndMoney = this.refunndMoney.toFixed(2);
+				this.refunndMoney = this.refunndMoney.toFixed(2); //精确到小数点后两位
 			},
+
+			/** 选择全部乘客 */
 			selectRefundAll: function selectRefundAll() {
 				var _this12 = this;
 
-				this.refunndMoney = 0;
-				this.selectPassenger = [];
+				this.refunndMoney = 0; //清空退款金额
+				this.selectPassenger = []; //清空选择的乘客
 				this.optionsPassenger.map(function (item, i) {
 					item.active = true;
 					var money = item.Price - item.Price * 0.1;
@@ -715,6 +735,8 @@
 					_this12.selectPassenger.push(item.DId);
 				});
 			},
+
+			/** 不显示官方二维码 */
 			cancelModal: function cancelModal() {
 				this.codePopupVisible = false;
 			},
