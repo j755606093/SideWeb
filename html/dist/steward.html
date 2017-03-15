@@ -149,7 +149,8 @@
         <span>¥{{OrderDetail.TotalPrice}}</span>
       </div>
       <div class="yes">
-        <button @click="yes">确定乘客</button>
+        <button v-if="checkedNum!==optionsPassenger.length" @click="yes">确定乘客</button>
+        <button style="background-color: #c8c8c8;" v-else>已全部上车</button>
       </div>
     </footer>
   </div>

@@ -251,18 +251,19 @@ const Vue_User = new Vue({
 				}).then(result => result.json())
 				.then(result => {
 					if(result.Data){
-						// 验证成功
+						// 验证成功,排除已经验证过的乘客信息
 						this.toast("验证成功!");
 						this.Passengers.map((item,index)=>{
 							for(let i=0;i<this.optionsPassenger.length;i++){
 								if(item===this.optionsPassenger[i].DId){
 									// 已经验证的乘客
-									this.checkedNum++;
+									this.checkedNum++;//已验证乘客数增加
+									//设置当前乘客信息
 									let data = this.optionsPassenger[i];
 									data.checked = true;
 									data.vaild = true;
 									data.active = false;
-									this.$set(this.optionsPassenger,i,data);
+									this.$set(this.optionsPassenger,i,data);// 响应式赋值,否则不会改变
 								}
 							}
 						})
@@ -355,20 +356,14 @@ const Vue_User = new Vue({
 		},
 		/** 确定选择这个订单 */
 		getOrder(){
+			// 多个订单选择
 			this.OrderDetail = this.AllOrder[this.selectOrderIndex];
 			this.myModal = false;
 			this.initData();
 		}
 	},
 	directives:{
-		edit:{
-			update(newval,oldval){
-				console.log(newval)
-				if(newval){
-					console.log(newval)
-				}
-			}
-		}
+		
 	},
 	components: {
 		"mt-popup": Popup,

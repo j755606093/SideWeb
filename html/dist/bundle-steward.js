@@ -329,18 +329,19 @@
 					return result.json();
 				}).then(function (result) {
 					if (result.Data) {
-						// 验证成功
+						// 验证成功,排除已经验证过的乘客信息
 						_this4.toast("验证成功!");
 						_this4.Passengers.map(function (item, index) {
 							for (var i = 0; i < _this4.optionsPassenger.length; i++) {
 								if (item === _this4.optionsPassenger[i].DId) {
 									// 已经验证的乘客
-									_this4.checkedNum++;
+									_this4.checkedNum++; //已验证乘客数增加
+									//设置当前乘客信息
 									var data = _this4.optionsPassenger[i];
 									data.checked = true;
 									data.vaild = true;
 									data.active = false;
-									_this4.$set(_this4.optionsPassenger, i, data);
+									_this4.$set(_this4.optionsPassenger, i, data); // 响应式赋值,否则不会改变
 								}
 							}
 						});
@@ -440,21 +441,13 @@
 
 			/** 确定选择这个订单 */
 			getOrder: function getOrder() {
+				// 多个订单选择
 				this.OrderDetail = this.AllOrder[this.selectOrderIndex];
 				this.myModal = false;
 				this.initData();
 			}
 		},
-		directives: {
-			edit: {
-				update: function update(newval, oldval) {
-					console.log(newval);
-					if (newval) {
-						console.log(newval);
-					}
-				}
-			}
-		},
+		directives: {},
 		components: {
 			"mt-popup": _mintUi.Popup,
 			"vue-input-code": _vueInputCode2.default

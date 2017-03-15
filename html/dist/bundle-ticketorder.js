@@ -380,6 +380,7 @@
 			/** 打开一个订单 */
 			openOrder: function openOrder(index) {
 				this.loading();
+				// history.pushState({ page: "order" }, "订票", "#/order");//增加一个历史记录
 				if (this.selected === 1) {
 					this.getOrderInfo(this.OrderList[index].Id);
 				} else {
@@ -770,6 +771,11 @@
 		}
 	});
 
+	// window.addEventListener("popstate",function(){
+	// 	if(Vue_Order.orderVisible){
+	// 		Vue_Order.goback();
+	// 	}
+	// })
 	// window.addEventListener('scroll',_.throttle(function(){
 	// 	if(!Vue_Order.ready){
 	// 		return;

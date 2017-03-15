@@ -209,7 +209,7 @@
             <div class="action-body">
               <!-- 验证码 -->
               <div v-if="showCode" class="code">
-                <div class="img"><img :src="code"></div>
+                <div @click="openCode" class="img"><img :src="code"></div>
                 <div class="right">
                   <p>车票验证码</p>
                   <p>{{OrderDetail.VerifyCode}}</p>
@@ -378,7 +378,8 @@
       <!-- 扫描二维码 -->
       <mt-popup v-model="codePopupVisible" class="code-popup-visible">
         <slot>
-          <img v-show="codePopupVisible" src="../picture/qrcode_for_gh_c94040df86a5_430.jpg">
+          <!-- <img src="../picture/qrcode_for_gh_c94040df86a5_430.jpg"> -->
+          <img :src="code">
           <div @click="cancelModal" v-show="codePopupVisible" style="position: fixed;top:0;left:0;width:100%;height:100%;background-color: rgba(0,0,0,.6);z-index: -1"></div>
         </slot>
       </mt-popup>
