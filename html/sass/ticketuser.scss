@@ -47,7 +47,7 @@ header {
   // padding-top:49px;
   // padding-bottom: 60px;
   .header {
-    height: 190px;
+    height: 130px;
     // background-color: #2196F3;
     display: flex;
     flex-direction: row;
@@ -59,7 +59,7 @@ header {
       position: absolute;
       top: 0;
       left: 0;
-      height: 190px;
+      height: 130px;
       width: 100%;
       z-index: -1;
     }
@@ -95,8 +95,9 @@ header {
       width:50%;
       text-align: right;
       img {
-        width: 90px;
-        height: 90px;
+        width: 70px;
+        height: 70px;
+        margin-top: 10px;
         border-radius: 50%;
       }
     }
@@ -1329,6 +1330,172 @@ header {
     }
     .red {
       color: $red;
+    }
+  }
+}
+
+/** 提取佣金 */
+.money-lists{
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  // margin-top: 50px;
+  .money-body{
+    .money-header{
+      margin-top:49px;
+      width:100%;
+      height:175px;
+      background-color: #329be8;
+      .money-header-top{
+        height:100px;
+        width:100%;
+        padding:10px 20px;
+        @include display_flex('row');
+        color:#fff;
+        font-weight:900;
+        .money-block{
+          flex: 1;
+          width:33.33333%;
+          height:100px;
+          @include display_flex('column');
+        }
+        .money-left{
+          position:relative;
+          >p.first{
+            font-size:24px;
+            font-weight:900;
+            margin-bottom: 20px;
+            >span{
+              font-size:14px;
+              margin-right:5px;
+            }
+          }
+          >p.last{
+            font-size:12px;
+            position:absolute;
+            bottom:10px;
+            left:0;
+            width:100%;
+            text-align: center;
+          }
+          &:after{
+            content: "";
+            height:20px;
+            width:1px;
+            position: absolute;
+            top:40px;
+            right:0;
+            background-color: #fff;
+          }
+        }
+        .money-center{
+          position:relative;
+          >p.first{
+            font-size:40px;
+            margin-bottom: 40px;
+            >span{
+              font-size:14px;
+              margin-right:5px;
+            }
+          }
+          >p.last{
+            margin-top:5px;
+            font-size:14px;
+            position:absolute;
+            bottom:10px;
+            left:0;
+            width:100%;
+            text-align: center;
+          }
+        }
+        .money-right{
+          position:relative;
+          >p.first{
+            font-size:24px;
+            font-weight:900;
+            margin-bottom: 20px;
+            >span{
+              font-size:14px;
+              margin-right:5px;
+            }
+          }
+          >p.last{
+            font-size:12px;
+            position:absolute;
+            bottom:10px;
+            left:0;
+            width:100%;
+            text-align: center;
+          }
+          &:after{
+            content: "";
+            height:20px;
+            width:1px;
+            position: absolute;
+            top:40px;
+            left:0;
+            background-color: #fff;
+          }
+        }
+      }
+      .money-header-bottom{
+        text-align: center;
+        height:70px;
+        @include display_flex('row');
+        .getmoney{
+          width:100px;
+          border:none;
+          outline: none;
+          color:#fff;
+          height:40px;
+          padding:0 10px;
+          border-radius: 5px;
+          background-color: #4da2ec;
+          font-size:15px;
+        }
+      }
+    }
+    .money-list{
+      width:100%;
+      padding:0 10px;
+      .people-list{
+        height:50px;
+        margin-top:10px;
+        padding:5px 0;
+        @include display_flex('row');
+        background-color: #fff;
+        border-radius: 5px;
+        .img{
+          width:50px;
+          height:50px;
+          @include display_flex('row');
+          margin-left: 10px;
+          >img{
+            width:40px;
+            height:40px;
+            border-radius: 50%;
+          }
+        }
+        .name{
+          margin-left: 10px;
+          height:50px;
+          line-height:50px;
+          width:100px;
+          font-size:14px;
+        }
+        .taskname{
+          flex:1;
+          line-height:50px;
+          height:50px;
+          text-align: right;
+          font-size:14px;
+          margin-right: 10px;
+        }
+      }
     }
   }
 }

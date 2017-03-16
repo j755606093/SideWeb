@@ -120,10 +120,12 @@ input {
       -ms-flex-direction: row;
           flex-direction: row;
       height: 60px;
-      line-height: 60px; }
+      line-height: 60px;
+      width: 100%; }
       .ticketbody .index-body .location > span {
         -ms-flex: 4;
             flex: 4;
+        width: 40%;
         font-size: 20px;
         font-weight: 900;
         color: #1e1e1e;
@@ -133,6 +135,7 @@ input {
       .ticketbody .index-body .location > div {
         -ms-flex: 2;
             flex: 2;
+        width: 20%;
         text-align: center; }
         .ticketbody .index-body .location > div span {
           width: 32px;
@@ -168,17 +171,20 @@ input {
       -ms-flex-direction: row;
           flex-direction: row;
       height: 60px;
-      line-height: 60px; }
+      line-height: 60px;
+      width: 100%; }
       .ticketbody .index-body .date > span {
         -ms-flex: 3;
             flex: 3;
+        width: 30%;
         display: inline-block;
         color: #c8c8c8;
         font-size: 12px; }
       .ticketbody .index-body .date > div {
         text-align: center;
         -ms-flex: 4;
-            flex: 4; }
+            flex: 4;
+        width: 40%; }
         .ticketbody .index-body .date > div span {
           display: inline-block;
           font-weight: 900;
@@ -187,6 +193,7 @@ input {
       .ticketbody .index-body .date > p {
         -ms-flex: 3;
             flex: 3;
+        width: 30%;
         text-align: right; }
         .ticketbody .index-body .date > p > span {
           text-align: right;
@@ -220,10 +227,12 @@ input {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: row;
-            flex-direction: row; }
+            flex-direction: row;
+        width: 100%; }
         .ticketbody .index-body .search-record .list > span {
           -ms-flex: 4;
               flex: 4;
+          width: 40%;
           color: #c8c8c8;
           display: inline-block;
           height: 25px;
@@ -235,6 +244,7 @@ input {
         .ticketbody .index-body .search-record .list > div {
           -ms-flex: 2;
               flex: 2;
+          width: 20%;
           text-align: center; }
           .ticketbody .index-body .search-record .list > div > span {
             width: 14px;

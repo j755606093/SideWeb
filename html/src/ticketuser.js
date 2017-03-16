@@ -149,6 +149,8 @@ const Vue_User = new Vue({
 
 		myModal:false,//自己的蒙版
 		isShowChangePassenger:false,//是否显示修改乘客弹窗
+
+		getMoneyData:[],//提取佣金数据
 	},
 	created() {
 		this.loading();
@@ -164,7 +166,7 @@ const Vue_User = new Vue({
 				this.isNoPay = result.NoPay;
 				Indicator.close();
 				this.ready = true;//显示网页
-				
+
 				if(this.getQueryString('list')==="6"){
 					// 如果list为6就跳到个人帮助中心
 					this.helpCenter();
@@ -279,8 +281,29 @@ const Vue_User = new Vue({
 		},
 		/** 提取佣金 */
 		showGetMoney(){
-			this.controlHeader(true, "提取佣金");
+			this.controlHeader(true, "我的佣金");
+			// this.showHeader = false;
 			this.getmoneyVisible = true; //显示
+			// /api/Member/GetOfflineUsr
+			this.loading();
+			fetch(config.serverUrl + "/api/Member/GetOfflineUsr", {
+					method: "POST",
+					headers: config.headers,
+					body: JSON.stringify({
+						Index: 1,
+						Size: 20,
+					})
+				})
+				.then(checkStatus)
+				.then(result => result.json())
+				.then(result => {
+					if (result.Data) {
+						this.getMoneyData = result.Data;
+					} else {
+						this.toast(result.Message);
+					}
+					Indicator.close();
+				})
 		},
 		/**
 		 * 获取订单数据
@@ -538,7 +561,6 @@ const Vue_User = new Vue({
 			this.loading();
 			this.getRefund().then(result => {
 				Indicator.close();
-				// console.log(result)
 
 				if (result.Data) {
 					for (let i = 0; i < result.Data.length; i++) {
@@ -555,6 +577,10 @@ const Vue_User = new Vue({
 
 				this.RefundOrder.isUse = false;
 			})
+		},
+		/** 申请提现 */
+		applyGetMoney(){
+			this.toast("稍后上线此功能");
 		},
 		/** 显示增加乘客 */
 		showAddPassenger(index) {
@@ -589,7 +615,6 @@ const Vue_User = new Vue({
 			} else {
 				this.helpContentShow = index;
 			}
-
 		},
 		/** 半圆显示 */
 		canvas(){

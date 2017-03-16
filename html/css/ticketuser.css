@@ -135,7 +135,7 @@ header {
 .body {
   width: 100%; }
   .body .header {
-    height: 190px;
+    height: 130px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
@@ -150,7 +150,7 @@ header {
       position: absolute;
       top: 0;
       left: 0;
-      height: 190px;
+      height: 130px;
       width: 100%;
       z-index: -1; }
     .body .header .content {
@@ -182,8 +182,9 @@ header {
       width: 50%;
       text-align: right; }
       .body .header .right img {
-        width: 90px;
-        height: 90px;
+        width: 70px;
+        height: 70px;
+        margin-top: 10px;
         border-radius: 50%; }
   .body .lists {
     width: 100%;
@@ -1367,6 +1368,180 @@ header {
       color: #0074D9; }
     .refund-lists .lists .red {
       color: #db3652; }
+
+/** 提取佣金 */
+.money-lists {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll; }
+  .money-lists .money-body .money-header {
+    margin-top: 49px;
+    width: 100%;
+    height: 175px;
+    background-color: #329be8; }
+    .money-lists .money-body .money-header .money-header-top {
+      height: 100px;
+      width: 100%;
+      padding: 10px 20px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      color: #fff;
+      font-weight: 900; }
+      .money-lists .money-body .money-header .money-header-top .money-block {
+        -ms-flex: 1;
+            flex: 1;
+        width: 33.33333%;
+        height: 100px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+            flex-direction: column;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center; }
+      .money-lists .money-body .money-header .money-header-top .money-left {
+        position: relative; }
+        .money-lists .money-body .money-header .money-header-top .money-left > p.first {
+          font-size: 24px;
+          font-weight: 900;
+          margin-bottom: 20px; }
+          .money-lists .money-body .money-header .money-header-top .money-left > p.first > span {
+            font-size: 14px;
+            margin-right: 5px; }
+        .money-lists .money-body .money-header .money-header-top .money-left > p.last {
+          font-size: 12px;
+          position: absolute;
+          bottom: 10px;
+          left: 0;
+          width: 100%;
+          text-align: center; }
+        .money-lists .money-body .money-header .money-header-top .money-left:after {
+          content: "";
+          height: 20px;
+          width: 1px;
+          position: absolute;
+          top: 40px;
+          right: 0;
+          background-color: #fff; }
+      .money-lists .money-body .money-header .money-header-top .money-center {
+        position: relative; }
+        .money-lists .money-body .money-header .money-header-top .money-center > p.first {
+          font-size: 40px;
+          margin-bottom: 40px; }
+          .money-lists .money-body .money-header .money-header-top .money-center > p.first > span {
+            font-size: 14px;
+            margin-right: 5px; }
+        .money-lists .money-body .money-header .money-header-top .money-center > p.last {
+          margin-top: 5px;
+          font-size: 14px;
+          position: absolute;
+          bottom: 10px;
+          left: 0;
+          width: 100%;
+          text-align: center; }
+      .money-lists .money-body .money-header .money-header-top .money-right {
+        position: relative; }
+        .money-lists .money-body .money-header .money-header-top .money-right > p.first {
+          font-size: 24px;
+          font-weight: 900;
+          margin-bottom: 20px; }
+          .money-lists .money-body .money-header .money-header-top .money-right > p.first > span {
+            font-size: 14px;
+            margin-right: 5px; }
+        .money-lists .money-body .money-header .money-header-top .money-right > p.last {
+          font-size: 12px;
+          position: absolute;
+          bottom: 10px;
+          left: 0;
+          width: 100%;
+          text-align: center; }
+        .money-lists .money-body .money-header .money-header-top .money-right:after {
+          content: "";
+          height: 20px;
+          width: 1px;
+          position: absolute;
+          top: 40px;
+          left: 0;
+          background-color: #fff; }
+    .money-lists .money-body .money-header .money-header-bottom {
+      text-align: center;
+      height: 70px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center; }
+      .money-lists .money-body .money-header .money-header-bottom .getmoney {
+        width: 100px;
+        border: none;
+        outline: none;
+        color: #fff;
+        height: 40px;
+        padding: 0 10px;
+        border-radius: 5px;
+        background-color: #4da2ec;
+        font-size: 15px; }
+  .money-lists .money-body .money-list {
+    width: 100%;
+    padding: 0 10px; }
+    .money-lists .money-body .money-list .people-list {
+      height: 50px;
+      margin-top: 10px;
+      padding: 5px 0;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      background-color: #fff;
+      border-radius: 5px; }
+      .money-lists .money-body .money-list .people-list .img {
+        width: 50px;
+        height: 50px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+        -ms-flex-pack: center;
+            justify-content: center;
+        -ms-flex-align: center;
+            align-items: center;
+        margin-left: 10px; }
+        .money-lists .money-body .money-list .people-list .img > img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%; }
+      .money-lists .money-body .money-list .people-list .name {
+        margin-left: 10px;
+        height: 50px;
+        line-height: 50px;
+        width: 100px;
+        font-size: 14px; }
+      .money-lists .money-body .money-list .people-list .taskname {
+        -ms-flex: 1;
+            flex: 1;
+        line-height: 50px;
+        height: 50px;
+        text-align: right;
+        font-size: 14px;
+        margin-right: 10px; }
 
 .mint-indicator {
   position: fixed;

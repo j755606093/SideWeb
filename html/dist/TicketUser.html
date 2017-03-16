@@ -51,6 +51,10 @@
           <p>优惠券</p>
           <div><img src="../picture/coupon_gray.png"></div>
         </div>
+        <div @click="showGetMoney" class="linestyle">
+          <p>提取佣金</p>
+          <div><img src="../picture/get_money.png"></div>
+        </div>
         <div @click="showPassengerList" class="linestyle">
           <p>常用联系人</p>
           <div><img src="../picture/contact_person_gray.png"></div>
@@ -213,6 +217,43 @@
           </div>
         </div>
       </slot>
+    </mt-popup>
+    <!-- 提取佣金 -->
+    <mt-popup v-model="getmoneyVisible" position="right" id="money-lists" class="money-lists">
+      <div class="money-body">
+        <div class="money-header">
+          <div class="money-header-top">
+            <div class="money-left money-block">
+              <p class="first"><span>¥</span>0</p>
+              <p class="last">佣金总数</p>
+            </div>
+            <div class="money-center money-block">
+              <p class="first"><span>¥</span>0</p>
+              <p class="last">可领取佣金</p>
+            </div>
+            <div class="money-right money-block">
+              <p class="first"><span>¥</span>0</p>
+              <p class="last">尚未完成金额</p>
+            </div>
+          </div>
+          <div class="money-header-bottom">
+            <button @click="applyGetMoney" class="getmoney">申请提现</button>
+          </div>
+        </div>
+        <div class="money-list">
+          <div class="people-list" v-for="(item,index) in getMoneyData">
+            <div class="img">
+              <img :src="item.Avatar">
+            </div>
+            <div class="name">
+              <p>{{item.Nick}}</p>
+            </div>
+            <div class="taskname">
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </mt-popup>
     <!-- 乘客 -->
     <mt-popup v-model="passengerVisible" position="right" class="action-page">

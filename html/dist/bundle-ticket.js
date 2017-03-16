@@ -34613,12 +34613,8 @@
 	   * @return {[type]} [description]
 	   */
 			inspectPhone: function inspectPhone() {
-				if (/^1[23578][0-9]{9}$/.test(this.payInfoData.contactPhone)) {
-					// this.setLocalStorePhone(this.payInfoData.contactPhone);
-					return true;
-				} else {
-					return false;
-				}
+				return (/^1[23578][0-9]{9}/.test(this.payInfoData.contactPhone)
+				);
 			},
 
 			/**

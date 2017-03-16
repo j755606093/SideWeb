@@ -32,8 +32,10 @@
       flex-direction: row;
       height: 60px;
       line-height: 60px;
+      width:100%;
       >span {
         flex: 4;
+        width:40%;
         font-size: 20px;
         font-weight: 900;
         color: rgb(30, 30, 30);
@@ -44,6 +46,7 @@
       }
       >div {
         flex: 2;
+        width:20%;
         text-align: center;
         span {
           width: 32px;
@@ -83,8 +86,10 @@
       flex-direction: row;
       height: 60px;
       line-height: 60px;
+      width:100%;
       >span {
         flex: 3;
+        width:30%;
         display: inline-block;
         color: #c8c8c8;
         font-size: 12px;
@@ -92,6 +97,7 @@
       >div {
         text-align: center;
         flex: 4;
+        width:40%;
         span {
           display: inline-block;
           font-weight: 900;
@@ -101,6 +107,7 @@
       }
       >p {
         flex: 3;
+        width:30%;
         text-align: right;
         >span {
           text-align: right;
@@ -136,8 +143,10 @@
       .list {
         display: flex;
         flex-direction: row;
+        width:100%;
         >span {
           flex: 4;
+          width:40%;
           color: rgb(200, 200, 200);
           display: inline-block;
           height: 25px;
@@ -151,6 +160,7 @@
         }
         >div {
           flex: 2;
+          width:20%;
           text-align: center;
           >span {
             width: 14px;
