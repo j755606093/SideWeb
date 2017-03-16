@@ -27,10 +27,8 @@ const debug = (function() {
 window.getData = (data) => {
 	window.localStorage.setItem("UserInfo", "Bearer " + data);
 }
-
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
-	// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
 }
 // if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
 // 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
@@ -50,7 +48,7 @@ const Authorization = (function() {
 		// 	position: 'center',
 		// 	duration: 10000
 		// })
-		return JSON.parse(string).Access_Token;
+		return "Bearer " + JSON.parse(string).Access_Token;
 	}
 	let cookie = document.cookie;
 	if (cookie === "") {

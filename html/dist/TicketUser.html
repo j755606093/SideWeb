@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+    <div style="height:60px;width:100%;"></div>
     <!-- 全部订单信息 -->
     <mt-popup v-model="orderVisible" position="right" id="order-lists" class="order-lists">
       <div class="lists">
@@ -400,7 +401,7 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===4" class="help-content">
-              <p>我司有专人负责确认，并与微信公众号、短信的方式通知到用户。</p>
+              <p>我司有专人负责确认，并以微信公众号、短信的方式通知到用户。</p>
             </div>
           </div>
           <div class="help-list" @click="showHelpContent(5)">
@@ -440,7 +441,7 @@
               <span v-else class="right"><i class="fa fa-caret-down"></i></span>
             </div>
             <div v-show="helpContentShow===8" class="help-content">
-              <p>目前暂不支持过期退，如有特殊情况请联系电话客服。</p>
+              <p>目前暂不支持过期退，如有特殊情况请联系电话客服。客服电话:0663-5519299</p>
             </div>
           </div>
           <!-- <div class="help-list" @click="showHelpContent(9)">

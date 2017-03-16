@@ -93,8 +93,7 @@
 	};
 
 	if (typeof window.jgkj !== "undefined") {
-		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
-		// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
 	}
 	// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
 	// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
@@ -109,7 +108,7 @@
 		if (window.localStorage.getItem("UserInfo")) {
 			// app中
 			var string = window.localStorage.getItem("UserInfo");
-			return JSON.parse(string).Access_Token;
+			return "Bearer " + JSON.parse(string).Access_Token;
 		}
 		var cookie = document.cookie;
 		if (cookie === "") {

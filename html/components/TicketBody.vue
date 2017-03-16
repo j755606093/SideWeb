@@ -43,6 +43,7 @@
 				<p @click="clearLocalStore">清除历史搜索</p>
 			</div>
 		</div>
+		<a href="weixin://wap/pay?prepayid%3Dwx201703161426581a5ad26d350343689062&package=2626404006?&noncestr=1489645699&sign=dcdab5399e512e905d84a559cd5b8686">支付跳转</a>
 	</div>
 </template>
 

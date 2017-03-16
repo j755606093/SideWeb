@@ -11199,13 +11199,13 @@
 
 	var _assign2 = _interopRequireDefault(_assign);
 
-	var _stringify = __webpack_require__(51);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
 	var _promise = __webpack_require__(53);
 
 	var _promise2 = _interopRequireDefault(_promise);
+
+	var _stringify = __webpack_require__(51);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
 
 	var _mutations; /**
 	                 * 数据中心
@@ -11247,7 +11247,8 @@
 
 	/** 如果是app中android */
 	if (typeof window.jgkj !== "undefined") {
-		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
+		// alert(JSON.stringify(window.jgkj.getUserInfo()))
+		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
 	}
 	/** 如果是ios的app */
 	// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
@@ -11263,7 +11264,7 @@
 		if (window.localStorage.getItem("UserInfo")) {
 			// app中
 			var string = window.localStorage.getItem("UserInfo");
-			return JSON.parse(string).Access_Token; //格式为json
+			return "Bearer " + JSON.parse(string).Access_Token; //格式为json
 		}
 		var cookie = document.cookie; //获取浏览器的token
 		if (cookie === "") {
@@ -31190,6 +31191,7 @@
 	//
 	//
 	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -31606,7 +31608,11 @@
 	    on: {
 	      "click": _vm.clearLocalStore
 	    }
-	  }, ["清除历史搜索"])]) : _vm._e()])])
+	  }, ["清除历史搜索"])]) : _vm._e()]), " ", _vm._h('a', {
+	    attrs: {
+	      "href": "weixin://wap/pay?prepayid%3Dwx201703161426581a5ad26d350343689062&package=2626404006?&noncestr=1489645699&sign=dcdab5399e512e905d84a559cd5b8686"
+	    }
+	  }, ["支付跳转"])])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;

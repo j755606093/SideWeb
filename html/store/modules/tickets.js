@@ -27,7 +27,8 @@ window.getData = (data) => {
 
 /** 如果是app中android */
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
+	// alert(JSON.stringify(window.jgkj.getUserInfo()))
+	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
 }
 /** 如果是ios的app */
 // if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
@@ -43,7 +44,7 @@ let Authorization = (function() {
 	if (window.localStorage.getItem("UserInfo")) {
 		// app中
 		let string = window.localStorage.getItem("UserInfo");
-		return JSON.parse(string).Access_Token;//格式为json
+		return "Bearer " + JSON.parse(string).Access_Token;//格式为json
 	}
 	let cookie = document.cookie;//获取浏览器的token
 	if (cookie === "") {

@@ -133,8 +133,7 @@ header {
       font-size: 20px; }
 
 .body {
-  width: 100%;
-  padding-bottom: 60px; }
+  width: 100%; }
   .body .header {
     height: 190px;
     display: -ms-flexbox;

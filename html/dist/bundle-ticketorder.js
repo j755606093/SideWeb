@@ -46,13 +46,13 @@
 
 	"use strict";
 
-	var _stringify = __webpack_require__(1);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
 	var _promise = __webpack_require__(4);
 
 	var _promise2 = _interopRequireDefault(_promise);
+
+	var _stringify = __webpack_require__(1);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
 
 	var _vue = __webpack_require__(68);
 
@@ -93,10 +93,8 @@
 	window.getData = function (data) {
 		window.localStorage.setItem("UserInfo", "Bearer " + data);
 	};
-
 	if (typeof window.jgkj !== "undefined") {
-		window.localStorage.setItem("UserInfo", "Bearer " + window.jgkj.getUserInfo());
-		// window.UserInfo = JSON.parse(window.jgkj.getUserInfo());
+		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
 	}
 	// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
 	// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
@@ -116,7 +114,7 @@
 			// 	position: 'center',
 			// 	duration: 10000
 			// })
-			return JSON.parse(string).Access_Token;
+			return "Bearer " + JSON.parse(string).Access_Token;
 		}
 		var cookie = document.cookie;
 		if (cookie === "") {
