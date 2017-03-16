@@ -31608,11 +31608,7 @@
 	    on: {
 	      "click": _vm.clearLocalStore
 	    }
-	  }, ["清除历史搜索"])]) : _vm._e()]), " ", _vm._h('a', {
-	    attrs: {
-	      "href": "weixin://wap/pay?prepayid%3Dwx201703161426581a5ad26d350343689062&package=2626404006?&noncestr=1489645699&sign=dcdab5399e512e905d84a559cd5b8686"
-	    }
-	  }, ["支付跳转"])])
+	  }, ["清除历史搜索"])]) : _vm._e()]), " "])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', [_vm._h('span')])
 	},function (){var _vm=this;
