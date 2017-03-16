@@ -130,6 +130,7 @@ const Vue_User = new Vue({
 		orderVisible: false, //是否显示订单列表
 		passengerVisible: false, //乘客列表
 		userVisible: false, //用户信息显示
+		getmoneyVisible:false,//提取佣金显示
 		refundVisible: false, //申请退款显示
 		helpVisible: false, //帮助中心显示
 
@@ -163,6 +164,11 @@ const Vue_User = new Vue({
 				this.isNoPay = result.NoPay;
 				Indicator.close();
 				this.ready = true;//显示网页
+				
+				if(this.getQueryString('list')==="6"){
+					// 如果list为6就跳到个人帮助中心
+					this.helpCenter();
+				}
 			});
 
 		let type = this.getQueryString("type");
@@ -202,6 +208,7 @@ const Vue_User = new Vue({
 			this.userVisible = false;
 			this.refundVisible = false;
 			this.helpVisible = false;
+			this.getmoneyVisible = false;
 			this.hideChangePassenger();
 		},
 		hideChangePassenger(){
@@ -269,6 +276,11 @@ const Vue_User = new Vue({
 			// }
 			this.controlHeader(true, "优惠券");
 			this.discountVisible = true; //显示
+		},
+		/** 提取佣金 */
+		showGetMoney(){
+			this.controlHeader(true, "提取佣金");
+			this.getmoneyVisible = true; //显示
 		},
 		/**
 		 * 获取订单数据

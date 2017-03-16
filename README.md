@@ -22,8 +22,9 @@
 | loadPageUrl | url | null | 打开一个网页 |
 | openNativePage | androidPageName,iosPageName,json | null | 打开一个原生页面 |
 | getUserInfo | null | null | 获取用户信息 |
+| openWxPay | json | json(result:'success|fail',message:'') | 打开微信支付 |
 
-`使用:jgkj.loadPageUrl(url);`
+`使用:window.jgkj.loadPageUrl(url);`
 
 ## 后台服务器接口
 
