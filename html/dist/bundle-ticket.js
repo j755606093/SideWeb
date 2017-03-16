@@ -11199,11 +11199,11 @@
 
 	var _assign2 = _interopRequireDefault(_assign);
 
-	var _promise = __webpack_require__(53);
+	var _promise = __webpack_require__(51);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(85);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -11247,7 +11247,7 @@
 
 	/** 如果是app中android */
 	if (typeof window.jgkj !== "undefined") {
-		// alert(JSON.stringify(window.jgkj.getUserInfo()))
+
 		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
 	}
 	/** 如果是ios的app */
@@ -12533,43 +12533,27 @@
 /* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(16)
-	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return $JSON.stringify.apply($JSON, arguments);
-	};
-
-/***/ },
-/* 53 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(54), __esModule: true };
-
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(55);
-	__webpack_require__(56);
-	__webpack_require__(69);
-	__webpack_require__(73);
+	__webpack_require__(53);
+	__webpack_require__(54);
+	__webpack_require__(67);
+	__webpack_require__(71);
 	module.exports = __webpack_require__(16).Promise;
 
 /***/ },
-/* 55 */
+/* 53 */
 /***/ function(module, exports) {
 
 	
 
 /***/ },
-/* 56 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $at  = __webpack_require__(57)(true);
+	var $at  = __webpack_require__(55)(true);
 
 	// 21.1.3.27 String.prototype[@@iterator]()
-	__webpack_require__(58)(String, 'String', function(iterated){
+	__webpack_require__(56)(String, 'String', function(iterated){
 	  this._t = String(iterated); // target
 	  this._i = 0;                // next index
 	// 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -12584,7 +12568,7 @@
 	});
 
 /***/ },
-/* 57 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var toInteger = __webpack_require__(42)
@@ -12606,20 +12590,20 @@
 	};
 
 /***/ },
-/* 58 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY        = __webpack_require__(59)
+	var LIBRARY        = __webpack_require__(57)
 	  , $export        = __webpack_require__(14)
-	  , redefine       = __webpack_require__(60)
+	  , redefine       = __webpack_require__(58)
 	  , hide           = __webpack_require__(19)
 	  , has            = __webpack_require__(35)
-	  , Iterators      = __webpack_require__(61)
-	  , $iterCreate    = __webpack_require__(62)
-	  , setToStringTag = __webpack_require__(66)
-	  , getPrototypeOf = __webpack_require__(68)
-	  , ITERATOR       = __webpack_require__(67)('iterator')
+	  , Iterators      = __webpack_require__(59)
+	  , $iterCreate    = __webpack_require__(60)
+	  , setToStringTag = __webpack_require__(64)
+	  , getPrototypeOf = __webpack_require__(66)
+	  , ITERATOR       = __webpack_require__(65)('iterator')
 	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 	  , FF_ITERATOR    = '@@iterator'
 	  , KEYS           = 'keys'
@@ -12681,35 +12665,35 @@
 	};
 
 /***/ },
-/* 59 */
+/* 57 */
 /***/ function(module, exports) {
 
 	module.exports = true;
 
 /***/ },
-/* 60 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(19);
 
 /***/ },
-/* 61 */
+/* 59 */
 /***/ function(module, exports) {
 
 	module.exports = {};
 
 /***/ },
-/* 62 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var create         = __webpack_require__(63)
+	var create         = __webpack_require__(61)
 	  , descriptor     = __webpack_require__(28)
-	  , setToStringTag = __webpack_require__(66)
+	  , setToStringTag = __webpack_require__(64)
 	  , IteratorPrototype = {};
 
 	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-	__webpack_require__(19)(IteratorPrototype, __webpack_require__(67)('iterator'), function(){ return this; });
+	__webpack_require__(19)(IteratorPrototype, __webpack_require__(65)('iterator'), function(){ return this; });
 
 	module.exports = function(Constructor, NAME, next){
 	  Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -12717,12 +12701,12 @@
 	};
 
 /***/ },
-/* 63 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 	var anObject    = __webpack_require__(21)
-	  , dPs         = __webpack_require__(64)
+	  , dPs         = __webpack_require__(62)
 	  , enumBugKeys = __webpack_require__(47)
 	  , IE_PROTO    = __webpack_require__(44)('IE_PROTO')
 	  , Empty       = function(){ /* empty */ }
@@ -12737,7 +12721,7 @@
 	    , gt     = '>'
 	    , iframeDocument;
 	  iframe.style.display = 'none';
-	  __webpack_require__(65).appendChild(iframe);
+	  __webpack_require__(63).appendChild(iframe);
 	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
 	  // createDict = iframe.contentWindow.Object;
 	  // html.removeChild(iframe);
@@ -12764,7 +12748,7 @@
 
 
 /***/ },
-/* 64 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var dP       = __webpack_require__(20)
@@ -12782,25 +12766,25 @@
 	};
 
 /***/ },
-/* 65 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(15).document && document.documentElement;
 
 /***/ },
-/* 66 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var def = __webpack_require__(20).f
 	  , has = __webpack_require__(35)
-	  , TAG = __webpack_require__(67)('toStringTag');
+	  , TAG = __webpack_require__(65)('toStringTag');
 
 	module.exports = function(it, tag, stat){
 	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 	};
 
 /***/ },
-/* 67 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var store      = __webpack_require__(45)('wks')
@@ -12816,7 +12800,7 @@
 	$exports.store = store;
 
 /***/ },
-/* 68 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
@@ -12834,14 +12818,14 @@
 	};
 
 /***/ },
-/* 69 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(70);
+	__webpack_require__(68);
 	var global        = __webpack_require__(15)
 	  , hide          = __webpack_require__(19)
-	  , Iterators     = __webpack_require__(61)
-	  , TO_STRING_TAG = __webpack_require__(67)('toStringTag');
+	  , Iterators     = __webpack_require__(59)
+	  , TO_STRING_TAG = __webpack_require__(65)('toStringTag');
 
 	for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
 	  var NAME       = collections[i]
@@ -12852,20 +12836,20 @@
 	}
 
 /***/ },
-/* 70 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var addToUnscopables = __webpack_require__(71)
-	  , step             = __webpack_require__(72)
-	  , Iterators        = __webpack_require__(61)
+	var addToUnscopables = __webpack_require__(69)
+	  , step             = __webpack_require__(70)
+	  , Iterators        = __webpack_require__(59)
 	  , toIObject        = __webpack_require__(36);
 
 	// 22.1.3.4 Array.prototype.entries()
 	// 22.1.3.13 Array.prototype.keys()
 	// 22.1.3.29 Array.prototype.values()
 	// 22.1.3.30 Array.prototype[@@iterator]()
-	module.exports = __webpack_require__(58)(Array, 'Array', function(iterated, kind){
+	module.exports = __webpack_require__(56)(Array, 'Array', function(iterated, kind){
 	  this._t = toIObject(iterated); // target
 	  this._i = 0;                   // next index
 	  this._k = kind;                // kind
@@ -12891,13 +12875,13 @@
 	addToUnscopables('entries');
 
 /***/ },
-/* 71 */
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = function(){ /* empty */ };
 
 /***/ },
-/* 72 */
+/* 70 */
 /***/ function(module, exports) {
 
 	module.exports = function(done, value){
@@ -12905,22 +12889,22 @@
 	};
 
 /***/ },
-/* 73 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY            = __webpack_require__(59)
+	var LIBRARY            = __webpack_require__(57)
 	  , global             = __webpack_require__(15)
 	  , ctx                = __webpack_require__(17)
-	  , classof            = __webpack_require__(74)
+	  , classof            = __webpack_require__(72)
 	  , $export            = __webpack_require__(14)
 	  , isObject           = __webpack_require__(22)
 	  , aFunction          = __webpack_require__(18)
-	  , anInstance         = __webpack_require__(75)
-	  , forOf              = __webpack_require__(76)
-	  , speciesConstructor = __webpack_require__(80)
-	  , task               = __webpack_require__(81).set
-	  , microtask          = __webpack_require__(83)()
+	  , anInstance         = __webpack_require__(73)
+	  , forOf              = __webpack_require__(74)
+	  , speciesConstructor = __webpack_require__(78)
+	  , task               = __webpack_require__(79).set
+	  , microtask          = __webpack_require__(81)()
 	  , PROMISE            = 'Promise'
 	  , TypeError          = global.TypeError
 	  , process            = global.process
@@ -12934,7 +12918,7 @@
 	  try {
 	    // correct subclassing with @@species support
 	    var promise     = $Promise.resolve(1)
-	      , FakePromise = (promise.constructor = {})[__webpack_require__(67)('species')] = function(exec){ exec(empty, empty); };
+	      , FakePromise = (promise.constructor = {})[__webpack_require__(65)('species')] = function(exec){ exec(empty, empty); };
 	    // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
 	    return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
 	  } catch(e){ /* empty */ }
@@ -13112,7 +13096,7 @@
 	    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
 	    this._n = false;          // <- notify
 	  };
-	  Internal.prototype = __webpack_require__(84)($Promise.prototype, {
+	  Internal.prototype = __webpack_require__(82)($Promise.prototype, {
 	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
 	    then: function then(onFulfilled, onRejected){
 	      var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -13138,8 +13122,8 @@
 	}
 
 	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
-	__webpack_require__(66)($Promise, PROMISE);
-	__webpack_require__(85)(PROMISE);
+	__webpack_require__(64)($Promise, PROMISE);
+	__webpack_require__(83)(PROMISE);
 	Wrapper = __webpack_require__(16)[PROMISE];
 
 	// statics
@@ -13163,7 +13147,7 @@
 	    return capability.promise;
 	  }
 	});
-	$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(86)(function(iter){
+	$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(84)(function(iter){
 	  $Promise.all(iter)['catch'](empty);
 	})), PROMISE, {
 	  // 25.4.4.1 Promise.all(iterable)
@@ -13209,12 +13193,12 @@
 	});
 
 /***/ },
-/* 74 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// getting tag from 19.1.3.6 Object.prototype.toString()
 	var cof = __webpack_require__(38)
-	  , TAG = __webpack_require__(67)('toStringTag')
+	  , TAG = __webpack_require__(65)('toStringTag')
 	  // ES3 wrong here
 	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -13237,7 +13221,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 73 */
 /***/ function(module, exports) {
 
 	module.exports = function(it, Constructor, name, forbiddenField){
@@ -13247,15 +13231,15 @@
 	};
 
 /***/ },
-/* 76 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx         = __webpack_require__(17)
-	  , call        = __webpack_require__(77)
-	  , isArrayIter = __webpack_require__(78)
+	  , call        = __webpack_require__(75)
+	  , isArrayIter = __webpack_require__(76)
 	  , anObject    = __webpack_require__(21)
 	  , toLength    = __webpack_require__(41)
-	  , getIterFn   = __webpack_require__(79)
+	  , getIterFn   = __webpack_require__(77)
 	  , BREAK       = {}
 	  , RETURN      = {};
 	var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
@@ -13277,7 +13261,7 @@
 	exports.RETURN = RETURN;
 
 /***/ },
-/* 77 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// call something on iterator step with safe closing on error
@@ -13294,12 +13278,12 @@
 	};
 
 /***/ },
-/* 78 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// check on default Array iterator
-	var Iterators  = __webpack_require__(61)
-	  , ITERATOR   = __webpack_require__(67)('iterator')
+	var Iterators  = __webpack_require__(59)
+	  , ITERATOR   = __webpack_require__(65)('iterator')
 	  , ArrayProto = Array.prototype;
 
 	module.exports = function(it){
@@ -13307,12 +13291,12 @@
 	};
 
 /***/ },
-/* 79 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var classof   = __webpack_require__(74)
-	  , ITERATOR  = __webpack_require__(67)('iterator')
-	  , Iterators = __webpack_require__(61);
+	var classof   = __webpack_require__(72)
+	  , ITERATOR  = __webpack_require__(65)('iterator')
+	  , Iterators = __webpack_require__(59);
 	module.exports = __webpack_require__(16).getIteratorMethod = function(it){
 	  if(it != undefined)return it[ITERATOR]
 	    || it['@@iterator']
@@ -13320,25 +13304,25 @@
 	};
 
 /***/ },
-/* 80 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
 	var anObject  = __webpack_require__(21)
 	  , aFunction = __webpack_require__(18)
-	  , SPECIES   = __webpack_require__(67)('species');
+	  , SPECIES   = __webpack_require__(65)('species');
 	module.exports = function(O, D){
 	  var C = anObject(O).constructor, S;
 	  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 	};
 
 /***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx                = __webpack_require__(17)
-	  , invoke             = __webpack_require__(82)
-	  , html               = __webpack_require__(65)
+	  , invoke             = __webpack_require__(80)
+	  , html               = __webpack_require__(63)
 	  , cel                = __webpack_require__(26)
 	  , global             = __webpack_require__(15)
 	  , process            = global.process
@@ -13413,7 +13397,7 @@
 	};
 
 /***/ },
-/* 82 */
+/* 80 */
 /***/ function(module, exports) {
 
 	// fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -13434,11 +13418,11 @@
 	};
 
 /***/ },
-/* 83 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(15)
-	  , macrotask = __webpack_require__(81).set
+	  , macrotask = __webpack_require__(79).set
 	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
 	  , process   = global.process
 	  , Promise   = global.Promise
@@ -13507,7 +13491,7 @@
 	};
 
 /***/ },
-/* 84 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var hide = __webpack_require__(19);
@@ -13519,7 +13503,7 @@
 	};
 
 /***/ },
-/* 85 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13527,7 +13511,7 @@
 	  , core        = __webpack_require__(16)
 	  , dP          = __webpack_require__(20)
 	  , DESCRIPTORS = __webpack_require__(24)
-	  , SPECIES     = __webpack_require__(67)('species');
+	  , SPECIES     = __webpack_require__(65)('species');
 
 	module.exports = function(KEY){
 	  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -13538,10 +13522,10 @@
 	};
 
 /***/ },
-/* 86 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ITERATOR     = __webpack_require__(67)('iterator')
+	var ITERATOR     = __webpack_require__(65)('iterator')
 	  , SAFE_CLOSING = false;
 
 	try {
@@ -13561,6 +13545,22 @@
 	    exec(arr);
 	  } catch(e){ /* empty */ }
 	  return safe;
+	};
+
+/***/ },
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(86), __esModule: true };
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(16)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
 	};
 
 /***/ },
@@ -29891,7 +29891,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(85);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -30173,7 +30173,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(85);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -31104,7 +31104,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 100%;\n  overflow-x: auto;\n  background-color: #fff;\n  position: absolute;\n  top: 12px;\n  left: 0; }\n  .ticketbody .slider {\n    height: 160px;\n    padding-left: 25px;\n    overflow-x: scroll;\n    white-space: nowrap; }\n    .ticketbody .slider > a {\n      display: inline-block;\n      margin-right: 5px; }\n    .ticketbody .slider .slider-item {\n      width: 250px;\n      height: 150px;\n      border-radius: 10px; }\n  .ticketbody .index-body {\n    width: 100%;\n    padding: 0 25px;\n    padding-bottom: 50px; }\n    .ticketbody .index-body .location {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .location > span {\n        -ms-flex: 4;\n            flex: 4;\n        font-size: 20px;\n        font-weight: 900;\n        color: #1e1e1e;\n        display: inline-block; }\n        .ticketbody .index-body .location > span:last-child {\n          text-align: right; }\n      .ticketbody .index-body .location > div {\n        -ms-flex: 2;\n            flex: 2;\n        text-align: center; }\n        .ticketbody .index-body .location > div span {\n          width: 32px;\n          height: 4px;\n          line-height: 12px;\n          background-color: #329be8;\n          display: inline-block;\n          border-radius: 2px;\n          position: relative; }\n          .ticketbody .index-body .location > div span::after {\n            content: \"\";\n            position: absolute;\n            bottom: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(45deg);\n            background-color: #329be8; }\n          .ticketbody .index-body .location > div span::before {\n            content: \"\";\n            position: absolute;\n            top: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(-45deg);\n            background-color: #329be8; }\n    .ticketbody .index-body .date {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px; }\n      .ticketbody .index-body .date > span {\n        -ms-flex: 3;\n            flex: 3;\n        display: inline-block;\n        color: #c8c8c8;\n        font-size: 12px; }\n      .ticketbody .index-body .date > div {\n        text-align: center;\n        -ms-flex: 4;\n            flex: 4; }\n        .ticketbody .index-body .date > div span {\n          display: inline-block;\n          font-weight: 900;\n          font-size: 18px;\n          color: #1e1e1e; }\n      .ticketbody .index-body .date > p {\n        -ms-flex: 3;\n            flex: 3;\n        text-align: right; }\n        .ticketbody .index-body .date > p > span {\n          text-align: right;\n          font-size: 18px;\n          color: #329be8;\n          height: 60px;\n          line-height: 60px;\n          float: left;\n          margin-left: 20%; }\n        .ticketbody .index-body .date > p > i {\n          color: #c8c8c8;\n          height: 60px;\n          line-height: 60px; }\n    .ticketbody .index-body .btn {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      color: #fff;\n      font-size: 18px;\n      border-radius: 5px;\n      background-color: #329be8;\n      margin-top: 20px; }\n    .ticketbody .index-body .search-record {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      margin-top: 20px; }\n      .ticketbody .index-body .search-record .list {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row; }\n        .ticketbody .index-body .search-record .list > span {\n          -ms-flex: 4;\n              flex: 4;\n          color: #c8c8c8;\n          display: inline-block;\n          height: 25px;\n          line-height: 25px; }\n          .ticketbody .index-body .search-record .list > span:first-child {\n            text-align: right; }\n          .ticketbody .index-body .search-record .list > span:last-child {\n            text-align: left; }\n        .ticketbody .index-body .search-record .list > div {\n          -ms-flex: 2;\n              flex: 2;\n          text-align: center; }\n          .ticketbody .index-body .search-record .list > div > span {\n            width: 14px;\n            height: 2px;\n            line-height: 12px;\n            background-color: #c8c8c8;\n            display: inline-block;\n            border-radius: 2px;\n            position: relative; }\n            .ticketbody .index-body .search-record .list > div > span::after {\n              content: \"\";\n              position: absolute;\n              bottom: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(45deg);\n              background-color: #c8c8c8; }\n            .ticketbody .index-body .search-record .list > div > span::before {\n              content: \"\";\n              position: absolute;\n              top: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(-45deg);\n              background-color: #c8c8c8; }\n      .ticketbody .index-body .search-record p {\n        text-align: center;\n        color: #c8c8c8;\n        height: 25px;\n        line-height: 25px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n.ticketbody {\n  width: 100%;\n  overflow-x: auto;\n  background-color: #fff;\n  position: absolute;\n  top: 12px;\n  left: 0; }\n  .ticketbody .slider {\n    height: 160px;\n    padding-left: 25px;\n    overflow-x: scroll;\n    white-space: nowrap; }\n    .ticketbody .slider > a {\n      display: inline-block;\n      margin-right: 5px; }\n    .ticketbody .slider .slider-item {\n      width: 250px;\n      height: 150px;\n      border-radius: 10px; }\n  .ticketbody .index-body {\n    width: 100%;\n    padding: 0 25px;\n    padding-bottom: 50px; }\n    .ticketbody .index-body .location {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px;\n      width: 100%; }\n      .ticketbody .index-body .location > span {\n        -ms-flex: 4;\n            flex: 4;\n        width: 40%;\n        font-size: 20px;\n        font-weight: 900;\n        color: #1e1e1e;\n        display: inline-block; }\n        .ticketbody .index-body .location > span:last-child {\n          text-align: right; }\n      .ticketbody .index-body .location > div {\n        -ms-flex: 2;\n            flex: 2;\n        width: 20%;\n        text-align: center; }\n        .ticketbody .index-body .location > div span {\n          width: 32px;\n          height: 4px;\n          line-height: 12px;\n          background-color: #329be8;\n          display: inline-block;\n          border-radius: 2px;\n          position: relative; }\n          .ticketbody .index-body .location > div span::after {\n            content: \"\";\n            position: absolute;\n            bottom: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(45deg);\n            background-color: #329be8; }\n          .ticketbody .index-body .location > div span::before {\n            content: \"\";\n            position: absolute;\n            top: 4px;\n            right: 0px;\n            width: 12px;\n            height: 4px;\n            border-radius: 2px;\n            transform: rotate(-45deg);\n            background-color: #329be8; }\n    .ticketbody .index-body .date {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: row;\n          flex-direction: row;\n      height: 60px;\n      line-height: 60px;\n      width: 100%; }\n      .ticketbody .index-body .date > span {\n        -ms-flex: 3;\n            flex: 3;\n        width: 30%;\n        display: inline-block;\n        color: #c8c8c8;\n        font-size: 12px; }\n      .ticketbody .index-body .date > div {\n        text-align: center;\n        -ms-flex: 4;\n            flex: 4;\n        width: 40%; }\n        .ticketbody .index-body .date > div span {\n          display: inline-block;\n          font-weight: 900;\n          font-size: 18px;\n          color: #1e1e1e; }\n      .ticketbody .index-body .date > p {\n        -ms-flex: 3;\n            flex: 3;\n        width: 30%;\n        text-align: right; }\n        .ticketbody .index-body .date > p > span {\n          text-align: right;\n          font-size: 18px;\n          color: #329be8;\n          height: 60px;\n          line-height: 60px;\n          float: left;\n          margin-left: 20%; }\n        .ticketbody .index-body .date > p > i {\n          color: #c8c8c8;\n          height: 60px;\n          line-height: 60px; }\n    .ticketbody .index-body .btn {\n      width: 100%;\n      height: 40px;\n      line-height: 40px;\n      text-align: center;\n      color: #fff;\n      font-size: 18px;\n      border-radius: 5px;\n      background-color: #329be8;\n      margin-top: 20px; }\n    .ticketbody .index-body .search-record {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n      margin-top: 20px; }\n      .ticketbody .index-body .search-record .list {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-direction: row;\n            flex-direction: row;\n        width: 100%; }\n        .ticketbody .index-body .search-record .list > span {\n          -ms-flex: 4;\n              flex: 4;\n          width: 40%;\n          color: #c8c8c8;\n          display: inline-block;\n          height: 25px;\n          line-height: 25px; }\n          .ticketbody .index-body .search-record .list > span:first-child {\n            text-align: right; }\n          .ticketbody .index-body .search-record .list > span:last-child {\n            text-align: left; }\n        .ticketbody .index-body .search-record .list > div {\n          -ms-flex: 2;\n              flex: 2;\n          width: 20%;\n          text-align: center; }\n          .ticketbody .index-body .search-record .list > div > span {\n            width: 14px;\n            height: 2px;\n            line-height: 12px;\n            background-color: #c8c8c8;\n            display: inline-block;\n            border-radius: 2px;\n            position: relative; }\n            .ticketbody .index-body .search-record .list > div > span::after {\n              content: \"\";\n              position: absolute;\n              bottom: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(45deg);\n              background-color: #c8c8c8; }\n            .ticketbody .index-body .search-record .list > div > span::before {\n              content: \"\";\n              position: absolute;\n              top: 2px;\n              right: 0px;\n              width: 4px;\n              height: 2px;\n              border-radius: 2px;\n              transform: rotate(-45deg);\n              background-color: #c8c8c8; }\n      .ticketbody .index-body .search-record p {\n        text-align: center;\n        color: #c8c8c8;\n        height: 25px;\n        line-height: 25px; }\n", ""]);
 
 	// exports
 
@@ -31119,7 +31119,7 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(85);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -33085,7 +33085,7 @@
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(56);
+	__webpack_require__(54);
 	__webpack_require__(165);
 	module.exports = __webpack_require__(16).Array.from;
 
@@ -33097,13 +33097,13 @@
 	var ctx            = __webpack_require__(17)
 	  , $export        = __webpack_require__(14)
 	  , toObject       = __webpack_require__(50)
-	  , call           = __webpack_require__(77)
-	  , isArrayIter    = __webpack_require__(78)
+	  , call           = __webpack_require__(75)
+	  , isArrayIter    = __webpack_require__(76)
 	  , toLength       = __webpack_require__(41)
 	  , createProperty = __webpack_require__(166)
-	  , getIterFn      = __webpack_require__(79);
+	  , getIterFn      = __webpack_require__(77);
 
-	$export($export.S + $export.F * !__webpack_require__(86)(function(iter){ Array.from(iter); }), 'Array', {
+	$export($export.S + $export.F * !__webpack_require__(84)(function(iter){ Array.from(iter); }), 'Array', {
 	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
 	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
 	    var O       = toObject(arrayLike)
@@ -33638,7 +33638,7 @@
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
 
-	var _stringify = __webpack_require__(51);
+	var _stringify = __webpack_require__(85);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -35075,15 +35075,15 @@
 /* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(56);
-	__webpack_require__(69);
+	__webpack_require__(54);
+	__webpack_require__(67);
 	module.exports = __webpack_require__(178).f('iterator');
 
 /***/ },
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.f = __webpack_require__(67);
+	exports.f = __webpack_require__(65);
 
 /***/ },
 /* 179 */
@@ -35096,7 +35096,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(181);
-	__webpack_require__(55);
+	__webpack_require__(53);
 	__webpack_require__(190);
 	__webpack_require__(191);
 	module.exports = __webpack_require__(16).Symbol;
@@ -35111,13 +35111,13 @@
 	  , has            = __webpack_require__(35)
 	  , DESCRIPTORS    = __webpack_require__(24)
 	  , $export        = __webpack_require__(14)
-	  , redefine       = __webpack_require__(60)
+	  , redefine       = __webpack_require__(58)
 	  , META           = __webpack_require__(182).KEY
 	  , $fails         = __webpack_require__(25)
 	  , shared         = __webpack_require__(45)
-	  , setToStringTag = __webpack_require__(66)
+	  , setToStringTag = __webpack_require__(64)
 	  , uid            = __webpack_require__(46)
-	  , wks            = __webpack_require__(67)
+	  , wks            = __webpack_require__(65)
 	  , wksExt         = __webpack_require__(178)
 	  , wksDefine      = __webpack_require__(183)
 	  , keyOf          = __webpack_require__(184)
@@ -35127,7 +35127,7 @@
 	  , toIObject      = __webpack_require__(36)
 	  , toPrimitive    = __webpack_require__(27)
 	  , createDesc     = __webpack_require__(28)
-	  , _create        = __webpack_require__(63)
+	  , _create        = __webpack_require__(61)
 	  , gOPNExt        = __webpack_require__(187)
 	  , $GOPD          = __webpack_require__(189)
 	  , $DP            = __webpack_require__(20)
@@ -35258,7 +35258,7 @@
 	  __webpack_require__(49).f  = $propertyIsEnumerable;
 	  __webpack_require__(48).f = $getOwnPropertySymbols;
 
-	  if(DESCRIPTORS && !__webpack_require__(59)){
+	  if(DESCRIPTORS && !__webpack_require__(57)){
 	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
 	  }
 
@@ -35405,7 +35405,7 @@
 
 	var global         = __webpack_require__(15)
 	  , core           = __webpack_require__(16)
-	  , LIBRARY        = __webpack_require__(59)
+	  , LIBRARY        = __webpack_require__(57)
 	  , wksExt         = __webpack_require__(178)
 	  , defineProperty = __webpack_require__(20).f;
 	module.exports = function(name){

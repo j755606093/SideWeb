@@ -27,7 +27,7 @@ window.getData = (data) => {
 
 /** 如果是app中android */
 if (typeof window.jgkj !== "undefined") {
-	// alert(JSON.stringify(window.jgkj.getUserInfo()))
+	
 	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
 }
 /** 如果是ios的app */
