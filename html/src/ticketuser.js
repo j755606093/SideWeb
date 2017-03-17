@@ -174,10 +174,10 @@ const Vue_User = new Vue({
 				this.isNoPay = result.NoPay;
 				Indicator.close();
 				this.ready = true;//显示网页
-
-				if(this.getQueryString('list')==="6"){
-					// 如果list为6就跳到个人帮助中心
-					this.helpCenter();
+				
+				let list = this.getQueryString('list');
+				if(list){
+					this.showList(list);
 				}
 			});
 
@@ -220,6 +220,19 @@ const Vue_User = new Vue({
 			this.helpVisible = false;
 			this.getmoneyVisible = false;
 			this.hideChangePassenger();
+		},
+		showList(list){
+			switch(list){
+				case "6":
+					// 如果list为6就跳到个人帮助中心
+					this.helpCenter();
+					break;
+				case "3":
+					this.showGetMoney();
+					break;
+				default:
+					return;
+			}
 		},
 		hideChangePassenger(){
 			this.isShowChangePassenger = false;

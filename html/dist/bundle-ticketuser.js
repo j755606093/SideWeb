@@ -236,9 +236,9 @@
 				_mintUi.Indicator.close();
 				_this.ready = true; //显示网页
 
-				if (_this.getQueryString('list') === "6") {
-					// 如果list为6就跳到个人帮助中心
-					_this.helpCenter();
+				var list = _this.getQueryString('list');
+				if (list) {
+					_this.showList(list);
 				}
 			});
 
@@ -282,6 +282,19 @@
 				this.helpVisible = false;
 				this.getmoneyVisible = false;
 				this.hideChangePassenger();
+			},
+			showList: function showList(list) {
+				switch (list) {
+					case "6":
+						// 如果list为6就跳到个人帮助中心
+						this.helpCenter();
+						break;
+					case "3":
+						this.showGetMoney();
+						break;
+					default:
+						return;
+				}
 			},
 			hideChangePassenger: function hideChangePassenger() {
 				this.isShowChangePassenger = false;
