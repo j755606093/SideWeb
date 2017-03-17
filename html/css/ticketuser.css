@@ -1525,8 +1525,8 @@ header {
             align-items: center;
         margin-left: 10px; }
         .money-lists .money-body .money-list .people-list .img > img {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           border-radius: 50%; }
       .money-lists .money-body .money-list .people-list .name {
         margin-left: 10px;
@@ -1534,6 +1534,10 @@ header {
         line-height: 50px;
         width: 100px;
         font-size: 14px; }
+        .money-lists .money-body .money-list .people-list .name > p {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
       .money-lists .money-body .money-list .people-list .taskname {
         -ms-flex: 1;
             flex: 1;
@@ -1542,6 +1546,12 @@ header {
         text-align: right;
         font-size: 14px;
         margin-right: 10px; }
+      @media (max-width: 320px) {
+        .money-lists .money-body .money-list .people-list .name {
+          width: 60px;
+          font-size: 12px; }
+        .money-lists .money-body .money-list .people-list .taskname {
+          font-size: 12px; } }
 
 .mint-indicator {
   position: fixed;

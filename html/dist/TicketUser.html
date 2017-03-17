@@ -224,15 +224,15 @@
         <div class="money-header">
           <div class="money-header-top">
             <div class="money-left money-block">
-              <p class="first"><span>¥</span>0</p>
+              <p class="first"><span>¥</span>{{getMoneyUseData.ReceiveBkge}}</p>
               <p class="last">佣金总数</p>
             </div>
             <div class="money-center money-block">
-              <p class="first"><span>¥</span>0</p>
+              <p class="first"><span>¥</span>{{getMoneyUseData.TotalBkge}}</p>
               <p class="last">可领取佣金</p>
             </div>
             <div class="money-right money-block">
-              <p class="first"><span>¥</span>0</p>
+              <p class="first"><span>¥</span>{{getMoneyUseData.UndoneBkge}}</p>
               <p class="last">尚未完成金额</p>
             </div>
           </div>
@@ -249,10 +249,20 @@
               <p>{{item.Nick}}</p>
             </div>
             <div class="taskname">
-              <p></p>
+              <template v-if="item.Status===0">
+                <p>已关注</p>
+              </template>
+              <template v-if="item.Status===1">
+                <p>已购票/将获得{{item.Brokerage}}元佣金</p>
+              </template>
+              <template v-if="item.Status===2">
+                <p>已完成交易/将获得{{item.Brokerage}}元佣金</p>
+              </template>
             </div>
           </div>
         </div>
+        <!-- 用来判断是否接近底部 -->
+        <div id="money_last"></div>
       </div>
     </mt-popup>
     <!-- 乘客 -->

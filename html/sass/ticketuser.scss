@@ -1475,8 +1475,8 @@ header {
           @include display_flex('row');
           margin-left: 10px;
           >img{
-            width:40px;
-            height:40px;
+            width:30px;
+            height:30px;
             border-radius: 50%;
           }
         }
@@ -1486,6 +1486,9 @@ header {
           line-height:50px;
           width:100px;
           font-size:14px;
+          >p{
+            @include text_nowrap;
+          }
         }
         .taskname{
           flex:1;
@@ -1494,6 +1497,15 @@ header {
           text-align: right;
           font-size:14px;
           margin-right: 10px;
+        }
+        @include responsive('iphone5'){
+          .name{
+            width:60px;
+            font-size:12px;
+          }
+          .taskname{
+            font-size:12px;
+          }
         }
       }
     }

@@ -150,7 +150,15 @@ const Vue_User = new Vue({
 		myModal:false,//自己的蒙版
 		isShowChangePassenger:false,//是否显示修改乘客弹窗
 
-		getMoneyData:[],//提取佣金数据
+		getMoneyData:[],//提取佣金用户数据
+		getMoneyUseData:{
+			ReceiveBkge:0,
+			TotalBkge:0,
+			UndoneBkge:0
+		},//提取数据
+		moneyIndex:1,//用户数据页数
+		moneyIsUse:false,//是否正在使用
+		moneyNoMoreData:false,//是否还有更多数据
 	},
 	created() {
 		this.loading();
@@ -284,24 +292,46 @@ const Vue_User = new Vue({
 			this.controlHeader(true, "我的佣金");
 			// this.showHeader = false;
 			this.getmoneyVisible = true; //显示
-			// /api/Member/GetOfflineUsr
+			if(this.moneyIsUse||this.noMoreData){
+				// 没有数据了或者正在使用中就退出
+				return;
+			}
+			this.moneyIsUse = true;
+
 			this.loading();
 			fetch(config.serverUrl + "/api/Member/GetOfflineUsr", {
 					method: "POST",
 					headers: config.headers,
 					body: JSON.stringify({
-						Index: 1,
-						Size: 20,
+						Index: this.moneyIndex,
+						Size: 10,
 					})
 				})
 				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => {
-					if (result.Data) {
-						this.getMoneyData = result.Data;
+					let getData = result.Data;
+					if (getData) {
+						this.moneyIndex++;
+						this.getMoneyUseData.ReceiveBkge = getData.ReceiveBkge;
+						this.getMoneyUseData.TotalBkge = getData.TotalBkge;
+						this.getMoneyUseData.UndoneBkge = getData.UndoneBkge;
+						let data = this.getMoneyData;
+						for(let i=0;i<getData.Usrs.length;i++){
+							data.push(getData.Usrs[i]);
+						}
+						this.getMoneyData = data;
+						if(getData.Usrs.length<10){
+							this.noMoreData = true;
+						}
+						else{
+							this.noMoreData = false;
+						}
 					} else {
+						this.noMoreData = true;
 						this.toast(result.Message);
 					}
+					this.moneyIsUse = false;
 					Indicator.close();
 				})
 		},
@@ -580,7 +610,12 @@ const Vue_User = new Vue({
 		},
 		/** 申请提现 */
 		applyGetMoney(){
-			this.toast("稍后上线此功能");
+			if(this.getMoneyUseData.ReceiveBkge===0){
+				this.toast("无可用领取佣金");
+			}
+			else{
+				this.toast("此功能稍后上线")
+			}
 		},
 		/** 显示增加乘客 */
 		showAddPassenger(index) {
@@ -656,11 +691,11 @@ document.getElementById("refund-lists").addEventListener('scroll', _.throttle(fu
 	}
 }, 100, { leading: false }));
 
-// document.getElementById("refund-lists").addEventListener('scroll', _.throttle(function() {
-// 	let refundVisible = Vue_User.refundVisible;
-// 	let status_refund = document.getElementById("last_refund").offsetTop - document.getElementById("refund-lists").scrollTop;
+document.getElementById("money-lists").addEventListener('scroll', _.throttle(function() {
+	let getmoneyVisible = Vue_User.getmoneyVisible;
+	let money_last = document.getElementById("money_last").offsetTop - document.getElementById("refund-lists").scrollTop;
 
-// 	if (status_refund < 1000 && refundVisible) {
-// 		Vue_User.applyRefund();
-// 	}
-// }, 100, { leading: false }));
+	if (money_last < 1000 && getmoneyVisible) {
+		Vue_User.showGetMoney();
+	}
+}, 100, { leading: false }));
