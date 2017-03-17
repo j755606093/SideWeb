@@ -62,6 +62,7 @@ header{
 		.center{
 			line-height:50px;
 			font-size:18px;
+			font-weight:900;
 		}
 	}
 }
