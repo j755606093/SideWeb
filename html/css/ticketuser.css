@@ -130,7 +130,8 @@ header {
     text-align: center; }
     header .home span {
       color: #fff;
-      font-size: 20px; }
+      font-size: 20px;
+      font-weight: 900; }
 
 .body {
   width: 100%; }
@@ -1379,7 +1380,6 @@ header {
   bottom: 0;
   overflow-y: scroll; }
   .money-lists .money-body .money-header {
-    margin-top: 49px;
     width: 100%;
     height: 175px;
     background-color: #329be8; }

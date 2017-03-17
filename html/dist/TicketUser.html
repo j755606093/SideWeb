@@ -221,6 +221,7 @@
     <!-- 提取佣金 -->
     <mt-popup v-model="getmoneyVisible" position="right" id="money-lists" class="money-lists">
       <div class="money-body">
+        <div style="height:50px;background-color: #329be8"></div>
         <div class="money-header">
           <div class="money-header-top">
             <div class="money-left money-block">
@@ -280,16 +281,6 @@
                 </div>
                 <div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
               </div>
-              <!-- 修改乘客 -->
-              <!-- <div style="padding:10px" v-show="showpassengeraction===2&&index===ChaPassengerIndex" class="add-action animated zoomIn">
-                <div class="line">
-                  <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
-                </div>
-                <div class="line">
-                  <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="选填(可用于联系)">
-                  <button @click="addPassenger(1)"><i class="fa fa-plus-circle"></i> 确定</button>
-                </div>
-              </div> -->
             </div>
           </div>
           <p class="refresh">没有乘客信息?来下面添加吧~ </p>
@@ -301,16 +292,6 @@
                 <div class="img"><img src="../picture/add_passenger.png"></div>
               </div>
             </div>
-            <!-- 添加乘客 -->
-            <!-- <div v-show="showpassengeraction===1" class="add-action animated zoomIn">
-              <div class="line">
-                <input type="text" v-model="passengerName" name="passengerName" placeholder="请填写真实姓名">
-              </div>
-              <div class="line">
-                <input type="text" v-model="passengerPhone" name="passengerPhone" placeholder="选填(可用于联系)">
-                <button @click="addPassenger(0)"><i class="fa fa-plus-circle"></i> 添加</button>
-              </div>
-            </div> -->
           </div>
         </div>
       </slot>

@@ -623,11 +623,47 @@ const Vue_User = new Vue({
 		},
 		/** 申请提现 */
 		applyGetMoney(){
-			if(this.getMoneyUseData.ReceiveBkge===0){
+			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
+			if(canGetMoney===0){
 				this.toast("无可用领取佣金");
 			}
 			else{
-				this.toast("此功能稍后上线")
+				this.myModal = true;
+				MessageBox.prompt("¥1-¥"+canGetMoney,"请输入提取佣金数额",{
+					inputType:'tel'
+				}).then(({ value, action }) => {
+					let Money = parseInt(value);
+					if (!Money) {
+						this.toast("请输入正确的佣金额!");
+						this.myModal = false;
+						return;
+					} else {
+						if(Money>canGetMoney){
+							// 输入金额大于提取金额
+							this.toast("申请金额不允许大于提取金额!");
+							this.myModal = false;
+							return;
+						}
+						fetch(config.serverUrl + "/api/Member/CashApply", {
+								method: 'POST',
+								headers: config.headers,
+								body: JSON.stringify({
+									Money:Money
+								})
+							})
+							.then(checkStatus)
+							.then(result => result.json())
+							.then(result => {
+								this.toast(result.Message);
+								this.myModal = false;
+
+								this.getMoneyUseData.ReceiveBkge = this.getMoneyUseData.ReceiveBkge - Money;//减去已经申请过的金额
+							});
+					}
+				}).catch(error => {
+					this.myModal = false;
+					console.log(error);
+				});
 			}
 		},
 		/** 显示增加乘客 */
