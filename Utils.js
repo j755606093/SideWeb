@@ -1,31 +1,92 @@
-// 删除页面script保护
-// <meta content="script-src https: 'unsafe-inline' 'unsafe-eval' *.qq.com *.weishi.com 'nonce-836503595'" http-equiv="Content-Security-Policy"/>
-function deleteSecurity(data){
-	let step1 = data.replace(/<iframe.*<\/iframe>/g,"");//去掉iframe框架
-	return step1.replace(/Content-Security-Policy/g,"");
+function clearHTML(html){
+	this.html = html;
 }
 
-// 插入自己的Script数据
-function insertScript(data,name="test"){
+// 删除页面script保护
+clearHTML.prototype.deleteSecurity = function(){
+	this.html = this.html.replace(/<iframe.*<\/iframe>/g,"");//去掉iframe框架
+	this.html = this.html.replace(/Content-Security-Policy/g,"");
+	return this;
+}
+
+/** 插入自己的Script数据 */
+clearHTML.prototype.insertScript = function(jsname){
 	let app = "<div id='comment_id'></div>";
-	let insertData = "<script src='/js/"+name+".js'></script>";
-	return deleteSecurity(data).replace(/(<\/body>)/gi,app+insertData+"$1");
+	let insertData = "<script src='/js/"+jsname+".js'></script>";
+	this.html = this.html.replace(/(<\/body>)/gi,app+insertData+"$1"); 
+	return this;
 }
 
 /** 删除所有的link标签 */
-function deleteLinkTag(data){
-	return data.replace(/<link.*>$/gi,"");
+clearHTML.prototype.deleteLinkTag = function(){
+	this.html = this.html.replace(/<link.*>$/gi,"");
+	return this;
 }
 
 /** 删除所有的script */
-function deleteScriptTag(data){
-	return data.replace(/<script.*>.*<\/script>/gi,"");
+clearHTML.prototype.deleteScriptTag = function(){
+	this.html = this.html.replace(/<script.*>.*<\/script>/gi,"");
+	return this;
 }
 
 // 插入自己的Css数据
-function insertCss(data){
-	let insertData = "<link href='js/test.js' rel='stylesheet'/>";
-	return deleteSecurity(data).replace(/(<\/head>)/gi,insertData+"$1");
+clearHTML.prototype.insertCss = function(cssname){
+	let insertCss = "<link href='js/"+cssname+".css' rel='stylesheet'/>";
+	this.html = this.html.replace(/(<\/head>)/gi,insertCss+"$1");
+	return this;
+}
+
+// 显示数据
+clearHTML.prototype.show = function(){
+	return this.html;
+}
+
+/**
+ * 需要隐藏的id
+ * js_sg_bar:底部阅读数
+ * sg_tj:相关文章
+ * sg_cmt_area:评论
+ */
+/** 隐藏这个id元素 */
+clearHTML.prototype.hideById = function(id){
+	if(typeof id==="object"){
+		//如果是数组
+		id.map((item,index)=>{
+			let reg = new RegExp('id="'+item+'"',"g");
+			this.html = this.html.replace(reg,"style='display:none;'");//同时覆盖了这个id
+		})
+	}
+	else{
+		let reg = new RegExp('id="'+id+'"',"g");
+		this.html = this.html.replace(reg,"style='display:none;'");//同时覆盖了这个id
+	}
+	return this;
+}
+
+/**
+ * 微信文章常用的组装函数
+ */
+function weixin(data){
+	let html = new clearHTML(data);
+	return html
+		.deleteSecurity()
+		.deleteScriptTag()
+		.deleteLinkTag()
+		.insertScript("test")
+		.hideById(["js_sg_bar","sg_tj","sg_cmt_area"])
+		.show();
+}
+
+/**
+ * 新闻常用的组装函数
+ */
+function news(data){
+	let html = new clearHTML(data);
+	// 不需要删除link标签
+	return html
+		.insertScript()
+		.deleteScriptTag()
+		.show();
 }
 
 // 格式化服务器传过来的数据
@@ -43,25 +104,6 @@ function formatJSON(data=""){
 			return null;
 		}
 	}
-}
-
-/**
- * 微信文章常用的组装函数
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
- */
-function weixin(data){
-	return insertScript(deleteLinkTag(deleteScriptTag(data)));
-}
-
-/**
- * 新闻常用的组装函数
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
- */
-function news(data){
-	// 不需要删除link标签
-	return insertScript(deleteScriptTag(data));
 }
 
 module.exports = {
