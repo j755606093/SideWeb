@@ -33234,11 +33234,11 @@
 	      staticClass: "name"
 	    }, [_vm._h('p', [_vm._s(item.StartPoint)]), " ", _vm._h('p', [_vm._s(item.EndPoint)])]), " ", _vm._h('div', {
 	      staticClass: "info"
-	    }, [_vm._h('p', {
-	      domProps: {
-	        "textContent": _vm._s('¥' + item.Price)
+	    }, [_vm._h('p', [_vm._h('span', {
+	      staticStyle: {
+	        "font-size": "12px"
 	      }
-	    }), " ", _vm._h('p', {
+	    }, ["¥"]), _vm._s(item.Price)]), " ", _vm._h('p', {
 	      domProps: {
 	        "textContent": _vm._s(item.TicketNum + '张余票')
 	      }

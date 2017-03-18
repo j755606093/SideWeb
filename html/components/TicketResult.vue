@@ -40,7 +40,7 @@
 									<p>{{item.EndPoint}}</p>
 								</div>
 								<div class="info">
-									<p v-text="'¥'+item.Price"></p>
+									<p><span style="font-size:12px;">¥</span>{{item.Price}}</p>
 									<p v-text="item.TicketNum+'张余票'">123张余票</p>
 								</div>
 							</div>
