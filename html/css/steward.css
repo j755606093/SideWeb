@@ -98,7 +98,7 @@ body {
 header {
   height: 50px;
   background-color: #fff;
-  color: #f35252;
+  color: #f98080;
   position: fixed;
   top: 0;
   left: 0;
@@ -110,7 +110,7 @@ header {
   header span {
     height: 50px;
     line-height: 50px;
-    color: #f35252;
+    color: #f98080;
     font-size: 18px;
     font-weight: 900;
     display: inline-block; }
@@ -329,7 +329,7 @@ header.code {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: #60e7bf;
             position: absolute;
             top: 9px;
             left: -17px; }
@@ -340,7 +340,7 @@ header.code {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: #f98080;
             position: absolute;
             top: 15px;
             left: -17px; }
@@ -690,7 +690,7 @@ footer {
       font-size: 15px; }
     footer .price span:last-child {
       margin-left: 5px;
-      color: #f35252;
+      color: #f98080;
       font-size: 20px;
       font-weight: 900; }
   footer .yes {

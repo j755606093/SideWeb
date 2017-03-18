@@ -300,56 +300,6 @@ const Vue_User = new Vue({
 			this.controlHeader(true, "优惠券");
 			this.discountVisible = true; //显示
 		},
-		/** 提取佣金列表 */
-		showGetMoney(){
-			// console.log(this.moneyIsUse,this.moneyNoMoreData)
-			this.controlHeader(true, "我的佣金");
-			// this.showHeader = false;
-			this.getmoneyVisible = true; //显示
-			if(this.moneyIsUse||this.moneyNoMoreData){
-				// 没有数据了或者正在使用中就退出
-				return;
-			}
-			this.moneyIsUse = true;
-
-			this.loading();
-			fetch(config.serverUrl + "/api/Member/GetOfflineUsr", {
-					method: "POST",
-					headers: config.headers,
-					body: JSON.stringify({
-						Index: this.moneyIndex,
-						Size: 10,
-					})
-				})
-				.then(checkStatus)
-				.then(result => result.json())
-				.then(result => {
-					let getData = result.Data;
-					if (getData) {
-						this.moneyIndex++;
-						this.getMoneyUseData.ReceiveBkge = getData.ReceiveBkge;
-						this.getMoneyUseData.TotalBkge = getData.TotalBkge;
-						this.getMoneyUseData.UndoneBkge = getData.UndoneBkge;
-						let data = this.getMoneyData;
-						for(let i=0;i<getData.Usrs.length;i++){
-							data.push(getData.Usrs[i]);
-						}
-						this.getMoneyData = data;
-						if(getData.Usrs.length<10){
-							this.moneyNoMoreData = true;
-							this.toast("没有更多数据");
-						}
-						else{
-							this.moneyNoMoreData = false;
-						}
-					} else {
-						this.moneyNoMoreData = true;
-						this.toast(result.Message);
-					}
-					this.moneyIsUse = false;
-					Indicator.close();
-				})
-		},
 		/**
 		 * 获取订单数据
 		 * @return {[type]} [description]
@@ -623,6 +573,59 @@ const Vue_User = new Vue({
 				this.RefundOrder.isUse = false;
 			})
 		},
+				/** 提取佣金列表 */
+		showGetMoney(){
+			// console.log(this.moneyIsUse,this.moneyNoMoreData)
+			this.controlHeader(true, "我的佣金");
+			// this.showHeader = false;
+			this.getmoneyVisible = true; //显示
+			if(this.moneyIsUse||this.moneyNoMoreData){
+				// 没有数据了或者正在使用中就退出
+				return;
+			}
+			this.moneyIsUse = true;
+
+			this.loading();
+			fetch(config.serverUrl + "/api/Member/GetOfflineUsr", {
+					method: "POST",
+					headers: config.headers,
+					body: JSON.stringify({
+						Index: this.moneyIndex,
+						Size: 10,
+					})
+				})
+				.then(checkStatus)
+				.then(result => result.json())
+				.then(result => {
+					let getData = result.Data;
+					if (getData) {
+						if(getData.Usrs.length<10){
+							this.moneyNoMoreData = true;
+							if(this.moneyIndex!==1){
+								this.toast("没有更多数据");
+							}
+						}
+						else{
+							this.moneyNoMoreData = false;
+						}
+						
+						this.moneyIndex++;
+						this.getMoneyUseData.ReceiveBkge = getData.ReceiveBkge;
+						this.getMoneyUseData.TotalBkge = getData.TotalBkge;
+						this.getMoneyUseData.UndoneBkge = getData.UndoneBkge;
+						let data = this.getMoneyData;
+						for(let i=0;i<getData.Usrs.length;i++){
+							data.push(getData.Usrs[i]);
+						}
+						this.getMoneyData = data;
+					} else {
+						this.moneyNoMoreData = true;
+						this.toast(result.Message);
+					}
+					this.moneyIsUse = false;
+					Indicator.close();
+				})
+		},
 		/** 申请提现 */
 		applyGetMoney(){
 			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
@@ -631,11 +634,11 @@ const Vue_User = new Vue({
 			}
 			else{
 				this.myModal = true;
-				MessageBox.prompt("¥1-¥"+canGetMoney,"请输入提取佣金数额",{
+				MessageBox.prompt("¥1-¥"+canGetMoney.toFixed(2),"请输入提取佣金数额",{
 					inputType:'tel'
 				}).then(({ value, action }) => {
-					let Money = parseInt(value);
-					if (!Money) {
+					let Money = parseFloat(value).toFixed(2);
+					if (!Money||Money<=0) {
 						this.toast("请输入正确的佣金额!");
 						this.myModal = false;
 						return;

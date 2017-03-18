@@ -333,7 +333,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: $my_green;
             position: absolute;
             top: 9px;
             left: -17px;
@@ -346,7 +346,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: $my_red;
             position: absolute;
             top: 15px;
             left: -17px;
@@ -1054,7 +1054,7 @@
       color: #c8c8c8;
       span {
         font-size: 18px;
-        color: #f35252;
+        color: $my_red;
         font-weight: 900;
       }
     }
@@ -1146,7 +1146,7 @@
       color: darken($gray, 30%);
       >span {
         margin: 10px;
-        color: #f35252;
+        color: $my_red;
         font-size: 18px;
         font-weight: 900;
       }

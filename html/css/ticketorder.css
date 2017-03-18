@@ -238,7 +238,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: #60e7bf;
             position: absolute;
             top: 9px;
             left: -17px; }
@@ -249,7 +249,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: #f98080;
             position: absolute;
             top: 15px;
             left: -17px; }
@@ -368,7 +368,7 @@ header {
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
-  background-color: #f35252;
+  background-color: #f98080;
   z-index: 4000; }
   .page-header > div {
     height: 50px;
@@ -819,7 +819,7 @@ header {
       font-size: 15px;
       color: #c8c8c8; }
     .refund-footer .money span.money {
-      color: #f35252;
+      color: #f98080;
       font-size: 20px;
       margin-left: 10px;
       font-weight: 900; }
@@ -835,7 +835,7 @@ header {
     -ms-flex-align: center;
         align-items: center; }
     .refund-footer .btn button {
-      background-color: #f35252;
+      background-color: #f98080;
       padding: 10px 20px;
       color: #fff;
       border: none;
@@ -871,7 +871,7 @@ header {
       color: #c8c8c8; }
       .pay .left p span {
         font-size: 18px;
-        color: #f35252;
+        color: #f98080;
         font-weight: 900; }
   .pay .right {
     -ms-flex: 5;

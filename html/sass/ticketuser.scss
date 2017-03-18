@@ -492,7 +492,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: $my_green;
             position: absolute;
             top: 9px;
             left: -17px;
@@ -505,7 +505,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: $my_red;
             position: absolute;
             top: 15px;
             left: -17px;
@@ -719,7 +719,7 @@ header {
             color: #c8c8c8;
             span {
               font-size: 18px;
-              color: #f35252;
+              color: $my_red;
               font-weight: 900;
             }
           }
@@ -1354,7 +1354,7 @@ header {
       .money-header-top{
         height:100px;
         width:100%;
-        padding:10px 20px;
+        padding:10px 5px;
         @include display_flex('row');
         color:#fff;
         font-weight:900;
@@ -1395,6 +1395,7 @@ header {
         }
         .money-center{
           position:relative;
+          flex: 1.5;
           >p.first{
             font-size:40px;
             margin-bottom: 40px;

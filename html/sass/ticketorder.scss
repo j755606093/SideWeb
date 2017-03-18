@@ -165,7 +165,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: $my_green;
             position: absolute;
             top: 9px;
             left: -17px;
@@ -178,7 +178,7 @@ header {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: $my_red;
             position: absolute;
             top: 15px;
             left: -17px;
@@ -306,7 +306,7 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: #f35252;
+  background-color: $my_red;
   z-index: 4000;
   >div {
     height: 50px;
@@ -705,7 +705,7 @@ header {
       color: #c8c8c8;
     }
     span.money {
-      color: #f35252;
+      color: $my_red;
       font-size: 20px;
       margin-left: 10px;
       font-weight: 900;
@@ -715,7 +715,7 @@ header {
     flex: 3;
     @include display_flex('row');
     button {
-      background-color: #f35252;
+      background-color: $my_red;
       padding: 10px 20px;
       color: $white;
       border: none;
@@ -746,7 +746,7 @@ header {
       color: #c8c8c8;
       span {
         font-size: 18px;
-        color: #f35252;
+        color: $my_red;
         font-weight: 900;
       }
     }

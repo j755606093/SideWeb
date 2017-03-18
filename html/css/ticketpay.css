@@ -376,7 +376,7 @@ input {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #8cff3f;
+            background-color: #60e7bf;
             position: absolute;
             top: 9px;
             left: -17px; }
@@ -387,7 +387,7 @@ input {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #f35252;
+            background-color: #f98080;
             position: absolute;
             top: 15px;
             left: -17px; }
@@ -1074,7 +1074,7 @@ input {
       color: #c8c8c8; }
       .pay .left p span {
         font-size: 18px;
-        color: #f35252;
+        color: #f98080;
         font-weight: 900; }
   .pay .right {
     -ms-flex: 5;
@@ -1161,7 +1161,7 @@ input {
       color: #5e5e5e; }
       .submit-box .order-info p:first-child > span {
         margin: 10px;
-        color: #f35252;
+        color: #f98080;
         font-size: 18px;
         font-weight: 900; }
   .submit-box .submit-order {
