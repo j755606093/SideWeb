@@ -122,7 +122,7 @@ const state = {
 
 	busInfo: null, //乘坐车辆的信息,大概都是上面resultList的一个数据,
 	serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization,
+	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization,
 }
 
 // getters,获取数据

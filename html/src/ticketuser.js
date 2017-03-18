@@ -82,7 +82,7 @@ function checkStatus(response) {
 const config = {
 	headers: {
 		'Content-Type': 'application/json',
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDE1OTE5MDIwMDYwMzEiLCJqdGkiOiI4N2RkYmRlYy05ZWFiLTQ3MWItYjQwNy02ODY2OWVmN2NhMTEiLCJpYXQiOjE0ODg1OTE3NzAsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4ODU5MTc3MCwiZXhwIjoxNDg5ODAxMzcwLCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.28By9C5QI-QWINKeAHi57Pi0YMymQXeqi4VwbJJiTxE" : Authorization
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization
 	},
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
@@ -302,10 +302,11 @@ const Vue_User = new Vue({
 		},
 		/** 提取佣金 */
 		showGetMoney(){
+			console.log(this.moneyIsUse,this.moneyNoMoreData)
 			this.controlHeader(true, "我的佣金");
 			// this.showHeader = false;
 			this.getmoneyVisible = true; //显示
-			if(this.moneyIsUse||this.noMoreData){
+			if(this.moneyIsUse||this.moneyNoMoreData){
 				// 没有数据了或者正在使用中就退出
 				return;
 			}
@@ -335,13 +336,14 @@ const Vue_User = new Vue({
 						}
 						this.getMoneyData = data;
 						if(getData.Usrs.length<10){
-							this.noMoreData = true;
+							this.moneyNoMoreData = true;
+							this.toast("没有更多数据");
 						}
 						else{
-							this.noMoreData = false;
+							this.moneyNoMoreData = false;
 						}
 					} else {
-						this.noMoreData = true;
+						this.moneyNoMoreData = true;
 						this.toast(result.Message);
 					}
 					this.moneyIsUse = false;
@@ -742,7 +744,7 @@ document.getElementById("refund-lists").addEventListener('scroll', _.throttle(fu
 
 document.getElementById("money-lists").addEventListener('scroll', _.throttle(function() {
 	let getmoneyVisible = Vue_User.getmoneyVisible;
-	let money_last = document.getElementById("money_last").offsetTop - document.getElementById("refund-lists").scrollTop;
+	let money_last = document.getElementById("money_last").offsetTop - document.getElementById("money-lists").scrollTop;
 
 	if (money_last < 1000 && getmoneyVisible) {
 		Vue_User.showGetMoney();
