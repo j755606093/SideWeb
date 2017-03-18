@@ -3,15 +3,15 @@ Vue.use(require('vue-resource')); //引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
-import { MessageBox, Toast, Indicator, Popup, Tabbar, Navbar, TabItem, TabContainer, TabContainerItem, Checklist } from 'mint-ui';
-import 'mint-ui/lib/style.css';
+import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
+// import 'mint-ui/lib/style.css';
 
-Vue.component(TabContainer.name, TabContainer);
-Vue.component(TabContainerItem.name, TabContainerItem);
-Vue.component(Tabbar.name, Tabbar);
-Vue.component(TabItem.name, TabItem);
-Vue.component(Navbar.name, Navbar);
-Vue.component(Checklist.name, Checklist);
+// Vue.component(TabContainer.name, TabContainer);
+// Vue.component(TabContainerItem.name, TabContainerItem);
+// Vue.component(Tabbar.name, Tabbar);
+// Vue.component(TabItem.name, TabItem);
+// Vue.component(Navbar.name, Navbar);
+// Vue.component(Checklist.name, Checklist);
 
 const debug = (function() {
 	let test = false;
@@ -107,13 +107,13 @@ const refreshLink = (function() {
 const Vue_Order = new Vue({
 	el: "#app",
 	data: {
-		OrderList: [],// 待支付页
+		OrderList: [], // 待支付页
 		index: 1, //页数
 		noMoreData: false, //没有更多数据
 		isUse: false, //是否使用中
 		noDataShow: true, //没有订单数据
 
-		OrderList1: [],//待使用页
+		OrderList1: [], //待使用页
 		index1: 1, //页数
 		noMoreData1: false, //没有更多数据
 		isUse1: false, //是否使用中
@@ -121,7 +121,7 @@ const Vue_Order = new Vue({
 
 		ready: false, //是否准备显示真个页面(防止数据未准备就显示凌乱的页面)
 		Passengers: [], //订单详情中乘客名数据
-		orderVisible: false,//控制订单详情页显示隐藏
+		orderVisible: false, //控制订单详情页显示隐藏
 
 		OrderDetail: {}, //订单详细信息
 		passenger: [], //乘客数据(显示前需要从Passengers判断状态)
@@ -138,11 +138,11 @@ const Vue_Order = new Vue({
 		optionsPassenger: [],
 		codePopupVisible: false, //二维码
 
-		myModal:false,//自己的蒙版,控制隐藏显示
+		myModal: false, //自己的蒙版,控制隐藏显示
 
 		refreshLink: refreshLink, //刷新页面地址(增加hash防止缓存)
-		code:"",//验证码的图片信息(base64)showQRCode(text).src
-		showCode:false,//是否显示验证码
+		code: "", //验证码的图片信息(base64)showQRCode(text).src
+		showCode: false, //是否显示验证码
 	},
 	created() {
 		this.loading();
@@ -151,22 +151,22 @@ const Vue_Order = new Vue({
 			// 需要显示订单详细信息
 			this.getOrderInfo(this.getQueryString("orderid"));
 			let id = this.getQueryString("orderid");
-			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//根据订单id生成二维码链接(不一定显示)
+			this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid=" + id).src; //根据订单id生成二维码链接(不一定显示)
 		}
 
 		// 顺序请求服务器,防止服务器请求过多报错
-		this.moreOrderData().then(result=>{
-				this.ready = true;
-				this.moreOrderData1()
-			}).catch(error=>{
-				Indicator.close();
-				this.ready = false;
-				document.getElementById("server_break").style.display = "block";
-				// alert("服务器繁忙,请稍后再试");
-			});
+		this.moreOrderData().then(result => {
+			this.ready = true;
+			this.moreOrderData1()
+		}).catch(error => {
+			Indicator.close();
+			this.ready = false;
+			document.getElementById("server_break").style.display = "block";
+			// alert("服务器繁忙,请稍后再试");
+		});
 	},
 	mounted() {
-		
+
 	},
 	watch: {
 
@@ -197,9 +197,9 @@ const Vue_Order = new Vue({
 		},
 		/** 待支付加载更多数据,empty是否强制刷新 */
 		moreOrderData(empty = false) {
-			return new Promise((resolve,reject)=>{
+			return new Promise((resolve, reject) => {
 				if (this.noMoreData || this.isUse) {
-					if(!empty){
+					if (!empty) {
 						resolve();
 					}
 					this.index = 1;
@@ -235,7 +235,7 @@ const Vue_Order = new Vue({
 							this.noDataShow = false; //隐藏没有订单的信息
 						} else {
 							this.noMoreData = true;
-							this.selected = 2;//如果未支付没有数据就显示已待使用
+							this.selected = 2; //如果未支付没有数据就显示已待使用
 							if (this.index !== 1) {
 								this.toast(result.Message);
 							}
@@ -245,10 +245,10 @@ const Vue_Order = new Vue({
 						this.index++;
 						Indicator.close();
 					})
-					.then(()=>{
+					.then(() => {
 						this.canvas();
 						resolve();
-					}).catch(error=>{
+					}).catch(error => {
 						reject(error);
 					})
 			});
@@ -256,7 +256,7 @@ const Vue_Order = new Vue({
 		/** 待使用加载更多数据 */
 		moreOrderData1(empty = false) {
 			if (this.noMoreData1 || this.isUse1) {
-				if(!empty){
+				if (!empty) {
 					return;
 				}
 				this.index1 = 1;
@@ -298,7 +298,7 @@ const Vue_Order = new Vue({
 					this.index1++;
 					Indicator.close();
 				})
-				.then(()=>{
+				.then(() => {
 					this.canvas();
 				})
 		},
@@ -310,7 +310,7 @@ const Vue_Order = new Vue({
 				this.getOrderInfo(this.OrderList[index].Id)
 			} else {
 				let id = this.OrderList1[index].Id;
-				this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid="+id).src;//生成二维码链接
+				this.code = window.showQRCode("http://ticket.samecity.com.cn/wx/steward.html?orderid=" + id).src; //生成二维码链接
 				this.getOrderInfo(this.OrderList1[index].Id);
 			}
 		},
@@ -324,7 +324,7 @@ const Vue_Order = new Vue({
 					})
 				}).then(result => result.json())
 				.then(result => {
-					if(!result.Data){
+					if (!result.Data) {
 						this.myModal = true;
 						MessageBox.alert(result.Message).then(action => {
 							this.myModal = false;
@@ -332,8 +332,8 @@ const Vue_Order = new Vue({
 						return;
 					}
 					this.OrderDetail = result.Data;
-					this.passenger = [];//显示乘客状态
-					this.optionsPassenger = [];//提供申请退款选择的用户名
+					this.passenger = []; //显示乘客状态
+					this.optionsPassenger = []; //提供申请退款选择的用户名
 					for (let i = 0; i < this.OrderDetail.Passengers.length; i++) {
 						let item = this.OrderDetail.Passengers[i];
 						if (item.Status === -3) {
@@ -366,21 +366,20 @@ const Vue_Order = new Vue({
 						this.CountDown();
 					}
 					/** 判断订单状态来显示二维码 */
-					if(this.OrderDetail.IsPay===1&&(this.OrderDetail.Status===2||this.OrderDetail.Status===4)){
+					if (this.OrderDetail.IsPay === 1 && (this.OrderDetail.Status === 2 || this.OrderDetail.Status === 4)) {
 						// 显示验证码
 						this.showCode = true;
-					}
-					else{
+					} else {
 						// 其它情况,不显示验证码
 						this.showCode = false;
 					}
-					
+
 					//判断订单是否支付,选择页面显示
-					if(this.OrderDetail.IsPay===1){
+					if (this.OrderDetail.IsPay === 1) {
 						this.selected = 2;
 					}
 				})
-				.catch(error=>{
+				.catch(error => {
 					console.log(error);
 				})
 		},
@@ -400,7 +399,7 @@ const Vue_Order = new Vue({
 				.then(result => {
 					Indicator.close();
 					let paydata = result.Data;
-					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, (r)=> {
+					window.WeixinJSBridge.invoke("getBrandWCPayRequest", paydata, (r) => {
 						if (r.err_msg === "get_brand_wcpay_request:ok") {
 							this.myModal = true;
 							MessageBox.alert('支付成功').then(action => {
@@ -417,7 +416,7 @@ const Vue_Order = new Vue({
 		CountDown() {
 			let time = new Date(this.OrderDetail.CTime).getTime() + 60 * 30 * 1000;
 			let nowTime = Date.now();
-			if(time-nowTime<1000){
+			if (time - nowTime < 1000) {
 				this.countdownTime = "已经失效";
 				return;
 			}
@@ -448,11 +447,11 @@ const Vue_Order = new Vue({
 		},
 		/** 返回键 */
 		goback() {
-			if(this.getQueryString("orderid")){
+			if (this.getQueryString("orderid")) {
 				// 如果有这个说明是其他页面跳转过来的
-				if(this.getQueryString("type")){
+				if (this.getQueryString("type")) {
 					// 有type说明是个人中心调整过来的,就直接跳转回去
-					window.location.href="./TicketUser.html?type="+this.getQueryString("type");
+					window.location.href = "./TicketUser.html?type=" + this.getQueryString("type");
 					return;
 				}
 			}
@@ -479,11 +478,11 @@ const Vue_Order = new Vue({
 					.then(checkStatus)
 					.then(result => result.json())
 					.then(result => {
-						MessageBox.alert('取消订单成功').then(res=>{
+						MessageBox.alert('取消订单成功').then(res => {
 							this.myModal = false;
 						});
-						this.goback();//返回上一层
-						if(!this.OrderList1){
+						this.goback(); //返回上一层
+						if (!this.OrderList1) {
 							// 没有数据
 							this.noMoreData = true;
 							return;
@@ -499,7 +498,7 @@ const Vue_Order = new Vue({
 							}
 						}
 					})
-			}).catch(error=>{
+			}).catch(error => {
 				this.myModal = false;
 			});
 		},
@@ -507,7 +506,7 @@ const Vue_Order = new Vue({
 		inputRefund() {
 			return MessageBox.prompt('请输入退款理由').then(({ value, action }) => {
 				return value;
-			}).catch(error=>{
+			}).catch(error => {
 
 			});
 		},
@@ -516,7 +515,7 @@ const Vue_Order = new Vue({
 			// this.refundPassenger = false;
 			this.myModal = true;
 			if (this.selectPassenger.length === 0) {
-				MessageBox.alert( "你未选择退款乘客").then(result=>{
+				MessageBox.alert("你未选择退款乘客").then(result => {
 					this.myModal = false;
 				})
 			} else {
@@ -534,10 +533,10 @@ const Vue_Order = new Vue({
 				}
 			}
 
-			if (number===0) {
+			if (number === 0) {
 				// 说明没有乘客可以退款
 				this.myModal = true;
-				MessageBox.alert('订单中所有乘客都不满足退款条件!').then(result=>{
+				MessageBox.alert('订单中所有乘客都不满足退款条件!').then(result => {
 					this.myModal = false;
 				});
 			} else {
@@ -561,7 +560,7 @@ const Vue_Order = new Vue({
 					DIds.push(this.selectPassenger[i]);
 				}
 			}
-			
+
 			/** 要求输入退款理由 */
 			this.inputRefund().then(result => {
 					fetch(config.serverUrl + "/api/Order/Refund", {
@@ -578,16 +577,16 @@ const Vue_Order = new Vue({
 						.then(result => {
 							if (result.Data) {
 								// 申请成功
-								MessageBox.alert('申请退款已提交').then(result=>{
+								MessageBox.alert('申请退款已提交').then(result => {
 									this.myModal = false;
-									this.goback();//返回上一层
+									this.goback(); //返回上一层
 								});
 								// 重新加载数据
 								this.moreOrderData(true);
 								// this.moreOrderData1(true);
-								this.orderVisible = false;//退出详情
+								this.orderVisible = false; //退出详情
 							} else {
-								MessageBox.alert(result.Message).then(result=>{
+								MessageBox.alert(result.Message).then(result => {
 									this.goback();
 									this.myModal = false;
 								});
@@ -595,7 +594,7 @@ const Vue_Order = new Vue({
 						})
 				})
 				.catch(error => {
-					MessageBox.alert('您取消申请退款').then(result=>{
+					MessageBox.alert('您取消申请退款').then(result => {
 						this.myModal = false;
 					});
 				})
@@ -610,23 +609,23 @@ const Vue_Order = new Vue({
 		},
 		/** 选择退款人 */
 		selectRefund(index) {
-			this.optionsPassenger[index].active = !this.optionsPassenger[index].active;// 是否选中
+			this.optionsPassenger[index].active = !this.optionsPassenger[index].active; // 是否选中
 
-			this.refunndMoney = 0;//清空退款金额
-			this.selectPassenger = [];//清空选择的乘客
+			this.refunndMoney = 0; //清空退款金额
+			this.selectPassenger = []; //清空选择的乘客
 			this.optionsPassenger.map((item, i) => {
 				if (item.active) {
-					let money = item.Price - item.Price * 0.1;//默认收取10%手续费
+					let money = item.Price - item.Price * 0.1; //默认收取10%手续费
 					this.refunndMoney += money;
 					this.selectPassenger.push(item.DId);
 				}
 			})
-			this.refunndMoney = this.refunndMoney.toFixed(2);//精确到小数点后两位
+			this.refunndMoney = this.refunndMoney.toFixed(2); //精确到小数点后两位
 		},
 		/** 选择全部乘客 */
 		selectRefundAll() {
-			this.refunndMoney = 0;//清空退款金额
-			this.selectPassenger = [];//清空选择的乘客
+			this.refunndMoney = 0; //清空退款金额
+			this.selectPassenger = []; //清空选择的乘客
 			this.optionsPassenger.map((item, i) => {
 				item.active = true;
 				let money = item.Price - item.Price * 0.1;
@@ -635,28 +634,28 @@ const Vue_Order = new Vue({
 			})
 		},
 		/** 不显示官方二维码 */
-		cancelModal(){
+		cancelModal() {
 			this.codePopupVisible = false;
 		},
 		/** 画图 */
-		canvas(){
+		canvas() {
 			let topbody = document.getElementsByClassName("canvas-top");
 			let bottombody = document.getElementsByClassName("canvas-bottom");
 
-			for(let i=0;i<topbody.length;i++){
+			for (let i = 0; i < topbody.length; i++) {
 				let con = topbody[i].getContext("2d");
-				con.arc(18,0,18,0,Math.PI*2);
+				con.arc(18, 0, 18, 0, Math.PI * 2);
 				con.lineWidth = 2;
-				con.fillStyle="#fafafa";
-				con.strokeStyle="#c8c8c8";
+				con.fillStyle = "#fafafa";
+				con.strokeStyle = "#c8c8c8";
 				con.stroke();
 				con.fill();
 
 				let content = bottombody[i].getContext("2d");
-				content.arc(18,20,18,0,Math.PI*2);
+				content.arc(18, 20, 18, 0, Math.PI * 2);
 				content.lineWidth = 2;
-				content.fillStyle="#fafafa";
-				content.strokeStyle="#c8c8c8";
+				content.fillStyle = "#fafafa";
+				content.strokeStyle = "#c8c8c8";
 				content.stroke();
 				content.fill();
 			}

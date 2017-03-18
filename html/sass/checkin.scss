@@ -1,18 +1,340 @@
 @import "./utils.scss";
-@mixin displayflex($dircetion) {
-  display: flex;
-  flex-direction: $dircetion;
-  justify-content: center;
-  align-items: center;
+$checkin_green:rgb(134, 209, 166);
+body {
+  background-color: #fafafa;
 }
 
-p {
-  margin: 0;
-  padding: 0;
+
+/** 顶部 */
+
+.qd__header {
+  height: 350px;
+  width: 100%;
+  position: relative;
+  @include display_flex('column');
+  >img.qd__header__bg {
+    width: 100%;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+  .qd__header--block {
+    height: 175px;
+    flex: 1;
+    width: 100%;
+    z-index: 1;
+  }
+  .qd__header--top {
+    position: relative;
+    @include display_flex('column');
+    .qd__text--total-text {
+      color: $checkin_green;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .qd__text--total-day {
+      color: $checkin_green;
+      font-size: 80px;
+      font-weight: 900;
+      margin-top: -20px;
+    }
+    .qd__text--total-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 16px;
+      font-weight: 900;
+      color: $checkin_green;
+    }
+  }
+  .qd__header--bottom {
+    overflow-x: scroll;
+    white-space: nowrap;
+    .qd__header-diamond__list {}
+    .qd__header-diamond {
+      white-space: nowrap;
+      padding: 0;
+      margin: 0;
+      width: 80px;
+      height: 90px;
+      text-align: center;
+      display: inline-block;
+      margin-top: 85px;
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        height: 7px;
+        width: 70px;
+        background-color: #fff;
+        top: 9px;
+        right: -36px;
+        z-index: 0;
+        box-shadow: 0 3px 5px 0px rgb(96, 185, 138);
+      }
+      &:last-child {
+        &:after {
+          content: "";
+          position: absolute;
+          height: 0;
+          width: 0;
+        }
+        p.diamond__block:after {
+          content: "";
+          position: absolute;
+          height: 0;
+          width: 0;
+        }
+      }
+      &:first-child {
+        p.diamond__block:before {
+          content: "";
+          position: absolute;
+          height: 0;
+          width: 0;
+        }
+      }
+      p.diamond__block {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: relative;
+        box-shadow: 0 2px 5px 0px rgb(96, 185, 138);
+        z-index: 10;
+        &:after {
+          content: "";
+          position: absolute;
+          height: 7px;
+          width: 10px;
+          background-color: #fff;
+          top: 9px;
+          right: -5px;
+          z-index: 1;
+        }
+        &:before {
+          content: "";
+          position: absolute;
+          height: 7px;
+          width: 10px;
+          background-color: #fff;
+          top: 9px;
+          left: -5px;
+          z-index: 1;
+        }
+        img.diamond_img {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-top: 5px;
+        }
+      }
+      p.diamond__text {
+        color: #fff;
+        font-size: 12px;
+        margin-top: 5px;
+        font-weight: 900;
+      }
+      .qd__btn {
+        position: absolute;
+        top: -40px;
+        left: 5px;
+        width: 70px;
+        height: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 0 5px;
+        span {
+          font-size: 14px;
+          height: 30px;
+          line-height: 30px;
+          color: $checkin_green;
+          position: relative;
+          z-index: 1;
+          font-weight: 900;
+        }
+        &:after {
+          content: "";
+          width: 16px;
+          height: 16px;
+          position: absolute;
+          bottom: -5px;
+          left: 27px;
+          border-radius: 50%;
+          z-index: 0;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}
+
+
+/** 做任务 */
+
+.qd__task {
+  width: 100%;
+  .qd__task--header {
+    width: 100%;
+    height: 35px;
+    position: relative;
+    background-color: #fff;
+    margin-top: 10px;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    >p {
+      padding-left: 25px;
+      color: rgb(50, 50, 50);
+      font-size: 15px;
+      height: 35px;
+      line-height: 35px;
+      font-weight: 900;
+    }
+    >div {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      width: 50px;
+      height: 35px;
+      @include display_flex('row');
+      >img {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+  .qd__task--body {
+    width: 100%;
+    overflow-x: scroll;
+    height: 70px;
+    background-color: #fff;
+    white-space: nowrap;
+    .task-body--list {
+      width: 100px;
+      height: 70px;
+      display: inline-block;
+      border-right: 1px solid #f1f1f1;
+      padding: 5px 0;
+      .task-line {
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        // margin: 5px 0;
+        @include display_flex("row");
+        >img {
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          margin-right: 5px;
+        }
+        >span {
+          color: #000;
+          font-size: 16px;
+          font-weight: 900;
+          height: 30px;
+          line-height: 30px;
+          display: inline-block;
+        }
+        >p {
+          width: 100%;
+          font-size: 12px;
+          color: rgb(150, 150, 150);
+        }
+      }
+    }
+  }
+}
+
+
+/** 换商品 */
+
+.qd__product {
+  .qd__product--header {
+    width: 100%;
+    height: 35px;
+    position: relative;
+    background-color: #fff;
+    margin-top: 10px;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    >p {
+      padding-left: 25px;
+      color: rgb(50, 50, 50);
+      font-size: 15px;
+      height: 35px;
+      line-height: 35px;
+      font-weight: 900;
+    }
+    >div {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      width: 50px;
+      height: 35px;
+      @include display_flex('row');
+      >img {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+  .product__list {
+    width: 100%;
+    background-color: #fff;
+    .list--block {
+      width: 50%;
+      height: 200px;
+      display: inline-block;
+      background-color: #fff;
+      float: left;
+      border-right: 1px solid #f1f1f1;
+      border-bottom: 1px solid #f1f1f1;
+      .product__list--img {
+        width: 100%;
+        height: 125px;
+        text-align: center;
+        >img {
+          // width: 100%;
+          height: 125px;
+        }
+      }
+      .product__list--text {
+        >p {
+          height: 25px;
+          text-align: center;
+          font-size: 14px;
+        }
+        .product-need-diamond {
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          @include display_flex("row");
+          >img {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+          }
+          span {
+            color: #000;
+            font-size: 14px;
+            font-weight: 900;
+            height: 30px;
+            line-height: 30px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
 }
 
 .animated {
-  animation-duration: 0.5s;
+  animation-duration: 1.5s;
 }
 
 .model {
@@ -24,204 +346,40 @@ p {
   z-index: 1;
 }
 
-#checkin {
-  padding-top: 10px;
-}
-
-.circle-btn {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  .circle-model {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 0;
-    text-align: center;
-    .circle-move {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      display: inline-block;
-      background-color: lighten(#3498db, 30%);
-      // @include displayflex(row);
-    }
+@keyframes rubberBand {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
-  .circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background-color: #3498db;
-    @include displayflex(column);
-    z-index: 10;
-    p {
-      color: $white;
-      margin-bottom: 0;
-    }
-    p.status {
-      font-size: 2rem;
-    }
-    p.check-day {
-      font-size: 1.4rem;
-    }
-    span.hr {
-      height: 0;
-      width: 100%;
-      border-bottom: 1px solid #fff;
-      margin: 10px 0;
-    }
+  30% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.15, 1);
+    transform: scale3d(0.75, 1.15, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.05, 0.85, 1);
+    transform: scale3d(1.05, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(.95, 1.05, 1);
+    transform: scale3d(.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, .95, 1);
+    transform: scale3d(1.05, .95, 1);
+  }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 }
 
-.credits-menu {
-  margin-top: 20px;
-  position: relative;
-  .menu {
-    @include displayflex(row);
-    width: 100%;
-    height: 40px;
-    position: relative;
-    // padding:0 5%;
-    text-align: center;
-    p {
-      flex: 1;
-      font-size: 1.6rem;
-      font-weight: 400;
-      i {
-        margin-left: 5px;
-      }
-    }
-    &::after {
-      width: 100%;
-      position: absolute;
-      bottom: -16px;
-      right: 0;
-      content: "";
-      height: 16px;
-      background-color: lighten($gray, 26%);
-      z-index: 0;
-    }
-  }
-  .my-credit,
-  .get-credit {
-    position: absolute;
-    top: 38px;
-    left: 0;
-    width: 100%;
-    border-top: 1px solid lighten($gray, 20%);
-    box-shadow: 0 5px 5px 0px #dcdcdc;
-    z-index: 10;
-    min-height: 200px;
-    background-color: $white;
-    .credit-header {
-      width: 100%;
-      height: 40px;
-      line-height: 40px;
-      padding-left: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-bottom: 1px solid lighten($gray, 20%);
-      p {
-        height: 20px;
-        line-height: 20px;
-        font-size: 1.4rem;
-        border: none;
-        border-left: 2px solid $blue;
-        padding-left: 5px;
-      }
-    }
-    .credit-lists {
-      width: 100%;
-      padding: 0 4%;
-      .list {
-        width: 100%;
-        border-bottom: 1px solid lighten($gray, 20%);
-        @include displayflex(row);
-        justify-content: flex-start;
-        >span {
-          font-size: 1.4rem;
-          height: 40px;
-          line-height: 40px;
-        }
-        >span.name {
-          flex: 0.4;
-        }
-        >span.time {
-          flex: 0.3;
-          color: $gray;
-        }
-        >span.number {
-          flex: 0.3;
-          align-self: flex-end;
-          text-align: right;
-          color: $green;
-        }
-      }
-      .list:last-child {
-        border-bottom: none;
-      }
-    }
-    .credit-lists.make {
-      width: 100%;
-      padding: 0 4%;
-      .list {
-        width: 100%;
-        border-bottom: 1px solid lighten($gray, 20%);
-        @include displayflex(row);
-        justify-content: flex-start;
-        >span {
-          font-size: 1.4rem;
-          height: 40px;
-          line-height: 40px;
-        }
-        >span.name {
-          flex: 0.4;
-        }
-        >span.time {
-          flex: 0.3;
-          color: $gray;
-        }
-        >span.number {
-          flex: 0.1;
-          align-self: flex-end;
-          text-align: left;
-          color: $green;
-        }
-        >span.fill {
-          flex: 0.2;
-          text-align: right;
-        }
-      }
-      .list:last-child {
-        border-bottom: none;
-      }
-    }
-  }
-}
-
-.credit-exchange {
-  width: 100%;
-  padding: 0 10px;
-  margin-top: 20px;
-  .exchange-header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px solid lighten($gray, 30%);
-    height: 30px;
-    line-height: 30px;
-    span {
-      flex: 1;
-      font-size: 1.4rem;
-    }
-    span:last-child {
-      text-align: right;
-    }
-  }
+.rubberBand {
+  animation-name: rubberBand;
+  animation-iteration-count: infinite;
 }
 
 @keyframes circleAnimate {

@@ -7,6 +7,7 @@
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
   <meta name="format-detection" content="telephone=no, email=no" />
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://og95t393g.bkt.clouddn.com/css/app/mint.css">
   <title>揭西大巴订票平台票务--我的</title>
 </head>
 
@@ -126,13 +127,12 @@
           </div>
           <div id="last"></div>
         </div>
-
         <!-- 退款订单 -->
         <div v-show="refundVisible" id="refund-lists" class="refund-lists">
           <div class="lists">
             <!-- 列表 -->
             <a class="list" v-for="(item,index) in RefundOrder.RefundList" :href="'https://ticket.samecity.com.cn/wx/TicketOrder.html?type=3&orderid='+item.OrderId">
-            <!-- <a class="list" v-for="(item,index) in RefundOrder.RefundList" href="##"> -->
+              <!-- <a class="list" v-for="(item,index) in RefundOrder.RefundList" href="##"> -->
               <div class="left">
                 <div class="left-line">
                   <span class="left-span">订单号:</span>
@@ -298,9 +298,7 @@
       </slot>
     </mt-popup>
     <!-- 修改乘客信息 -->
-    <mt-popup
-      v-model="isShowChangePassenger"
-      class="change-page">
+    <mt-popup v-model="isShowChangePassenger" class="change-page">
       <slot>
         <div class="change-page-body">
           <!-- 修改乘客信息 -->
@@ -510,10 +508,10 @@
     </footer>
   </div>
   <script type="text/javascript">
-    var url = "./bundle-ticketuser.js?"+Date.now();
-    var script = document.createElement("script");
-    script.src = url;
-    document.body.appendChild(script);
+  var url = "./bundle-ticketuser.js?" + Date.now();
+  var script = document.createElement("script");
+  script.src = url;
+  document.body.appendChild(script);
   </script>
   <!-- <script src="./bundle-ticketuser.js"></script> -->
 </body>
