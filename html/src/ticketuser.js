@@ -628,27 +628,27 @@ const Vue_User = new Vue({
 			// 先判断是否有默认手机号
 			// 如果有手机号就直接输入金额提现
 			// 没有就先输入手机号
-			if (this.UserInfo.Mobile) {
-				this.fetchMoney(this.UserInfo.Mobile);
-				return;
-			}
+			// if (this.UserInfo.Mobile) {
+			this.fetchMoney(this.UserInfo.Mobile);
+			// 	return;
+			// }
 			this.myModal = true;
-			MessageBox.prompt("请输入接收提现结果短信的手机号", "设置手机号", {
-				inputType: 'tel'
-			}).then(({ value, action }) => {
-				// 判断手机号是否正确
-				if (!/^1[23578][0-9]{9}/.test(value)) {
-					this.toast("手机号格式错误");
-					this.myModal = false;
-				} else {
-					// 默认设置了手机号
-					this.UserInfo.Mobile = value;
-					this.fetchMoney(value);
-				}
-			}).catch(error => {
-				this.myModal = false;
-				console.log(error);
-			})
+			// MessageBox.prompt("请输入接收提现结果短信的手机号", "设置手机号", {
+			// 	inputType: 'tel'
+			// }).then(({ value, action }) => {
+			// 	// 判断手机号是否正确
+			// 	if (!/^1[23578][0-9]{9}/.test(value)) {
+			// 		this.toast("手机号格式错误");
+			// 		this.myModal = false;
+			// 	} else {
+			// 		// 默认设置了手机号
+			// 		this.UserInfo.Mobile = value;
+			// 		this.fetchMoney(value);
+			// 	}
+			// }).catch(error => {
+			// 	this.myModal = false;
+			// 	console.log(error);
+			// })
 		},
 		fetchMoney(phone) {
 			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
