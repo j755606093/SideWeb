@@ -130,7 +130,7 @@ const Vue_User = new Vue({
 		orderVisible: false, //是否显示订单列表
 		passengerVisible: false, //乘客列表
 		userVisible: false, //用户信息显示
-		getmoneyVisible:false,//提取佣金显示
+		getmoneyVisible: false, //提取佣金显示
 		refundVisible: false, //申请退款显示
 		helpVisible: false, //帮助中心显示
 
@@ -142,23 +142,23 @@ const Vue_User = new Vue({
 			index: 1,
 			isUse: false,
 			noMoreData: false
-		},//退款单
+		}, //退款单
 		helpContentShow: 0, //默认不显示任何一个
 		showpassengeraction: 0, //修改增加乘客
 		ChaPassengerIndex: 0,
 
-		myModal:false,//自己的蒙版
-		isShowChangePassenger:false,//是否显示修改乘客弹窗
+		myModal: false, //自己的蒙版
+		isShowChangePassenger: false, //是否显示修改乘客弹窗
 
-		getMoneyData:[],//提取佣金用户数据
-		getMoneyUseData:{
-			ReceiveBkge:0,
-			TotalBkge:0,
-			UndoneBkge:0
-		},//提取数据
-		moneyIndex:1,//用户数据页数
-		moneyIsUse:false,//是否正在使用
-		moneyNoMoreData:false,//是否还有更多数据
+		getMoneyData: [], //提取佣金用户数据
+		getMoneyUseData: {
+			ReceiveBkge: 0,
+			TotalBkge: 0,
+			UndoneBkge: 0
+		}, //提取数据
+		moneyIndex: 1, //用户数据页数
+		moneyIsUse: false, //是否正在使用
+		moneyNoMoreData: false, //是否还有更多数据
 	},
 	created() {
 		this.loading();
@@ -173,18 +173,18 @@ const Vue_User = new Vue({
 				this.UserInfo = result.Userinfo;
 				this.isNoPay = result.NoPay;
 				Indicator.close();
-				this.ready = true;//显示网页
-				
+				this.ready = true; //显示网页
+
 				let list = this.getQueryString('list');
-				if(list){
+				if (list) {
 					this.showList(list);
 				}
 			});
 
 		let type = this.getQueryString("type");
-		if(type){
+		if (type) {
 			// 说明是查看订单后返回的数据
-			let some = type==="0"?"":type;
+			let some = type === "0" ? "" : type;
 
 			this.showOrderList(some);
 			this.UseOrderType = parseInt(type);
@@ -221,8 +221,8 @@ const Vue_User = new Vue({
 			this.getmoneyVisible = false;
 			this.hideChangePassenger();
 		},
-		showList(list){
-			switch(list){
+		showList(list) {
+			switch (list) {
 				case "6":
 					// 如果list为6就跳到个人帮助中心
 					this.helpCenter();
@@ -234,7 +234,7 @@ const Vue_User = new Vue({
 					return;
 			}
 		},
-		hideChangePassenger(){
+		hideChangePassenger() {
 			this.isShowChangePassenger = false;
 		},
 		//控制头部显示和标题
@@ -258,7 +258,7 @@ const Vue_User = new Vue({
 				.then(checkStatus)
 				.then(result => result.json())
 				.then(result => result.Data)
-				.catch(error=>{
+				.catch(error => {
 					Indicator.close();
 					document.getElementById("server_break").style.display = "block";
 					// alert("服务器繁忙,请稍后再试");
@@ -271,12 +271,11 @@ const Vue_User = new Vue({
 		showOrderList(type = "") {
 			this.controlHeader(true, "订单");
 			this.UseOrderType = type === '' ? 0 : type;
-			if(this.UseOrderType===3){
+			if (this.UseOrderType === 3) {
 				// 这是申请退款
 				this.applyRefund();
 				return;
-			}
-			else{
+			} else {
 				this.refundVisible = false;
 			}
 			if (this["OrderType" + type].OrderList.length === 0) {
@@ -342,14 +341,14 @@ const Vue_User = new Vue({
 					this["OrderType" + type].index++;
 					Indicator.close();
 				})
-				.then(()=>{
+				.then(() => {
 					this.canvas();
 				})
 		},
 		openOrder(index) {
 			let type = this.UseOrderType === 0 ? '' : this.UseOrderType; //0,1,2,3
 			let Id = this["OrderType" + type].OrderList[index].Id;
-			window.location.href = "./TicketOrder.html?orderid=" + Id+"&type="+this.UseOrderType;
+			window.location.href = "./TicketOrder.html?orderid=" + Id + "&type=" + this.UseOrderType;
 		},
 		/**
 		 * 显示乘客
@@ -365,7 +364,7 @@ const Vue_User = new Vue({
 				this.toast("请输入正确的姓名!");
 				return;
 			}
-			if (this.passengerPhone!==""&&!/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
+			if (this.passengerPhone !== "" && !/^1[23578][0-9]{9}$/.test(this.passengerPhone)) {
 				this.toast("请输入正确的手机号!");
 				return;
 			}
@@ -480,10 +479,9 @@ const Vue_User = new Vue({
 						// 	title = "姓名";
 						// 	break;
 					case 2:
-						if(/^1[23578][0-9]{9}$/.test(value)){
+						if (/^1[23578][0-9]{9}$/.test(value)) {
 							Mobile = value;
-						}
-						else{
+						} else {
 							Mobile = "";
 							value = "";
 						}
@@ -493,7 +491,7 @@ const Vue_User = new Vue({
 						break;
 				}
 				if (value === "") {
-					MessageBox.alert("请输入正确的" + title).then(result=>{
+					MessageBox.alert("请输入正确的" + title).then(result => {
 						this.myModal = false;
 					});
 					return;
@@ -518,7 +516,7 @@ const Vue_User = new Vue({
 									this.UserInfo.Mobile = value;
 								}
 							}
-							MessageBox.alert(result.Message).then(result=>{
+							MessageBox.alert(result.Message).then(result => {
 								this.myModal = false;
 							});
 						});
@@ -573,13 +571,13 @@ const Vue_User = new Vue({
 				this.RefundOrder.isUse = false;
 			})
 		},
-				/** 提取佣金列表 */
-		showGetMoney(){
+		/** 提取佣金列表 */
+		showGetMoney() {
 			// console.log(this.moneyIsUse,this.moneyNoMoreData)
 			this.controlHeader(true, "我的佣金");
 			// this.showHeader = false;
 			this.getmoneyVisible = true; //显示
-			if(this.moneyIsUse||this.moneyNoMoreData){
+			if (this.moneyIsUse || this.moneyNoMoreData) {
 				// 没有数据了或者正在使用中就退出
 				return;
 			}
@@ -599,22 +597,21 @@ const Vue_User = new Vue({
 				.then(result => {
 					let getData = result.Data;
 					if (getData) {
-						if(getData.Usrs.length<10){
+						if (getData.Usrs.length < 10) {
 							this.moneyNoMoreData = true;
-							if(this.moneyIndex!==1){
+							if (this.moneyIndex !== 1) {
 								this.toast("没有更多数据");
 							}
-						}
-						else{
+						} else {
 							this.moneyNoMoreData = false;
 						}
-						
+
 						this.moneyIndex++;
 						this.getMoneyUseData.ReceiveBkge = getData.ReceiveBkge;
 						this.getMoneyUseData.TotalBkge = getData.TotalBkge;
 						this.getMoneyUseData.UndoneBkge = getData.UndoneBkge;
 						let data = this.getMoneyData;
-						for(let i=0;i<getData.Usrs.length;i++){
+						for (let i = 0; i < getData.Usrs.length; i++) {
 							data.push(getData.Usrs[i]);
 						}
 						this.getMoneyData = data;
@@ -627,33 +624,60 @@ const Vue_User = new Vue({
 				})
 		},
 		/** 申请提现 */
-		applyGetMoney(){
-			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
-			if(canGetMoney===0){
-				this.toast("无可用领取佣金");
+		applyGetMoney() {
+			// 先判断是否有默认手机号
+			// 如果有手机号就直接输入金额提现
+			// 没有就先输入手机号
+			if (this.UserInfo.Mobile) {
+				this.fetchMoney(this.UserInfo.Mobile);
+				return;
 			}
-			else{
+			this.myModal = true;
+			MessageBox.prompt("请输入接收提现结果短信的手机号", "设置手机号", {
+				inputType: 'tel'
+			}).then(({ value, action }) => {
+				// 判断手机号是否正确
+				if (!/^1[23578][0-9]{9}/.test(value)) {
+					this.toast("手机号格式错误");
+					this.myModal = false;
+				} else {
+					// 默认设置了手机号
+					this.UserInfo.Mobile = value;
+					this.fetchMoney(value);
+				}
+			}).catch(error => {
+				this.myModal = false;
+				console.log(error);
+			})
+		},
+		fetchMoney(phone) {
+			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
+			if (canGetMoney === 0) {
+				this.toast("无可用领取佣金");
+			} else {
 				this.myModal = true;
-				MessageBox.prompt("¥1-¥"+canGetMoney.toFixed(2),"请输入提取佣金数额",{
-					inputType:'tel'
+				MessageBox.prompt("¥1-¥" + canGetMoney.toFixed(2), "请输入提取佣金数额", {
+					inputType: 'tel'
 				}).then(({ value, action }) => {
 					let Money = parseFloat(value).toFixed(2);
-					if (!Money||Money<=0) {
+					if (!Money || Money <= 0) {
 						this.toast("请输入正确的佣金额!");
 						this.myModal = false;
 						return;
 					} else {
-						if(Money>canGetMoney){
+						if (Money > canGetMoney) {
 							// 输入金额大于提取金额
 							this.toast("申请金额不允许大于提取金额!");
 							this.myModal = false;
 							return;
 						}
+
 						fetch(config.serverUrl + "/api/Member/CashApply", {
 								method: 'POST',
 								headers: config.headers,
 								body: JSON.stringify({
-									Money:Money
+									Money: Money,
+									Phone: phone
 								})
 							})
 							.then(checkStatus)
@@ -662,7 +686,7 @@ const Vue_User = new Vue({
 								this.toast(result.Message);
 								this.myModal = false;
 
-								this.getMoneyUseData.ReceiveBkge = this.getMoneyUseData.ReceiveBkge - Money;//减去已经申请过的金额
+								this.getMoneyUseData.ReceiveBkge = this.getMoneyUseData.ReceiveBkge - Money; //减去已经申请过的金额
 							});
 					}
 				}).catch(error => {
@@ -682,7 +706,7 @@ const Vue_User = new Vue({
 		/** 显示改变乘客 */
 		showChaPassenger(index) {
 			this.showpassengeraction = 2;
-			if(this.ChaPassengerIndex===index){
+			if (this.ChaPassengerIndex === index) {
 				this.ChaPassengerIndex = -1;
 				return;
 			}
@@ -706,24 +730,24 @@ const Vue_User = new Vue({
 			}
 		},
 		/** 半圆显示 */
-		canvas(){
+		canvas() {
 			let topbody = document.getElementsByClassName("canvas-top");
 			let bottombody = document.getElementsByClassName("canvas-bottom");
 
-			for(let i=0;i<topbody.length;i++){
+			for (let i = 0; i < topbody.length; i++) {
 				let con = topbody[i].getContext("2d");
-				con.arc(18,0,18,0,Math.PI*2);
+				con.arc(18, 0, 18, 0, Math.PI * 2);
 				con.lineWidth = 2;
-				con.fillStyle="#fafafa";
-				con.strokeStyle="#c8c8c8";
+				con.fillStyle = "#fafafa";
+				con.strokeStyle = "#c8c8c8";
 				con.stroke();
 				con.fill();
 
 				let content = bottombody[i].getContext("2d");
-				content.arc(18,20,18,0,Math.PI*2);
+				content.arc(18, 20, 18, 0, Math.PI * 2);
 				content.lineWidth = 2;
-				content.fillStyle="#fafafa";
-				content.strokeStyle="#c8c8c8";
+				content.fillStyle = "#fafafa";
+				content.strokeStyle = "#c8c8c8";
 				content.stroke();
 				content.fill();
 			}

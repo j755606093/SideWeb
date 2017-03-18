@@ -718,6 +718,37 @@
 			applyGetMoney: function applyGetMoney() {
 				var _this8 = this;
 
+				// 先判断是否有默认手机号
+				// 如果有手机号就直接输入金额提现
+				// 没有就先输入手机号
+				if (this.UserInfo.Mobile) {
+					this.fetchMoney(this.UserInfo.Mobile);
+					return;
+				}
+				this.myModal = true;
+				_mintUi.MessageBox.prompt("请输入接收提现结果短信的手机号", "设置手机号", {
+					inputType: 'tel'
+				}).then(function (_ref2) {
+					var value = _ref2.value,
+					    action = _ref2.action;
+
+					// 判断手机号是否正确
+					if (!/^1[23578][0-9]{9}/.test(value)) {
+						_this8.toast("手机号格式错误");
+						_this8.myModal = false;
+					} else {
+						// 默认设置了手机号
+						_this8.UserInfo.Mobile = value;
+						_this8.fetchMoney(value);
+					}
+				}).catch(function (error) {
+					_this8.myModal = false;
+					console.log(error);
+				});
+			},
+			fetchMoney: function fetchMoney(phone) {
+				var _this9 = this;
+
 				var canGetMoney = this.getMoneyUseData.ReceiveBkge;
 				if (canGetMoney === 0) {
 					this.toast("无可用领取佣金");
@@ -725,39 +756,41 @@
 					this.myModal = true;
 					_mintUi.MessageBox.prompt("¥1-¥" + canGetMoney.toFixed(2), "请输入提取佣金数额", {
 						inputType: 'tel'
-					}).then(function (_ref2) {
-						var value = _ref2.value,
-						    action = _ref2.action;
+					}).then(function (_ref3) {
+						var value = _ref3.value,
+						    action = _ref3.action;
 
 						var Money = parseFloat(value).toFixed(2);
 						if (!Money || Money <= 0) {
-							_this8.toast("请输入正确的佣金额!");
-							_this8.myModal = false;
+							_this9.toast("请输入正确的佣金额!");
+							_this9.myModal = false;
 							return;
 						} else {
 							if (Money > canGetMoney) {
 								// 输入金额大于提取金额
-								_this8.toast("申请金额不允许大于提取金额!");
-								_this8.myModal = false;
+								_this9.toast("申请金额不允许大于提取金额!");
+								_this9.myModal = false;
 								return;
 							}
+
 							fetch(config.serverUrl + "/api/Member/CashApply", {
 								method: 'POST',
 								headers: config.headers,
 								body: (0, _stringify2.default)({
-									Money: Money
+									Money: Money,
+									Phone: phone
 								})
 							}).then(checkStatus).then(function (result) {
 								return result.json();
 							}).then(function (result) {
-								_this8.toast(result.Message);
-								_this8.myModal = false;
+								_this9.toast(result.Message);
+								_this9.myModal = false;
 
-								_this8.getMoneyUseData.ReceiveBkge = _this8.getMoneyUseData.ReceiveBkge - Money; //减去已经申请过的金额
+								_this9.getMoneyUseData.ReceiveBkge = _this9.getMoneyUseData.ReceiveBkge - Money; //减去已经申请过的金额
 							});
 						}
 					}).catch(function (error) {
-						_this8.myModal = false;
+						_this9.myModal = false;
 						console.log(error);
 					});
 				}
