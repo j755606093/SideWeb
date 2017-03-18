@@ -371,11 +371,11 @@
 				this.discountVisible = true; //显示
 			},
 
-			/** 提取佣金 */
+			/** 提取佣金列表 */
 			showGetMoney: function showGetMoney() {
 				var _this2 = this;
 
-				console.log(this.moneyIsUse, this.moneyNoMoreData);
+				// console.log(this.moneyIsUse,this.moneyNoMoreData)
 				this.controlHeader(true, "我的佣金");
 				// this.showHeader = false;
 				this.getmoneyVisible = true; //显示

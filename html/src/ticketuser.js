@@ -300,9 +300,9 @@ const Vue_User = new Vue({
 			this.controlHeader(true, "优惠券");
 			this.discountVisible = true; //显示
 		},
-		/** 提取佣金 */
+		/** 提取佣金列表 */
 		showGetMoney(){
-			console.log(this.moneyIsUse,this.moneyNoMoreData)
+			// console.log(this.moneyIsUse,this.moneyNoMoreData)
 			this.controlHeader(true, "我的佣金");
 			// this.showHeader = false;
 			this.getmoneyVisible = true; //显示
