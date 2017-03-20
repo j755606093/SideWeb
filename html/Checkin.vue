@@ -7,20 +7,20 @@
 			<p class="qd__text--total-day">7</p>
 			<span class="qd__text--total-card">总积分120</span>
 		</div>
-		<div class="qd__header--bottom qd__header--block">
+		<div v-if="CreditInfo.Record.length!==0" class="qd__header--bottom qd__header--block">
 			<div class="qd__header-diamond__list">
 				<div class="qd__header-diamond">
 					<p class="diamond__block">
-						<img class="diamond_img" src="picture/check_select_icon.png"></img>
+						<img class="diamond_img" :src="CreditInfo.Record[0].IsSignIn?'picture/check_select_icon.png':'picture/diamond_icon.png'"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
+					<p class="diamond__text">{{CreditInfo.Record[0].Point}}钻石</p>
 				</div>
 				<div class="qd__header-diamond">
 					<p class="diamond__block">
-						<img class="diamond_img" src="picture/diamond_icon.png"></img>
+						<img class="diamond_img" :src="isCheckin?'picture/check_select_icon.png':'picture/diamond_icon.png'"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
-					<div class="qd__btn animated rubberBand">
+					<p class="diamond__text">{{CreditInfo.Record[1].Point}}钻石</p>
+					<div v-show="!isCheckin" class="qd__btn animated rubberBand">
 						<span>点击签到</span>
 					</div>
 				</div>
@@ -28,25 +28,25 @@
 					<p class="diamond__block">
 						<img class="diamond_img" src="picture/diamond_icon.png"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
+					<p class="diamond__text">{{CreditInfo.Record[2].Point}}钻石</p>
 				</div>
 				<div class="qd__header-diamond">
 					<p class="diamond__block">
 						<img class="diamond_img" src="picture/diamond_icon.png"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
+					<p class="diamond__text">{{CreditInfo.Record[2].Point+5>=30?30:CreditInfo.Record[2].Point+5}}钻石</p>
 				</div>
 				<div class="qd__header-diamond">
 					<p class="diamond__block">
 						<img class="diamond_img" src="picture/diamond_icon.png"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
+					<p class="diamond__text">{{CreditInfo.Record[2].Point+10>=30?30:CreditInfo.Record[2].Point+10}}钻石</p>
 				</div>
 				<div class="qd__header-diamond">
 					<p class="diamond__block">
 						<img class="diamond_img" src="picture/diamond_icon.png"></img>
 					</p>
-					<p class="diamond__text">5钻石</p>
+					<p class="diamond__text">{{CreditInfo.Record[2].Point+15>=30?30:CreditInfo.Record[2].Point+15}}钻石</p>
 				</div>
 			</div>
 		</div>
