@@ -37,6 +37,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="home__lists">
+			<my-list></my-list>
+		</div>
 	</div>
 </template>
 
@@ -47,6 +50,7 @@
 <script type="text/babel">
 import Utils from "../../Utils/utils";
 import Swiper from "swiper";
+import List from "./list.vue";
 
 export default {
 	data () {
@@ -70,6 +74,9 @@ export default {
 	},
 	methods:{
 		
+	},
+	components:{
+		"my-list":List
 	}
 }
 </script>
