@@ -4,8 +4,8 @@
 		<img class="qd__header__bg" src="picture/check_bg.png">
 		<div class="qd__header--top qd__header--block">
 			<p class="qd__text--total-text">累计签到</p>
-			<p class="qd__text--total-day">7</p>
-			<span class="qd__text--total-card">总积分120</span>
+			<p class="qd__text--total-day">{{CreditInfo.ContCount}}</p>
+			<span class="qd__text--total-card">总积分{{CreditInfo.Point}}</span>
 		</div>
 		<div v-if="CreditInfo.Record.length!==0" class="qd__header--bottom qd__header--block">
 			<div class="qd__header-diamond__list">
@@ -20,7 +20,7 @@
 						<img class="diamond_img" :src="isCheckin?'picture/check_select_icon.png':'picture/diamond_icon.png'"></img>
 					</p>
 					<p class="diamond__text">{{CreditInfo.Record[1].Point}}钻石</p>
-					<div v-show="!isCheckin" class="qd__btn animated rubberBand">
+					<div @click="checkIn" v-show="!isCheckin" class="qd__btn animated rubberBand">
 						<span>点击签到</span>
 					</div>
 				</div>
@@ -57,47 +57,12 @@
 			<div><img src="picture/right_icon.png"></div>
 		</div>
 		<div class="qd__task--body">
-			<div class="task-body--list">
+			<div @click="openNativePage(index)" v-for="(item,index) in TaskInfo" class="task-body--list">
 				<div class="task-line">
 					<img src="picture/diamond_icon.png">
-					<span>+100</span>
+					<span>+{{item.Point}}</span>
 				</div>
-				<p class="task-line">完善资料</p>
-			</div>
-			<div class="task-body--list">
-				<div class="task-line">
-					<img src="picture/diamond_icon.png">
-					<span>+100</span>
-				</div>
-				<p class="task-line">完善资料</p>
-			</div>
-			<div class="task-body--list">
-				<div class="task-line">
-					<img src="picture/diamond_icon.png">
-					<span>+100</span>
-				</div>
-				<p class="task-line">完善资料</p>
-			</div>
-			<div class="task-body--list">
-				<div class="task-line">
-					<img src="picture/diamond_icon.png">
-					<span>+100</span>
-				</div>
-				<p class="task-line">完善资料</p>
-			</div>
-			<div class="task-body--list">
-				<div class="task-line">
-					<img src="picture/diamond_icon.png">
-					<span>+100</span>
-				</div>
-				<p class="task-line">完善资料</p>
-			</div>
-			<div class="task-body--list">
-				<div class="task-line">
-					<img src="picture/diamond_icon.png">
-					<span>+100</span>
-				</div>
-				<p class="task-line">完善资料</p>
+				<p class="task-line">{{item.Content}}</p>
 			</div>
 		</div>
 	</div>
@@ -192,12 +157,24 @@ let Vue_App =  {
 		
 		this.getUserInfo();// 获取用户信息
 		this.getCheckinInfo();//获取用户签到信息
-		// this.getTaskInfo();//获取积分任务
+		this.getTaskInfo();//获取积分任务
 	},
 	mounted(){
 		
 	},
 	methods:{
+		loading() {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
+		},
+		toast(title) {
+			Toast({
+				message: title,
+				position: 'bottom',
+				duration: 3000
+			});
+		},
 		hideModel(){
 			this.model = false;
 		},
@@ -209,9 +186,10 @@ let Vue_App =  {
 					if(result){
 						this.CreditInfo.IsSignIn = true;
 						this.CreditInfo.ContCount++;
+						this.toast("签到成功!");
 					}
 					else{
-						console.log("error")
+						this.toast(result.Message);
 					}
 				})
 			}
@@ -280,6 +258,9 @@ let Vue_App =  {
 					this.TaskInfo = result.Data;
 				}
 			})
+		},
+		openNativePage(index){
+			console.log(this.TaskInfo[index]);
 		}
 	},
 	computed:{

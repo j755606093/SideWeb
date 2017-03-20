@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import store from '../store/index.js'; //导入状态库
+import store from '../store/ticket.js'; //导入状态库
 import MintUI from 'mint-ui'
 // import 'mint-ui/lib/style.css'
 
@@ -29,11 +29,11 @@ const routes = [{
 		path: "",
 		name: "ticketbody",
 		component: TicketBody
-	},{
+	}, {
 		path: "/rebate/:id",
 		name: "rebate",
 		component: TicketInfo
-	},{
+	}, {
 		path: "/qr/:id",
 		name: "qr",
 		component: QR

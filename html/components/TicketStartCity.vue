@@ -2,7 +2,7 @@
 	<div id="citylist">
 		<div class="left">
 			<template v-for="(list,index) in setStartCityList">
-				<p @click="getStartCity(item.Id,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
+				<p @click="getStartCity(item.CityId,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
 			</template>
 		</div>
 		<div class="right">

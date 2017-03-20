@@ -20,11 +20,15 @@
 | ---- | ---- | ----| ---- |
 | getAllApi | null | Object | 获取所有的可用api. |
 | loadPageUrl | url | null | 打开一个网页 |
-| openNativePage | androidPageName,iosPageName,json | null | 打开一个原生页面 |
+| openNativePage | androidPageName,iosPageName,json | jgkj_JSCALLBACK | 打开一个原生页面 |
 | getUserInfo | null | null | 获取用户信息 |
 | openWxPay | json | json(result:'success|fail',message:'') | 打开微信支付 |
 
-`使用:window.jgkj.loadPageUrl(url);`
+`使用:window.jgkj.loadPageUrl(url);`;
+
+**如果返回值不是立即返回的,比如需要原生执行完成后才返回值,那么需要一个全局函数来接受这个数据和动作,因此做一下约定:**
+
+> 约定一个函数`window.jgkj_JSCALLBACK(action,json)`作为公共回调,此函数接受两个参数,第一个参数一个执行的动作,此动作是api的名称,第二个参数是返回的json数据.比如打开微信支付,原生执行完成后回调:`window.jgkj_JSCALLBACK('openWxPay',{result:'success'})`
 
 ## 后台服务器接口
 

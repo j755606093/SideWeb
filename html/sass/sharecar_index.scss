@@ -1,0 +1,85 @@
+@import "./utils.scss";
+body {
+  background-color: #fafafa;
+}
+
+
+/** 轮播图 */
+
+.home__swpier {
+  height: 160px;
+  width: 100%;
+  .swiper-container {
+    height: 160px;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.home__header {
+  height: 80px;
+  background-color: #fff;
+  margin-top: 10px;
+  .header_title {
+    height: 45px;
+    line-height: 45px;
+    padding: 0 10px;
+    border-bottom: 1px solid #fafafa;
+    >span {
+      height: 45px;
+      line-height: 45px;
+      width: 60px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      // margin-left: 10px;
+      display: inline-block;
+      color: rgb(200, 200, 200);
+      position: relative;
+      &.active {
+        color: #000;
+      }
+      &.active:after {
+        background-color: $blue;
+        content: "";
+        position: absolute;
+        bottom: 5px;
+        height: 2px;
+        width: 14px;
+        left: 23px;
+      }
+    }
+    .action--btn {
+      float: right;
+      height: 45px;
+      line-height: 45px;
+      padding: 0 10px;
+      width: 40px;
+      >img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+  .header_message {
+    height: 35px;
+    line-height: 35px;
+    padding: 0 10px;
+    span.message--new {
+      font-size: 12px;
+      color: rgb(30, 30, 30);
+      margin-left: 10px;
+    }
+    .header_message--taxis {
+      float: right;
+      >span {
+        padding: 0 10px;
+        color: rgb(200, 200, 200);
+      }
+      >span.active {
+        color: rgb(30, 30, 30);
+      }
+    }
+  }
+}

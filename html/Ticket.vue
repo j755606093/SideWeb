@@ -28,7 +28,6 @@
 <script type="text/babel">
 import Utils from "./Utils/utils";
 import SideHeader from "./components/SideHeader.vue";
-import TicketInfo from "./components/TicketInfo.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
@@ -68,7 +67,6 @@ export default {
 	},
 	components:{
 		"side-header":SideHeader,
-		"order-info":TicketInfo,
 		"side-footer":Footer
 	}
 }

@@ -3,7 +3,7 @@
  * 这里包含了几乎所有的网络操作,因为需要token
  * 并且包含了调用公司app用户的token操作
  */
-import types from '../Type'; //数据类型
+import types from '../TicketType'; //数据类型
 import "whatwg-fetch";
 const _ = require("underscore");
 import { Toast } from 'mint-ui';
@@ -20,14 +20,8 @@ const debug = (function() {
 	return debug;
 })();
 
-/** ios端回调传送回本地js的token,然后保存到本地 */
-window.getData = (data) => {
-	window.localStorage.setItem("UserInfo", "Bearer " + data);
-}
-
 /** 如果是app中android */
 if (typeof window.jgkj !== "undefined") {
-	
 	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
 }
 /** 如果是ios的app */
@@ -44,9 +38,9 @@ let Authorization = (function() {
 	if (window.localStorage.getItem("UserInfo")) {
 		// app中
 		let string = window.localStorage.getItem("UserInfo");
-		return "Bearer " + JSON.parse(string).Access_Token;//格式为json
+		return "Bearer " + JSON.parse(string).Access_Token; //格式为json
 	}
-	let cookie = document.cookie;//获取浏览器的token
+	let cookie = document.cookie; //获取浏览器的token
 	if (cookie === "") {
 		return cookie;
 	}
@@ -87,10 +81,10 @@ function checkStatus(response) {
 // 初始化数据 state
 const state = {
 	isFirst: true, //第一次启动
-	HeaderIsHome: true,//是否是主页
+	HeaderIsHome: true, //是否是主页
 	showHeader: false, //不显示头部
 	showBack: true, //不显示返回键
-	HeaderTitle: "身边订票",//头部标题显示
+	HeaderTitle: "身边订票", //头部标题显示
 	showFooter: true, //显示底部tab
 
 	startCity: {
@@ -501,7 +495,7 @@ const actions = {
 	/** 获取二维码的优惠信息 */
 	getQRRebateInfo({ commit, state }, data) {
 		// /api/Order/Cancel
-		return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id="+data, {
+		return fetch(state.serverUrl + "/api/Rebate/GetQrcodeRebate?id=" + data, {
 				method: "GET",
 				headers: {
 					'Content-Type': 'application/json',
@@ -536,7 +530,7 @@ const actions = {
 	/** 获取优惠券信息 */
 	getRebateInfo({ commit, state }, data) {
 		// /api/Order/Cancel
-		return fetch(state.serverUrl + "/api/Rebate/GetCodeInfo?code="+data, {
+		return fetch(state.serverUrl + "/api/Rebate/GetCodeInfo?code=" + data, {
 				method: "GET",
 				headers: {
 					'Content-Type': 'application/json',
@@ -552,7 +546,7 @@ const actions = {
 	/** 领取优惠券 */
 	getRebate({ commit, state }, data) {
 		// /api/Order/Cancel
-		return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/"+data, {
+		return fetch(state.serverUrl + "/api/Transport/CheckRebateCode/" + data, {
 				method: "GET",
 				headers: {
 					'Content-Type': 'application/json',

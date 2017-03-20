@@ -297,7 +297,7 @@ body {
       display: inline-block;
       border-right: 1px solid #f1f1f1;
       padding: 5px 0; }
-      .qd__task .qd__task--body .task-body--list .task-line {
+      .qd__task .qd__task--body .task-body--list div.task-line {
         height: 30px;
         line-height: 30px;
         text-align: center;
@@ -309,22 +309,24 @@ body {
             justify-content: center;
         -ms-flex-align: center;
             align-items: center; }
-        .qd__task .qd__task--body .task-body--list .task-line > img {
+        .qd__task .qd__task--body .task-body--list div.task-line > img {
           width: 20px;
           height: 20px;
           display: inline-block;
           margin-right: 5px; }
-        .qd__task .qd__task--body .task-body--list .task-line > span {
+        .qd__task .qd__task--body .task-body--list div.task-line > span {
           color: #000;
           font-size: 16px;
           font-weight: 900;
           height: 30px;
           line-height: 30px;
           display: inline-block; }
-        .qd__task .qd__task--body .task-body--list .task-line > p {
-          width: 100%;
-          font-size: 12px;
-          color: #969696; }
+      .qd__task .qd__task--body .task-body--list p.task-line {
+        text-align: center;
+        width: 100%;
+        font-size: 12px;
+        color: #969696;
+        margin-top: 5px; }
 
 /** 换商品 */
 .qd__product .qd__product--header {

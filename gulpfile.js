@@ -117,7 +117,7 @@ gulp.task('ticket', ['sass'], function() {
 
 gulp.task('compress', function() {
 	return gulp.src('./html/dist/bundle-*.js')
-		.pipe(uglify())//生产的时候再启用压缩
+		.pipe(uglify()) //生产的时候再启用压缩
 		.pipe(gulp.dest('html/dist/compress'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
@@ -239,6 +239,36 @@ gulp.task('checkin', function() {
 			plugins: [new HtmlWebpackPlugin({
 				title: "有奖签到",
 				filename: "checkin.html",
+				hash: true,
+				template: "!!ejs!html/default.ejs",
+				inject: true
+			})]
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		// .pipe(rev())
+		.pipe(gulp.dest('html/dist/'))
+		// .pipe(rev.manifest())
+		// .pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
+gulp.task('sharecar', function() {
+	return gulp.src('./html/src/sharecar.js')
+		.pipe(webpack({
+			watch: true,
+			output: {
+				filename: 'bundle-sharecar.js'
+			},
+			module: modules,
+			resolve: {
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+					'vue$': 'vue/dist/vue.js'
+				}
+			},
+			plugins: [new HtmlWebpackPlugin({
+				title: "揭西同乡拼车平台",
+				filename: "sharecar.html",
 				hash: true,
 				template: "!!ejs!html/default.ejs",
 				inject: true
