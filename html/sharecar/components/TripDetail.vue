@@ -9,19 +9,19 @@
 			<div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
 			</div>
-			<a href="tel:0663-5519299" class="trip__contact">
+			<a :href="'tel:'+tripData.Phone" class="trip__contact">
 				<div class="trip--contact-way">
 					<img src="../icon/phone_icon.png">
 				</div>
 				<span>电话联系</span>
-				<span>(13871895108)</span>
+				<span>({{tripData.Phone}})</span>
 			</a>
-			<div class="trip__contact">
+			<a :href="'sms:'+tripData.Phone" class="trip__contact">
 				<div class="trip--contact-way">
 					<img src="../icon/messnge_icon.png">
 				</div>
 				<span>短信联系</span>
-			</div>
+			</a>
 		</div>
 	</div>
 </template>
@@ -98,14 +98,13 @@ export default {
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
-		let types = this.$route.params.types;
+		this.types = parseInt(this.$route.params.types);
 
 		if(!this.tripId){
 
 		}
 		
-		if(types==="0"){
-			this.types = parseInt(types);
+		if(this.types===0){
 			this.loading();
 			this.$store.dispatch("getTripDetail",this.tripId).then(result=>{
 				if(result.Data){
@@ -118,7 +117,6 @@ export default {
 				Indicator.close();
 			})
 		}else{
-			this.types = parseInt(this.types);
 			this.loading();
 			this.$store.dispatch("getTripDetailPeople",this.tripId).then(result=>{
 				if(result.Data){

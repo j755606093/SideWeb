@@ -34420,7 +34420,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 12px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 70px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 12px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 70px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
 
 	// exports
 
@@ -34491,6 +34491,10 @@
 			}
 		}
 	}; //
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -35100,12 +35104,11 @@
 			var _this = this;
 
 			this.tripId = this.$route.params.tripId;
-			var types = this.$route.params.types;
+			this.types = parseInt(this.$route.params.types);
 
 			if (!this.tripId) {}
 
-			if (types === "0") {
-				this.types = parseInt(types);
+			if (this.types === 0) {
 				this.loading();
 				this.$store.dispatch("getTripDetail", this.tripId).then(function (result) {
 					if (result.Data) {
@@ -35117,7 +35120,6 @@
 					_mintUi.Indicator.close();
 				});
 			} else {
-				this.types = parseInt(this.types);
 				this.loading();
 				this.$store.dispatch("getTripDetailPeople", this.tripId).then(function (result) {
 					if (result.Data) {
@@ -35177,34 +35179,37 @@
 	    }
 	  }), " ", _vm._h('div', {
 	    staticClass: "trip__remark"
-	  }, [_vm._h('p', ["备注:" + _vm._s(_vm.tripData.Remark ? _vm.tripData.Remark : '无')])]), " ", _vm._m(0), " ", _vm._m(1), " ", _vm._m(2)]) : _vm._e()])
+	  }, [_vm._h('p', ["备注:" + _vm._s(_vm.tripData.Remark ? _vm.tripData.Remark : '无')])]), " ", _vm._m(0), " ", _vm._h('a', {
+	    staticClass: "trip__contact",
+	    attrs: {
+	      "href": 'tel:' + _vm.tripData.Phone
+	    }
+	  }, [_vm._m(1), " ", _vm._h('span', ["电话联系"]), " ", _vm._h('span', ["(" + _vm._s(_vm.tripData.Phone) + ")"])]), " ", _vm._h('a', {
+	    staticClass: "trip__contact",
+	    attrs: {
+	      "href": 'sms:' + _vm.tripData.Phone
+	    }
+	  }, [_vm._m(2), " ", _vm._h('span', ["短信联系"])])]) : _vm._e()])
 	},staticRenderFns: [function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "trip__tip"
 	  }, [_vm._h('p', ["平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~"])])
 	},function (){var _vm=this;
-	  return _vm._h('a', {
-	    staticClass: "trip__contact",
-	    attrs: {
-	      "href": "tel:0663-5519299"
-	    }
-	  }, [_vm._h('div', {
+	  return _vm._h('div', {
 	    staticClass: "trip--contact-way"
 	  }, [_vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(155)
 	    }
-	  })]), " ", _vm._h('span', ["电话联系"]), " ", _vm._h('span', ["(13871895108)"])])
+	  })])
 	},function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "trip__contact"
-	  }, [_vm._h('div', {
 	    staticClass: "trip--contact-way"
 	  }, [_vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(156)
 	    }
-	  })]), " ", _vm._h('span', ["短信联系"])])
+	  })])
 	}]}
 	if (false) {
 	  module.hot.accept()

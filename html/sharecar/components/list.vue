@@ -77,7 +77,7 @@
 	div.header--info{
 		@include display_flex('row');
 		span.header--name{
-			font-size:12px;
+			font-size:15px;
 			color:rgb(50,50,50);
 		}
 		>img{
@@ -101,7 +101,7 @@
 			margin-left:5px;
 		}
 		>span{
-			font-size:12px;
+			font-size:15px;
 			color:rgb(200,200,200);
 		}
 	}
@@ -124,9 +124,13 @@
 				height:10px;
 			}
 		}
+		span{
+			font-size: 14px;
+		}
 		span.line-surplus{
 			margin-left:17px;
 			color:rgb(200,200,200);
+			font-size:12px;
 		}
 		div.line__left--dot{
 			width:65px;
