@@ -163,10 +163,6 @@ export default {
 				return {}
 			}
 		},
-		index:{
-			type:Number,
-			default:0
-		},
 		types:{
 			type:Number,
 			default:0
@@ -185,9 +181,7 @@ export default {
 	},
 	methods:{
 		goToTipDetail(){
-			this.$router.replace({path:"/detail/"+this.list.Id});
-			console.log(this.list.Id);
-			console.log(this.types)
+			this.$router.replace({path:`/detail/${this.types}/${this.list.Id}`});
 		}
 	},
 	filters:{

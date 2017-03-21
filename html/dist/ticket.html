@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8"/>
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-		<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-		<meta name="format-detection" content="telephone=no, email=no"/>
-		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-		<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet"/>
-		<link rel="stylesheet" href="http://og95t393g.bkt.clouddn.com/css/app/mint.css">
-		<title>揭西大巴订票平台</title>
-	</head>
-	<body>
-		<div id="app">
-			<router-view></router-view>
-		</div>
-	<script type="text/javascript" src="bundle-ticket.js?b68872073a22a86f25e1"></script></body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="http://og95t393g.bkt.clouddn.com/css/app/mint.css">
+  <title>揭西大巴订票平台</title>
+  <script type="text/javascript">
+  try {
+    if (window.localStorage.getItem("jgkj_time")) {
+      var jgkj_time = parseInt(window.localStorage.getItem("jgkj_time"));
+      if (jgkj_time + 1000 * 60 * 10 < Date.now()) {
+        window.localStorage.setItem("jgkj_time", Date.now());
+        window.location.href = "https://ticket.samecity.com.cn/wx/ticket.html?" + Date.now();
+      }
+    } else {
+      window.localStorage.setItem("jgkj_time", Date.now());
+      window.location.href = "https://ticket.samecity.com.cn/wx/ticket.html?" + Date.now();
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+  <script type="text/javascript" src="bundle-ticket.js?b68872073a22a86f25e1"></script>
+</body>
+
 </html>

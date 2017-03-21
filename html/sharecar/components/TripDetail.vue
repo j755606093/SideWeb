@@ -1,7 +1,7 @@
 <template type="x/template">
 	<div class="tripdetail">
 		<div v-if="isReady" class="trip__info">
-			<my-list :types="pageIndex" :list="item" :index="index"></my-list>
+			<my-list :types="types" :list="tripData"></my-list>
 		</div>
 	</div>
 </template>
@@ -23,24 +23,50 @@ export default {
 	data () {
 		return {
 			tripId:"",
-			isReady:false
+			isReady:false,
+
+			tripData:{}
 		}
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
-		if(this.tripId){
+		this.types = this.$route.params.types;
+		
+		if(this.tripId&&this.types){
+			this.types = parseInt(this.types);
+			this.loading();
 			this.$store.dispatch("getTripDetail",this.tripId).then(result=>{
-				console.log(result)
+				if(result.Data){
+					this.tripData = result.Data;
+					this.isReady = true;//开始显示
+				}
+				else{
+					this.toast(result.Message);
+				}
+				Indicator.close();
 			})
 		}
-		console.log(this.tripId);
-
+		else{
+			
+		}
 	},
 	computed:{
 		
 	},
 	methods:{
-		
+		toast(title) {
+			Toast({
+				message: title,
+				position: 'bottom',
+				duration: 3000
+			});
+		},
+		/** 加载动画(需要手动关闭) */
+		loading() {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
+		},
 	},
 	filters:{
 		

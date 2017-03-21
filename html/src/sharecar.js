@@ -23,7 +23,7 @@ const routes = [{
 		component: Index
 	}]
 }, {
-	path: "/detail/:tripId",
+	path: "/detail/:types/:tripId",
 	name: "tripdetail",
 	component: TripDetail
 }, {

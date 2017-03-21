@@ -44,7 +44,7 @@
 		</div>
 		<div class="home__lists">
 			<template v-for="(item,index) in showPageData">
-				<my-list :types="pageIndex" :list="item" :index="index"></my-list>
+				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
 		</div>
 	</div>
@@ -121,7 +121,7 @@ export default {
 			}
 			
 			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
-			
+
 			if(status<-100){
 				this.headerTopElement.style.position = "fixed";
 				this.headerTopElement.style.top = "0";
