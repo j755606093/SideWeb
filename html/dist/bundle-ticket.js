@@ -31291,7 +31291,7 @@
 	exports.i(__webpack_require__(141), "");
 
 	// module
-	exports.push([module.id, "\n.startcity--tip{\n\theight:35px;\n\twidth:100%;\n\tposition:fixed;\n\ttop:50px;\n\tleft:0;\n\tz-index: 100;\n\tbackground-color: #fff;\n\tborder-bottom:0.5px solid #c8c8c8;\n}\n.startcity--tip>p{\n\ttext-align: center;\n\tfont-size:16px;\n\tcolor:#0074D9;\n\theight:35px;\n\tline-height: 35px;\n}\n.modal{\n\tposition: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, .6);\n  z-index: 5000;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.modal>.modal-body{\n\twidth:80%;\n\t/*margin:0 10%;*/\n\theight:400px;\n\tbackground-color: #fff;\n}\n", ""]);
+	exports.push([module.id, "\n.startcity--tip{\n\theight:35px;\n\twidth:100%;\n\tposition:fixed;\n\ttop:50px;\n\tleft:0;\n\tz-index: 100;\n\tbackground-color: #fff;\n\tborder-bottom:0.5px solid #c8c8c8;\n}\n.startcity--tip>p{\n\ttext-align: center;\n\tfont-size:16px;\n\tcolor:#0074D9;\n\theight:35px;\n\tline-height: 35px;\n}\n.modal{\n\tposition: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, .6);\n  z-index: 5000;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.modal>.modal-body{\n\ttext-align: center;\n\twidth:90%;\n\theight:300px;\n\tpadding:20px 20px;\n\tborder-radius: 10px;\n\tbackground-color: #fff;\n}\n.modal>.modal-body>strong{\n\ttext-align: left;\n\tfont-size:16px;\n\tcolor:rgb(50,50,50);\n\theight:50px;\n\tline-height: 50px;\n\twidth:100%;\n\tdisplay: block;\n}\n.modal>.modal-body>p{\n\tfont-size:16px;\n\ttext-align: left;\n\tcolor:rgb(50,50,50);\n\twidth:100%;\n\tline-height: 26px;\n\t/*text-indent: 1em;*/\n}\n.modal>.modal-body>button{\n\tfont-size:16px;\n\tcolor:#fff;\n\theight:40px;\n\twidth:150px;\n\tbackground-color: #0074D9;\n\toutline:none;\n\tborder:none;\n\tborder-radius: 5px;\n\tmargin-top:15px;\n}\n", ""]);
 
 	// exports
 
@@ -31431,9 +31431,45 @@
 			},
 			openTip: function openTip() {
 				this.modalTip = true;
+			},
+			closeTip: function closeTip() {
+				this.modalTip = false;
 			}
 		}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -31510,7 +31546,15 @@
 	      "id": "citylist"
 	    }
 	  }, [_vm._h('div', {
-	    staticClass: "left"
+	    staticClass: "startcity--tip",
+	    on: {
+	      "click": _vm.openTip
+	    }
+	  }, [_vm._h('p', ["关于回程班次购票的情况说明"])]), " ", _vm._h('div', {
+	    staticClass: "left",
+	    staticStyle: {
+	      "top": "85px"
+	    }
 	  }, [_vm._l((_vm.setStartCityList), function(list, index) {
 	    return [_vm._l((list.Content), function(item) {
 	      return _vm._h('p', {
@@ -31528,7 +31572,10 @@
 	      }, [_vm._s(item.Name)])
 	    })]
 	  })]), " ", _vm._h('div', {
-	    staticClass: "right"
+	    staticClass: "right",
+	    staticStyle: {
+	      "top": "85px"
+	    }
 	  }, [_vm._l((_vm.setStartCityList), function(list, index) {
 	    return _vm._h('div', [_vm._h('span', {
 	      class: {
@@ -31544,7 +31591,11 @@
 	    staticClass: "modal"
 	  }, [_vm._h('div', {
 	    staticClass: "modal-body"
-	  })]) : _vm._e()])
+	  }, [_vm._h('strong', ["关于回程班次购票的情况说明"]), " ", _vm._h('p', ["尊敬的揭西城市圈用户："]), " ", _vm._h('p', ["因揭西大巴客运回程运营较复杂，为确保用户购票乘车体验流畅，目前只上线了较少的外地回揭西班次，后续流程确定优化完成后，我们将在近期上线更多回程班次，感谢广大揭西同乡的支持，谢谢！"]), " ", _vm._h('button', {
+	    on: {
+	      "click": _vm.closeTip
+	    }
+	  }, ["明白"])])]) : _vm._e()])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()

@@ -1,21 +1,24 @@
 <template type="x/template" id="ticketstartcity">
 	<div id="citylist">
-		<!-- <div @click="openTip" class="startcity--tip">
+		<div @click="openTip" class="startcity--tip">
 			<p>关于回程班次购票的情况说明</p>
-		</div> -->
-		<div class="left" >
+		</div>
+		<div class="left" style="top:85px">
 			<template v-for="(list,index) in setStartCityList">
 				<p @click="getStartCity(item.CityId,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
 			</template>
 		</div>
-		<div class="right">
+		<div class="right" style="top:85px">
 			<div v-for="(list,index) in setStartCityList">
 				<span :class="{active:indexItem===index}" @click="selectCity(index)">{{list.ShortKey}}</span>
 			</div>
 		</div>
 		<div v-if="modalTip" class="modal">
 			<div class="modal-body">
-				
+				<strong>关于回程班次购票的情况说明</strong>
+				<p>尊敬的揭西城市圈用户：</p>
+				<p>因揭西大巴客运回程运营较复杂，为确保用户购票乘车体验流畅，目前只上线了较少的外地回揭西班次，后续流程确定优化完成后，我们将在近期上线更多回程班次，感谢广大揭西同乡的支持，谢谢！</p>
+				<button @click="closeTip">明白</button>
 			</div>
 		</div>
 	</div>
@@ -54,10 +57,40 @@
   align-items: center;
 }
 .modal>.modal-body{
-	width:80%;
-	/*margin:0 10%;*/
-	height:400px;
+	text-align: center;
+	width:90%;
+	height:300px;
+	padding:20px 20px;
+	border-radius: 10px;
 	background-color: #fff;
+}
+.modal>.modal-body>strong{
+	text-align: left;
+	font-size:16px;
+	color:rgb(50,50,50);
+	height:50px;
+	line-height: 50px;
+	width:100%;
+	display: block;
+}
+.modal>.modal-body>p{
+	font-size:16px;
+	text-align: left;
+	color:rgb(50,50,50);
+	width:100%;
+	line-height: 26px;
+	/*text-indent: 1em;*/
+}
+.modal>.modal-body>button{
+	font-size:16px;
+	color:#fff;
+	height:40px;
+	width:150px;
+	background-color: #0074D9;
+	outline:none;
+	border:none;
+	border-radius: 5px;
+	margin-top:15px;
 }
 </style>
 
@@ -174,6 +207,9 @@ export default {
 		},
 		openTip(){
 			this.modalTip = true;
+		},
+		closeTip(){
+			this.modalTip = false;
 		}
 	}
 }
