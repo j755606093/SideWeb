@@ -122,6 +122,13 @@ gulp.task('compress', function() {
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
 
+gulp.task('compress_ticket', function() {
+	return gulp.src('./html/dist/bundle-ticket.js')
+		.pipe(uglify()) //生产的时候再启用压缩
+		.pipe(gulp.dest('html/dist'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
 gulp.task('app', function() {
 	return gulp.src('./html/js/commenting.js')
 		.pipe(webpack({
