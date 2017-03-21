@@ -20,7 +20,7 @@
 			<div class="location">
 				<span @click="GoStartCity">{{getStartCity}}</span>
 				<div><span></span></div>
-				<span @click="GoEndCity">{{getEndCity}}</span>
+				<span @click="GoEndCity" :style="{color:getEndCity==='选择目的地'?'#c8c8c8':'#1e1e1e'}">{{getEndCity}}</span>
 			</div>
 			<!-- 选择时间 -->
 			<div class="date">

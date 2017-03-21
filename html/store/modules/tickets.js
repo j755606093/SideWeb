@@ -100,8 +100,8 @@ const state = {
 		Name: "五经富",
 	}, //出发地
 	endCity: {
-		Code: "3385290",
-		Name: "深圳罗湖",
+		Code: "0000",
+		Name: "选择目的地",
 	}, //到达地
 
 	startDate: {
@@ -215,18 +215,11 @@ const actions = {
 					Code: data.Start.CityId,
 					Name: data.Start.Name
 				});
-				if (!data.End) {
-					// 如果为空,后台不保证传回来的是真实的数据
-					commit(types.SET_ENDCITY, {
-						Code: "000",
-						Name: "请选择"
-					})
-					return { End: false };
-				}
+				// 目的地地址改为用户选择
 				commit(types.SET_ENDCITY, {
-					Code: data.End.CityId,
-					Name: data.End.Name
-				});
+					Code: "000",
+					Name: "选择目的地"
+				})
 				return data;
 			})
 	},

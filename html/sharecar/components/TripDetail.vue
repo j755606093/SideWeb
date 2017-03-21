@@ -1,6 +1,6 @@
 <template type="x/template">
 	<div class="tripdetail">
-		<div class="trip__info">
+		<div v-if="isReady" class="trip__info">
 			<my-list :types="pageIndex" :list="item" :index="index"></my-list>
 		</div>
 	</div>
@@ -17,15 +17,24 @@
 <script type="text/babel">
 import Utils from "../../Utils/utils";
 import List from "./list.vue";
+import { Toast, Indicator, Popup } from 'mint-ui';
 
 export default {
 	data () {
 		return {
-			
+			tripId:"",
+			isReady:false
 		}
 	},
 	created(){
-		
+		this.tripId = this.$route.params.tripId;
+		if(this.tripId){
+			this.$store.dispatch("getTripDetail",this.tripId).then(result=>{
+				console.log(result)
+			})
+		}
+		console.log(this.tripId);
+
 	},
 	computed:{
 		
@@ -34,24 +43,7 @@ export default {
 		
 	},
 	filters:{
-		formatTime(time){
-			const formatDate = new Date(time);//转换为DATE对象
-			const Today = new Date();
-
-			let text = ""
-
-			if(Today.getDate()===formatDate.getDate()&&formatDate.getMonth()===Today.getMonth()){
-				// 说明是今天
-				text = "今天";
-			}
-			else{
-				text = `${formatDate.getMonth()+1}月${formatDate.getDate()}号`;
-			}
-
-			text = `${text} (${Utils.formatWeek(formatDate)})`;
-			text = `${text} ${formatDate.getHours()}:${formatDate.getMinutes()>9?formatDate.getMinutes():"0"+formatDate.getMinutes()}`;
-			return text;
-		}
+		
 	},
 	components:{
 		"my-list":List

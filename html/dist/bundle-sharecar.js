@@ -66,10 +66,14 @@
 
 	var _Index2 = _interopRequireDefault(_Index);
 
+	var _TripDetail = __webpack_require__(95);
+
+	var _TripDetail2 = _interopRequireDefault(_TripDetail);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
-	__webpack_require__(93);
+	__webpack_require__(100);
 
 	// Vue.use(Vuex);
 
@@ -87,6 +91,10 @@
 			name: "index",
 			component: _Index2.default
 		}]
+	}, {
+		path: "/detail/:tripId",
+		name: "tripdetail",
+		component: _TripDetail2.default
 	}, {
 		path: "*",
 		name: "all",
@@ -11248,6 +11256,12 @@
 				});
 				return data;
 			});
+		},
+		getTripDetail: function getTripDetail(_ref5, data) {
+			var commit = _ref5.commit,
+			    state = _ref5.state;
+
+			return getData("/api/CarPool/GetDre?id=" + data);
 		}
 	};
 
@@ -28426,7 +28440,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nfooter {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  justify-content: center;\n  align-items: center;\n  background-color: #fff;\n  box-shadow: 0 -3px 3px 3px #fafafa;\n  z-index: 100;\n  overflow: visible;\n}\nfooter .footer {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px;\n    position: relative;\n}\nfooter .footer i {\n      font-size: 1.8rem;\n}\nfooter .footer > img {\n      width: 16px;\n      height: 16px;\n}\nfooter .footer > img.center {\n      width: 20px;\n      height: 20px;\n      display: inline-block;\n      z-index: 106;\n      margin-top: -5px;\n}\nfooter .footer p {\n      font-size: 12px;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px;\n      font-weight: 900;\n}\nfooter .footer p.center {\n      margin-top: 0px;\n      color: #000;\n      z-index: 110;\n}\nfooter .footer div.circle {\n      position: absolute;\n      top: -15px;\n      width: 60px;\n      height: 60px;\n      left: 26%;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n      z-index: 101;\n      background-color: #fff;\n      border-radius: 50%;\n      box-shadow: 0 -3px 3px 3px #fafafa;\n}\n@media (max-width: 320px) {\nfooter .footer div.circle {\n          left: 22%;\n}\n}\nfooter .footer .clear {\n      position: absolute;\n      top: 0px;\n      height: 50px;\n      left: 0;\n      width: 100%;\n      z-index: 105;\n      background-color: #fff;\n}\nfooter .footer.active {\n    color: #0074D9;\n}\nfooter .footer.active p {\n      color: #0074D9;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nfooter {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  height: 50px;\n  line-height: 50px;\n  width: 100%;\n  overflow-x: hidden;\n  justify-content: center;\n  align-items: center;\n  background-color: #fff;\n  box-shadow: 0 -3px 3px 3px #fafafa;\n  z-index: 100;\n  overflow: visible;\n}\nfooter .footer {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    width: 33.3333%;\n    color: #AAAAAA;\n    height: 50px;\n    line-height: 50px;\n    position: relative;\n}\nfooter .footer i {\n      font-size: 1.8rem;\n}\nfooter .footer > img {\n      width: 16px;\n      height: 16px;\n}\nfooter .footer > img.center {\n      width: 20px;\n      height: 20px;\n      display: inline-block;\n      z-index: 106;\n      margin-top: -10px;\n}\nfooter .footer p {\n      font-size: 12px;\n      color: #AAAAAA;\n      height: 20px;\n      line-height: 20px;\n      font-weight: 900;\n}\nfooter .footer p.center {\n      margin-top: 5px;\n      color: #000;\n      z-index: 110;\n}\nfooter .footer div.circle {\n      position: absolute;\n      top: -15px;\n      width: 60px;\n      height: 60px;\n      left: 26%;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n      z-index: 101;\n      background-color: #fff;\n      border-radius: 50%;\n      box-shadow: 0 -3px 3px 3px #fafafa;\n}\n@media (max-width: 320px) {\nfooter .footer div.circle {\n          left: 22%;\n}\n}\nfooter .footer .clear {\n      position: absolute;\n      top: 0px;\n      height: 50px;\n      left: 0;\n      width: 100%;\n      z-index: 105;\n      background-color: #fff;\n}\nfooter .footer.active {\n    color: #0074D9;\n}\nfooter .footer.active p {\n      color: #0074D9;\n}\n", ""]);
 
 	// exports
 
@@ -28654,7 +28668,8 @@
 	    }
 	  }, [_vm._h('my-header'), " ", _vm._h('div', {
 	    staticStyle: {
-	      "padding-bottom": "70px"
+	      "padding-bottom": "70px",
+	      "position": "relative"
 	    }
 	  }, [_vm._h('transition', {
 	    attrs: {
@@ -28684,7 +28699,7 @@
 	__vue_exports__ = __webpack_require__(80)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(89)
+	var __vue_template__ = __webpack_require__(91)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -28766,7 +28781,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  margin-top: 10px; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative;\n  margin-bottom: 10px; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #fafafa; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n", ""]);
 
 	// exports
 
@@ -28851,6 +28866,10 @@
 	//
 	//
 	//
+	//
+	//
+
+	var _ = __webpack_require__(53);
 
 	exports.default = {
 		data: function data() {
@@ -28862,7 +28881,11 @@
 				sortIndex: 0, //排序索引
 				pageIndex: 0, //页面索引
 
-				onlineNumber: 100
+				onlineNumber: 0, //显示的在线人数
+				onlineTimeContorl: null, //保存循环的变量
+
+				headerTop: 0, //头部距离顶部距离
+				headerTopElement: null
 			};
 		},
 		created: function created() {
@@ -28891,12 +28914,34 @@
 			this.randomOnlineNumber();
 		},
 		mounted: function mounted() {
+			var _this2 = this;
+
 			var mySwiper = new _swiper2.default('.swiper-container', {
 				autoplay: 2000,
 				loop: true,
 				pagination: '.swiper-pagination',
 				autoplayDisableOnInteraction: false
 			});
+
+			this.headerTopElement = document.getElementById("headertop");
+
+			/** 监听滚动 */
+			window.addEventListener('scroll', _.throttle(function () {
+				if (_this2.HeaderStatus) {
+					// 显示头部的时候不需要执行下面的命令
+					return;
+				}
+
+				var status = _this2.headerTopElement.offsetTop - document.body.scrollTop;
+
+				if (status < -100) {
+					_this2.headerTopElement.style.position = "fixed";
+					_this2.headerTopElement.style.top = "0";
+					_this2.headerTopElement.style.left = "0";
+				} else {
+					_this2.headerTopElement.style.position = "relative";
+				}
+			}, 100, { leading: false }));
 		},
 
 		computed: {
@@ -28912,6 +28957,9 @@
 				} else {
 					return this.PeopleInfo;
 				}
+			},
+			HeaderStatus: function HeaderStatus() {
+				return this.$store.getters.getHeaderState;
 			}
 		},
 		methods: {
@@ -28925,7 +28973,7 @@
 
 			/** 模拟在线人数 */
 			randomOnlineNumber: function randomOnlineNumber() {
-				var _this2 = this;
+				var _this3 = this;
 
 				// 如果本地有数据就本地拿,更像是服务器那边的数据
 				var number = window.localStorage.getItem("jgkj_online");
@@ -28935,19 +28983,19 @@
 					this.onlineNumber = parseInt(Math.random() * 1000);
 				}
 
-				setInterval(function () {
+				this.onlineTimeContorl = setInterval(function () {
 					var random = parseInt(Math.random() * 10);
 					var action = Math.random() * 10 > 4 ? false : true;
 
 					if (action) {
-						_this2.onlineNumber -= random;
-						if (_this2.onlineNumber <= 0) {
-							_this2.onlineNumber = 20;
+						_this3.onlineNumber -= random;
+						if (_this3.onlineNumber <= 0) {
+							_this3.onlineNumber = 20;
 						}
 					} else {
-						_this2.onlineNumber += random;
+						_this3.onlineNumber += random;
 					}
-					window.localStorage.setItem("jgkj_online", _this2.onlineNumber);
+					window.localStorage.setItem("jgkj_online", _this3.onlineNumber);
 				}, 2000);
 			},
 
@@ -28961,6 +29009,10 @@
 				this.pageIndex = index;
 			}
 		},
+		destroyed: function destroyed() {
+			clearInterval(this.onlineTimeContorl);
+		},
+
 		components: {
 			"my-list": _list2.default
 		}
@@ -34408,7 +34460,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 12px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 70px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 12px;\n      color: #323232;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 12px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 70px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 12px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
 
 	// exports
 
@@ -34452,7 +34504,13 @@
 		created: function created() {},
 
 		computed: {},
-		methods: {},
+		methods: {
+			goToTipDetail: function goToTipDetail() {
+				this.$router.replace({ path: "/detail/" + this.list.Id });
+				console.log(this.list.Id);
+				console.log(this.types);
+			}
+		},
 		filters: {
 			formatTime: function formatTime(time) {
 				var formatDate = new Date(time); //转换为DATE对象
@@ -34633,7 +34691,10 @@
 
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "list"
+	    staticClass: "list",
+	    on: {
+	      "click": _vm.goToTipDetail
+	    }
 	  }, [_vm._h('div', {
 	    staticClass: "list__header"
 	  }, [_vm._h('div', {
@@ -34648,17 +34709,17 @@
 	    staticClass: "header--name"
 	  }, [_vm._s(_vm.list.UserInfo.Nickname)]), " ", (_vm.list.UserInfo.Sex === 1) ? [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(97)
+	      "src": __webpack_require__(87)
 	    }
 	  })] : [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(87)
+	      "src": __webpack_require__(88)
 	    }
 	  })], " "]), " ", _vm._h('div', {
 	    staticClass: "header--active"
 	  }, [(_vm.types === 0) ? [_vm._h('span', ["请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我"])] : [_vm._h('span', ["去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她')])], " ", " ", _vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(96)
+	      "src": __webpack_require__(89)
 	    }
 	  })])]), " ", _vm._h('div', {
 	    staticClass: "list__body"
@@ -34688,7 +34749,7 @@
 	    staticClass: "line__left"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(95)
+	      "src": __webpack_require__(90)
 	    }
 	  })])
 	}]}
@@ -34703,11 +34764,28 @@
 /* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__.p + "man_icon.png?8167f559a875c839ac984d131c21643b";
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
 	module.exports = __webpack_require__.p + "women_icon.png?140a933c9a021b923d082022519ea8af";
 
 /***/ },
-/* 88 */,
 /* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "into_icon.png?c7ec5d49aa59df4159de9a3331232aa0";
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "clock_icon.png?603d69a916a328c7ae4aafccd847558a";
+
+/***/ },
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -34718,7 +34796,18 @@
 	  }, [_vm._m(0), " ", _vm._h('div', {
 	    staticClass: "online--number"
 	  }, [_vm._h('span', ["在线人数" + _vm._s(_vm.onlineNumber)])])]), " ", _vm._h('div', {
-	    staticClass: "home__header"
+	    staticStyle: {
+	      "height": "80px",
+	      "width": "100%"
+	    },
+	    attrs: {
+	      "id": "header_block"
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "home__header",
+	    attrs: {
+	      "id": "headertop"
+	    }
 	  }, [_vm._h('div', {
 	    staticClass: "header_title"
 	  }, [_vm._h('span', {
@@ -34763,7 +34852,7 @@
 	        _vm.sort(1)
 	      }
 	    }
-	  }, ["发布时间 ↓"])])])]), " ", _vm._h('div', {
+	  }, ["发布时间 ↓"])])])])]), " ", _vm._h('div', {
 	    staticClass: "home__lists"
 	  }, [_vm._l((_vm.showPageData), function(item, index) {
 	    return [_vm._h('my-list', {
@@ -34783,19 +34872,19 @@
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(90)
+	      "src": __webpack_require__(92)
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(90)
+	      "src": __webpack_require__(92)
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(90)
+	      "src": __webpack_require__(92)
 	    }
 	  })])]), " ", " ", _vm._h('div', {
 	    staticClass: "swiper-pagination"
@@ -34805,7 +34894,7 @@
 	    staticClass: "action--btn"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(91)
+	      "src": __webpack_require__(93)
 	    }
 	  })])
 	},function (){var _vm=this;
@@ -34813,7 +34902,7 @@
 	    staticClass: "action--btn"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(92)
+	      "src": __webpack_require__(94)
 	    }
 	  })])
 	}]}
@@ -34825,31 +34914,204 @@
 	}
 
 /***/ },
-/* 90 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "swiper1.png?da981d4a9a3f465cbb5c2262e0d7c415";
 
 /***/ },
-/* 91 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "seach_icon.png?de1ae6d7a482e776a91319e1bf9fa131";
 
 /***/ },
-/* 92 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "Refresh_ICON.png?eab7845008bd21073751a21845113213";
 
 /***/ },
-/* 93 */
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+
+	/* styles */
+	__webpack_require__(96)
+
+	/* script */
+	__vue_exports__ = __webpack_require__(98)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(99)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/TripDetail.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-73efa559", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-73efa559", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] TripDetail.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(94);
+	var content = __webpack_require__(97);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(58)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73efa559!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TripDetail.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-73efa559!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TripDetail.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(34)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _utils = __webpack_require__(60);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _list = __webpack_require__(82);
+
+	var _list2 = _interopRequireDefault(_list);
+
+	var _mintUi = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+		data: function data() {
+			return {
+				tripId: "",
+				isReady: false
+			};
+		},
+		created: function created() {
+			this.tripId = this.$route.params.tripId;
+			if (this.tripId) {
+				this.$store.dispatch("getTripDetail", this.tripId).then(function (result) {
+					console.log(result);
+				});
+			}
+			console.log(this.tripId);
+		},
+
+		computed: {},
+		methods: {},
+		filters: {},
+		components: {
+			"my-list": _list2.default
+		}
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "tripdetail"
+	  }, [(_vm.isReady) ? _vm._h('div', {
+	    staticClass: "trip__info"
+	  }, [_vm._h('my-list', {
+	    attrs: {
+	      "types": _vm.pageIndex,
+	      "list": _vm.item,
+	      "index": _vm.index
+	    }
+	  })]) : _vm._e()])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-73efa559", module.exports)
+	  }
+	}
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(101);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(35)(content, {});
@@ -34869,7 +35131,7 @@
 	}
 
 /***/ },
-/* 94 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -34881,24 +35143,6 @@
 
 	// exports
 
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "clock_icon.png?603d69a916a328c7ae4aafccd847558a";
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "into_icon.png?c7ec5d49aa59df4159de9a3331232aa0";
-
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "man_icon.png?8167f559a875c839ac984d131c21643b";
 
 /***/ }
 /******/ ]);

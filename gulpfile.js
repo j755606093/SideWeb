@@ -267,7 +267,7 @@ gulp.task('sharecar', function() {
 				}
 			},
 			plugins: [new HtmlWebpackPlugin({
-				title: "揭西同乡拼车平台",
+				title: "城市圈拼车平台",
 				filename: "sharecar.html",
 				hash: true,
 				template: "!!ejs!html/default.ejs",

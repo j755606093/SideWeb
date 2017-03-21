@@ -98,7 +98,8 @@ body {
 .home__swpier {
   height: 160px;
   width: 100%;
-  position: relative; }
+  position: relative;
+  margin-bottom: 10px; }
   .home__swpier .swiper-container {
     height: 160px; }
     .home__swpier .swiper-container img {
@@ -116,7 +117,9 @@ body {
 .home__header {
   height: 80px;
   background-color: #fff;
-  margin-top: 10px; }
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 3px 3px 3px #fafafa; }
   .home__header .header_title {
     height: 45px;
     line-height: 45px;

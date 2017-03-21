@@ -11,6 +11,7 @@ Vue.use(VueRouter);
 
 import ShareCar from "../sharecar/ShareCar.vue";
 import Index from "../sharecar/components/Index.vue";
+import TripDetail from "../sharecar/components/TripDetail.vue";
 
 const routes = [{
 	path: '/',
@@ -21,6 +22,10 @@ const routes = [{
 		name: "index",
 		component: Index
 	}]
+}, {
+	path: "/detail/:tripId",
+	name: "tripdetail",
+	component: TripDetail
 }, {
 	path: "*",
 	name: "all",

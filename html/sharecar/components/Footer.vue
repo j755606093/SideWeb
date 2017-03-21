@@ -60,7 +60,7 @@ footer{
 			height:20px;
 			display:inline-block;
 			z-index:106;
-			margin-top: -5px;
+			margin-top: -10px;
 		}
 		p{
 			font-size:12px;
@@ -70,7 +70,7 @@ footer{
 			font-weight: 900;
 		}
 		p.center{
-			margin-top:0px;
+			margin-top:5px;
 			color:#000;
 			z-index:110;
 		}

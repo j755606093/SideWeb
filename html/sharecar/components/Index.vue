@@ -21,22 +21,24 @@
 				<span>在线人数{{onlineNumber}}</span>
 			</div>
 		</div>
-		<div class="home__header">
-			<div class="header_title">
-				<span @click="switchPage(0)" :class="{active:pageIndex===0}">人找车</span>
-				<span @click="switchPage(1)" :class="{active:pageIndex===1}">车找人</span>
-				<div class="action--btn">
-					<img src="../icon/seach_icon.png">
+		<div id="header_block" style="height: 80px;width:100%;">
+			<div id="headertop" class="home__header">
+				<div class="header_title">
+					<span @click="switchPage(0)" :class="{active:pageIndex===0}">人找车</span>
+					<span @click="switchPage(1)" :class="{active:pageIndex===1}">车找人</span>
+					<div class="action--btn">
+						<img src="../icon/seach_icon.png">
+					</div>
+					<div class="action--btn">
+						<img src="../icon/Refresh_ICON.png">
+					</div>
 				</div>
-				<div class="action--btn">
-					<img src="../icon/Refresh_ICON.png">
-				</div>
-			</div>
-			<div class="header_message">
-				<span class="message--new">有43条新消息</span>
-				<div class="header_message--taxis">
-					<span @click="sort(0)" :class="{active:sortIndex===0}">发布时间 ↑</span>
-					<span @click="sort(1)" :class="{active:sortIndex===1}">发布时间 ↓</span>
+				<div class="header_message">
+					<span class="message--new">有43条新消息</span>
+					<div class="header_message--taxis">
+						<span @click="sort(0)" :class="{active:sortIndex===0}">发布时间 ↑</span>
+						<span @click="sort(1)" :class="{active:sortIndex===1}">发布时间 ↓</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -57,6 +59,7 @@ import Utils from "../../Utils/utils";
 import Swiper from "swiper";
 import List from "./list.vue";
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
+const _ = require("underscore");
 
 export default {
 	data () {
@@ -68,7 +71,11 @@ export default {
 			sortIndex:0,//排序索引
 			pageIndex:0,//页面索引
 
-			onlineNumber:100
+			onlineNumber:0,//显示的在线人数
+			onlineTimeContorl:null,//保存循环的变量
+
+			headerTop:0,//头部距离顶部距离
+			headerTopElement:null,
 		}
 	},
 	created(){
@@ -103,6 +110,27 @@ export default {
 	    pagination: '.swiper-pagination',
 	    autoplayDisableOnInteraction : false,
 	  });
+		
+		this.headerTopElement = document.getElementById("headertop");
+
+		/** 监听滚动 */
+		window.addEventListener('scroll',_.throttle(()=>{
+			if(this.HeaderStatus){
+				// 显示头部的时候不需要执行下面的命令
+				return;
+			}
+			
+			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
+			
+			if(status<-100){
+				this.headerTopElement.style.position = "fixed";
+				this.headerTopElement.style.top = "0";
+				this.headerTopElement.style.left = "0";
+			}
+			else{
+				this.headerTopElement.style.position = "relative";
+			}
+		},100,{leading: false}))
 	},
 	computed:{
 		CarInfo(){
@@ -118,6 +146,9 @@ export default {
 			else{
 				return this.PeopleInfo;
 			}
+		},
+		HeaderStatus(){
+			return this.$store.getters.getHeaderState;
 		}
 	},
 	methods:{
@@ -139,7 +170,7 @@ export default {
 				this.onlineNumber = parseInt(Math.random()*1000);
 			}
 			
-			setInterval(()=>{
+			this.onlineTimeContorl = setInterval(()=>{
 				let random = parseInt(Math.random()*10);
 				let action = Math.random()*10>4?false:true;
 
@@ -163,6 +194,9 @@ export default {
 		switchPage(index){
 			this.pageIndex = index;
 		}
+	},
+	destroyed(){
+		clearInterval(this.onlineTimeContorl);
 	},
 	components:{
 		"my-list":List

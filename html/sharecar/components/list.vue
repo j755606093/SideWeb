@@ -1,5 +1,5 @@
 <template type="x/template">
-	<div class="list">
+	<div class="list" @click="goToTipDetail">
 		<div class="list__header">
 			<div class="header--avatar">
 				<img :src="list.UserInfo.Headimgurl">
@@ -102,7 +102,7 @@
 		}
 		>span{
 			font-size:12px;
-			color:rgb(50,50,50);
+			color:rgb(200,200,200);
 		}
 	}
 }
@@ -184,7 +184,11 @@ export default {
 		
 	},
 	methods:{
-		
+		goToTipDetail(){
+			this.$router.replace({path:"/detail/"+this.list.Id});
+			console.log(this.list.Id);
+			console.log(this.types)
+		}
 	},
 	filters:{
 		formatTime(time){

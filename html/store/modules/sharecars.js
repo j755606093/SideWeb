@@ -168,6 +168,9 @@ const actions = {
 				return data;
 			})
 	},
+	getTripDetail({ commit, state }, data) {
+		return getData("/api/CarPool/GetDre?id=" + data)
+	}
 }
 
 // mutations
