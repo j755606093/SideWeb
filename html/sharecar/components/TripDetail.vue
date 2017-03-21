@@ -9,6 +9,19 @@
 			<div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
 			</div>
+			<a href="tel:0663-5519299" class="trip__contact">
+				<div class="trip--contact-way">
+					<img src="../icon/phone_icon.png">
+				</div>
+				<span>电话联系</span>
+				<span>(13871895108)</span>
+			</a>
+			<div class="trip__contact">
+				<div class="trip--contact-way">
+					<img src="../icon/messnge_icon.png">
+				</div>
+				<span>短信联系</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -30,6 +43,40 @@
 	>p{
 		line-height: 26px;
 		font-size:14px;
+	}
+}
+.trip__tip{
+	text-align: center;
+	margin:35px 20px;
+	>p{
+		font-size:14px;
+		color:rgb(200,200,200);
+		line-height:26px;
+	}
+}
+.trip__contact{
+	height:40px;
+	line-height:40px;
+	width:100%;
+	border-radius:5px;
+	background-color:#fff;
+	@include display_flex("row");
+	margin-top:10px;
+	div.trip--contact-way{
+		height:40px;
+		width:20px;
+		@include display_flex("row");
+		>img{
+			width:12px;
+			height:12px;
+		}
+	}
+	span{
+		height:40px;
+		line-height:40px;
+		color:rgb(50,50,50);
+		font-size:15px;
+		margin-left:5px;
 	}
 }
 </style>

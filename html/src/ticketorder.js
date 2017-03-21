@@ -4,7 +4,7 @@ require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
-// import 'mint-ui/lib/style.css';
+import 'mint-ui/lib/style.css';
 
 // Vue.component(TabContainer.name, TabContainer);
 // Vue.component(TabContainerItem.name, TabContainerItem);
@@ -671,16 +671,16 @@ const Vue_Order = new Vue({
 // 			Vue_Order.goback();
 // 		}
 // 	})
-	// window.addEventListener('scroll',_.throttle(function(){
-	// 	if(!Vue_Order.ready){
-	// 		return;
-	// 	}
-	// 	let selected = Vue_Order.selected;
-	// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
-	// 	if(status<1000 && selected===1){
-	// 		Vue_Order.moreOrderData();
-	// 		// console.log('yes');
-	// 	}
+// window.addEventListener('scroll',_.throttle(function(){
+// 	if(!Vue_Order.ready){
+// 		return;
+// 	}
+// 	let selected = Vue_Order.selected;
+// 	let status = document.getElementById("last").offsetTop-document.body.scrollTop;
+// 	if(status<1000 && selected===1){
+// 		Vue_Order.moreOrderData();
+// 		// console.log('yes');
+// 	}
 
 // 	let status1 = document.getElementById("last1").offsetTop-document.body.scrollTop;
 // 	if(status1<1000 && selected===2){
