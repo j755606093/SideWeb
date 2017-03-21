@@ -79,28 +79,33 @@ export default {
 		}
 	},
 	created(){
-		this.$store.dispatch("getCarInfo",{
-			Index:this.CarInfoPage,
-			Size:10
-		})
-		.then(result=>{
-			if(result.length<10){
-				// 没有更多数据
-				this.CarNoMoreData = true;
-			}
-			this.$store.dispatch("getPeopleInfo",{
-				Index:this.PeopleInfoPage,
+		if(this.$store.getters.getCarInfo.length===0){
+			this.$store.dispatch("getCarInfo",{
+				Index:this.CarInfoPage,
 				Size:10
-			}).then(items=>{
-				if(items.length<10){
+			})
+			.then(result=>{
+				if(result.length<10){
 					// 没有更多数据
-					this.PeopleNoMoreData = true;
+					this.CarNoMoreData = true;
+				}
+				if(this.$store.getters.getPeopleInfo.length===0){
+					this.$store.dispatch("getPeopleInfo",{
+						Index:this.PeopleInfoPage,
+						Size:10
+					}).then(items=>{
+						if(items.length<10){
+							// 没有更多数据
+							this.PeopleNoMoreData = true;
+						}
+					})
 				}
 			})
-		})
-		.catch(error=>{
-			this.toast("服务器错误,请稍后重试...");
-		});
+			.catch(error=>{
+				this.toast("服务器错误,请稍后重试...");
+			});
+		}
+		
 		this.randomOnlineNumber();
 	},
 	mounted(){
@@ -115,11 +120,6 @@ export default {
 
 		/** 监听滚动 */
 		window.addEventListener('scroll',_.throttle(()=>{
-			if(this.HeaderStatus){
-				// 显示头部的时候不需要执行下面的命令
-				return;
-			}
-			
 			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
 
 			if(status<-100){
@@ -146,9 +146,6 @@ export default {
 			else{
 				return this.PeopleInfo;
 			}
-		},
-		HeaderStatus(){
-			return this.$store.getters.getHeaderState;
 		}
 	},
 	methods:{

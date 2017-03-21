@@ -1,14 +1,14 @@
 <template type="x/template" id="header">
 	<header v-show="showHeader">
-		<div class="home" v-if="showBack">
-			<span>拼车</span>
+		<div class="home" v-if="!showBack">
+			<span>{{headerTitle}}</span>
 		</div>
 		<div class="other" v-else>
 			<div @click="GoBack" class="left">
 				<img src="../icon/back_icon.png">
 			</div>
 			<div class="center">
-				<span>{{getHeaderTitle}}</span>
+				<span>{{headerTitle}}</span>
 			</div>
 		</div>
 	</header>
@@ -19,7 +19,7 @@
 header{
 	height:50px;
 	// background-color:#14d67c;
-	background-color:#2196F3;
+	background-color:#fff;
 	color:$white;
 	font-size:1.5rem;
 	position:fixed;
@@ -53,58 +53,50 @@ header{
 				left:25px;
 				top:15.5px;
 			}
-			// i{
-			// 	font-size:3rem;
-			// 	line-height:50px;
-			// }
 		}
 		.center{
 			line-height:50px;
 			font-size:18px;
 			font-weight:900;
+			color:#000;
 		}
 	}
 }
 </style>
 
 <script type="text/babel">
-import { mapGetters } from 'vuex'
 import Utils from "../../Utils/utils";
 
 export default {
+	props:{
+		showBack:{
+			type:Boolean,
+			default:true
+		},
+		showHeader:{
+			type:Boolean,
+			default:true
+		},
+		headerTitle:{
+			type:String,
+			default:"拼车"
+		}
+	},
 	data () {
 		return {
 			
 		}
 	},
 	created(){
-		// setInterval(()=>{
-		// 	this.$store.commit("CHANGE_HEADER",false);
-		// 	console.log(this.$store.state.tickes.HeaderIsHome)
-		// },3000)
+		
 	},
 	computed:{
-		showBack(){
-			return this.$store.state.sharecars.showBack;
-		},
-		showHeader(){
-			if(this.$store.getters.Development.serverUrl!==""){
-				console.log(this.formatData(this.$store.getters.Development));//测试
-			}
-			return this.$store.state.sharecars.getHeaderState;
-		},
-		getHeaderTitle(){
-			return this.$store.state.sharecars.HeaderTitle;
-		}
+		
 	},
 	methods:{
 		GoBack(){
 			this.$router.go(-1);
-			this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});
-		},
-		formatData(data){
-			return JSON.parse(JSON.stringify(data));
-		},
+		}
 	}
 }
 </script>

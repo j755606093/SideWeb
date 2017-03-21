@@ -98,7 +98,7 @@
 	}, {
 		path: "*",
 		name: "all",
-		redirect: { name: "home" }
+		redirect: { path: "/" }
 	}];
 
 	var router = new _vueRouter2.default({
@@ -11149,9 +11149,6 @@
 		serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
 		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization,
 
-		HeaderStatus: false, //默认不显示头部
-		showBack: true, //是否显示返回键
-		HeaderTitle: "拼车", //头部标题
 		showFooter: true, //是否显示底部
 
 		CarInfo: [],
@@ -11190,9 +11187,6 @@
 		Development: function Development(state) {
 			return state;
 		},
-		getHeaderState: function getHeaderState(state) {
-			return state.HeaderStatus;
-		},
 		getFooterState: function getFooterState(state) {
 			return state.showFooter;
 		},
@@ -11208,22 +11202,10 @@
 	// 调用方法:
 	// this.$store.dispatch("cancelOrder",数据)
 	var actions = {
-		/** 设置头部信息数据 */
-		setHeaderStatus: function setHeaderStatus(_ref, data) {
+		/** 设置底部显示隐藏 */
+		setFooterStatus: function setFooterStatus(_ref, data) {
 			var commit = _ref.commit,
 			    state = _ref.state;
-
-			commit(_ShareCarType2.default.CHANGE_HEADER, {
-				HeaderStatus: data.HeaderStatus ? data.HeaderStatus : state.HeaderStatus,
-				showBack: data.showBack ? data.showBack : state.data.showBack,
-				HeaderTitle: data.HeaderTitle ? data.HeaderTitle : state.HeaderTitle
-			});
-		},
-
-		/** 设置底部显示隐藏 */
-		setFooterStatus: function setFooterStatus(_ref2, data) {
-			var commit = _ref2.commit,
-			    state = _ref2.state;
 
 			commit(_ShareCarType2.default.CHANGE_FOOTER, {
 				showFooter: data
@@ -11231,9 +11213,9 @@
 		},
 
 		/** 获取车主的列表信息 */
-		getCarInfo: function getCarInfo(_ref3, data) {
-			var commit = _ref3.commit,
-			    state = _ref3.state;
+		getCarInfo: function getCarInfo(_ref2, data) {
+			var commit = _ref2.commit,
+			    state = _ref2.state;
 
 			return postData("/api/CarPool/ListDre", data).then(function (result) {
 				var data = result.Data;
@@ -11245,9 +11227,9 @@
 		},
 
 		/** 获取乘客信息 */
-		getPeopleInfo: function getPeopleInfo(_ref4, data) {
-			var commit = _ref4.commit,
-			    state = _ref4.state;
+		getPeopleInfo: function getPeopleInfo(_ref3, data) {
+			var commit = _ref3.commit,
+			    state = _ref3.state;
 
 			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
 				var data = result.Data;
@@ -11257,22 +11239,27 @@
 				return data;
 			});
 		},
-		getTripDetail: function getTripDetail(_ref5, data) {
+
+		/** 获取车主发布的信息 */
+		getTripDetail: function getTripDetail(_ref4, data) {
+			var commit = _ref4.commit,
+			    state = _ref4.state;
+
+			return getData("/api/CarPool/GetDre?id=" + data);
+		},
+
+		/** 获取乘客发布的信息 */
+		getTripDetailPeople: function getTripDetailPeople(_ref5, data) {
 			var commit = _ref5.commit,
 			    state = _ref5.state;
 
-			return getData("/api/CarPool/GetDre?id=" + data);
+			return getData("/api/CarPool/GetPassenger?id=" + data);
 		}
 	};
 
 	// mutations
 	// 改变数据,每一个类型对应一个操作
-	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.CHANGE_HEADER, function (state, data) {
-		// 设置头部状态显示
-		state.HeaderStatus = data.HeaderStatus;
-		state.showBack = data.showBack;
-		state.HeaderTitle = data.HeaderTitle;
-	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.CHANGE_FOOTER, function (state, data) {
+	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.CHANGE_FOOTER, function (state, data) {
 		state.showFooter = data.showFooter;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_CAR_INFO, function (state, data) {
 		state.CarInfo = data.CarInfo;
@@ -27865,15 +27852,31 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _Header = __webpack_require__(61);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
 	var _Footer = __webpack_require__(67);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -27884,27 +27887,11 @@
 		methods: {},
 		computed: {},
 		components: {
-			"my-header": _Header2.default,
+			// "my-header":Header,
 			"my-footer": _Footer2.default
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
+	// import Header from "./components/Header.vue";
 
 /***/ },
 /* 60 */
@@ -28183,7 +28170,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #2196F3;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n      color: #000;\n}\n", ""]);
 
 	// exports
 
@@ -28198,123 +28185,104 @@
 		value: true
 	});
 
-	var _stringify = __webpack_require__(26);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
-	var _vuex = __webpack_require__(5);
-
 	var _utils = __webpack_require__(60);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
 	exports.default = {
+		props: {
+			showBack: {
+				type: Boolean,
+				default: true
+			},
+			showHeader: {
+				type: Boolean,
+				default: true
+			},
+			headerTitle: {
+				type: String,
+				default: "拼车"
+			}
+		},
 		data: function data() {
 			return {};
 		},
-		created: function created() {
-			// setInterval(()=>{
-			// 	this.$store.commit("CHANGE_HEADER",false);
-			// 	console.log(this.$store.state.tickes.HeaderIsHome)
-			// },3000)
-		},
+		created: function created() {},
 
-		computed: {
-			showBack: function showBack() {
-				return this.$store.state.sharecars.showBack;
-			},
-			showHeader: function showHeader() {
-				if (this.$store.getters.Development.serverUrl !== "") {
-					console.log(this.formatData(this.$store.getters.Development)); //测试
-				}
-				return this.$store.state.sharecars.getHeaderState;
-			},
-			getHeaderTitle: function getHeaderTitle() {
-				return this.$store.state.sharecars.HeaderTitle;
-			}
-		},
+		computed: {},
 		methods: {
 			GoBack: function GoBack() {
 				this.$router.go(-1);
-				this.$store.commit("CHANGE_HEADER", { isHome: true, Title: "身边订票" });
-			},
-			formatData: function formatData(data) {
-				return JSON.parse((0, _stringify2.default)(data));
 			}
 		}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 65 */
@@ -28328,9 +28296,9 @@
 	      value: (_vm.showHeader),
 	      expression: "showHeader"
 	    }]
-	  }, [(_vm.showBack) ? _vm._h('div', {
+	  }, [(!_vm.showBack) ? _vm._h('div', {
 	    staticClass: "home"
-	  }, [_vm._h('span', ["拼车"])]) : _vm._h('div', {
+	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])]) : _vm._h('div', {
 	    staticClass: "other"
 	  }, [_vm._h('div', {
 	    staticClass: "left",
@@ -28343,7 +28311,7 @@
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "center"
-	  }, [_vm._h('span', [_vm._s(_vm.getHeaderTitle)])])]), " "])
+	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])])]), " "])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -28354,9 +28322,9 @@
 
 /***/ },
 /* 66 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAWJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpVc2VyQ29tbWVudD5TY3JlZW5zaG90PC9leGlmOlVzZXJDb21tZW50PgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KbszeLgAAAzNJREFUaAXtmk+oDVEcx99VihCS0stGio2NlJToeS9SpPxbvbJULCxsnrJSxMJGyUt2r5SkRCIW/peykIWFkmz8KRIvf+Nxfb5Pp+6b5s6cc+/MnJlz51ff7pk5v5n7/czvnLnnzr2NZrPZ10sxrZdgxVoDh17xusJ1hTu7Als47CH6ht6ic2gR8h6NHD6WRqA6EUP2mn1r0JuYvsJ2ZT2HD+E8DlZAi9FJNXxGlhUW7PEUmJ/0z0ETKXm5dWdV4QM4TIMVxAw0Ww1fkQXwPsyfsgT4SN5ny9xc0roFFuwZB2dnHXJzSe1mDrvC3oFgM/qVC4nlSTutcCewW33D6pp0UuG9HOcyNB+TP4S+Iu/hCjyM4zFkOzIEuwmNo1KErXGZrTysIGyBg4C1BQ4GVsBpc9gV9innHEClmbN4mRJJwNvIvIxsh/0zcgfRB1TaaAcj2EuoXX8UqBKwMh0HZGCnR6nabFcGNg44aFgBt85hV9jfHH8YlXrO4u89uo8mV3oGWIv6q8h2GJNaqfiE2/3ogoCX0XiCZqGQ4y9wG3XT0kO30GFVSLEeUYWf01iuPT0QE6JWqXslmgK+1yu0cD7QkF5CQzeteYGD69HwelX4FdqBfqBQ4x1g29Ej8zks0EF0Dc3UhkVo4XEQ6SeUMocWRnryIr9TVlradoV+yTEDqOzQWPwfGtKtcZsNPV20Hd5Lyb2L9LtRJSIKLNNBQ8cBG+idNCbHvXakhKl0f0qe9+52wDJ2A+1CLtA3yV+IShtJwDKtb1Au0CvI15SwhW6QW2ikActMntCF/yvOBjhv6NJV2BhSpXcj2y8brsPbvE+ur7YVNiau0NiDXKB185trTuD71RVYfs8jF+hV5N9CpYBuXUvjySmGyR5DthdN69kN6DvyFrZm4wy6Vno1Jzkad6Ii93VTYePTpdJ6ergAFf5xZMx2U2FzDlVaj0BtYj5JXudyFsAC1V8gbKA1f7/oAF+RFbD8j6I06Ivk/FGyr8hiDke96x8+p1H0Yr5g31rk9aeZPIBh6luHRtBKNI6uo2NINy2vkRewV6ikN48Ou6TcIPpq4CDKmABRVzjh4gTR9Q8tuseIX8JTHQAAAABJRU5ErkJggg=="
+	module.exports = __webpack_require__.p + "back_icon.png?9c70bbda4d7811925dee836e55ad7574";
 
 /***/ },
 /* 67 */
@@ -28666,17 +28634,12 @@
 	    attrs: {
 	      "id": "sharecar"
 	    }
-	  }, [_vm._h('my-header'), " ", _vm._h('div', {
+	  }, [_vm._h('div', {
 	    staticStyle: {
 	      "padding-bottom": "70px",
 	      "position": "relative"
 	    }
-	  }, [_vm._h('transition', {
-	    attrs: {
-	      "enter-active-class": "fadeIn",
-	      "leave-active-class": "fadeOut"
-	    }
-	  }, [_vm._h('router-view')])]), " ", _vm._h('my-footer')])
+	  }, [_vm._h('router-view')]), " ", _vm._h('my-footer')])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -28891,26 +28854,31 @@
 		created: function created() {
 			var _this = this;
 
-			this.$store.dispatch("getCarInfo", {
-				Index: this.CarInfoPage,
-				Size: 10
-			}).then(function (result) {
-				if (result.length < 10) {
-					// 没有更多数据
-					_this.CarNoMoreData = true;
-				}
-				_this.$store.dispatch("getPeopleInfo", {
-					Index: _this.PeopleInfoPage,
+			if (this.$store.getters.getCarInfo.length === 0) {
+				this.$store.dispatch("getCarInfo", {
+					Index: this.CarInfoPage,
 					Size: 10
-				}).then(function (items) {
-					if (items.length < 10) {
+				}).then(function (result) {
+					if (result.length < 10) {
 						// 没有更多数据
-						_this.PeopleNoMoreData = true;
+						_this.CarNoMoreData = true;
 					}
+					if (_this.$store.getters.getPeopleInfo.length === 0) {
+						_this.$store.dispatch("getPeopleInfo", {
+							Index: _this.PeopleInfoPage,
+							Size: 10
+						}).then(function (items) {
+							if (items.length < 10) {
+								// 没有更多数据
+								_this.PeopleNoMoreData = true;
+							}
+						});
+					}
+				}).catch(function (error) {
+					_this.toast("服务器错误,请稍后重试...");
 				});
-			}).catch(function (error) {
-				_this.toast("服务器错误,请稍后重试...");
-			});
+			}
+
 			this.randomOnlineNumber();
 		},
 		mounted: function mounted() {
@@ -28927,11 +28895,6 @@
 
 			/** 监听滚动 */
 			window.addEventListener('scroll', _.throttle(function () {
-				if (_this2.HeaderStatus) {
-					// 显示头部的时候不需要执行下面的命令
-					return;
-				}
-
 				var status = _this2.headerTopElement.offsetTop - document.body.scrollTop;
 
 				if (status < -100) {
@@ -28957,9 +28920,6 @@
 				} else {
 					return this.PeopleInfo;
 				}
-			},
-			HeaderStatus: function HeaderStatus() {
-				return this.$store.getters.getHeaderState;
 			}
 		},
 		methods: {
@@ -34488,12 +34448,15 @@
 				default: function _default() {
 					return {};
 				}
-			},
+			}, //需要的数据
+			nogo: {
+				type: String,
+				default: "false"
+			}, //是否可以点击和显示部分元素,默认可以点击
 			types: {
 				type: Number,
 				default: 0
-			}
-		},
+			} },
 		data: function data() {
 			return {};
 		},
@@ -34502,7 +34465,10 @@
 		computed: {},
 		methods: {
 			goToTipDetail: function goToTipDetail() {
-				this.$router.replace({ path: "/detail/" + this.types + "/" + this.list.Id });
+				if (this.nogo === "true") {
+					return;
+				}
+				this.$router.push({ name: 'tripdetail', params: { types: this.types, tripId: this.list.Id } });
 			}
 		},
 		filters: {
@@ -34709,13 +34675,13 @@
 	    attrs: {
 	      "src": __webpack_require__(88)
 	    }
-	  })], " "]), " ", _vm._h('div', {
+	  })], " "]), " ", (_vm.nogo !== 'true') ? _vm._h('div', {
 	    staticClass: "header--active"
 	  }, [(_vm.types === 0) ? [_vm._h('span', ["请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我"])] : [_vm._h('span', ["去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她')])], " ", " ", _vm._h('img', {
 	    attrs: {
 	      "src": __webpack_require__(89)
 	    }
-	  })])]), " ", _vm._h('div', {
+	  })]) : _vm._e()]), " ", _vm._h('div', {
 	    staticClass: "list__body"
 	  }, [_vm._h('div', {
 	    staticClass: "list__body--line"
@@ -35006,7 +34972,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n", ""]);
 
 	// exports
 
@@ -35029,9 +34995,34 @@
 
 	var _list2 = _interopRequireDefault(_list);
 
+	var _Header = __webpack_require__(61);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
 	var _mintUi = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -35048,7 +35039,9 @@
 			this.tripId = this.$route.params.tripId;
 			this.types = this.$route.params.types;
 
-			if (this.tripId && this.types) {
+			if (!this.tripId) {}
+
+			if (this.types === "0") {
 				this.types = parseInt(this.types);
 				this.loading();
 				this.$store.dispatch("getTripDetail", this.tripId).then(function (result) {
@@ -35060,7 +35053,19 @@
 					}
 					_mintUi.Indicator.close();
 				});
-			} else {}
+			} else {
+				this.types = parseInt(this.types);
+				this.loading();
+				this.$store.dispatch("getTripDetailPeople", this.tripId).then(function (result) {
+					if (result.Data) {
+						_this.tripData = result.Data;
+						_this.isReady = true; //开始显示
+					} else {
+						_this.toast(result.Message);
+					}
+					_mintUi.Indicator.close();
+				});
+			}
 		},
 
 		computed: {},
@@ -35082,24 +35087,10 @@
 		},
 		filters: {},
 		components: {
-			"my-list": _list2.default
+			"my-list": _list2.default,
+			"my-header": _Header2.default
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 99 */
@@ -35108,12 +35099,18 @@
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
 	    staticClass: "tripdetail"
-	  }, [(_vm.isReady) ? _vm._h('div', {
+	  }, [_vm._h('my-header', {
+	    attrs: {
+	      "showBack": true,
+	      "headerTitle": "旅程详情"
+	    }
+	  }), " ", (_vm.isReady) ? _vm._h('div', {
 	    staticClass: "trip__info"
 	  }, [_vm._h('my-list', {
 	    attrs: {
 	      "types": _vm.types,
-	      "list": _vm.tripData
+	      "list": _vm.tripData,
+	      "nogo": "true"
 	    }
 	  })]) : _vm._e()])
 	},staticRenderFns: []}

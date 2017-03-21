@@ -1,6 +1,9 @@
 <template type="x/template" id="ticketstartcity">
 	<div id="citylist">
-		<div class="left">
+		<!-- <div @click="openTip" class="startcity--tip">
+			<p>关于回程班次购票的情况说明</p>
+		</div> -->
+		<div class="left" >
 			<template v-for="(list,index) in setStartCityList">
 				<p @click="getStartCity(item.CityId,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
 			</template>
@@ -10,11 +13,52 @@
 				<span :class="{active:indexItem===index}" @click="selectCity(index)">{{list.ShortKey}}</span>
 			</div>
 		</div>
+		<div v-if="modalTip" class="modal">
+			<div class="modal-body">
+				
+			</div>
+		</div>
 	</div>
 </template>
 
 <style lang="css">
 @import "../css/ticketcity.css";
+.startcity--tip{
+	height:35px;
+	width:100%;
+	position:fixed;
+	top:50px;
+	left:0;
+	z-index: 100;
+	background-color: #fff;
+	border-bottom:0.5px solid #c8c8c8;
+}
+.startcity--tip>p{
+	text-align: center;
+	font-size:16px;
+	color:#0074D9;
+	height:35px;
+	line-height: 35px;
+}
+.modal{
+	position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 5000;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.modal>.modal-body{
+	width:80%;
+	/*margin:0 10%;*/
+	height:400px;
+	background-color: #fff;
+}
 </style>
 
 <script type="text/babel">
@@ -40,6 +84,8 @@ export default {
 			throttleFunction:null,//引用的函数
 
 			indexItem:0,//默认显示的地址
+
+			modalTip:false,//显示modal
 		}
 	},
 	created(){
@@ -108,21 +154,6 @@ export default {
 	methods:{
 		getStartCity(code,name){
 			this.startcity = name;
-			// if(station.length===0){
-			// 	this.$store.dispatch("setStartCity",{
-			// 		Code:code,
-			// 		Name:name,
-			// 		Station:"",//空的站台
-			// 	});
-			// 	this.$router.go(-1);
-			// }
-			// else{
-			// 	this.startCitySlots[0].values = _.map(station,(item)=>{
-			// 		return item.Name;
-			// 	});
-				
-			// 	this.startpopupVisible = true;
-			// }
 			this.$store.dispatch("setStartCity",{
 				Code:code,
 				Name:name,
@@ -140,6 +171,9 @@ export default {
 		},
 		yesData(){
 			this.$router.go(-1);
+		},
+		openTip(){
+			this.modalTip = true;
 		}
 	}
 }

@@ -239,12 +239,6 @@ const actions = {
 	},
 	/** 获取后台可选的到达点 */
 	setEndCityList({ commit, state }) {
-		// if(state.endCityList){
-		// 	// 列表空
-		// 	return new Promise((reslove,reject)=>{
-		// 		reslove();
-		// 	})
-		// }
 		return fetch(state.serverUrl + "/api/Transport/GetEndPoints/" + state.startCity.Code)
 			.then(checkStatus)
 			.then(result => result.json())

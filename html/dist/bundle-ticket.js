@@ -31291,7 +31291,7 @@
 	exports.i(__webpack_require__(141), "");
 
 	// module
-	exports.push([module.id, "\n", ""]);
+	exports.push([module.id, "\n.startcity--tip{\n\theight:35px;\n\twidth:100%;\n\tposition:fixed;\n\ttop:50px;\n\tleft:0;\n\tz-index: 100;\n\tbackground-color: #fff;\n\tborder-bottom:0.5px solid #c8c8c8;\n}\n.startcity--tip>p{\n\ttext-align: center;\n\tfont-size:16px;\n\tcolor:#0074D9;\n\theight:35px;\n\tline-height: 35px;\n}\n.modal{\n\tposition: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, .6);\n  z-index: 5000;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n.modal>.modal-body{\n\twidth:80%;\n\t/*margin:0 10%;*/\n\theight:400px;\n\tbackground-color: #fff;\n}\n", ""]);
 
 	// exports
 
@@ -31340,7 +31340,9 @@
 				elementHeight: [], //各个元素距离顶部的高度
 				throttleFunction: null, //引用的函数
 
-				indexItem: 0 };
+				indexItem: 0, //默认显示的地址
+
+				modalTip: false };
 		},
 		created: function created() {
 			this.$store.dispatch("ChangeHeader", { isHome: false, Title: "选择出发地" });
@@ -31409,21 +31411,6 @@
 		methods: {
 			getStartCity: function getStartCity(code, name) {
 				this.startcity = name;
-				// if(station.length===0){
-				// 	this.$store.dispatch("setStartCity",{
-				// 		Code:code,
-				// 		Name:name,
-				// 		Station:"",//空的站台
-				// 	});
-				// 	this.$router.go(-1);
-				// }
-				// else{
-				// 	this.startCitySlots[0].values = _.map(station,(item)=>{
-				// 		return item.Name;
-				// 	});
-
-				// 	this.startpopupVisible = true;
-				// }
 				this.$store.dispatch("setStartCity", {
 					Code: code,
 					Name: name
@@ -31441,9 +31428,56 @@
 			},
 			yesData: function yesData() {
 				this.$router.go(-1);
+			},
+			openTip: function openTip() {
+				this.modalTip = true;
 			}
 		}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -31506,7 +31540,11 @@
 	        }
 	      }
 	    }, [_vm._s(list.ShortKey)])])
-	  })])])
+	  })]), " ", (_vm.modalTip) ? _vm._h('div', {
+	    staticClass: "modal"
+	  }, [_vm._h('div', {
+	    staticClass: "modal-body"
+	  })]) : _vm._e()])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()

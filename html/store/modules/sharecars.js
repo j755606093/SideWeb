@@ -83,9 +83,6 @@ const state = {
 	serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
 	Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization,
 
-	HeaderStatus: false, //默认不显示头部
-	showBack: true, //是否显示返回键
-	HeaderTitle: "拼车", //头部标题
 	showFooter: true, //是否显示底部
 
 	CarInfo: [],
@@ -122,7 +119,6 @@ let getData = (url) => {
 // this.$store.getters.getIsFirst
 const getters = {
 	Development: state => state,
-	getHeaderState: state => state.HeaderStatus,
 	getFooterState: state => state.showFooter,
 	getCarInfo: state => state.CarInfo,
 	getPeopleInfo: state => state.PeopleInfo
@@ -132,14 +128,6 @@ const getters = {
 // 调用方法:
 // this.$store.dispatch("cancelOrder",数据)
 const actions = {
-	/** 设置头部信息数据 */
-	setHeaderStatus({ commit, state }, data) {
-		commit(types.CHANGE_HEADER, {
-			HeaderStatus: data.HeaderStatus ? data.HeaderStatus : state.HeaderStatus,
-			showBack: data.showBack ? data.showBack : state.data.showBack,
-			HeaderTitle: data.HeaderTitle ? data.HeaderTitle : state.HeaderTitle
-		})
-	},
 	/** 设置底部显示隐藏 */
 	setFooterStatus({ commit, state }, data) {
 		commit(types.CHANGE_FOOTER, {
@@ -168,20 +156,19 @@ const actions = {
 				return data;
 			})
 	},
+	/** 获取车主发布的信息 */
 	getTripDetail({ commit, state }, data) {
 		return getData("/api/CarPool/GetDre?id=" + data)
-	}
+	},
+	/** 获取乘客发布的信息 */
+	getTripDetailPeople({ commit, state }, data) {
+		return getData("/api/CarPool/GetPassenger?id=" + data)
+	},
 }
 
 // mutations
 // 改变数据,每一个类型对应一个操作
 const mutations = {
-	[types.CHANGE_HEADER](state, data) {
-		// 设置头部状态显示
-		state.HeaderStatus = data.HeaderStatus;
-		state.showBack = data.showBack;
-		state.HeaderTitle = data.HeaderTitle;
-	},
 	[types.CHANGE_FOOTER](state, data) {
 		state.showFooter = data.showFooter;
 	},

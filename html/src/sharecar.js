@@ -29,7 +29,7 @@ const routes = [{
 }, {
 	path: "*",
 	name: "all",
-	redirect: { name: "home" },
+	redirect: { path: "/" },
 }];
 
 const router = new VueRouter({

@@ -13,7 +13,7 @@
 					<img src="../icon/women_icon.png">
 				</template>
 			</div>
-			<div class="header--active">
+			<div class="header--active" v-if="nogo!=='true'">
 				<template v-if="types===0">
 					<span>请{{list.UserInfo.Sex===1?'他':'她'}}接我</span>
 				</template>
@@ -162,11 +162,15 @@ export default {
 			default:function(){
 				return {}
 			}
-		},
+		},//需要的数据
+		nogo:{
+			type:String,
+			default:"false"
+		},//是否可以点击和显示部分元素,默认可以点击
 		types:{
 			type:Number,
 			default:0
-		}
+		},//类型,有乘客类型和车主类型
 	},
 	data () {
 		return {
@@ -181,7 +185,10 @@ export default {
 	},
 	methods:{
 		goToTipDetail(){
-			this.$router.replace({path:`/detail/${this.types}/${this.list.Id}`});
+			if(this.nogo==="true"){
+				return;
+			}
+			this.$router.push({ name: 'tripdetail', params: { types: this.types,tripId:this.list.Id }});
 		}
 	},
 	filters:{
