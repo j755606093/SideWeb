@@ -97,11 +97,21 @@ body {
 /** 轮播图 */
 .home__swpier {
   height: 160px;
-  width: 100%; }
+  width: 100%;
+  position: relative; }
   .home__swpier .swiper-container {
     height: 160px; }
     .home__swpier .swiper-container img {
-      width: 100%; }
+      width: 100%;
+      height: 160px; }
+  .home__swpier .online--number {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 900;
+    z-index: 100; }
 
 .home__header {
   height: 80px;
@@ -156,3 +166,7 @@ body {
         color: #c8c8c8; }
       .home__header .header_message .header_message--taxis > span.active {
         color: #1e1e1e; }
+
+.home__lists {
+  width: 100%;
+  padding: 0 10px; }

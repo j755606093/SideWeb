@@ -22,7 +22,15 @@ const debug = (function() {
 
 /** 如果是app中android */
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
+	var datastring = "";
+
+	try {
+		datastring = JSON.stringify(window.jgkj.getUserInfo());
+		alert(datastring);
+	} catch (e) {
+		alert(e)
+	}
+	window.localStorage.setItem("UserInfo", datastring);
 }
 /** 如果是ios的app */
 // if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {

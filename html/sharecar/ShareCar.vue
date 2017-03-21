@@ -1,7 +1,7 @@
 <template>
 	<div id="sharecar">
 		<my-header></my-header>
-		<div>
+		<div style="padding-bottom: 70px;">
 			<transition 
 			enter-active-class="fadeIn"
 			leave-active-class="fadeOut">

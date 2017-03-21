@@ -9,11 +9,22 @@ body {
 .home__swpier {
   height: 160px;
   width: 100%;
+  position: relative;
   .swiper-container {
     height: 160px;
     img {
       width: 100%;
+      height: 160px;
     }
+  }
+  .online--number {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 900;
+    z-index: 100;
   }
 }
 
@@ -82,4 +93,9 @@ body {
       }
     }
   }
+}
+
+.home__lists {
+  width: 100%;
+  padding: 0 10px;
 }

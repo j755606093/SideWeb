@@ -87,15 +87,9 @@ const state = {
 	showBack: true, //是否显示返回键
 	HeaderTitle: "拼车", //头部标题
 	showFooter: true, //是否显示底部
-}
 
-// getters,获取数据
-// 调用方法如下
-// this.$store.getters.getIsFirst
-const getters = {
-	Development: state => state,
-	getHeaderState: state => state.HeaderStatus,
-	getFooterState: state => state.showFooter
+	CarInfo: [],
+	PeopleInfo: []
 }
 
 let postData = (url, data) => {
@@ -123,31 +117,54 @@ let getData = (url) => {
 		.then(result => result.json())
 }
 
+// getters,获取数据
+// 调用方法如下
+// this.$store.getters.getIsFirst
+const getters = {
+	Development: state => state,
+	getHeaderState: state => state.HeaderStatus,
+	getFooterState: state => state.showFooter,
+	getCarInfo: state => state.CarInfo,
+	getPeopleInfo: state => state.PeopleInfo
+}
+
 // actions
 // 调用方法:
 // this.$store.dispatch("cancelOrder",数据)
 const actions = {
-	/** 获取默认的出发点(没有到达点) */
-	getCityDefault({ commit, state }) {
-		return getData("/api/Transport/Index")
+	/** 设置头部信息数据 */
+	setHeaderStatus({ commit, state }, data) {
+		commit(types.CHANGE_HEADER, {
+			HeaderStatus: data.HeaderStatus ? data.HeaderStatus : state.HeaderStatus,
+			showBack: data.showBack ? data.showBack : state.data.showBack,
+			HeaderTitle: data.HeaderTitle ? data.HeaderTitle : state.HeaderTitle
+		})
+	},
+	/** 设置底部显示隐藏 */
+	setFooterStatus({ commit, state }, data) {
+		commit(types.CHANGE_FOOTER, {
+			showFooter: data,
+		})
+	},
+	/** 获取车主的列表信息 */
+	getCarInfo({ commit, state }, data) {
+		return postData("/api/CarPool/ListDre", data)
 			.then(result => {
 				let data = result.Data;
-				commit(types.SET_STARTCITY, {
-					Code: data.Start.CityId,
-					Name: data.Start.Name
+				commit(types.GET_CAR_INFO, {
+					CarInfo: data,
 				});
-				if (!data.End) {
-					// 如果为空,后台不保证传回来的是真实的数据
-					commit(types.SET_ENDCITY, {
-						Code: "000",
-						Name: "请选择"
-					})
-					return { End: false };
-				}
-				commit(types.SET_ENDCITY, {
-					Code: data.End.CityId,
-					Name: data.End.Name
-				});
+				return data;
+			})
+	},
+	/** 获取乘客信息 */
+	getPeopleInfo({ commit, state }, data) {
+		return postData("/api/CarPool/ListPassenger", data)
+			.then(result => {
+				let data = result.Data;
+				commit(types.GET_PEOPLE_INFO, {
+					PeopleInfo: data,
+				})
 				return data;
 			})
 	},
@@ -158,8 +175,18 @@ const actions = {
 const mutations = {
 	[types.CHANGE_HEADER](state, data) {
 		// 设置头部状态显示
-		state.HeaderIsHome = data.isHome;
-		state.HeaderTitle = data.Title;
+		state.HeaderStatus = data.HeaderStatus;
+		state.showBack = data.showBack;
+		state.HeaderTitle = data.HeaderTitle;
+	},
+	[types.CHANGE_FOOTER](state, data) {
+		state.showFooter = data.showFooter;
+	},
+	[types.GET_CAR_INFO](state, data) {
+		state.CarInfo = data.CarInfo;
+	},
+	[types.GET_PEOPLE_INFO](state, data) {
+		state.PeopleInfo = data.PeopleInfo;
 	},
 }
 
