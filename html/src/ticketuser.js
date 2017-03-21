@@ -632,7 +632,7 @@ const Vue_User = new Vue({
 			this.fetchMoney(this.UserInfo.Mobile);
 			// 	return;
 			// }
-			this.myModal = true;
+			// this.myModal = true;
 			// MessageBox.prompt("请输入接收提现结果短信的手机号", "设置手机号", {
 			// 	inputType: 'tel'
 			// }).then(({ value, action }) => {
@@ -654,6 +654,7 @@ const Vue_User = new Vue({
 			let canGetMoney = this.getMoneyUseData.ReceiveBkge;
 			if (canGetMoney === 0) {
 				this.toast("无可用领取佣金");
+				this.myModal = false;
 			} else {
 				this.myModal = true;
 				MessageBox.prompt("¥1-¥" + canGetMoney.toFixed(2), "请输入提取佣金数额", {
