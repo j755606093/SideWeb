@@ -3,6 +3,12 @@
 		<my-header :showBack="true" headerTitle="旅程详情"></my-header>
 		<div v-if="isReady" class="trip__info">
 			<my-list :types="types" :list="tripData" nogo="true"></my-list>
+			<div class="trip__remark">
+				<p>备注:{{tripData.Remark?tripData.Remark:'无'}}</p>
+			</div>
+			<div class="trip__tip">
+				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -15,6 +21,16 @@
 .trip__info{
 	width:100%;
 	padding:0 10px;
+}
+.trip__remark{
+	background-color: #fff;
+	border-radius: 5px;
+	padding:10px 25px;
+	margin-top:10px;
+	>p{
+		line-height: 26px;
+		font-size:14px;
+	}
 }
 </style>
 
@@ -35,14 +51,14 @@ export default {
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
-		this.types = this.$route.params.types;
+		let types = this.$route.params.types;
 
 		if(!this.tripId){
 
 		}
 		
-		if(this.types==="0"){
-			this.types = parseInt(this.types);
+		if(types==="0"){
+			this.types = parseInt(types);
 			this.loading();
 			this.$store.dispatch("getTripDetail",this.tripId).then(result=>{
 				if(result.Data){

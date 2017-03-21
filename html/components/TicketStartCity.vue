@@ -43,55 +43,6 @@
 	height:35px;
 	line-height: 35px;
 }
-.modal{
-	position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .6);
-  z-index: 5000;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.modal>.modal-body{
-	text-align: center;
-	width:90%;
-	height:300px;
-	padding:20px 20px;
-	border-radius: 10px;
-	background-color: #fff;
-}
-.modal>.modal-body>strong{
-	text-align: left;
-	font-size:16px;
-	color:rgb(50,50,50);
-	height:50px;
-	line-height: 50px;
-	width:100%;
-	display: block;
-}
-.modal>.modal-body>p{
-	font-size:16px;
-	text-align: left;
-	color:rgb(50,50,50);
-	width:100%;
-	line-height: 26px;
-	/*text-indent: 1em;*/
-}
-.modal>.modal-body>button{
-	font-size:16px;
-	color:#fff;
-	height:40px;
-	width:150px;
-	background-color: #0074D9;
-	outline:none;
-	border:none;
-	border-radius: 5px;
-	margin-top:15px;
-}
 </style>
 
 <script type="text/babel">
