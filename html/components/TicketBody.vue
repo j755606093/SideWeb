@@ -278,6 +278,14 @@ export default {
 		},
 		/** 点击查询按钮 */
 		query(){
+			if(this.getEndCity==="选择目的地"){
+				Toast({
+				  message: '请选择目的地',
+				  position: 'bottom',
+				  duration: 3000
+				});
+				return ;
+			}
 			if(this.startCity.Name===this.endCity.Name){
 				// 地点相同
 				Toast({
