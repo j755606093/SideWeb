@@ -36,6 +36,7 @@ footer{
 	background-color: $white;
 	box-shadow:3px 0 3px 3px #efeeee;
 	z-index: 100;
+	overflow: hidden;
 	.footer{
 		flex:1;
 		display:flex;
@@ -46,6 +47,10 @@ footer{
 		color:$gray;
 		height: 50px;
 		line-height:50px;
+		display:inline-block;
+		float:left;
+		text-align: center;
+		position:relative;
 		i{
 			font-size:1.8rem;
 		}
@@ -58,6 +63,10 @@ footer{
 			color:$gray;
 			height:20px;
 			line-height:20px;
+			display:block;
+			position:absolute;
+			bottom:0;
+			left:40%;
 		}
 	}
 	.footer.nopay{

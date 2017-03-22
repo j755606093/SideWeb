@@ -266,9 +266,7 @@ input {
   z-index: 10000; }
 
 .ticket-info {
-  margin: 10px 10px;
-  display: -ms-flexbox;
-  display: flex;
+  width: 96%;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;
@@ -277,34 +275,38 @@ input {
       align-items: center;
   position: relative;
   height: 120px;
+  margin: 5px 2%;
   border-radius: 6px;
   background-color: #fff;
   border: 0.5px solid #c8c8c8; }
+  .ticket-info > div {
+    float: left; }
   .ticket-info .left {
     z-index: 1;
     -ms-flex: 3;
         flex: 3;
-    display: -ms-flexbox;
-    display: flex;
+    width: 30%;
     -ms-flex-direction: column;
         flex-direction: column;
+    height: 100%;
     text-align: center; }
     .ticket-info .left > span {
       font-size: 12px;
       font-weight: 900;
       color: #323232;
-      margin: 2px 0; }
+      margin: 2px 0;
+      display: block; }
       .ticket-info .left > span:first-child {
         font-size: 20px;
-        color: #2196f3; }
+        color: #2196f3;
+        margin-top: 25px; }
       .ticket-info .left > span:last-child {
         color: #c8c8c8; }
   .ticket-info .center {
     z-index: 1;
     -ms-flex: 1;
         flex: 1;
-    display: -ms-flexbox;
-    display: flex;
+    width: 10%;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: distribute;
@@ -319,7 +321,9 @@ input {
       height: 9px;
       border-radius: 50%;
       background-color: #fafafa;
-      border: 0.5px solid #c8c8c8; }
+      border: 0.5px solid #c8c8c8;
+      display: block;
+      margin: 6px 0; }
     .ticket-info .center canvas.canvas-top {
       position: absolute;
       top: -2px;
@@ -336,25 +340,25 @@ input {
     z-index: 1;
     -ms-flex: 6;
         flex: 6;
-    display: -ms-flexbox;
-    display: flex;
+    width: 60%;
     -ms-flex-direction: column;
         flex-direction: column;
     height: 120px; }
     .ticket-info .right .top {
       -ms-flex: 6.5;
           flex: 6.5;
-      display: -ms-flexbox;
-      display: flex;
+      height: 90px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
           justify-content: center; }
+      .ticket-info .right .top > div {
+        float: left;
+        height: 90px; }
       .ticket-info .right .top .name {
-        -ms-flex: 7;
-            flex: 7;
-        display: -ms-flexbox;
-        display: flex;
+        -ms-flex: 6.5;
+            flex: 6.5;
+        width: 65%;
         -ms-flex-direction: column;
             flex-direction: column;
         -ms-flex-align: start;
@@ -363,9 +367,11 @@ input {
             justify-content: flex-end; }
         .ticket-info .right .top .name p {
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
           position: relative;
           text-align: left;
+          height: 45px;
+          line-height: 45px;
           margin-left: 20px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .name p {
@@ -378,7 +384,7 @@ input {
             border-radius: 50%;
             background-color: #60e7bf;
             position: absolute;
-            top: 9px;
+            top: 18px;
             left: -17px; }
           .ticket-info .right .top .name p:last-child {
             line-height: 40px; }
@@ -394,25 +400,26 @@ input {
       .ticket-info .right .top .info {
         -ms-flex: 3.5;
             flex: 3.5;
-        display: -ms-flexbox;
-        display: flex;
+        width: 35%;
         -ms-flex-direction: column;
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
             justify-content: center; }
         .ticket-info .right .top .info p {
-          height: 28px;
-          line-height: 28px;
+          height: 35px;
+          line-height: 35px;
           margin-right: 10px; }
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
-            color: #f35252; }
+            color: #f35252;
+            line-height: 45px; }
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px; }
+            padding-top: 8px;
+            line-height: 45px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .info p {
               margin-right: 10px; }
@@ -426,8 +433,7 @@ input {
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
-      display: -ms-flexbox;
-      display: flex;
+      height: 30px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: start;
@@ -439,7 +445,7 @@ input {
         top: 2px;
         left: 4px;
         width: 10px;
-        height: 12.5px; }
+        height: 10px; }
       .ticket-info .right .bottom img.right {
         position: absolute;
         top: 5px;
@@ -447,7 +453,8 @@ input {
         width: 10px;
         height: 8px; }
       .ticket-info .right .bottom p {
-        margin-left: 20px; }
+        margin-left: 20px;
+        text-align: left; }
 
 .passenger-info {
   width: 100%;
@@ -458,43 +465,52 @@ input {
     border-top-right-radius: 10px;
     margin: 0 10px; }
     .passenger-info .passenger-selected > .line {
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
           justify-content: center;
       -ms-flex-align: center;
           align-items: center;
-      margin: 0 10px; }
+      margin: 0 10px;
+      width: 100%;
+      height: 50px; }
       .passenger-info .passenger-selected > .line > div {
         width: 60px;
         height: 50px;
         line-height: 50px;
-        display: -ms-flexbox;
-        display: flex;
+        display: inline-block;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: start;
             justify-content: flex-start;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+        float: left; }
         .passenger-info .passenger-selected > .line > div img {
           width: 20px;
           height: 20px;
-          margin-left: 10px; }
+          margin-left: 10px;
+          margin-top: 15px; }
+      .passenger-info .passenger-selected > .line > span {
+        float: left; }
       .passenger-info .passenger-selected > .line .center {
         -ms-flex: 8;
             flex: 8;
         height: 50px;
         line-height: 50px;
-        font-size: 16px; }
+        font-size: 16px;
+        width: 40%;
+        display: inline-block; }
       .passenger-info .passenger-selected > .line .right {
         -ms-flex: 2;
             flex: 2;
+        width: 40%;
         height: 50px;
         line-height: 50px;
-        font-size: 16px; }
+        font-size: 16px;
+        display: inline-block;
+        text-align: right;
+        padding-right: 10px; }
 
 .write-info {
   width: 100%;
@@ -541,8 +557,6 @@ input {
       position: absolute;
       bottom: 0;
       right: 0;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -552,7 +566,8 @@ input {
       text-align: center; }
       .write-info > .line div.img img {
         width: 20px;
-        height: 20px; }
+        height: 20px;
+        margin-top: 15px; }
 
 .page-header {
   position: fixed;
@@ -562,8 +577,6 @@ input {
   width: 100%;
   text-align: center;
   background-color: #2196F3;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-align: center;
@@ -576,8 +589,6 @@ input {
     position: absolute;
     left: 10px;
     top: 0;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     -ms-flex-align: center;
@@ -587,7 +598,8 @@ input {
   .page-header img {
     width: 19px;
     height: 19px;
-    line-height: 50px; }
+    line-height: 50px;
+    margin-top: 15px; }
   .page-header > span.right {
     font-size: 14px;
     color: #fff;
@@ -611,8 +623,6 @@ input {
     background-color: #fff;
     color: #c8c8c8;
     text-align: center;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     -ms-flex-pack: center;
@@ -627,7 +637,9 @@ input {
       font-size: 18px;
       -ms-flex: 1;
           flex: 1;
-      font-weight: 900; }
+      font-weight: 900;
+      float: left;
+      width: 50%; }
     .page-header > .popup-header span.active {
       color: #329be8;
       position: relative; }
@@ -654,8 +666,6 @@ input {
     margin-top: 2px;
     margin-bottom: 5px; }
     .action-select-car .line-car .left {
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: start;
@@ -666,7 +676,6 @@ input {
       .action-select-car .line-car .left > img {
         width: 25px;
         height: 25px;
-        margin-left: 5px;
         z-index: 1;
         position: absolute;
         top: 18px;
@@ -683,8 +692,6 @@ input {
         z-index: 0; }
     .action-select-car .line-car .center {
       margin-left: 30px;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       -ms-flex-pack: center;
@@ -696,7 +703,8 @@ input {
         line-height: 25px;
         color: #323232;
         font-size: 15px;
-        margin-left: 10px; }
+        margin-left: 10px;
+        margin-top: 18px; }
     .action-select-car .line-car:nth-child(2n) {
       margin-left: 2%; }
 
@@ -762,27 +770,27 @@ input {
         color: #c8c8c8; }
     .action-page .action .action-select {
       width: 100%;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       margin-top: 60px; }
       .action-page .action .action-select .line {
         margin: 0 10px;
         margin-bottom: 10px;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         height: 60px;
         line-height: 60px;
         border-radius: 10px;
         background-color: #fff; }
+        .action-page .action .action-select .line > div {
+          display: inline-block;
+          float: left;
+          height: 60px;
+          line-height: 60px; }
         .action-page .action .action-select .line .left {
           -ms-flex: 2;
               flex: 2;
-          display: -ms-flexbox;
-          display: flex;
+          width: 20%;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: start;
@@ -794,7 +802,8 @@ input {
             width: 25px;
             height: 25px;
             margin-left: 20px;
-            z-index: 1; }
+            z-index: 10;
+            margin-top: 20px; }
           .action-page .action .action-select .line .left::after {
             content: "";
             position: absolute;
@@ -804,12 +813,11 @@ input {
             height: 25px;
             background-color: #fafafa;
             border-radius: 50%;
-            z-index: 0; }
+            z-index: -1; }
         .action-page .action .action-select .line .center {
           -ms-flex: 6;
               flex: 6;
-          display: -ms-flexbox;
-          display: flex;
+          width: 60%;
           -ms-flex-direction: column;
               flex-direction: column;
           -ms-flex-pack: center;
@@ -817,15 +825,15 @@ input {
           -ms-flex-align: start;
               align-items: flex-start; }
           .action-page .action .action-select .line .center p {
-            line-height: 25px;
+            line-height: 30px;
+            height: 50%;
             color: #323232;
             font-size: 15px;
             margin-left: 10px; }
         .action-page .action .action-select .line .right {
           -ms-flex: 2;
               flex: 2;
-          display: -ms-flexbox;
-          display: flex;
+          width: 20%;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
@@ -857,7 +865,9 @@ input {
           font-size: 18px;
           -ms-flex: 1;
               flex: 1;
-          font-weight: 900; }
+          font-weight: 900;
+          float: left;
+          width: 50%; }
         .action-page .action .action-use .popup-header span.active {
           color: #329be8;
           position: relative; }
@@ -1032,14 +1042,7 @@ input {
       -ms-flex-align: center;
           align-items: center; }
     .change-page .change-page-body .line-btn {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
+      width: 100%; }
       .change-page .change-page-body .line-btn > button {
         -ms-flex: 1;
             flex: 1;
@@ -1047,7 +1050,10 @@ input {
         border: none;
         outline: none;
         height: 40px;
-        font-size: 16px; }
+        font-size: 16px;
+        width: 50%;
+        text-align: center;
+        float: left; }
         .change-page .change-page-body .line-btn > button.left-btn {
           color: #999; }
         .change-page .change-page-body .line-btn > button.right-btn {

@@ -11098,9 +11098,16 @@
 		return debug;
 	}();
 
-	/** 如果是app中android */
+	/** 如果是app */
 	if (typeof window.jgkj !== "undefined") {
-		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
+		var datastring = "";
+
+		try {
+			datastring = window.jgkj.getUserInfo();
+		} catch (e) {
+			alert(e);
+		}
+		window.localStorage.setItem("UserInfo", datastring);
 	}
 
 	/**
@@ -11168,7 +11175,10 @@
 		CarInfo: [],
 		PeopleInfo: [],
 
-		Province: [] };
+		Province: [], //全国省份
+		City: [], //市
+		District: [], //区
+		Village: [] };
 
 	var postData = function postData(url, data) {
 		return fetch(state.serverUrl + url, {
@@ -11210,6 +11220,19 @@
 		},
 		getPeopleInfo: function getPeopleInfo(state) {
 			return state.PeopleInfo;
+		},
+
+		getProvince: function getProvince(state) {
+			return state.Province;
+		},
+		getCity: function getCity(state) {
+			return state.City;
+		},
+		getDistrict: function getDistrict(state) {
+			return state.District;
+		},
+		getVillage: function getVillage(state) {
+			return state.Village;
 		}
 	};
 
@@ -11276,10 +11299,29 @@
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			return getData("/api/Transport/ChildArea?parentid=" + data).then(function (result) {
-				commit(_ShareCarType2.default.GET_PROVINCE, {
-					Province: data
-				});
+			return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(function (result) {
+				switch (data.Type) {
+					case 0:
+						commit(_ShareCarType2.default.GET_PROVINCE, {
+							Province: result.Data
+						});
+						break;
+					case 1:
+						commit(_ShareCarType2.default.GET_CITY, {
+							City: result.Data
+						});
+						break;
+					case 2:
+						commit(_ShareCarType2.default.GET_DISTRICT, {
+							District: result.Data
+						});
+						break;
+					case 3:
+						commit(_ShareCarType2.default.GET_VILLAGE, {
+							Village: result.Data
+						});
+						break;
+				}
 			});
 		}
 	};
@@ -11294,6 +11336,12 @@
 		state.PeopleInfo = data.PeopleInfo;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PROVINCE, function (state, data) {
 		state.Province = data.Province;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_CITY, function (state, data) {
+		state.City = data.City;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_DISTRICT, function (state, data) {
+		state.District = data.District;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_VILLAGE, function (state, data) {
+		state.Village = data.Village;
 	}), _mutations);
 
 	exports.default = {
@@ -11627,7 +11675,10 @@
 		CHANGE_HEADER: "CHANGE_HEADER",
 		CHANGE_FOOTER: "CHANGE_FOOTER",
 
-		GET_PROVINCE: "GET_PROVINCE"
+		GET_PROVINCE: "GET_PROVINCE",
+		GET_CITY: "GET_CITY",
+		GET_DISTRICT: "GET_DISTRICT",
+		GET_VILLAGE: "GET_VILLAGE"
 	};
 
 /***/ },
@@ -35727,9 +35778,36 @@
 
 			};
 		},
-		created: function created() {},
+		created: function created() {
+			var _this = this;
 
-		computed: {},
+			if (this.Province.length === 0) {
+				// 如果没有数据就去获取
+				this.$store.dispatch("getProvince", {
+					Id: 0,
+					Type: 0
+				}).then(function (result) {
+					var data = [];
+					_this.Province.forEach(function (item, index) {});
+					_this.startAddressSlot[0].values = _this.Province;
+				});
+			}
+		},
+
+		computed: {
+			Province: function Province() {
+				return this.$store.getters.getProvince;
+			},
+			City: function City() {
+				return this.$store.getters.getCity;
+			},
+			District: function District() {
+				return this.$store.getters.getDistrict;
+			},
+			Village: function Village() {
+				return this.$store.getters.getVillage;
+			}
+		},
 		methods: {
 			toast: function toast(title) {
 				(0, _mintUi.Toast)({
@@ -35887,6 +35965,8 @@
 	    }
 	  }, ["取消"]), " ", _vm._h('span', ["目的地"]), " ", _vm._h('span', ["下一步"])]), " ", _vm._h('mt-picker', {
 	    attrs: {
+	      "visibleItemCount": 5,
+	      "valueKey": "Name",
 	      "slots": _vm.startAddressSlot
 	    },
 	    on: {

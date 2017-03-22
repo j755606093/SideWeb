@@ -18,16 +18,17 @@ const debug = (function() {
 	return debug;
 })();
 
-window.getData = (data) => {
-	window.localStorage.setItem("UserInfo", "Bearer " + data);
-}
-
+/** 如果是app */
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
+	var datastring = "";
+
+	try {
+		datastring = window.jgkj.getUserInfo();
+	} catch (e) {
+		alert(e)
+	}
+	window.localStorage.setItem("UserInfo", datastring);
 }
-// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie

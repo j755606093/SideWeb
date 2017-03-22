@@ -446,8 +446,6 @@ header {
 
 .ticket-info {
   margin: 10px 0;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;
@@ -459,32 +457,36 @@ header {
   border-radius: 6px;
   background-color: #fff;
   border: 0.5px solid #c8c8c8; }
+  .ticket-info > div {
+    float: left; }
   .ticket-info .left {
     z-index: 1;
     -ms-flex: 3;
         flex: 3;
     width: 30%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
+    height: 100%;
     text-align: center; }
     .ticket-info .left > span {
       font-size: 12px;
       font-weight: 900;
       color: #323232;
-      margin: 2px 0; }
+      margin: 2px 0;
+      display: block;
+      height: 20px;
+      line-height: 20px; }
       .ticket-info .left > span:first-child {
         font-size: 20px;
-        color: #2196f3; }
+        color: #2196f3;
+        margin-top: 25px; }
       .ticket-info .left > span:last-child {
         color: #c8c8c8; }
   .ticket-info .center {
     z-index: 1;
     -ms-flex: 1;
         flex: 1;
-    display: -ms-flexbox;
-    display: flex;
+    width: 10%;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: distribute;
@@ -499,7 +501,9 @@ header {
       height: 9px;
       border-radius: 50%;
       background-color: #fafafa;
-      border: 0.5px solid #c8c8c8; }
+      border: 0.5px solid #c8c8c8;
+      display: block;
+      margin: 6px 0; }
     .ticket-info .center canvas.canvas-top {
       position: absolute;
       top: -2px;
@@ -516,25 +520,25 @@ header {
     z-index: 1;
     -ms-flex: 6;
         flex: 6;
-    display: -ms-flexbox;
-    display: flex;
+    width: 60%;
     -ms-flex-direction: column;
         flex-direction: column;
     height: 120px; }
     .ticket-info .right .top {
       -ms-flex: 6.5;
           flex: 6.5;
-      display: -ms-flexbox;
-      display: flex;
+      height: 90px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
           justify-content: center; }
+      .ticket-info .right .top > div {
+        float: left;
+        height: 90px; }
       .ticket-info .right .top .name {
-        -ms-flex: 7;
-            flex: 7;
-        display: -ms-flexbox;
-        display: flex;
+        -ms-flex: 6.5;
+            flex: 6.5;
+        width: 65%;
         -ms-flex-direction: column;
             flex-direction: column;
         -ms-flex-align: start;
@@ -543,9 +547,11 @@ header {
             justify-content: flex-end; }
         .ticket-info .right .top .name p {
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
           position: relative;
           text-align: left;
+          height: 45px;
+          line-height: 45px;
           margin-left: 20px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .name p {
@@ -558,7 +564,7 @@ header {
             border-radius: 50%;
             background-color: #60e7bf;
             position: absolute;
-            top: 9px;
+            top: 18px;
             left: -17px; }
           .ticket-info .right .top .name p:last-child {
             line-height: 40px; }
@@ -574,25 +580,26 @@ header {
       .ticket-info .right .top .info {
         -ms-flex: 3.5;
             flex: 3.5;
-        display: -ms-flexbox;
-        display: flex;
+        width: 35%;
         -ms-flex-direction: column;
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
             justify-content: center; }
         .ticket-info .right .top .info p {
-          height: 28px;
-          line-height: 28px;
+          height: 35px;
+          line-height: 35px;
           margin-right: 10px; }
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
-            color: #f35252; }
+            color: #f35252;
+            line-height: 45px; }
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px; }
+            padding-top: 8px;
+            line-height: 45px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .info p {
               margin-right: 10px; }
@@ -606,8 +613,7 @@ header {
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
-      display: -ms-flexbox;
-      display: flex;
+      height: 30px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: start;
@@ -619,7 +625,7 @@ header {
         top: 2px;
         left: 4px;
         width: 10px;
-        height: 12.5px; }
+        height: 10px; }
       .ticket-info .right .bottom img.right {
         position: absolute;
         top: 5px;
@@ -627,7 +633,8 @@ header {
         width: 10px;
         height: 8px; }
       .ticket-info .right .bottom p {
-        margin-left: 20px; }
+        margin-left: 20px;
+        text-align: left; }
 
 .discount-lists {
   width: 100%;
@@ -816,66 +823,69 @@ header {
         color: #c8c8c8; }
     .action-page > .action .action-select {
       width: 100%;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       margin-top: 60px; }
       .action-page > .action .action-select .line {
         margin: 0 10px;
         margin-bottom: 10px;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         height: 60px;
         line-height: 60px;
         border-radius: 10px;
         background-color: #fff; }
+        .action-page > .action .action-select .line > div {
+          display: inline-block;
+          float: left;
+          height: 60px;
+          line-height: 60px; }
         .action-page > .action .action-select .line .left {
-          -ms-flex: 0.3;
-              flex: 0.3;
-          display: -ms-flexbox;
-          display: flex;
+          -ms-flex: 2;
+              flex: 2;
+          width: 20%;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: start;
               justify-content: flex-start;
           -ms-flex-align: center;
-              align-items: center; }
-          .action-page > .action .action-select .line .left p {
-            margin-left: 10px;
-            font-size: 16px; }
+              align-items: center;
+          position: relative; }
+          .action-page > .action .action-select .line .left > p {
+            font-size: 14px;
+            text-align: center; }
         .action-page > .action .action-select .line .center {
-          -ms-flex: 0.5;
-              flex: 0.5;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: start;
-              justify-content: flex-start;
-          -ms-flex-align: center;
-              align-items: center; }
+          -ms-flex: 6;
+              flex: 6;
+          width: 60%;
+          -ms-flex-direction: column;
+              flex-direction: column;
+          -ms-flex-pack: center;
+              justify-content: center;
+          -ms-flex-align: start;
+              align-items: flex-start; }
           .action-page > .action .action-select .line .center p {
-            line-height: 25px;
+            line-height: 30px;
+            height: 50%;
             color: #323232;
             font-size: 15px;
-            margin-left: 10px; }
+            margin-left: 10px;
+            margin-top: 15px; }
         .action-page > .action .action-select .line .right {
-          -ms-flex: 0.2;
-              flex: 0.2;
-          display: -ms-flexbox;
-          display: flex;
+          -ms-flex: 2;
+              flex: 2;
+          width: 20%;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
               justify-content: center;
           -ms-flex-align: center;
-              align-items: center; }
+              align-items: center;
+          text-align: center; }
           .action-page > .action .action-select .line .right > img {
             width: 20px;
-            height: 20px; }
+            height: 20px;
+            margin-top: 20px; }
 
 .add-action {
   width: 100%; }

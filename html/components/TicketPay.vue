@@ -143,7 +143,7 @@
 			  				<div @click="setFare(index)" class="left"><img v-if="item.active" src="../picture/select.png"></div>
 			  				<div @click="setFare(index)" class="center">
 			  					<p>{{item.Name}}</p>
-			  					<p>{{item.Mobile}}</p>
+			  					<p>{{item.Mobile!==""?item.Mobile:'无'}}</p>
 			  				</div>
 			  				<div @click="showChaPassenger(index)" class="right"><img src="../picture/edit.png"></div>
 			  			</div>

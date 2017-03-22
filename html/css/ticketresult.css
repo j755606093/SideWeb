@@ -111,8 +111,6 @@ input {
     line-height: 50px;
     width: 70px; }
   .result .date-control {
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     font-size: 1.4rem;
@@ -129,16 +127,18 @@ input {
       line-height: 30px;
       -ms-flex: 0.6;
           flex: 0.6;
+      width: 60%;
       -ms-flex-pack: center;
           justify-content: center;
       color: #323232;
-      font-size: 17px; }
+      font-size: 17px;
+      display: inline-block;
+      float: left; }
     .result .date-control span:first-child,
     .result .date-control span:last-child {
       -ms-flex: 0.2;
           flex: 0.2;
-      display: -ms-flexbox;
-      display: flex;
+      width: 20%;
       -ms-flex-pack: center;
           justify-content: center;
       font-size: 14px;
@@ -146,23 +146,23 @@ input {
     .result .date-control > span.no {
       color: #c8c8c8; }
   .result .data-set {
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     font-size: 1.4rem;
     height: 50px;
     width: 100%;
-    display: flex;
     flex-direction: row;
     -ms-flex-pack: center;
         justify-content: center;
     text-align: center; }
     .result .data-set > div {
+      width: 25%;
       -ms-flex: 1;
           flex: 1;
       position: relative;
-      text-align: center; }
+      display: inline-block;
+      text-align: center;
+      float: left; }
     .result .data-set p {
       margin-top: 10px;
       font-size: 12px;
@@ -180,8 +180,7 @@ input {
     margin-top: 35px;
     text-align: center; }
     .result .result-list .list {
-      display: -ms-flexbox;
-      display: flex;
+      width: 100%;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -190,41 +189,38 @@ input {
           align-items: center;
       position: relative;
       height: 120px;
-      margin: 10px 0;
+      margin: 5px 0;
       border-radius: 6px;
       background-color: #fff;
       border: 0.5px solid #c8c8c8; }
-      .result .result-list .list .bg-result {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 120px;
-        z-index: 0; }
+      .result .result-list .list > div {
+        float: left; }
       .result .result-list .list .left {
         z-index: 1;
         -ms-flex: 3;
             flex: 3;
-        display: -ms-flexbox;
-        display: flex;
+        width: 30%;
         -ms-flex-direction: column;
             flex-direction: column;
+        height: 100%;
         text-align: center; }
         .result .result-list .list .left > span {
           font-size: 12px;
           font-weight: 900;
           color: #323232;
-          margin: 2px 0; }
+          margin: 2px 0;
+          display: block; }
           .result .result-list .list .left > span:first-child {
             font-size: 20px;
-            color: #2196f3; }
+            color: #2196f3;
+            margin-top: 25px; }
           .result .result-list .list .left > span:last-child {
             color: #c8c8c8; }
       .result .result-list .list .center {
         z-index: 1;
         -ms-flex: 1;
             flex: 1;
-        display: -ms-flexbox;
-        display: flex;
+        width: 10%;
         -ms-flex-direction: column;
             flex-direction: column;
         -ms-flex-pack: distribute;
@@ -239,7 +235,9 @@ input {
           height: 9px;
           border-radius: 50%;
           background-color: #fafafa;
-          border: 0.5px solid #c8c8c8; }
+          border: 0.5px solid #c8c8c8;
+          display: block;
+          margin: 6px 0; }
         .result .result-list .list .center canvas.canvas-top {
           position: absolute;
           top: -2px;
@@ -256,25 +254,25 @@ input {
         z-index: 1;
         -ms-flex: 6;
             flex: 6;
-        display: -ms-flexbox;
-        display: flex;
+        width: 60%;
         -ms-flex-direction: column;
             flex-direction: column;
         height: 120px; }
         .result .result-list .list .right .top {
           -ms-flex: 6.5;
               flex: 6.5;
-          display: -ms-flexbox;
-          display: flex;
+          height: 90px;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
               justify-content: center; }
+          .result .result-list .list .right .top > div {
+            float: left;
+            height: 90px; }
           .result .result-list .list .right .top .name {
-            -ms-flex: 7;
-                flex: 7;
-            display: -ms-flexbox;
-            display: flex;
+            -ms-flex: 6.5;
+                flex: 6.5;
+            width: 65%;
             -ms-flex-direction: column;
                 flex-direction: column;
             -ms-flex-align: start;
@@ -283,9 +281,11 @@ input {
                 justify-content: flex-end; }
             .result .result-list .list .right .top .name p {
               font-weight: bold;
-              font-size: 20px;
+              font-size: 18px;
               position: relative;
               text-align: left;
+              height: 45px;
+              line-height: 45px;
               margin-left: 20px; }
               @media (max-width: 320px) {
                 .result .result-list .list .right .top .name p {
@@ -298,7 +298,7 @@ input {
                 border-radius: 50%;
                 background-color: #60e7bf;
                 position: absolute;
-                top: 9px;
+                top: 18px;
                 left: -17px; }
               .result .result-list .list .right .top .name p:last-child {
                 line-height: 40px; }
@@ -314,25 +314,26 @@ input {
           .result .result-list .list .right .top .info {
             -ms-flex: 3.5;
                 flex: 3.5;
-            display: -ms-flexbox;
-            display: flex;
+            width: 35%;
             -ms-flex-direction: column;
                 flex-direction: column;
             text-align: right;
             -ms-flex-pack: center;
                 justify-content: center; }
             .result .result-list .list .right .top .info p {
-              height: 28px;
-              line-height: 28px;
+              height: 35px;
+              line-height: 35px;
               margin-right: 10px; }
               .result .result-list .list .right .top .info p:first-child {
                 font-weight: 900;
                 font-size: 20px;
-                color: #f35252; }
+                color: #f35252;
+                line-height: 45px; }
               .result .result-list .list .right .top .info p:last-child {
                 font-size: 12px;
                 color: #323232;
-                padding-top: 8px; }
+                padding-top: 8px;
+                line-height: 45px; }
               @media (max-width: 320px) {
                 .result .result-list .list .right .top .info p {
                   margin-right: 10px; }
@@ -346,8 +347,7 @@ input {
         .result .result-list .list .right .bottom {
           -ms-flex: 3;
               flex: 3;
-          display: -ms-flexbox;
-          display: flex;
+          height: 30px;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: start;
@@ -367,7 +367,8 @@ input {
             width: 10px;
             height: 8px; }
           .result .result-list .list .right .bottom p {
-            margin-left: 20px; }
+            margin-left: 20px;
+            text-align: left; }
     .result .result-list .router {
       height: 60px;
       margin: 0 -10px;

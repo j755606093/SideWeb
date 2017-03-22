@@ -47,30 +47,38 @@ header {
 }
 
 .ticket-info {
-  margin: 10px 10px;
-  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin: 10px 10px;
   position: relative;
   height: 120px;
   border-radius: 6px;
   background-color: $white;
   border: 0.5px solid #c8c8c8;
+  >div {
+    float: left;
+  }
   .left {
     z-index: 1;
     flex: 3;
-    display: flex;
+    width: 30%;
+    // display: flex;
     flex-direction: column;
+    height: 100%;
     text-align: center;
     >span {
       font-size: 12px;
       font-weight: 900;
       color: rgb(50, 50, 50);
       margin: 2px 0;
+      display: block;
+      height: 20px;
+      line-height: 20px;
       &:first-child {
         font-size: 20px;
         color: rgb(33, 150, 243);
+        margin-top: 25px;
       }
       &:last-child {
         color: rgb(200, 200, 200);
@@ -80,7 +88,8 @@ header {
   .center {
     z-index: 1;
     flex: 1;
-    display: flex;
+    width: 10%;
+    // display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: left;
@@ -93,34 +102,8 @@ header {
       border-radius: 50%;
       background-color: #fafafa;
       border: 0.5px solid #c8c8c8;
-      // &:first-child::after {
-      //   width: 18px;
-      //   height: 9px;
-      //   background-color: #fafafa;
-      //   border: 0.5px solid #c8c8c8;
-      //   content: "";
-      //   border-radius: 0 0 10px 10px;
-      //   border-top-color: #fafafa;
-      //   position: absolute;
-      //   top: -0.7px;
-      //   left: -4.5px;
-      //   z-index: 10;
-      //   transform: rotate(0deg);
-      // }
-      // &:last-child::after {
-      //   width: 18px;
-      //   height: 9px;
-      //   background-color: #fafafa;
-      //   border: 0.5px solid #c8c8c8;
-      //   border-bottom-color: #fafafa;
-      //   content: "";
-      //   border-radius: 10px 10px 0 0;
-      //   position: absolute;
-      //   bottom: -0.7px;
-      //   left: -4.5px;
-      //   z-index: 10;
-      //   transform: rotate(0deg);
-      // }
+      display: block;
+      margin: 6px 0
     }
     canvas.canvas-top {
       position: absolute;
@@ -140,25 +123,34 @@ header {
   .right {
     z-index: 1;
     flex: 6;
-    display: flex;
+    width: 60%;
+    // display: flex;
     flex-direction: column;
     height: 120px;
     .top {
       flex: 6.5;
-      display: flex;
+      height: 90px;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
+      >div {
+        float: left;
+        height: 90px;
+      }
       .name {
-        flex: 7;
-        display: flex;
+        flex: 6.5;
+        width: 65%;
+        // display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-end;
         p {
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
           position: relative;
           text-align: left;
+          height: 45px;
+          line-height: 45px;
           margin-left: 20px;
           @include responsive("iphone5") {
             font-size: 16px;
@@ -172,7 +164,7 @@ header {
             border-radius: 50%;
             background-color: $my_green;
             position: absolute;
-            top: 9px;
+            top: 18px;
             left: -17px;
           }
           &:last-child {
@@ -192,23 +184,26 @@ header {
       }
       .info {
         flex: 3.5;
-        display: flex;
+        width: 35%;
+        // display: flex;
         flex-direction: column;
         text-align: right;
         justify-content: center;
         p {
-          height: 28px;
-          line-height: 28px;
+          height: 35px;
+          line-height: 35px;
           margin-right: 10px;
           &:first-child {
             font-weight: 900;
             font-size: 20px;
             color: rgb(243, 82, 82);
+            line-height: 45px;
           }
           &:last-child {
             font-size: 12px;
             color: rgb(50, 50, 50);
             padding-top: 8px;
+            line-height: 45px;
           }
           @include responsive("iphone5") {
             margin-right: 10px;
@@ -229,7 +224,8 @@ header {
     }
     .bottom {
       flex: 3;
-      display: flex;
+      height: 30px;
+      // display: flex;
       flex-direction: row;
       justify-content: flex-start;
       position: relative;
@@ -240,7 +236,7 @@ header {
           top: 2px;
           left: 4px;
           width: 10px;
-          height: 12.5px;
+          height: 10px;
         }
         &.right {
           position: absolute;
@@ -252,6 +248,7 @@ header {
       }
       p {
         margin-left: 20px;
+        text-align: left;
       }
     }
   }
@@ -1103,7 +1100,8 @@ footer {
   background-color: $white;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 100;
-  >.footer {
+  overflow: hidden;
+  .footer {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -1113,6 +1111,10 @@ footer {
     color: $gray;
     height: 50px;
     line-height: 50px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    position: relative;
     i {
       font-size: 1.8rem;
     }
@@ -1125,6 +1127,10 @@ footer {
       color: $gray;
       height: 20px;
       line-height: 20px;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 40%;
     }
   }
   .footer.active {

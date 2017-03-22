@@ -20,9 +20,16 @@ const debug = (function() {
 	return debug;
 })();
 
-/** 如果是app中android */
+/** 如果是app */
 if (typeof window.jgkj !== "undefined") {
-	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
+	var datastring = "";
+
+	try {
+		datastring = window.jgkj.getUserInfo();
+	} catch (e) {
+		alert(e)
+	}
+	window.localStorage.setItem("UserInfo", datastring);
 }
 
 /**
@@ -91,6 +98,9 @@ const state = {
 	PeopleInfo: [],
 
 	Province: [], //全国省份
+	City: [], //市
+	District: [], //区
+	Village: [], //村
 }
 
 let postData = (url, data) => {
@@ -125,7 +135,12 @@ const getters = {
 	Development: state => state,
 	getFooterState: state => state.showFooter,
 	getCarInfo: state => state.CarInfo,
-	getPeopleInfo: state => state.PeopleInfo
+	getPeopleInfo: state => state.PeopleInfo,
+
+	getProvince: state => state.Province,
+	getCity: state => state.City,
+	getDistrict: state => state.District,
+	getVillage: state => state.Village,
 }
 
 // actions
@@ -170,10 +185,29 @@ const actions = {
 	},
 	/** 获取全国省数据 */
 	getProvince({ commit, state }, data) {
-		return getData("/api/Transport/ChildArea?parentid=" + data).then(result => {
-			commit(types.GET_PROVINCE, {
-				Province: data,
-			});
+		return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(result => {
+			switch (data.Type) {
+				case 0:
+					commit(types.GET_PROVINCE, {
+						Province: result.Data,
+					});
+					break;
+				case 1:
+					commit(types.GET_CITY, {
+						City: result.Data,
+					});
+					break;
+				case 2:
+					commit(types.GET_DISTRICT, {
+						District: result.Data,
+					});
+					break;
+				case 3:
+					commit(types.GET_VILLAGE, {
+						Village: result.Data,
+					});
+					break;
+			}
 		})
 	}
 }
@@ -192,6 +226,15 @@ const mutations = {
 	},
 	[types.GET_PROVINCE](state, data) {
 		state.Province = data.Province;
+	},
+	[types.GET_CITY](state, data) {
+		state.City = data.City;
+	},
+	[types.GET_DISTRICT](state, data) {
+		state.District = data.District;
+	},
+	[types.GET_VILLAGE](state, data) {
+		state.Village = data.Village;
 	},
 }
 

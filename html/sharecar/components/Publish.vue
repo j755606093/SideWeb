@@ -61,7 +61,7 @@
 			  	<span>目的地</span>
 			  	<span>下一步</span>
 			  </div>
-			  <mt-picker :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
+			  <mt-picker :visibleItemCount="5" valueKey="Name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
 	</div>
@@ -266,10 +266,33 @@ export default {
 		}
 	},
 	created(){
-		
+		if(this.Province.length===0){
+			// 如果没有数据就去获取
+			this.$store.dispatch("getProvince",{
+				Id:0,
+				Type:0
+			}).then(result=>{
+				let data = [];
+				this.Province.forEach((item,index)=>{
+					
+				})
+				this.startAddressSlot[0].values = this.Province;
+			})
+		}
 	},
 	computed:{
-		
+		Province(){
+			return this.$store.getters.getProvince;
+		},
+		City(){
+			return this.$store.getters.getCity;
+		},
+		District(){
+			return this.$store.getters.getDistrict;
+		},
+		Village(){
+			return this.$store.getters.getVillage;
+		},
 	},
 	methods:{
 		toast(title) {

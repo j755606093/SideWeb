@@ -121,7 +121,8 @@ input {
           flex-direction: row;
       height: 60px;
       line-height: 60px;
-      width: 100%; }
+      width: 100%;
+      position: relative; }
       .ticketbody .index-body .location > span {
         -ms-flex: 4;
             flex: 4;
@@ -129,14 +130,17 @@ input {
         font-size: 20px;
         font-weight: 900;
         color: #1e1e1e;
-        display: inline-block; }
+        display: inline-block;
+        float: left; }
         .ticketbody .index-body .location > span:last-child {
           text-align: right; }
       .ticketbody .index-body .location > div {
         -ms-flex: 2;
             flex: 2;
         width: 20%;
-        text-align: center; }
+        text-align: center;
+        display: inline-block;
+        float: left; }
         .ticketbody .index-body .location > div span {
           width: 32px;
           height: 4px;
@@ -179,12 +183,15 @@ input {
         width: 30%;
         display: inline-block;
         color: #c8c8c8;
-        font-size: 12px; }
+        font-size: 12px;
+        float: left; }
       .ticketbody .index-body .date > div {
         text-align: center;
+        float: left;
         -ms-flex: 4;
             flex: 4;
-        width: 40%; }
+        width: 40%;
+        display: inline-block; }
         .ticketbody .index-body .date > div span {
           display: inline-block;
           font-weight: 900;
@@ -194,7 +201,9 @@ input {
         -ms-flex: 3;
             flex: 3;
         width: 30%;
-        text-align: right; }
+        text-align: right;
+        display: inline-block;
+        float: left; }
         .ticketbody .index-body .date > p > span {
           text-align: right;
           font-size: 18px;
@@ -236,7 +245,8 @@ input {
           color: #c8c8c8;
           display: inline-block;
           height: 25px;
-          line-height: 25px; }
+          line-height: 25px;
+          float: left; }
           .ticketbody .index-body .search-record .list > span:first-child {
             text-align: right; }
           .ticketbody .index-body .search-record .list > span:last-child {
@@ -245,7 +255,9 @@ input {
           -ms-flex: 2;
               flex: 2;
           width: 20%;
-          text-align: center; }
+          text-align: center;
+          display: inline-block;
+          float: left; }
           .ticketbody .index-body .search-record .list > div > span {
             width: 14px;
             height: 2px;

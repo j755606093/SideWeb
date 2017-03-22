@@ -20,20 +20,17 @@ const debug = (function() {
 	return debug;
 })();
 
+/** 如果是app */
 if (typeof window.jgkj !== "undefined") {
 	var datastring = "";
 
 	try {
-		datastring = JSON.stringify(window.jgkj.getUserInfo());
-		alert(datastring);
+		datastring = window.jgkj.getUserInfo();
 	} catch (e) {
 		alert(e)
 	}
 	window.localStorage.setItem("UserInfo", datastring);
 }
-// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
