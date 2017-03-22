@@ -36,8 +36,14 @@
 						<div class="right">
 							<div class="top">
 								<div class="name">
-									<p>{{item.StartPoint}}</p>
-									<p>{{item.EndPoint}}</p>
+									<template v-if="item.StartPoint.length>5">
+										<p style="font-size:17px;">{{item.StartPoint}}</p>
+										<p style="font-size:17px;">{{item.EndPoint}}</p>
+									</template>
+									<template v-else>
+										<p>{{item.StartPoint}}</p>
+										<p>{{item.EndPoint}}</p>
+									</template>
 								</div>
 								<div class="info">
 									<p><span style="font-size:12px;">¥</span>{{item.Price}}</p>
