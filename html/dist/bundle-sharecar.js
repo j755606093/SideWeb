@@ -35694,7 +35694,7 @@
 				Role: 0, //0是乘客,1是司机
 
 				startAddress: "", //选择的上车地点
-				startAddress_show: false, //显示选择上车点
+				PickerPageShow: false, //显示选择上车点
 				startAddressSlot: [{
 					flex: 1,
 					values: ['广东省', '大石区', '广东省', '广州市', '广东省', '礼村'],
@@ -35744,8 +35744,13 @@
 			},
 
 			/** 选择上车地点 */
-			startAddress: function startAddress() {
-				this.startAddress_show = true;
+			startAddressPageShow: function startAddressPageShow() {
+				this.PickerPageShow = true;
+			},
+
+			/** 取消显示 */
+			cancelPicker: function cancelPicker() {
+				this.PickerPageShow = false;
 			},
 
 			/** 值改变后的回调函数 */
@@ -35824,7 +35829,7 @@
 	  }, [_vm._h('div', {
 	    staticClass: "publish__info--line",
 	    on: {
-	      "click": _vm.startAddress
+	      "click": _vm.startAddressPageShow
 	    }
 	  }, [_vm._h('div', {
 	    staticClass: "line__left--dot"
@@ -35851,24 +35856,28 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.startAddress_show),
-	      expression: "startAddress_show"
+	      value: (_vm.PickerPageShow),
+	      expression: "PickerPageShow"
 	    }],
 	    staticClass: "mt_page",
 	    attrs: {
 	      "position": "bottom"
 	    },
 	    domProps: {
-	      "value": (_vm.startAddress_show)
+	      "value": (_vm.PickerPageShow)
 	    },
 	    on: {
 	      "input": function($event) {
-	        _vm.startAddress_show = $event
+	        _vm.PickerPageShow = $event
 	      }
 	    }
 	  }, [_vm._t("default", [_vm._h('div', {
 	    staticClass: "popup-header"
-	  }, [_vm._h('span', ["取消"]), " ", _vm._h('span', ["目的地"]), " ", _vm._h('span', ["下一步"])]), " ", _vm._h('mt-picker', {
+	  }, [_vm._h('span', {
+	    on: {
+	      "click": _vm.cancelPicker
+	    }
+	  }, ["取消"]), " ", _vm._h('span', ["目的地"]), " ", _vm._h('span', ["下一步"])]), " ", _vm._h('mt-picker', {
 	    attrs: {
 	      "slots": _vm.startAddressSlot
 	    },

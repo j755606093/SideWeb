@@ -3,7 +3,7 @@
 		<!-- 轮播图 -->
 		<div class="slider">
 			<router-link to="/rebate/lvdzju">
-				<img class="slider-item" :src="'../picture/slider1.png?'+Date.now()">
+				<img class="slider-item" src="../picture/slider1.png">
 			</router-link>
 			<!-- <router-link to="/rebate/002">
 				<img class="slider-item" src="../picture/slider2.png">
@@ -12,7 +12,7 @@
 				<img class="slider-item" src="../picture/slider1.png">
 			</a> -->
 			<a href="#">
-				<img class="slider-item" :src="'../picture/slider2.png?'+Date.now()">
+				<img class="slider-item" src="../picture/slider2.png">
 			</a>
 		</div>
 		<div class="index-body">

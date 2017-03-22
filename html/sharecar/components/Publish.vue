@@ -7,7 +7,7 @@
 		</div>
 		<div class="publish animated slideInUp">
 			<div class="publish__info">
-				<div @click="startAddress" class="publish__info--line">
+				<div @click="startAddressPageShow" class="publish__info--line">
 					<div class="line__left--dot"></div>
 					<template v-if="Role===0">
 						<span class="line__span--gray">上车地点</span>
@@ -52,12 +52,12 @@
 			</div>
 		</div>
 		<mt-popup
-		  v-model="startAddress_show"
+		  v-model="PickerPageShow"
 		  position="bottom"
 		  class="mt_page">
 		  <slot>
 		  	<div class="popup-header">
-			  	<span>取消</span>
+			  	<span @click="cancelPicker">取消</span>
 			  	<span>目的地</span>
 			  	<span>下一步</span>
 			  </div>
@@ -238,7 +238,7 @@ export default {
 			Role:0,//0是乘客,1是司机
 			
 			startAddress:"",//选择的上车地点
-			startAddress_show:false,//显示选择上车点
+			PickerPageShow:false,//显示选择上车点
 			startAddressSlot:[
 				{
           flex: 1,
@@ -290,8 +290,12 @@ export default {
 			this.Role = index;
 		},
 		/** 选择上车地点 */
-		startAddress(){
-			this.startAddress_show = true;
+		startAddressPageShow(){
+			this.PickerPageShow = true;
+		},
+		/** 取消显示 */
+		cancelPicker(){
+			this.PickerPageShow = false;
 		},
 		/** 值改变后的回调函数 */
 		startValuesChange(picker, values){
@@ -300,7 +304,8 @@ export default {
 		/** 选择到达地点 */
 		endAdress(){
 
-		}
+		},
+		
 	},
 	filters:{
 		formatTime(time){
