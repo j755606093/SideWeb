@@ -5,7 +5,7 @@
 			<transition 
 			enter-active-class="fadeIn"
 			leave-active-class="fadeOut">
-				<keep-alive>
+				<keep-alive exclude-"TicketPay">
 					<router-view></router-view>
 				</keep-alive>
 			</transition>
