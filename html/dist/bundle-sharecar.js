@@ -62,18 +62,22 @@
 
 	var _ShareCar2 = _interopRequireDefault(_ShareCar);
 
-	var _Index = __webpack_require__(76);
+	var _Index = __webpack_require__(70);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _TripDetail = __webpack_require__(95);
+	var _TripDetail = __webpack_require__(89);
 
 	var _TripDetail2 = _interopRequireDefault(_TripDetail);
+
+	var _Publish = __webpack_require__(104);
+
+	var _Publish2 = _interopRequireDefault(_Publish);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
-	__webpack_require__(100);
+	__webpack_require__(102);
 
 	// Vue.use(Vuex);
 
@@ -85,19 +89,27 @@
 	var routes = [{
 		path: '/',
 		// name: "home",
+		redirect: '/index',
 		component: _ShareCar2.default,
+		mate: { keepAlive: true },
 		children: [{
 			path: "",
 			name: "index",
-			component: _Index2.default
+			component: _Index2.default,
+			mate: { keepAlive: true }
 		}]
 	}, {
 		path: "/detail/:types/:tripId",
 		name: "tripdetail",
 		component: _TripDetail2.default
 	}, {
+		path: "/publish",
+		name: "publish",
+		component: _Publish2.default
+	}, {
 		path: "*",
 		name: "all",
+		mate: { keepAlive: true },
 		redirect: { path: "/" }
 	}];
 
@@ -27529,7 +27541,7 @@
 	__vue_exports__ = __webpack_require__(59)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(75)
+	var __vue_template__ = __webpack_require__(69)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -27852,12 +27864,14 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _Footer = __webpack_require__(67);
+	var _Footer = __webpack_require__(61);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
 	//
 	//
 	//
@@ -28114,244 +28128,6 @@
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/Header.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-87ba0de0", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-87ba0de0", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] Header.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 62 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(63);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(58)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-87ba0de0!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Header.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-87ba0de0!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Header.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 63 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(34)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n      color: #000;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _utils = __webpack_require__(60);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-		props: {
-			showBack: {
-				type: Boolean,
-				default: true
-			},
-			showHeader: {
-				type: Boolean,
-				default: true
-			},
-			headerTitle: {
-				type: String,
-				default: "拼车"
-			}
-		},
-		data: function data() {
-			return {};
-		},
-		created: function created() {},
-
-		computed: {},
-		methods: {
-			GoBack: function GoBack() {
-				this.$router.go(-1);
-			}
-		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){var _vm=this;
-	  return _vm._h('header', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.showHeader),
-	      expression: "showHeader"
-	    }]
-	  }, [(!_vm.showBack) ? _vm._h('div', {
-	    staticClass: "home"
-	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])]) : _vm._h('div', {
-	    staticClass: "other"
-	  }, [_vm._h('div', {
-	    staticClass: "left",
-	    on: {
-	      "click": _vm.GoBack
-	    }
-	  }, [_vm._h('img', {
-	    attrs: {
-	      "src": __webpack_require__(66)
-	    }
-	  })]), " ", _vm._h('div', {
-	    staticClass: "center"
-	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])])]), " "])
-	},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-87ba0de0", module.exports)
-	  }
-	}
-
-/***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "back_icon.png?9c70bbda4d7811925dee836e55ad7574";
-
-/***/ },
-/* 67 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-	var __vue_styles__ = {}
-
-	/* styles */
-	__webpack_require__(68)
-
-	/* script */
-	__vue_exports__ = __webpack_require__(70)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(71)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
 	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/Footer.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
@@ -28374,13 +28150,13 @@
 
 
 /***/ },
-/* 68 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(69);
+	var content = __webpack_require__(63);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(58)(content, {});
@@ -28400,7 +28176,7 @@
 	}
 
 /***/ },
-/* 69 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -28414,7 +28190,7 @@
 
 
 /***/ },
-/* 70 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28556,7 +28332,7 @@
 	//
 
 /***/ },
-/* 71 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -28567,36 +28343,40 @@
 	      value: (_vm.getfooter),
 	      expression: "getfooter"
 	    }]
-	  }, [_vm._m(0), " ", _vm._m(1), " ", _vm._m(2)])
-	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('a', {
-	    staticClass: "footer active"
-	  }, [_vm._h('img', {
+	  }, [_vm._m(0), " ", _vm._h('router-link', {
+	    staticClass: "footer",
 	    attrs: {
-	      "src": __webpack_require__(72)
+	      "to": "/publish"
 	    }
-	  }), " ", _vm._h('p', ["首页"])])
-	},function (){var _vm=this;
-	  return _vm._h('a', {
-	    staticClass: "footer"
 	  }, [_vm._h('div', {
 	    staticClass: "circle"
 	  }), " ", _vm._h('img', {
 	    staticClass: "center",
 	    attrs: {
-	      "src": __webpack_require__(73)
+	      "src": __webpack_require__(67)
 	    }
 	  }), " ", _vm._h('div', {
 	    staticClass: "clear"
 	  }), " ", _vm._h('p', {
 	    staticClass: "center"
-	  }, ["发布行程"])])
+	  }, ["发布行程"])]), " ", _vm._m(1)])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('a', {
+	    staticClass: "footer active",
+	    attrs: {
+	      "href": "./sharecar.html"
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(66)
+	    }
+	  }), " ", _vm._h('p', ["首页"])])
 	},function (){var _vm=this;
 	  return _vm._h('a', {
 	    staticClass: "footer"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(74)
+	      "src": __webpack_require__(68)
 	    }
 	  }), " ", _vm._h('p', ["我的"])])
 	}]}
@@ -28608,25 +28388,25 @@
 	}
 
 /***/ },
-/* 72 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "car_icon.png?6951904b78ad70316dad2c844a93bac0";
 
 /***/ },
-/* 73 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "add_up_icon.png?aaf266e6cebcbae8567d8077edfa3d2f";
 
 /***/ },
-/* 74 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "me_grey_icon.png?106ab7f1bc38c230e9731e1c850faf31";
 
 /***/ },
-/* 75 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -28639,7 +28419,12 @@
 	      "padding-bottom": "70px",
 	      "position": "relative"
 	    }
-	  }, [_vm._h('router-view')]), " ", _vm._h('my-footer')])
+	  }, [_vm._h('transition', {
+	    attrs: {
+	      "enter-active-class": "fadeIn",
+	      "leave-active-class": "fadeOut"
+	    }
+	  }, [_vm._h('keep-alive', [_vm._h('router-view')])]), " "]), " ", _vm._h('my-footer')])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -28649,20 +28434,20 @@
 	}
 
 /***/ },
-/* 76 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(77)
+	__webpack_require__(71)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(80)
+	__vue_exports__ = __webpack_require__(74)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(91)
+	var __vue_template__ = __webpack_require__(85)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -28696,13 +28481,13 @@
 
 
 /***/ },
-/* 77 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(78);
+	var content = __webpack_require__(72);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(58)(content, {});
@@ -28722,12 +28507,12 @@
 	}
 
 /***/ },
-/* 78 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
 	// imports
-	exports.i(__webpack_require__(79), "");
+	exports.i(__webpack_require__(73), "");
 
 	// module
 	exports.push([module.id, "\n", ""]);
@@ -28736,7 +28521,7 @@
 
 
 /***/ },
-/* 79 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -28744,13 +28529,13 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative;\n  margin-bottom: 10px; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #fafafa; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative;\n  margin-bottom: 10px; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #fafafa; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 80 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28763,18 +28548,23 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _swiper = __webpack_require__(81);
+	var _swiper = __webpack_require__(75);
 
 	var _swiper2 = _interopRequireDefault(_swiper);
 
-	var _list = __webpack_require__(82);
+	var _list = __webpack_require__(76);
 
 	var _list2 = _interopRequireDefault(_list);
 
 	var _mintUi = __webpack_require__(30);
 
+	var _TripDetail = __webpack_require__(89);
+
+	var _TripDetail2 = _interopRequireDefault(_TripDetail);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _ = __webpack_require__(53); //
 	//
 	//
 	//
@@ -28830,9 +28620,6 @@
 	//
 	//
 	//
-	//
-
-	var _ = __webpack_require__(53);
 
 	exports.default = {
 		data: function data() {
@@ -28848,12 +28635,17 @@
 				onlineTimeContorl: null, //保存循环的变量
 
 				headerTop: 0, //头部距离顶部距离
-				headerTopElement: null
-			};
+				headerRealTopElement: null,
+				headerTopElement: null,
+
+				trip_detail_status: false, //旅程详情页显示
+
+				scrollFunction: null };
 		},
 		created: function created() {
 			var _this = this;
 
+			console.log("created");
 			if (this.$store.getters.getCarInfo.length === 0) {
 				this.$store.dispatch("getCarInfo", {
 					Index: this.CarInfoPage,
@@ -28892,19 +28684,24 @@
 			});
 
 			this.headerTopElement = document.getElementById("headertop");
+			this.headerRealTopElement = document.getElementById("header_block");
 
-			/** 监听滚动 */
-			window.addEventListener('scroll', _.throttle(function () {
+			/** 保存地址,便于移除监听事件 */
+			this.scrollFunction = _.throttle(function () {
 				var status = _this2.headerTopElement.offsetTop - document.body.scrollTop;
+				var realTop = _this2.headerRealTopElement.offsetTop - document.body.scrollTop;
 
-				if (status < -100) {
+				if (realTop <= 0 || status < -170) {
 					_this2.headerTopElement.style.position = "fixed";
 					_this2.headerTopElement.style.top = "0";
 					_this2.headerTopElement.style.left = "0";
 				} else {
 					_this2.headerTopElement.style.position = "relative";
 				}
-			}, 100, { leading: false }));
+			}, 100, { leading: false });
+
+			/** 监听滚动 */
+			window.addEventListener('scroll', this.scrollFunction);
 		},
 
 		computed: {
@@ -28914,6 +28711,8 @@
 			PeopleInfo: function PeopleInfo() {
 				return this.$store.getters.getPeopleInfo;
 			},
+
+			/** 当前列表 */
 			showPageData: function showPageData() {
 				if (this.pageIndex === 0) {
 					return this.CarInfo;
@@ -28967,19 +28766,32 @@
 			/** 切换主页 */
 			switchPage: function switchPage(index) {
 				this.pageIndex = index;
+			},
+
+			/** 打开详情页 */
+			openDetailPage: function openDetailPage(index) {
+				this.types = this.pageIndex;
+				this.tripId = this.showPageData[index].Id;
+				this.trip_detail_status = true;
 			}
 		},
+		activated: function activated() {
+			console.log("activated");
+		},
 		destroyed: function destroyed() {
+			window.removeEventListener("scroll", this.scrollFunction, false);
 			clearInterval(this.onlineTimeContorl);
 		},
 
 		components: {
-			"my-list": _list2.default
+			"my-list": _list2.default,
+			"mt-popup": _mintUi.Popup,
+			"trip-detail": _TripDetail2.default
 		}
 	};
 
 /***/ },
-/* 81 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34339,20 +34151,20 @@
 
 
 /***/ },
-/* 82 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(83)
+	__webpack_require__(77)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(85)
+	__vue_exports__ = __webpack_require__(79)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(86)
+	var __vue_template__ = __webpack_require__(80)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -34386,13 +34198,13 @@
 
 
 /***/ },
-/* 83 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(84);
+	var content = __webpack_require__(78);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(58)(content, {});
@@ -34412,7 +34224,7 @@
 	}
 
 /***/ },
-/* 84 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -34420,13 +34232,13 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 70px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 80px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 85 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34650,7 +34462,7 @@
 	//
 
 /***/ },
-/* 86 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -34673,17 +34485,17 @@
 	    staticClass: "header--name"
 	  }, [_vm._s(_vm.list.UserInfo.Nickname)]), " ", (_vm.list.UserInfo.Sex === 1) ? [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(87)
+	      "src": __webpack_require__(81)
 	    }
 	  })] : [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(88)
+	      "src": __webpack_require__(82)
 	    }
 	  })], " "]), " ", (_vm.nogo !== 'true') ? _vm._h('div', {
 	    staticClass: "header--active"
 	  }, [(_vm.types === 0) ? [_vm._h('span', ["请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我"])] : [_vm._h('span', ["去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她')])], " ", " ", _vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(89)
+	      "src": __webpack_require__(83)
 	    }
 	  })]) : _vm._e()]), " ", _vm._h('div', {
 	    staticClass: "list__body"
@@ -34713,7 +34525,7 @@
 	    staticClass: "line__left"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(90)
+	      "src": __webpack_require__(84)
 	    }
 	  })])
 	}]}
@@ -34725,31 +34537,31 @@
 	}
 
 /***/ },
-/* 87 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "man_icon.png?8167f559a875c839ac984d131c21643b";
 
 /***/ },
-/* 88 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "women_icon.png?140a933c9a021b923d082022519ea8af";
 
 /***/ },
-/* 89 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "into_icon.png?c7ec5d49aa59df4159de9a3331232aa0";
 
 /***/ },
-/* 90 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "clock_icon.png?603d69a916a328c7ae4aafccd847558a";
 
 /***/ },
-/* 91 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
@@ -34835,19 +34647,19 @@
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(92)
+	      "src": __webpack_require__(86)
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(92)
+	      "src": __webpack_require__(86)
 	    }
 	  })]), " ", _vm._h('div', {
 	    staticClass: "swiper-slide"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(92)
+	      "src": __webpack_require__(86)
 	    }
 	  })])]), " ", " ", _vm._h('div', {
 	    staticClass: "swiper-pagination"
@@ -34857,7 +34669,7 @@
 	    staticClass: "action--btn"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(93)
+	      "src": __webpack_require__(87)
 	    }
 	  })])
 	},function (){var _vm=this;
@@ -34865,7 +34677,7 @@
 	    staticClass: "action--btn"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(94)
+	      "src": __webpack_require__(88)
 	    }
 	  })])
 	}]}
@@ -34877,35 +34689,35 @@
 	}
 
 /***/ },
-/* 92 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "swiper1.png?da981d4a9a3f465cbb5c2262e0d7c415";
 
 /***/ },
-/* 93 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "seach_icon.png?de1ae6d7a482e776a91319e1bf9fa131";
 
 /***/ },
-/* 94 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "Refresh_ICON.png?eab7845008bd21073751a21845113213";
 
 /***/ },
-/* 95 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 
 	/* styles */
-	__webpack_require__(96)
+	__webpack_require__(90)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(98)
+	__vue_exports__ = __webpack_require__(92)
 
 	/* template */
 	var __vue_template__ = __webpack_require__(99)
@@ -34942,13 +34754,13 @@
 
 
 /***/ },
-/* 96 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(97);
+	var content = __webpack_require__(91);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(58)(content, {});
@@ -34968,7 +34780,7 @@
 	}
 
 /***/ },
-/* 97 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -34976,13 +34788,13 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 98 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34995,11 +34807,11 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _list = __webpack_require__(82);
+	var _list = __webpack_require__(76);
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _Header = __webpack_require__(61);
+	var _Header = __webpack_require__(93);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -35090,12 +34902,20 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
 			return {
 				tripId: "",
 				isReady: false,
+				types: -1,
 
 				tripData: {}
 			};
@@ -35105,8 +34925,6 @@
 
 			this.tripId = this.$route.params.tripId;
 			this.types = parseInt(this.$route.params.types);
-
-			if (!this.tripId) {}
 
 			if (this.types === 0) {
 				this.loading();
@@ -35158,19 +34976,267 @@
 	};
 
 /***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+
+	/* styles */
+	__webpack_require__(94)
+
+	/* script */
+	__vue_exports__ = __webpack_require__(96)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(97)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/Header.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-87ba0de0", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-87ba0de0", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] Header.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(95);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(58)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-87ba0de0!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Header.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-87ba0de0!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Header.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(34)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n      color: #000;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _utils = __webpack_require__(60);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+		props: {
+			showBack: {
+				type: Boolean,
+				default: true
+			},
+			showHeader: {
+				type: Boolean,
+				default: true
+			},
+			headerTitle: {
+				type: String,
+				default: "拼车"
+			},
+			Position: {
+				type: String,
+				default: "fixed"
+			}
+		},
+		data: function data() {
+			return {};
+		},
+		created: function created() {},
+
+		computed: {},
+		methods: {
+			GoBack: function GoBack() {
+				this.$router.go(-1);
+			}
+		}
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('header', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showHeader),
+	      expression: "showHeader"
+	    }],
+	    style: ({
+	      position: _vm.Position
+	    })
+	  }, [(!_vm.showBack) ? _vm._h('div', {
+	    staticClass: "home"
+	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])]) : _vm._h('div', {
+	    staticClass: "other"
+	  }, [_vm._h('div', {
+	    staticClass: "left",
+	    on: {
+	      "click": _vm.GoBack
+	    }
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(98)
+	    }
+	  })]), " ", _vm._h('div', {
+	    staticClass: "center"
+	  }, [_vm._h('span', [_vm._s(_vm.headerTitle)])])]), " "])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-87ba0de0", module.exports)
+	  }
+	}
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "back_icon.png?9c70bbda4d7811925dee836e55ad7574";
+
+/***/ },
 /* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;
 	  return _vm._h('div', {
-	    staticClass: "tripdetail"
+	    staticClass: "tripdetail",
+	    attrs: {
+	      "id": "tripdetail"
+	    }
 	  }, [_vm._h('my-header', {
 	    attrs: {
 	      "showBack": true,
 	      "headerTitle": "旅程详情"
 	    }
 	  }), " ", (_vm.isReady) ? _vm._h('div', {
-	    staticClass: "trip__info"
+	    staticClass: "trip__info animated slideInRight"
 	  }, [_vm._h('my-list', {
 	    attrs: {
 	      "types": _vm.types,
@@ -35199,7 +35265,7 @@
 	    staticClass: "trip--contact-way"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(155)
+	      "src": __webpack_require__(100)
 	    }
 	  })])
 	},function (){var _vm=this;
@@ -35207,7 +35273,7 @@
 	    staticClass: "trip--contact-way"
 	  }, [_vm._h('img', {
 	    attrs: {
-	      "src": __webpack_require__(156)
+	      "src": __webpack_require__(101)
 	    }
 	  })])
 	}]}
@@ -35222,10 +35288,22 @@
 /* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__.p + "phone_icon.png?2c1e951fcae944357738b4d0e18f7241";
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "messnge_icon.png?6eaed054d73b03bcea0b79a946a035e2";
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(101);
+	var content = __webpack_require__(103);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(35)(content, {});
@@ -35245,7 +35323,7 @@
 	}
 
 /***/ },
-/* 101 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(34)();
@@ -35259,69 +35337,197 @@
 
 
 /***/ },
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "phone_icon.png?2c1e951fcae944357738b4d0e18f7241";
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+
+	/* styles */
+	__webpack_require__(105)
+
+	/* script */
+	__vue_exports__ = __webpack_require__(107)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(108)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/Publish.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-5fa50b1c", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-5fa50b1c", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] Publish.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
 
 /***/ },
-/* 156 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "messnge_icon.png?6eaed054d73b03bcea0b79a946a035e2";
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(106);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(58)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5fa50b1c!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Publish.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5fa50b1c!./../../../node_modules/sass-loader/index.js!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Publish.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 106 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(34)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.publishtrip {\n  margin-top: 60px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _utils = __webpack_require__(60);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _list = __webpack_require__(76);
+
+	var _list2 = _interopRequireDefault(_list);
+
+	var _Header = __webpack_require__(93);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _mintUi = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				isReady: false,
+
+				tripData: {}
+			};
+		},
+		created: function created() {},
+
+		computed: {},
+		methods: {
+			toast: function toast(title) {
+				(0, _mintUi.Toast)({
+					message: title,
+					position: 'bottom',
+					duration: 3000
+				});
+			},
+
+			/** 加载动画(需要手动关闭) */
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			}
+		},
+		filters: {},
+		components: {
+			"my-header": _Header2.default
+		}
+	};
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "publishtrip",
+	    attrs: {
+	      "id": "publishtrip"
+	    }
+	  }, [_vm._h('my-header', {
+	    attrs: {
+	      "showBack": true,
+	      "headerTitle": "发布旅程"
+	    }
+	  }), " ", (_vm.isReady) ? _vm._h('div', {
+	    staticClass: "trip__info animated slideInUp"
+	  }) : _vm._e()])
+	},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-5fa50b1c", module.exports)
+	  }
+	}
 
 /***/ }
 /******/ ]);

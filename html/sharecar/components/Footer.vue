@@ -1,15 +1,15 @@
 <template type="x/template" id="footer">
 	<footer v-show="getfooter">
-		<a class="footer active">
+		<a href="./sharecar.html" class="footer active">
 			<img src="../icon/car_icon.png">
 			<p>首页</p>
 		</a>
-		<a class="footer">
+		<router-link to="/publish" class="footer">
 			<div class="circle"></div>
 			<img class="center" src="../icon/add_up_icon.png">
 			<div class="clear"></div>
 			<p class="center">发布行程</p>
-		</a>
+		</router-link>
 		<a class="footer">
 			<img src="../icon/me_grey_icon.png">
 			<p>我的</p>

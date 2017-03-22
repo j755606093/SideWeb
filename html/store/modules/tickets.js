@@ -42,29 +42,35 @@ if (typeof window.jgkj !== "undefined") {
  * @param  {[type]} ) {	let        cookie [description]
  * @return {[type]}   [description]
  */
-let Authorization = (function() {
-	if (window.localStorage.getItem("UserInfo")) {
-		// app中
-		let string = window.localStorage.getItem("UserInfo");
-		return "Bearer " + JSON.parse(string).Access_Token; //格式为json
-	}
-	let cookie = document.cookie; //获取浏览器的token
-	if (cookie === "") {
-		return cookie;
-	}
-
-	let arrayCookie = cookie.split(";");
-
-	for (let i = 0; i < arrayCookie.length; i++) {
-		let item = arrayCookie[i].split("=");
-
-		if (item[0].trim() === "access_token") {
-			return "Bearer " + item[1];
+var Authorization = "";
+try {
+	Authorization = (function() {
+		let info = window.localStorage.getItem("UserInfo");
+		if (info && info !== "undefined") {
+			// app中
+			let string = window.localStorage.getItem("UserInfo");
+			return "Bearer " + JSON.parse(string).Access_Token; //格式为json
 		}
-	}
+		let cookie = document.cookie; //获取浏览器的token
+		if (cookie === "") {
+			return cookie;
+		}
 
-	return ""; //如果没有就返回这个
-})();
+		let arrayCookie = cookie.split(";");
+
+		for (let i = 0; i < arrayCookie.length; i++) {
+			let item = arrayCookie[i].split("=");
+
+			if (item[0].trim() === "access_token") {
+				return "Bearer " + item[1];
+			}
+		}
+
+		return ""; //如果没有就返回这个
+	})();
+} catch (e) {
+	Authorization = "";
+}
 
 //检查请求返回的状态
 function checkStatus(response) {

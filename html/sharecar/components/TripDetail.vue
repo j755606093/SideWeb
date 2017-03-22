@@ -1,7 +1,7 @@
 <template type="x/template">
-	<div class="tripdetail">
+	<div id="tripdetail" class="tripdetail">
 		<my-header :showBack="true" headerTitle="旅程详情"></my-header>
-		<div v-if="isReady" class="trip__info">
+		<div v-if="isReady" class="trip__info animated slideInRight">
 			<my-list :types="types" :list="tripData" nogo="true"></my-list>
 			<div class="trip__remark">
 				<p>备注:{{tripData.Remark?tripData.Remark:'无'}}</p>
@@ -30,6 +30,10 @@
 @import "../../sass/utils.scss";
 .tripdetail{
 	margin-top:60px;
+	// position:absolute;
+	// top:0;
+	// right:-100%;
+	// width:100%;
 }
 .trip__info{
 	width:100%;
@@ -79,6 +83,9 @@
 		margin-left:5px;
 	}
 }
+.animated{
+	animation-duration: 0.4s;
+}
 </style>
 
 <script type="text/babel">
@@ -92,17 +99,14 @@ export default {
 		return {
 			tripId:"",
 			isReady:false,
+			types:-1,
 
-			tripData:{}
+			tripData:{},
 		}
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
 		this.types = parseInt(this.$route.params.types);
-
-		if(!this.tripId){
-
-		}
 		
 		if(this.types===0){
 			this.loading();

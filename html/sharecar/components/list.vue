@@ -93,7 +93,7 @@
 		display: inline-block;
 		height:65px;
 		line-height: 65px;
-		width:70px;
+		width:80px;
 		text-align:right;
 		>img{
 			width:10px;

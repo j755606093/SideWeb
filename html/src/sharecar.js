@@ -12,23 +12,32 @@ Vue.use(VueRouter);
 import ShareCar from "../sharecar/ShareCar.vue";
 import Index from "../sharecar/components/Index.vue";
 import TripDetail from "../sharecar/components/TripDetail.vue";
+import Publish from "../sharecar/components/Publish.vue";
 
 const routes = [{
 	path: '/',
 	// name: "home",
+	redirect: '/index',
 	component: ShareCar,
+	mate: { keepAlive: true },
 	children: [{
 		path: "",
 		name: "index",
-		component: Index
+		component: Index,
+		mate: { keepAlive: true }
 	}]
 }, {
 	path: "/detail/:types/:tripId",
 	name: "tripdetail",
 	component: TripDetail
 }, {
+	path: "/publish",
+	name: "publish",
+	component: Publish
+}, {
 	path: "*",
 	name: "all",
+	mate: { keepAlive: true },
 	redirect: { path: "/" },
 }];
 

@@ -1,5 +1,5 @@
 <template type="x/template" id="header">
-	<header v-show="showHeader">
+	<header :style="{position:Position}" v-show="showHeader">
 		<div class="home" v-if="!showBack">
 			<span>{{headerTitle}}</span>
 		</div>
@@ -80,6 +80,10 @@ export default {
 		headerTitle:{
 			type:String,
 			default:"拼车"
+		},
+		Position:{
+			type:String,
+			default:"fixed"
 		}
 	},
 	data () {

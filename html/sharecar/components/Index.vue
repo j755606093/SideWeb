@@ -59,6 +59,7 @@ import Utils from "../../Utils/utils";
 import Swiper from "swiper";
 import List from "./list.vue";
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
+import TripDetail from "./TripDetail.vue";
 const _ = require("underscore");
 
 export default {
@@ -75,10 +76,16 @@ export default {
 			onlineTimeContorl:null,//保存循环的变量
 
 			headerTop:0,//头部距离顶部距离
+			headerRealTopElement:null,
 			headerTopElement:null,
+
+			trip_detail_status:false,//旅程详情页显示
+
+			scrollFunction:null,//监听函数地址
 		}
 	},
 	created(){
+		console.log("created")
 		if(this.$store.getters.getCarInfo.length===0){
 			this.$store.dispatch("getCarInfo",{
 				Index:this.CarInfoPage,
@@ -117,12 +124,14 @@ export default {
 	  });
 		
 		this.headerTopElement = document.getElementById("headertop");
-
-		/** 监听滚动 */
-		window.addEventListener('scroll',_.throttle(()=>{
+		this.headerRealTopElement = document.getElementById("header_block");
+		
+		/** 保存地址,便于移除监听事件 */
+		this.scrollFunction = _.throttle(()=>{
 			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
-
-			if(status<-100){
+			let realTop = this.headerRealTopElement.offsetTop-document.body.scrollTop;
+                                  
+			if(realTop<=0||status<-170){
 				this.headerTopElement.style.position = "fixed";
 				this.headerTopElement.style.top = "0";
 				this.headerTopElement.style.left = "0";
@@ -130,7 +139,10 @@ export default {
 			else{
 				this.headerTopElement.style.position = "relative";
 			}
-		},100,{leading: false}))
+		},100,{leading: false});
+
+		/** 监听滚动 */
+		window.addEventListener('scroll',this.scrollFunction)
 	},
 	computed:{
 		CarInfo(){
@@ -139,6 +151,7 @@ export default {
 		PeopleInfo(){
 			return this.$store.getters.getPeopleInfo;
 		},
+		/** 当前列表 */
 		showPageData(){
 			if(this.pageIndex===0){
 				return this.CarInfo;
@@ -190,13 +203,25 @@ export default {
 		/** 切换主页 */
 		switchPage(index){
 			this.pageIndex = index;
+		},
+		/** 打开详情页 */
+		openDetailPage(index){
+			this.types = this.pageIndex;
+			this.tripId = this.showPageData[index].Id;
+			this.trip_detail_status = true;
 		}
 	},
+	activated(){
+		console.log("activated")
+	},
 	destroyed(){
+		window.removeEventListener("scroll", this.scrollFunction, false);
 		clearInterval(this.onlineTimeContorl);
 	},
 	components:{
-		"my-list":List
+		"my-list":List,
+		"mt-popup": Popup,
+		"trip-detail":TripDetail
 	}
 }
 </script>
