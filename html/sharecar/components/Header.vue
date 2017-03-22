@@ -26,7 +26,7 @@ header{
 	top:0;
 	left:0;
 	width:100%;
-	z-index:100000;
+	z-index:1000;
 	padding:0;
 	margin:0;
 	// color:#000;

@@ -11102,39 +11102,41 @@
 	if (typeof window.jgkj !== "undefined") {
 		window.localStorage.setItem("UserInfo", (0, _stringify2.default)(window.jgkj.getUserInfo()));
 	}
-	/** 如果是ios的app */
-	// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-	// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-	// }
 
 	/**
 	 * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
 	 * @param  {[type]} ) {	let        cookie [description]
 	 * @return {[type]}   [description]
 	 */
-	var Authorization = function () {
-		if (window.localStorage.getItem("UserInfo")) {
-			// app中
-			var string = window.localStorage.getItem("UserInfo");
-			return "Bearer " + JSON.parse(string).Access_Token; //格式为json
-		}
-		var cookie = document.cookie; //获取浏览器的token
-		if (cookie === "") {
-			return cookie;
-		}
-
-		var arrayCookie = cookie.split(";");
-
-		for (var i = 0; i < arrayCookie.length; i++) {
-			var item = arrayCookie[i].split("=");
-
-			if (item[0].trim() === "access_token") {
-				return "Bearer " + item[1];
+	var Authorization = "";
+	try {
+		Authorization = function () {
+			var info = window.localStorage.getItem("UserInfo");
+			if (info && info !== "undefined") {
+				// app中
+				var string = window.localStorage.getItem("UserInfo");
+				return "Bearer " + JSON.parse(string).Access_Token; //格式为json
 			}
-		}
+			var cookie = document.cookie; //获取浏览器的token
+			if (cookie === "") {
+				return cookie;
+			}
 
-		return ""; //如果没有就返回这个
-	}();
+			var arrayCookie = cookie.split(";");
+
+			for (var i = 0; i < arrayCookie.length; i++) {
+				var item = arrayCookie[i].split("=");
+
+				if (item[0].trim() === "access_token") {
+					return "Bearer " + item[1];
+				}
+			}
+
+			return ""; //如果没有就返回这个
+		}();
+	} catch (e) {
+		Authorization = "";
+	}
 
 	//检查请求返回的状态
 	function checkStatus(response) {
@@ -11164,8 +11166,9 @@
 		showFooter: true, //是否显示底部
 
 		CarInfo: [],
-		PeopleInfo: []
-	};
+		PeopleInfo: [],
+
+		Province: [] };
 
 	var postData = function postData(url, data) {
 		return fetch(state.serverUrl + url, {
@@ -11266,6 +11269,14 @@
 			    state = _ref5.state;
 
 			return getData("/api/CarPool/GetPassenger?id=" + data);
+		},
+
+		/** 获取全国省数据 */
+		getProvince: function getProvince(_ref6, data) {
+			var commit = _ref6.commit,
+			    state = _ref6.state;
+
+			return getData("/api/Transport/ChildArea?parentid=" + data);
 		}
 	};
 
@@ -28529,7 +28540,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative;\n  margin-bottom: 10px; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #fafafa; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #f5f5f5; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
 
 	// exports
 
@@ -34232,7 +34243,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 80px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 80px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
 
 	// exports
 
@@ -34303,6 +34314,7 @@
 			}
 		}
 	}; //
+	//
 	//
 	//
 	//
@@ -34788,7 +34800,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
 
 	// exports
 
@@ -34819,8 +34831,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
 	//
 	//
 	//
@@ -35057,7 +35067,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 100000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n      color: #000;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  height: 50px;\n  background-color: #fff;\n  color: #fff;\n  font-size: 1.5rem;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 1000;\n  padding: 0;\n  margin: 0;\n}\nheader .home {\n    text-align: center;\n    line-height: 50px;\n    font-size: 1.8rem;\n    font-weight: 900;\n}\nheader .other {\n    text-align: center;\n}\nheader .other .left {\n      height: 50px;\n      font-size: 1.5rem;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 70px;\n}\nheader .other .left img {\n        width: 19px;\n        height: 19px;\n        line-height: 50px;\n        position: absolute;\n        left: 25px;\n        top: 15.5px;\n}\nheader .other .center {\n      line-height: 50px;\n      font-size: 18px;\n      font-weight: 900;\n      color: #000;\n}\n", ""]);
 
 	// exports
 
@@ -35418,7 +35428,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.publishtrip {\n  margin-top: 60px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip {\n  margin-top: 50px;\n}\n.publishtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.publishtrip .swtich-role > span.active {\n      color: #323232;\n}\n.publishtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 4px;\n}\n.publish {\n  width: 100%;\n  padding: 10px;\n}\n.publish .publish__info {\n    width: 100%;\n    height: 190px;\n    background-color: #fff;\n    padding: 10px 0;\n    border-radius: 5px;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publish .publish__info--line {\n    height: 45px;\n    line-height: 45px;\n    border-radius: 5px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n}\n.publish .publish__info--line div.line__left {\n      width: 65px;\n      height: 45px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.publish .publish__info--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.publish .publish__info--line div.line__span {\n      width: 65px;\n      height: 45px;\n      text-align: right;\n}\n.publish .publish__info--line div.line__span span {\n        height: 45px;\n        line-height: 45px;\n        font-size: 14px;\n        color: #323232;\n        margin-right: 5px;\n}\n.publish .publish__info--line span {\n      font-size: 14px;\n}\n.publish .publish__info--line span.line__span--gray {\n      color: #c8c8c8;\n}\n.publish .publish__info--line input {\n      display: block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 60%;\n}\n.publish .publish__info--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.publish .publish__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.publish .publish__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.mt_page {\n  width: 100%;\n  height: 43%;\n  background-color: #fff;\n  overflow-y: scroll;\n}\n.mt_page .popup-header {\n    height: 50px;\n    width: 100%;\n    line-height: 50px;\n    background-color: #fff;\n    color: #fff;\n    text-align: center;\n    position: relative;\n}\n.mt_page .popup-header span {\n      display: inline-block;\n      height: 50px;\n      line-height: 50px;\n      font-size: 14px;\n      width: 60px;\n      color: #000;\n}\n.mt_page .popup-header span:last-child {\n      position: absolute;\n      top: 0;\n      right: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.mt_page .popup-header span:first-child {\n      position: absolute;\n      top: 0;\n      left: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
 
 	// exports
 
@@ -35469,13 +35479,244 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
 			return {
-				isReady: false,
+				Role: 0, //0是乘客,1是司机
 
-				tripData: {}
+				startAddress: "", //选择的上车地点
+				startAddress_show: false, //显示选择上车点
+				startAddressSlot: [{
+					flex: 1,
+					values: ['广东省', '大石区', '广东省', '广州市', '广东省', '礼村'],
+					className: 'slot1',
+					textAlign: 'left'
+				}, {
+					flex: 1,
+					values: ['广州市', '大石区', '广州市', '大石区', '广州市', '礼村'],
+					className: 'slot2',
+					textAlign: 'left'
+				}, {
+					flex: 1,
+					values: ['大石区', '大石区', '大石区', '大石区', '大石区', '礼村'],
+					className: 'slot3',
+					textAlign: 'left'
+				}, {
+					flex: 1,
+					values: ['礼村', '礼村', '礼村', '礼村', '礼村', '礼村'],
+					className: 'slot4',
+					textAlign: 'left'
+				}]
+
 			};
 		},
 		created: function created() {},
@@ -35495,11 +35736,49 @@
 				_mintUi.Indicator.open({
 					spinnerType: 'fading-circle'
 				});
+			},
+
+			/** 切换页面选择角色 */
+			switchRole: function switchRole(index) {
+				this.Role = index;
+			},
+
+			/** 选择上车地点 */
+			startAddress: function startAddress() {
+				this.startAddress_show = true;
+			},
+
+			/** 值改变后的回调函数 */
+			startValuesChange: function startValuesChange(picker, values) {
+				console.log(values);
+			},
+
+			/** 选择到达地点 */
+			endAdress: function endAdress() {}
+		},
+		filters: {
+			formatTime: function formatTime(time) {
+				var formatDate = new Date(time); //转换为DATE对象
+				var Today = new Date();
+
+				var text = "";
+
+				if (Today.getDate() === formatDate.getDate() && formatDate.getMonth() === Today.getMonth()) {
+					// 说明是今天
+					text = "今天";
+				} else {
+					text = formatDate.getMonth() + 1 + "\u6708" + formatDate.getDate() + "\u53F7";
+				}
+
+				text = text + " (" + _utils2.default.formatWeek(formatDate) + ")";
+				text = text + " " + formatDate.getHours() + ":" + (formatDate.getMinutes() > 9 ? formatDate.getMinutes() : "0" + formatDate.getMinutes());
+				return text;
 			}
 		},
-		filters: {},
 		components: {
-			"my-header": _Header2.default
+			"my-header": _Header2.default,
+			"mt-picker": _mintUi.Picker,
+			"mt-popup": _mintUi.Popup
 		}
 	};
 
@@ -35518,10 +35797,140 @@
 	      "showBack": true,
 	      "headerTitle": "发布旅程"
 	    }
-	  }), " ", (_vm.isReady) ? _vm._h('div', {
-	    staticClass: "trip__info animated slideInUp"
-	  }) : _vm._e()])
-	},staticRenderFns: []}
+	  }), " ", _vm._h('div', {
+	    staticClass: "swtich-role"
+	  }, [_vm._h('span', {
+	    class: {
+	      active: _vm.Role === 0
+	    },
+	    on: {
+	      "click": function($event) {
+	        _vm.switchRole(0)
+	      }
+	    }
+	  }, ["我是乘客"]), " ", _vm._h('span', {
+	    class: {
+	      active: _vm.Role === 1
+	    },
+	    on: {
+	      "click": function($event) {
+	        _vm.switchRole(1)
+	      }
+	    }
+	  }, ["我是司机"])]), " ", _vm._h('div', {
+	    staticClass: "publish animated slideInUp"
+	  }, [_vm._h('div', {
+	    staticClass: "publish__info"
+	  }, [_vm._h('div', {
+	    staticClass: "publish__info--line",
+	    on: {
+	      "click": _vm.startAddress
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "line__left--dot"
+	  }), " ", (_vm.Role === 0) ? [_vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["上车地点"])] : [_vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["出发地点"])], " "]), " ", _vm._h('div', {
+	    staticClass: "publish__info--line",
+	    on: {
+	      "click": _vm.endAdress
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "line__left--dot dot-red"
+	  }), " ", _vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["你要去哪"])]), " ", _vm._m(0), " ", _vm._h('div', {
+	    staticClass: "publish__info--line"
+	  }, [_vm._m(1), " ", (_vm.Role === 0) ? [_vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["默认1人"])] : [_vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["默认1座位"])], " "])]), " ", _vm._m(2), " ", _vm._m(3)]), " ", _vm._h('mt-popup', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.startAddress_show),
+	      expression: "startAddress_show"
+	    }],
+	    staticClass: "mt_page",
+	    attrs: {
+	      "position": "bottom"
+	    },
+	    domProps: {
+	      "value": (_vm.startAddress_show)
+	    },
+	    on: {
+	      "input": function($event) {
+	        _vm.startAddress_show = $event
+	      }
+	    }
+	  }, [_vm._t("default", [_vm._h('div', {
+	    staticClass: "popup-header"
+	  }, [_vm._h('span', ["取消"]), " ", _vm._h('span', ["目的地"]), " ", _vm._h('span', ["下一步"])]), " ", _vm._h('mt-picker', {
+	    attrs: {
+	      "slots": _vm.startAddressSlot
+	    },
+	    on: {
+	      "change": _vm.startValuesChange
+	    }
+	  })])])])
+	},staticRenderFns: [function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "publish__info--line"
+	  }, [_vm._h('div', {
+	    staticClass: "line__left"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(84)
+	    }
+	  })]), " ", _vm._h('span', {
+	    staticClass: "line__span--gray"
+	  }, ["今天周一"])])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "line__left"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(68)
+	    }
+	  })])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "publish__info--line box_shadow"
+	  }, [_vm._h('div', {
+	    staticClass: "line__left"
+	  }, [_vm._h('img', {
+	    attrs: {
+	      "src": __webpack_require__(100)
+	    }
+	  })]), " ", _vm._h('input', {
+	    staticClass: "phone",
+	    attrs: {
+	      "maxlength": "11",
+	      "placeholder": "联系电话必填",
+	      "type": "tel",
+	      "name": "phone"
+	    }
+	  })])
+	},function (){var _vm=this;
+	  return _vm._h('div', {
+	    staticClass: "publish__info--line box_shadow",
+	    staticStyle: {
+	      "margin-top": "10px"
+	    }
+	  }, [_vm._h('div', {
+	    staticClass: "line__span"
+	  }, [_vm._h('span', ["备注:"])]), " ", _vm._h('input', {
+	    staticClass: "remark",
+	    attrs: {
+	      "placeholder": "",
+	      "type": "text",
+	      "name": "remark"
+	    }
+	  })])
+	}]}
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {

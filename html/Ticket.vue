@@ -5,7 +5,9 @@
 			<transition 
 			enter-active-class="fadeIn"
 			leave-active-class="fadeOut">
-				<router-view></router-view>
+				<keep-alive>
+					<router-view></router-view>
+				</keep-alive>
 			</transition>
 		</div>
 		<side-footer></side-footer>

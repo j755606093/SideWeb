@@ -24,39 +24,41 @@ const debug = (function() {
 if (typeof window.jgkj !== "undefined") {
 	window.localStorage.setItem("UserInfo", JSON.stringify(window.jgkj.getUserInfo()));
 }
-/** 如果是ios的app */
-// if (typeof window.webkit !== "undefined"&&typeof window.webkit.messageHandlers!=="undefined"&&typeof window.webkit.messageHandlers.getUserInfo!=="undefined") {
-// 	window.webkit.messageHandlers.getUserInfo.postMessage(['getData', ]);
-// }
 
 /**
  * 从cookie中拿tooken,兼容有些浏览器没有设置cookie
  * @param  {[type]} ) {	let        cookie [description]
  * @return {[type]}   [description]
  */
-let Authorization = (function() {
-	if (window.localStorage.getItem("UserInfo")) {
-		// app中
-		let string = window.localStorage.getItem("UserInfo");
-		return "Bearer " + JSON.parse(string).Access_Token; //格式为json
-	}
-	let cookie = document.cookie; //获取浏览器的token
-	if (cookie === "") {
-		return cookie;
-	}
-
-	let arrayCookie = cookie.split(";");
-
-	for (let i = 0; i < arrayCookie.length; i++) {
-		let item = arrayCookie[i].split("=");
-
-		if (item[0].trim() === "access_token") {
-			return "Bearer " + item[1];
+var Authorization = "";
+try {
+	Authorization = (function() {
+		let info = window.localStorage.getItem("UserInfo");
+		if (info && info !== "undefined") {
+			// app中
+			let string = window.localStorage.getItem("UserInfo");
+			return "Bearer " + JSON.parse(string).Access_Token; //格式为json
 		}
-	}
+		let cookie = document.cookie; //获取浏览器的token
+		if (cookie === "") {
+			return cookie;
+		}
 
-	return ""; //如果没有就返回这个
-})();
+		let arrayCookie = cookie.split(";");
+
+		for (let i = 0; i < arrayCookie.length; i++) {
+			let item = arrayCookie[i].split("=");
+
+			if (item[0].trim() === "access_token") {
+				return "Bearer " + item[1];
+			}
+		}
+
+		return ""; //如果没有就返回这个
+	})();
+} catch (e) {
+	Authorization = "";
+}
 
 //检查请求返回的状态
 function checkStatus(response) {
@@ -86,7 +88,9 @@ const state = {
 	showFooter: true, //是否显示底部
 
 	CarInfo: [],
-	PeopleInfo: []
+	PeopleInfo: [],
+
+	Province: [], //全国省份
 }
 
 let postData = (url, data) => {
@@ -164,6 +168,10 @@ const actions = {
 	getTripDetailPeople({ commit, state }, data) {
 		return getData("/api/CarPool/GetPassenger?id=" + data)
 	},
+	/** 获取全国省数据 */
+	getProvince({ commit, state }, data) {
+		return getData("/api/Transport/ChildArea?parentid=" + data)
+	}
 }
 
 // mutations

@@ -504,6 +504,10 @@ export default {
 			this.$router.replace({path:"/home/ticketbody"});
 		}
 	},
+	activated(){
+		this.$store.commit("SET_SHOWHEADER",false);
+		this.$store.commit("SET_SHOWBACK",true);
+	},
 	created(){
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;

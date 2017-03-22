@@ -72,6 +72,11 @@ export default {
 			modalTip:false,//显示modal
 		}
 	},
+	activated(){
+		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择出发地"});
+		this.$store.commit("SET_SHOWHEADER",true);
+		this.$store.commit("SET_SHOWBACK",true);
+	},
 	created(){
 		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择出发地"});
 		this.$store.commit("SET_SHOWHEADER",true);

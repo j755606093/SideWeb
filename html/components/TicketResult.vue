@@ -238,6 +238,11 @@ export default {
 			isCanLast:"#323232",//#c8c8c8
 		}
 	},
+	activated(){
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
+		this.$store.commit("SET_SHOWBACK",true);
+		this.$store.commit("SET_SHOWHEADER",true);
+	},
 	created(){
 		if(this.$store.getters.getIsFirst){
 			//数据为空,一般是直接进入这个页面才会这样

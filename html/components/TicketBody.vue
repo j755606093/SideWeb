@@ -83,6 +83,13 @@ export default {
       startTime: "",
 		}
 	},
+	activated(){
+		this.$store.commit("CHANGE_HEADER",{isHome:true,Title:"身边订票"});// 设置头部标题(目前没用,留着是因为底部tabbar需要根据是否是首页而显示)
+		this.$store.commit("SET_SHOWBACK",false);//不显示返回按钮(这里没什么用)
+		this.$store.commit("SET_SHOWHEADER",false);//不显示头部
+		// 获取本地历史搜索数据
+		this.localStorage = this.getLocalStore().reverse();
+	},
 	created(){
 			history.replaceState({},"","#/home/ticketbody");//修复部分url一开始就有"#/"导致无法支付的bug(url未注册)
 		// try{

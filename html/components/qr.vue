@@ -140,6 +140,11 @@ export default {
 			rebateInfo:null
 		}
 	},
+	activated(){
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"优惠券"});
+		this.$store.commit("SET_SHOWBACK",true);
+		this.$store.commit("SET_SHOWHEADER",true);
+	},
 	created(){
 		this.loading();
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"优惠券"});

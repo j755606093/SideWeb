@@ -56,6 +56,7 @@
 	width:100%;
 	margin-top:10px;
 	border-radius:5px;
+	box-shadow: 0 3px 3px 3px #f5f5f5;
 }
 .list__header{
 	height:65px;

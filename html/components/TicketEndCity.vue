@@ -42,6 +42,11 @@ export default {
 			indexItem:0,//默认地址
 		}
 	},
+	activated(){
+		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择到达地"});
+		this.$store.commit("SET_SHOWHEADER",true);
+		this.$store.commit("SET_SHOWBACK",true);
+	},
 	created(){
 		this.$store.dispatch("ChangeHeader",{isHome:false,Title:"选择到达地"});
 		this.$store.commit("SET_SHOWHEADER",true);

@@ -77,6 +77,12 @@ export default {
 			twoMonth:[],//第二个月可以显示的日期
 		}
 	},
+	activated(){
+		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"选择日期"});
+		this.$store.commit("SET_SHOWHEADER",true);
+		this.initTime();
+		this.$store.commit("SET_SHOWBACK",false);
+	},
 	created(){
 		// let nowDate = new Date();
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:"选择日期"});

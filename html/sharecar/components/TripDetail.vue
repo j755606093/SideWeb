@@ -30,10 +30,6 @@
 @import "../../sass/utils.scss";
 .tripdetail{
 	margin-top:60px;
-	// position:absolute;
-	// top:0;
-	// right:-100%;
-	// width:100%;
 }
 .trip__info{
 	width:100%;
@@ -44,6 +40,7 @@
 	border-radius: 5px;
 	padding:10px 25px;
 	margin-top:10px;
+	box-shadow: 0 3px 3px 3px #f5f5f5;
 	>p{
 		line-height: 26px;
 		font-size:14px;
@@ -66,6 +63,7 @@
 	background-color:#fff;
 	@include display_flex("row");
 	margin-top:10px;
+	box-shadow: 0 3px 3px 3px #f5f5f5;
 	div.trip--contact-way{
 		height:40px;
 		width:20px;
