@@ -239,6 +239,8 @@ export default {
 		}
 	},
 	activated(){
+		this.startCity = this.$store.state.tickets.startCity;
+		this.endCity = this.$store.state.tickets.endCity;
 		this.$store.commit("CHANGE_HEADER",{isHome:false,Title:this.startCity.Name+" 到 "+this.endCity.Name});
 		this.$store.commit("SET_SHOWBACK",true);
 		this.$store.commit("SET_SHOWHEADER",true);
