@@ -11276,7 +11276,11 @@
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			return getData("/api/Transport/ChildArea?parentid=" + data);
+			return getData("/api/Transport/ChildArea?parentid=" + data).then(function (result) {
+				commit(_ShareCarType2.default.GET_PROVINCE, {
+					Province: data
+				});
+			});
 		}
 	};
 
@@ -11288,6 +11292,8 @@
 		state.CarInfo = data.CarInfo;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PEOPLE_INFO, function (state, data) {
 		state.PeopleInfo = data.PeopleInfo;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PROVINCE, function (state, data) {
+		state.Province = data.Province;
 	}), _mutations);
 
 	exports.default = {
@@ -11619,7 +11625,9 @@
 		GET_PEOPLE_INFO: "GET_PEOPLE_INFO",
 
 		CHANGE_HEADER: "CHANGE_HEADER",
-		CHANGE_FOOTER: "CHANGE_FOOTER"
+		CHANGE_FOOTER: "CHANGE_FOOTER",
+
+		GET_PROVINCE: "GET_PROVINCE"
 	};
 
 /***/ },

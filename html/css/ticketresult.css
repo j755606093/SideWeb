@@ -262,8 +262,8 @@ input {
             flex-direction: column;
         height: 120px; }
         .result .result-list .list .right .top {
-          -ms-flex: 7;
-              flex: 7;
+          -ms-flex: 6.5;
+              flex: 6.5;
           display: -ms-flexbox;
           display: flex;
           -ms-flex-direction: row;
@@ -271,8 +271,8 @@ input {
           -ms-flex-pack: center;
               justify-content: center; }
           .result .result-list .list .right .top .name {
-            -ms-flex: 6;
-                flex: 6;
+            -ms-flex: 7;
+                flex: 7;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-direction: column;
@@ -312,8 +312,8 @@ input {
                 top: 15px;
                 left: -17px; }
           .result .result-list .list .right .top .info {
-            -ms-flex: 4;
-                flex: 4;
+            -ms-flex: 3.5;
+                flex: 3.5;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-direction: column;
@@ -324,7 +324,7 @@ input {
             .result .result-list .list .right .top .info p {
               height: 28px;
               line-height: 28px;
-              margin-right: 25px; }
+              margin-right: 10px; }
               .result .result-list .list .right .top .info p:first-child {
                 font-weight: 900;
                 font-size: 20px;
@@ -335,14 +335,14 @@ input {
                 padding-top: 8px; }
               @media (max-width: 320px) {
                 .result .result-list .list .right .top .info p {
-                  margin-right: 15px; }
+                  margin-right: 10px; }
                   .result .result-list .list .right .top .info p:first-child {
                     font-size: 16px; }
                   .result .result-list .list .right .top .info p:last-child {
                     padding-top: 6px; } }
             @media (max-width: 320px) {
               .result .result-list .list .right .top .info p {
-                margin-right: 15px; } }
+                margin-right: 10px; } }
         .result .result-list .list .right .bottom {
           -ms-flex: 3;
               flex: 3;

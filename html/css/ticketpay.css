@@ -342,8 +342,8 @@ input {
         flex-direction: column;
     height: 120px; }
     .ticket-info .right .top {
-      -ms-flex: 7;
-          flex: 7;
+      -ms-flex: 6.5;
+          flex: 6.5;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: row;
@@ -351,8 +351,8 @@ input {
       -ms-flex-pack: center;
           justify-content: center; }
       .ticket-info .right .top .name {
-        -ms-flex: 6;
-            flex: 6;
+        -ms-flex: 7;
+            flex: 7;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -392,8 +392,8 @@ input {
             top: 15px;
             left: -17px; }
       .ticket-info .right .top .info {
-        -ms-flex: 4;
-            flex: 4;
+        -ms-flex: 3.5;
+            flex: 3.5;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
@@ -404,7 +404,7 @@ input {
         .ticket-info .right .top .info p {
           height: 28px;
           line-height: 28px;
-          margin-right: 25px; }
+          margin-right: 10px; }
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
@@ -414,13 +414,15 @@ input {
             color: #323232;
             padding-top: 8px; }
           @media (max-width: 320px) {
-            .ticket-info .right .top .info p:first-child {
-              font-size: 16px; }
-            .ticket-info .right .top .info p:last-child {
-              padding-top: 6px; } }
+            .ticket-info .right .top .info p {
+              margin-right: 10px; }
+              .ticket-info .right .top .info p:first-child {
+                font-size: 16px; }
+              .ticket-info .right .top .info p:last-child {
+                padding-top: 6px; } }
         @media (max-width: 320px) {
           .ticket-info .right .top .info p {
-            margin-right: 15px; } }
+            margin-right: 10px; } }
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
@@ -432,12 +434,18 @@ input {
           justify-content: flex-start;
       position: relative;
       margin-top: 4px; }
-      .ticket-info .right .bottom img {
+      .ticket-info .right .bottom img:first-child {
         position: absolute;
-        top: 4px;
+        top: 2px;
         left: 4px;
         width: 10px;
-        height: 10px; }
+        height: 12.5px; }
+      .ticket-info .right .bottom img.right {
+        position: absolute;
+        top: 5px;
+        right: 25px;
+        width: 10px;
+        height: 8px; }
       .ticket-info .right .bottom p {
         margin-left: 20px; }
 
@@ -915,7 +923,8 @@ input {
               .action-page .action .action-use .rebate .bottom .left p > span {
                 font-size: 12px;
                 margin-right: 5px; }
-            .action-page .action .action-use .rebate .bottom .left .limit, .action-page .action .action-use .rebate .bottom .left .name {
+            .action-page .action .action-use .rebate .bottom .left .limit,
+            .action-page .action .action-use .rebate .bottom .left .name {
               font-size: 12px;
               font-weight: 900;
               color: #323232; }

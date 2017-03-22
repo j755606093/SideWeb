@@ -27,11 +27,11 @@ header {
   }
 }
 
-header.code{
-	background-color: #329be8;
-	span{
-		color: #fff;
-	}
+header.code {
+  background-color: #329be8;
+  span {
+    color: #fff;
+  }
 }
 
 .nothing {
@@ -39,98 +39,98 @@ header.code{
   width: 100%;
 }
 
-.codebody{
-	width:100%;
-	padding:0 20px;
-	.input{
-		width:100%;
-		margin-top:36px;
-		position: relative;
-		@include display_flex('row');
-		>div{
-			width:16.6666%;
-			height:50px;
-			line-height:50px;
-			border:1px solid #323232;
-			font-weight:900;
-			background-color: white;
-			&:nth-child(n){
-				border-right: none;
-			}
-			// &:first-child{
-			// 	border-top-left-radius: 5px;
-			// 	border-bottom-left-radius: 5px;
-			// }
-			&:last-child{
-				border-top-right-radius: 5px;
-				border-bottom-right-radius: 5px;
-				border-right:1px solid #323232;
-			}
-			input{
-				font-size:20px;
-				width:100%;
-				color:rgb(50,50,50);
-				text-align: center;
-				font-weight:900;
-				// margin-top: 13px;
-				// height:45px;
-			}
-		}
-		>span{
-			width:16.6666%;
-			height:50px;
-			line-height:50px;
-			border:1px solid #323232;
-			font-weight:900;
-			background-color: white;
-			display: inline-block;
-			text-align: center;
-			font-size:20px;
-			&:nth-child(n){
-				border-right: none;
-			}
-			&:first-child{
-				border-top-left-radius: 5px;
-				border-bottom-left-radius: 5px;
-			}
-			&:last-child{
-				border-top-right-radius: 5px;
-				border-bottom-right-radius: 5px;
-				border-right:1px solid #323232;
-			}
-		}
-		>span.first{
-			border-top-left-radius: 5px;
-			border-bottom-left-radius: 5px;
-		}
-		.input-code{
-			position:absolute;
-			top:0;
-			left:0;
-		}
-		.input-code.first{
-			border-top-left-radius: 5px;
-			border-bottom-left-radius: 5px;
-		}
-	}
-	>p{
-		width:100%;
-		height:50px;
-		line-height:50px;
-		color:#c8c8c8;
-		text-align: center;
-		font-size:18px;
-	}
-	>button{
-		width:100%;
-		height:50px;
-		color:$white;
-		font-size:18px;
-		border:none;
-		outline: none;
-		background-color: #329be8;
-		border-radius: 5px;
-	}
+.codebody {
+  width: 100%;
+  padding: 0 20px;
+  .input {
+    width: 100%;
+    margin-top: 36px;
+    position: relative;
+    @include display_flex('row');
+    >div {
+      width: 16.6666%;
+      height: 50px;
+      line-height: 50px;
+      border: 1px solid #323232;
+      font-weight: 900;
+      background-color: white;
+      &:nth-child(n) {
+        border-right: none;
+      }
+      // &:first-child{
+      // 	border-top-left-radius: 5px;
+      // 	border-bottom-left-radius: 5px;
+      // }
+      &:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-right: 1px solid #323232;
+      }
+      input {
+        font-size: 20px;
+        width: 100%;
+        color: rgb(50, 50, 50);
+        text-align: center;
+        font-weight: 900;
+        // margin-top: 13px;
+        // height:45px;
+      }
+    }
+    >span {
+      width: 16.6666%;
+      height: 50px;
+      line-height: 50px;
+      border: 1px solid #323232;
+      font-weight: 900;
+      background-color: white;
+      display: inline-block;
+      text-align: center;
+      font-size: 20px;
+      &:nth-child(n) {
+        border-right: none;
+      }
+      &:first-child {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      &:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-right: 1px solid #323232;
+      }
+    }
+    >span.first {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    .input-code {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .input-code.first {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+  }
+  >p {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: #c8c8c8;
+    text-align: center;
+    font-size: 18px;
+  }
+  >button {
+    width: 100%;
+    height: 50px;
+    color: $white;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #329be8;
+    border-radius: 5px;
+  }
 }
 
 .ticket-info {
@@ -147,7 +147,7 @@ header.code{
   .left {
     z-index: 1;
     flex: 3;
-    width:30%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -168,7 +168,7 @@ header.code{
   .center {
     z-index: 1;
     flex: 1;
-    width:10%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -220,13 +220,13 @@ header.code{
     height: 120px;
     .top {
       flex: 7;
-      width:100%;
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: center;
       .name {
         flex: 6;
-        width:60%;
+        width: 60%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -264,7 +264,7 @@ header.code{
       }
       .info {
         flex: 4;
-        width:40%;
+        width: 40%;
         display: flex;
         flex-direction: column;
         text-align: right;
@@ -288,7 +288,7 @@ header.code{
     }
     .bottom {
       flex: 3;
-      width:100%;
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -308,29 +308,29 @@ header.code{
   }
 }
 
-.line-other{
-	width:100%;
-	padding:0 10px;
-	height:40px;
-	@include display_flex('row');
-	div{
-		flex:4;
-		width:40%;
-		p{
-			background-color:#c8c8c8;
-			width:100%;
-			height:1px;
-		}
-	}
-	span.center{
-		text-align: center;
-		flex:2;
-		width:20%;
-		line-height:40px;
-		height:40px;
-		color:#c8c8c8;
-		font-size:12px;
-	}
+.line-other {
+  width: 100%;
+  padding: 0 10px;
+  height: 40px;
+  @include display_flex('row');
+  div {
+    flex: 4;
+    width: 40%;
+    p {
+      background-color: #c8c8c8;
+      width: 100%;
+      height: 1px;
+    }
+  }
+  span.center {
+    text-align: center;
+    flex: 2;
+    width: 20%;
+    line-height: 40px;
+    height: 40px;
+    color: #c8c8c8;
+    font-size: 12px;
+  }
 }
 
 .passenger-info {
@@ -350,10 +350,10 @@ header.code{
       padding: 0 10px;
       width: 100%;
       background-color: #fff;
-      margin-top:10px;
+      margin-top: 10px;
       >div {
         flex: 2;
-        width:20%;
+        width: 20%;
         height: 50px;
         line-height: 50px;
         display: flex;
@@ -508,84 +508,84 @@ header.code{
   background-color: rgba(0, 0, 0, .6);
   z-index: 5000;
   @include display_flex('row');
-  .modal-body{
-  	width:100%;
-  	margin:0 22px;
+  .modal-body {
+    width: 100%;
+    margin: 0 22px;
   }
-  .order-list{
-  	width:100%;
-  	background-color: $white;
-  	padding:35px 10px;
-  	border-radius:5px;
-  	p{
-  		color:rgb(50,50,50);
-  		font-size:15px;
-  		font-weight:900;
-  		text-align: center;
-  		margin:0 10px;
-  	}
-  	.line{
-  		background-color: $white;
-	    border-radius: 10px;
-	    height: 50px;
-	    position: relative;
-	    div.img {
-	      height: 50px;
-	      line-height: 50px;
-	      width: 70px;
-	      position: absolute;
-	      bottom: 0;
-	      left: 0;
-	      display: flex;
-	      flex-direction: row;
-	      justify-content: center;
-	      align-items: center;
-	      text-align: center;
-	      img {
-	        width: 25px;
-	        height: 25px;
-	        z-index:1;
-	      }
-	      span{
-	      	position: absolute;
-	      	top:12.5px;
-	      	left:22.5px;
-	      	background-color: #fafafa;
-	      	width:25px;
-	      	height:25px;
-	      	border-radius: 50%;
-	      	z-index:0;
-	      }
-	    }
-	    .center {
-	      height: 50px;
-	      line-height: 50px;
-	      display: block;
-	      // margin-right: 130px;
-	      padding-left: 20px;
-	      color: #c8c8c8;
-	      font-size: 16px;
-	      width: 100%;
-	      @include text_nowrap;
-	      p{
-	      	font-size:15px;
-	      	text-align: right;
-	      	color:rgb(50,50,50);
-	      	margin-right:20px;
-	      }
-	    }
-  	}
+  .order-list {
+    width: 100%;
+    background-color: $white;
+    padding: 35px 10px;
+    border-radius: 5px;
+    p {
+      color: rgb(50, 50, 50);
+      font-size: 15px;
+      font-weight: 900;
+      text-align: center;
+      margin: 0 10px;
+    }
+    .line {
+      background-color: $white;
+      border-radius: 10px;
+      height: 50px;
+      position: relative;
+      div.img {
+        height: 50px;
+        line-height: 50px;
+        width: 70px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        img {
+          width: 25px;
+          height: 25px;
+          z-index: 1;
+        }
+        span {
+          position: absolute;
+          top: 12.5px;
+          left: 22.5px;
+          background-color: #fafafa;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          z-index: 0;
+        }
+      }
+      .center {
+        height: 50px;
+        line-height: 50px;
+        display: block;
+        // margin-right: 130px;
+        padding-left: 20px;
+        color: #c8c8c8;
+        font-size: 16px;
+        width: 100%;
+        @include text_nowrap;
+        p {
+          font-size: 15px;
+          text-align: right;
+          color: rgb(50, 50, 50);
+          margin-right: 20px;
+        }
+      }
+    }
   }
-  button{
-  	background-color: #329be8;
-  	height:50px;
-  	width:100%;
-  	border:none;
-  	outline: none;
-  	color:$white;
-  	margin-top:10px;
-  	border-radius:5px;
-  	font-size:18px;
+  button {
+    background-color: #329be8;
+    height: 50px;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: $white;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 18px;
   }
 }
 
@@ -604,13 +604,13 @@ footer {
   @include display_flex('row');
   .price {
     flex: 5;
-    margin-left:10px;
+    margin-left: 10px;
     span:first-child {
       color: #c8c8c8;
       font-size: 15px;
     }
     span:last-child {
-    	margin-left:5px;
+      margin-left: 5px;
       color: $my_red;
       font-size: 20px;
       font-weight: 900;
@@ -618,7 +618,7 @@ footer {
   }
   .yes {
     flex: 5;
-    margin-right:10px;
+    margin-right: 10px;
     @include display_flex('row');
     justify-content: flex-end;
     button {
@@ -628,7 +628,7 @@ footer {
       color: $white;
       background-color: #329be8;
       border-radius: 5px;
-      font-size:18px;
+      font-size: 18px;
     }
   }
 }

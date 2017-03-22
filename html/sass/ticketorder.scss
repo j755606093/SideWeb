@@ -122,19 +122,19 @@ header {
       //   transform: rotate(0deg);
       // }
     }
-    canvas.canvas-top{
-      position:absolute;
-      top:-2px;
-      left:-5px;
-      width:18px;
-      height:9;
+    canvas.canvas-top {
+      position: absolute;
+      top: -2px;
+      left: -5px;
+      width: 18px;
+      height: 9;
     }
-    canvas.canvas-bottom{
-      position:absolute;
-      bottom:-2px;
-      left:-5px;
-      width:18px;
-      height:9;
+    canvas.canvas-bottom {
+      position: absolute;
+      bottom: -2px;
+      left: -5px;
+      width: 18px;
+      height: 9;
     }
   }
   .right {
@@ -144,12 +144,12 @@ header {
     flex-direction: column;
     height: 120px;
     .top {
-      flex: 7;
+      flex: 6.5;
       display: flex;
       flex-direction: row;
       justify-content: center;
       .name {
-        flex: 6;
+        flex: 7;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -160,6 +160,11 @@ header {
           position: relative;
           text-align: left;
           margin-left: 20px;
+          @include responsive("iphone5") {
+            font-size: 16px;
+            margin-left: 10px;
+          }
+          // @include text_nowrap;
           &:first-child::after {
             content: "";
             width: 10px;
@@ -186,7 +191,7 @@ header {
         }
       }
       .info {
-        flex: 4;
+        flex: 3.5;
         display: flex;
         flex-direction: column;
         text-align: right;
@@ -194,7 +199,7 @@ header {
         p {
           height: 28px;
           line-height: 28px;
-          margin-right: 15px;
+          margin-right: 10px;
           &:first-child {
             font-weight: 900;
             font-size: 20px;
@@ -204,6 +209,20 @@ header {
             font-size: 12px;
             color: rgb(50, 50, 50);
             padding-top: 8px;
+          }
+          @include responsive("iphone5") {
+            margin-right: 10px;
+            &:first-child {
+              font-size: 16px;
+            }
+            &:last-child {
+              padding-top: 6px;
+            }
+          }
+        }
+        @include responsive('iphone5') {
+          p {
+            margin-right: 10px;
           }
         }
       }
@@ -216,11 +235,20 @@ header {
       position: relative;
       margin-top: 4px;
       img {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 10px;
-        height: 10px;
+        &:first-child {
+          position: absolute;
+          top: 2px;
+          left: 4px;
+          width: 10px;
+          height: 12.5px;
+        }
+        &.right {
+          position: absolute;
+          top: 5px;
+          right: 25px;
+          width: 10px;
+          height: 8px;
+        }
       }
       p {
         margin-left: 20px;
@@ -282,10 +310,10 @@ header {
       text-decoration: none;
       background-color: #329be8;
       text-align: center;
-      display:inline-block;
+      display: inline-block;
       border-radius: 5px;
-      margin-top:10px;
-      font-size:18px;
+      margin-top: 10px;
+      font-size: 18px;
     }
   }
   .order {
@@ -776,11 +804,11 @@ header {
       flex: 7;
       border-radius: 5px;
     }
-    @include responsive("iphone5"){
-      span{
-        flex:5;
+    @include responsive("iphone5") {
+      span {
+        flex: 5;
       }
-      button{
+      button {
         font-size: 14px;
         flex: 5;
       }
@@ -1035,25 +1063,27 @@ header {
   z-index: 5000;
 }
 
+
 /** 弹出框 */
+
 .mint-msgbox-wrapper {
   z-index: 5001 !important;
-  .mint-msgbox{
-    border-radius:10px;
+  .mint-msgbox {
+    border-radius: 10px;
   }
   .mint-msgbox-btn {
     font-size: 18px;
   }
-  .mint-msgbox-content{
-    border:none;
+  .mint-msgbox-content {
+    border: none;
   }
-  .mint-msgbox-cancel{
-    color:#c8c8c8;
-    border:none;
+  .mint-msgbox-cancel {
+    color: #c8c8c8;
+    border: none;
   }
-  .mint-msgbox-confirm{
-    color:$blue;
-    border:none;
+  .mint-msgbox-confirm {
+    color: $blue;
+    border: none;
   }
 }
 
@@ -1086,15 +1116,15 @@ footer {
     i {
       font-size: 1.8rem;
     }
-    img{
-      width:16px;
-      height:16px;
+    img {
+      width: 16px;
+      height: 16px;
     }
-    p{
-      font-size:12px;
-      color:$gray;
-      height:20px;
-      line-height:20px;
+    p {
+      font-size: 12px;
+      color: $gray;
+      height: 20px;
+      line-height: 20px;
     }
   }
   .footer.active {

@@ -170,7 +170,11 @@ const actions = {
 	},
 	/** 获取全国省数据 */
 	getProvince({ commit, state }, data) {
-		return getData("/api/Transport/ChildArea?parentid=" + data)
+		return getData("/api/Transport/ChildArea?parentid=" + data).then(result => {
+			commit(types.GET_PROVINCE, {
+				Province: data,
+			});
+		})
 	}
 }
 
@@ -185,6 +189,9 @@ const mutations = {
 	},
 	[types.GET_PEOPLE_INFO](state, data) {
 		state.PeopleInfo = data.PeopleInfo;
+	},
+	[types.GET_PROVINCE](state, data) {
+		state.Province = data.Province;
 	},
 }
 
