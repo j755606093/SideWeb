@@ -270,8 +270,11 @@ export default {
           className: 'slot4',
           textAlign: 'left',
         }, 
-			]
-
+			],
+			selectProince:null,//省
+			selcctCity:null,//市
+			selectDistinct:null,//区
+			selectVillage:null,//村
 		}
 	},
 	created(){
@@ -282,6 +285,7 @@ export default {
 				Type:0
 			}).then(result=>{
 				this.startAddressSlot[0].values = this.Province;
+				this.selectProince = this.Province[0];//默认选择第一个
 				// this.startAddressSlot[1].values = this.Province;
 				// this.startAddressSlot[2].values = this.Province;
 				// this.startAddressSlot[3].values = this.Province;
@@ -333,6 +337,10 @@ export default {
 		},
 		/** 值改变后的回调函数 */
 		startValuesChange(picker, values){
+			// if(this.selectProince.Id!==values[0].Id){
+			// 	// 不相等时候就需要操作
+				
+			// }
 			console.log(values);
 		},
 		/** 选择到达地点 */

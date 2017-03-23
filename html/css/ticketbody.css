@@ -105,7 +105,8 @@ input {
     white-space: nowrap; }
     .ticketbody .slider > a {
       display: inline-block;
-      margin-right: 5px; }
+      margin-right: 5px;
+      border-radius: 10px; }
     .ticketbody .slider .slider-item {
       width: 250px;
       height: 150px;

@@ -12859,6 +12859,26 @@
 		});
 	};
 
+	var districtSearchCountry = new AMap.DistrictSearch({
+		level: 'country',
+		subdistrict: 1
+	});
+
+	var districtSearchProvince = new AMap.DistrictSearch({
+		level: 'province',
+		subdistrict: 1
+	});
+
+	var districtSearchCity = new AMap.DistrictSearch({
+		level: 'province',
+		subdistrict: 1
+	});
+
+	var districtSearchDistrict = new AMap.DistrictSearch({
+		level: 'district',
+		subdistrict: 1
+	});
+
 	// getters,获取数据
 	// 调用方法如下
 	// this.$store.getters.getIsFirst
@@ -12953,6 +12973,9 @@
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
+			districtSearchCountry.search("中国", function (status, result) {
+				console.log(status, result);
+			});
 			return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(function (result) {
 				switch (data.Type) {
 					case 0:
@@ -35134,9 +35157,11 @@
 					}],
 					className: 'slot4',
 					textAlign: 'left'
-				}]
-
-			};
+				}],
+				selectProince: null, //省
+				selcctCity: null, //市
+				selectDistinct: null, //区
+				selectVillage: null };
 		},
 		created: function created() {
 			var _this = this;
@@ -35148,6 +35173,7 @@
 					Type: 0
 				}).then(function (result) {
 					_this.startAddressSlot[0].values = _this.Province;
+					_this.selectProince = _this.Province[0]; //默认选择第一个
 					// this.startAddressSlot[1].values = this.Province;
 					// this.startAddressSlot[2].values = this.Province;
 					// this.startAddressSlot[3].values = this.Province;
@@ -35205,6 +35231,10 @@
 
 			/** 值改变后的回调函数 */
 			startValuesChange: function startValuesChange(picker, values) {
+				// if(this.selectProince.Id!==values[0].Id){
+				// 	// 不相等时候就需要操作
+
+				// }
 				console.log(values);
 			},
 

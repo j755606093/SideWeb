@@ -128,6 +128,26 @@ let getData = (url) => {
 		.then(result => result.json())
 }
 
+let districtSearchCountry = new AMap.DistrictSearch({
+	level: 'country',
+	subdistrict: 1
+});
+
+let districtSearchProvince = new AMap.DistrictSearch({
+	level: 'province',
+	subdistrict: 1
+});
+
+let districtSearchCity = new AMap.DistrictSearch({
+	level: 'province',
+	subdistrict: 1
+});
+
+let districtSearchDistrict = new AMap.DistrictSearch({
+	level: 'district',
+	subdistrict: 1
+});
+
 // getters,获取数据
 // 调用方法如下
 // this.$store.getters.getIsFirst
@@ -185,6 +205,9 @@ const actions = {
 	},
 	/** 获取全国省数据 */
 	getProvince({ commit, state }, data) {
+		districtSearchCountry.search("中国", function(status, result) {
+			console.log(status, result)
+		})
 		return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(result => {
 			switch (data.Type) {
 				case 0:
