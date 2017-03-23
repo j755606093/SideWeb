@@ -27,7 +27,7 @@ export default {
 	data () {
 		return {
 			endcity:"",
-			setEndCityList:null,
+			// setEndCityList:null,
 			endpopupVisible:false,//显示到达选择
 			endCitySlots: [{
 				flex: 1,

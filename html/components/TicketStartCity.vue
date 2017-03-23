@@ -4,9 +4,9 @@
 			<p>关于回程班次购票的情况说明</p>
 		</div>
 		<div class="left" style="top:85px">
-			<template v-for="(list,index) in setStartCityList">
+			<div v-for="(list,index) in setStartCityList">
 				<p @click="getStartCity(item.CityId,item.Name)" v-show="indexItem===index" v-for="item in list.Content">{{item.Name}}</p>
-			</template>
+			</div>
 		</div>
 		<div class="right" style="top:85px">
 			<div v-for="(list,index) in setStartCityList">
@@ -55,7 +55,6 @@ export default {
 	data () {
 		return {
 			startcity:"",
-			setStartCityList:null,
 			startpopupVisible:false,//显示出发选择
 			startCitySlots: [{
 				flex: 1,
@@ -92,6 +91,7 @@ export default {
   			Indicator.close();
   		});
 		}
+		console.log(this.setStartCityList)
 	},
 	mounted(){
 		//实现iphone通讯录中类似顶部显示当前块功能

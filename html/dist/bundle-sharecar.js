@@ -12861,22 +12861,26 @@
 
 	var districtSearchCountry = new AMap.DistrictSearch({
 		level: 'country',
-		subdistrict: 1
+		subdistrict: 1,
+		showbiz: false
 	});
 
 	var districtSearchProvince = new AMap.DistrictSearch({
 		level: 'province',
-		subdistrict: 1
+		subdistrict: 1,
+		showbiz: false
 	});
 
 	var districtSearchCity = new AMap.DistrictSearch({
 		level: 'province',
-		subdistrict: 1
+		subdistrict: 1,
+		showbiz: false
 	});
 
 	var districtSearchDistrict = new AMap.DistrictSearch({
 		level: 'district',
-		subdistrict: 1
+		subdistrict: 1,
+		showbiz: false
 	});
 
 	// getters,获取数据

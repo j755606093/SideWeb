@@ -130,22 +130,26 @@ let getData = (url) => {
 
 let districtSearchCountry = new AMap.DistrictSearch({
 	level: 'country',
-	subdistrict: 1
+	subdistrict: 1,
+	showbiz: false
 });
 
 let districtSearchProvince = new AMap.DistrictSearch({
 	level: 'province',
-	subdistrict: 1
+	subdistrict: 1,
+	showbiz: false
 });
 
 let districtSearchCity = new AMap.DistrictSearch({
 	level: 'province',
-	subdistrict: 1
+	subdistrict: 1,
+	showbiz: false
 });
 
 let districtSearchDistrict = new AMap.DistrictSearch({
 	level: 'district',
-	subdistrict: 1
+	subdistrict: 1,
+	showbiz: false
 });
 
 // getters,获取数据
