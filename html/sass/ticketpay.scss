@@ -888,9 +888,17 @@
         .top {
           width: 100%;
           height: 100px;
+          position: relative;
           img {
             width: 100%;
             height: 100px;
+          }
+          p {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            color: #fff;
+            z-index: 10;
           }
         }
         .bottom {

@@ -889,10 +889,17 @@ input {
         float: left; }
         .action-page .action .action-use .rebate .top {
           width: 100%;
-          height: 100px; }
+          height: 100px;
+          position: relative; }
           .action-page .action .action-use .rebate .top img {
             width: 100%;
             height: 100px; }
+          .action-page .action .action-use .rebate .top p {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            color: #fff;
+            z-index: 10; }
         .action-page .action .action-use .rebate .bottom {
           border: 0.5px solid #c8c8c8;
           border-top: none;
