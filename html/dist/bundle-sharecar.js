@@ -12977,7 +12977,7 @@
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			districtSearchCountry.search("中国", function (status, result) {
+			districtSearchProvince.search("广东", function (status, result) {
 				console.log(status, result);
 			});
 			return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(function (result) {

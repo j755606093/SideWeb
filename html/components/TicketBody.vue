@@ -285,12 +285,12 @@ export default {
 		},
 		/** 点击查询按钮 */
 		query(){
-			try{
-				window.jgkj_loadPageUrl("http://192.168.31.116:3000/sharecar.html")
-			}
-			catch(e){
-				alert(e)
-			}
+			// try{
+			// 	window.jgkj_loadPageUrl("http://192.168.31.116:3000/sharecar.html")
+			// }
+			// catch(e){
+			// 	alert(e)
+			// }
 			if(this.getEndCity==="选择目的地"){
 				Toast({
 				  message: '请选择目的地',
