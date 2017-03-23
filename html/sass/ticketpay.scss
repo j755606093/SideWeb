@@ -1166,11 +1166,16 @@
   height: 50px;
   width: 100%;
   background-color: $white;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   box-shadow: 3px 0 3px 3px #efeeee;
+  >div {
+    float: left;
+    display: inline-block;
+  }
   .order-info {
     flex: 0.6;
+    width: 60%;
     display: flex;
     flex-direction: column;
     padding: 0 10px;
@@ -1201,6 +1206,8 @@
   }
   .submit-order {
     flex: 0.4;
+    width: 40%;
+    float: right;
     >button {
       background-color: #329be8;
       color: $white;

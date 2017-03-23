@@ -52,18 +52,19 @@
 			</div>
 		</div>
 		<mt-popup
-		  v-model="PickerPageShow"
-		  position="bottom"
-		  class="mt_page">
+	  v-model="PickerPageShow"
+	  position="bottom"
+	  class="mt_page">
 		  <slot>
 		  	<div class="popup-header">
 			  	<span @click="cancelPicker">取消</span>
 			  	<span>目的地</span>
 			  	<span>下一步</span>
 			  </div>
-			  <mt-picker :visibleItemCount="5" valueKey="Name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
+			  <mt-picker :visibleItemCount="5" value-key="Name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
+		
 	</div>
 </template>
 
@@ -242,22 +243,30 @@ export default {
 			startAddressSlot:[
 				{
           flex: 1,
-          values: ['广东省', '大石区', '广东省', '广州市', '广东省','礼村'],
+          values: [{
+          	Name:'请选择'
+          }],
           className: 'slot1',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['请选择'],
+          values: [{
+          	Name:'请选择'
+          }],
           className: 'slot2',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['请选择'],
+          values: [{
+          	Name:'请选择'
+          }],
           className: 'slot3',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['请选择'],
+          values: [{
+          	Name:'请选择'
+          }],
           className: 'slot4',
           textAlign: 'left',
         }, 
@@ -272,14 +281,10 @@ export default {
 				Id:0,
 				Type:0
 			}).then(result=>{
-				let data = [];
-				this.Province.forEach((item,index)=>{
-					data.push(item.Name);
-				})
-				this.startAddressSlot[0].values = data;
-				// this.startAddressSlot[1].values = data;
-				// this.startAddressSlot[2].values = data;
-				// this.startAddressSlot[3].values = data;
+				this.startAddressSlot[0].values = this.Province;
+				// this.startAddressSlot[1].values = this.Province;
+				// this.startAddressSlot[2].values = this.Province;
+				// this.startAddressSlot[3].values = this.Province;
 			})
 		}
 	},
