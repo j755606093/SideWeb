@@ -71,7 +71,7 @@ footer{
 	}
 	.footer.nopay{
 		position:relative;
-		p::after{
+		&::after{
 			content:"";
 			position:absolute;
 			top:2px;

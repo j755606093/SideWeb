@@ -247,17 +247,17 @@ export default {
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['广州市', '大石区', '广州市', '大石区', '广州市','礼村'],
+          values: ['请选择'],
           className: 'slot2',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['大石区', '大石区', '大石区', '大石区', '大石区','礼村'],
+          values: ['请选择'],
           className: 'slot3',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: ['礼村', '礼村', '礼村', '礼村', '礼村','礼村' ],
+          values: ['请选择'],
           className: 'slot4',
           textAlign: 'left',
         }, 
@@ -274,9 +274,12 @@ export default {
 			}).then(result=>{
 				let data = [];
 				this.Province.forEach((item,index)=>{
-					
+					data.push(item.Name);
 				})
-				this.startAddressSlot[0].values = this.Province;
+				this.startAddressSlot[0].values = data;
+				// this.startAddressSlot[1].values = data;
+				// this.startAddressSlot[2].values = data;
+				// this.startAddressSlot[3].values = data;
 			})
 		}
 	},
@@ -295,6 +298,9 @@ export default {
 		},
 	},
 	methods:{
+		formatJSON(data){
+			return JSON.parse(JSON.stringify(data));
+		},
 		toast(title) {
 			Toast({
 				message: title,
