@@ -245,15 +245,19 @@ const actions = {
 				}
 			})
 	},
-	getSearch({ commit, state }, data) {
+	getStartSearch({ commit, state }, data) {
 		return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
 				method: 'GET',
 			})
 			.then(checkStatus)
 			.then(result => result.json())
-			.then(result => {
-				console.log(result)
+	},
+	getEndSearch({ commit, state }, data) {
+		return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+				method: 'GET',
 			})
+			.then(checkStatus)
+			.then(result => result.json())
 	}
 }
 

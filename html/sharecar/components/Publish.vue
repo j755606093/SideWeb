@@ -9,25 +9,31 @@
 			<div class="publish__info">
 				<div  class="publish__info--line">
 					<div class="line__left--dot"></div>
-					<input v-model="searchText" @keyup="searchKeyup" type="text" name="search">
-					<!-- <template v-if="Role===0">
-						<span class="line__span--gray">{{goToLocation}}</span>
-					</template>
-					<template v-else>
-						<span class="line__span--gray">出发地点</span>
-					</template> -->
-				</div>
-				<div @click="endAdress" class="publish__info--line">
-					<div class="line__left--dot dot-red"></div>
-					<span class="line__span--gray">你要去哪</span>
+					<input @click="searchStartKeyup" v-model="searchStartText" @keyup="searchStartKeyup" type="text" placeholder="请输入出发地" name="search">
+					<div v-show="showStartSearchResult" class="line-action">
+						<div @click="deleteAddress(0)" class="img">
+							<img src="../icon/select_icon.png">
+						</div>
+						<span @click="cancelAddress(0)">取消</span>
+					</div>
 				</div>
 				<div class="publish__info--line">
+					<div class="line__left--dot dot-red"></div>
+					<input @click="searchEndKeyup" v-model="searchEndText" @keyup="searchEndKeyup" type="text" placeholder="请输入到达地" name="search">
+					<div v-show="showEndSearchResult" class="line-action">
+						<div @click="deleteAddress(1)" class="img">
+							<img src="../icon/select_icon.png">
+						</div>
+						<span @click="cancelAddress(1)">取消</span>
+					</div>
+				</div>
+				<div @click="actionDatePicker(true)" class="publish__info--line">
 					<div class="line__left">
 						<img src="../icon/clock_icon.png">
 					</div>
-					<span class="line__span--gray">今天周一</span>
+					<span class="line__span--gray">{{datePickerText}}</span>
 				</div>
-				<div class="publish__info--line">
+				<div @click="actionNumberPicker(true)" class="publish__info--line">
 					<div class="line__left">
 						<img src="../icon/me_grey_icon.png">
 					</div>
@@ -51,21 +57,67 @@
 				</div>
 				<input class="remark" placeholder="" type="text" name="remark">
 			</div>
+			<div v-show="showStartSearchResult" class="search__result">
+				<div @click="startAddress(index)" class="search__result--line" v-for="(item,index) in searchStartList">
+					<div class="img">
+						<img src="../icon/place_icon.png">
+					</div>
+					<div class="location-name">
+						<div class="line">
+							<span>{{item.name}}</span>
+						</div>
+						<div class="line">
+							<span class="gray">{{item.district}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="top:115px;" v-show="showEndSearchResult" class="search__result">
+				<div @click="endAdress(index)" class="search__result--line" v-for="(item,index) in searchEndList">
+					<div class="img">
+						<img src="../icon/place_icon.png">
+					</div>
+					<div class="location-name">
+						<div class="line">
+							<span>{{item.name}}</span>
+						</div>
+						<div class="line">
+							<span class="gray">{{item.district}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<!-- 选择出发日期 -->
 		<mt-popup
-	  v-model="PickerPageShow"
+	  v-model="datePickerPageShow"
 	  position="bottom"
 	  class="mt_page">
 		  <slot>
-		  	<div class="popup-header">
-			  	<span @click="cancelPicker">取消</span>
-			  	<span>目的地</span>
-			  	<span :style="{color:canGoNext?'':'#c8c8c8'}" @click="nextSelect">下一步</span>
-			  </div>
-			  <mt-picker :visibleItemCount="7" value-key="name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
+				<div class="popup-header">
+ 			  	<span @click="actionDatePicker(false)">取消</span>
+ 			  	<span>出发日期</span>
+	  			<span>下一步</span>
+ 			  </div>
+
+		  	<mt-picker :visibleItemCount="7" :slots="datePicker" @change="dateValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
-		
+		<!-- 选择人数 -->
+		<mt-popup
+	  v-model="numberPickerPageShow"
+	  position="bottom"
+	  class="mt_page">
+		  <slot>
+				<div class="popup-header">
+ 			  	<span @click="actionNumberPicker(false)">上一步</span>
+ 			  	<span>人数</span>
+	  			<span @click="actionNumberPicker(false)">确定</span>
+ 			  </div>
+
+		  	<mt-picker :visibleItemCount="7" :slots="numberPicker" @change="numberValuesChange"></mt-picker>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -109,6 +161,7 @@
 .publish{
 	width:100%;
 	padding:10px;
+	position:relative;
 	.publish__info{
 		width:100%;
 		height:190px;
@@ -126,6 +179,10 @@
 		justify-content:flex-start;
 		background-color:#fff;
 		width:100%;
+		position:relative;
+		>div{
+			float:left;
+		}
 		div.line__left{
 			width:65px;
 			height:45px;
@@ -148,6 +205,36 @@
 				margin-right:5px;
 			}
 		}
+		div.line-action{
+			position:absolute;
+			top:0;
+			right:5px;
+			height:45px;
+			line-height:45px;
+			width:60px;
+			background-color:#fff;
+			>div.img{
+				height:45px;
+				// line-height:45px;
+				display:inline-block;
+				width:50%;
+				float:left;
+				text-align:center;
+				>img{
+					width:15px;
+					height:15px;
+					margin-top:15px;
+				}
+			}
+			>span{
+				color:#c8c8c8;
+				height:45px;
+				float:left;
+				width:50%;
+				line-height:45px;
+				display:inline-block;
+			}
+		}
 		span{
 			font-size: 14px;
 		}
@@ -155,14 +242,15 @@
 			color:#c8c8c8;
 		}
 		input{
-			display:block;
+			display:inline-block;
 			// text-align:center;
 			border:none;
 			outline:none;
 			height:45px;
 			font-size:14px;
 			// line-height:40px;
-			width:60%;
+			width:55%;
+			float:left;
 		}
 		div.line__left--dot{
 			width:65px;
@@ -182,6 +270,57 @@
 		div.dot-red{
 			&:after{
 				background-color:$my_red;
+			}
+		}
+	}
+	/** 搜索结果列表 */
+	.search__result{
+		position:absolute;
+		top:65px;
+		left:10px;
+		right:10px;
+		height:200px;
+		z-index:100;
+		background-color: #fff;
+		border-top:1px solid #fafafa;
+		overflow-y:scroll;
+		.search__result--line{
+			float:left;
+			width:100%;
+			height:60px;
+			position:relative;
+			>div.img{
+				position:absolute;
+				height:60px;
+				width:65px;
+				line-height: 60px;
+				top:0;
+				left:0;
+				text-align:center;
+				>img{
+					height:10px;
+					width:10px;
+					// margin-top: 35px;
+				}
+			}
+			.location-name{
+				// padding:5px 0;
+				padding-left: 65px;
+				width:100%;
+				float:left;
+				height:60px;
+				.line{
+					height:30px;
+					line-height:30px;
+					width:100%;
+					@include text_nowrap;
+				}
+				span{
+					font-size:15px;
+				}
+				span.gray{
+					color:#c8c8c8;
+				}
 			}
 		}
 	}
@@ -229,6 +368,9 @@
 .animated{
 	animation-duration: 0.4s;
 }
+.picker-slot{
+	font-size:14px;
+}
 </style>
 
 <script type="text/babel">
@@ -236,129 +378,70 @@ import Utils from "../../Utils/utils";
 import List from "./list.vue";
 import Header from "./Header.vue";
 import { Toast, Indicator, Popup,Picker } from 'mint-ui';
+const _ = require("underscore");
 
 export default {
 	data () {
 		return {
 			Role:0,//0是乘客,1是司机
 			
-			startAddress:"",//选择的上车地点
-			PickerPageShow:false,//显示选择上车点
-			startAddressSlot:[
-				{
-          flex: 1,
-          values: [{
-          	name:'请选择'
-          }],
-          className: 'slot1',
-          textAlign: 'left'
-        }, {
-          flex: 1,
-          values: [],
-          className: 'slot2',
-          textAlign: 'left'
-        }, {
-          flex: 1,
-          values: [],
-          className: 'slot3',
-          textAlign: 'left'
-        }, {
-          flex: 1,
-          values: [],
-          className: 'slot4',
-          textAlign: 'left',
-        }, 
-			],
-			selectProince:{},//省
-			selectCity:{},//市
-			selectDistinct:{},//区
-			selectVillage:{},//村
+			datePickerPageShow:false,//显示选择日期
+			datePicker:[{
+    		flex: 1,
+    		values: ["今天","明天","后天","大后天"],
+    		className: 'slot1',
+    		textAlign: 'center'
+       }, {
+    		flex: 1,
+    		values: ["0 点", "1 点", "2 点", "3 点", "4 点", "5 点", "6 点", "7 点", "8 点", "9 点", "10 点", "11 点", "12 点", "13 点", "14 点", "15 点", "16 点", "17 点", "18 点", "19 点", "20 点", "21 点", "22 点", "23 点"],
+    		className: 'slot2',
+    		textAlign: 'center'
+       }, {
+    		flex: 1,
+    		values: ["0 分","30 分"],
+    		className: 'slot3',
+    		textAlign: 'center'
+      }],
+      datePickerText:"",//出发日期字符串
+			
+			numberPickerPageShow:false,//显示选择人数
+			numberPicker:[{
+    		flex: 1,
+    		values: ["1 人","2 人","3 人","4 人","5 人","6 人"],
+    		className: 'slot1',
+    		textAlign: 'center'
+      }],
+      numberPickerText:"",//人数
+			
+			searchStartText:"",//搜索的地址
+			searchEndText:"",
+			searchStartList:[],//开始搜索结果
+			searchEndList:[],//到达搜索结果
+			showEndSearchResult:false,//是否显示搜索结果
+			showStartSearchResult:false,//
 
-			searchText:"",//搜索的地址
-
-			isUseNetWork:false,//是否正在使用请求
+			searchStartFunction:null,//搜索处理函数
+			searchEndFunction:null,//搜索处理函数
 		}
 	},
 	created(){
-		if(this.Province.length===0){
-			// 如果没有数据就去获取
-			// this.$store.dispatch("getProvince").then(result=>{
-			// 	this.startAddressSlot[0].values = this.Province;
-			// 	this.selectProince = this.Province[0];//默认选择第一个
-			// }).then(()=>{
-			// 	this.$store.dispatch("getCity",this.selectProince.name).then(res=>{
-			// 		this.selectCity = this.City[0];
-			// 		this.startAddressSlot[1].values = this.City;
-			// 	})
-			// })
-			// .then(()=>{
-			// 	// console.log(this.selectCity.name)
-			// 	this.$store.dispatch("getDistrict",this.selectCity.name).then(res=>{
-			// 		this.selectDistinct = this.District[0];
-			// 		this.startAddressSlot[2].values = this.District;
-			// 	})
-			// })
-			// .then(()=>{
-			// 	this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
-			// 		this.selectVillage = this.Village[0];
-			// 		this.startAddressSlot[3].values = this.Village;
-			// 	})
-			// })
-		}
+		this.datePickerText = "今天"+Utils.formatWeek(new Date());
+		/** 定义函数使用 */
+		this.searchStartFunction = _.debounce(()=>{
+			this.$store.dispatch("getStartSearch",this.searchStartText).then(result=>{
+				this.searchStartList = result.tips;
+			});
+		},500);
+		
+		/** 定义函数使用 */
+		this.searchEndFunction = _.debounce(()=>{
+			this.$store.dispatch("getEndSearch",this.searchEndText).then(result=>{
+				this.searchEndList = result.tips;
+			})
+		},500);
 	},
 	computed:{
-		/** 省份数据 */
-		Province(){
-			return this.$store.getters.getProvince;
-		},
-		/** 城市数据 */
-		City(){
-			return this.$store.getters.getCity;
-		},
-		/**区域 */
-		District(){
-			return this.$store.getters.getDistrict;
-		},
-		/** 村 */
-		Village(){
-			return this.$store.getters.getVillage;
-		},
-		goToLocation(){
-			if(this.selectProince&&this.selectProince.name&&this.selectCity&&this.selectCity.name&&this.selectDistinct&&this.selectDistinct.name){
-				// 如果是类似上海市这种
-				let len = this.selectProince.name.length;
-				if(this.selectProince.name.slice(len-1,len)==="市"){
-					// 如果区下面还有就显示
-					if(this.selectVillage&&this.selectVillage.name){
-						return this.selectCity.name+this.selectDistinct.name+this.selectVillage.name;
-					}
-					else{
-						return this.selectCity.name+this.selectDistinct.name
-					}
-				}
-				else{
-					// 一般的省份
-					if(this.selectVillage&&this.selectVillage.name){
-						return this.selectProince.name+this.selectCity.name+this.selectDistinct.name+this.selectVillage.name;
-					}
-					else{
-						return this.selectProince.name+this.selectCity.name+this.selectDistinct.name
-					}
-				}
-			}
-			else{
-				return "你要去哪";
-			}
-		},
-		/** 是否可以点击下一步 */
-		canGoNext(){
-			if(this.goToLocation==="你要去哪"){
-				return false;
-			}
-			else{
-				return true;
-			}
-		},
+		
 	},
 	methods:{
 		formatJSON(data){
@@ -381,96 +464,61 @@ export default {
 		switchRole(index){
 			this.Role = index;
 		},
-		/** 选择上车地点 */
-		startAddressPageShow(){
-			this.PickerPageShow = true;
+		/** 选择开始地点 */
+		startAddress(index){
+			this.searchStartText = this.searchStartList[index].district+this.searchStartList[index].name;
+			this.searchBlur();
 		},
-		/** 取消显示 */
-		cancelPicker(){
-			this.PickerPageShow = false;
+		/** 删除值 */
+		deleteAddress(index){
+			if(index===0){
+				this.searchStartText = "";
+			}
+			else{
+				this.searchEndText = "";
+			}
 		},
-		/** 值改变后的回调函数 */
-		startValuesChange(picker, values){
-			if(this.isUseNetWork){
-				return;
-			}
-			
-			//省份是否改变
-			if(values[0]&&this.selectProince.name!==values[0].name){
-				this.isUseNetWork = true;//开启限制
-				// 不相等时候就需要操作
-				this.$store.dispatch("getCity",values[0].name).then(res=>{
-					this.selectProince = values[0];//需要记录当前选中的省份值
-					this.selectCity = this.City[0];//默认选中第一个
-					this.startAddressSlot[1].values = this.City;
-					
-					if(!this.selectCity){
-						setTimeout(()=>{
-							this.isUseNetWork = false;//关闭限制
-						},10);
-						return;
-					}
-					// 加载城市的区域
-					this.$store.dispatch("getDistrict",this.City[0].name).then(res=>{
-						this.selectDistinct = this.District[0];
-						this.startAddressSlot[2].values = this.District;
-						
-						// 加载村的区域
-						this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
-							this.selectVillage = this.Village[0];
-							this.startAddressSlot[3].values = this.Village;
-							setTimeout(()=>{
-								this.isUseNetWork = false;//关闭限制
-							},10);
-						});
-					});
-				});
-				return;
-			}
-
-			// // 城市是否改变
-			if(values[1]&&this.selectCity.name!==values[1].name){
-				this.isUseNetWork = true;//开启限制
-				// 不相等时候就需要操作
-				this.$store.dispatch("getDistrict",values[1].name).then(res=>{
-					this.selectCity = values[1];//需要记录当前选中的市份值
-					this.selectDistinct = this.District[0];
-					this.startAddressSlot[2].values = this.District;
-
-					// 加载村的区域
-					this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
-						this.selectVillage = this.Village[0];
-						this.startAddressSlot[3].values = this.Village;
-						setTimeout(()=>{
-							this.isUseNetWork = false;//关闭限制
-						},10);
-					});
-				});
-				return;
-			}
-
-			// // 区域是否改变
-			if(values[2]&&this.selectDistinct.name!==values[2].name){
-				this.isUseNetWork = true;//开启限制
-				// 不相等时候就需要操作
-				this.$store.dispatch("getVillage",values[2].name).then(res=>{
-					this.selectDistinct = values[2];//需要记录当前选中的区份值
-					this.selectVillage = this.Village[0];
-					this.startAddressSlot[3].values = this.Village;
-					setTimeout(()=>{
-						this.isUseNetWork = false;//关闭限制
-					},10);
-					// this.isUseNetWork = false;//关闭限制
-				});
-			}
+		/** 取消结果页显示 */
+		cancelAddress(){
+			this.searchBlur();
 		},
 		/** 选择到达地点 */
-		endAdress(){
-
+		endAdress(index){
+			this.searchEndText = this.searchEndList[index].district+this.searchEndList[index].name;
+			this.searchBlur();
 		},
-		searchKeyup(){
-			this.$store.dispatch("getSearch",this.searchText)
-			console.log(this.searchText)
+		searchStartKeyup(){
+			this.showStartSearchResult = true;//显示搜索结果
+			this.searchStartFunction();
+		},
+		/** 输入框blur */
+		searchBlur(){
+			this.showStartSearchResult = false;//隐藏搜索结果
+			this.showEndSearchResult = false;//隐藏
+		},
+		searchEndKeyup(){
+			this.showEndSearchResult = true;//显示搜索结果
+			this.searchEndFunction();
+		},
+		/** 隐藏显示日期选择 */
+		actionDatePicker(action){
+			this.datePickerPageShow = action;
+		},
+		/** 隐藏显示选择人数 */
+		actionNumberPicker(action){
+			this.numberPickerPageShow = action;
+		},
+		dateValuesChange(picker,values){
+			if(this.datePickerPageShow){
+				// 显示的时候才允许设置值
+				this.datePickerText = values[0]+" "+values[1]+values[2];
+			}
+		},
+		numberValuesChange(picker,values){
+			if(this.numberPickerPageShow){
+				// 显示的时候才允许设置值
+				this.numberPickerText = values[0]
+			}
 		}
 	},
 	filters:{
