@@ -7,14 +7,15 @@
 		</div>
 		<div class="publish animated slideInUp">
 			<div class="publish__info">
-				<div @click="startAddressPageShow" class="publish__info--line">
+				<div  class="publish__info--line">
 					<div class="line__left--dot"></div>
-					<template v-if="Role===0">
-						<span class="line__span--gray">上车地点</span>
+					<input v-model="searchText" @keyup="searchKeyup" type="text" name="search">
+					<!-- <template v-if="Role===0">
+						<span class="line__span--gray">{{goToLocation}}</span>
 					</template>
 					<template v-else>
 						<span class="line__span--gray">出发地点</span>
-					</template>
+					</template> -->
 				</div>
 				<div @click="endAdress" class="publish__info--line">
 					<div class="line__left--dot dot-red"></div>
@@ -59,9 +60,9 @@
 		  	<div class="popup-header">
 			  	<span @click="cancelPicker">取消</span>
 			  	<span>目的地</span>
-			  	<span>下一步</span>
+			  	<span :style="{color:canGoNext?'':'#c8c8c8'}" @click="nextSelect">下一步</span>
 			  </div>
-			  <mt-picker :visibleItemCount="5" value-key="Name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
+			  <mt-picker :visibleItemCount="7" value-key="name" :slots="startAddressSlot" @change="startValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
 		
@@ -187,7 +188,7 @@
 }
 .mt_page{
 	width: 100%;
-  height: 43%;
+  height: 55%;
   background-color: #fff;
   overflow-y: scroll;
   .popup-header {
@@ -222,6 +223,9 @@
     }
   }
 }
+.picker-center-highlight{
+	// margin-top:0 !important;
+}
 .animated{
 	animation-duration: 0.4s;
 }
@@ -244,66 +248,116 @@ export default {
 				{
           flex: 1,
           values: [{
-          	Name:'请选择'
+          	name:'请选择'
           }],
           className: 'slot1',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: [{
-          	Name:'请选择'
-          }],
+          values: [],
           className: 'slot2',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: [{
-          	Name:'请选择'
-          }],
+          values: [],
           className: 'slot3',
           textAlign: 'left'
         }, {
           flex: 1,
-          values: [{
-          	Name:'请选择'
-          }],
+          values: [],
           className: 'slot4',
           textAlign: 'left',
         }, 
 			],
-			selectProince:null,//省
-			selcctCity:null,//市
-			selectDistinct:null,//区
-			selectVillage:null,//村
+			selectProince:{},//省
+			selectCity:{},//市
+			selectDistinct:{},//区
+			selectVillage:{},//村
+
+			searchText:"",//搜索的地址
+
+			isUseNetWork:false,//是否正在使用请求
 		}
 	},
 	created(){
 		if(this.Province.length===0){
 			// 如果没有数据就去获取
-			this.$store.dispatch("getProvince",{
-				Id:0,
-				Type:0
-			}).then(result=>{
-				this.startAddressSlot[0].values = this.Province;
-				this.selectProince = this.Province[0];//默认选择第一个
-				// this.startAddressSlot[1].values = this.Province;
-				// this.startAddressSlot[2].values = this.Province;
-				// this.startAddressSlot[3].values = this.Province;
-			})
+			// this.$store.dispatch("getProvince").then(result=>{
+			// 	this.startAddressSlot[0].values = this.Province;
+			// 	this.selectProince = this.Province[0];//默认选择第一个
+			// }).then(()=>{
+			// 	this.$store.dispatch("getCity",this.selectProince.name).then(res=>{
+			// 		this.selectCity = this.City[0];
+			// 		this.startAddressSlot[1].values = this.City;
+			// 	})
+			// })
+			// .then(()=>{
+			// 	// console.log(this.selectCity.name)
+			// 	this.$store.dispatch("getDistrict",this.selectCity.name).then(res=>{
+			// 		this.selectDistinct = this.District[0];
+			// 		this.startAddressSlot[2].values = this.District;
+			// 	})
+			// })
+			// .then(()=>{
+			// 	this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
+			// 		this.selectVillage = this.Village[0];
+			// 		this.startAddressSlot[3].values = this.Village;
+			// 	})
+			// })
 		}
 	},
 	computed:{
+		/** 省份数据 */
 		Province(){
 			return this.$store.getters.getProvince;
 		},
+		/** 城市数据 */
 		City(){
 			return this.$store.getters.getCity;
 		},
+		/**区域 */
 		District(){
 			return this.$store.getters.getDistrict;
 		},
+		/** 村 */
 		Village(){
 			return this.$store.getters.getVillage;
+		},
+		goToLocation(){
+			if(this.selectProince&&this.selectProince.name&&this.selectCity&&this.selectCity.name&&this.selectDistinct&&this.selectDistinct.name){
+				// 如果是类似上海市这种
+				let len = this.selectProince.name.length;
+				if(this.selectProince.name.slice(len-1,len)==="市"){
+					// 如果区下面还有就显示
+					if(this.selectVillage&&this.selectVillage.name){
+						return this.selectCity.name+this.selectDistinct.name+this.selectVillage.name;
+					}
+					else{
+						return this.selectCity.name+this.selectDistinct.name
+					}
+				}
+				else{
+					// 一般的省份
+					if(this.selectVillage&&this.selectVillage.name){
+						return this.selectProince.name+this.selectCity.name+this.selectDistinct.name+this.selectVillage.name;
+					}
+					else{
+						return this.selectProince.name+this.selectCity.name+this.selectDistinct.name
+					}
+				}
+			}
+			else{
+				return "你要去哪";
+			}
+		},
+		/** 是否可以点击下一步 */
+		canGoNext(){
+			if(this.goToLocation==="你要去哪"){
+				return false;
+			}
+			else{
+				return true;
+			}
 		},
 	},
 	methods:{
@@ -337,17 +391,87 @@ export default {
 		},
 		/** 值改变后的回调函数 */
 		startValuesChange(picker, values){
-			// if(this.selectProince.Id!==values[0].Id){
-			// 	// 不相等时候就需要操作
-				
-			// }
-			console.log(values);
+			if(this.isUseNetWork){
+				return;
+			}
+			
+			//省份是否改变
+			if(values[0]&&this.selectProince.name!==values[0].name){
+				this.isUseNetWork = true;//开启限制
+				// 不相等时候就需要操作
+				this.$store.dispatch("getCity",values[0].name).then(res=>{
+					this.selectProince = values[0];//需要记录当前选中的省份值
+					this.selectCity = this.City[0];//默认选中第一个
+					this.startAddressSlot[1].values = this.City;
+					
+					if(!this.selectCity){
+						setTimeout(()=>{
+							this.isUseNetWork = false;//关闭限制
+						},10);
+						return;
+					}
+					// 加载城市的区域
+					this.$store.dispatch("getDistrict",this.City[0].name).then(res=>{
+						this.selectDistinct = this.District[0];
+						this.startAddressSlot[2].values = this.District;
+						
+						// 加载村的区域
+						this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
+							this.selectVillage = this.Village[0];
+							this.startAddressSlot[3].values = this.Village;
+							setTimeout(()=>{
+								this.isUseNetWork = false;//关闭限制
+							},10);
+						});
+					});
+				});
+				return;
+			}
+
+			// // 城市是否改变
+			if(values[1]&&this.selectCity.name!==values[1].name){
+				this.isUseNetWork = true;//开启限制
+				// 不相等时候就需要操作
+				this.$store.dispatch("getDistrict",values[1].name).then(res=>{
+					this.selectCity = values[1];//需要记录当前选中的市份值
+					this.selectDistinct = this.District[0];
+					this.startAddressSlot[2].values = this.District;
+
+					// 加载村的区域
+					this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
+						this.selectVillage = this.Village[0];
+						this.startAddressSlot[3].values = this.Village;
+						setTimeout(()=>{
+							this.isUseNetWork = false;//关闭限制
+						},10);
+					});
+				});
+				return;
+			}
+
+			// // 区域是否改变
+			if(values[2]&&this.selectDistinct.name!==values[2].name){
+				this.isUseNetWork = true;//开启限制
+				// 不相等时候就需要操作
+				this.$store.dispatch("getVillage",values[2].name).then(res=>{
+					this.selectDistinct = values[2];//需要记录当前选中的区份值
+					this.selectVillage = this.Village[0];
+					this.startAddressSlot[3].values = this.Village;
+					setTimeout(()=>{
+						this.isUseNetWork = false;//关闭限制
+					},10);
+					// this.isUseNetWork = false;//关闭限制
+				});
+			}
 		},
 		/** 选择到达地点 */
 		endAdress(){
 
 		},
-		
+		searchKeyup(){
+			this.$store.dispatch("getSearch",this.searchText)
+			console.log(this.searchText)
+		}
 	},
 	filters:{
 		formatTime(time){

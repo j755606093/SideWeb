@@ -183,32 +183,77 @@ const actions = {
 	getTripDetailPeople({ commit, state }, data) {
 		return getData("/api/CarPool/GetPassenger?id=" + data)
 	},
-	/** 获取全国省数据 */
-	getProvince({ commit, state }, data) {
-		return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(result => {
-			switch (data.Type) {
-				case 0:
-					commit(types.GET_PROVINCE, {
-						Province: result.Data,
-					});
-					break;
-				case 1:
+	/** 获取全国省数据  */
+	getProvince({ commit, state }) {
+		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&keywords=中国&subdistrict=1', {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				let res = result.districts[0].districts;
+				commit(types.GET_PROVINCE, {
+					Province: res,
+				});
+			})
+	},
+	/** 获取省的市数据  */
+	getCity({ commit, state }, data) {
+		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				if (result.districts.length !== 0) {
+					let res = result.districts[0].districts;
 					commit(types.GET_CITY, {
-						City: result.Data,
+						City: res,
 					});
-					break;
-				case 2:
+				}
+			})
+	},
+	/** 获取市的区数据  */
+	getDistrict({ commit, state }, data) {
+		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				if (result.districts.length !== 0) {
+					let res = result.districts[0].districts;
 					commit(types.GET_DISTRICT, {
-						District: result.Data,
+						District: res,
 					});
-					break;
-				case 3:
+				}
+			})
+	},
+	/** 获取区数据  */
+	getVillage({ commit, state }, data) {
+		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				if (result.districts.length !== 0) {
+					let res = result.districts[0].districts;
 					commit(types.GET_VILLAGE, {
-						Village: result.Data,
+						Village: res,
 					});
-					break;
-			}
-		})
+				}
+			})
+	},
+	getSearch({ commit, state }, data) {
+		return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				console.log(result)
+			})
 	}
 }
 

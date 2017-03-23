@@ -12948,34 +12948,89 @@
 			return getData("/api/CarPool/GetPassenger?id=" + data);
 		},
 
-		/** 获取全国省数据 */
-		getProvince: function getProvince(_ref6, data) {
+		/** 获取全国省数据  */
+		getProvince: function getProvince(_ref6) {
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(function (result) {
-				switch (data.Type) {
-					case 0:
-						commit(_ShareCarType2.default.GET_PROVINCE, {
-							Province: result.Data
-						});
-						break;
-					case 1:
-						commit(_ShareCarType2.default.GET_CITY, {
-							City: result.Data
-						});
-						break;
-					case 2:
-						commit(_ShareCarType2.default.GET_DISTRICT, {
-							District: result.Data
-						});
-						break;
-					case 3:
-						commit(_ShareCarType2.default.GET_VILLAGE, {
-							Village: result.Data
-						});
-						break;
+			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&keywords=中国&subdistrict=1', {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				var res = result.districts[0].districts;
+				commit(_ShareCarType2.default.GET_PROVINCE, {
+					Province: res
+				});
+			});
+		},
+
+		/** 获取省的市数据  */
+		getCity: function getCity(_ref7, data) {
+			var commit = _ref7.commit,
+			    state = _ref7.state;
+
+			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				if (result.districts.length !== 0) {
+					var res = result.districts[0].districts;
+					commit(_ShareCarType2.default.GET_CITY, {
+						City: res
+					});
 				}
+			});
+		},
+
+		/** 获取市的区数据  */
+		getDistrict: function getDistrict(_ref8, data) {
+			var commit = _ref8.commit,
+			    state = _ref8.state;
+
+			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				if (result.districts.length !== 0) {
+					var res = result.districts[0].districts;
+					commit(_ShareCarType2.default.GET_DISTRICT, {
+						District: res
+					});
+				}
+			});
+		},
+
+		/** 获取区数据  */
+		getVillage: function getVillage(_ref9, data) {
+			var commit = _ref9.commit,
+			    state = _ref9.state;
+
+			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				if (result.districts.length !== 0) {
+					var res = result.districts[0].districts;
+					commit(_ShareCarType2.default.GET_VILLAGE, {
+						Village: res
+					});
+				}
+			});
+		},
+		getSearch: function getSearch(_ref10, data) {
+			var commit = _ref10.commit,
+			    state = _ref10.state;
+
+			return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				console.log(result);
 			});
 		}
 	};
@@ -34834,7 +34889,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip {\n  margin-top: 50px;\n}\n.publishtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.publishtrip .swtich-role > span.active {\n      color: #323232;\n}\n.publishtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 4px;\n}\n.publish {\n  width: 100%;\n  padding: 10px;\n}\n.publish .publish__info {\n    width: 100%;\n    height: 190px;\n    background-color: #fff;\n    padding: 10px 0;\n    border-radius: 5px;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publish .publish__info--line {\n    height: 45px;\n    line-height: 45px;\n    border-radius: 5px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n}\n.publish .publish__info--line div.line__left {\n      width: 65px;\n      height: 45px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.publish .publish__info--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.publish .publish__info--line div.line__span {\n      width: 65px;\n      height: 45px;\n      text-align: right;\n}\n.publish .publish__info--line div.line__span span {\n        height: 45px;\n        line-height: 45px;\n        font-size: 14px;\n        color: #323232;\n        margin-right: 5px;\n}\n.publish .publish__info--line span {\n      font-size: 14px;\n}\n.publish .publish__info--line span.line__span--gray {\n      color: #c8c8c8;\n}\n.publish .publish__info--line input {\n      display: block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 60%;\n}\n.publish .publish__info--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.publish .publish__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.publish .publish__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.mt_page {\n  width: 100%;\n  height: 43%;\n  background-color: #fff;\n  overflow-y: scroll;\n}\n.mt_page .popup-header {\n    height: 50px;\n    width: 100%;\n    line-height: 50px;\n    background-color: #fff;\n    color: #fff;\n    text-align: center;\n    position: relative;\n}\n.mt_page .popup-header span {\n      display: inline-block;\n      height: 50px;\n      line-height: 50px;\n      font-size: 14px;\n      width: 60px;\n      color: #000;\n}\n.mt_page .popup-header span:last-child {\n      position: absolute;\n      top: 0;\n      right: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.mt_page .popup-header span:first-child {\n      position: absolute;\n      top: 0;\n      left: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip {\n  margin-top: 50px;\n}\n.publishtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.publishtrip .swtich-role > span.active {\n      color: #323232;\n}\n.publishtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 4px;\n}\n.publish {\n  width: 100%;\n  padding: 10px;\n}\n.publish .publish__info {\n    width: 100%;\n    height: 190px;\n    background-color: #fff;\n    padding: 10px 0;\n    border-radius: 5px;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publish .publish__info--line {\n    height: 45px;\n    line-height: 45px;\n    border-radius: 5px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n}\n.publish .publish__info--line div.line__left {\n      width: 65px;\n      height: 45px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.publish .publish__info--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.publish .publish__info--line div.line__span {\n      width: 65px;\n      height: 45px;\n      text-align: right;\n}\n.publish .publish__info--line div.line__span span {\n        height: 45px;\n        line-height: 45px;\n        font-size: 14px;\n        color: #323232;\n        margin-right: 5px;\n}\n.publish .publish__info--line span {\n      font-size: 14px;\n}\n.publish .publish__info--line span.line__span--gray {\n      color: #c8c8c8;\n}\n.publish .publish__info--line input {\n      display: block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 60%;\n}\n.publish .publish__info--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.publish .publish__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.publish .publish__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.mt_page {\n  width: 100%;\n  height: 55%;\n  background-color: #fff;\n  overflow-y: scroll;\n}\n.mt_page .popup-header {\n    height: 50px;\n    width: 100%;\n    line-height: 50px;\n    background-color: #fff;\n    color: #fff;\n    text-align: center;\n    position: relative;\n}\n.mt_page .popup-header span {\n      display: inline-block;\n      height: 50px;\n      line-height: 50px;\n      font-size: 14px;\n      width: 60px;\n      color: #000;\n}\n.mt_page .popup-header span:last-child {\n      position: absolute;\n      top: 0;\n      right: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.mt_page .popup-header span:first-child {\n      position: absolute;\n      top: 0;\n      left: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
 
 	// exports
 
@@ -35098,6 +35153,10 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -35109,67 +35168,114 @@
 				startAddressSlot: [{
 					flex: 1,
 					values: [{
-						Name: '请选择'
+						name: '请选择'
 					}],
 					className: 'slot1',
 					textAlign: 'left'
 				}, {
 					flex: 1,
-					values: [{
-						Name: '请选择'
-					}],
+					values: [],
 					className: 'slot2',
 					textAlign: 'left'
 				}, {
 					flex: 1,
-					values: [{
-						Name: '请选择'
-					}],
+					values: [],
 					className: 'slot3',
 					textAlign: 'left'
 				}, {
 					flex: 1,
-					values: [{
-						Name: '请选择'
-					}],
+					values: [],
 					className: 'slot4',
 					textAlign: 'left'
 				}],
-				selectProince: null, //省
-				selcctCity: null, //市
-				selectDistinct: null, //区
-				selectVillage: null };
+				selectProince: {}, //省
+				selectCity: {}, //市
+				selectDistinct: {}, //区
+				selectVillage: {}, //村
+
+				searchText: "", //搜索的地址
+
+				isUseNetWork: false };
 		},
 		created: function created() {
-			var _this = this;
-
 			if (this.Province.length === 0) {
 				// 如果没有数据就去获取
-				this.$store.dispatch("getProvince", {
-					Id: 0,
-					Type: 0
-				}).then(function (result) {
-					_this.startAddressSlot[0].values = _this.Province;
-					_this.selectProince = _this.Province[0]; //默认选择第一个
-					// this.startAddressSlot[1].values = this.Province;
-					// this.startAddressSlot[2].values = this.Province;
-					// this.startAddressSlot[3].values = this.Province;
-				});
+				// this.$store.dispatch("getProvince").then(result=>{
+				// 	this.startAddressSlot[0].values = this.Province;
+				// 	this.selectProince = this.Province[0];//默认选择第一个
+				// }).then(()=>{
+				// 	this.$store.dispatch("getCity",this.selectProince.name).then(res=>{
+				// 		this.selectCity = this.City[0];
+				// 		this.startAddressSlot[1].values = this.City;
+				// 	})
+				// })
+				// .then(()=>{
+				// 	// console.log(this.selectCity.name)
+				// 	this.$store.dispatch("getDistrict",this.selectCity.name).then(res=>{
+				// 		this.selectDistinct = this.District[0];
+				// 		this.startAddressSlot[2].values = this.District;
+				// 	})
+				// })
+				// .then(()=>{
+				// 	this.$store.dispatch("getVillage",this.selectDistinct.name).then(res=>{
+				// 		this.selectVillage = this.Village[0];
+				// 		this.startAddressSlot[3].values = this.Village;
+				// 	})
+				// })
 			}
 		},
 
 		computed: {
+			/** 省份数据 */
 			Province: function Province() {
 				return this.$store.getters.getProvince;
 			},
+
+			/** 城市数据 */
 			City: function City() {
 				return this.$store.getters.getCity;
 			},
+
+			/**区域 */
 			District: function District() {
 				return this.$store.getters.getDistrict;
 			},
+
+			/** 村 */
 			Village: function Village() {
 				return this.$store.getters.getVillage;
+			},
+			goToLocation: function goToLocation() {
+				if (this.selectProince && this.selectProince.name && this.selectCity && this.selectCity.name && this.selectDistinct && this.selectDistinct.name) {
+					// 如果是类似上海市这种
+					var len = this.selectProince.name.length;
+					if (this.selectProince.name.slice(len - 1, len) === "市") {
+						// 如果区下面还有就显示
+						if (this.selectVillage && this.selectVillage.name) {
+							return this.selectCity.name + this.selectDistinct.name + this.selectVillage.name;
+						} else {
+							return this.selectCity.name + this.selectDistinct.name;
+						}
+					} else {
+						// 一般的省份
+						if (this.selectVillage && this.selectVillage.name) {
+							return this.selectProince.name + this.selectCity.name + this.selectDistinct.name + this.selectVillage.name;
+						} else {
+							return this.selectProince.name + this.selectCity.name + this.selectDistinct.name;
+						}
+					}
+				} else {
+					return "你要去哪";
+				}
+			},
+
+			/** 是否可以点击下一步 */
+			canGoNext: function canGoNext() {
+				if (this.goToLocation === "你要去哪") {
+					return false;
+				} else {
+					return true;
+				}
 			}
 		},
 		methods: {
@@ -35208,15 +35314,88 @@
 
 			/** 值改变后的回调函数 */
 			startValuesChange: function startValuesChange(picker, values) {
-				// if(this.selectProince.Id!==values[0].Id){
-				// 	// 不相等时候就需要操作
+				var _this = this;
 
-				// }
-				console.log(values);
+				if (this.isUseNetWork) {
+					return;
+				}
+
+				//省份是否改变
+				if (values[0] && this.selectProince.name !== values[0].name) {
+					this.isUseNetWork = true; //开启限制
+					// 不相等时候就需要操作
+					this.$store.dispatch("getCity", values[0].name).then(function (res) {
+						_this.selectProince = values[0]; //需要记录当前选中的省份值
+						_this.selectCity = _this.City[0]; //默认选中第一个
+						_this.startAddressSlot[1].values = _this.City;
+
+						if (!_this.selectCity) {
+							setTimeout(function () {
+								_this.isUseNetWork = false; //关闭限制
+							}, 10);
+							return;
+						}
+						// 加载城市的区域
+						_this.$store.dispatch("getDistrict", _this.City[0].name).then(function (res) {
+							_this.selectDistinct = _this.District[0];
+							_this.startAddressSlot[2].values = _this.District;
+
+							// 加载村的区域
+							_this.$store.dispatch("getVillage", _this.selectDistinct.name).then(function (res) {
+								_this.selectVillage = _this.Village[0];
+								_this.startAddressSlot[3].values = _this.Village;
+								setTimeout(function () {
+									_this.isUseNetWork = false; //关闭限制
+								}, 10);
+							});
+						});
+					});
+					return;
+				}
+
+				// // 城市是否改变
+				if (values[1] && this.selectCity.name !== values[1].name) {
+					this.isUseNetWork = true; //开启限制
+					// 不相等时候就需要操作
+					this.$store.dispatch("getDistrict", values[1].name).then(function (res) {
+						_this.selectCity = values[1]; //需要记录当前选中的市份值
+						_this.selectDistinct = _this.District[0];
+						_this.startAddressSlot[2].values = _this.District;
+
+						// 加载村的区域
+						_this.$store.dispatch("getVillage", _this.selectDistinct.name).then(function (res) {
+							_this.selectVillage = _this.Village[0];
+							_this.startAddressSlot[3].values = _this.Village;
+							setTimeout(function () {
+								_this.isUseNetWork = false; //关闭限制
+							}, 10);
+						});
+					});
+					return;
+				}
+
+				// // 区域是否改变
+				if (values[2] && this.selectDistinct.name !== values[2].name) {
+					this.isUseNetWork = true; //开启限制
+					// 不相等时候就需要操作
+					this.$store.dispatch("getVillage", values[2].name).then(function (res) {
+						_this.selectDistinct = values[2]; //需要记录当前选中的区份值
+						_this.selectVillage = _this.Village[0];
+						_this.startAddressSlot[3].values = _this.Village;
+						setTimeout(function () {
+							_this.isUseNetWork = false; //关闭限制
+						}, 10);
+						// this.isUseNetWork = false;//关闭限制
+					});
+				}
 			},
 
 			/** 选择到达地点 */
-			endAdress: function endAdress() {}
+			endAdress: function endAdress() {},
+			searchKeyup: function searchKeyup() {
+				this.$store.dispatch("getSearch", this.searchText);
+				console.log(this.searchText);
+			}
 		},
 		filters: {
 			formatTime: function formatTime(time) {
@@ -35284,17 +35463,31 @@
 	  }, [_c('div', {
 	    staticClass: "publish__info"
 	  }, [_c('div', {
-	    staticClass: "publish__info--line",
-	    on: {
-	      "click": _vm.startAddressPageShow
-	    }
+	    staticClass: "publish__info--line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot"
-	  }), _vm._v(" "), (_vm.Role === 0) ? [_c('span', {
-	    staticClass: "line__span--gray"
-	  }, [_vm._v("上车地点")])] : [_c('span', {
-	    staticClass: "line__span--gray"
-	  }, [_vm._v("出发地点")])]], 2), _vm._v(" "), _c('div', {
+	  }), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchText),
+	      expression: "searchText"
+	    }],
+	    attrs: {
+	      "type": "text",
+	      "name": "search"
+	    },
+	    domProps: {
+	      "value": (_vm.searchText)
+	    },
+	    on: {
+	      "keyup": _vm.searchKeyup,
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.searchText = $event.target.value
+	      }
+	    }
+	  })]), _vm._v(" "), _c('div', {
 	    staticClass: "publish__info--line",
 	    on: {
 	      "click": _vm.endAdress
@@ -35327,10 +35520,17 @@
 	    on: {
 	      "click": _vm.cancelPicker
 	    }
-	  }, [_vm._v("取消")]), _vm._v(" "), _c('span', [_vm._v("目的地")]), _vm._v(" "), _c('span', [_vm._v("下一步")])]), _vm._v(" "), _c('mt-picker', {
+	  }, [_vm._v("取消")]), _vm._v(" "), _c('span', [_vm._v("目的地")]), _vm._v(" "), _c('span', {
+	    style: ({
+	      color: _vm.canGoNext ? '' : '#c8c8c8'
+	    }),
+	    on: {
+	      "click": _vm.nextSelect
+	    }
+	  }, [_vm._v("下一步")])]), _vm._v(" "), _c('mt-picker', {
 	    attrs: {
-	      "visibleItemCount": 5,
-	      "value-key": "Name",
+	      "visibleItemCount": 7,
+	      "value-key": "name",
 	      "slots": _vm.startAddressSlot
 	    },
 	    on: {
