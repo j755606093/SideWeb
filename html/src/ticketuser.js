@@ -661,6 +661,11 @@ const Vue_User = new Vue({
 				MessageBox.prompt("¥1-¥" + canGetMoney.toFixed(2), "请输入提取佣金数额", {
 					inputType: 'tel'
 				}).then(({ value, action }) => {
+					if (value === "" || isNaN(value)) {
+						this.toast("请输入正确的佣金额!");
+						this.myModal = false;
+						return;
+					}
 					let Money = parseFloat(value).toFixed(2);
 					if (!Money || Money <= 0) {
 						this.toast("请输入正确的佣金额!");

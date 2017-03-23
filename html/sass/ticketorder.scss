@@ -144,13 +144,14 @@ header {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-end;
+        padding: 10px 0;
         p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px;
           @include responsive("iphone5") {
             font-size: 16px;
@@ -189,6 +190,7 @@ header {
         flex-direction: column;
         text-align: right;
         justify-content: center;
+        padding: 10px 0;
         p {
           height: 35px;
           line-height: 35px;
@@ -197,13 +199,13 @@ header {
             font-weight: 900;
             font-size: 20px;
             color: rgb(243, 82, 82);
-            line-height: 45px;
+            // line-height: 45px;
           }
           &:last-child {
             font-size: 12px;
             color: rgb(50, 50, 50);
-            padding-top: 8px;
-            line-height: 45px;
+            padding-top: 4px;
+            // line-height: 45px;
           }
           @include responsive("iphone5") {
             margin-right: 10px;
@@ -229,7 +231,8 @@ header {
       flex-direction: row;
       justify-content: flex-start;
       position: relative;
-      margin-top: 4px;
+      padding-bottom: 5px;
+      // margin-top: 4px;
       img {
         &:first-child {
           position: absolute;
@@ -256,7 +259,7 @@ header {
 
 .mint-navbar {
   // margin-top:50px;
-  display: flex;
+  // display: flex;
   width: 100%;
   height: 40px;
   justify-content: center;
@@ -327,7 +330,7 @@ header {
   z-index: 1000;
   width: 100%;
   text-align: center;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -339,7 +342,7 @@ header {
     position: absolute;
     left: 10px;
     top: 0;
-    display: flex;
+    // display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -348,6 +351,7 @@ header {
     width: 19px;
     height: 19px;
     line-height: 50px;
+    margin-top: 15px;
   }
   span.right {
     font-size: 14px;
@@ -418,7 +422,7 @@ header {
       position: absolute;
       bottom: 0;
       right: 0;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -440,7 +444,7 @@ header {
     border-top-right-radius: 10px;
     margin: 0 10px;
     >.line {
-      display: flex;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -449,7 +453,7 @@ header {
         flex: 2;
         height: 50px;
         line-height: 50px;
-        display: flex;
+        // display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
@@ -487,14 +491,21 @@ header {
     margin-top: 60px;
     .contact {
       outline: none;
-      @include display_flex('row');
+      // @include display_flex('row');
       margin: 0 10px;
       background-color: $white;
       border-radius: 5px;
       height: 100px;
       color: rgb(50, 50, 50);
+      display: block;
+      height: 90px;
+      padding: 10px 0;
+      >div {
+        float: left;
+      }
       .left {
         flex: 8;
+        width: 80%;
         p {
           color: rgb(50, 50, 50);
           font-size: 15px;
@@ -513,10 +524,14 @@ header {
       }
       .right {
         flex: 2;
-        @include display_flex('row');
+        width: 20%;
+        height: 70%;
+        text-align: center;
+        // @include display_flex('row');
         >img {
           width: 20px;
           height: 20px;
+          margin-top: 25px;
         }
       }
     }
@@ -542,29 +557,39 @@ header {
         line-height: 40px;
       }
       .passenger {
-        @include display_flex('column');
+        // @include display_flex('column');
         .passenger-line {
           width: 100%;
-          @include display_flex('row');
+          margin-bottom: 5px;
+          // @include display_flex('row');
           position: relative;
+          float: left;
+          background-color: #fff;
+          >div {
+            float: left;
+            height: 40px;
+            line-height: 40px;
+          }
           .img {
             flex: 2;
-            @include display_flex('row');
+            width: 20%;
+            // @include display_flex('row');
             justify-content: flex-start;
             text-align: left;
             >img {
-              width: 25px;
-              height: 25px;
-              margin-left: 10px;
+              width: 24px;
+              height: 24px;
+              margin-left: 11px;
               z-index: -1;
+              margin-top: 8px;
             }
             &::after {
               content: "";
               position: absolute;
               top: 7.5px;
               left: 10px;
-              width: 25px;
-              height: 25px;
+              width: 26px;
+              height: 26px;
               background-color: #fafafa;
               border-radius: 50%;
               z-index: 0;
@@ -572,15 +597,17 @@ header {
           }
           .name {
             flex: 3;
-            @include display_flex('row');
+            width: 30%;
+            // @include display_flex('row');
             justify-content: flex-start;
           }
           .info {
             flex: 5;
-            @include display_flex('row');
+            width: 50%;
+            // @include display_flex('row');
             justify-content: flex-end;
             text-align: right;
-            margin-right: 10px;
+            padding-right: 10px;
             >span {
               color: rgb(200, 200, 200)
             }
@@ -593,7 +620,10 @@ header {
         .passenger-line.active {
           .img {
             >img {
-              z-index: 1;
+              z-index: 3;
+            }
+            &::after {
+              z-index: -1;
             }
           }
           span {
@@ -623,7 +653,7 @@ header {
 }
 
 .code {
-  @include display_flex("row");
+  // @include display_flex("row");
   background-color: $white;
   margin: 5px 10px;
   border: 0.5px solid #c8c8c8;
@@ -642,7 +672,7 @@ header {
   .right {
     flex: 6;
     width: 60%;
-    @include display_flex('column');
+    // @include display_flex('column');
     align-items: flex-start;
     margin-right: 5px;
     >p {
@@ -677,20 +707,27 @@ header {
   bottom: 0;
   left: 0;
   width: 100%;
-  @include display_flex('row');
+  // @include display_flex('row');
   height: 50px;
   line-height: 50px;
   background-color: $white;
+  >div {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+  }
   .all {
     flex: 2;
-    @include display_flex('row');
+    width: 20%;
+    // @include display_flex('row');
     justify-content: flex-start;
     text-align: left;
     position: relative;
     >img {
       width: 20px;
       height: 20px;
-      margin-left: 20px;
+      margin-left: 22px;
+      margin-top: 17px;
       z-index: -1;
     }
     &::after {
@@ -710,6 +747,9 @@ header {
       height: 50px;
       line-height: 50px;
       color: #c8c8c8;
+      position: absolute;
+      top: 2px;
+      right: 0;
     }
     span.active {
       color: rgb(50, 50, 50);
@@ -719,10 +759,14 @@ header {
     >img {
       z-index: 1;
     }
+    &::after {
+      z-index: -1;
+    }
   }
   .money {
     flex: 5;
-    @include display_flex('row');
+    width: 50%;
+    // @include display_flex('row');
     justify-content: flex-start;
     span.text {
       margin-left: 10px;
@@ -738,7 +782,8 @@ header {
   }
   .btn {
     flex: 3;
-    @include display_flex('row');
+    width: 30%;
+    // @include display_flex('row');
     button {
       background-color: $my_red;
       padding: 10px 20px;
@@ -753,7 +798,7 @@ header {
 .pay {
   height: 50px;
   line-height: 50px;
-  @include display_flex('row');
+  // @include display_flex('row');
   position: fixed;
   bottom: 0;
   left: 0;
@@ -762,7 +807,11 @@ header {
   background-color: $white;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000;
+  >div {
+    float: left;
+  }
   .left {
+    width: 50%;
     flex: 5;
     p {
       height: 50px;
@@ -778,17 +827,21 @@ header {
   }
   .right {
     flex: 5;
-    @include display_flex('row');
+    width: 50%;
+    // @include display_flex('row');
     p {
       color: #329be8;
       font-size: 16px;
       flex: 1;
+      width: 10%;
+      display: inline-block;
       text-align: right;
     }
     span {
       color: #c8c8c8;
       font-size: 12px;
       flex: 3;
+      width: 30%;
     }
     button {
       background-color: #329be8;
@@ -799,15 +852,18 @@ header {
       border: none;
       color: $white;
       flex: 7;
+      width: 70%;
       border-radius: 5px;
     }
     @include responsive("iphone5") {
       span {
         flex: 5;
+        width: 50%;
       }
       button {
         font-size: 14px;
         flex: 5;
+        width: 50%;
       }
     }
   }
@@ -888,12 +944,12 @@ header {
         width: 96%;
         margin: 0px 2%;
         font-size: 1.2rem;
-        display: flex;
+        // display: flex;
         flex-direction: row;
         align-items: center;
         height: 40px;
         .city {
-          display: flex;
+          // display: flex;
           flex-direction: row;
           justify-content: center;
           flex: 1;
@@ -1044,10 +1100,10 @@ header {
   background: none;
   width: 100%;
   height: 100%;
-  @include display_flex('row') img {
-    width: 200px;
-    height: 200px;
-  }
+  // @include display_flex('row') img {
+  //   width: 200px;
+  //   height: 200px;
+  // }
 }
 
 .my-modal {
@@ -1085,7 +1141,7 @@ header {
 }
 
 footer {
-  display: flex;
+  // display: flex;
   flex-direction: row;
   position: fixed;
   bottom: 0;
@@ -1103,7 +1159,7 @@ footer {
   overflow: hidden;
   .footer {
     flex: 1;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1156,7 +1212,7 @@ footer {
   width: 100%;
   height: 100%;
   z-index: 10;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;

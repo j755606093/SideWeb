@@ -231,14 +231,15 @@ header {
         -ms-flex-align: start;
             align-items: flex-start;
         -ms-flex-pack: end;
-            justify-content: flex-end; }
+            justify-content: flex-end;
+        padding: 10px 0; }
         .ticket-info .right .top .name p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .name p {
@@ -272,7 +273,8 @@ header {
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: center;
+        padding: 10px 0; }
         .ticket-info .right .top .info p {
           height: 35px;
           line-height: 35px;
@@ -280,13 +282,11 @@ header {
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
-            color: #f35252;
-            line-height: 45px; }
+            color: #f35252; }
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px;
-            line-height: 45px; }
+            padding-top: 4px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .info p {
               margin-right: 10px; }
@@ -306,7 +306,7 @@ header {
       -ms-flex-pack: start;
           justify-content: flex-start;
       position: relative;
-      margin-top: 4px; }
+      padding-bottom: 5px; }
       .ticket-info .right .bottom img:first-child {
         position: absolute;
         top: 2px;
@@ -324,8 +324,6 @@ header {
         text-align: left; }
 
 .mint-navbar {
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
   height: 40px;
   -ms-flex-pack: center;
@@ -388,8 +386,6 @@ header {
   z-index: 1000;
   width: 100%;
   text-align: center;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-align: center;
@@ -404,8 +400,6 @@ header {
     position: absolute;
     left: 10px;
     top: 0;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     -ms-flex-align: center;
@@ -415,7 +409,8 @@ header {
   .page-header img {
     width: 19px;
     height: 19px;
-    line-height: 50px; }
+    line-height: 50px;
+    margin-top: 15px; }
   .page-header span.right {
     font-size: 14px;
     color: #fff;
@@ -480,8 +475,6 @@ header {
       position: absolute;
       bottom: 0;
       right: 0;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -502,8 +495,6 @@ header {
     border-top-right-radius: 10px;
     margin: 0 10px; }
     .passenger-info .passenger-selected > .line {
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -516,8 +507,6 @@ header {
             flex: 2;
         height: 50px;
         line-height: 50px;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: start;
@@ -552,22 +541,20 @@ header {
     margin-top: 60px; }
     .action-page .action-body .contact {
       outline: none;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
       margin: 0 10px;
       background-color: #fff;
       border-radius: 5px;
       height: 100px;
-      color: #323232; }
+      color: #323232;
+      display: block;
+      height: 90px;
+      padding: 10px 0; }
+      .action-page .action-body .contact > div {
+        float: left; }
       .action-page .action-body .contact .left {
         -ms-flex: 8;
-            flex: 8; }
+            flex: 8;
+        width: 80%; }
         .action-page .action-body .contact .left p {
           color: #323232;
           font-size: 15px;
@@ -584,17 +571,13 @@ header {
       .action-page .action-body .contact .right {
         -ms-flex: 2;
             flex: 2;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center; }
+        width: 20%;
+        height: 70%;
+        text-align: center; }
         .action-page .action-body .contact .right > img {
           width: 20px;
-          height: 20px; }
+          height: 20px;
+          margin-top: 25px; }
     .action-page .action-body .refund {
       text-align: center;
       background-color: #fff;
@@ -613,93 +596,65 @@ header {
         color: #c8c8c8;
         height: 40px;
         line-height: 40px; }
-      .action-page .action-body .refund .passenger {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-            flex-direction: column;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center; }
-        .action-page .action-body .refund .passenger .passenger-line {
-          width: 100%;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center;
-          position: relative; }
-          .action-page .action-body .refund .passenger .passenger-line .img {
-            -ms-flex: 2;
-                flex: 2;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-                flex-direction: row;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center;
-            -ms-flex-pack: start;
-                justify-content: flex-start;
-            text-align: left; }
-            .action-page .action-body .refund .passenger .passenger-line .img > img {
-              width: 25px;
-              height: 25px;
-              margin-left: 10px;
-              z-index: -1; }
-            .action-page .action-body .refund .passenger .passenger-line .img::after {
-              content: "";
-              position: absolute;
-              top: 7.5px;
-              left: 10px;
-              width: 25px;
-              height: 25px;
-              background-color: #fafafa;
-              border-radius: 50%;
-              z-index: 0; }
-          .action-page .action-body .refund .passenger .passenger-line .name {
-            -ms-flex: 3;
-                flex: 3;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-                flex-direction: row;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center;
-            -ms-flex-pack: start;
-                justify-content: flex-start; }
-          .action-page .action-body .refund .passenger .passenger-line .info {
-            -ms-flex: 5;
-                flex: 5;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-                flex-direction: row;
-            -ms-flex-pack: center;
-                justify-content: center;
-            -ms-flex-align: center;
-                align-items: center;
-            -ms-flex-pack: end;
-                justify-content: flex-end;
-            text-align: right;
-            margin-right: 10px; }
-            .action-page .action-body .refund .passenger .passenger-line .info > span {
-              color: #c8c8c8; }
-          .action-page .action-body .refund .passenger .passenger-line span {
-            font-size: 15px;
-            color: #323232; }
-        .action-page .action-body .refund .passenger .passenger-line.active .img > img {
-          z-index: 1; }
-        .action-page .action-body .refund .passenger .passenger-line.active span {
+      .action-page .action-body .refund .passenger .passenger-line {
+        width: 100%;
+        margin-bottom: 5px;
+        position: relative;
+        float: left;
+        background-color: #fff; }
+        .action-page .action-body .refund .passenger .passenger-line > div {
+          float: left;
+          height: 40px;
+          line-height: 40px; }
+        .action-page .action-body .refund .passenger .passenger-line .img {
+          -ms-flex: 2;
+              flex: 2;
+          width: 20%;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+          text-align: left; }
+          .action-page .action-body .refund .passenger .passenger-line .img > img {
+            width: 24px;
+            height: 24px;
+            margin-left: 11px;
+            z-index: -1;
+            margin-top: 8px; }
+          .action-page .action-body .refund .passenger .passenger-line .img::after {
+            content: "";
+            position: absolute;
+            top: 7.5px;
+            left: 10px;
+            width: 26px;
+            height: 26px;
+            background-color: #fafafa;
+            border-radius: 50%;
+            z-index: 0; }
+        .action-page .action-body .refund .passenger .passenger-line .name {
+          -ms-flex: 3;
+              flex: 3;
+          width: 30%;
+          -ms-flex-pack: start;
+              justify-content: flex-start; }
+        .action-page .action-body .refund .passenger .passenger-line .info {
+          -ms-flex: 5;
+              flex: 5;
+          width: 50%;
+          -ms-flex-pack: end;
+              justify-content: flex-end;
+          text-align: right;
+          padding-right: 10px; }
+          .action-page .action-body .refund .passenger .passenger-line .info > span {
+            color: #c8c8c8; }
+        .action-page .action-body .refund .passenger .passenger-line span {
           font-size: 15px;
           color: #323232; }
+      .action-page .action-body .refund .passenger .passenger-line.active .img > img {
+        z-index: 3; }
+      .action-page .action-body .refund .passenger .passenger-line.active .img::after {
+        z-index: -1; }
+      .action-page .action-body .refund .passenger .passenger-line.active span {
+        font-size: 15px;
+        color: #323232; }
     .action-page .action-body .pay-ticket-info {
       margin: 0 10px;
       background-color: #fff;
@@ -715,14 +670,6 @@ header {
         color: #000; }
 
 .code {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
   background-color: #fff;
   margin: 5px 10px;
   border: 0.5px solid #c8c8c8;
@@ -740,14 +687,6 @@ header {
     -ms-flex: 6;
         flex: 6;
     width: 60%;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-        flex-direction: column;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center;
     -ms-flex-align: start;
         align-items: flex-start;
     margin-right: 5px; }
@@ -778,28 +717,17 @@ header {
   bottom: 0;
   left: 0;
   width: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
   height: 50px;
   line-height: 50px;
   background-color: #fff; }
+  .refund-footer > div {
+    float: left;
+    height: 50px;
+    line-height: 50px; }
   .refund-footer .all {
     -ms-flex: 2;
         flex: 2;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center;
+    width: 20%;
     -ms-flex-pack: start;
         justify-content: flex-start;
     text-align: left;
@@ -807,7 +735,8 @@ header {
     .refund-footer .all > img {
       width: 20px;
       height: 20px;
-      margin-left: 20px;
+      margin-left: 22px;
+      margin-top: 17px;
       z-index: -1; }
     .refund-footer .all::after {
       content: "";
@@ -824,22 +753,20 @@ header {
       margin-left: 10px;
       height: 50px;
       line-height: 50px;
-      color: #c8c8c8; }
+      color: #c8c8c8;
+      position: absolute;
+      top: 2px;
+      right: 0; }
     .refund-footer .all span.active {
       color: #323232; }
   .refund-footer .all.active > img {
     z-index: 1; }
+  .refund-footer .all.active::after {
+    z-index: -1; }
   .refund-footer .money {
     -ms-flex: 5;
         flex: 5;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center;
+    width: 50%;
     -ms-flex-pack: start;
         justify-content: flex-start; }
     .refund-footer .money span.text {
@@ -854,14 +781,7 @@ header {
   .refund-footer .btn {
     -ms-flex: 3;
         flex: 3;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center; }
+    width: 30%; }
     .refund-footer .btn button {
       background-color: #f98080;
       padding: 10px 20px;
@@ -873,14 +793,6 @@ header {
 .pay {
   height: 50px;
   line-height: 50px;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -889,7 +801,10 @@ header {
   background-color: #fff;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000; }
+  .pay > div {
+    float: left; }
   .pay .left {
+    width: 50%;
     -ms-flex: 5;
         flex: 5; }
     .pay .left p {
@@ -904,25 +819,21 @@ header {
   .pay .right {
     -ms-flex: 5;
         flex: 5;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center; }
+    width: 50%; }
     .pay .right p {
       color: #329be8;
       font-size: 16px;
       -ms-flex: 1;
           flex: 1;
+      width: 10%;
+      display: inline-block;
       text-align: right; }
     .pay .right span {
       color: #c8c8c8;
       font-size: 12px;
       -ms-flex: 3;
-          flex: 3; }
+          flex: 3;
+      width: 30%; }
     .pay .right button {
       background-color: #329be8;
       height: 40px;
@@ -933,15 +844,18 @@ header {
       color: #fff;
       -ms-flex: 7;
           flex: 7;
+      width: 70%;
       border-radius: 5px; }
     @media (max-width: 320px) {
       .pay .right span {
         -ms-flex: 5;
-            flex: 5; }
+            flex: 5;
+        width: 50%; }
       .pay .right button {
         font-size: 14px;
         -ms-flex: 5;
-            flex: 5; } }
+            flex: 5;
+        width: 50%; } }
 
 .pay-order {
   width: 100%;
@@ -1006,16 +920,12 @@ header {
         width: 96%;
         margin: 0px 2%;
         font-size: 1.2rem;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-align: center;
             align-items: center;
         height: 40px; }
         .pay-order .ticket-body .pay-info .address-info .city {
-          display: -ms-flexbox;
-          display: flex;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
@@ -1138,18 +1048,7 @@ header {
   text-align: center;
   background: none;
   width: 100%;
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center; }
-  .code-popup-visible img {
-    width: 200px;
-    height: 200px; }
+  height: 100%; }
 
 .my-modal {
   position: fixed;
@@ -1177,8 +1076,6 @@ header {
     border: none; }
 
 footer {
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   position: fixed;
@@ -1199,8 +1096,6 @@ footer {
   footer .footer {
     -ms-flex: 1;
         flex: 1;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1246,8 +1141,6 @@ footer {
   width: 100%;
   height: 100%;
   z-index: 10;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;

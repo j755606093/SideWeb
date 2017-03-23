@@ -291,39 +291,44 @@ header.code {
     z-index: 1;
     -ms-flex: 6;
         flex: 6;
-    display: -ms-flexbox;
-    display: flex;
+    width: 60%;
     -ms-flex-direction: column;
         flex-direction: column;
     height: 120px; }
     .ticket-info .right .top {
-      -ms-flex: 7;
-          flex: 7;
-      width: 100%;
-      display: -ms-flexbox;
-      display: flex;
+      -ms-flex: 6.5;
+          flex: 6.5;
+      height: 90px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
           justify-content: center; }
+      .ticket-info .right .top > div {
+        float: left;
+        height: 90px; }
       .ticket-info .right .top .name {
-        -ms-flex: 6;
-            flex: 6;
-        width: 60%;
-        display: -ms-flexbox;
-        display: flex;
+        -ms-flex: 6.5;
+            flex: 6.5;
+        width: 65%;
         -ms-flex-direction: column;
             flex-direction: column;
         -ms-flex-align: start;
             align-items: flex-start;
         -ms-flex-pack: end;
-            justify-content: flex-end; }
+            justify-content: flex-end;
+        padding: 10px 0; }
         .ticket-info .right .top .name p {
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
           position: relative;
           text-align: left;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px; }
+          @media (max-width: 320px) {
+            .ticket-info .right .top .name p {
+              font-size: 16px;
+              margin-left: 10px; } }
           .ticket-info .right .top .name p:first-child::after {
             content: "";
             width: 10px;
@@ -331,7 +336,7 @@ header.code {
             border-radius: 50%;
             background-color: #60e7bf;
             position: absolute;
-            top: 9px;
+            top: 18px;
             left: -17px; }
           .ticket-info .right .top .name p:last-child {
             line-height: 40px; }
@@ -345,20 +350,19 @@ header.code {
             top: 15px;
             left: -17px; }
       .ticket-info .right .top .info {
-        -ms-flex: 4;
-            flex: 4;
-        width: 40%;
-        display: -ms-flexbox;
-        display: flex;
+        -ms-flex: 3.5;
+            flex: 3.5;
+        width: 35%;
         -ms-flex-direction: column;
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: center;
+        padding: 10px 0; }
         .ticket-info .right .top .info p {
-          height: 28px;
-          line-height: 28px;
-          margin-right: 25px; }
+          height: 35px;
+          line-height: 35px;
+          margin-right: 10px; }
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
@@ -366,27 +370,42 @@ header.code {
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px; }
+            padding-top: 4px; }
+          @media (max-width: 320px) {
+            .ticket-info .right .top .info p {
+              margin-right: 10px; }
+              .ticket-info .right .top .info p:first-child {
+                font-size: 16px; }
+              .ticket-info .right .top .info p:last-child {
+                padding-top: 6px; } }
+        @media (max-width: 320px) {
+          .ticket-info .right .top .info p {
+            margin-right: 10px; } }
     .ticket-info .right .bottom {
       -ms-flex: 3;
           flex: 3;
-      width: 100%;
-      display: -ms-flexbox;
-      display: flex;
+      height: 30px;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: start;
           justify-content: flex-start;
       position: relative;
-      margin-top: 4px; }
-      .ticket-info .right .bottom img {
+      padding-bottom: 5px; }
+      .ticket-info .right .bottom img:first-child {
         position: absolute;
-        top: 4px;
+        top: 2px;
         left: 4px;
         width: 10px;
         height: 10px; }
+      .ticket-info .right .bottom img.right {
+        position: absolute;
+        top: 5px;
+        right: 25px;
+        width: 10px;
+        height: 8px; }
       .ticket-info .right .bottom p {
-        margin-left: 20px; }
+        margin-left: 20px;
+        text-align: left; }
 
 .line-other {
   width: 100%;

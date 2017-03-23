@@ -12859,30 +12859,6 @@
 		});
 	};
 
-	var districtSearchCountry = new AMap.DistrictSearch({
-		level: 'country',
-		subdistrict: 1,
-		showbiz: false
-	});
-
-	var districtSearchProvince = new AMap.DistrictSearch({
-		level: 'province',
-		subdistrict: 1,
-		showbiz: false
-	});
-
-	var districtSearchCity = new AMap.DistrictSearch({
-		level: 'province',
-		subdistrict: 1,
-		showbiz: false
-	});
-
-	var districtSearchDistrict = new AMap.DistrictSearch({
-		level: 'district',
-		subdistrict: 1,
-		showbiz: false
-	});
-
 	// getters,获取数据
 	// 调用方法如下
 	// this.$store.getters.getIsFirst
@@ -12977,9 +12953,6 @@
 			var commit = _ref6.commit,
 			    state = _ref6.state;
 
-			districtSearchProvince.search("广东", function (status, result) {
-				console.log(status, result);
-			});
 			return getData("/api/Transport/ChildArea?parentid=" + data.Id).then(function (result) {
 				switch (data.Type) {
 					case 0:

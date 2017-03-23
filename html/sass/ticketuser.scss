@@ -13,24 +13,25 @@ header {
   width: 100%;
   text-align: center;
   background-color: #2196F3;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   background-color: #329be8;
+  position: relative;
   .left {
-    position: absolute;
     width: 50px;
+    height: 50px;
+    position: absolute;
     top: 0;
     left: 0;
+    display: inline-block;
     line-height: 50px;
     >img {
       width: 20px;
       height: 20px;
       line-height: 50px;
-      position: absolute;
-      left: 25px;
-      top: 15.5px;
+      margin-top: 15px;
     }
   }
   .home {
@@ -39,6 +40,8 @@ header {
       color: $white;
       font-size: 20px;
       font-weight: 900;
+      height: 50px;
+      line-height: 50px;
     }
   }
 }
@@ -50,7 +53,7 @@ header {
   .header {
     height: 130px;
     // background-color: #2196F3;
-    display: flex;
+    // display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -63,6 +66,11 @@ header {
       height: 130px;
       width: 100%;
       z-index: -1;
+    }
+    >div {
+      float: left;
+      display: inline-block;
+      margin-top: 20px;
     }
     .content {
       height: 90px;
@@ -125,7 +133,7 @@ header {
     position: absolute;
     top: 0;
     right: 0;
-    @include display_flex('row');
+    // @include display_flex('row');
     >img {
       width: 20px;
       height: 20px;
@@ -157,7 +165,7 @@ header {
       position: fixed;
       top: 50px;
       left: 0;
-      display: flex;
+      // display: flex;
       width: 100%;
       flex-direction: row;
       align-items: center;
@@ -170,6 +178,13 @@ header {
       // box-shadow: 3px 0 3px 3px #efeeee;
       background-color: white;
       padding: 0 20px;
+      >span {
+        float: left;
+        width: 25%;
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+      }
       span {
         flex: 1;
         font-size: 16px;
@@ -198,7 +213,7 @@ header {
       border-radius: 10px;
       margin-bottom: 10px;
       .list-header {
-        display: flex;
+        // display: flex;
         flex-direction: row;
         justify-content: center;
         border-bottom: 1px solid lighten($gray, 20%);
@@ -218,14 +233,14 @@ header {
         }
       }
       .list-center {
-        display: flex;
+        // display: flex;
         flex-direction: row;
         justify-content: center;
         padding: 5px 0;
         min-height: 50px;
         align-items: center;
         .city {
-          display: flex;
+          // display: flex;
           flex-direction: row;
           justify-content: center;
           flex: 0.8;
@@ -270,7 +285,7 @@ header {
         }
       }
       .list-footer {
-        display: flex;
+        // display: flex;
         flex-direction: row;
         justify-content: center;
         padding: 5px 0;
@@ -353,7 +368,7 @@ header {
       position: absolute;
       bottom: 0;
       right: 0;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -464,13 +479,14 @@ header {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-end;
+        padding: 10px 0;
         p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px;
           @include responsive("iphone5") {
             font-size: 16px;
@@ -509,6 +525,7 @@ header {
         flex-direction: column;
         text-align: right;
         justify-content: center;
+        padding: 10px 0;
         p {
           height: 35px;
           line-height: 35px;
@@ -517,13 +534,13 @@ header {
             font-weight: 900;
             font-size: 20px;
             color: rgb(243, 82, 82);
-            line-height: 45px;
+            // line-height: 45px;
           }
           &:last-child {
             font-size: 12px;
             color: rgb(50, 50, 50);
-            padding-top: 8px;
-            line-height: 45px;
+            padding-top: 4px;
+            // line-height: 45px;
           }
           @include responsive("iphone5") {
             margin-right: 10px;
@@ -549,7 +566,8 @@ header {
       flex-direction: row;
       justify-content: flex-start;
       position: relative;
-      margin-top: 4px;
+      padding-bottom: 5px;
+      // margin-top: 4px;
       img {
         &:first-child {
           position: absolute;
@@ -584,7 +602,7 @@ header {
   overflow-y: scroll;
   .lists {
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 60px;
@@ -592,7 +610,7 @@ header {
     .list {
       width: 100%;
       padding: 0 2%;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -708,7 +726,7 @@ header {
       .pay {
         height: 50px;
         line-height: 50px;
-        @include display_flex('row');
+        // @include display_flex('row');
         position: fixed;
         bottom: 0;
         left: 0;
@@ -732,7 +750,7 @@ header {
         }
         .right {
           flex: 5;
-          @include display_flex('row');
+          // @include display_flex('row');
           span {
             color: #c8c8c8;
             font-size: 12px;
@@ -874,7 +892,7 @@ header {
     background-color: $white;
     color: #c8c8c8;
     text-align: center;
-    display: flex;
+    // display: flex;
     flex-direction: row;
     justify-content: center;
     span {
@@ -903,11 +921,11 @@ header {
     width: 100%;
     padding: 0 10px;
     .rebate {
-      // height: 200px;
-      display: flex;
+      height: 200px;
+      // display: flex;
       margin-top: 10px;
       background-color: #fff;
-      @include display_flex("column");
+      // @include display_flex("column");
       width: 50%;
       float: left;
       .top {
@@ -921,11 +939,16 @@ header {
       .bottom {
         border: 0.5px solid #c8c8c8;
         border-top: none;
-        // height:100px;
+        height: 100px;
         width: 100%;
-        @include display_flex("row");
+        // @include display_flex("row");
+        >div {
+          float: left;
+          display: inline-block;
+        }
         .left {
           flex: 6;
+          width: 70%;
           padding-left: 10px;
           p {
             font-size: 23px;
@@ -952,6 +975,7 @@ header {
         }
         .right {
           flex: 4;
+          width: 30%;
           a {
             color: #329be8;
             text-align: center;
@@ -1001,7 +1025,7 @@ header {
   overflow-y: scroll;
   .lists {
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 60px;
@@ -1013,7 +1037,7 @@ header {
       padding: 0 2%;
       height: 40px;
       line-height: 40px;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       border-bottom: 1px solid lighten($gray, 20%);
       span {
@@ -1043,7 +1067,7 @@ header {
     }
   }
   .info-man {
-    display: flex;
+    // display: flex;
     flex-direction: column;
     background-color: white;
     margin-top: 20px;
@@ -1051,7 +1075,7 @@ header {
       height: 40px;
       line-height: 40px;
       flex: 1;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       width: 96%;
       margin: 0 2%;
@@ -1100,7 +1124,7 @@ header {
   margin-top: 50px;
   .lists {
     // width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1113,35 +1137,49 @@ header {
       // margin-top: 10px;
       // height: 40px;
       // line-height: 40px;
-      display: flex;
+      // display: flex;
       flex-direction: column;
       border-bottom: 1px solid lighten($gray, 20%);
       .info-man-line {
         height: 50px;
         line-height: 50px;
         // border-bottom: 1px solid lighten($gray, 20%);
-        display: flex;
+        // display: flex;
         flex-direction: row;
         align-items: center;
         background-color: white;
         border-radius: 10px;
         margin-top: 10px;
+        position: relative;
+        >span {
+          float: left;
+          display: inline-block;
+          height: 50px;
+          line-height: 50px;
+        }
         .left {
           flex: 0.3;
+          width: 30%;
           margin-left: 10px;
         }
         .gray {
           flex: 0.5;
+          width: 50%;
           color: darken($gray, 20%);
         }
         .right {
+          position: absolute;
+          top: 0;
+          right: 0;
           flex: 0.2;
-          height: 40px;
-          line-height: 40px;
-          display: flex;
+          width: 20%;
+          height: 50px;
+          line-height: 50px;
+          // display: flex;
           flex-direction: row;
           justify-content: center;
           align-items: center;
+          text-align: center;
           i {
             float: right;
             color: $blue;
@@ -1150,6 +1188,7 @@ header {
           >img {
             width: 20px;
             height: 20px;
+            margin-top: 15px;
           }
         }
       }
@@ -1189,7 +1228,7 @@ header {
   margin-top: 50px;
   .lists {
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1253,7 +1292,7 @@ header {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
+  // display: flex;
   flex-direction: row;
   justify-content: center;
   // align-items: center;
@@ -1264,16 +1303,20 @@ header {
     border-radius: 10px;
     height: 200px;
     margin-top: 100px;
+    margin-left: 10%;
+    margin-right: 10%;
     .line-header {
       height: 40px;
       font-size: 20px;
       text-align: center;
-      @include display_flex('row');
+      // @include display_flex('row');
     }
     .line-btn {
-      @include display_flex('row');
+      // @include display_flex('row');
       >button {
         flex: 1;
+        width: 50%;
+        float: left;
         background-color: #fff;
         border: none;
         outline: none;
@@ -1301,7 +1344,7 @@ header {
   padding-top: 90px;
   .lists {
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 10px;
@@ -1309,21 +1352,30 @@ header {
     .list {
       width: 96%;
       margin: 0 2%;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       background-color: white;
       border-radius: 10px;
       margin-bottom: 10px;
       padding: 10px 10px;
       color: $black;
+      background-color: #fff;
+      margin-bottom: 10px;
+      float: left;
+      >div {
+        float: left;
+        display: inline-block;
+        background-color: #fff;
+      }
       .left {
         flex: 0.8;
-        display: flex;
+        width: 80%;
+        // display: flex;
         flex-direction: column;
         .left-line {
           height: 30px;
           line-height: 30px;
-          display: flex;
+          // display: flex;
           flex-direction: row;
           .left-span {
             flex: 0.3;
@@ -1335,6 +1387,8 @@ header {
       }
       .right {
         flex: 0.2;
+        width: 20%;
+        height: 120px;
         position: relative;
         img.checking {
           position: absolute;
@@ -1342,6 +1396,7 @@ header {
           bottom: 10px;
           width: 60px;
           height: 60px;
+          margin-bottom: 20px;
           // transform: rotate(-30deg);
         }
       }
@@ -1376,25 +1431,34 @@ header {
       width: 100%;
       height: 175px;
       background-color: #329be8;
+      // >div {
+      //   float: left;
+      //   display: inline-block;
+      // }
       .money-header-top {
         height: 100px;
         width: 100%;
         padding: 10px 5px;
-        @include display_flex('row');
+        // @include display_flex('row');
         color: #fff;
         font-weight: 900;
+        >div {
+          float: left;
+          display: inline-block;
+          text-align: center;
+        }
         .money-block {
           flex: 1;
           width: 33.33333%;
           height: 100px;
-          @include display_flex('column');
+          // @include display_flex('column');
         }
         .money-left {
           position: relative;
           >p.first {
             font-size: 24px;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-top: 20px;
             >span {
               font-size: 14px;
               margin-right: 5px;
@@ -1444,7 +1508,7 @@ header {
           >p.first {
             font-size: 24px;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-top: 20px;
             >span {
               font-size: 14px;
               margin-right: 5px;
@@ -1472,7 +1536,7 @@ header {
       .money-header-bottom {
         text-align: center;
         height: 70px;
-        @include display_flex('row');
+        // @include display_flex('row');
         .getmoney {
           width: 100px;
           border: none;
@@ -1483,6 +1547,7 @@ header {
           border-radius: 5px;
           background-color: #4da2ec;
           font-size: 15px;
+          margin-top: 10px;
         }
       }
     }
@@ -1493,18 +1558,23 @@ header {
         height: 50px;
         margin-top: 10px;
         padding: 5px 0;
-        @include display_flex('row');
+        // @include display_flex('row');
         background-color: #fff;
         border-radius: 5px;
+        >div {
+          float: left;
+          display: inline-block;
+        }
         .img {
           width: 50px;
           height: 50px;
-          @include display_flex('row');
+          // @include display_flex('row');
           margin-left: 10px;
           >img {
             width: 30px;
             height: 30px;
             border-radius: 50%;
+            margin-top: 15px;
           }
         }
         .name {
@@ -1519,11 +1589,15 @@ header {
         }
         .taskname {
           flex: 1;
+          float: right;
           line-height: 50px;
           height: 50px;
           text-align: right;
           font-size: 14px;
           margin-right: 10px;
+          p {
+            width: 100%;
+          }
         }
         @include responsive('iphone5') {
           .name {
@@ -1546,7 +1620,7 @@ header {
   width: 100%;
   height: 100%;
   z-index: 10;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -1588,7 +1662,7 @@ header {
 }
 
 footer {
-  display: flex;
+  // display: flex;
   flex-direction: row;
   position: fixed;
   bottom: 0;
@@ -1603,9 +1677,10 @@ footer {
   background-color: $white;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 100;
+  overflow: hidden;
   .footer {
     flex: 1;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1613,6 +1688,10 @@ footer {
     color: $gray;
     height: 50px;
     line-height: 50px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    position: relative;
     i {
       font-size: 1.8rem;
     }
@@ -1625,6 +1704,10 @@ footer {
       color: $gray;
       height: 20px;
       line-height: 20px;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 40%;
     }
   }
   .footer.active {

@@ -215,28 +215,41 @@ header.code {
   .right {
     z-index: 1;
     flex: 6;
-    display: flex;
+    width: 60%;
+    // display: flex;
     flex-direction: column;
     height: 120px;
     .top {
-      flex: 7;
-      width: 100%;
-      display: flex;
+      flex: 6.5;
+      height: 90px;
+      // display: flex;
       flex-direction: row;
       justify-content: center;
+      >div {
+        float: left;
+        height: 90px;
+      }
       .name {
-        flex: 6;
-        width: 60%;
-        display: flex;
+        flex: 6.5;
+        width: 65%;
+        // display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-end;
+        padding: 10px 0;
         p {
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
           position: relative;
           text-align: left;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px;
+          @include responsive("iphone5") {
+            font-size: 16px;
+            margin-left: 10px;
+          }
+          // @include text_nowrap;
           &:first-child::after {
             content: "";
             width: 10px;
@@ -244,7 +257,7 @@ header.code {
             border-radius: 50%;
             background-color: $my_green;
             position: absolute;
-            top: 9px;
+            top: 18px;
             left: -17px;
           }
           &:last-child {
@@ -263,46 +276,74 @@ header.code {
         }
       }
       .info {
-        flex: 4;
-        width: 40%;
-        display: flex;
+        flex: 3.5;
+        width: 35%;
+        // display: flex;
         flex-direction: column;
         text-align: right;
         justify-content: center;
+        padding: 10px 0;
         p {
-          height: 28px;
-          line-height: 28px;
-          margin-right: 25px;
+          height: 35px;
+          line-height: 35px;
+          margin-right: 10px;
           &:first-child {
             font-weight: 900;
             font-size: 20px;
             color: rgb(243, 82, 82);
+            // line-height: 45px;
           }
           &:last-child {
             font-size: 12px;
             color: rgb(50, 50, 50);
-            padding-top: 8px;
+            padding-top: 4px;
+            // line-height: 45px;
+          }
+          @include responsive("iphone5") {
+            margin-right: 10px;
+            &:first-child {
+              font-size: 16px;
+            }
+            &:last-child {
+              padding-top: 6px;
+            }
+          }
+        }
+        @include responsive('iphone5') {
+          p {
+            margin-right: 10px;
           }
         }
       }
     }
     .bottom {
       flex: 3;
-      width: 100%;
-      display: flex;
+      height: 30px;
+      // display: flex;
       flex-direction: row;
       justify-content: flex-start;
       position: relative;
-      margin-top: 4px;
+      padding-bottom: 5px;
+      // margin-top: 4px;
       img {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 10px;
-        height: 10px;
+        &:first-child {
+          position: absolute;
+          top: 2px;
+          left: 4px;
+          width: 10px;
+          height: 10px;
+        }
+        &.right {
+          position: absolute;
+          top: 5px;
+          right: 25px;
+          width: 10px;
+          height: 8px;
+        }
       }
       p {
         margin-left: 20px;
+        text-align: left;
       }
     }
   }

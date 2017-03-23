@@ -307,13 +307,14 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-end;
+        padding: 10px 0;
         p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px;
           @include responsive("iphone5") {
             font-size: 16px;
@@ -352,6 +353,7 @@
         flex-direction: column;
         text-align: right;
         justify-content: center;
+        padding: 10px 0;
         p {
           height: 35px;
           line-height: 35px;
@@ -360,13 +362,13 @@
             font-weight: 900;
             font-size: 20px;
             color: rgb(243, 82, 82);
-            line-height: 45px;
+            // line-height: 45px;
           }
           &:last-child {
             font-size: 12px;
             color: rgb(50, 50, 50);
-            padding-top: 8px;
-            line-height: 45px;
+            padding-top: 4px;
+            // line-height: 45px;
           }
           @include responsive("iphone5") {
             margin-right: 10px;
@@ -392,7 +394,8 @@
       flex-direction: row;
       justify-content: flex-start;
       position: relative;
-      margin-top: 4px;
+      padding-bottom: 5px;
+      // margin-top: 4px;
       img {
         &:first-child {
           position: absolute;
@@ -826,9 +829,11 @@
           flex-direction: row;
           justify-content: center;
           align-items: center;
+          text-align: center;
           >img {
             width: 20px;
             height: 20px;
+            margin-top: 20px;
           }
         }
       }
@@ -842,7 +847,7 @@
         background-color: $white;
         color: #c8c8c8;
         text-align: center;
-        display: flex;
+        // display: flex;
         flex-direction: row;
         justify-content: center;
         span {
@@ -873,40 +878,34 @@
         padding: 0 10px;
       }
       .rebate {
-        // height: 200px;
-        display: flex;
+        height: 200px;
+        // display: flex;
         margin-top: 10px;
         background-color: #fff;
-        @include display_flex("column");
+        // @include display_flex("column");
         width: 50%;
         float: left;
         .top {
           width: 100%;
           height: 100px;
-          position: relative;
           img {
             width: 100%;
             height: 100px;
-          }
-          p {
-            // width:100%;
-            bottom: 5px;
-            right: 5px;
-            left: 5px;
-            text-align: right;
-            color: #fff;
-            position: absolute;
-            font-weight: 900;
           }
         }
         .bottom {
           border: 0.5px solid #c8c8c8;
           border-top: none;
-          // height:100px;
+          height: 100px;
           width: 100%;
-          @include display_flex("row");
+          // @include display_flex("row");
+          >div {
+            float: left;
+            display: inline-block;
+          }
           .left {
             flex: 7;
+            width: 70%;
             padding-left: 10px;
             p {
               font-size: 23px;
@@ -933,12 +932,15 @@
           }
           .right {
             flex: 3;
+            width: 30%;
             text-align: center;
             position: relative;
+            height: 100%;
             img {
               width: 28px;
               height: 28px;
               z-index: -1;
+              margin-top: 30px;
             }
             span {
               width: 30px;
@@ -947,7 +949,7 @@
               border-radius: 50%;
               z-index: 1;
               position: absolute;
-              top: -1px;
+              top: 29px;
               right: 20%;
             }
             @include responsive('iphone5') {
@@ -1036,7 +1038,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
+  // display: flex;
   flex-direction: row;
   justify-content: center;
   // align-items: center;
@@ -1046,12 +1048,14 @@
     background-color: #fff;
     border-radius: 10px;
     height: 200px;
+    margin-left: 10%;
+    margin-right: 10%;
     margin-top: 100px;
     .line-header {
       height: 40px;
       font-size: 20px;
       text-align: center;
-      @include display_flex('row');
+      // @include display_flex('row');
     }
     .line-btn {
       // @include display_flex('row');
@@ -1083,7 +1087,7 @@
 .pay {
   height: 50px;
   line-height: 50px;
-  @include display_flex('row');
+  // @include display_flex('row');
   position: fixed;
   bottom: 0;
   left: 0;
@@ -1092,8 +1096,13 @@
   background-color: $white;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000;
+  >div {
+    float: left;
+    display: inline-block;
+  }
   .left {
     flex: 5;
+    width: 50%;
     p {
       height: 50px;
       line-height: 50px;
@@ -1108,13 +1117,19 @@
   }
   .right {
     flex: 5;
-    @include display_flex('row');
+    width: 50%;
+    // @include display_flex('row');
     span {
       color: #c8c8c8;
       font-size: 12px;
       flex: 5;
+      height: 50px;
+      width: 50%;
+      display: inline-block;
+      float: left;
     }
     button {
+      width: 50%;
       background-color: #329be8;
       height: 40px;
       line-height: 40px;
@@ -1176,7 +1191,7 @@
   .order-info {
     flex: 0.6;
     width: 60%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     padding: 0 10px;
     margin: 5px 0;

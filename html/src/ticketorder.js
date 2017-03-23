@@ -508,9 +508,7 @@ const Vue_Order = new Vue({
 		inputRefund() {
 			return MessageBox.prompt('请输入退款理由').then(({ value, action }) => {
 				return value;
-			}).catch(error => {
-
-			});
+			})
 		},
 		/** 查看选择乘客是否合法 */
 		checkSelectPassenger() {

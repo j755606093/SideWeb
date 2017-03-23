@@ -104,41 +104,40 @@ header {
   width: 100%;
   text-align: center;
   background-color: #2196F3;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
-  background-color: #329be8; }
+  background-color: #329be8;
+  position: relative; }
   header .left {
-    position: absolute;
     width: 50px;
+    height: 50px;
+    position: absolute;
     top: 0;
     left: 0;
+    display: inline-block;
     line-height: 50px; }
     header .left > img {
       width: 20px;
       height: 20px;
       line-height: 50px;
-      position: absolute;
-      left: 25px;
-      top: 15.5px; }
+      margin-top: 15px; }
   header .home {
     text-align: center; }
     header .home span {
       color: #fff;
       font-size: 20px;
-      font-weight: 900; }
+      font-weight: 900;
+      height: 50px;
+      line-height: 50px; }
 
 .body {
   width: 100%; }
   .body .header {
     height: 130px;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     -ms-flex-pack: center;
@@ -154,6 +153,10 @@ header {
       height: 130px;
       width: 100%;
       z-index: -1; }
+    .body .header > div {
+      float: left;
+      display: inline-block;
+      margin-top: 20px; }
     .body .header .content {
       height: 90px;
       width: 100%; }
@@ -206,15 +209,7 @@ header {
     line-height: 60px;
     position: absolute;
     top: 0;
-    right: 0;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center; }
+    right: 0; }
     .linestyle > div > img {
       width: 20px;
       height: 20px; }
@@ -241,8 +236,6 @@ header {
       position: fixed;
       top: 50px;
       left: 0;
-      display: -ms-flexbox;
-      display: flex;
       width: 100%;
       -ms-flex-direction: row;
           flex-direction: row;
@@ -257,6 +250,12 @@ header {
       z-index: 10;
       background-color: white;
       padding: 0 20px; }
+      .order-lists > .lists .order-lists-header > span {
+        float: left;
+        width: 25%;
+        display: inline-block;
+        height: 40px;
+        line-height: 40px; }
       .order-lists > .lists .order-lists-header span {
         -ms-flex: 1;
             flex: 1;
@@ -280,8 +279,6 @@ header {
       border-radius: 10px;
       margin-bottom: 10px; }
       .order-lists > .lists .list .list-header {
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: center;
@@ -301,8 +298,6 @@ header {
           -ms-flex: 0.3;
               flex: 0.3; }
       .order-lists > .lists .list .list-center {
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: center;
@@ -312,8 +307,6 @@ header {
         -ms-flex-align: center;
             align-items: center; }
         .order-lists > .lists .list .list-center .city {
-          display: -ms-flexbox;
-          display: flex;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
@@ -355,8 +348,6 @@ header {
           text-align: right;
           color: #db3652; }
       .order-lists > .lists .list .list-footer {
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: center;
@@ -431,8 +422,6 @@ header {
       position: absolute;
       bottom: 0;
       right: 0;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -544,14 +533,15 @@ header {
         -ms-flex-align: start;
             align-items: flex-start;
         -ms-flex-pack: end;
-            justify-content: flex-end; }
+            justify-content: flex-end;
+        padding: 10px 0; }
         .ticket-info .right .top .name p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .name p {
@@ -585,7 +575,8 @@ header {
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: center;
+        padding: 10px 0; }
         .ticket-info .right .top .info p {
           height: 35px;
           line-height: 35px;
@@ -593,13 +584,11 @@ header {
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
-            color: #f35252;
-            line-height: 45px; }
+            color: #f35252; }
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px;
-            line-height: 45px; }
+            padding-top: 4px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .info p {
               margin-right: 10px; }
@@ -619,7 +608,7 @@ header {
       -ms-flex-pack: start;
           justify-content: flex-start;
       position: relative;
-      margin-top: 4px; }
+      padding-bottom: 5px; }
       .ticket-info .right .bottom img:first-child {
         position: absolute;
         top: 2px;
@@ -646,8 +635,6 @@ header {
   overflow-y: scroll; }
   .discount-lists .lists {
     width: 100%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -658,8 +645,6 @@ header {
     .discount-lists .lists .list {
       width: 100%;
       padding: 0 2%;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       -ms-flex-pack: center;
@@ -759,14 +744,6 @@ header {
       .action-page > .action .action-body .pay {
         height: 50px;
         line-height: 50px;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -788,15 +765,7 @@ header {
               font-weight: 900; }
         .action-page > .action .action-body .pay .right {
           -ms-flex: 5;
-              flex: 5;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center; }
+              flex: 5; }
           .action-page > .action .action-body .pay .right span {
             color: #c8c8c8;
             font-size: 12px;
@@ -926,8 +895,6 @@ header {
     background-color: #fff;
     color: #c8c8c8;
     text-align: center;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
     -ms-flex-pack: center;
@@ -955,17 +922,9 @@ header {
     width: 100%;
     padding: 0 10px; }
     .action-use .page .rebate {
-      display: -ms-flexbox;
-      display: flex;
+      height: 200px;
       margin-top: 10px;
       background-color: #fff;
-      display: flex;
-      -ms-flex-direction: column;
-          flex-direction: column;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
       width: 50%;
       float: left; }
       .action-use .page .rebate .top {
@@ -977,18 +936,15 @@ header {
       .action-use .page .rebate .bottom {
         border: 0.5px solid #c8c8c8;
         border-top: none;
-        width: 100%;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center; }
+        height: 100px;
+        width: 100%; }
+        .action-use .page .rebate .bottom > div {
+          float: left;
+          display: inline-block; }
         .action-use .page .rebate .bottom .left {
           -ms-flex: 6;
               flex: 6;
+          width: 70%;
           padding-left: 10px; }
           .action-use .page .rebate .bottom .left p {
             font-size: 23px;
@@ -1010,7 +966,8 @@ header {
             margin-bottom: 8px; }
         .action-use .page .rebate .bottom .right {
           -ms-flex: 4;
-              flex: 4; }
+              flex: 4;
+          width: 30%; }
           .action-use .page .rebate .bottom .right a {
             color: #329be8;
             text-align: center;
@@ -1038,8 +995,6 @@ header {
   overflow-y: scroll; }
   .passenger-lists .lists {
     width: 100%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1055,8 +1010,6 @@ header {
       padding: 0 2%;
       height: 40px;
       line-height: 40px;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       border-bottom: 1px solid #dddddd; }
@@ -1083,8 +1036,6 @@ header {
           width: 40px;
           line-height: 40px; }
   .passenger-lists .info-man {
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     background-color: white;
@@ -1094,8 +1045,6 @@ header {
       line-height: 40px;
       -ms-flex: 1;
           flex: 1;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       width: 96%;
@@ -1137,8 +1086,6 @@ header {
   overflow-y: scroll;
   margin-top: 50px; }
   .user-lists .lists {
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1150,51 +1097,59 @@ header {
       -ms-flex: 1;
           flex: 1;
       width: 100%;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
       border-bottom: 1px solid #dddddd; }
       .user-lists .lists .info-man .info-man-line {
         height: 50px;
         line-height: 50px;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-align: center;
             align-items: center;
         background-color: white;
         border-radius: 10px;
-        margin-top: 10px; }
+        margin-top: 10px;
+        position: relative; }
+        .user-lists .lists .info-man .info-man-line > span {
+          float: left;
+          display: inline-block;
+          height: 50px;
+          line-height: 50px; }
         .user-lists .lists .info-man .info-man-line .left {
           -ms-flex: 0.3;
               flex: 0.3;
+          width: 30%;
           margin-left: 10px; }
         .user-lists .lists .info-man .info-man-line .gray {
           -ms-flex: 0.5;
               flex: 0.5;
+          width: 50%;
           color: #777777; }
         .user-lists .lists .info-man .info-man-line .right {
+          position: absolute;
+          top: 0;
+          right: 0;
           -ms-flex: 0.2;
               flex: 0.2;
-          height: 40px;
-          line-height: 40px;
-          display: -ms-flexbox;
-          display: flex;
+          width: 20%;
+          height: 50px;
+          line-height: 50px;
           -ms-flex-direction: row;
               flex-direction: row;
           -ms-flex-pack: center;
               justify-content: center;
           -ms-flex-align: center;
-              align-items: center; }
+              align-items: center;
+          text-align: center; }
           .user-lists .lists .info-man .info-man-line .right i {
             float: right;
             color: #0074D9;
             font-size: 1.4rem; }
           .user-lists .lists .info-man .info-man-line .right > img {
             width: 20px;
-            height: 20px; }
+            height: 20px;
+            margin-top: 15px; }
       .user-lists .lists .info-man span {
         font-size: 1.4rem; }
 
@@ -1224,8 +1179,6 @@ header {
   margin-top: 50px; }
   .help-lists .lists {
     width: 100%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1278,8 +1231,6 @@ header {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;
@@ -1289,40 +1240,27 @@ header {
     background-color: #fff;
     border-radius: 10px;
     height: 200px;
-    margin-top: 100px; }
+    margin-top: 100px;
+    margin-left: 10%;
+    margin-right: 10%; }
     .change-page .change-page-body .line-header {
       height: 40px;
       font-size: 20px;
-      text-align: center;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
-    .change-page .change-page-body .line-btn {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
-      .change-page .change-page-body .line-btn > button {
-        -ms-flex: 1;
-            flex: 1;
-        background-color: #fff;
-        border: none;
-        outline: none;
-        height: 40px;
-        font-size: 16px; }
-        .change-page .change-page-body .line-btn > button.left-btn {
-          color: #999; }
-        .change-page .change-page-body .line-btn > button.right-btn {
-          color: #0074D9; }
+      text-align: center; }
+    .change-page .change-page-body .line-btn > button {
+      -ms-flex: 1;
+          flex: 1;
+      width: 50%;
+      float: left;
+      background-color: #fff;
+      border: none;
+      outline: none;
+      height: 40px;
+      font-size: 16px; }
+      .change-page .change-page-body .line-btn > button.left-btn {
+        color: #999; }
+      .change-page .change-page-body .line-btn > button.right-btn {
+        color: #0074D9; }
 
 .refund-lists {
   width: 100%;
@@ -1335,8 +1273,6 @@ header {
   padding-top: 90px; }
   .refund-lists .lists {
     width: 100%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1347,27 +1283,29 @@ header {
     .refund-lists .lists .list {
       width: 96%;
       margin: 0 2%;
-      display: -ms-flexbox;
-      display: flex;
       -ms-flex-direction: row;
           flex-direction: row;
       background-color: white;
       border-radius: 10px;
       margin-bottom: 10px;
       padding: 10px 10px;
-      color: #111111; }
+      color: #111111;
+      background-color: #fff;
+      margin-bottom: 10px;
+      float: left; }
+      .refund-lists .lists .list > div {
+        float: left;
+        display: inline-block;
+        background-color: #fff; }
       .refund-lists .lists .list .left {
         -ms-flex: 0.8;
             flex: 0.8;
-        display: -ms-flexbox;
-        display: flex;
+        width: 80%;
         -ms-flex-direction: column;
             flex-direction: column; }
         .refund-lists .lists .list .left .left-line {
           height: 30px;
           line-height: 30px;
-          display: -ms-flexbox;
-          display: flex;
           -ms-flex-direction: row;
               flex-direction: row; }
           .refund-lists .lists .list .left .left-line .left-span {
@@ -1379,13 +1317,16 @@ header {
       .refund-lists .lists .list .right {
         -ms-flex: 0.2;
             flex: 0.2;
+        width: 20%;
+        height: 120px;
         position: relative; }
         .refund-lists .lists .list .right img.checking {
           position: absolute;
           right: 10px;
           bottom: 10px;
           width: 60px;
-          height: 60px; }
+          height: 60px;
+          margin-bottom: 20px; }
     .refund-lists .lists span {
       font-size: 1.2rem; }
     .refund-lists .lists .blue {
@@ -1410,35 +1351,23 @@ header {
       height: 100px;
       width: 100%;
       padding: 10px 5px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
       color: #fff;
       font-weight: 900; }
+      .money-lists .money-body .money-header .money-header-top > div {
+        float: left;
+        display: inline-block;
+        text-align: center; }
       .money-lists .money-body .money-header .money-header-top .money-block {
         -ms-flex: 1;
             flex: 1;
         width: 33.33333%;
-        height: 100px;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-            flex-direction: column;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center; }
+        height: 100px; }
       .money-lists .money-body .money-header .money-header-top .money-left {
         position: relative; }
         .money-lists .money-body .money-header .money-header-top .money-left > p.first {
           font-size: 24px;
           font-weight: 900;
-          margin-bottom: 20px; }
+          margin-top: 20px; }
           .money-lists .money-body .money-header .money-header-top .money-left > p.first > span {
             font-size: 14px;
             margin-right: 5px; }
@@ -1480,7 +1409,7 @@ header {
         .money-lists .money-body .money-header .money-header-top .money-right > p.first {
           font-size: 24px;
           font-weight: 900;
-          margin-bottom: 20px; }
+          margin-top: 20px; }
           .money-lists .money-body .money-header .money-header-top .money-right > p.first > span {
             font-size: 14px;
             margin-right: 5px; }
@@ -1501,15 +1430,7 @@ header {
           background-color: #fff; }
     .money-lists .money-body .money-header .money-header-bottom {
       text-align: center;
-      height: 70px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
+      height: 70px; }
       .money-lists .money-body .money-header .money-header-bottom .getmoney {
         width: 100px;
         border: none;
@@ -1519,7 +1440,8 @@ header {
         padding: 0 10px;
         border-radius: 5px;
         background-color: #4da2ec;
-        font-size: 15px; }
+        font-size: 15px;
+        margin-top: 10px; }
   .money-lists .money-body .money-list {
     width: 100%;
     padding: 0 10px; }
@@ -1527,32 +1449,20 @@ header {
       height: 50px;
       margin-top: 10px;
       padding: 5px 0;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
       background-color: #fff;
       border-radius: 5px; }
+      .money-lists .money-body .money-list .people-list > div {
+        float: left;
+        display: inline-block; }
       .money-lists .money-body .money-list .people-list .img {
         width: 50px;
         height: 50px;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row;
-            flex-direction: row;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center;
         margin-left: 10px; }
         .money-lists .money-body .money-list .people-list .img > img {
           width: 30px;
           height: 30px;
-          border-radius: 50%; }
+          border-radius: 50%;
+          margin-top: 15px; }
       .money-lists .money-body .money-list .people-list .name {
         margin-left: 10px;
         height: 50px;
@@ -1566,11 +1476,14 @@ header {
       .money-lists .money-body .money-list .people-list .taskname {
         -ms-flex: 1;
             flex: 1;
+        float: right;
         line-height: 50px;
         height: 50px;
         text-align: right;
         font-size: 14px;
         margin-right: 10px; }
+        .money-lists .money-body .money-list .people-list .taskname p {
+          width: 100%; }
       @media (max-width: 320px) {
         .money-lists .money-body .money-list .people-list .name {
           width: 60px;
@@ -1585,8 +1498,6 @@ header {
   width: 100%;
   height: 100%;
   z-index: 10;
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;
@@ -1619,8 +1530,6 @@ header {
     color: #0074D9; }
 
 footer {
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   position: fixed;
@@ -1636,12 +1545,11 @@ footer {
       align-items: center;
   background-color: #fff;
   box-shadow: 3px 0 3px 3px #efeeee;
-  z-index: 100; }
+  z-index: 100;
+  overflow: hidden; }
   footer .footer {
     -ms-flex: 1;
         flex: 1;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     -ms-flex-pack: center;
@@ -1651,7 +1559,11 @@ footer {
     width: 33.3333%;
     color: #AAAAAA;
     height: 50px;
-    line-height: 50px; }
+    line-height: 50px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    position: relative; }
     footer .footer i {
       font-size: 1.8rem; }
     footer .footer img {
@@ -1661,7 +1573,11 @@ footer {
       font-size: 12px;
       color: #AAAAAA;
       height: 20px;
-      line-height: 20px; }
+      line-height: 20px;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 40%; }
   footer .footer.active {
     color: #0074D9; }
     footer .footer.active p {

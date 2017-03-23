@@ -364,14 +364,15 @@ input {
         -ms-flex-align: start;
             align-items: flex-start;
         -ms-flex-pack: end;
-            justify-content: flex-end; }
+            justify-content: flex-end;
+        padding: 10px 0; }
         .ticket-info .right .top .name p {
           font-weight: bold;
           font-size: 18px;
           position: relative;
           text-align: left;
-          height: 45px;
-          line-height: 45px;
+          height: 35px;
+          line-height: 35px;
           margin-left: 20px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .name p {
@@ -405,7 +406,8 @@ input {
             flex-direction: column;
         text-align: right;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: center;
+        padding: 10px 0; }
         .ticket-info .right .top .info p {
           height: 35px;
           line-height: 35px;
@@ -413,13 +415,11 @@ input {
           .ticket-info .right .top .info p:first-child {
             font-weight: 900;
             font-size: 20px;
-            color: #f35252;
-            line-height: 45px; }
+            color: #f35252; }
           .ticket-info .right .top .info p:last-child {
             font-size: 12px;
             color: #323232;
-            padding-top: 8px;
-            line-height: 45px; }
+            padding-top: 4px; }
           @media (max-width: 320px) {
             .ticket-info .right .top .info p {
               margin-right: 10px; }
@@ -439,7 +439,7 @@ input {
       -ms-flex-pack: start;
           justify-content: flex-start;
       position: relative;
-      margin-top: 4px; }
+      padding-bottom: 5px; }
       .ticket-info .right .bottom img:first-child {
         position: absolute;
         top: 2px;
@@ -839,10 +839,12 @@ input {
           -ms-flex-pack: center;
               justify-content: center;
           -ms-flex-align: center;
-              align-items: center; }
+              align-items: center;
+          text-align: center; }
           .action-page .action .action-select .line .right > img {
             width: 20px;
-            height: 20px; }
+            height: 20px;
+            margin-top: 20px; }
     .action-page .action .action-use {
       margin-top: 50px; }
       .action-page .action .action-use .popup-header {
@@ -852,8 +854,6 @@ input {
         background-color: #fff;
         color: #c8c8c8;
         text-align: center;
-        display: -ms-flexbox;
-        display: flex;
         -ms-flex-direction: row;
             flex-direction: row;
         -ms-flex-pack: center;
@@ -882,49 +882,29 @@ input {
       .action-page .action .action-use > .page {
         padding: 0 10px; }
       .action-page .action .action-use .rebate {
-        display: -ms-flexbox;
-        display: flex;
+        height: 200px;
         margin-top: 10px;
         background-color: #fff;
-        display: flex;
-        -ms-flex-direction: column;
-            flex-direction: column;
-        -ms-flex-pack: center;
-            justify-content: center;
-        -ms-flex-align: center;
-            align-items: center;
         width: 50%;
         float: left; }
         .action-page .action .action-use .rebate .top {
           width: 100%;
-          height: 100px;
-          position: relative; }
+          height: 100px; }
           .action-page .action .action-use .rebate .top img {
             width: 100%;
             height: 100px; }
-          .action-page .action .action-use .rebate .top p {
-            bottom: 5px;
-            right: 5px;
-            left: 5px;
-            text-align: right;
-            color: #fff;
-            position: absolute;
-            font-weight: 900; }
         .action-page .action .action-use .rebate .bottom {
           border: 0.5px solid #c8c8c8;
           border-top: none;
-          width: 100%;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-              flex-direction: row;
-          -ms-flex-pack: center;
-              justify-content: center;
-          -ms-flex-align: center;
-              align-items: center; }
+          height: 100px;
+          width: 100%; }
+          .action-page .action .action-use .rebate .bottom > div {
+            float: left;
+            display: inline-block; }
           .action-page .action .action-use .rebate .bottom .left {
             -ms-flex: 7;
                 flex: 7;
+            width: 70%;
             padding-left: 10px; }
             .action-page .action .action-use .rebate .bottom .left p {
               font-size: 23px;
@@ -947,12 +927,15 @@ input {
           .action-page .action .action-use .rebate .bottom .right {
             -ms-flex: 3;
                 flex: 3;
+            width: 30%;
             text-align: center;
-            position: relative; }
+            position: relative;
+            height: 100%; }
             .action-page .action .action-use .rebate .bottom .right img {
               width: 28px;
               height: 28px;
-              z-index: -1; }
+              z-index: -1;
+              margin-top: 30px; }
             .action-page .action .action-use .rebate .bottom .right span {
               width: 30px;
               height: 30px;
@@ -960,7 +943,7 @@ input {
               border-radius: 50%;
               z-index: 1;
               position: absolute;
-              top: -1px;
+              top: 29px;
               right: 20%; }
             @media (max-width: 320px) {
               .action-page .action .action-use .rebate .bottom .right span {
@@ -1017,8 +1000,6 @@ input {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: -ms-flexbox;
-  display: flex;
   -ms-flex-direction: row;
       flex-direction: row;
   -ms-flex-pack: center;
@@ -1028,19 +1009,13 @@ input {
     background-color: #fff;
     border-radius: 10px;
     height: 200px;
+    margin-left: 10%;
+    margin-right: 10%;
     margin-top: 100px; }
     .change-page .change-page-body .line-header {
       height: 40px;
       font-size: 20px;
-      text-align: center;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-          flex-direction: row;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center; }
+      text-align: center; }
     .change-page .change-page-body .line-btn {
       width: 100%; }
       .change-page .change-page-body .line-btn > button {
@@ -1063,14 +1038,6 @@ input {
 .pay {
   height: 50px;
   line-height: 50px;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -1079,9 +1046,13 @@ input {
   background-color: #fff;
   box-shadow: 3px 0 3px 3px #efeeee;
   z-index: 4000; }
+  .pay > div {
+    float: left;
+    display: inline-block; }
   .pay .left {
     -ms-flex: 5;
-        flex: 5; }
+        flex: 5;
+    width: 50%; }
     .pay .left p {
       height: 50px;
       line-height: 50px;
@@ -1094,20 +1065,18 @@ input {
   .pay .right {
     -ms-flex: 5;
         flex: 5;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    -ms-flex-align: center;
-        align-items: center; }
+    width: 50%; }
     .pay .right span {
       color: #c8c8c8;
       font-size: 12px;
       -ms-flex: 5;
-          flex: 5; }
+          flex: 5;
+      height: 50px;
+      width: 50%;
+      display: inline-block;
+      float: left; }
     .pay .right button {
+      width: 50%;
       background-color: #329be8;
       height: 40px;
       line-height: 40px;
@@ -1160,8 +1129,6 @@ input {
     -ms-flex: 0.6;
         flex: 0.6;
     width: 60%;
-    display: -ms-flexbox;
-    display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
     padding: 0 10px;

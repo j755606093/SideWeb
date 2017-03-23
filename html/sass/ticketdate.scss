@@ -18,7 +18,7 @@
     height: 40px;
     padding: 0 10px;
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: row;
     background-color: lighten($gray, 30%);
     text-align: center;
@@ -27,15 +27,21 @@
       height: 40px;
       line-height: 40px;
       font-size: 1.4rem;
+      display: inline-block;
+      width: 14.2857%;
+      float: left;
     }
   }
   .date-body {
     width: 100%;
     padding: 0 10px;
+    float: left;
     .date-body-header {
       height: 60px;
       line-height: 60px;
       text-align: center;
+      float: left;
+      width: 100%;
       >p {
         color: #329be8;
         font-size: 2.4rem;
@@ -47,13 +53,16 @@
     }
     .date-body-lists {
       width: 100%;
-      display: flex;
+      // display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       text-align: center;
+      float: left;
       >div {
         width: 14.2857%;
         height: 40px;
+        float: left;
+        display: inline-block;
       }
       span {
         display: inline-block;
