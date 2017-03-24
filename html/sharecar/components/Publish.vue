@@ -511,42 +511,44 @@ export default {
 	},
 	mounted(){
 		// 监听开始地址滚动
-		document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
-			if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
+		// document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
+		// 	if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
 
-			let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
+		// 	let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
 
-			if (last < 400) {
-				this.$store.dispatch("getStartSearch",{
-					text:this.searchStartText,
-					page:this.searchStartIndex
-				}).then(result=>{
-					if(result.tips.lenght<10){
-						this.searchStartNoData = true;//没有更多数据
-					}
-					this.searchStartList = this.searchStartList.concat(result.tips);
-				})
-			}
-		}, 400, { leading: false }));
+		// 	if (last < 400) {
+		// 		this.$store.dispatch("getStartSearch",{
+		// 			text:this.searchStartText,
+		// 			page:this.searchStartIndex
+		// 		}).then(result=>{
+		// 			this.searchStartIndex++;
+		// 			if(result.tips.lenght<10){
+		// 				this.searchStartNoData = true;//没有更多数据
+		// 			}
+		// 			this.searchStartList = this.searchStartList.concat(result.tips);
+		// 		})
+		// 	}
+		// }, 400, { leading: false }));
 
 		// 监听到达地址滚动
-		document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
-			if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
+		// document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
+		// 	if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
 
-			let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
+		// 	let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
 
-			if (last < 400) {
-				this.$store.dispatch("getEndSearch",{
-					text:this.searchEndText,
-					page:this.searchEndIndex
-				}).then(result=>{
-					if(result.tips.lenght<10){
-						this.searchEndNoData = true;//没有更多数据
-					}
-					this.searchEndList = this.searchEndList.concat(result.tips);
-				})
-			}
-		}, 400, { leading: false }));
+		// 	if (last < 400) {
+		// 		this.$store.dispatch("getEndSearch",{
+		// 			text:this.searchEndText,
+		// 			page:this.searchEndIndex
+		// 		}).then(result=>{
+		// 			this.searchEndIndex++;
+		// 			if(result.tips.lenght<10){
+		// 				this.searchEndNoData = true;//没有更多数据
+		// 			}
+		// 			this.searchEndList = this.searchEndList.concat(result.tips);
+		// 		})
+		// 	}
+		// }, 400, { leading: false }));
 	},
 	computed:{
 		/** 显示提交按钮 */

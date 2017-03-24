@@ -33,8 +33,8 @@
 				<div class="header_message">
 					<span class="message--new">有43条新消息</span>
 					<div class="header_message--taxis">
-						<span @click="sort(0)" :class="{active:sortIndex===0}">发布时间 ↑</span>
-						<span @click="sort(1)" :class="{active:sortIndex===1}">发布时间 ↓</span>
+						<span @click="sort(1)" :class="{active:sortIndex===1}">发布时间 ↑</span>
+						<span @click="sort(2)" :class="{active:sortIndex===2}">发车时间 ↑</span>
 					</div>
 				</div>
 			</div>
@@ -43,13 +43,13 @@
 			<template v-for="(item,index) in CarInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
-			<!-- <div id="home__last"></div> -->
+			<div id="car__last"></div>
 		</div>
 		<div v-show="pageIndex===1" class="home__lists">
 			<template v-for="(item,index) in PeopleInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
-			<div id="home__last"></div>
+			<div id="people__last"></div>
 		</div>
 	</div>
 </template>
@@ -73,7 +73,7 @@ export default {
 			CarNoMoreData:false,//没有更多数据
 			PeopleInfoPage:1,//找人
 			PeopleNoMoreData:false,//没有更多数据
-			sortIndex:0,//排序索引
+			sortIndex:0,//排序索引,0默认,1发车,2发布
 
 			onlineNumber:0,//显示的在线人数
 			onlineTimeContorl:null,//保存循环的变量
@@ -98,7 +98,8 @@ export default {
 			this.loading();
 			this.$store.dispatch("getCarInfo",{
 				Index:this.CarInfoPage,
-				Size:10
+				Size:10,
+				OrderBy:this.sortIndex
 			})
 			.then(result=>{
 				Indicator.close();
@@ -109,7 +110,8 @@ export default {
 				if(this.$store.getters.getPeopleInfo.length===0){
 					this.$store.dispatch("getPeopleInfo",{
 						Index:this.PeopleInfoPage,
-						Size:10
+						Size:10,
+						OrderBy:this.sortIndex
 					}).then(items=>{
 						if(items.length<10){
 							// 没有更多数据
@@ -207,14 +209,29 @@ export default {
 				window.localStorage.setItem("jgkj_online",this.onlineNumber);
 			},2000)
 		},
-		/** 发布时间排序 */
+		/** 2发布时间排序,1发车时间 */
 		sort(index){
+			if(this.sortIndex===index)return;
 			this.sortIndex = index;
+
+			/** 如果是第一个页面 */
 			if(this.pageIndex===0){
-				this.$store.dispatch("setCarInfoReverse");
+				// 2
+				this.$store.dispatch("setCarInfoReverse",{
+					Index:1,
+					Size:10,
+					OrderBy:index,
+					isRefresh:true
+				});
 			}
 			else{
-				this.$store.dispatch("setPeopleInfoReverse");
+				// 1
+				this.$store.dispatch("setPeopleInfoReverse",{
+					Index:1,
+					Size:10,
+					OrderBy:index,
+					isRefresh:true
+				});
 			}
 		},
 		/** 切换主页 */
@@ -234,6 +251,7 @@ export default {
 				this.$store.dispatch("getCarInfo",{
 					Index:1,
 					Size:10,
+					OrderBy:this.sortIndex,
 					isRefresh:true
 				})
 				.then(result=>{
@@ -245,6 +263,7 @@ export default {
 				this.$store.dispatch("getPeopleInfo",{
 					Index:1,
 					Size:10,
+					OrderBy:this.sortIndex,
 					isRefresh:true
 				})
 				.then(result=>{

@@ -190,7 +190,16 @@ const actions = {
 	},
 	/** 倒叙数组 */
 	setCarInfoReverse({ commit, state }, data) {
-		commit(types.REVERSE_CARINFO);
+		return postData("/api/CarPool/ListDre", data)
+			.then(result => {
+				let res = result.Data;
+				commit(types.GET_CAR_INFO, {
+					CarInfo: res,
+					isRefresh: data.isRefresh ? true : false
+				});
+				return data;
+			})
+			// commit(types.REVERSE_CARINFO);
 	},
 	/** 获取乘客信息 */
 	getPeopleInfo({ commit, state }, data) {
@@ -206,7 +215,16 @@ const actions = {
 	},
 	/** 倒叙数组 */
 	setPeopleInfoReverse({ commit, state }, data) {
-		commit(types.REVERSE_PEOPLEINFO);
+		return postData("/api/CarPool/ListPassenger", data)
+			.then(result => {
+				let res = result.Data;
+				commit(types.GET_PEOPLE_INFO, {
+					PeopleInfo: res,
+					isRefresh: data.isRefresh ? true : false
+				})
+				return data;
+			})
+			// commit(types.REVERSE_PEOPLEINFO);
 	},
 	/** 获取车主发布的信息 */
 	getTripDetail({ commit, state }, data) {
@@ -280,7 +298,7 @@ const actions = {
 	},
 	/** 获取用户输入后搜索得到的信息 */
 	getStartSearch({ commit, state }, data) {
-		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=${data.text}&page=${data.page}`, {
+		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&offset=100&keywords=${data.text}&page=${data.page}`, {
 				method: 'GET',
 			})
 			.then(checkStatus)
@@ -288,7 +306,7 @@ const actions = {
 	},
 	/** 获取用户输入后搜索得到的信息 */
 	getEndSearch({ commit, state }, data) {
-		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=${data.text}&page=${data.page}`, {
+		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&offset=100&keywords=${data.text}&page=${data.page}`, {
 				method: 'GET',
 			})
 			.then(checkStatus)

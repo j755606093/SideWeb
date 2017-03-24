@@ -12969,7 +12969,15 @@
 			var commit = _ref5.commit,
 			    state = _ref5.state;
 
-			commit(_ShareCarType2.default.REVERSE_CARINFO);
+			return postData("/api/CarPool/ListDre", data).then(function (result) {
+				var res = result.Data;
+				commit(_ShareCarType2.default.GET_CAR_INFO, {
+					CarInfo: res,
+					isRefresh: data.isRefresh ? true : false
+				});
+				return data;
+			});
+			// commit(types.REVERSE_CARINFO);
 		},
 
 		/** 获取乘客信息 */
@@ -12992,7 +13000,15 @@
 			var commit = _ref7.commit,
 			    state = _ref7.state;
 
-			commit(_ShareCarType2.default.REVERSE_PEOPLEINFO);
+			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
+				var res = result.Data;
+				commit(_ShareCarType2.default.GET_PEOPLE_INFO, {
+					PeopleInfo: res,
+					isRefresh: data.isRefresh ? true : false
+				});
+				return data;
+			});
+			// commit(types.REVERSE_PEOPLEINFO);
 		},
 
 		/** 获取车主发布的信息 */
@@ -13090,7 +13106,7 @@
 			var commit = _ref14.commit,
 			    state = _ref14.state;
 
-			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&keywords=" + data.text + "&page=" + data.page, {
+			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&offset=100&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
@@ -13102,7 +13118,7 @@
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&keywords=" + data.text + "&page=" + data.page, {
+			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&offset=100&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
@@ -13523,8 +13539,8 @@
 		GET_DISTRICT: "GET_DISTRICT",
 		GET_VILLAGE: "GET_VILLAGE",
 
-		REVERSE_CARINFO: "REVERSE_CARINFO",
-		REVERSE_PEOPLEINFO: "REVERSE_PEOPLEINFO",
+		// REVERSE_CARINFO: "REVERSE_CARINFO",
+		// REVERSE_PEOPLEINFO: "REVERSE_PEOPLEINFO",
 
 		SET_USERINFO: "SET_USERINFO",
 		SET_MYPUBLISH: "SET_MYPUBLISH"
@@ -28354,7 +28370,7 @@
 				CarNoMoreData: false, //没有更多数据
 				PeopleInfoPage: 1, //找人
 				PeopleNoMoreData: false, //没有更多数据
-				sortIndex: 0, //排序索引
+				sortIndex: 0, //排序索引,0默认,1发车,2发布
 
 				onlineNumber: 0, //显示的在线人数
 				onlineTimeContorl: null, //保存循环的变量
@@ -28380,7 +28396,8 @@
 				this.loading();
 				this.$store.dispatch("getCarInfo", {
 					Index: this.CarInfoPage,
-					Size: 10
+					Size: 10,
+					OrderBy: this.sortIndex
 				}).then(function (result) {
 					_mintUi.Indicator.close();
 					if (result.length < 10) {
@@ -28390,7 +28407,8 @@
 					if (_this.$store.getters.getPeopleInfo.length === 0) {
 						_this.$store.dispatch("getPeopleInfo", {
 							Index: _this.PeopleInfoPage,
-							Size: 10
+							Size: 10,
+							OrderBy: _this.sortIndex
 						}).then(function (items) {
 							if (items.length < 10) {
 								// 没有更多数据
@@ -28492,13 +28510,28 @@
 				}, 2000);
 			},
 
-			/** 发布时间排序 */
+			/** 2发布时间排序,1发车时间 */
 			sort: function sort(index) {
+				if (this.sortIndex === index) return;
 				this.sortIndex = index;
+
+				/** 如果是第一个页面 */
 				if (this.pageIndex === 0) {
-					this.$store.dispatch("setCarInfoReverse");
+					// 2
+					this.$store.dispatch("setCarInfoReverse", {
+						Index: 1,
+						Size: 10,
+						OrderBy: index,
+						isRefresh: true
+					});
 				} else {
-					this.$store.dispatch("setPeopleInfoReverse");
+					// 1
+					this.$store.dispatch("setPeopleInfoReverse", {
+						Index: 1,
+						Size: 10,
+						OrderBy: index,
+						isRefresh: true
+					});
 				}
 			},
 
@@ -28523,6 +28556,7 @@
 					this.$store.dispatch("getCarInfo", {
 						Index: 1,
 						Size: 10,
+						OrderBy: this.sortIndex,
 						isRefresh: true
 					}).then(function (result) {
 						_mintUi.Indicator.close();
@@ -28532,6 +28566,7 @@
 					this.$store.dispatch("getPeopleInfo", {
 						Index: 1,
 						Size: 10,
+						OrderBy: this.sortIndex,
 						isRefresh: true
 					}).then(function (result) {
 						_mintUi.Indicator.close();
@@ -34951,15 +34986,6 @@
 	    staticClass: "header_message--taxis"
 	  }, [_c('span', {
 	    class: {
-	      active: _vm.sortIndex === 0
-	    },
-	    on: {
-	      "click": function($event) {
-	        _vm.sort(0)
-	      }
-	    }
-	  }, [_vm._v("发布时间 ↑")]), _vm._v(" "), _c('span', {
-	    class: {
 	      active: _vm.sortIndex === 1
 	    },
 	    on: {
@@ -34967,7 +34993,16 @@
 	        _vm.sort(1)
 	      }
 	    }
-	  }, [_vm._v("发布时间 ↓")])])])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("发布时间 ↑")]), _vm._v(" "), _c('span', {
+	    class: {
+	      active: _vm.sortIndex === 2
+	    },
+	    on: {
+	      "click": function($event) {
+	        _vm.sort(2)
+	      }
+	    }
+	  }, [_vm._v("发车时间 ↑")])])])])]), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -34982,6 +35017,10 @@
 	        "list": item
 	      }
 	    })]
+	  }), _vm._v(" "), _c('div', {
+	    attrs: {
+	      "id": "car__last"
+	    }
 	  })], 2), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
@@ -34999,7 +35038,7 @@
 	    })]
 	  }), _vm._v(" "), _c('div', {
 	    attrs: {
-	      "id": "home__last"
+	      "id": "people__last"
 	    }
 	  })], 2)])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -35681,45 +35720,45 @@
 			}, 500);
 		},
 		mounted: function mounted() {
-			var _this2 = this;
-
 			// 监听开始地址滚动
-			document.getElementById("startSearchList").addEventListener('scroll', _.throttle(function () {
-				if (!_this2.showStartSearchResult || _this2.searchStartNoData) return; //列表不显示或者没有更多数据时候不执行
+			// document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
+			// 	if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
 
-				var last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
+			// 	let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
 
-				if (last < 400) {
-					_this2.$store.dispatch("getStartSearch", {
-						text: _this2.searchStartText,
-						page: _this2.searchStartIndex
-					}).then(function (result) {
-						if (result.tips.lenght < 10) {
-							_this2.searchStartNoData = true; //没有更多数据
-						}
-						_this2.searchStartList = _this2.searchStartList.concat(result.tips);
-					});
-				}
-			}, 400, { leading: false }));
+			// 	if (last < 400) {
+			// 		this.$store.dispatch("getStartSearch",{
+			// 			text:this.searchStartText,
+			// 			page:this.searchStartIndex
+			// 		}).then(result=>{
+			// 			this.searchStartIndex++;
+			// 			if(result.tips.lenght<10){
+			// 				this.searchStartNoData = true;//没有更多数据
+			// 			}
+			// 			this.searchStartList = this.searchStartList.concat(result.tips);
+			// 		})
+			// 	}
+			// }, 400, { leading: false }));
 
 			// 监听到达地址滚动
-			document.getElementById("endSearchList").addEventListener('scroll', _.throttle(function () {
-				if (!_this2.showEndSearchResult || _this2.searchEndNoData) return; //列表不显示或者没有更多数据时候不执行
+			// document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
+			// 	if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
 
-				var last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
+			// 	let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
 
-				if (last < 400) {
-					_this2.$store.dispatch("getEndSearch", {
-						text: _this2.searchEndText,
-						page: _this2.searchEndIndex
-					}).then(function (result) {
-						if (result.tips.lenght < 10) {
-							_this2.searchEndNoData = true; //没有更多数据
-						}
-						_this2.searchEndList = _this2.searchEndList.concat(result.tips);
-					});
-				}
-			}, 400, { leading: false }));
+			// 	if (last < 400) {
+			// 		this.$store.dispatch("getEndSearch",{
+			// 			text:this.searchEndText,
+			// 			page:this.searchEndIndex
+			// 		}).then(result=>{
+			// 			this.searchEndIndex++;
+			// 			if(result.tips.lenght<10){
+			// 				this.searchEndNoData = true;//没有更多数据
+			// 			}
+			// 			this.searchEndList = this.searchEndList.concat(result.tips);
+			// 		})
+			// 	}
+			// }, 400, { leading: false }));
 		},
 
 		computed: {
@@ -35905,7 +35944,7 @@
 				);
 			},
 			submitOrder: function submitOrder() {
-				var _this3 = this;
+				var _this2 = this;
 
 				if (!this.inspectPhone()) {
 					this.toast("手机号不正确!");
@@ -35940,19 +35979,19 @@
 				if (this.Role === 0) {
 					this.$store.dispatch("publishPassengerTrip", json).then(function (result) {
 						if (result.Code === 200) {
-							_this3.toast("发布成功");
-							_this3.$router.replace({ name: 'tripdetail', params: { types: 1, tripId: result.Data } });
+							_this2.toast("发布成功");
+							_this2.$router.replace({ name: 'tripdetail', params: { types: 1, tripId: result.Data } });
 						} else {
-							_this3.toast(result.Message);
+							_this2.toast(result.Message);
 						}
 					});
 				} else {
 					this.$store.dispatch("publishCarTrip", json).then(function (result) {
 						if (result.Code === 200) {
-							_this3.toast("发布成功");
-							_this3.$router.replace({ name: 'tripdetail', params: { types: 0, tripId: result.Data } });
+							_this2.toast("发布成功");
+							_this2.$router.replace({ name: 'tripdetail', params: { types: 0, tripId: result.Data } });
 						} else {
-							_this3.toast(result.Message);
+							_this2.toast(result.Message);
 						}
 					});
 				}
