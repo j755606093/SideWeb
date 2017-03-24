@@ -87,7 +87,7 @@
 							<span>{{item.name}}</span>
 						</div>
 						<div class="line">
-							<span class="gray">{{item.address}}</span>
+							<span class="gray">{{item.cityname+item.address}}</span>
 						</div>
 					</div>
 				</div>

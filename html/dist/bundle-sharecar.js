@@ -36333,7 +36333,7 @@
 	      staticClass: "line"
 	    }, [_c('span', {
 	      staticClass: "gray"
-	    }, [_vm._v(_vm._s(item.address))])])])])
+	    }, [_vm._v(_vm._s(item.cityname + item.address))])])])])
 	  }), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "float": "left"
