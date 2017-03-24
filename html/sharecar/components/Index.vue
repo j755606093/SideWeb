@@ -126,7 +126,7 @@ export default {
 		}
 
 		//获取用户地理位置
-		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+		// navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		
 		this.randomOnlineNumber();
 	},
