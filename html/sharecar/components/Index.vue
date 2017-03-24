@@ -5,13 +5,10 @@
 		    <!-- Additional required wrapper -->
 		    <div class="swiper-wrapper">
 	        <div class="swiper-slide">
-						<img src="../icon/swiper1.png">
+						<img src="../icon/banner1.png">
 	        </div>
 	        <div class="swiper-slide">
-	        	<img src="../icon/swiper1.png">
-	        </div>
-	        <div class="swiper-slide">
-	        	<img src="../icon/swiper1.png">
+	        	<img src="../icon/banner2.png">
 	        </div>
 		    </div>
 		    <!-- If we need pagination -->
@@ -24,12 +21,12 @@
 		<div id="header_block" style="height: 80px;width:100%;">
 			<div id="headertop" class="home__header">
 				<div class="header_title">
-					<span @click="switchPage(0)" :class="{active:pageIndex===0}">人找车</span>
-					<span @click="switchPage(1)" :class="{active:pageIndex===1}">车找人</span>
+					<span @click="switchPage(0)" :class="{active:pageIndex===0}">车找人</span>
+					<span @click="switchPage(1)" :class="{active:pageIndex===1}">人找车</span>
 					<div class="action--btn">
 						<img src="../icon/seach_icon.png">
 					</div>
-					<div class="action--btn">
+					<div @click="refresh" class="action--btn">
 						<img src="../icon/Refresh_ICON.png">
 					</div>
 				</div>
@@ -42,10 +39,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="home__lists">
-			<template v-for="(item,index) in showPageData">
+		<div v-show="pageIndex===0" class="home__lists">
+			<template v-for="(item,index) in CarInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
+			<!-- <div id="home__last"></div> -->
+		</div>
+		<div v-show="pageIndex===1" class="home__lists">
+			<template v-for="(item,index) in PeopleInfo">
+				<my-list :types="pageIndex" :list="item"></my-list>
+			</template>
+			<div id="home__last"></div>
 		</div>
 	</div>
 </template>
@@ -70,7 +74,6 @@ export default {
 			PeopleInfoPage:1,//找人
 			PeopleNoMoreData:false,//没有更多数据
 			sortIndex:0,//排序索引
-			pageIndex:0,//页面索引
 
 			onlineNumber:0,//显示的在线人数
 			onlineTimeContorl:null,//保存循环的变量
@@ -78,6 +81,7 @@ export default {
 			headerTop:0,//头部距离顶部距离
 			headerRealTopElement:null,
 			headerTopElement:null,
+			home__last:null,//底部元素,用来计算和顶部的距离
 
 			trip_detail_status:false,//旅程详情页显示
 
@@ -85,13 +89,19 @@ export default {
 		}
 	},
 	created(){
-		console.log("created")
+		// 如果没有用户信息就去获取
+		if(!this.$store.getters.getUserInfo){
+			this.$store.dispatch("getUserInfo");
+		}
+		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
+			this.loading();
 			this.$store.dispatch("getCarInfo",{
 				Index:this.CarInfoPage,
 				Size:10
 			})
 			.then(result=>{
+				Indicator.close();
 				if(result.length<10){
 					// 没有更多数据
 					this.CarNoMoreData = true;
@@ -151,17 +161,18 @@ export default {
 		PeopleInfo(){
 			return this.$store.getters.getPeopleInfo;
 		},
-		/** 当前列表 */
-		showPageData(){
-			if(this.pageIndex===0){
-				return this.CarInfo;
-			}
-			else{
-				return this.PeopleInfo;
-			}
+		// 页面索引
+		pageIndex(){
+			return this.$store.getters.getPageIndex;
 		}
 	},
 	methods:{
+		/** 加载动画(需要手动关闭) */
+		loading() {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
+		},
 		toast(title) {
 			Toast({
 				message: title,
@@ -199,16 +210,48 @@ export default {
 		/** 发布时间排序 */
 		sort(index){
 			this.sortIndex = index;
+			if(this.pageIndex===0){
+				this.$store.dispatch("setCarInfoReverse");
+			}
+			else{
+				this.$store.dispatch("setPeopleInfoReverse");
+			}
 		},
 		/** 切换主页 */
 		switchPage(index){
-			this.pageIndex = index;
+			this.$store.dispatch("setPageInfo",index);
 		},
 		/** 打开详情页 */
 		openDetailPage(index){
 			this.types = this.pageIndex;
 			this.tripId = this.showPageData[index].Id;
 			this.trip_detail_status = true;
+		},
+		/** 刷新信息 */
+		refresh(){
+			this.loading();
+			if(this.pageIndex===0){
+				this.$store.dispatch("getCarInfo",{
+					Index:1,
+					Size:10,
+					isRefresh:true
+				})
+				.then(result=>{
+					Indicator.close();
+					this.toast("刷新成功");
+				})
+			}
+			else{
+				this.$store.dispatch("getPeopleInfo",{
+					Index:1,
+					Size:10,
+					isRefresh:true
+				})
+				.then(result=>{
+					Indicator.close();
+					this.toast("刷新成功");
+				})
+			}
 		}
 	},
 	activated(){

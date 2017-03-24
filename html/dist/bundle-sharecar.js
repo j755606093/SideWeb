@@ -62,22 +62,26 @@
 
 	var _ShareCar2 = _interopRequireDefault(_ShareCar);
 
-	var _Index = __webpack_require__(56);
+	var _Index = __webpack_require__(58);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _TripDetail = __webpack_require__(71);
+	var _TripDetail = __webpack_require__(73);
 
 	var _TripDetail2 = _interopRequireDefault(_TripDetail);
 
-	var _Publish = __webpack_require__(88);
+	var _Publish = __webpack_require__(91);
 
 	var _Publish2 = _interopRequireDefault(_Publish);
+
+	var _User = __webpack_require__(101);
+
+	var _User2 = _interopRequireDefault(_User);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
-	__webpack_require__(93);
+	__webpack_require__(98);
 
 	// Vue.use(Vuex);
 
@@ -102,6 +106,10 @@
 		path: "/detail/:types/:tripId",
 		name: "tripdetail",
 		component: _TripDetail2.default
+	}, {
+		path: "/user",
+		name: "user",
+		component: _User2.default
 	}, {
 		path: "/publish",
 		name: "publish",
@@ -12826,13 +12834,17 @@
 
 		showFooter: true, //是否显示底部
 
+		pageIndex: 0, //首页页面索引
 		CarInfo: [],
 		PeopleInfo: [],
 
 		Province: [], //全国省份
 		City: [], //市
 		District: [], //区
-		Village: [] };
+		Village: [], //村
+
+		myPublish: [], //我的发布
+		UserInfo: null };
 
 	var postData = function postData(url, data) {
 		return fetch(state.serverUrl + url, {
@@ -12869,6 +12881,9 @@
 		getFooterState: function getFooterState(state) {
 			return state.showFooter;
 		},
+		getPageIndex: function getPageIndex(state) {
+			return state.pageIndex;
+		},
 		getCarInfo: function getCarInfo(state) {
 			return state.CarInfo;
 		},
@@ -12887,6 +12902,13 @@
 		},
 		getVillage: function getVillage(state) {
 			return state.Village;
+		},
+
+		getMyPublish: function getMyPublish(state) {
+			return state.myPublish;
+		},
+		getUserInfo: function getUserInfo(state) {
+			return state.UserInfo;
 		}
 	};
 
@@ -12904,54 +12926,95 @@
 			});
 		},
 
-		/** 获取车主的列表信息 */
-		getCarInfo: function getCarInfo(_ref2, data) {
+		/** 设置页面索引 */
+		setPageInfo: function setPageInfo(_ref2, data) {
 			var commit = _ref2.commit,
 			    state = _ref2.state;
 
-			return postData("/api/CarPool/ListDre", data).then(function (result) {
-				var data = result.Data;
-				commit(_ShareCarType2.default.GET_CAR_INFO, {
-					CarInfo: data
-				});
-				return data;
+			commit(_ShareCarType2.default.SET_PAGE_INDEX, {
+				pageIndex: data
 			});
 		},
 
-		/** 获取乘客信息 */
-		getPeopleInfo: function getPeopleInfo(_ref3, data) {
+		/** 获取自己的发布信息 */
+		getUserInfo: function getUserInfo(_ref3, data) {
 			var commit = _ref3.commit,
 			    state = _ref3.state;
 
-			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
-				var data = result.Data;
-				commit(_ShareCarType2.default.GET_PEOPLE_INFO, {
-					PeopleInfo: data
+			return getData("/api/Transport/UserRelevant", data).then(function (result) {
+				var userinfo = result.Data.Userinfo;
+				commit(_ShareCarType2.default.SET_USERINFO, {
+					UserInfo: userinfo
+				});
+			});
+		},
+
+		/** 获取车主的列表信息 */
+		getCarInfo: function getCarInfo(_ref4, data) {
+			var commit = _ref4.commit,
+			    state = _ref4.state;
+
+			return postData("/api/CarPool/ListDre", data).then(function (result) {
+				var res = result.Data;
+				commit(_ShareCarType2.default.GET_CAR_INFO, {
+					CarInfo: res,
+					isRefresh: data.isRefresh ? true : false
 				});
 				return data;
 			});
 		},
 
+		/** 倒叙数组 */
+		setCarInfoReverse: function setCarInfoReverse(_ref5, data) {
+			var commit = _ref5.commit,
+			    state = _ref5.state;
+
+			commit(_ShareCarType2.default.REVERSE_CARINFO);
+		},
+
+		/** 获取乘客信息 */
+		getPeopleInfo: function getPeopleInfo(_ref6, data) {
+			var commit = _ref6.commit,
+			    state = _ref6.state;
+
+			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
+				var res = result.Data;
+				commit(_ShareCarType2.default.GET_PEOPLE_INFO, {
+					PeopleInfo: res,
+					isRefresh: data.isRefresh ? true : false
+				});
+				return data;
+			});
+		},
+
+		/** 倒叙数组 */
+		setPeopleInfoReverse: function setPeopleInfoReverse(_ref7, data) {
+			var commit = _ref7.commit,
+			    state = _ref7.state;
+
+			commit(_ShareCarType2.default.REVERSE_PEOPLEINFO);
+		},
+
 		/** 获取车主发布的信息 */
-		getTripDetail: function getTripDetail(_ref4, data) {
-			var commit = _ref4.commit,
-			    state = _ref4.state;
+		getTripDetail: function getTripDetail(_ref8, data) {
+			var commit = _ref8.commit,
+			    state = _ref8.state;
 
 			return getData("/api/CarPool/GetDre?id=" + data);
 		},
 
 		/** 获取乘客发布的信息 */
-		getTripDetailPeople: function getTripDetailPeople(_ref5, data) {
-			var commit = _ref5.commit,
-			    state = _ref5.state;
+		getTripDetailPeople: function getTripDetailPeople(_ref9, data) {
+			var commit = _ref9.commit,
+			    state = _ref9.state;
 
 			return getData("/api/CarPool/GetPassenger?id=" + data);
 		},
 
 		/** 获取全国省数据  */
-		getProvince: function getProvince(_ref6) {
-			var commit = _ref6.commit,
-			    state = _ref6.state;
+		getProvince: function getProvince(_ref10) {
+			var commit = _ref10.commit,
+			    state = _ref10.state;
 
 			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&keywords=中国&subdistrict=1', {
 				method: 'GET'
@@ -12966,9 +13029,9 @@
 		},
 
 		/** 获取省的市数据  */
-		getCity: function getCity(_ref7, data) {
-			var commit = _ref7.commit,
-			    state = _ref7.state;
+		getCity: function getCity(_ref11, data) {
+			var commit = _ref11.commit,
+			    state = _ref11.state;
 
 			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
 				method: 'GET'
@@ -12985,9 +13048,9 @@
 		},
 
 		/** 获取市的区数据  */
-		getDistrict: function getDistrict(_ref8, data) {
-			var commit = _ref8.commit,
-			    state = _ref8.state;
+		getDistrict: function getDistrict(_ref12, data) {
+			var commit = _ref12.commit,
+			    state = _ref12.state;
 
 			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
 				method: 'GET'
@@ -13004,9 +13067,9 @@
 		},
 
 		/** 获取区数据  */
-		getVillage: function getVillage(_ref9, data) {
-			var commit = _ref9.commit,
-			    state = _ref9.state;
+		getVillage: function getVillage(_ref13, data) {
+			var commit = _ref13.commit,
+			    state = _ref13.state;
 
 			return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
 				method: 'GET'
@@ -13021,24 +13084,68 @@
 				}
 			});
 		},
-		getStartSearch: function getStartSearch(_ref10, data) {
-			var commit = _ref10.commit,
-			    state = _ref10.state;
 
-			return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+		/** 获取用户输入后搜索得到的信息 */
+		getStartSearch: function getStartSearch(_ref14, data) {
+			var commit = _ref14.commit,
+			    state = _ref14.state;
+
+			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
 			});
 		},
-		getEndSearch: function getEndSearch(_ref11, data) {
-			var commit = _ref11.commit,
-			    state = _ref11.state;
 
-			return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+		/** 获取用户输入后搜索得到的信息 */
+		getEndSearch: function getEndSearch(_ref15, data) {
+			var commit = _ref15.commit,
+			    state = _ref15.state;
+
+			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
+			});
+		},
+
+		/** 乘客发布行程 */
+		publishPassengerTrip: function publishPassengerTrip(_ref16, data) {
+			var commit = _ref16.commit,
+			    state = _ref16.state;
+
+			return postData("/api/CarPool/PublishRoute", data);
+		},
+
+		/** 司机发布行程 */
+		publishCarTrip: function publishCarTrip(_ref17, data) {
+			var commit = _ref17.commit,
+			    state = _ref17.state;
+
+			return postData("/api/CarPool/PublishTravel", data);
+		},
+
+		/** 获取自己的发布乘客信息 */
+		getMyPublishPassengerTrip: function getMyPublishPassengerTrip(_ref18, data) {
+			var commit = _ref18.commit,
+			    state = _ref18.state;
+
+			data.UsrId = state.UserInfo.Id;
+			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
+				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
+				return result.Data;
+			});
+		},
+
+		/** 获取自己的发布司机信息 */
+		getMyPublishCarTrip: function getMyPublishCarTrip(_ref19, data) {
+			var commit = _ref19.commit,
+			    state = _ref19.state;
+
+			data.UsrId = state.UserInfo.Id;
+			return postData("/api/CarPool/ListDre", data).then(function (result) {
+				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
+				return result.Data;
 			});
 		}
 	};
@@ -13047,10 +13154,28 @@
 	// 改变数据,每一个类型对应一个操作
 	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.CHANGE_FOOTER, function (state, data) {
 		state.showFooter = data.showFooter;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.SET_USERINFO, function (state, data) {
+		state.UserInfo = data.UserInfo;
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.SET_PAGE_INDEX, function (state, data) {
+		state.pageIndex = data.pageIndex;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_CAR_INFO, function (state, data) {
-		state.CarInfo = data.CarInfo;
+		if (data.isRefresh) {
+			state.CarInfo = data.CarInfo;
+		} else {
+			state.CarInfo = state.CarInfo.concat(data.CarInfo);
+		}
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.REVERSE_CARINFO, function (state, data) {
+		state.CarInfo.reverse();
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PEOPLE_INFO, function (state, data) {
-		state.PeopleInfo = data.PeopleInfo;
+		if (data.isRefresh) {
+			state.PeopleInfo = data.PeopleInfo;
+		} else {
+			state.PeopleInfo = state.PeopleInfo.concat(data.PeopleInfo);
+		}
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.REVERSE_PEOPLEINFO, function (state, data) {
+		state.PeopleInfo.reverse();
+	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.SET_MYPUBLISH, function (state, data) {
+		state.myPublish = state.myPublish.concat(data);
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PROVINCE, function (state, data) {
 		state.Province = data.Province;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_CITY, function (state, data) {
@@ -13388,6 +13513,7 @@
 	exports.default = {
 		GET_CAR_INFO: "GET_CAR_INFO",
 		GET_PEOPLE_INFO: "GET_PEOPLE_INFO",
+		SET_PAGE_INDEX: "SET_PAGE_INDEX",
 
 		CHANGE_HEADER: "CHANGE_HEADER",
 		CHANGE_FOOTER: "CHANGE_FOOTER",
@@ -13395,7 +13521,13 @@
 		GET_PROVINCE: "GET_PROVINCE",
 		GET_CITY: "GET_CITY",
 		GET_DISTRICT: "GET_DISTRICT",
-		GET_VILLAGE: "GET_VILLAGE"
+		GET_VILLAGE: "GET_VILLAGE",
+
+		REVERSE_CARINFO: "REVERSE_CARINFO",
+		REVERSE_PEOPLEINFO: "REVERSE_PEOPLEINFO",
+
+		SET_USERINFO: "SET_USERINFO",
+		SET_MYPUBLISH: "SET_MYPUBLISH"
 	};
 
 /***/ },
@@ -26975,7 +27107,7 @@
 	  /* script */
 	  __webpack_require__(45),
 	  /* template */
-	  __webpack_require__(55),
+	  __webpack_require__(57),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -27765,6 +27897,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
+		props: {
+			activeIndex: {
+				type: Number,
+				default: 0
+			}
+		},
 		data: function data() {
 			return {
 				refresh: ""
@@ -27775,11 +27913,20 @@
 		computed: {
 			getfooter: function getfooter() {
 				return this.$store.getters.getFooterState;
-				// return this.$store.getters.getHeaderState;
 			}
 		},
 		methods: {}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -27902,7 +28049,22 @@
 	      value: (_vm.getfooter),
 	      expression: "getfooter"
 	    }]
-	  }, [_vm._m(0), _vm._v(" "), _c('router-link', {
+	  }, [_c('router-link', {
+	    class: {
+	      'footer': true, 'active': _vm.activeIndex === 0
+	    },
+	    attrs: {
+	      "to": "/"
+	    }
+	  }, [(_vm.activeIndex === 0) ? [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(52)
+	    }
+	  })] : [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(53)
+	    }
+	  })], _vm._v(" "), _c('p', [_vm._v("首页")])], 2), _vm._v(" "), _c('router-link', {
 	    staticClass: "footer",
 	    attrs: {
 	      "to": "/publish"
@@ -27912,33 +28074,29 @@
 	  }), _vm._v(" "), _c('img', {
 	    staticClass: "center",
 	    attrs: {
-	      "src": __webpack_require__(52)
+	      "src": __webpack_require__(54)
 	    }
 	  }), _vm._v(" "), _c('div', {
 	    staticClass: "clear"
 	  }), _vm._v(" "), _c('p', {
 	    staticClass: "center"
-	  }, [_vm._v("发布行程")])]), _vm._v(" "), _vm._m(1)], 1)
-	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('a', {
-	    staticClass: "footer active",
+	  }, [_vm._v("发布行程")])]), _vm._v(" "), _c('router-link', {
+	    class: {
+	      'footer': true, 'active': _vm.activeIndex === 1
+	    },
 	    attrs: {
-	      "href": "./sharecar.html"
+	      "to": "/user"
 	    }
-	  }, [_c('img', {
+	  }, [(_vm.activeIndex === 1) ? [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(53)
+	      "src": __webpack_require__(55)
 	    }
-	  }), _vm._v(" "), _c('p', [_vm._v("首页")])])
-	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('a', {
-	    staticClass: "footer"
-	  }, [_c('img', {
+	  })] : [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(54)
+	      "src": __webpack_require__(56)
 	    }
-	  }), _vm._v(" "), _c('p', [_vm._v("我的")])])
-	}]}
+	  })], _vm._v(" "), _c('p', [_vm._v("我的")])], 2)], 1)
+	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 	if (false) {
 	  module.hot.accept()
@@ -27951,22 +28109,34 @@
 /* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "add_up_icon.png?aaf266e6cebcbae8567d8077edfa3d2f";
+	module.exports = __webpack_require__.p + "car_icon.png?6951904b78ad70316dad2c844a93bac0";
 
 /***/ },
 /* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "car_icon.png?6951904b78ad70316dad2c844a93bac0";
+	module.exports = __webpack_require__.p + "car_grey_icon.png?b2c7120cf78e6f3c2b5c69d851c0e791";
 
 /***/ },
 /* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "me_grey_icon.png?106ab7f1bc38c230e9731e1c850faf31";
+	module.exports = __webpack_require__.p + "add_up_icon.png?aaf266e6cebcbae8567d8077edfa3d2f";
 
 /***/ },
 /* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "me_icon.png?1a3a2d65341a116ff0fdccf7285194eb";
+
+/***/ },
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "me_grey_icon.png?106ab7f1bc38c230e9731e1c850faf31";
+
+/***/ },
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -27995,18 +28165,18 @@
 	}
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(57)
+	__webpack_require__(59)
 
 	var Component = __webpack_require__(44)(
 	  /* script */
-	  __webpack_require__(60),
+	  __webpack_require__(62),
 	  /* template */
-	  __webpack_require__(84),
+	  __webpack_require__(86),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -28033,13 +28203,13 @@
 
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(58);
+	var content = __webpack_require__(60);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
@@ -28059,12 +28229,12 @@
 	}
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
 	// imports
-	exports.i(__webpack_require__(59), "");
+	exports.i(__webpack_require__(61), "");
 
 	// module
 	exports.push([module.id, "\n", ""]);
@@ -28073,7 +28243,7 @@
 
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -28087,7 +28257,7 @@
 
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28100,23 +28270,27 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _swiper = __webpack_require__(61);
+	var _swiper = __webpack_require__(63);
 
 	var _swiper2 = _interopRequireDefault(_swiper);
 
-	var _list = __webpack_require__(62);
+	var _list = __webpack_require__(64);
 
 	var _list2 = _interopRequireDefault(_list);
 
 	var _mintUi = __webpack_require__(30);
 
-	var _TripDetail = __webpack_require__(71);
+	var _TripDetail = __webpack_require__(73);
 
 	var _TripDetail2 = _interopRequireDefault(_TripDetail);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ = __webpack_require__(36); //
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -28181,7 +28355,6 @@
 				PeopleInfoPage: 1, //找人
 				PeopleNoMoreData: false, //没有更多数据
 				sortIndex: 0, //排序索引
-				pageIndex: 0, //页面索引
 
 				onlineNumber: 0, //显示的在线人数
 				onlineTimeContorl: null, //保存循环的变量
@@ -28189,6 +28362,7 @@
 				headerTop: 0, //头部距离顶部距离
 				headerRealTopElement: null,
 				headerTopElement: null,
+				home__last: null, //底部元素,用来计算和顶部的距离
 
 				trip_detail_status: false, //旅程详情页显示
 
@@ -28197,12 +28371,18 @@
 		created: function created() {
 			var _this = this;
 
-			console.log("created");
+			// 如果没有用户信息就去获取
+			if (!this.$store.getters.getUserInfo) {
+				this.$store.dispatch("getUserInfo");
+			}
+			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
+				this.loading();
 				this.$store.dispatch("getCarInfo", {
 					Index: this.CarInfoPage,
 					Size: 10
 				}).then(function (result) {
+					_mintUi.Indicator.close();
 					if (result.length < 10) {
 						// 没有更多数据
 						_this.CarNoMoreData = true;
@@ -28264,16 +28444,18 @@
 				return this.$store.getters.getPeopleInfo;
 			},
 
-			/** 当前列表 */
-			showPageData: function showPageData() {
-				if (this.pageIndex === 0) {
-					return this.CarInfo;
-				} else {
-					return this.PeopleInfo;
-				}
+			// 页面索引
+			pageIndex: function pageIndex() {
+				return this.$store.getters.getPageIndex;
 			}
 		},
 		methods: {
+			/** 加载动画(需要手动关闭) */
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			},
 			toast: function toast(title) {
 				(0, _mintUi.Toast)({
 					message: title,
@@ -28313,11 +28495,16 @@
 			/** 发布时间排序 */
 			sort: function sort(index) {
 				this.sortIndex = index;
+				if (this.pageIndex === 0) {
+					this.$store.dispatch("setCarInfoReverse");
+				} else {
+					this.$store.dispatch("setPeopleInfoReverse");
+				}
 			},
 
 			/** 切换主页 */
 			switchPage: function switchPage(index) {
-				this.pageIndex = index;
+				this.$store.dispatch("setPageInfo", index);
 			},
 
 			/** 打开详情页 */
@@ -28325,6 +28512,32 @@
 				this.types = this.pageIndex;
 				this.tripId = this.showPageData[index].Id;
 				this.trip_detail_status = true;
+			},
+
+			/** 刷新信息 */
+			refresh: function refresh() {
+				var _this4 = this;
+
+				this.loading();
+				if (this.pageIndex === 0) {
+					this.$store.dispatch("getCarInfo", {
+						Index: 1,
+						Size: 10,
+						isRefresh: true
+					}).then(function (result) {
+						_mintUi.Indicator.close();
+						_this4.toast("刷新成功");
+					});
+				} else {
+					this.$store.dispatch("getPeopleInfo", {
+						Index: 1,
+						Size: 10,
+						isRefresh: true
+					}).then(function (result) {
+						_mintUi.Indicator.close();
+						_this4.toast("刷新成功");
+					});
+				}
 			}
 		},
 		activated: function activated() {
@@ -28343,7 +28556,7 @@
 	};
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33703,18 +33916,18 @@
 
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(63)
+	__webpack_require__(65)
 
 	var Component = __webpack_require__(44)(
 	  /* script */
-	  __webpack_require__(65),
+	  __webpack_require__(67),
 	  /* template */
-	  __webpack_require__(66),
+	  __webpack_require__(68),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -33741,13 +33954,13 @@
 
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(64);
+	var content = __webpack_require__(66);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
@@ -33767,7 +33980,7 @@
 	}
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -33781,7 +33994,7 @@
 
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34006,7 +34219,7 @@
 	//
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -34029,17 +34242,17 @@
 	    staticClass: "header--name"
 	  }, [_vm._v(_vm._s(_vm.list.UserInfo.Nickname))]), _vm._v(" "), (_vm.list.UserInfo.Sex === 1) ? [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(67)
+	      "src": __webpack_require__(69)
 	    }
 	  })] : [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(68)
+	      "src": __webpack_require__(70)
 	    }
 	  })]], 2), _vm._v(" "), (_vm.nogo !== 'true') ? _c('div', {
 	    staticClass: "header--active"
 	  }, [(_vm.types === 0) ? [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])], _vm._v(" "), _c('img', {
 	    attrs: {
-	      "src": __webpack_require__(69)
+	      "src": __webpack_require__(71)
 	    }
 	  })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
 	    staticClass: "list__body"
@@ -34057,19 +34270,19 @@
 	    staticClass: "line__left--dot"
 	  }), _vm._v(" "), _c('span', {
 	    staticClass: "line__start--address"
-	  }, [_vm._v(_vm._s(_vm.list.Spoint))])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v(_vm._s(_vm.list.Spoint.split("省")[1] ? _vm.list.Spoint.split("省")[1] : _vm.list.Epoint))])]), _vm._v(" "), _c('div', {
 	    staticClass: "list__body--line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot dot-red"
 	  }), _vm._v(" "), _c('span', {
 	    staticClass: "line__end--address"
-	  }, [_vm._v(_vm._s(_vm.list.Epoint))])])])])
+	  }, [_vm._v(_vm._s(_vm.list.Epoint.split("省")[1] ? _vm.list.Epoint.split("省")[1] : _vm.list.Epoint))])])])])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: "line__left"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(70)
+	      "src": __webpack_require__(72)
 	    }
 	  })])
 	}]}
@@ -34082,42 +34295,42 @@
 	}
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "man_icon.png?8167f559a875c839ac984d131c21643b";
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "women_icon.png?140a933c9a021b923d082022519ea8af";
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "into_icon.png?c7ec5d49aa59df4159de9a3331232aa0";
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "clock_icon.png?603d69a916a328c7ae4aafccd847558a";
 
 /***/ },
-/* 71 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(72)
+	__webpack_require__(74)
 
 	var Component = __webpack_require__(44)(
 	  /* script */
-	  __webpack_require__(74),
+	  __webpack_require__(76),
 	  /* template */
-	  __webpack_require__(81),
+	  __webpack_require__(83),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -34144,13 +34357,13 @@
 
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(73);
+	var content = __webpack_require__(75);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
@@ -34170,7 +34383,7 @@
 	}
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -34184,7 +34397,7 @@
 
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34197,11 +34410,11 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _list = __webpack_require__(62);
+	var _list = __webpack_require__(64);
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _Header = __webpack_require__(75);
+	var _Header = __webpack_require__(77);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -34364,18 +34577,18 @@
 	};
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(76)
+	__webpack_require__(78)
 
 	var Component = __webpack_require__(44)(
 	  /* script */
-	  __webpack_require__(78),
+	  __webpack_require__(80),
 	  /* template */
-	  __webpack_require__(79),
+	  __webpack_require__(81),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -34402,13 +34615,13 @@
 
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(77);
+	var content = __webpack_require__(79);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
@@ -34428,7 +34641,7 @@
 	}
 
 /***/ },
-/* 77 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -34442,7 +34655,7 @@
 
 
 /***/ },
-/* 78 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34555,7 +34768,7 @@
 	//
 
 /***/ },
-/* 79 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -34580,7 +34793,7 @@
 	    }
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(80)
+	      "src": __webpack_require__(82)
 	    }
 	  })]), _vm._v(" "), _c('div', {
 	    staticClass: "center"
@@ -34595,13 +34808,13 @@
 	}
 
 /***/ },
-/* 80 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "back_icon.png?9c70bbda4d7811925dee836e55ad7574";
 
 /***/ },
-/* 81 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -34645,7 +34858,7 @@
 	    staticClass: "trip--contact-way"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(82)
+	      "src": __webpack_require__(84)
 	    }
 	  })])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -34653,7 +34866,7 @@
 	    staticClass: "trip--contact-way"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(83)
+	      "src": __webpack_require__(85)
 	    }
 	  })])
 	}]}
@@ -34666,19 +34879,19 @@
 	}
 
 /***/ },
-/* 82 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "phone_icon.png?2c1e951fcae944357738b4d0e18f7241";
 
 /***/ },
-/* 83 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "messnge_icon.png?6eaed054d73b03bcea0b79a946a035e2";
 
 /***/ },
-/* 84 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -34712,7 +34925,7 @@
 	        _vm.switchPage(0)
 	      }
 	    }
-	  }, [_vm._v("人找车")]), _vm._v(" "), _c('span', {
+	  }, [_vm._v("车找人")]), _vm._v(" "), _c('span', {
 	    class: {
 	      active: _vm.pageIndex === 1
 	    },
@@ -34721,7 +34934,16 @@
 	        _vm.switchPage(1)
 	      }
 	    }
-	  }, [_vm._v("车找人")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("人找车")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+	    staticClass: "action--btn",
+	    on: {
+	      "click": _vm.refresh
+	    }
+	  }, [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(87)
+	    }
+	  })])]), _vm._v(" "), _c('div', {
 	    staticClass: "header_message"
 	  }, [_c('span', {
 	    staticClass: "message--new"
@@ -34746,14 +34968,39 @@
 	      }
 	    }
 	  }, [_vm._v("发布时间 ↓")])])])])]), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.pageIndex === 0),
+	      expression: "pageIndex===0"
+	    }],
 	    staticClass: "home__lists"
-	  }, [_vm._l((_vm.showPageData), function(item, index) {
+	  }, [_vm._l((_vm.CarInfo), function(item, index) {
 	    return [_c('my-list', {
 	      attrs: {
 	        "types": _vm.pageIndex,
 	        "list": item
 	      }
 	    })]
+	  })], 2), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.pageIndex === 1),
+	      expression: "pageIndex===1"
+	    }],
+	    staticClass: "home__lists"
+	  }, [_vm._l((_vm.PeopleInfo), function(item, index) {
+	    return [_c('my-list', {
+	      attrs: {
+	        "types": _vm.pageIndex,
+	        "list": item
+	      }
+	    })]
+	  }), _vm._v(" "), _c('div', {
+	    attrs: {
+	      "id": "home__last"
+	    }
 	  })], 2)])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
@@ -34764,19 +35011,13 @@
 	    staticClass: "swiper-slide"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(85)
+	      "src": __webpack_require__(88)
 	    }
 	  })]), _vm._v(" "), _c('div', {
 	    staticClass: "swiper-slide"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(85)
-	    }
-	  })]), _vm._v(" "), _c('div', {
-	    staticClass: "swiper-slide"
-	  }, [_c('img', {
-	    attrs: {
-	      "src": __webpack_require__(85)
+	      "src": __webpack_require__(89)
 	    }
 	  })])]), _vm._v(" "), _c('div', {
 	    staticClass: "swiper-pagination"
@@ -34786,15 +35027,7 @@
 	    staticClass: "action--btn"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(86)
-	    }
-	  })])
-	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('div', {
-	    staticClass: "action--btn"
-	  }, [_c('img', {
-	    attrs: {
-	      "src": __webpack_require__(87)
+	      "src": __webpack_require__(90)
 	    }
 	  })])
 	}]}
@@ -34807,18 +35040,6 @@
 	}
 
 /***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "swiper1.png?da981d4a9a3f465cbb5c2262e0d7c415";
-
-/***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "seach_icon.png?de1ae6d7a482e776a91319e1bf9fa131";
-
-/***/ },
 /* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34828,15 +35049,33 @@
 /* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__.p + "banner1.png?877ee5374996be6ac50bcbd4340dd2a2";
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "banner2.png?2040e20bad550c879cceed0e9028c441";
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "seach_icon.png?de1ae6d7a482e776a91319e1bf9fa131";
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
 	
 	/* styles */
-	__webpack_require__(89)
+	__webpack_require__(92)
 
 	var Component = __webpack_require__(44)(
 	  /* script */
-	  __webpack_require__(91),
+	  __webpack_require__(94),
 	  /* template */
-	  __webpack_require__(92),
+	  __webpack_require__(95),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -34863,13 +35102,13 @@
 
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(90);
+	var content = __webpack_require__(93);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
@@ -34889,7 +35128,7 @@
 	}
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -34897,13 +35136,13 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip {\n  margin-top: 50px;\n}\n.publishtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.publishtrip .swtich-role > span.active {\n      color: #323232;\n}\n.publishtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 4px;\n}\n.publish {\n  width: 100%;\n  padding: 10px;\n  position: relative;\n  /** 搜索结果列表 */\n}\n.publish .publish__info {\n    width: 100%;\n    height: 190px;\n    background-color: #fff;\n    padding: 10px 0;\n    border-radius: 5px;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publish .publish__info--line {\n    height: 45px;\n    line-height: 45px;\n    border-radius: 5px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n    position: relative;\n}\n.publish .publish__info--line > div {\n      float: left;\n}\n.publish .publish__info--line div.line__left {\n      width: 65px;\n      height: 45px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.publish .publish__info--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.publish .publish__info--line div.line__span {\n      width: 65px;\n      height: 45px;\n      text-align: right;\n}\n.publish .publish__info--line div.line__span span {\n        height: 45px;\n        line-height: 45px;\n        font-size: 14px;\n        color: #323232;\n        margin-right: 5px;\n}\n.publish .publish__info--line div.line-action {\n      position: absolute;\n      top: 0;\n      right: 5px;\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      background-color: #fff;\n}\n.publish .publish__info--line div.line-action > div.img {\n        height: 45px;\n        display: inline-block;\n        width: 50%;\n        float: left;\n        text-align: center;\n}\n.publish .publish__info--line div.line-action > div.img > img {\n          width: 15px;\n          height: 15px;\n          margin-top: 15px;\n}\n.publish .publish__info--line div.line-action > span {\n        color: #c8c8c8;\n        height: 45px;\n        float: left;\n        width: 50%;\n        line-height: 45px;\n        display: inline-block;\n}\n.publish .publish__info--line span {\n      font-size: 14px;\n}\n.publish .publish__info--line span.line__span--gray {\n      color: #c8c8c8;\n}\n.publish .publish__info--line input {\n      display: inline-block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 55%;\n      float: left;\n}\n.publish .publish__info--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.publish .publish__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.publish .publish__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.publish .search__result {\n    position: absolute;\n    top: 65px;\n    left: 10px;\n    right: 10px;\n    height: 200px;\n    z-index: 100;\n    background-color: #fff;\n    border-top: 1px solid #fafafa;\n    overflow-y: scroll;\n}\n.publish .search__result .search__result--line {\n      float: left;\n      width: 100%;\n      height: 60px;\n      position: relative;\n}\n.publish .search__result .search__result--line > div.img {\n        position: absolute;\n        height: 60px;\n        width: 65px;\n        line-height: 60px;\n        top: 0;\n        left: 0;\n        text-align: center;\n}\n.publish .search__result .search__result--line > div.img > img {\n          height: 10px;\n          width: 10px;\n}\n.publish .search__result .search__result--line .location-name {\n        padding-left: 65px;\n        width: 100%;\n        float: left;\n        height: 60px;\n}\n.publish .search__result .search__result--line .location-name .line {\n          height: 30px;\n          line-height: 30px;\n          width: 100%;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n}\n.publish .search__result .search__result--line .location-name span {\n          font-size: 15px;\n}\n.publish .search__result .search__result--line .location-name span.gray {\n          color: #c8c8c8;\n}\n.mt_page {\n  width: 100%;\n  height: 55%;\n  background-color: #fff;\n  overflow-y: scroll;\n}\n.mt_page .popup-header {\n    height: 50px;\n    width: 100%;\n    line-height: 50px;\n    background-color: #fff;\n    color: #fff;\n    text-align: center;\n    position: relative;\n}\n.mt_page .popup-header span {\n      display: inline-block;\n      height: 50px;\n      line-height: 50px;\n      font-size: 14px;\n      width: 60px;\n      color: #000;\n}\n.mt_page .popup-header span:last-child {\n      position: absolute;\n      top: 0;\n      right: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.mt_page .popup-header span:first-child {\n      position: absolute;\n      top: 0;\n      left: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n.picker-slot {\n  font-size: 14px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip {\n  margin-top: 50px;\n}\n.publishtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publishtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.publishtrip .swtich-role > span.active {\n      color: #323232;\n}\n.publishtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 4px;\n}\n.publish {\n  width: 100%;\n  padding: 10px;\n  position: relative;\n  /** 发布按钮 */\n  /** 搜索结果列表 */\n}\n.publish .publish__info {\n    width: 100%;\n    height: 190px;\n    background-color: #fff;\n    padding: 10px 0;\n    border-radius: 5px;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.publish .publish__info--line {\n    height: 45px;\n    line-height: 45px;\n    border-radius: 5px;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n    position: relative;\n}\n.publish .publish__info--line > div {\n      float: left;\n}\n.publish .publish__info--line div.line__left {\n      width: 65px;\n      height: 45px;\n      text-align: center;\n}\n.publish .publish__info--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.publish .publish__info--line div.line__span {\n      width: 65px;\n      height: 45px;\n      text-align: right;\n}\n.publish .publish__info--line div.line__span span {\n        height: 45px;\n        line-height: 45px;\n        font-size: 14px;\n        color: #323232;\n        margin-right: 5px;\n}\n.publish .publish__info--line div.line-action {\n      position: absolute;\n      top: 0;\n      right: 5px;\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      background-color: #fff;\n}\n.publish .publish__info--line div.line-action > div.img {\n        height: 45px;\n        display: inline-block;\n        width: 50%;\n        float: left;\n        text-align: center;\n}\n.publish .publish__info--line div.line-action > div.img > img {\n          width: 15px;\n          height: 15px;\n          margin-top: 15px;\n}\n.publish .publish__info--line div.line-action > span {\n        color: #c8c8c8;\n        height: 45px;\n        float: left;\n        width: 50%;\n        line-height: 45px;\n        display: inline-block;\n}\n.publish .publish__info--line span {\n      font-size: 14px;\n}\n.publish .publish__info--line span.line__span--gray {\n      color: #c8c8c8;\n}\n.publish .publish__info--line input {\n      display: inline-block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 75%;\n      float: left;\n}\n.publish .publish__info--line div.line__left--dot {\n      width: 65px;\n      height: 45px;\n      position: relative;\n}\n.publish .publish__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 18px;\n        left: 28px;\n}\n.publish .publish__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.publish .publish__btn {\n    width: 100%;\n    padding: 0 5px;\n    height: 45px;\n    line-height: 45px;\n    text-align: center;\n    margin-top: 45px;\n}\n.publish .publish__btn > button {\n      border: none;\n      outline: none;\n      border-radius: 5px;\n      width: 100%;\n      background-color: #515151;\n      height: 45px;\n      font-size: 16px;\n      color: #fff;\n}\n.publish .search__result {\n    position: absolute;\n    top: 65px;\n    left: 10px;\n    right: 10px;\n    height: 400px;\n    z-index: 100;\n    background-color: #fff;\n    border-top: 1px solid #fafafa;\n    overflow-y: scroll;\n}\n.publish .search__result .search__result--line {\n      float: left;\n      width: 100%;\n      height: 60px;\n      position: relative;\n}\n.publish .search__result .search__result--line > div.img {\n        position: absolute;\n        height: 60px;\n        width: 65px;\n        line-height: 60px;\n        top: 0;\n        left: 0;\n        text-align: center;\n}\n.publish .search__result .search__result--line > div.img > img {\n          height: 10px;\n          width: 10px;\n}\n.publish .search__result .search__result--line .location-name {\n        padding-left: 65px;\n        width: 100%;\n        float: left;\n        height: 60px;\n}\n.publish .search__result .search__result--line .location-name .line {\n          height: 30px;\n          line-height: 30px;\n          width: 100%;\n          overflow: hidden;\n          white-space: nowrap;\n          text-overflow: ellipsis;\n}\n.publish .search__result .search__result--line .location-name span {\n          font-size: 15px;\n}\n.publish .search__result .search__result--line .location-name span.gray {\n          color: #c8c8c8;\n}\n.mt_page {\n  width: 100%;\n  height: 55%;\n  background-color: #fff;\n  overflow-y: scroll;\n}\n.mt_page .popup-header {\n    height: 50px;\n    width: 100%;\n    line-height: 50px;\n    background-color: #fff;\n    color: #fff;\n    text-align: center;\n    position: relative;\n}\n.mt_page .popup-header span {\n      display: inline-block;\n      height: 50px;\n      line-height: 50px;\n      font-size: 14px;\n      width: 60px;\n      color: #000;\n}\n.mt_page .popup-header span:last-child {\n      position: absolute;\n      top: 0;\n      right: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.mt_page .popup-header span:first-child {\n      position: absolute;\n      top: 0;\n      left: 0;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n.picker-slot {\n  font-size: 14px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34920,11 +35159,11 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _list = __webpack_require__(62);
+	var _list = __webpack_require__(64);
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _Header = __webpack_require__(75);
+	var _Header = __webpack_require__(77);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -34932,6 +35171,47 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -35318,12 +35598,12 @@
 				datePickerPageShow: false, //显示选择日期
 				datePicker: [{
 					flex: 1,
-					values: ["今天", "明天", "后天", "大后天"],
+					values: [],
 					className: 'slot1',
 					textAlign: 'center'
 				}, {
 					flex: 1,
-					values: ["0 点", "1 点", "2 点", "3 点", "4 点", "5 点", "6 点", "7 点", "8 点", "9 点", "10 点", "11 点", "12 点", "13 点", "14 点", "15 点", "16 点", "17 点", "18 点", "19 点", "20 点", "21 点", "22 点", "23 点"],
+					values: [],
 					className: 'slot2',
 					textAlign: 'center'
 				}, {
@@ -35337,42 +35617,117 @@
 				numberPickerPageShow: false, //显示选择人数
 				numberPicker: [{
 					flex: 1,
-					values: ["1 人", "2 人", "3 人", "4 人", "5 人", "6 人"],
+					values: ["1人", "2人", "3人", "4人", "5人", "6人"],
 					className: 'slot1',
 					textAlign: 'center'
 				}],
-				numberPickerText: "", //人数
+				numberPickerText: "默认1人", //人数
 
 				searchStartText: "", //搜索的地址
 				searchEndText: "",
 				searchStartList: [], //开始搜索结果
+				searchStartIndex: 1, //页数
+				searchStartNoData: false, //没有数据
+
 				searchEndList: [], //到达搜索结果
+				searchEndIndex: 1, //页数
+				searchEndNoData: false, //没有数据
+
 				showEndSearchResult: false, //是否显示搜索结果
 				showStartSearchResult: false, //
 
 				searchStartFunction: null, //搜索处理函数
-				searchEndFunction: null };
+				searchEndFunction: null, //搜索处理函数
+
+				/** 提交结果 */
+				submitResult: {
+					start: null,
+					end: null,
+					time: null,
+					number: null,
+					phone: null,
+					remark: ""
+				}
+			};
 		},
 		created: function created() {
 			var _this = this;
 
-			this.datePickerText = "今天" + _utils2.default.formatWeek(new Date());
-			/** 定义函数使用 */
+			this.datePickerText = "今天" + _utils2.default.formatWeek(new Date()); // 显示今天几号
+
+			this.initDatePickerDay(); //初始化日期
+			this.initDatePickerTime(); //初始化时间
+
+			/** 定义按键函数使用 */
 			this.searchStartFunction = _.debounce(function () {
-				_this.$store.dispatch("getStartSearch", _this.searchStartText).then(function (result) {
+				_this.$store.dispatch("getStartSearch", {
+					text: _this.searchStartText,
+					page: 1
+				}).then(function (result) {
+					_this.searchStartIndex = 2;
 					_this.searchStartList = result.tips;
 				});
 			}, 500);
 
-			/** 定义函数使用 */
+			/** 定义按键函数使用 */
 			this.searchEndFunction = _.debounce(function () {
-				_this.$store.dispatch("getEndSearch", _this.searchEndText).then(function (result) {
+				_this.$store.dispatch("getEndSearch", {
+					text: _this.searchEndText,
+					page: 1
+				}).then(function (result) {
+					_this.searchEndIndex = 2;
 					_this.searchEndList = result.tips;
 				});
 			}, 500);
 		},
+		mounted: function mounted() {
+			var _this2 = this;
 
-		computed: {},
+			// 监听开始地址滚动
+			document.getElementById("startSearchList").addEventListener('scroll', _.throttle(function () {
+				if (!_this2.showStartSearchResult || _this2.searchStartNoData) return; //列表不显示或者没有更多数据时候不执行
+
+				var last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
+
+				if (last < 400) {
+					_this2.$store.dispatch("getStartSearch", {
+						text: _this2.searchStartText,
+						page: _this2.searchStartIndex
+					}).then(function (result) {
+						if (result.tips.lenght < 10) {
+							_this2.searchStartNoData = true; //没有更多数据
+						}
+						_this2.searchStartList = _this2.searchStartList.concat(result.tips);
+					});
+				}
+			}, 400, { leading: false }));
+
+			// 监听到达地址滚动
+			document.getElementById("endSearchList").addEventListener('scroll', _.throttle(function () {
+				if (!_this2.showEndSearchResult || _this2.searchEndNoData) return; //列表不显示或者没有更多数据时候不执行
+
+				var last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
+
+				if (last < 400) {
+					_this2.$store.dispatch("getEndSearch", {
+						text: _this2.searchEndText,
+						page: _this2.searchEndIndex
+					}).then(function (result) {
+						if (result.tips.lenght < 10) {
+							_this2.searchEndNoData = true; //没有更多数据
+						}
+						_this2.searchEndList = _this2.searchEndList.concat(result.tips);
+					});
+				}
+			}, 400, { leading: false }));
+		},
+
+		computed: {
+			/** 显示提交按钮 */
+			showSubmitBtn: function showSubmitBtn() {
+				return this.submitResult.start && this.submitResult.end && this.submitResult.number && this.submitResult.phone && this.submitResult.time;
+			}
+		},
 		methods: {
 			formatJSON: function formatJSON(data) {
 				return JSON.parse((0, _stringify2.default)(data));
@@ -35397,9 +35752,48 @@
 				this.Role = index;
 			},
 
+			/** 初始化选择的时间 */
+			initDatePickerDay: function initDatePickerDay() {
+				// 设置可选择的出发时间(一共七天)
+				for (var i = 0; i < 30; i++) {
+					var date = new Date(Date.now() + i * 24 * 60 * 60 * 1000);
+					var json = {};
+					switch (i) {
+						case 0:
+							json.title = "今天";
+							break;
+						case 1:
+							json.title = "明天";
+							break;
+						case 2:
+							json.title = "后天";
+							break;
+						case 3:
+							json.title = "大后天";
+							break;
+						default:
+							json.title = date.getMonth() + 1 + "\u6708" + date.getDate() + "\u53F7";
+					}
+					json.value = date;
+					json.value.setSeconds(0);
+					this.datePicker[0].values.push(json);
+				}
+			},
+
+			/** 初始化选择的时间 */
+			initDatePickerTime: function initDatePickerTime() {
+				var date = new Date();
+				var hour = date.getHours(); //获取现在的小时
+
+				for (var i = hour; i < 24; i++) {
+					this.datePicker[1].values.push(i + " \u70B9");
+				}
+			},
+
 			/** 选择开始地点 */
 			startAddress: function startAddress(index) {
 				this.searchStartText = this.searchStartList[index].district + this.searchStartList[index].name;
+				this.submitResult.start = this.searchStartList[index]; //保存结果
 				this.searchBlur();
 			},
 
@@ -35420,10 +35814,13 @@
 			/** 选择到达地点 */
 			endAdress: function endAdress(index) {
 				this.searchEndText = this.searchEndList[index].district + this.searchEndList[index].name;
+				this.submitResult.end = this.searchEndList[index]; //保存结果
 				this.searchBlur();
 			},
 			searchStartKeyup: function searchStartKeyup() {
 				this.showStartSearchResult = true; //显示搜索结果
+				this.showEndSearchResult = false; //隐藏另一个
+				if (this.searchStartText === "") return;
 				this.searchStartFunction();
 			},
 
@@ -35434,6 +35831,8 @@
 			},
 			searchEndKeyup: function searchEndKeyup() {
 				this.showEndSearchResult = true; //显示搜索结果
+				this.showStartSearchResult = false; //隐藏另一个
+				if (this.searchEndText === "") return;
 				this.searchEndFunction();
 			},
 
@@ -35446,16 +35845,116 @@
 			actionNumberPicker: function actionNumberPicker(action) {
 				this.numberPickerPageShow = action;
 			},
+
+			/** 下一步 */
+			nextStep: function nextStep() {
+				this.actionDatePicker(false);
+				this.actionNumberPicker(true);
+			},
+
+			/** 时间改变出发的函数 */
 			dateValuesChange: function dateValuesChange(picker, values) {
+				var date = new Date();
+
+				// 显示的时候才允许设置值
 				if (this.datePickerPageShow) {
-					// 显示的时候才允许设置值
-					this.datePickerText = values[0] + " " + values[1] + values[2];
+					var time = this.getDateValues(values[1], values[2]);
+					this.submitResult.time = values[0].value;
+					this.submitResult.time.setHours(time.hour); //设置小时
+					this.submitResult.time.setMinutes(time.minute); //设置分钟
+
+					this.datePickerText = values[0].title + " " + values[1] + values[2];
+					// console.log(this.submitResult.time);
 				}
 			},
+
+			/** 格式化字符串提取时间 */
+			getDateValues: function getDateValues(h, m) {
+				var hour = "",
+				    minute = "";
+				if (h.length === 3) {
+					// '0 点'这类
+					hour = h.slice(0, 1);
+				} else {
+					// '11 点'这类
+					hour = h.slice(0, 2);
+				}
+				if (m.length === 3) {
+					minute = m.slice(0, 1);
+				} else {
+					minute = m.slice(0, 2);
+				}
+				return {
+					hour: hour,
+					minute: minute
+				};
+			},
+
+			/** 选择人数改变触发的函数 */
 			numberValuesChange: function numberValuesChange(picker, values) {
 				if (this.numberPickerPageShow) {
 					// 显示的时候才允许设置值
 					this.numberPickerText = values[0];
+					this.submitResult.number = parseInt(values[0].slice(0.1));
+				}
+			},
+
+			/** 检查手机号 */
+			inspectPhone: function inspectPhone() {
+				return (/^1[23578][0-9]{9}/.test(this.submitResult.phone)
+				);
+			},
+			submitOrder: function submitOrder() {
+				var _this3 = this;
+
+				if (!this.inspectPhone()) {
+					this.toast("手机号不正确!");
+					return;
+				}
+
+				// 获取开始和到达地理位置
+				var startLocation = this.submitResult.start.location.split(",");
+				var endLocation = this.submitResult.end.location.split(",");
+
+				//组装数据
+				var json = {
+					Phone: this.submitResult.phone,
+					Seat: this.submitResult.number,
+					SPoint: this.searchStartText,
+					EPoint: this.searchEndText,
+					STime: this.submitResult.time,
+					Remark: this.submitResult.remark,
+					SpointLocation: {
+						X: startLocation[0],
+						Y: startLocation[1]
+					},
+					Spointid: this.submitResult.start.id,
+					EpointLocation: {
+						X: endLocation[0],
+						Y: endLocation[1]
+					},
+					EpointId: this.submitResult.end.id
+				};
+
+				/** 发送数据 */
+				if (this.Role === 0) {
+					this.$store.dispatch("publishPassengerTrip", json).then(function (result) {
+						if (result.Code === 200) {
+							_this3.toast("发布成功");
+							_this3.$router.replace({ name: 'tripdetail', params: { types: 1, tripId: result.Data } });
+						} else {
+							_this3.toast(result.Message);
+						}
+					});
+				} else {
+					this.$store.dispatch("publishCarTrip", json).then(function (result) {
+						if (result.Code === 200) {
+							_this3.toast("发布成功");
+							_this3.$router.replace({ name: 'tripdetail', params: { types: 0, tripId: result.Data } });
+						} else {
+							_this3.toast(result.Message);
+						}
+					});
 				}
 			}
 		},
@@ -35486,7 +35985,7 @@
 	};
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -35568,7 +36067,7 @@
 	    }
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(97)
+	      "src": __webpack_require__(96)
 	    }
 	  })]), _vm._v(" "), _c('span', {
 	    on: {
@@ -35620,7 +36119,7 @@
 	    }
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(97)
+	      "src": __webpack_require__(96)
 	    }
 	  })]), _vm._v(" "), _c('span', {
 	    on: {
@@ -35635,28 +36134,95 @@
 	        _vm.actionDatePicker(true)
 	      }
 	    }
-	  }, [_vm._m(0), _vm._v(" "), _c('span', {
+	  }, [_vm._m(0), _vm._v(" "), (_vm.datePickerText.length === 4) ? [_c('span', {
 	    staticClass: "line__span--gray"
-	  }, [_vm._v(_vm._s(_vm.datePickerText))])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v(_vm._s(_vm.datePickerText))])] : [_c('span', [_vm._v(_vm._s(_vm.datePickerText))])]], 2), _vm._v(" "), _c('div', {
 	    staticClass: "publish__info--line",
 	    on: {
 	      "click": function($event) {
 	        _vm.actionNumberPicker(true)
 	      }
 	    }
-	  }, [_vm._m(1), _vm._v(" "), (_vm.Role === 0) ? [_c('span', {
+	  }, [_vm._m(1), _vm._v(" "), (_vm.Role === 0) ? [(_vm.numberPickerText === '默认1人') ? [_c('span', {
 	    staticClass: "line__span--gray"
-	  }, [_vm._v("默认1人")])] : [_c('span', {
+	  }, [_vm._v("默认1人")])] : [_c('span', [_vm._v(_vm._s(_vm.numberPickerText))])]] : [(_vm.numberPickerText === '默认1人') ? [_c('span', {
 	    staticClass: "line__span--gray"
-	  }, [_vm._v("默认1座位")])]], 2)]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('div', {
+	  }, [_vm._v("默认1人座位")])] : [_c('span', [_vm._v(_vm._s(_vm.numberPickerText) + "座位")])]]], 2)]), _vm._v(" "), _c('div', {
+	    staticClass: "publish__info--line box_shadow"
+	  }, [_vm._m(2), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.submitResult.phone),
+	      expression: "submitResult.phone"
+	    }],
+	    staticClass: "phone",
+	    attrs: {
+	      "maxlength": "11",
+	      "placeholder": "联系电话必填",
+	      "type": "tel",
+	      "name": "phone"
+	    },
+	    domProps: {
+	      "value": (_vm.submitResult.phone)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.submitResult.phone = $event.target.value
+	      }
+	    }
+	  })]), _vm._v(" "), _c('div', {
+	    staticClass: "publish__info--line box_shadow",
+	    staticStyle: {
+	      "margin-top": "10px"
+	    }
+	  }, [_vm._m(3), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.submitResult.remark),
+	      expression: "submitResult.remark"
+	    }],
+	    staticClass: "remark",
+	    attrs: {
+	      "placeholder": "",
+	      "type": "text",
+	      "name": "remark"
+	    },
+	    domProps: {
+	      "value": (_vm.submitResult.remark)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.submitResult.remark = $event.target.value
+	      }
+	    }
+	  })]), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showSubmitBtn),
+	      expression: "showSubmitBtn"
+	    }],
+	    staticClass: "publish__btn"
+	  }, [_c('button', {
+	    on: {
+	      "click": _vm.submitOrder
+	    }
+	  }, [_vm._v("确定发布")])]), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
 	      value: (_vm.showStartSearchResult),
 	      expression: "showStartSearchResult"
 	    }],
-	    staticClass: "search__result"
-	  }, _vm._l((_vm.searchStartList), function(item, index) {
+	    staticClass: "search__result",
+	    attrs: {
+	      "id": "startSearchList"
+	    }
+	  }, [_vm._l((_vm.searchStartList), function(item, index) {
 	    return _c('div', {
 	      staticClass: "search__result--line",
 	      on: {
@@ -35673,7 +36239,14 @@
 	    }, [_c('span', {
 	      staticClass: "gray"
 	    }, [_vm._v(_vm._s(item.district))])])])])
-	  })), _vm._v(" "), _c('div', {
+	  }), _vm._v(" "), _c('div', {
+	    staticStyle: {
+	      "float": "left"
+	    },
+	    attrs: {
+	      "id": "startSearchList_last"
+	    }
+	  })], 2), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -35683,8 +36256,11 @@
 	    staticClass: "search__result",
 	    staticStyle: {
 	      "top": "115px"
+	    },
+	    attrs: {
+	      "id": "endSearchList"
 	    }
-	  }, _vm._l((_vm.searchEndList), function(item, index) {
+	  }, [_vm._l((_vm.searchEndList), function(item, index) {
 	    return _c('div', {
 	      staticClass: "search__result--line",
 	      on: {
@@ -35701,7 +36277,14 @@
 	    }, [_c('span', {
 	      staticClass: "gray"
 	    }, [_vm._v(_vm._s(item.district))])])])])
-	  }))]), _vm._v(" "), _c('mt-popup', {
+	  }), _vm._v(" "), _c('div', {
+	    staticStyle: {
+	      "float": "left"
+	    },
+	    attrs: {
+	      "id": "endSearchList_last"
+	    }
+	  })], 2)]), _vm._v(" "), _c('mt-popup', {
 	    staticClass: "mt_page",
 	    attrs: {
 	      "position": "bottom"
@@ -35721,9 +36304,17 @@
 	        _vm.actionDatePicker(false)
 	      }
 	    }
-	  }, [_vm._v("取消")]), _vm._v(" "), _c('span', [_vm._v("出发日期")]), _vm._v(" "), _c('span', [_vm._v("下一步")])]), _vm._v(" "), _c('mt-picker', {
+	  }, [_vm._v("取消")]), _vm._v(" "), _c('span', [_vm._v("出发日期")]), _vm._v(" "), _c('span', {
+	    staticStyle: {
+	      "color": "#0074D9"
+	    },
+	    on: {
+	      "click": _vm.nextStep
+	    }
+	  }, [_vm._v("下一步")])]), _vm._v(" "), _c('mt-picker', {
 	    attrs: {
 	      "visibleItemCount": 7,
+	      "value-key": "title",
 	      "slots": _vm.datePicker
 	    },
 	    on: {
@@ -35750,6 +36341,9 @@
 	      }
 	    }
 	  }, [_vm._v("上一步")]), _vm._v(" "), _c('span', [_vm._v("人数")]), _vm._v(" "), _c('span', {
+	    staticStyle: {
+	      "color": "#0074D9"
+	    },
 	    on: {
 	      "click": function($event) {
 	        _vm.actionNumberPicker(false)
@@ -35769,7 +36363,7 @@
 	    staticClass: "line__left"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(70)
+	      "src": __webpack_require__(72)
 	    }
 	  })])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -35777,41 +36371,27 @@
 	    staticClass: "line__left"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(54)
+	      "src": __webpack_require__(56)
 	    }
 	  })])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
-	    staticClass: "publish__info--line box_shadow"
-	  }, [_c('div', {
 	    staticClass: "line__left"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(82)
-	    }
-	  })]), _vm._v(" "), _c('input', {
-	    staticClass: "phone",
-	    attrs: {
-	      "maxlength": "11",
-	      "placeholder": "联系电话必填",
-	      "type": "tel",
-	      "name": "phone"
+	      "src": __webpack_require__(84)
 	    }
 	  })])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
-	    staticClass: "publish__info--line box_shadow",
-	    staticStyle: {
-	      "margin-top": "10px"
-	    }
-	  }, [_c('div', {
 	    staticClass: "line__span"
-	  }, [_c('span', [_vm._v("备注:")])]), _vm._v(" "), _c('input', {
-	    staticClass: "remark",
+	  }, [_c('span', [_vm._v("备注:")])])
+	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "img"
+	  }, [_c('img', {
 	    attrs: {
-	      "placeholder": "",
-	      "type": "text",
-	      "name": "remark"
+	      "src": __webpack_require__(97)
 	    }
 	  })])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -35819,15 +36399,7 @@
 	    staticClass: "img"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": __webpack_require__(96)
-	    }
-	  })])
-	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('div', {
-	    staticClass: "img"
-	  }, [_c('img', {
-	    attrs: {
-	      "src": __webpack_require__(96)
+	      "src": __webpack_require__(97)
 	    }
 	  })])
 	}]}
@@ -35840,16 +36412,28 @@
 	}
 
 /***/ },
-/* 93 */
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "select_icon.png?1904eda34844bad20cf0033c1cdf7f5e";
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "place_icon.png?f5ceb7e15b4795d68ebd14e82560992c";
+
+/***/ },
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(94);
+	var content = __webpack_require__(99);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(95)(content, {});
+	var update = __webpack_require__(100)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35866,7 +36450,7 @@
 	}
 
 /***/ },
-/* 94 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(40)();
@@ -35880,7 +36464,7 @@
 
 
 /***/ },
-/* 95 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -36132,16 +36716,452 @@
 
 
 /***/ },
-/* 96 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "place_icon.png?f5ceb7e15b4795d68ebd14e82560992c";
+	
+	/* styles */
+	__webpack_require__(102)
+
+	var Component = __webpack_require__(44)(
+	  /* script */
+	  __webpack_require__(104),
+	  /* template */
+	  __webpack_require__(105),
+	  /* scopeId */
+	  null,
+	  /* cssModules */
+	  null
+	)
+	Component.options.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/sharecar/components/User.vue"
+	if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+	if (Component.options.functional) {console.error("[vue-loader] User.vue: functional components are not supported with templates, they should use render functions.")}
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-09c70044", Component.options)
+	  } else {
+	    hotAPI.reload("data-v-09c70044", Component.options)
+	  }
+	})()}
+
+	module.exports = Component.exports
+
 
 /***/ },
-/* 97 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "select_icon.png?1904eda34844bad20cf0033c1cdf7f5e";
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(103);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	if(content.locals) module.exports = content.locals;
+	// add the styles to the DOM
+	var update = __webpack_require__(42)("46779dd6", content, false);
+	// Hot Module Replacement
+	if(false) {
+	 // When the styles change, update the <style> tags
+	 if(!content.locals) {
+	   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-09c70044!../../../node_modules/sass-loader/index.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue", function() {
+	     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-09c70044!../../../node_modules/sass-loader/index.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue");
+	     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+	     update(newContent);
+	   });
+	 }
+	 // When the module is disposed, remove the <style> tags
+	 module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(40)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.user--header {\n  height: 85px;\n  line-height: 85px;\n  background-color: #fff;\n  width: 100%;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.user--header > div {\n    float: left;\n    height: 85px;\n    line-height: 85px;\n    display: inline-block;\n}\n.user--header div.header-img {\n    width: 85px;\n    text-align: center;\n}\n.user--header div.header-img > img {\n      width: 45px;\n      height: 45px;\n      margin-top: 20px;\n}\n.user--header div.header-center {\n    width: 40%;\n    padding: 20px 0;\n}\n.user--header div.header-center > p {\n      font-size: 15px;\n      font-weight: 900;\n      color: #000;\n      height: 23px;\n      line-height: 23px;\n}\n.user--header div.header-right {\n    text-align: center;\n    float: right;\n    width: 40px;\n}\n.user--header div.header-right > img {\n      width: 8px;\n      height: 8px;\n}\n.user--title {\n  width: 100%;\n  height: 50px;\n  text-align: center;\n}\n.user--title .title-bg {\n    height: 50px;\n    line-height: 50px;\n    text-align: center;\n    position: relative;\n    display: inline-block;\n    width: 20px;\n}\n.user--title .title-bg:after {\n      content: \"\";\n      position: absolute;\n      top: 25px;\n      width: 4px;\n      height: 12px;\n      background-color: #999;\n      transform: rotate(30deg);\n}\n.user--title .title--body {\n    height: 50px;\n    display: inline-block;\n    width: 160px;\n    text-align: center;\n}\n.user--title .title--body > p {\n      height: 25px;\n      line-height: 25px;\n}\n.user--title .title--body > p:first-child {\n        font-size: 16px;\n        color: #000;\n        font-weight: 900;\n}\n.publish--lists {\n  width: 100%;\n  padding: 10px 10px;\n  padding-bottom: 80px;\n}\n.no-data {\n  text-align: center;\n  padding-top: 30px;\n}\n.no-data .img {\n    width: 100%;\n    margin-bottom: 20px;\n}\n.no-data .img img {\n      width: 195px;\n      height: 195px;\n}\n.no-data p {\n    color: #c8c8c8;\n    font-size: 18px;\n    font-weight: 900;\n    margin-bottom: 10px;\n}\n.no-data a {\n    width: 90px;\n    height: 35px;\n    line-height: 35px;\n    color: #fff;\n    text-decoration: none;\n    background-color: #329be8;\n    text-align: center;\n    display: inline-block;\n    border-radius: 5px;\n    margin-top: 10px;\n    font-size: 18px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _utils = __webpack_require__(46);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _list = __webpack_require__(64);
+
+	var _list2 = _interopRequireDefault(_list);
+
+	var _Footer = __webpack_require__(47);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _mintUi = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				CarIndex: 1, // 页数
+				CarNoData: false, //没有数据
+
+				PassengerIndex: 1, // 页数
+				PassengerNoData: false };
+		},
+		created: function created() {
+			var _this = this;
+
+			// 如果没有用户信息就去获取
+			if (!this.$store.getters.getUserInfo) {
+				this.loading();
+				this.$store.dispatch("getUserInfo").then(function () {
+					// 再去获取发布的数据
+					_this.getMyPublishPassengerTrip().then(function () {
+						_this.getMyPublishCarTrip();
+					});
+				});
+			} else {
+				// 直接获取发布的数据
+				this.getMyPublishPassengerTrip().then(function () {
+					_this.getMyPublishCarTrip();
+				});
+			}
+		},
+		activated: function activated() {},
+
+		computed: {
+			/** 是否显示没有数据 */
+			isShowNoData: function isShowNoData() {
+				return this.myPublish.length === 0;
+			},
+
+			/** 自己发布的信息 */
+			myPublish: function myPublish() {
+				return this.$store.getters.getMyPublish;
+			}
+		},
+		methods: {
+			toast: function toast(title) {
+				(0, _mintUi.Toast)({
+					message: title,
+					position: 'bottom',
+					duration: 3000
+				});
+			},
+
+			/** 加载动画(需要手动关闭) */
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			},
+
+			/** 获取乘客发布的数据 */
+			getMyPublishPassengerTrip: function getMyPublishPassengerTrip() {
+				var _this2 = this;
+
+				// if(this.PassengerNoData)return;// 没有数据了
+
+				this.loading();
+				return this.$store.dispatch("getMyPublishPassengerTrip", {
+					Index: this.PassengerIndex,
+					Size: 10
+				}).then(function (result) {
+					if (result.length < 10) {
+						_this2.PassengerNoData = true;
+					}
+					_this2.PassengerIndex++;
+					_mintUi.Indicator.close();
+				});
+			},
+
+			/** 获取司机发布的数据 */
+			getMyPublishCarTrip: function getMyPublishCarTrip() {
+				var _this3 = this;
+
+				// if(this.CarNoData)return;// 没有数据了
+
+				this.loading();
+				return this.$store.dispatch("getMyPublishCarTrip", {
+					Index: this.CarIndex,
+					Size: 10
+				}).then(function (result) {
+					if (result.length < 10) {
+						_this3.CarNoData = true;
+					}
+					_this3.CarIndex++;
+					_mintUi.Indicator.close();
+				});
+			}
+		},
+		filters: {},
+		components: {
+			"my-list": _list2.default,
+			"my-footer": _Footer2.default
+		}
+	};
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "user",
+	    attrs: {
+	      "id": "user"
+	    }
+	  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), (_vm.isShowNoData) ? _c('div', {
+	    staticClass: "no-data"
+	  }, [_vm._m(2), _vm._v(" "), _c('p', [_vm._v("这里空空如也~")]), _vm._v(" "), _c('p', [_vm._v("吓得我立刻去发布呀~")]), _vm._v(" "), _c('router-link', {
+	    attrs: {
+	      "to": "/publish"
+	    }
+	  }, [_vm._v("发布")])], 1) : _vm._e(), _vm._v(" "), _c('div', {
+	    staticClass: "publish--lists"
+	  }, [_vm._l((_vm.myPublish), function(item, index) {
+	    return [_c('my-list', {
+	      attrs: {
+	        "types": item.Num ? 1 : 0,
+	        "list": item
+	      }
+	    })]
+	  })], 2), _vm._v(" "), _c('my-footer', {
+	    attrs: {
+	      "active-index": 1
+	    }
+	  })], 1)
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "user--header"
+	  }, [_c('div', {
+	    staticClass: "header-img"
+	  }, [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(96)
+	    }
+	  })]), _vm._v(" "), _c('div', {
+	    staticClass: "header-center"
+	  }, [_c('p', [_vm._v("你家风格")]), _vm._v(" "), _c('p', [_vm._v("13513464133")])]), _vm._v(" "), _c('div', {
+	    staticClass: "header-right"
+	  }, [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(71)
+	    }
+	  })])])
+	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "user--title"
+	  }, [_c('div', {
+	    staticClass: "title-bg"
+	  }), _vm._v(" "), _c('div', {
+	    staticClass: "title--body"
+	  }, [_c('p', [_vm._v("我的发布")]), _vm._v(" "), _c('p', [_vm._v("愿你每次出行都有新惊喜")])]), _vm._v(" "), _c('div', {
+	    staticClass: "title-bg"
+	  })])
+	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "img"
+	  }, [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(106)
+	    }
+	  })])
+	}]}
+	module.exports.render._withStripped = true
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-09c70044", module.exports)
+	  }
+	}
+
+/***/ },
+/* 106 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "nodata.png?f71ba737d22561b5af54a42ae63569ca";
 
 /***/ }
 /******/ ]);

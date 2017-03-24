@@ -31,17 +31,32 @@
 					<div class="line__left">
 						<img src="../icon/clock_icon.png">
 					</div>
-					<span class="line__span--gray">{{datePickerText}}</span>
+					<template v-if="datePickerText.length===4">
+						<span class="line__span--gray">{{datePickerText}}</span>
+					</template>
+					<template v-else>
+						<span>{{datePickerText}}</span>
+					</template>
 				</div>
 				<div @click="actionNumberPicker(true)" class="publish__info--line">
 					<div class="line__left">
 						<img src="../icon/me_grey_icon.png">
 					</div>
 					<template v-if="Role===0">
-						<span class="line__span--gray">默认1人</span>
+						<template v-if="numberPickerText==='默认1人'">
+							<span class="line__span--gray">默认1人</span>
+						</template>
+						<template v-else>
+							<span>{{numberPickerText}}</span>
+						</template>
 					</template>
 					<template v-else>
-						<span class="line__span--gray">默认1座位</span>
+						<template v-if="numberPickerText==='默认1人'">
+							<span class="line__span--gray">默认1人座位</span>
+						</template>
+						<template v-else>
+							<span>{{numberPickerText}}座位</span>
+						</template>
 					</template>
 				</div>
 			</div>
@@ -49,15 +64,20 @@
 				<div class="line__left">
 					<img src="../icon/phone_icon.png">
 				</div>
-				<input maxlength="11" class="phone" placeholder="联系电话必填" type="tel" name="phone">
+				<input v-model="submitResult.phone" maxlength="11" class="phone" placeholder="联系电话必填" type="tel" name="phone">
 			</div>
 			<div style="margin-top:10px;" class="publish__info--line box_shadow">
 				<div class="line__span">
 					<span>备注:</span>
 				</div>
-				<input class="remark" placeholder="" type="text" name="remark">
+				<input v-model="submitResult.remark" class="remark" placeholder="" type="text" name="remark">
 			</div>
-			<div v-show="showStartSearchResult" class="search__result">
+			<!-- 提交按钮 -->
+			<div v-show="showSubmitBtn" class="publish__btn">
+				<button @click="submitOrder">确定发布</button>
+			</div>
+			<!-- 开始地址结果列表 -->
+			<div id="startSearchList" v-show="showStartSearchResult" class="search__result">
 				<div @click="startAddress(index)" class="search__result--line" v-for="(item,index) in searchStartList">
 					<div class="img">
 						<img src="../icon/place_icon.png">
@@ -71,8 +91,10 @@
 						</div>
 					</div>
 				</div>
+				<div style="float:left;" id="startSearchList_last"></div>
 			</div>
-			<div style="top:115px;" v-show="showEndSearchResult" class="search__result">
+			<!-- 到达地址结果列表 -->
+			<div id="endSearchList" style="top:115px;" v-show="showEndSearchResult" class="search__result">
 				<div @click="endAdress(index)" class="search__result--line" v-for="(item,index) in searchEndList">
 					<div class="img">
 						<img src="../icon/place_icon.png">
@@ -86,33 +108,34 @@
 						</div>
 					</div>
 				</div>
+				<div style="float:left;" id="endSearchList_last"></div>
 			</div>
 		</div>
 		<!-- 选择出发日期 -->
 		<mt-popup
-	  v-model="datePickerPageShow"
-	  position="bottom"
-	  class="mt_page">
+		  v-model="datePickerPageShow"
+		  position="bottom"
+		  class="mt_page">
 		  <slot>
 				<div class="popup-header">
  			  	<span @click="actionDatePicker(false)">取消</span>
  			  	<span>出发日期</span>
-	  			<span>下一步</span>
+	  			<span style="color:#0074D9" @click="nextStep">下一步</span>
  			  </div>
 
-		  	<mt-picker :visibleItemCount="7" :slots="datePicker" @change="dateValuesChange"></mt-picker>
+		  	<mt-picker :visibleItemCount="7" value-key="title" :slots="datePicker" @change="dateValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
 		<!-- 选择人数 -->
 		<mt-popup
-	  v-model="numberPickerPageShow"
-	  position="bottom"
-	  class="mt_page">
+		  v-model="numberPickerPageShow"
+		  position="bottom"
+		  class="mt_page">
 		  <slot>
 				<div class="popup-header">
  			  	<span @click="actionNumberPicker(false)">上一步</span>
  			  	<span>人数</span>
-	  			<span @click="actionNumberPicker(false)">确定</span>
+	  			<span style="color:#0074D9" @click="actionNumberPicker(false)">确定</span>
  			  </div>
 
 		  	<mt-picker :visibleItemCount="7" :slots="numberPicker" @change="numberValuesChange"></mt-picker>
@@ -175,7 +198,8 @@
 		height:45px;
 		line-height: 45px;
 		border-radius:5px;
-		@include display_flex('row');
+		// @include display_flex('row');
+		
 		justify-content:flex-start;
 		background-color:#fff;
 		width:100%;
@@ -186,7 +210,8 @@
 		div.line__left{
 			width:65px;
 			height:45px;
-			@include display_flex('row');
+			text-align:center;
+			// @include display_flex('row');
 			>img{
 				width:10px;
 				height:10px;
@@ -249,12 +274,12 @@
 			height:45px;
 			font-size:14px;
 			// line-height:40px;
-			width:55%;
+			width:75%;
 			float:left;
 		}
 		div.line__left--dot{
 			width:65px;
-			height:36.6666px;
+			height:45px;
 			position: relative;
 			&:after{
 				content:"";
@@ -263,7 +288,7 @@
 				height:10px;
 				border-radius: 50%;
 				background-color:$my_green;
-				top:13px;
+				top:18px;
 				left:28px;
 			}
 		}
@@ -273,13 +298,32 @@
 			}
 		}
 	}
+	/** 发布按钮 */
+	.publish__btn{
+		width:100%;
+		padding:0 5px;
+		height:45px;
+		line-height:45px;
+		text-align:center;
+		margin-top:45px;
+		>button{
+			border:none;
+			outline:none;
+			border-radius:5px;
+			width:100%;
+			background-color:#515151;
+			height:45px;
+			font-size:16px;
+			color:#fff;
+		}
+	}
 	/** 搜索结果列表 */
 	.search__result{
 		position:absolute;
 		top:65px;
 		left:10px;
 		right:10px;
-		height:200px;
+		height:400px;
 		z-index:100;
 		background-color: #fff;
 		border-top:1px solid #fafafa;
@@ -362,9 +406,6 @@
     }
   }
 }
-.picker-center-highlight{
-	// margin-top:0 !important;
-}
 .animated{
 	animation-duration: 0.4s;
 }
@@ -388,12 +429,12 @@ export default {
 			datePickerPageShow:false,//显示选择日期
 			datePicker:[{
     		flex: 1,
-    		values: ["今天","明天","后天","大后天"],
+    		values: [],
     		className: 'slot1',
     		textAlign: 'center'
        }, {
     		flex: 1,
-    		values: ["0 点", "1 点", "2 点", "3 点", "4 点", "5 点", "6 点", "7 点", "8 点", "9 点", "10 点", "11 点", "12 点", "13 点", "14 点", "15 点", "16 点", "17 点", "18 点", "19 点", "20 点", "21 点", "22 点", "23 点"],
+    		values: [],
     		className: 'slot2',
     		textAlign: 'center'
        }, {
@@ -407,41 +448,111 @@ export default {
 			numberPickerPageShow:false,//显示选择人数
 			numberPicker:[{
     		flex: 1,
-    		values: ["1 人","2 人","3 人","4 人","5 人","6 人"],
+    		values: ["1人","2人","3人","4人","5人","6人"],
     		className: 'slot1',
     		textAlign: 'center'
       }],
-      numberPickerText:"",//人数
+      numberPickerText:"默认1人",//人数
 			
 			searchStartText:"",//搜索的地址
 			searchEndText:"",
 			searchStartList:[],//开始搜索结果
+			searchStartIndex:1,//页数
+			searchStartNoData:false,//没有数据
+
 			searchEndList:[],//到达搜索结果
+			searchEndIndex:1,//页数
+			searchEndNoData:false,//没有数据
+
 			showEndSearchResult:false,//是否显示搜索结果
 			showStartSearchResult:false,//
 
 			searchStartFunction:null,//搜索处理函数
 			searchEndFunction:null,//搜索处理函数
+
+			/** 提交结果 */
+			submitResult:{
+				start:null,
+				end:null,
+				time:null,
+				number:null,
+				phone:null,
+				remark:""
+			}
 		}
 	},
 	created(){
-		this.datePickerText = "今天"+Utils.formatWeek(new Date());
-		/** 定义函数使用 */
+		this.datePickerText = "今天"+Utils.formatWeek(new Date());// 显示今天几号
+
+		this.initDatePickerDay();//初始化日期
+		this.initDatePickerTime();//初始化时间
+
+		/** 定义按键函数使用 */
 		this.searchStartFunction = _.debounce(()=>{
-			this.$store.dispatch("getStartSearch",this.searchStartText).then(result=>{
+			this.$store.dispatch("getStartSearch",{
+				text:this.searchStartText,
+				page:1
+			}).then(result=>{
+				this.searchStartIndex = 2;
 				this.searchStartList = result.tips;
 			});
 		},500);
 		
-		/** 定义函数使用 */
+		/** 定义按键函数使用 */
 		this.searchEndFunction = _.debounce(()=>{
-			this.$store.dispatch("getEndSearch",this.searchEndText).then(result=>{
+			this.$store.dispatch("getEndSearch",{
+				text:this.searchEndText,
+				page:1
+			}).then(result=>{
+				this.searchEndIndex = 2;
 				this.searchEndList = result.tips;
 			})
 		},500);
 	},
+	mounted(){
+		// 监听开始地址滚动
+		document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
+			if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
+
+			let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
+
+			if (last < 400) {
+				this.$store.dispatch("getStartSearch",{
+					text:this.searchStartText,
+					page:this.searchStartIndex
+				}).then(result=>{
+					if(result.tips.lenght<10){
+						this.searchStartNoData = true;//没有更多数据
+					}
+					this.searchStartList = this.searchStartList.concat(result.tips);
+				})
+			}
+		}, 400, { leading: false }));
+
+		// 监听到达地址滚动
+		document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
+			if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
+
+			let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
+
+			if (last < 400) {
+				this.$store.dispatch("getEndSearch",{
+					text:this.searchEndText,
+					page:this.searchEndIndex
+				}).then(result=>{
+					if(result.tips.lenght<10){
+						this.searchEndNoData = true;//没有更多数据
+					}
+					this.searchEndList = this.searchEndList.concat(result.tips);
+				})
+			}
+		}, 400, { leading: false }));
+	},
 	computed:{
-		
+		/** 显示提交按钮 */
+		showSubmitBtn(){
+			return this.submitResult.start&&this.submitResult.end&&this.submitResult.number&&this.submitResult.phone&&this.submitResult.time;
+		}
 	},
 	methods:{
 		formatJSON(data){
@@ -464,9 +575,46 @@ export default {
 		switchRole(index){
 			this.Role = index;
 		},
+		/** 初始化选择的时间 */
+		initDatePickerDay(){
+			// 设置可选择的出发时间(一共七天)
+			for(let i=0;i<30;i++){
+				let date = new Date(Date.now()+i*24*60*60*1000);
+				let json = {};
+				switch(i){
+					case 0:
+						json.title = "今天";
+						break;
+					case 1:
+						json.title = "明天";
+						break;
+					case 2:
+						json.title = "后天";
+						break;
+					case 3:
+						json.title = "大后天";
+						break;
+					default:
+						json.title = `${date.getMonth()+1}月${date.getDate()}号`;
+				}
+				json.value = date;
+				json.value.setSeconds(0);
+				this.datePicker[0].values.push(json);
+			}
+		},
+		/** 初始化选择的时间 */
+		initDatePickerTime(){
+			let date = new Date();
+			let hour = date.getHours();//获取现在的小时
+
+			for(let i=hour;i<24;i++){
+				this.datePicker[1].values.push(`${i} 点`);
+			}
+		},
 		/** 选择开始地点 */
 		startAddress(index){
 			this.searchStartText = this.searchStartList[index].district+this.searchStartList[index].name;
+			this.submitResult.start = this.searchStartList[index];//保存结果
 			this.searchBlur();
 		},
 		/** 删除值 */
@@ -485,10 +633,13 @@ export default {
 		/** 选择到达地点 */
 		endAdress(index){
 			this.searchEndText = this.searchEndList[index].district+this.searchEndList[index].name;
+			this.submitResult.end = this.searchEndList[index];//保存结果
 			this.searchBlur();
 		},
 		searchStartKeyup(){
 			this.showStartSearchResult = true;//显示搜索结果
+			this.showEndSearchResult = false;//隐藏另一个
+			if(this.searchStartText==="")return;
 			this.searchStartFunction();
 		},
 		/** 输入框blur */
@@ -498,6 +649,8 @@ export default {
 		},
 		searchEndKeyup(){
 			this.showEndSearchResult = true;//显示搜索结果
+			this.showStartSearchResult = false;//隐藏另一个
+			if(this.searchEndText==="")return;
 			this.searchEndFunction();
 		},
 		/** 隐藏显示日期选择 */
@@ -508,16 +661,113 @@ export default {
 		actionNumberPicker(action){
 			this.numberPickerPageShow = action;
 		},
+		/** 下一步 */
+		nextStep(){
+			this.actionDatePicker(false);
+			this.actionNumberPicker(true);
+		},
+		/** 时间改变出发的函数 */
 		dateValuesChange(picker,values){
+			let date = new Date();
+
+			// 显示的时候才允许设置值
 			if(this.datePickerPageShow){
-				// 显示的时候才允许设置值
-				this.datePickerText = values[0]+" "+values[1]+values[2];
+				let time = this.getDateValues(values[1],values[2]);
+				this.submitResult.time = values[0].value;
+				this.submitResult.time.setHours(time.hour);//设置小时
+				this.submitResult.time.setMinutes(time.minute);//设置分钟
+				
+				this.datePickerText = values[0].title+" "+values[1]+values[2];
+				// console.log(this.submitResult.time);
 			}
 		},
+		/** 格式化字符串提取时间 */
+		getDateValues(h,m){
+			let hour = "",
+					minute = "";
+			if(h.length===3){
+				// '0 点'这类
+				hour = h.slice(0,1);
+			}
+			else{
+				// '11 点'这类
+				hour = h.slice(0,2);
+			}
+			if(m.length===3){
+				minute = m.slice(0,1);
+			}
+			else{
+				minute = m.slice(0,2);
+			}
+			return {
+				hour:hour,
+				minute:minute
+			}
+		},
+		/** 选择人数改变触发的函数 */
 		numberValuesChange(picker,values){
 			if(this.numberPickerPageShow){
 				// 显示的时候才允许设置值
-				this.numberPickerText = values[0]
+				this.numberPickerText = values[0];
+				this.submitResult.number = parseInt(values[0].slice(0.1));
+			}
+		},
+		/** 检查手机号 */
+		inspectPhone(){
+			return /^1[23578][0-9]{9}/.test(this.submitResult.phone)
+		},
+		submitOrder(){
+			if(!this.inspectPhone()){
+				this.toast("手机号不正确!");
+				return;
+			}
+			
+			// 获取开始和到达地理位置
+			let startLocation = this.submitResult.start.location.split(",");
+			let endLocation = this.submitResult.end.location.split(",");
+
+			//组装数据
+			let json = {
+				Phone:this.submitResult.phone,
+				Seat:this.submitResult.number,
+				SPoint:this.searchStartText,
+				EPoint:this.searchEndText,
+				STime:this.submitResult.time,
+				Remark:this.submitResult.remark,
+				SpointLocation:{
+					X:startLocation[0],
+					Y:startLocation[1]
+				},
+				Spointid:this.submitResult.start.id,
+				EpointLocation:{
+					X:endLocation[0],
+					Y:endLocation[1]
+				},
+				EpointId:this.submitResult.end.id,
+			}
+
+			/** 发送数据 */
+			if(this.Role===0){
+				this.$store.dispatch("publishPassengerTrip",json).then(result=>{
+					if(result.Code===200){
+						this.toast("发布成功");
+						this.$router.replace({ name: 'tripdetail', params: { types: 1,tripId:result.Data }});
+					}
+					else{
+						this.toast(result.Message);
+					}
+				})
+			}
+			else{
+				this.$store.dispatch("publishCarTrip",json).then(result=>{
+					if(result.Code===200){
+						this.toast("发布成功");
+						this.$router.replace({ name: 'tripdetail', params: { types: 0,tripId:result.Data }});
+					}
+					else{
+						this.toast(result.Message);
+					}
+				})
 			}
 		}
 	},

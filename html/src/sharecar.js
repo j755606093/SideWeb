@@ -13,6 +13,7 @@ import ShareCar from "../sharecar/ShareCar.vue";
 import Index from "../sharecar/components/Index.vue";
 import TripDetail from "../sharecar/components/TripDetail.vue";
 import Publish from "../sharecar/components/Publish.vue";
+import User from "../sharecar/components/User.vue";
 
 const routes = [{
 	path: '/',
@@ -30,6 +31,10 @@ const routes = [{
 	path: "/detail/:types/:tripId",
 	name: "tripdetail",
 	component: TripDetail
+}, {
+	path: "/user",
+	name: "user",
+	component: User
 }, {
 	path: "/publish",
 	name: "publish",
