@@ -35778,7 +35778,7 @@
 
 			// 监听开始地址滚动
 			document.getElementById("startSearchList").addEventListener('scroll', _.throttle(function () {
-				if (!_this2.showStartSearchResult || _this2.searchStartNoData) return; //列表不显示或者没有更多数据时候不执行
+				if (_this2.searchStartNoData) return; //列表不显示或者没有更多数据时候不执行
 
 				var last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
 
@@ -35798,7 +35798,7 @@
 
 			// 监听到达地址滚动
 			document.getElementById("endSearchList").addEventListener('scroll', _.throttle(function () {
-				if (!_this2.showEndSearchResult || _this2.searchEndNoData) return; //列表不显示或者没有更多数据时候不执行
+				if (_this2.searchEndNoData) return; //列表不显示或者没有更多数据时候不执行
 
 				var last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
 
@@ -35887,7 +35887,7 @@
 
 			/** 选择开始地点 */
 			startAddress: function startAddress(index) {
-				this.searchStartText = this.searchStartList[index].address + this.searchStartList[index].name;
+				this.searchStartText = this.searchStartList[index].name;
 				this.submitResult.start = this.searchStartList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -35908,7 +35908,7 @@
 
 			/** 选择到达地点 */
 			endAdress: function endAdress(index) {
-				this.searchEndText = this.searchEndList[index].address + this.searchEndList[index].name;
+				this.searchEndText = this.searchEndList[index].name;
 				this.submitResult.end = this.searchEndList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -36333,7 +36333,7 @@
 	      staticClass: "line"
 	    }, [_c('span', {
 	      staticClass: "gray"
-	    }, [_vm._v(_vm._s(item.cityname + item.address))])])])])
+	    }, [_vm._v(_vm._s(item.cityname + item.adname + item.address))])])])])
 	  }), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "float": "left"
@@ -36371,7 +36371,7 @@
 	      staticClass: "line"
 	    }, [_c('span', {
 	      staticClass: "gray"
-	    }, [_vm._v(_vm._s(item.address))])])])])
+	    }, [_vm._v(_vm._s(item.cityname + item.adname + item.address))])])])])
 	  }), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "float": "left"

@@ -87,7 +87,7 @@
 							<span>{{item.name}}</span>
 						</div>
 						<div class="line">
-							<span class="gray">{{item.cityname+item.address}}</span>
+							<span class="gray">{{item.cityname+item.adname+item.address}}</span>
 						</div>
 					</div>
 				</div>
@@ -104,7 +104,7 @@
 							<span>{{item.name}}</span>
 						</div>
 						<div class="line">
-							<span class="gray">{{item.address}}</span>
+							<span class="gray">{{item.cityname+item.adname+item.address}}</span>
 						</div>
 					</div>
 				</div>
@@ -512,7 +512,7 @@ export default {
 	mounted(){
 		// 监听开始地址滚动
 		document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
-			if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
+			if(this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
 
 			let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
 
@@ -532,7 +532,7 @@ export default {
 
 		// 监听到达地址滚动
 		document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
-			if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
+			if(this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
 
 			let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
 
@@ -615,7 +615,7 @@ export default {
 		},
 		/** 选择开始地点 */
 		startAddress(index){
-			this.searchStartText = this.searchStartList[index].address+this.searchStartList[index].name;
+			this.searchStartText = this.searchStartList[index].name;
 			this.submitResult.start = this.searchStartList[index];//保存结果
 			this.searchBlur();
 		},
@@ -634,7 +634,7 @@ export default {
 		},
 		/** 选择到达地点 */
 		endAdress(index){
-			this.searchEndText = this.searchEndList[index].address+this.searchEndList[index].name;
+			this.searchEndText = this.searchEndList[index].name;
 			this.submitResult.end = this.searchEndList[index];//保存结果
 			this.searchBlur();
 		},
