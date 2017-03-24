@@ -1,19 +1,29 @@
 <template type="x/template" id="footer">
 	<footer v-show="getfooter">
-		<a href="./sharecar.html" class="footer active">
-			<img src="../icon/car_icon.png">
+		<router-link to="/" :class="{'footer':true,'active':activeIndex===0}">
+			<template v-if="activeIndex===0">
+				<img src="../icon/car_icon.png">
+			</template>
+			<template v-else>
+				<img src="../icon/car_grey_icon.png">
+			</template>
 			<p>首页</p>
-		</a>
+		</router-link>
 		<router-link to="/publish" class="footer">
 			<div class="circle"></div>
 			<img class="center" src="../icon/add_up_icon.png">
 			<div class="clear"></div>
 			<p class="center">发布行程</p>
 		</router-link>
-		<a class="footer">
-			<img src="../icon/me_grey_icon.png">
+		<router-link to="/user" :class="{'footer':true,'active':activeIndex===1}">
+			<template v-if="activeIndex===1">
+				<img src="../icon/me_icon.png">
+			</template>
+			<template v-else>
+				<img src="../icon/me_grey_icon.png">
+			</template>
 			<p>我的</p>
-		</a>
+		</router-link>
 	</footer>
 </template>
 
@@ -112,6 +122,12 @@ footer{
 import Utils from "../../Utils/utils";
 
 export default {
+	props:{
+		activeIndex:{
+			type:Number,
+			default:0
+		}
+	},
 	data () {
 		return {
 			refresh:""
@@ -123,7 +139,6 @@ export default {
 	computed:{
 		getfooter(){
 			return this.$store.getters.getFooterState;
-			// return this.$store.getters.getHeaderState;
 		},
 	},
 	methods:{

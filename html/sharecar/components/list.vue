@@ -38,11 +38,11 @@
 			</div>
 			<div class="list__body--line">
 				<div class="line__left--dot"></div>
-				<span class="line__start--address">{{list.Spoint}}</span>
+				<span class="line__start--address">{{list.Spoint.split("省")[1]?list.Spoint.split("省")[1]:list.Epoint}}</span>
 			</div>
 			<div class="list__body--line">
 				<div class="line__left--dot dot-red"></div>
-				<span class="line__end--address">{{list.Epoint}}</span>
+				<span class="line__end--address">{{list.Epoint.split("省")[1]?list.Epoint.split("省")[1]:list.Epoint}}</span>
 			</div>
 		</div>
 	</div>

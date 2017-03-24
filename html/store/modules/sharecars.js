@@ -94,6 +94,7 @@ const state = {
 
 	showFooter: true, //是否显示底部
 
+	pageIndex: 0, //首页页面索引
 	CarInfo: [],
 	PeopleInfo: [],
 
@@ -101,6 +102,9 @@ const state = {
 	City: [], //市
 	District: [], //区
 	Village: [], //村
+
+	myPublish: [], //我的发布
+	UserInfo: null, //用户信息
 }
 
 let postData = (url, data) => {
@@ -134,6 +138,7 @@ let getData = (url) => {
 const getters = {
 	Development: state => state,
 	getFooterState: state => state.showFooter,
+	getPageIndex: state => state.pageIndex,
 	getCarInfo: state => state.CarInfo,
 	getPeopleInfo: state => state.PeopleInfo,
 
@@ -141,6 +146,9 @@ const getters = {
 	getCity: state => state.City,
 	getDistrict: state => state.District,
 	getVillage: state => state.Village,
+
+	getMyPublish: state => state.myPublish,
+	getUserInfo: state => state.UserInfo
 }
 
 // actions
@@ -153,27 +161,52 @@ const actions = {
 			showFooter: data,
 		})
 	},
+	/** 设置页面索引 */
+	setPageInfo({ commit, state }, data) {
+		commit(types.SET_PAGE_INDEX, {
+			pageIndex: data,
+		})
+	},
+	/** 获取自己的发布信息 */
+	getUserInfo({ commit, state }, data) {
+		return getData("/api/Transport/UserRelevant", data).then(result => {
+			let userinfo = result.Data.Userinfo;
+			commit(types.SET_USERINFO, {
+				UserInfo: userinfo
+			})
+		})
+	},
 	/** 获取车主的列表信息 */
 	getCarInfo({ commit, state }, data) {
 		return postData("/api/CarPool/ListDre", data)
 			.then(result => {
-				let data = result.Data;
+				let res = result.Data;
 				commit(types.GET_CAR_INFO, {
-					CarInfo: data,
+					CarInfo: res,
+					isRefresh: data.isRefresh ? true : false
 				});
 				return data;
 			})
+	},
+	/** 倒叙数组 */
+	setCarInfoReverse({ commit, state }, data) {
+		commit(types.REVERSE_CARINFO);
 	},
 	/** 获取乘客信息 */
 	getPeopleInfo({ commit, state }, data) {
 		return postData("/api/CarPool/ListPassenger", data)
 			.then(result => {
-				let data = result.Data;
+				let res = result.Data;
 				commit(types.GET_PEOPLE_INFO, {
-					PeopleInfo: data,
+					PeopleInfo: res,
+					isRefresh: data.isRefresh ? true : false
 				})
 				return data;
 			})
+	},
+	/** 倒叙数组 */
+	setPeopleInfoReverse({ commit, state }, data) {
+		commit(types.REVERSE_PEOPLEINFO);
 	},
 	/** 获取车主发布的信息 */
 	getTripDetail({ commit, state }, data) {
@@ -245,20 +278,46 @@ const actions = {
 				}
 			})
 	},
+	/** 获取用户输入后搜索得到的信息 */
 	getStartSearch({ commit, state }, data) {
-		return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=${data.text}&page=${data.page}`, {
 				method: 'GET',
 			})
 			.then(checkStatus)
 			.then(result => result.json())
 	},
+	/** 获取用户输入后搜索得到的信息 */
 	getEndSearch({ commit, state }, data) {
-		return fetch('http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=' + data, {
+		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&keywords=${data.text}&page=${data.page}`, {
 				method: 'GET',
 			})
 			.then(checkStatus)
 			.then(result => result.json())
-	}
+	},
+	/** 乘客发布行程 */
+	publishPassengerTrip({ commit, state }, data) {
+		return postData("/api/CarPool/PublishRoute", data)
+	},
+	/** 司机发布行程 */
+	publishCarTrip({ commit, state }, data) {
+		return postData("/api/CarPool/PublishTravel", data)
+	},
+	/** 获取自己的发布乘客信息 */
+	getMyPublishPassengerTrip({ commit, state }, data) {
+		data.UsrId = state.UserInfo.Id;
+		return postData("/api/CarPool/ListPassenger", data).then(result => {
+			commit(types.SET_MYPUBLISH, result.Data);
+			return result.Data;
+		})
+	},
+	/** 获取自己的发布司机信息 */
+	getMyPublishCarTrip({ commit, state }, data) {
+		data.UsrId = state.UserInfo.Id;
+		return postData("/api/CarPool/ListDre", data).then(result => {
+			commit(types.SET_MYPUBLISH, result.Data);
+			return result.Data;
+		})
+	},
 }
 
 // mutations
@@ -267,11 +326,34 @@ const mutations = {
 	[types.CHANGE_FOOTER](state, data) {
 		state.showFooter = data.showFooter;
 	},
+	[types.SET_USERINFO](state, data) {
+		state.UserInfo = data.UserInfo;
+	},
+	[types.SET_PAGE_INDEX](state, data) {
+		state.pageIndex = data.pageIndex;
+	},
 	[types.GET_CAR_INFO](state, data) {
-		state.CarInfo = data.CarInfo;
+		if (data.isRefresh) {
+			state.CarInfo = data.CarInfo;
+		} else {
+			state.CarInfo = state.CarInfo.concat(data.CarInfo);
+		}
+	},
+	[types.REVERSE_CARINFO](state, data) {
+		state.CarInfo.reverse();
 	},
 	[types.GET_PEOPLE_INFO](state, data) {
-		state.PeopleInfo = data.PeopleInfo;
+		if (data.isRefresh) {
+			state.PeopleInfo = data.PeopleInfo;
+		} else {
+			state.PeopleInfo = state.PeopleInfo.concat(data.PeopleInfo);
+		}
+	},
+	[types.REVERSE_PEOPLEINFO](state, data) {
+		state.PeopleInfo.reverse();
+	},
+	[types.SET_MYPUBLISH](state, data) {
+		state.myPublish = state.myPublish.concat(data);
 	},
 	[types.GET_PROVINCE](state, data) {
 		state.Province = data.Province;
