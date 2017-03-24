@@ -298,15 +298,23 @@ const actions = {
 	},
 	/** 获取用户输入后搜索得到的信息 */
 	getStartSearch({ commit, state }, data) {
-		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&offset=100&keywords=${data.text}&page=${data.page}`, {
+		return fetch(`http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=广东&offset=20&keywords=${data.text}&page=${data.page}&extensions=all`, {
 				method: 'GET',
 			})
 			.then(checkStatus)
 			.then(result => result.json())
 	},
+	// /** 再次获取详细的结果 */
+	// getStartSearchDetail({ commit, state }, data) {
+	// 	return fetch(`http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=广东&offset=20&keywords=${data.text}&page=${data.page}&extensions=all`, {
+	// 			method: 'GET',
+	// 		})
+	// 		.then(checkStatus)
+	// 		.then(result => result.json())
+	// },
 	/** 获取用户输入后搜索得到的信息 */
 	getEndSearch({ commit, state }, data) {
-		return fetch(`http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=广东&offset=100&keywords=${data.text}&page=${data.page}`, {
+		return fetch(`http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=广东&offset=20&keywords=${data.text}&page=${data.page}`, {
 				method: 'GET',
 			})
 			.then(checkStatus)
@@ -336,6 +344,10 @@ const actions = {
 			return result.Data;
 		})
 	},
+	/** 设置位置 */
+	setLocation({ commit, state }, data) {
+
+	}
 }
 
 // mutations

@@ -124,6 +124,9 @@ export default {
 				this.toast("服务器错误,请稍后重试...");
 			});
 		}
+
+		//获取用户地理位置
+		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		
 		this.randomOnlineNumber();
 	},
@@ -271,7 +274,36 @@ export default {
 					this.toast("刷新成功");
 				})
 			}
-		}
+		},
+		/** 接受浏览器返回的定位位置 */
+		showPosition(position){
+			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
+			// 返回定位位置给服务器判断最近上车点
+			this.$store.dispatch("setLocation",{
+				latitude:latitude,
+				longitude:longitude
+			}).then(data=>{
+				// this.locationLoad = false;//停止界面加载提示
+				if(data){
+					this.locationName = "最近上车点:"+data.Name;
+					this.$store.dispatch("setStartCity",{
+						Code:data.CityId,
+						Name:data.Name
+					});
+					Toast({
+					  message: "已为你切换到最近的出发点",
+					  position: 'bottom',
+					  duration: 3000,
+					});
+				}
+				else{
+					//没有数据
+					// this.locationName = "";
+				}
+			}).catch(error=>{
+				// this.locationLoad = false;//停止界面加载提示
+			})
+		},
 	},
 	activated(){
 		console.log("activated")

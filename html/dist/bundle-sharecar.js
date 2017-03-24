@@ -13106,19 +13106,27 @@
 			var commit = _ref14.commit,
 			    state = _ref14.state;
 
-			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&offset=100&keywords=" + data.text + "&page=" + data.page, {
+			return fetch("http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page + "&extensions=all", {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
 			});
 		},
 
+		// /** 再次获取详细的结果 */
+		// getStartSearchDetail({ commit, state }, data) {
+		// 	return fetch(`http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=广东&offset=20&keywords=${data.text}&page=${data.page}&extensions=all`, {
+		// 			method: 'GET',
+		// 		})
+		// 		.then(checkStatus)
+		// 		.then(result => result.json())
+		// },
 		/** 获取用户输入后搜索得到的信息 */
 		getEndSearch: function getEndSearch(_ref15, data) {
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch("http://restapi.amap.com/v3/assistant/inputtips?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&city=\u5E7F\u4E1C&offset=100&keywords=" + data.text + "&page=" + data.page, {
+			return fetch("http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
@@ -13163,6 +13171,12 @@
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
 				return result.Data;
 			});
+		},
+
+		/** 设置位置 */
+		setLocation: function setLocation(_ref20, data) {
+			var commit = _ref20.commit,
+			    state = _ref20.state;
 		}
 	};
 
@@ -28421,6 +28435,9 @@
 				});
 			}
 
+			//获取用户地理位置
+			navigator.geolocation.getCurrentPosition(this.showPosition, this.getPositionError);
+
 			this.randomOnlineNumber();
 		},
 		mounted: function mounted() {
@@ -28573,6 +28590,43 @@
 						_this4.toast("刷新成功");
 					});
 				}
+			},
+
+			/** 接受浏览器返回的定位位置 */
+			showPosition: function showPosition(position) {
+				var _this5 = this;
+
+				var _position$coords = position.coords,
+				    latitude = _position$coords.latitude,
+				    longitude = _position$coords.longitude,
+				    accuracy = _position$coords.accuracy,
+				    altitude = _position$coords.altitude,
+				    altitudeAccuracy = _position$coords.altitudeAccuracy;
+				// 返回定位位置给服务器判断最近上车点
+
+				this.$store.dispatch("setLocation", {
+					latitude: latitude,
+					longitude: longitude
+				}).then(function (data) {
+					// this.locationLoad = false;//停止界面加载提示
+					if (data) {
+						_this5.locationName = "最近上车点:" + data.Name;
+						_this5.$store.dispatch("setStartCity", {
+							Code: data.CityId,
+							Name: data.Name
+						});
+						(0, _mintUi.Toast)({
+							message: "已为你切换到最近的出发点",
+							position: 'bottom',
+							duration: 3000
+						});
+					} else {
+						//没有数据
+						// this.locationName = "";
+					}
+				}).catch(function (error) {
+					// this.locationLoad = false;//停止界面加载提示
+				});
 			}
 		},
 		activated: function activated() {
@@ -35704,7 +35758,7 @@
 					page: 1
 				}).then(function (result) {
 					_this.searchStartIndex = 2;
-					_this.searchStartList = result.tips;
+					_this.searchStartList = result.pois;
 				});
 			}, 500);
 
@@ -35715,50 +35769,52 @@
 					page: 1
 				}).then(function (result) {
 					_this.searchEndIndex = 2;
-					_this.searchEndList = result.tips;
+					_this.searchEndList = result.pois;
 				});
 			}, 500);
 		},
 		mounted: function mounted() {
+			var _this2 = this;
+
 			// 监听开始地址滚动
-			// document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
-			// 	if(!this.showStartSearchResult||this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
+			document.getElementById("startSearchList").addEventListener('scroll', _.throttle(function () {
+				if (!_this2.showStartSearchResult || _this2.searchStartNoData) return; //列表不显示或者没有更多数据时候不执行
 
-			// 	let last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
+				var last = document.getElementById("startSearchList_last").offsetTop - document.getElementById("startSearchList").scrollTop;
 
-			// 	if (last < 400) {
-			// 		this.$store.dispatch("getStartSearch",{
-			// 			text:this.searchStartText,
-			// 			page:this.searchStartIndex
-			// 		}).then(result=>{
-			// 			this.searchStartIndex++;
-			// 			if(result.tips.lenght<10){
-			// 				this.searchStartNoData = true;//没有更多数据
-			// 			}
-			// 			this.searchStartList = this.searchStartList.concat(result.tips);
-			// 		})
-			// 	}
-			// }, 400, { leading: false }));
+				if (last < 400) {
+					_this2.$store.dispatch("getStartSearch", {
+						text: _this2.searchStartText,
+						page: _this2.searchStartIndex
+					}).then(function (result) {
+						_this2.searchStartIndex++;
+						if (result.pois.lenght < 10) {
+							_this2.searchStartNoData = true; //没有更多数据
+						}
+						_this2.searchStartList = _this2.searchStartList.concat(result.pois);
+					});
+				}
+			}, 400, { leading: false }));
 
 			// 监听到达地址滚动
-			// document.getElementById("endSearchList").addEventListener('scroll', _.throttle(()=> {
-			// 	if(!this.showEndSearchResult||this.searchEndNoData)return;//列表不显示或者没有更多数据时候不执行
+			document.getElementById("endSearchList").addEventListener('scroll', _.throttle(function () {
+				if (!_this2.showEndSearchResult || _this2.searchEndNoData) return; //列表不显示或者没有更多数据时候不执行
 
-			// 	let last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
+				var last = document.getElementById("endSearchList_last").offsetTop - document.getElementById("endSearchList").scrollTop;
 
-			// 	if (last < 400) {
-			// 		this.$store.dispatch("getEndSearch",{
-			// 			text:this.searchEndText,
-			// 			page:this.searchEndIndex
-			// 		}).then(result=>{
-			// 			this.searchEndIndex++;
-			// 			if(result.tips.lenght<10){
-			// 				this.searchEndNoData = true;//没有更多数据
-			// 			}
-			// 			this.searchEndList = this.searchEndList.concat(result.tips);
-			// 		})
-			// 	}
-			// }, 400, { leading: false }));
+				if (last < 400) {
+					_this2.$store.dispatch("getEndSearch", {
+						text: _this2.searchEndText,
+						page: _this2.searchEndIndex
+					}).then(function (result) {
+						_this2.searchEndIndex++;
+						if (result.pois.lenght < 10) {
+							_this2.searchEndNoData = true; //没有更多数据
+						}
+						_this2.searchEndList = _this2.searchEndList.concat(result.pois);
+					});
+				}
+			}, 400, { leading: false }));
 		},
 
 		computed: {
@@ -35831,7 +35887,7 @@
 
 			/** 选择开始地点 */
 			startAddress: function startAddress(index) {
-				this.searchStartText = this.searchStartList[index].district + this.searchStartList[index].name;
+				this.searchStartText = this.searchStartList[index].address + this.searchStartList[index].name;
 				this.submitResult.start = this.searchStartList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -35852,7 +35908,7 @@
 
 			/** 选择到达地点 */
 			endAdress: function endAdress(index) {
-				this.searchEndText = this.searchEndList[index].district + this.searchEndList[index].name;
+				this.searchEndText = this.searchEndList[index].address + this.searchEndList[index].name;
 				this.submitResult.end = this.searchEndList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -35944,7 +36000,7 @@
 				);
 			},
 			submitOrder: function submitOrder() {
-				var _this2 = this;
+				var _this3 = this;
 
 				if (!this.inspectPhone()) {
 					this.toast("手机号不正确!");
@@ -35979,19 +36035,19 @@
 				if (this.Role === 0) {
 					this.$store.dispatch("publishPassengerTrip", json).then(function (result) {
 						if (result.Code === 200) {
-							_this2.toast("发布成功");
-							_this2.$router.replace({ name: 'tripdetail', params: { types: 1, tripId: result.Data } });
+							_this3.toast("发布成功");
+							_this3.$router.replace({ name: 'tripdetail', params: { types: 1, tripId: result.Data } });
 						} else {
-							_this2.toast(result.Message);
+							_this3.toast(result.Message);
 						}
 					});
 				} else {
 					this.$store.dispatch("publishCarTrip", json).then(function (result) {
 						if (result.Code === 200) {
-							_this2.toast("发布成功");
-							_this2.$router.replace({ name: 'tripdetail', params: { types: 0, tripId: result.Data } });
+							_this3.toast("发布成功");
+							_this3.$router.replace({ name: 'tripdetail', params: { types: 0, tripId: result.Data } });
 						} else {
-							_this2.toast(result.Message);
+							_this3.toast(result.Message);
 						}
 					});
 				}
@@ -36277,7 +36333,7 @@
 	      staticClass: "line"
 	    }, [_c('span', {
 	      staticClass: "gray"
-	    }, [_vm._v(_vm._s(item.district))])])])])
+	    }, [_vm._v(_vm._s(item.address))])])])])
 	  }), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "float": "left"
@@ -36315,7 +36371,7 @@
 	      staticClass: "line"
 	    }, [_c('span', {
 	      staticClass: "gray"
-	    }, [_vm._v(_vm._s(item.district))])])])])
+	    }, [_vm._v(_vm._s(item.address))])])])])
 	  }), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "float": "left"
