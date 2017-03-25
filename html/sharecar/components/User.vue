@@ -197,6 +197,7 @@ export default {
 						Index:this.CarIndex,
 						Size:10
 					}).then((result)=>{
+						Indicator.close();
 						if(result.length<10){
 							this.CarNoData = true;
 						}
@@ -228,6 +229,7 @@ export default {
 						this.CarNoData = true;
 					}
 					this.CarIndex++;
+					Indicator.close();
 				})
 			}).catch(error=>{
 				Indicator.close();
@@ -236,7 +238,7 @@ export default {
 				}
 				console.log(error);
 			});
-			
+
 			// this.getMyPublishPassengerTrip().then(()=>{
 			// 	this.getMyPublishCarTrip().catch(error=>{
 			// 		if(Date.now()<1490457415742){

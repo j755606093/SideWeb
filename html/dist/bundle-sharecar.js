@@ -37478,6 +37478,7 @@
 							Index: _this.CarIndex,
 							Size: 10
 						}).then(function (result) {
+							_mintUi.Indicator.close();
 							if (result.length < 10) {
 								_this.CarNoData = true;
 							}
@@ -37508,6 +37509,7 @@
 							_this.CarNoData = true;
 						}
 						_this.CarIndex++;
+						_mintUi.Indicator.close();
 					});
 				}).catch(function (error) {
 					_mintUi.Indicator.close();
