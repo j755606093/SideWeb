@@ -1,6 +1,6 @@
 <template type="x/template">
 	<div id="user" class="user">
-		<div @click="goToPage('userinfo')" class="user--header" v-if="UserInfo">
+		<div @click="goToPage('userinfo')" class="user--header" v-if="UserInfo||isShow">
 			<div class="header-img">
 				<img :src="UserInfo.Headimgurl">
 			</div>
@@ -173,6 +173,8 @@ export default {
 
 			PassengerIndex:1,// 页数
 			PassengerNoData:false,//没有数据
+
+			isShow:false,//
 		}
 	},
 	created(){
@@ -218,7 +220,7 @@ export default {
 		}
 	},
 	activated(){
-		
+		this.isShow = true;
 	},
 	computed:{
 		/** 是否显示没有数据 */

@@ -37370,7 +37370,9 @@
 				CarNoData: false, //没有数据
 
 				PassengerIndex: 1, // 页数
-				PassengerNoData: false };
+				PassengerNoData: false, //没有数据
+
+				isShow: false };
 		},
 		created: function created() {
 			var _this = this;
@@ -37415,7 +37417,9 @@
 				});
 			}
 		},
-		activated: function activated() {},
+		activated: function activated() {
+			this.isShow = true;
+		},
 
 		computed: {
 			/** 是否显示没有数据 */
@@ -37511,7 +37515,7 @@
 	    attrs: {
 	      "id": "user"
 	    }
-	  }, [(_vm.UserInfo) ? _c('div', {
+	  }, [(_vm.UserInfo || _vm.isShow) ? _c('div', {
 	    staticClass: "user--header",
 	    on: {
 	      "click": function($event) {
