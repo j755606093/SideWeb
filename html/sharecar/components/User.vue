@@ -180,23 +180,23 @@ export default {
 	created(){
 		// 如果没有用户信息就去获取
 		// if(!this.UserInfo){
-			this.loading();
+			// this.loading();
 			this.$store.dispatch("getUserInfo").then(()=>{
 				// 再去获取发布的数据
-				this.getMyPublishPassengerTrip().then(()=>{
-					this.getMyPublishCarTrip().catch(error=>{
-						// this.toast(error);
-						if(Date.now()<1490457415742){
-							this.toast(error);
-						}
-						console.log(error);
-					});
-				}).catch(error=>{
-					if(Date.now()<1490457415742){
-						this.toast(error);
-					}
-					console.log(error);
-				});
+				// this.getMyPublishPassengerTrip().then(()=>{
+				// 	this.getMyPublishCarTrip().catch(error=>{
+				// 		// this.toast(error);
+				// 		if(Date.now()<1490457415742){
+				// 			this.toast(error);
+				// 		}
+				// 		console.log(error);
+				// 	});
+				// }).catch(error=>{
+				// 	if(Date.now()<1490457415742){
+				// 		this.toast(error);
+				// 	}
+				// 	console.log(error);
+				// });
 			})
 		// }
 		// else{

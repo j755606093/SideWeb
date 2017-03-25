@@ -37467,27 +37467,25 @@
 				isShow: false };
 		},
 		created: function created() {
-			var _this = this;
-
 			// 如果没有用户信息就去获取
 			// if(!this.UserInfo){
-			this.loading();
+			// this.loading();
 			this.$store.dispatch("getUserInfo").then(function () {
 				// 再去获取发布的数据
-				_this.getMyPublishPassengerTrip().then(function () {
-					_this.getMyPublishCarTrip().catch(function (error) {
-						// this.toast(error);
-						if (Date.now() < 1490457415742) {
-							_this.toast(error);
-						}
-						console.log(error);
-					});
-				}).catch(function (error) {
-					if (Date.now() < 1490457415742) {
-						_this.toast(error);
-					}
-					console.log(error);
-				});
+				// this.getMyPublishPassengerTrip().then(()=>{
+				// 	this.getMyPublishCarTrip().catch(error=>{
+				// 		// this.toast(error);
+				// 		if(Date.now()<1490457415742){
+				// 			this.toast(error);
+				// 		}
+				// 		console.log(error);
+				// 	});
+				// }).catch(error=>{
+				// 	if(Date.now()<1490457415742){
+				// 		this.toast(error);
+				// 	}
+				// 	console.log(error);
+				// });
 			});
 			// }
 			// else{
@@ -37552,7 +37550,7 @@
 
 			/** 获取乘客发布的数据 */
 			getMyPublishPassengerTrip: function getMyPublishPassengerTrip() {
-				var _this2 = this;
+				var _this = this;
 
 				// if(this.PassengerNoData)return;// 没有数据了
 
@@ -37562,9 +37560,9 @@
 					Size: 10
 				}).then(function (result) {
 					if (result.length < 10) {
-						_this2.PassengerNoData = true;
+						_this.PassengerNoData = true;
 					}
-					_this2.PassengerIndex++;
+					_this.PassengerIndex++;
 					_mintUi.Indicator.close();
 				}).catch(function (error) {
 					_mintUi.Indicator.close();
@@ -37573,7 +37571,7 @@
 
 			/** 获取司机发布的数据 */
 			getMyPublishCarTrip: function getMyPublishCarTrip() {
-				var _this3 = this;
+				var _this2 = this;
 
 				// if(this.CarNoData)return;// 没有数据了
 
@@ -37583,9 +37581,9 @@
 					Size: 10
 				}).then(function (result) {
 					if (result.length < 10) {
-						_this3.CarNoData = true;
+						_this2.CarNoData = true;
 					}
-					_this3.CarIndex++;
+					_this2.CarIndex++;
 					_mintUi.Indicator.close();
 				}).catch(function (error) {
 					_mintUi.Indicator.close();
