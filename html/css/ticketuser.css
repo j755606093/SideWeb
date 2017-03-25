@@ -1579,7 +1579,8 @@ footer {
       display: block;
       position: absolute;
       bottom: 0;
-      left: 40%; }
+      left: 0;
+      width: 100%; }
   footer .footer.active {
     color: #0074D9; }
     footer .footer.active p {

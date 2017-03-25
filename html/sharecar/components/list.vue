@@ -1,5 +1,6 @@
 <template type="x/template">
 	<div class="list" @click="goToTipDetail">
+		<!-- 头部 -->
 		<div class="list__header">
 			<div class="header--avatar">
 				<img :src="list.UserInfo.Headimgurl">
@@ -38,29 +39,70 @@
 				<img src="../icon/into_icon.png">
 			</div>
 		</div>
+		<!-- 主体 -->
 		<div class="list__body">
+			<!-- 时间行 -->
 			<div class="list__body--line">
 				<div class="line__left">
 					<img src="../icon/clock_icon.png">
 				</div>
 				<div class="line__right">
 					<span class="line-time">{{list.BoardTime|formatTime}}</span>
-					<template v-if="types===0">
-						<span class="line-surplus">剩{{list.RemainingSeat}}空座</span>
-					</template>
-					<template v-else>
-						<span class="line-surplus">需要{{list.Num}}个座位</span>
-					</template>
+					<div class="other--info">
+						<img src="../icon/me_grey_icon.png">
+						<template v-if="types===0">
+							<span class="line-surplus">剩{{list.RemainingSeat}}空座</span>
+						</template>
+						<template v-else>
+							<span class="line-surplus">需要{{list.Num}}个座位</span>
+						</template>
+					</div>
 				</div>
 			</div>
-			<div class="list__body--line">
-				<div class="line__left--dot"></div>
-				<span class="line__start--address">{{list.Spoint.split("省")[1]?list.Spoint.split("省")[1]:list.Spoint}}</span>
-			</div>
-			<div class="list__body--line">
-				<div class="line__left--dot dot-red"></div>
-				<span class="line__end--address">{{list.Epoint.split("省")[1]?list.Epoint.split("省")[1]:list.Epoint}}</span>
-			</div>
+			
+			<!-- 如果是详细信息 -->
+			<template v-if="isDetail">
+				<!-- 一行 -->
+				<div class="list__body--line height">
+					<div class="line__left--dot">
+						<span>起点</span>
+					</div>
+					<div class="line__right--address">
+						<span class="line__start--address">{{list.Spoint}}</span>
+						<span class="line__start--address">{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.City+list.StartDetail.Name}}</span>
+					</div>
+				</div>
+				<!-- 一行 -->
+				<div class="list__body--line height">
+					<div class="line__left--dot dot-red">
+						<span>终点</span>
+					</div>
+					<div class="line__right--address">
+						<span class="line__end--address">{{list.Epoint}}</span>
+						<span class="line__start--address">{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.City+list.EndDetail.Name}}</span>
+					</div>
+				</div>
+			</template>
+			<template v-else>
+				<!-- 一行 -->
+				<div class="list__line">
+					<div class="line__left--dot">
+						<span class="green">起点</span>
+					</div>
+					<div class="line__right--address">
+						<span>{{list.Spoint.split("省")[1]?list.Spoint.split("省")[1]:list.Spoint}}</span>
+					</div>
+				</div>
+				<!-- 一行 -->
+				<div class="list__line">
+					<div class="line__left--dot dot-red">
+						<span class="red">终点</span>
+					</div>
+					<div class="line__right--address">
+						<span>{{list.Epoint.split("省")[1]?list.Epoint.split("省")[1]:list.Epoint}}</span>
+					</div>
+				</div>
+			</template>
 		</div>
 	</div>
 </template>
@@ -134,12 +176,9 @@
 	}
 }
 .list__body{
-	height: 110px;
-	// @include display_flex('column');
+	min-height: 110px;
+	// 双行
 	.list__body--line{
-		flex:1;
-		// @include display_flex('row');
-		justify-content:flex-start;
 		width:100%;
 		height:36.6666px;
 		position: relative;
@@ -148,7 +187,7 @@
 			float:left;
 		}
 		div.line__left{
-			width:65px;
+			width:50px;
 			height:36.6666px;
 			text-align:center;
 			position: absolute;
@@ -162,64 +201,127 @@
 				width:10px;
 				height:10px;
 				top:13px;
-				left:28px;
+				left:20px;
 			}
 		}
 		.line__right{
-			padding-left:65px;
+			padding-left:50px;
 			width:100%;
-			// .line-time{
-			// 	width:80%;
-			// }
-			.line-surplus{
-				margin-top:10px;
+			position:relative;
+			height:36.6666px;
+			span.line-time{
+				float:left;
+				font-size: 14px;
+				margin-top:8px;
+				display:inline-block;
+			}
+			div.other--info{
+				position:absolute;
+				top:0;
+				right:10px;
+				width:110px;
+				height:36.6666px;
+				line-height:40px;
+				>img{
+					width:10px;
+					height:10px;
+					position:absolute;
+					top:13px;
+					left:10px;
+				}
+				span.line-surplus{
+					position:absolute;
+					top:0;
+					right:0;
+					font-size:14px;
+					margin-top:0;
+					height:36.6666px;
+					line-height:36.6666px;
+				}
 			}
 		}
-		span{
-			font-size: 14px;
-			margin-top:8px;
-			display:inline-block;
-			@include text_nowrap;
-			float:left;
-		}
-		span.line__start--address,span.line__end--address{
-			padding-left:65px;
-			width: 100%;
-		}
-		span.line-surplus{
-			margin-left:10px;
-			margin-top:0;
-			color:#9e9e9e;
-			font-size:12px;
-			float:left;
-			width: 20%;
-			// position:absolute;
-			// top:10px;
-			// right:0;
-			// text-align:left;
-		}
 		div.line__left--dot{
-			width:65px;
+			width:50px;
 			height:36.6666px;
 			position: absolute;
 			top:0;
 			left:0;
-			&:after{
-				content:"";
-				position:absolute;
-				width:10px;
-				height:10px;
-				border-radius: 50%;
-				background-color:$my_green;
-				top:13px;
-				left:28px;
+			text-align:center;
+			height:60px;
+			>span{
+				color:$my_green;
+				font-size:12px;
+				float:none;
+				line-height:60px;
+				display:inline-block;
 			}
 		}
 		div.dot-red{
-			&:after{
-				background-color:$my_red;
+			>span{
+				color:$my_red;
+				font-size:12px;
 			}
 		}
+		div.line__right--address{
+			width: 100%;
+			height:60px;
+			padding:5px 0;
+			padding-left:50px;
+			>span{
+				display:block;
+				@include text_nowrap;
+				height:25px;
+				width: 100%;
+				font-size: 14px;
+				line-height:25px;
+				&:last-child{
+					font-size:12px;
+					color:#c8c8c8;
+				}
+			}
+		}
+	}
+	// 单行
+	.list__line{
+		width:100%;
+		height:36.6666px;
+		position: relative;
+		>div{
+			display:inline-block;
+			float:left;
+		}
+		div.line__left--dot{
+			width:50px;
+			height:36.6666px;
+			text-align:center;
+			position: absolute;
+			top:0;
+			left:0;
+			>span.green{
+				color:$my_green;
+				font-size:12px;
+				height:36.6666px;
+				line-height:36.6666px;
+			}
+			>span.red{
+				color:$my_red;
+				font-size:12px;
+				height:36.6666px;
+				line-height:36.6666px;
+			}
+		}
+		.line__right--address{
+			padding-left:50px;
+			width:100%;
+			height:36.6666px;
+			line-height:36.6666px;
+			>span{
+				font-size:14px;
+			}
+		}
+	}
+	.list__body--line.height{
+		height: 60px;
 	}
 }
 </style>
@@ -246,6 +348,10 @@ export default {
 		isShowRight:{
 			type:Boolean,
 			default:true
+		},
+		isDetail:{
+			type:Boolean,
+			default:false
 		}
 	},
 	data () {

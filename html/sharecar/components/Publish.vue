@@ -176,7 +176,7 @@
 				left:44%;
 				width:20px;
 				background-color:$blue;
-				height:4px;
+				height:2px;
 			}
 		}
 	}
@@ -615,7 +615,7 @@ export default {
 		},
 		/** 选择开始地点 */
 		startAddress(index){
-			this.searchStartText = this.searchStartList[index].name;
+			this.searchStartText = this.searchStartList[index].cityname+this.searchStartList[index].name;
 			this.submitResult.start = this.searchStartList[index];//保存结果
 			this.searchBlur();
 		},
@@ -634,7 +634,7 @@ export default {
 		},
 		/** 选择到达地点 */
 		endAdress(index){
-			this.searchEndText = this.searchEndList[index].name;
+			this.searchEndText = this.searchEndList[index].cityname+this.searchEndList[index].name;
 			this.submitResult.end = this.searchEndList[index];//保存结果
 			this.searchBlur();
 		},
@@ -727,7 +727,7 @@ export default {
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
 			let endLocation = this.submitResult.end.location.split(",");
-			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.name;// 详细地址
+			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.adname+this.submitResult.start.name;// 详细地址
 			let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
 
 			//组装数据
@@ -738,8 +738,18 @@ export default {
 				EPoint:this.searchEndText,
 				STime:this.submitResult.time,
 				Remark:this.submitResult.remark,
-				SDetail:startDetail,
-				EDetail:endDetail,
+				StartDetail:{
+					Province:this.submitResult.start.pname,
+					City:this.submitResult.start.cityname,
+					District:this.submitResult.start.adname,
+					Name:this.submitResult.start.name
+				},
+				EndDetail:{
+					Province:this.submitResult.end.pname,
+					City:this.submitResult.end.cityname,
+					District:this.submitResult.end.adname,
+					Name:this.submitResult.end.name
+				},
 				SpointLocation:{
 					X:startLocation[0],
 					Y:startLocation[1]

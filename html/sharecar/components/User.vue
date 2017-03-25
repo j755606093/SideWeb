@@ -1,12 +1,12 @@
 <template type="x/template">
 	<div id="user" class="user">
-		<div class="user--header">
+		<div @click="goToPage('userinfo')" class="user--header" v-if="UserInfo">
 			<div class="header-img">
-				<img src="../icon/select_icon.png">
+				<img :src="UserInfo.Headimgurl">
 			</div>
 			<div class="header-center">
-				<p>你家风格</p>
-				<p>13513464133</p>	
+				<p>{{UserInfo.Nickname}}</p>
+				<p>{{UserInfo.Mobile}}</p>	
 			</div>
 			<div class="header-right">
 				<img src="../icon/into_icon.png">
@@ -59,6 +59,7 @@
 			width:45px;
 			height:45px;
 			margin-top: 20px;
+			border-radius:50%;
 		}
 	}
 	div.header-center{
@@ -187,6 +188,9 @@ export default {
 		}
 		else{
 			// 直接获取发布的数据
+			if(this.myPublish.length!==0){
+				return;
+			}
 			this.getMyPublishPassengerTrip().then(()=>{
 				this.getMyPublishCarTrip();
 			});
@@ -203,6 +207,9 @@ export default {
 		/** 自己发布的信息 */
 		myPublish(){
 			return this.$store.getters.getMyPublish
+		},
+		UserInfo(){
+			return this.$store.getters.getUserInfo;
 		}
 	},
 	methods:{
@@ -250,6 +257,10 @@ export default {
 				this.CarIndex++;
 				Indicator.close();
 			})
+		},
+		/** 跳转页面 */
+		goToPage(name){
+			this.$router.push({name:name})
 		}
 	},
 	filters:{

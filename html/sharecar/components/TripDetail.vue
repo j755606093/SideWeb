@@ -2,13 +2,13 @@
 	<div id="tripdetail" class="tripdetail">
 		<my-header :showBack="true" headerTitle="旅程详情"></my-header>
 		<div v-if="isReady" class="trip__info animated slideInRight">
-			<my-list :types="types" :list="tripData" nogo="true"></my-list>
+			<my-list :isDetail="true" :types="types" :list="tripData" nogo="true"></my-list>
 			<div class="trip__remark">
 				<p>备注:{{tripData.Remark?tripData.Remark:'无'}}</p>
 			</div>
-			<div class="trip__tip">
+			<!-- <div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
-			</div>
+			</div> -->
 			<a :href="'tel:'+tripData.Phone" class="trip__contact">
 				<div class="trip--contact-way">
 					<img src="../icon/phone_icon.png">
@@ -117,6 +117,9 @@ export default {
 					this.toast(result.Message);
 				}
 				Indicator.close();
+			}).catch(error=>{
+				this.$router.push({path:"/"});
+				Indicator.close();
 			})
 		}else{
 			this.loading();
@@ -128,6 +131,9 @@ export default {
 				else{
 					this.toast(result.Message);
 				}
+				Indicator.close();
+			}).catch(error=>{
+				this.$router.push({path:"/"});
 				Indicator.close();
 			})
 		}

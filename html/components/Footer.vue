@@ -66,7 +66,8 @@ footer{
 			display:block;
 			position:absolute;
 			bottom:0;
-			left:40%;
+			left: 0;
+      width: 100%;
 		}
 	}
 	.footer.nopay{

@@ -340,6 +340,8 @@ export default {
 				this.CarInfoPage++;
 				this.CarInterntUse = false;//关掉使用
 				return result;
+			}).catch(error=>{
+				Indicator.close();
 			})
 		},
 		/** 获取第二页数据 */
@@ -360,6 +362,8 @@ export default {
 				this.PeopleInfoPage++;
 				this.PeopleInterntUse = false;//关掉使用
 				return result;
+			}).catch(error=>{
+				Indicator.close();
 			})
 		}
 	},

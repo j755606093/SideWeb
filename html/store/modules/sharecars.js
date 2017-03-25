@@ -106,10 +106,7 @@ const state = {
 	myPublish: [], //我的发布
 	UserInfo: null, //用户信息
 
-	Location: {
-		X: "113.313707",
-		Y: "23.016158"
-	}, //用户位置
+	Location: null, //用户位置
 }
 
 let postData = (url, data) => {
@@ -188,10 +185,10 @@ const actions = {
 			.then(result => {
 				let res = result.Data;
 				commit(types.GET_CAR_INFO, {
-					CarInfo: res,
+					CarInfo: res ? res : [],
 					isRefresh: data.isRefresh ? true : false
 				});
-				return res;
+				return res ? res : [];
 			})
 	},
 	/** 倒叙数组 */
@@ -213,10 +210,10 @@ const actions = {
 			.then(result => {
 				let res = result.Data;
 				commit(types.GET_PEOPLE_INFO, {
-					PeopleInfo: res,
+					PeopleInfo: res ? res : [],
 					isRefresh: data.isRefresh ? true : false
 				})
-				return res;
+				return res ? res : [];
 			})
 	},
 	/** 倒叙数组 */
@@ -345,6 +342,17 @@ const actions = {
 	/** 设置位置 */
 	setLocation({ commit, state }, data) {
 		commit(types.SET_LOCATION, data);
+	},
+	/** 修改用户手机号 */
+	setUserPhone({ commit, state }, data) {
+		return postData("/api/Transport/UpdateUserInfo", data).then(result => {
+			if (result.Data) {
+				commit(types.SET_USERINFO_PHONE, data.Mobile);
+				return result.Message;
+			} else {
+				return result.Message;
+			}
+		})
 	}
 }
 
@@ -397,6 +405,9 @@ const mutations = {
 	},
 	[types.GET_VILLAGE](state, data) {
 		state.Village = data.Village;
+	},
+	[types.SET_USERINFO_PHONE](state, data) {
+		state.UserInfo.Mobile = data;
 	},
 }
 

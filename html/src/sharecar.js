@@ -15,6 +15,7 @@ import TripDetail from "../sharecar/components/TripDetail.vue";
 import Publish from "../sharecar/components/Publish.vue";
 import User from "../sharecar/components/User.vue";
 import Search from "../sharecar/components/Search.vue";
+import UserInfo from "../sharecar/components/UserInfo.vue";
 
 const routes = [{
 	path: '/',
@@ -44,6 +45,10 @@ const routes = [{
 	path: "/search",
 	name: "search",
 	component: Search
+}, {
+	path: "/userinfo",
+	name: "userinfo",
+	component: UserInfo
 }, {
 	path: "*",
 	name: "all",
