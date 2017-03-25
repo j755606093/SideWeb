@@ -28530,10 +28530,10 @@
 			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
 				this.getCarData().then(function (result) {
-					if (_this.$store.getters.getPeopleInfo.length === 0) {
-						_this.getPeopleData();
-						_mintUi.Indicator.close();
-					}
+					// if(this.$store.getters.getPeopleInfo.length===0){
+					// 	this.getPeopleData();
+					// 	Indicator.close();
+					// }
 				}).catch(function (error) {
 					_this.toast("服务器错误,请稍后重试...");
 				});
@@ -28679,6 +28679,9 @@
 
 			/** 切换主页 */
 			switchPage: function switchPage(index) {
+				if (this.PeopleInfo.length === 0) {
+					this.getPeopleData();
+				}
 				this.$store.dispatch("setPageInfo", index);
 			},
 

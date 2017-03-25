@@ -138,10 +138,10 @@ export default {
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
 			this.getCarData().then(result=>{
-				if(this.$store.getters.getPeopleInfo.length===0){
-					this.getPeopleData();
-					Indicator.close();
-				}
+				// if(this.$store.getters.getPeopleInfo.length===0){
+				// 	this.getPeopleData();
+				// 	Indicator.close();
+				// }
 			})
 			.catch(error=>{
 				this.toast("服务器错误,请稍后重试...");
@@ -282,6 +282,9 @@ export default {
 		},
 		/** 切换主页 */
 		switchPage(index){
+			if(this.PeopleInfo.length===0){
+				this.getPeopleData();
+			}
 			this.$store.dispatch("setPageInfo",index);
 		},
 		/** 打开详情页 */
