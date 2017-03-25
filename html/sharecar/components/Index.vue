@@ -34,7 +34,7 @@
 				</div>
 				<div class="header_message">
 					<span class="message--new">欢迎使用城市圈</span>
-					<!-- <span @click="openCodePage" v-if="!isFocusMe" style="color:#0074D9">关注我</span> -->
+					<span @click="openCodePage" v-if="!isFocusMe" style="color:#0074D9">关注我</span>
 					<!-- <span class="message--new">有43条新消息</span> -->
 					<div class="header_message--taxis">
 						<span @click="sort(2)" :class="{active:sortIndex===2}">最新发布</span>
@@ -132,9 +132,9 @@ export default {
 		})
 
 		// 如果没有用户信息就去获取
-		// if(!this.$store.getters.getUserInfo){
-		// 	this.$store.dispatch("getUserInfo");
-		// }
+		if(!this.$store.getters.getUserInfo){
+			this.$store.dispatch("getUserInfo");
+		}
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
 			this.getCarData().then(result=>{

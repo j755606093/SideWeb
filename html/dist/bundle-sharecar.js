@@ -28524,9 +28524,9 @@
 			});
 
 			// 如果没有用户信息就去获取
-			// if(!this.$store.getters.getUserInfo){
-			// 	this.$store.dispatch("getUserInfo");
-			// }
+			if (!this.$store.getters.getUserInfo) {
+				this.$store.dispatch("getUserInfo");
+			}
 			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
 				this.getCarData().then(function (result) {
@@ -35543,7 +35543,14 @@
 	    staticClass: "header_message"
 	  }, [_c('span', {
 	    staticClass: "message--new"
-	  }, [_vm._v("欢迎使用城市圈")]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("欢迎使用城市圈")]), _vm._v(" "), (!_vm.isFocusMe) ? _c('span', {
+	    staticStyle: {
+	      "color": "#0074D9"
+	    },
+	    on: {
+	      "click": _vm.openCodePage
+	    }
+	  }, [_vm._v("关注我")]) : _vm._e(), _vm._v(" "), _c('div', {
 	    staticClass: "header_message--taxis"
 	  }, [_c('span', {
 	    class: {
