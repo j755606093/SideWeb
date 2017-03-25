@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var webpack = require('gulp-webpack');
+var wp = require("webpack");
 var rename = require('gulp-rename'); //更改名字
 var uglify = require('gulp-uglify'); //js代码压缩
 var sass = require('gulp-sass');
@@ -96,16 +97,21 @@ gulp.task('ticket', ['sass'], function() {
 			resolve: {
 				extensions: ['', '.js', '.jsx'],
 				alias: {
-					'vue$': 'vue/dist/vue.js'
+					'vue$': 'vue/dist/vue.common.js'
 				}
 			},
-			plugins: [new HtmlWebpackPlugin({
-				title: "揭西大巴订票平台",
-				filename: "ticket.html",
-				hash: true,
-				template: "!!ejs!html/default.ejs",
-				inject: true
-			})]
+			plugins: [
+				new wp.DefinePlugin({
+					'process.env': {
+						NODE_ENV: '"production"'
+					}
+				}),
+				new wp.optimize.UglifyJsPlugin({
+					compress: {
+						warnings: false
+					}
+				})
+			]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		// .pipe(rev())
@@ -174,9 +180,21 @@ gulp.task('ticketorder', function() {
 			resolve: {
 				extensions: ['', '.js', '.jsx'],
 				alias: {
-					'vue$': 'vue/dist/vue.js'
+					'vue$': 'vue/dist/vue.common.js'
 				}
 			},
+			plugins: [
+				new wp.DefinePlugin({
+					'process.env': {
+						NODE_ENV: '"production"'
+					}
+				}),
+				new wp.optimize.UglifyJsPlugin({
+					compress: {
+						warnings: false
+					}
+				})
+			]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		.pipe(gulp.dest('html/dist/'))
@@ -194,9 +212,21 @@ gulp.task('ticketuser', function() {
 			resolve: {
 				extensions: ['', '.js', '.jsx'],
 				alias: {
-					'vue$': 'vue/dist/vue.js'
+					'vue$': 'vue/dist/vue.common.js'
 				}
 			},
+			plugins: [
+				new wp.DefinePlugin({
+					'process.env': {
+						NODE_ENV: '"production"'
+					}
+				}),
+				new wp.optimize.UglifyJsPlugin({
+					compress: {
+						warnings: false
+					}
+				})
+			]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		.pipe(gulp.dest('html/dist/'))

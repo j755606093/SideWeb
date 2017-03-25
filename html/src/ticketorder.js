@@ -4,7 +4,7 @@ require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
-import 'mint-ui/lib/style.css';
+// import 'mint-ui/lib/style.css';
 
 // Vue.component(TabContainer.name, TabContainer);
 // Vue.component(TabContainerItem.name, TabContainerItem);
