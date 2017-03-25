@@ -138,6 +138,7 @@ export default {
 						this.isReady = true;//开始显示
 						Indicator.close();
 					}).catch(error=>{
+						this.isReady = true;//开始显示
 						console.log(error)
 						Indicator.close();
 						this.toast("获取行程失败...");
@@ -165,6 +166,7 @@ export default {
 
 						Indicator.close();
 					}).catch(error=>{
+						this.isReady = true;//开始显示
 						console.log(error)
 						Indicator.close();
 						this.toast("获取行程失败...");

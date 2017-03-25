@@ -12967,7 +12967,7 @@
 				commit(_ShareCarType2.default.SET_USERINFO, {
 					UserInfo: userinfo
 				});
-				window.localStorage.setItem("jgkj_UserInfo", (0, _stringify2.default)(userinfo));
+				// window.localStorage.setItem("jgkj_UserInfo", JSON.stringify(userinfo));
 			});
 		},
 
@@ -13181,6 +13181,7 @@
 			    state = _ref19.state;
 
 			data.UsrId = state.UserInfo.Id;
+			// console.log(data.UsrId)
 			return postData("/api/CarPool/ListDre", data).then(function (result) {
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data ? result.Data : []);
 				return result.Data;
@@ -35155,6 +35156,7 @@
 							_this.isReady = true; //开始显示
 							_mintUi.Indicator.close();
 						}).catch(function (error) {
+							_this.isReady = true; //开始显示
 							console.log(error);
 							_mintUi.Indicator.close();
 							_this.toast("获取行程失败...");
@@ -35181,6 +35183,7 @@
 
 							_mintUi.Indicator.close();
 						}).catch(function (error) {
+							_this.isReady = true; //开始显示
 							console.log(error);
 							_mintUi.Indicator.close();
 							_this.toast("获取行程失败...");

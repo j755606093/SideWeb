@@ -177,7 +177,7 @@ const actions = {
 			commit(types.SET_USERINFO, {
 				UserInfo: userinfo
 			});
-			window.localStorage.setItem("jgkj_UserInfo", JSON.stringify(userinfo));
+			// window.localStorage.setItem("jgkj_UserInfo", JSON.stringify(userinfo));
 		})
 	},
 	/** 获取车主的列表信息 */
@@ -335,6 +335,7 @@ const actions = {
 	/** 获取自己的发布司机信息 */
 	getMyPublishCarTrip({ commit, state }, data) {
 		data.UsrId = state.UserInfo.Id;
+		// console.log(data.UsrId)
 		return postData("/api/CarPool/ListDre", data).then(result => {
 			commit(types.SET_MYPUBLISH, result.Data ? result.Data : []);
 			return result.Data;
