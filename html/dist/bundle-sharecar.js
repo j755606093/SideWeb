@@ -37465,7 +37465,7 @@
 				this.$store.dispatch("getUserInfo").then(function () {
 					// 再去获取发布的数据
 					_this.$store.dispatch("getMyPublishPassengerTrip", {
-						Index: _this.PassengerIndex,
+						Index: 1,
 						Size: 10
 					}).then(function (result) {
 						if (result.length < 10) {
@@ -37475,7 +37475,7 @@
 						_mintUi.Indicator.close();
 					}).then(function (result) {
 						_this.$store.dispatch("getMyPublishCarTrip", {
-							Index: _this.CarIndex,
+							Index: 1,
 							Size: 10
 						}).then(function (result) {
 							_mintUi.Indicator.close();
@@ -37484,6 +37484,12 @@
 							}
 							_this.CarIndex++;
 						});
+					}).catch(function (error) {
+						_mintUi.Indicator.close();
+						if (Date.now() < 1490457415742) {
+							_this.toast(error);
+						}
+						console.log(error);
 					});
 				});
 			} else {
@@ -37492,7 +37498,7 @@
 					return;
 				}
 				this.$store.dispatch("getMyPublishPassengerTrip", {
-					Index: this.PassengerIndex,
+					Index: 1,
 					Size: 10
 				}).then(function (result) {
 					if (result.length < 10) {
@@ -37502,7 +37508,7 @@
 					_mintUi.Indicator.close();
 				}).then(function (result) {
 					_this.$store.dispatch("getMyPublishCarTrip", {
-						Index: _this.CarIndex,
+						Index: 1,
 						Size: 10
 					}).then(function (result) {
 						if (result.length < 10) {
