@@ -27716,6 +27716,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -28274,7 +28277,12 @@
 	      "padding-bottom": "70px",
 	      "position": "relative"
 	    }
-	  }, [_c('keep-alive', [_c('router-view')], 1)], 1), _vm._v(" "), _c('my-footer')], 1)
+	  }, [_c('transition', {
+	    attrs: {
+	      "enter-active-class": "fadeIn",
+	      "leave-active-class": "fadeOut"
+	    }
+	  }, [_c('keep-alive', [_c('router-view')], 1)], 1)], 1), _vm._v(" "), _c('my-footer')], 1)
 	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -28539,12 +28547,7 @@
 			}
 			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
-				this.getCarData().then(function (result) {
-					// if(this.$store.getters.getPeopleInfo.length===0){
-					// 	this.getPeopleData();
-					// 	Indicator.close();
-					// }
-				}).catch(function (error) {
+				this.getCarData().catch(function (error) {
 					_this.toast("服务器错误,请稍后重试...");
 				});
 			}
@@ -28837,6 +28840,18 @@
 			}
 		},
 		activated: function activated() {
+			/** 判断是否有更多数据 */
+			var CarInfo_len = this.CarInfo.length;
+
+			if (CarInfo_len % 10 !== 0) {
+				// 说明没有更多数据
+				this.CarNoMoreData = true;
+			}
+
+			var PeopleInfo_len = this.PeopleInfo.length;
+			if (PeopleInfo_len % 10 !== 0) {
+				this.PeopleNoMoreData = true;
+			}
 			console.log("activated");
 		},
 		destroyed: function destroyed() {
@@ -35642,7 +35657,7 @@
 	        _vm.sort(1)
 	      }
 	    }
-	  }, [_vm._v("最近出发")])])])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("出发时间")])])])])]), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

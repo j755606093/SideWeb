@@ -38,7 +38,7 @@
 					<!-- <span class="message--new">有43条新消息</span> -->
 					<div class="header_message--taxis">
 						<span @click="sort(2)" :class="{active:sortIndex===2}">最新发布</span>
-						<span @click="sort(1)" :class="{active:sortIndex===1}">最近出发</span>
+						<span @click="sort(1)" :class="{active:sortIndex===1}">出发时间</span>
 					</div>
 				</div>
 			</div>
@@ -137,12 +137,7 @@ export default {
 		}
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
-			this.getCarData().then(result=>{
-				// if(this.$store.getters.getPeopleInfo.length===0){
-				// 	this.getPeopleData();
-				// 	Indicator.close();
-				// }
-			})
+			this.getCarData()
 			.catch(error=>{
 				this.toast("服务器错误,请稍后重试...");
 			});
@@ -415,6 +410,18 @@ export default {
 		}
 	},
 	activated(){
+		/** 判断是否有更多数据 */
+		let CarInfo_len = this.CarInfo.length;
+		
+		if(CarInfo_len%10!==0){
+			// 说明没有更多数据
+			this.CarNoMoreData = true;
+		}
+
+		let PeopleInfo_len = this.PeopleInfo.length;
+		if(PeopleInfo_len%10!==0){
+			this.PeopleNoMoreData = true;
+		}
 		console.log("activated")
 	},
 	destroyed(){
