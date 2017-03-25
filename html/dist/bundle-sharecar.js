@@ -13232,7 +13232,7 @@
 			var commit = _ref24.commit,
 			    state = _ref24.state;
 
-			return fetch("http://restapi.amap.com/v3/direction/driving?key=760ee992f02825b935228aa35a2c8be9&origin=" + data.SpointLocation.X + "," + data.SpointLocation.Y + "&destination=" + data.EpointLocation.X + "," + data.EpointLocation.Y + "&originid=&destinationid=&extensions=base&strategy=0&waypoints=&avoidpolygons=&avoidroad=", {
+			return fetch("https://restapi.amap.com/v3/direction/driving?key=760ee992f02825b935228aa35a2c8be9&origin=" + data.SpointLocation.X + "," + data.SpointLocation.Y + "&destination=" + data.EpointLocation.X + "," + data.EpointLocation.Y + "&originid=&destinationid=&extensions=base&strategy=0&waypoints=&avoidpolygons=&avoidroad=", {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
