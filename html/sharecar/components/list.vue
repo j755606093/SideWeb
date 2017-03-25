@@ -14,7 +14,7 @@
 					<img src="../icon/women_icon.png">
 				</template>
 			</div>
-			<div class="header--active" v-if="nogo!=='true'">
+			<div @click.stop="closeTrip" class="header--active" v-if="nogo!=='true'">
 				<!-- 是否显示右上角 -->
 				<template v-if="isShowRight">
 					<!-- 乘客 -->
@@ -35,6 +35,9 @@
 							<span>去接{{list.UserInfo.Sex===1?'他':'她'}}</span>
 						</template>
 					</template>
+				</template>
+				<template v-if="isMe">
+					<span>关闭行程</span>
 				</template>
 				<img src="../icon/into_icon.png">
 			</div>
@@ -364,7 +367,11 @@ export default {
 		isDetail:{
 			type:Boolean,
 			default:false
-		}
+		},//是否显示详细信息
+		isMe:{
+			type:Boolean,
+			default:false
+		},//是否本人自己的数据
 	},
 	data () {
 		return {
@@ -383,6 +390,11 @@ export default {
 				return;
 			}
 			this.$router.push({ name: 'tripdetail', params: { types: this.types,tripId:this.list.Id }});
+		},
+		closeTrip(){
+			if(this.isMe){
+				// 可以相应关闭
+			}
 		}
 	},
 	filters:{

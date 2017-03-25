@@ -27709,9 +27709,6 @@
 	//
 	//
 	//
-	//
-	//
-	//
 
 	exports.default = {
 		data: function data() {
@@ -28270,12 +28267,7 @@
 	      "padding-bottom": "70px",
 	      "position": "relative"
 	    }
-	  }, [_c('transition', {
-	    attrs: {
-	      "enter-active-class": "fadeIn",
-	      "leave-active-class": "fadeOut"
-	    }
-	  }, [_c('keep-alive', [_c('router-view')], 1)], 1)], 1), _vm._v(" "), _c('my-footer')], 1)
+	  }, [_c('keep-alive', [_c('router-view')], 1)], 1), _vm._v(" "), _c('my-footer')], 1)
 	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -34329,8 +34321,11 @@
 			isDetail: {
 				type: Boolean,
 				default: false
-			}
-		},
+			}, //是否显示详细信息
+			isMe: {
+				type: Boolean,
+				default: false
+			} },
 		data: function data() {
 			return {};
 		},
@@ -34343,6 +34338,11 @@
 					return;
 				}
 				this.$router.push({ name: 'tripdetail', params: { types: this.types, tripId: this.list.Id } });
+			},
+			closeTrip: function closeTrip() {
+				if (this.isMe) {
+					// 可以相应关闭
+				}
 			}
 		},
 		filters: {
@@ -34373,6 +34373,9 @@
 			}
 		}
 	}; //
+	//
+	//
+	//
 	//
 	//
 	//
@@ -34744,8 +34747,14 @@
 	      "src": __webpack_require__(70)
 	    }
 	  })]], 2), _vm._v(" "), (_vm.nogo !== 'true') ? _c('div', {
-	    staticClass: "header--active"
-	  }, [(_vm.isShowRight) ? [(_vm.types === 0) ? [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])]] : [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])]]] : _vm._e(), _vm._v(" "), _c('img', {
+	    staticClass: "header--active",
+	    on: {
+	      "click": function($event) {
+	        $event.stopPropagation();
+	        _vm.closeTrip($event)
+	      }
+	    }
+	  }, [(_vm.isShowRight) ? [(_vm.types === 0) ? [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])]] : [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])]]] : _vm._e(), _vm._v(" "), (_vm.isMe) ? [_c('span', [_vm._v("关闭行程")])] : _vm._e(), _vm._v(" "), _c('img', {
 	    attrs: {
 	      "src": __webpack_require__(71)
 	    }
@@ -37571,6 +37580,7 @@
 	  }, [_vm._l((_vm.myPublish), function(item, index) {
 	    return [_c('my-list', {
 	      attrs: {
+	        "isMe": true,
 	        "isShowRight": false,
 	        "types": item.Num ? 1 : 0,
 	        "list": item

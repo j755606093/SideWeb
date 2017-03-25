@@ -31,7 +31,7 @@
 		<!-- 发布的信息 -->
 		<div class="publish--lists">
 			<template v-for="(item,index) in myPublish">
-				<my-list :isShowRight="false" :types="item.Num?1:0" :list="item"></my-list>
+				<my-list :isMe="true" :isShowRight="false" :types="item.Num?1:0" :list="item"></my-list>
 			</template>
 		</div>
 		<my-footer :active-index="1"></my-footer>
