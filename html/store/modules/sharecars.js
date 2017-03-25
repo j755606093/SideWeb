@@ -392,7 +392,15 @@ const actions = {
 	/** 是否关注我 */
 	getFocusMe({ commit, state }, data) {
 		return getData("/api/Member/IsUserSub")
-	}
+	},
+	/** 删除 */
+	deletePassengerTrip({ commit, state }, data) {
+		return postData("/api/CarPool/UpdateTravel", data)
+	},
+	/** 删除 */
+	deleteCarTrip({ commit, state }, data) {
+		return postData("/api/CarPool/UpdateRoute", data)
+	},
 }
 
 // mutations

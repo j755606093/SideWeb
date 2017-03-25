@@ -343,6 +343,7 @@
 
 <script type="text/babel">
 import Utils from "../../Utils/utils";
+import { MessageBox,Toast,Indicator } from 'mint-ui';
 
 export default {
 	props:{
@@ -385,6 +386,19 @@ export default {
 		
 	},
 	methods:{
+		toast(title) {
+			Toast({
+				message: title,
+				position: 'bottom',
+				duration: 3000
+			});
+		},
+		/** 加载动画(需要手动关闭) */
+		loading() {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
+		},
 		goToTipDetail(){
 			if(this.nogo==="true"){
 				return;
@@ -394,6 +408,30 @@ export default {
 		closeTrip(){
 			if(this.isMe){
 				// 可以相应关闭
+				MessageBox.confirm('确定执行此操作?').then(action => {
+					this.loading();
+					if(this.types===0){
+						this.$store.dispatch("deletePassengerTrip",{
+							Id:this.list.Id,
+							Status:0
+						}).then(result=>{
+							Indicator.close();
+							this.toast(result.Message);
+						})
+					}
+					else{
+						this.$store.dispatch("deleteCarTrip",{
+							Id:this.list.Id,
+							Status:0
+						}).then(result=>{
+							Indicator.close();
+							this.toast(result.Message);
+						})
+					}
+				}).catch(error=>{
+					Indicator.close();
+					console.log(error)
+				});
 			}
 		}
 	},

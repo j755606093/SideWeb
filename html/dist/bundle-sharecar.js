@@ -13261,6 +13261,22 @@
 			    state = _ref25.state;
 
 			return getData("/api/Member/IsUserSub");
+		},
+
+		/** 删除 */
+		deletePassengerTrip: function deletePassengerTrip(_ref26, data) {
+			var commit = _ref26.commit,
+			    state = _ref26.state;
+
+			return postData("/api/CarPool/UpdateTravel", data);
+		},
+
+		/** 删除 */
+		deleteCarTrip: function deleteCarTrip(_ref27, data) {
+			var commit = _ref27.commit,
+			    state = _ref27.state;
+
+			return postData("/api/CarPool/UpdateRoute", data);
 		}
 	};
 
@@ -34296,7 +34312,353 @@
 
 	var _utils2 = _interopRequireDefault(_utils);
 
+	var _mintUi = __webpack_require__(30);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		props: {
@@ -34333,6 +34695,20 @@
 
 		computed: {},
 		methods: {
+			toast: function toast(title) {
+				(0, _mintUi.Toast)({
+					message: title,
+					position: 'bottom',
+					duration: 3000
+				});
+			},
+
+			/** 加载动画(需要手动关闭) */
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			},
 			goToTipDetail: function goToTipDetail() {
 				if (this.nogo === "true") {
 					return;
@@ -34340,8 +34716,33 @@
 				this.$router.push({ name: 'tripdetail', params: { types: this.types, tripId: this.list.Id } });
 			},
 			closeTrip: function closeTrip() {
+				var _this = this;
+
 				if (this.isMe) {
 					// 可以相应关闭
+					_mintUi.MessageBox.confirm('确定执行此操作?').then(function (action) {
+						_this.loading();
+						if (_this.types === 0) {
+							_this.$store.dispatch("deletePassengerTrip", {
+								Id: _this.list.Id,
+								Status: 0
+							}).then(function (result) {
+								_mintUi.Indicator.close();
+								_this.toast(result.Message);
+							});
+						} else {
+							_this.$store.dispatch("deleteCarTrip", {
+								Id: _this.list.Id,
+								Status: 0
+							}).then(function (result) {
+								_mintUi.Indicator.close();
+								_this.toast(result.Message);
+							});
+						}
+					}).catch(function (error) {
+						_mintUi.Indicator.close();
+						console.log(error);
+					});
 				}
 			}
 		},
@@ -34372,349 +34773,7 @@
 				}
 			}
 		}
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 68 */
@@ -37411,32 +37470,13 @@
 			var _this = this;
 
 			// 如果没有用户信息就去获取
-			if (!this.UserInfo) {
-				this.loading();
-				this.$store.dispatch("getUserInfo").then(function () {
-					// 再去获取发布的数据
-					_this.getMyPublishPassengerTrip().then(function () {
-						_this.getMyPublishCarTrip().catch(function (error) {
-							// this.toast(error);
-							if (Date.now() < 1490457415742) {
-								_this.toast(error);
-							}
-							console.log(error);
-						});
-					}).catch(function (error) {
-						if (Date.now() < 1490457415742) {
-							_this.toast(error);
-						}
-						console.log(error);
-					});
-				});
-			} else {
-				// 直接获取发布的数据
-				if (this.myPublish.length !== 0) {
-					return;
-				}
-				this.getMyPublishPassengerTrip().then(function () {
+			// if(!this.UserInfo){
+			this.loading();
+			this.$store.dispatch("getUserInfo").then(function () {
+				// 再去获取发布的数据
+				_this.getMyPublishPassengerTrip().then(function () {
 					_this.getMyPublishCarTrip().catch(function (error) {
+						// this.toast(error);
 						if (Date.now() < 1490457415742) {
 							_this.toast(error);
 						}
@@ -37448,7 +37488,27 @@
 					}
 					console.log(error);
 				});
-			}
+			});
+			// }
+			// else{
+			// 	// 直接获取发布的数据
+			// 	if(this.myPublish.length!==0){
+			// 		return;
+			// 	}
+			// 	this.getMyPublishPassengerTrip().then(()=>{
+			// 		this.getMyPublishCarTrip().catch(error=>{
+			// 			if(Date.now()<1490457415742){
+			// 				this.toast(error);
+			// 			}
+			// 			console.log(error);
+			// 		});
+			// 	}).catch(error=>{
+			// 		if(Date.now()<1490457415742){
+			// 			this.toast(error);
+			// 		}
+			// 		console.log(error);
+			// 	});
+			// }
 		},
 		activated: function activated() {
 			this.isShow = true;
@@ -37467,7 +37527,7 @@
 			UserInfo: function UserInfo() {
 				if (window.localStorage.getItem("jgkj_UserInfo")) {
 					var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-					console.log(user);
+					// console.log(user)
 					return user;
 				} else {
 					return this.$store.getters.getUserInfo;
