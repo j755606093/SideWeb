@@ -1,12 +1,12 @@
 <template type="x/template">
 	<div id="user" class="user">
-		<div @click="goToPage('userinfo')" class="user--header" v-if="UserInfo||isShow">
+		<div @click="goToPage('userinfo')" class="user--header">
 			<div class="header-img">
-				<img :src="UserInfo.Headimgurl">
+				<img :src="UserInfo?UserInfo.Headimgurl:''">
 			</div>
 			<div class="header-center">
-				<p>{{UserInfo.Nickname}}</p>
-				<p>{{UserInfo.Mobile}}</p>	
+				<p>{{UserInfo?UserInfo.Nickname:'用户'}}</p>
+				<p>{{UserInfo?UserInfo.Mobile:'手机号'}}</p>	
 			</div>
 			<div class="header-right">
 				<img src="../icon/into_icon.png">
@@ -232,7 +232,14 @@ export default {
 			return this.$store.getters.getMyPublish
 		},
 		UserInfo(){
-			return this.$store.getters.getUserInfo;
+			if(window.localStorage.getItem("jgkj_UserInfo")){
+				let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+				console.log(user)
+				return user;
+			}
+			else{
+				return this.$store.getters.getUserInfo;
+			}
 		}
 	},
 	methods:{

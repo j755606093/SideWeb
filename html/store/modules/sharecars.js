@@ -176,7 +176,8 @@ const actions = {
 			let userinfo = result.Data.Userinfo;
 			commit(types.SET_USERINFO, {
 				UserInfo: userinfo
-			})
+			});
+			window.localStorage.setItem("jgkj_UserInfo", JSON.stringify(userinfo));
 		})
 	},
 	/** 获取车主的列表信息 */
@@ -325,7 +326,12 @@ const actions = {
 	},
 	/** 获取自己的发布乘客信息 */
 	getMyPublishPassengerTrip({ commit, state }, data) {
-		data.UsrId = state.UserInfo.Id;
+		if (window.localStorage.getItem("jgkj_UserInfo")) {
+			let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+			data.UsrId = user.Id;
+		} else {
+			data.UsrId = state.UserInfo.Id;
+		}
 		return postData("/api/CarPool/ListPassenger", data).then(result => {
 			commit(types.SET_MYPUBLISH, result.Data);
 			return result.Data;
@@ -333,7 +339,12 @@ const actions = {
 	},
 	/** 获取自己的发布司机信息 */
 	getMyPublishCarTrip({ commit, state }, data) {
-		data.UsrId = state.UserInfo.Id;
+		if (window.localStorage.getItem("jgkj_UserInfo")) {
+			let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+			data.UsrId = user.Id;
+		} else {
+			data.UsrId = state.UserInfo.Id;
+		}
 		return postData("/api/CarPool/ListDre", data).then(result => {
 			commit(types.SET_MYPUBLISH, result.Data);
 			return result.Data;

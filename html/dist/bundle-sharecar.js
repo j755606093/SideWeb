@@ -12967,6 +12967,7 @@
 				commit(_ShareCarType2.default.SET_USERINFO, {
 					UserInfo: userinfo
 				});
+				window.localStorage.setItem("jgkj_UserInfo", (0, _stringify2.default)(userinfo));
 			});
 		},
 
@@ -13167,7 +13168,12 @@
 			var commit = _ref18.commit,
 			    state = _ref18.state;
 
-			data.UsrId = state.UserInfo.Id;
+			if (window.localStorage.getItem("jgkj_UserInfo")) {
+				var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+				data.UsrId = user.Id;
+			} else {
+				data.UsrId = state.UserInfo.Id;
+			}
 			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
 				return result.Data;
@@ -13179,7 +13185,12 @@
 			var commit = _ref19.commit,
 			    state = _ref19.state;
 
-			data.UsrId = state.UserInfo.Id;
+			if (window.localStorage.getItem("jgkj_UserInfo")) {
+				var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+				data.UsrId = user.Id;
+			} else {
+				data.UsrId = state.UserInfo.Id;
+			}
 			return postData("/api/CarPool/ListDre", data).then(function (result) {
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
 				return result.Data;
@@ -36422,9 +36433,12 @@
 				var hour = date.getHours(); //获取现在的小时
 				var data = [];
 
-				for (var i = hour + 1; i < 24; i++) {
+				for (var i = 0; i <= 23; i++) {
 					data.push(i + " \u70B9");
 				}
+				// for(let i=hour+1;i<=23;i++){
+				// 	data.push(`${i} 点`);
+				// }
 				return data;
 			},
 
@@ -36432,7 +36446,7 @@
 			initAllDate: function initAllDate() {
 				var data = [];
 
-				for (var i = 0; i < 24; i++) {
+				for (var i = 0; i <= 23; i++) {
 					data.push(i + " \u70B9");
 				}
 				return data;
@@ -37442,7 +37456,13 @@
 				return this.$store.getters.getMyPublish;
 			},
 			UserInfo: function UserInfo() {
-				return this.$store.getters.getUserInfo;
+				if (window.localStorage.getItem("jgkj_UserInfo")) {
+					var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
+					console.log(user);
+					return user;
+				} else {
+					return this.$store.getters.getUserInfo;
+				}
 			}
 		},
 		methods: {
@@ -37525,7 +37545,7 @@
 	    attrs: {
 	      "id": "user"
 	    }
-	  }, [(_vm.UserInfo || _vm.isShow) ? _c('div', {
+	  }, [_c('div', {
 	    staticClass: "user--header",
 	    on: {
 	      "click": function($event) {
@@ -37536,11 +37556,11 @@
 	    staticClass: "header-img"
 	  }, [_c('img', {
 	    attrs: {
-	      "src": _vm.UserInfo.Headimgurl
+	      "src": _vm.UserInfo ? _vm.UserInfo.Headimgurl : ''
 	    }
 	  })]), _vm._v(" "), _c('div', {
 	    staticClass: "header-center"
-	  }, [_c('p', [_vm._v(_vm._s(_vm.UserInfo.Nickname))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.UserInfo.Mobile))])]), _vm._v(" "), _vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._m(1), _vm._v(" "), (_vm.isShowNoData) ? _c('div', {
+	  }, [_c('p', [_vm._v(_vm._s(_vm.UserInfo ? _vm.UserInfo.Nickname : '用户'))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.UserInfo ? _vm.UserInfo.Mobile : '手机号'))])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _vm._m(1), _vm._v(" "), (_vm.isShowNoData) ? _c('div', {
 	    staticClass: "no-data"
 	  }, [_vm._m(2), _vm._v(" "), _c('p', [_vm._v("这里空空如也~")]), _vm._v(" "), _c('p', [_vm._v("吓得我立刻去发布呀~")]), _vm._v(" "), _c('router-link', {
 	    attrs: {
@@ -38384,6 +38404,7 @@
 				this.$store.dispatch("setUserPhone", {
 					Mobile: this.Phone
 				}).then(function (result) {
+					/** 后面要修改loal本地存储的用户信息 */
 					_this.Status = 0;
 					_mintUi.Indicator.close();
 					_this.toast(result);

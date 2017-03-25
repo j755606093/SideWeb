@@ -612,17 +612,20 @@ export default {
 			let date = new Date();
 			let hour = date.getHours();//获取现在的小时
 			let data = [];
-
-			for(let i=hour+1;i<24;i++){
+			
+			for(let i=0;i<=23;i++){
 				data.push(`${i} 点`);
 			}
+			// for(let i=hour+1;i<=23;i++){
+			// 	data.push(`${i} 点`);
+			// }
 			return data;
 		},
 		/** 返回所有可选的时间 */
 		initAllDate(){
 			let data = [];
 
-			for(let i=0;i<24;i++){
+			for(let i=0;i<=23;i++){
 				data.push(`${i} 点`);
 			}
 			return data;

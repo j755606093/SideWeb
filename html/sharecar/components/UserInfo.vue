@@ -126,6 +126,7 @@ export default {
 			this.$store.dispatch("setUserPhone",{
 				Mobile:this.Phone
 			}).then(result=>{
+				/** 后面要修改loal本地存储的用户信息 */
 				this.Status = 0;
 				Indicator.close();
 				this.toast(result)
