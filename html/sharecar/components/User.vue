@@ -179,45 +179,47 @@ export default {
 	},
 	created(){
 		// 如果没有用户信息就去获取
-		// if(!this.UserInfo){
-			// this.loading();
+		if(!this.UserInfo){
+			this.loading();
 			this.$store.dispatch("getUserInfo").then(()=>{
 				// 再去获取发布的数据
-				// this.getMyPublishPassengerTrip().then(()=>{
-				// 	this.getMyPublishCarTrip().catch(error=>{
-				// 		// this.toast(error);
-				// 		if(Date.now()<1490457415742){
-				// 			this.toast(error);
-				// 		}
-				// 		console.log(error);
-				// 	});
-				// }).catch(error=>{
-				// 	if(Date.now()<1490457415742){
-				// 		this.toast(error);
-				// 	}
-				// 	console.log(error);
-				// });
+				this.getMyPublishPassengerTrip().then(()=>{
+					this.getMyPublishCarTrip().catch(error=>{
+						// this.toast(error);
+						if(Date.now()<1490462359920){
+							this.toast(error);
+						}
+						console.log(error);
+					});
+				}).catch(error=>{
+					Indicator.close();
+					if(Date.now()<1490462359920){
+						this.toast(error);
+					}
+					console.log(error);
+				});
 			})
-		// }
-		// else{
-		// 	// 直接获取发布的数据
-		// 	if(this.myPublish.length!==0){
-		// 		return;
-		// 	}
-		// 	this.getMyPublishPassengerTrip().then(()=>{
-		// 		this.getMyPublishCarTrip().catch(error=>{
-		// 			if(Date.now()<1490457415742){
-		// 				this.toast(error);
-		// 			}
-		// 			console.log(error);
-		// 		});
-		// 	}).catch(error=>{
-		// 		if(Date.now()<1490457415742){
-		// 			this.toast(error);
-		// 		}
-		// 		console.log(error);
-		// 	});
-		// }
+		}
+		else{
+			// 直接获取发布的数据
+			if(this.myPublish.length!==0){
+				return;
+			}
+			this.getMyPublishPassengerTrip().then(()=>{
+				this.getMyPublishCarTrip().catch(error=>{
+					if(Date.now()<1490457415742){
+						this.toast(error);
+					}
+					console.log(error);
+				});
+			}).catch(error=>{
+				Indicator.close();
+				if(Date.now()<1490457415742){
+					this.toast(error);
+				}
+				console.log(error);
+			});
+		}
 	},
 	activated(){
 		this.isShow = true;
@@ -232,14 +234,7 @@ export default {
 			return this.$store.getters.getMyPublish
 		},
 		UserInfo(){
-			if(window.localStorage.getItem("jgkj_UserInfo")){
-				let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-				// console.log(user)
-				return user;
-			}
-			else{
-				return this.$store.getters.getUserInfo;
-			}
+			return this.$store.getters.getUserInfo;
 		}
 	},
 	methods:{
@@ -270,8 +265,6 @@ export default {
 				}
 				this.PassengerIndex++;
 				Indicator.close();
-			}).catch(error=>{
-				Indicator.close();
 			})
 		},
 		/** 获取司机发布的数据 */
@@ -287,8 +280,6 @@ export default {
 					this.CarNoData = true;
 				}
 				this.CarIndex++;
-				Indicator.close();
-			}).catch(error=>{
 				Indicator.close();
 			})
 		},

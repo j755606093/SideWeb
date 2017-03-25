@@ -13168,12 +13168,7 @@
 			var commit = _ref18.commit,
 			    state = _ref18.state;
 
-			if (window.localStorage.getItem("jgkj_UserInfo")) {
-				var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-				data.UsrId = user.Id;
-			} else {
-				data.UsrId = state.UserInfo.Id;
-			}
+			data.UsrId = state.UserInfo.Id;
 			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
 				return result.Data;
@@ -13185,12 +13180,7 @@
 			var commit = _ref19.commit,
 			    state = _ref19.state;
 
-			if (window.localStorage.getItem("jgkj_UserInfo")) {
-				var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-				data.UsrId = user.Id;
-			} else {
-				data.UsrId = state.UserInfo.Id;
-			}
+			data.UsrId = state.UserInfo.Id;
 			return postData("/api/CarPool/ListDre", data).then(function (result) {
 				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
 				return result.Data;
@@ -37467,46 +37457,49 @@
 				isShow: false };
 		},
 		created: function created() {
+			var _this = this;
+
 			// 如果没有用户信息就去获取
-			// if(!this.UserInfo){
-			// this.loading();
-			this.$store.dispatch("getUserInfo").then(function () {
-				// 再去获取发布的数据
-				// this.getMyPublishPassengerTrip().then(()=>{
-				// 	this.getMyPublishCarTrip().catch(error=>{
-				// 		// this.toast(error);
-				// 		if(Date.now()<1490457415742){
-				// 			this.toast(error);
-				// 		}
-				// 		console.log(error);
-				// 	});
-				// }).catch(error=>{
-				// 	if(Date.now()<1490457415742){
-				// 		this.toast(error);
-				// 	}
-				// 	console.log(error);
-				// });
-			});
-			// }
-			// else{
-			// 	// 直接获取发布的数据
-			// 	if(this.myPublish.length!==0){
-			// 		return;
-			// 	}
-			// 	this.getMyPublishPassengerTrip().then(()=>{
-			// 		this.getMyPublishCarTrip().catch(error=>{
-			// 			if(Date.now()<1490457415742){
-			// 				this.toast(error);
-			// 			}
-			// 			console.log(error);
-			// 		});
-			// 	}).catch(error=>{
-			// 		if(Date.now()<1490457415742){
-			// 			this.toast(error);
-			// 		}
-			// 		console.log(error);
-			// 	});
-			// }
+			if (!this.UserInfo) {
+				this.loading();
+				this.$store.dispatch("getUserInfo").then(function () {
+					// 再去获取发布的数据
+					_this.getMyPublishPassengerTrip().then(function () {
+						_this.getMyPublishCarTrip().catch(function (error) {
+							// this.toast(error);
+							if (Date.now() < 1490462359920) {
+								_this.toast(error);
+							}
+							console.log(error);
+						});
+					}).catch(function (error) {
+						_mintUi.Indicator.close();
+						if (Date.now() < 1490462359920) {
+							_this.toast(error);
+						}
+						console.log(error);
+					});
+				});
+			} else {
+				// 直接获取发布的数据
+				if (this.myPublish.length !== 0) {
+					return;
+				}
+				this.getMyPublishPassengerTrip().then(function () {
+					_this.getMyPublishCarTrip().catch(function (error) {
+						if (Date.now() < 1490457415742) {
+							_this.toast(error);
+						}
+						console.log(error);
+					});
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
+					if (Date.now() < 1490457415742) {
+						_this.toast(error);
+					}
+					console.log(error);
+				});
+			}
 		},
 		activated: function activated() {
 			this.isShow = true;
@@ -37523,13 +37516,7 @@
 				return this.$store.getters.getMyPublish;
 			},
 			UserInfo: function UserInfo() {
-				if (window.localStorage.getItem("jgkj_UserInfo")) {
-					var user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-					// console.log(user)
-					return user;
-				} else {
-					return this.$store.getters.getUserInfo;
-				}
+				return this.$store.getters.getUserInfo;
 			}
 		},
 		methods: {
@@ -37550,7 +37537,7 @@
 
 			/** 获取乘客发布的数据 */
 			getMyPublishPassengerTrip: function getMyPublishPassengerTrip() {
-				var _this = this;
+				var _this2 = this;
 
 				// if(this.PassengerNoData)return;// 没有数据了
 
@@ -37560,18 +37547,16 @@
 					Size: 10
 				}).then(function (result) {
 					if (result.length < 10) {
-						_this.PassengerNoData = true;
+						_this2.PassengerNoData = true;
 					}
-					_this.PassengerIndex++;
-					_mintUi.Indicator.close();
-				}).catch(function (error) {
+					_this2.PassengerIndex++;
 					_mintUi.Indicator.close();
 				});
 			},
 
 			/** 获取司机发布的数据 */
 			getMyPublishCarTrip: function getMyPublishCarTrip() {
-				var _this2 = this;
+				var _this3 = this;
 
 				// if(this.CarNoData)return;// 没有数据了
 
@@ -37581,11 +37566,9 @@
 					Size: 10
 				}).then(function (result) {
 					if (result.length < 10) {
-						_this2.CarNoData = true;
+						_this3.CarNoData = true;
 					}
-					_this2.CarIndex++;
-					_mintUi.Indicator.close();
-				}).catch(function (error) {
+					_this3.CarIndex++;
 					_mintUi.Indicator.close();
 				});
 			},

@@ -326,12 +326,7 @@ const actions = {
 	},
 	/** 获取自己的发布乘客信息 */
 	getMyPublishPassengerTrip({ commit, state }, data) {
-		if (window.localStorage.getItem("jgkj_UserInfo")) {
-			let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-			data.UsrId = user.Id;
-		} else {
-			data.UsrId = state.UserInfo.Id;
-		}
+		data.UsrId = state.UserInfo.Id;
 		return postData("/api/CarPool/ListPassenger", data).then(result => {
 			commit(types.SET_MYPUBLISH, result.Data);
 			return result.Data;
@@ -339,12 +334,7 @@ const actions = {
 	},
 	/** 获取自己的发布司机信息 */
 	getMyPublishCarTrip({ commit, state }, data) {
-		if (window.localStorage.getItem("jgkj_UserInfo")) {
-			let user = JSON.parse(window.localStorage.getItem("jgkj_UserInfo"));
-			data.UsrId = user.Id;
-		} else {
-			data.UsrId = state.UserInfo.Id;
-		}
+		data.UsrId = state.UserInfo.Id;
 		return postData("/api/CarPool/ListDre", data).then(result => {
 			commit(types.SET_MYPUBLISH, result.Data);
 			return result.Data;
