@@ -13268,6 +13268,17 @@
 			    state = _ref27.state;
 
 			return postData("/api/CarPool/UpdateRoute", data);
+		},
+
+		/** 清空个人发布的数据信息 */
+		clearMyPublish: function clearMyPublish(_ref28, id) {
+			var commit = _ref28.commit,
+			    state = _ref28.state;
+
+			commit(_ShareCarType2.default.SET_MYPUBLISH, {
+				clear: true,
+				Id: id
+			});
 		}
 	};
 
@@ -13287,18 +13298,24 @@
 		} else {
 			state.CarInfo = state.CarInfo.concat(data.CarInfo);
 		}
-	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.REVERSE_CARINFO, function (state, data) {
-		state.CarInfo.reverse();
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PEOPLE_INFO, function (state, data) {
 		if (data.isRefresh) {
 			state.PeopleInfo = data.PeopleInfo;
 		} else {
 			state.PeopleInfo = state.PeopleInfo.concat(data.PeopleInfo);
 		}
-	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.REVERSE_PEOPLEINFO, function (state, data) {
-		state.PeopleInfo.reverse();
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.SET_MYPUBLISH, function (state, data) {
-		state.myPublish = state.myPublish.concat(data);
+		if (data.clear) {
+			var item = [];
+			for (var i = 0; i < state.myPublish.length; i++) {
+				if (state.myPublish[i].Id !== data.Id) {
+					item.push(state.myPublish[i]);
+				}
+			}
+			state.myPublish = item;
+		} else {
+			state.myPublish = state.myPublish.concat(data);
+		}
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_PROVINCE, function (state, data) {
 		state.Province = data.Province;
 	}), (0, _defineProperty3.default)(_mutations, _ShareCarType2.default.GET_CITY, function (state, data) {
@@ -34741,6 +34758,7 @@
 								Id: _this.list.Id,
 								Status: 0
 							}).then(function (result) {
+								_this.$store.dispatch("clearMyPublish", _this.list.Id);
 								_mintUi.Indicator.close();
 								_this.toast(result.Message);
 							});
@@ -35246,7 +35264,10 @@
 			},
 			formatDistanceTime: function formatDistanceTime(value) {
 				var time = parseInt(value);
-				return parseFloat(time / 60 / 60).toFixed(2);
+				// console.log(time)
+				var hour = parseInt(time / 60 / 60);
+				var minth = parseInt(time / 60 % 60);
+				return hour + "小时" + minth + "分钟";
 			}
 		},
 		components: {

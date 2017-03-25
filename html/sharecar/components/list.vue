@@ -424,6 +424,7 @@ export default {
 							Id:this.list.Id,
 							Status:0
 						}).then(result=>{
+							this.$store.dispatch("clearMyPublish",this.list.Id)
 							Indicator.close();
 							this.toast(result.Message);
 						})

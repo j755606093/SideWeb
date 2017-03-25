@@ -213,7 +213,10 @@ export default {
 		},
 		formatDistanceTime(value){
 			let time = parseInt(value);
-			return parseFloat(time/60/60).toFixed(2);
+			// console.log(time)
+			let hour = parseInt(time/60/60);
+			let minth = parseInt(time/60%60);
+			return hour+"小时"+minth+"分钟";
 		}
 	},
 	components:{

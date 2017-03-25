@@ -392,6 +392,13 @@ const actions = {
 	deleteCarTrip({ commit, state }, data) {
 		return postData("/api/CarPool/UpdateRoute", data)
 	},
+	/** 清空个人发布的数据信息 */
+	clearMyPublish({ commit, state }, id) {
+		commit(types.SET_MYPUBLISH, {
+			clear: true,
+			Id: id
+		});
+	}
 }
 
 // mutations
@@ -416,9 +423,9 @@ const mutations = {
 			state.CarInfo = state.CarInfo.concat(data.CarInfo);
 		}
 	},
-	[types.REVERSE_CARINFO](state, data) {
-		state.CarInfo.reverse();
-	},
+	// [types.REVERSE_CARINFO](state, data) {
+	// 	state.CarInfo.reverse();
+	// },
 	[types.GET_PEOPLE_INFO](state, data) {
 		if (data.isRefresh) {
 			state.PeopleInfo = data.PeopleInfo;
@@ -426,11 +433,21 @@ const mutations = {
 			state.PeopleInfo = state.PeopleInfo.concat(data.PeopleInfo);
 		}
 	},
-	[types.REVERSE_PEOPLEINFO](state, data) {
-		state.PeopleInfo.reverse();
-	},
+	// [types.REVERSE_PEOPLEINFO](state, data) {
+	// 	state.PeopleInfo.reverse();
+	// },
 	[types.SET_MYPUBLISH](state, data) {
-		state.myPublish = state.myPublish.concat(data);
+		if (data.clear) {
+			let item = [];
+			for (let i = 0; i < state.myPublish.length; i++) {
+				if (state.myPublish[i].Id !== data.Id) {
+					item.push(state.myPublish[i])
+				}
+			}
+			state.myPublish = item;
+		} else {
+			state.myPublish = state.myPublish.concat(data);
+		}
 	},
 	[types.GET_PROVINCE](state, data) {
 		state.Province = data.Province;
