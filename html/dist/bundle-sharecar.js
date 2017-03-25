@@ -13170,7 +13170,7 @@
 
 			data.UsrId = state.UserInfo.Id;
 			return postData("/api/CarPool/ListPassenger", data).then(function (result) {
-				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
+				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data ? result.Data : []);
 				return result.Data;
 			});
 		},
@@ -13182,7 +13182,7 @@
 
 			data.UsrId = state.UserInfo.Id;
 			return postData("/api/CarPool/ListDre", data).then(function (result) {
-				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data);
+				commit(_ShareCarType2.default.SET_MYPUBLISH, result.Data ? result.Data : []);
 				return result.Data;
 			});
 		},

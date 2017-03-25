@@ -328,7 +328,7 @@ const actions = {
 	getMyPublishPassengerTrip({ commit, state }, data) {
 		data.UsrId = state.UserInfo.Id;
 		return postData("/api/CarPool/ListPassenger", data).then(result => {
-			commit(types.SET_MYPUBLISH, result.Data);
+			commit(types.SET_MYPUBLISH, result.Data ? result.Data : []);
 			return result.Data;
 		})
 	},
@@ -336,7 +336,7 @@ const actions = {
 	getMyPublishCarTrip({ commit, state }, data) {
 		data.UsrId = state.UserInfo.Id;
 		return postData("/api/CarPool/ListDre", data).then(result => {
-			commit(types.SET_MYPUBLISH, result.Data);
+			commit(types.SET_MYPUBLISH, result.Data ? result.Data : []);
 			return result.Data;
 		})
 	},
