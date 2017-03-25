@@ -183,20 +183,25 @@ export default {
 			this.loading();
 			this.$store.dispatch("getUserInfo").then(()=>{
 				// 再去获取发布的数据
-				this.getMyPublishPassengerTrip().then(()=>{
-					this.getMyPublishCarTrip().catch(error=>{
-						// this.toast(error);
-						if(Date.now()<1490462359920){
-							this.toast(error);
-						}
-						console.log(error);
-					});
-				}).catch(error=>{
-					Indicator.close();
-					if(Date.now()<1490462359920){
-						this.toast(error);
+				this.$store.dispatch("getMyPublishPassengerTrip",{
+					Index:this.PassengerIndex,
+					Size:10
+				}).then((result)=>{
+					if(result.length<10){
+						this.PassengerNoData = true;
 					}
-					console.log(error);
+					this.PassengerIndex++;
+					Indicator.close();
+				}).then(result=>{
+					this.$store.dispatch("getMyPublishCarTrip",{
+						Index:this.CarIndex,
+						Size:10
+					}).then((result)=>{
+						if(result.length<10){
+							this.CarNoData = true;
+						}
+						this.CarIndex++;
+					})
 				});
 			})
 		}
@@ -205,13 +210,25 @@ export default {
 			if(this.myPublish.length!==0){
 				return;
 			}
-			this.getMyPublishPassengerTrip().then(()=>{
-				this.getMyPublishCarTrip().catch(error=>{
-					if(Date.now()<1490457415742){
-						this.toast(error);
+			this.$store.dispatch("getMyPublishPassengerTrip",{
+				Index:this.PassengerIndex,
+				Size:10
+			}).then((result)=>{
+				if(result.length<10){
+					this.PassengerNoData = true;
+				}
+				this.PassengerIndex++;
+				Indicator.close();
+			}).then(result=>{
+				this.$store.dispatch("getMyPublishCarTrip",{
+					Index:this.CarIndex,
+					Size:10
+				}).then((result)=>{
+					if(result.length<10){
+						this.CarNoData = true;
 					}
-					console.log(error);
-				});
+					this.CarIndex++;
+				})
 			}).catch(error=>{
 				Indicator.close();
 				if(Date.now()<1490457415742){
@@ -219,6 +236,21 @@ export default {
 				}
 				console.log(error);
 			});
+			
+			// this.getMyPublishPassengerTrip().then(()=>{
+			// 	this.getMyPublishCarTrip().catch(error=>{
+			// 		if(Date.now()<1490457415742){
+			// 			this.toast(error);
+			// 		}
+			// 		console.log(error);
+			// 	});
+			// }).catch(error=>{
+			// 	Indicator.close();
+			// 	if(Date.now()<1490457415742){
+			// 		this.toast(error);
+			// 	}
+			// 	console.log(error);
+			// });
 		}
 	},
 	activated(){

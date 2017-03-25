@@ -37464,20 +37464,25 @@
 				this.loading();
 				this.$store.dispatch("getUserInfo").then(function () {
 					// 再去获取发布的数据
-					_this.getMyPublishPassengerTrip().then(function () {
-						_this.getMyPublishCarTrip().catch(function (error) {
-							// this.toast(error);
-							if (Date.now() < 1490462359920) {
-								_this.toast(error);
-							}
-							console.log(error);
-						});
-					}).catch(function (error) {
-						_mintUi.Indicator.close();
-						if (Date.now() < 1490462359920) {
-							_this.toast(error);
+					_this.$store.dispatch("getMyPublishPassengerTrip", {
+						Index: _this.PassengerIndex,
+						Size: 10
+					}).then(function (result) {
+						if (result.length < 10) {
+							_this.PassengerNoData = true;
 						}
-						console.log(error);
+						_this.PassengerIndex++;
+						_mintUi.Indicator.close();
+					}).then(function (result) {
+						_this.$store.dispatch("getMyPublishCarTrip", {
+							Index: _this.CarIndex,
+							Size: 10
+						}).then(function (result) {
+							if (result.length < 10) {
+								_this.CarNoData = true;
+							}
+							_this.CarIndex++;
+						});
 					});
 				});
 			} else {
@@ -37485,12 +37490,24 @@
 				if (this.myPublish.length !== 0) {
 					return;
 				}
-				this.getMyPublishPassengerTrip().then(function () {
-					_this.getMyPublishCarTrip().catch(function (error) {
-						if (Date.now() < 1490457415742) {
-							_this.toast(error);
+				this.$store.dispatch("getMyPublishPassengerTrip", {
+					Index: this.PassengerIndex,
+					Size: 10
+				}).then(function (result) {
+					if (result.length < 10) {
+						_this.PassengerNoData = true;
+					}
+					_this.PassengerIndex++;
+					_mintUi.Indicator.close();
+				}).then(function (result) {
+					_this.$store.dispatch("getMyPublishCarTrip", {
+						Index: _this.CarIndex,
+						Size: 10
+					}).then(function (result) {
+						if (result.length < 10) {
+							_this.CarNoData = true;
 						}
-						console.log(error);
+						_this.CarIndex++;
 					});
 				}).catch(function (error) {
 					_mintUi.Indicator.close();
@@ -37499,6 +37516,21 @@
 					}
 					console.log(error);
 				});
+
+				// this.getMyPublishPassengerTrip().then(()=>{
+				// 	this.getMyPublishCarTrip().catch(error=>{
+				// 		if(Date.now()<1490457415742){
+				// 			this.toast(error);
+				// 		}
+				// 		console.log(error);
+				// 	});
+				// }).catch(error=>{
+				// 	Indicator.close();
+				// 	if(Date.now()<1490457415742){
+				// 		this.toast(error);
+				// 	}
+				// 	console.log(error);
+				// });
 			}
 		},
 		activated: function activated() {
