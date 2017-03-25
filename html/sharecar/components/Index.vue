@@ -126,15 +126,15 @@ export default {
 
 		this.$store.dispatch("getFocusMe").then(result=>{
 			this.isFocusMe = result.Data;
-			console.log(result);
+			// console.log(result);
 		}).catch(error=>{
 			console.log(error);
 		})
 
 		// 如果没有用户信息就去获取
-		if(!this.$store.getters.getUserInfo){
-			this.$store.dispatch("getUserInfo");
-		}
+		// if(!this.$store.getters.getUserInfo){
+		// 	this.$store.dispatch("getUserInfo");
+		// }
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
 			this.getCarData().then(result=>{

@@ -28518,15 +28518,15 @@
 
 			this.$store.dispatch("getFocusMe").then(function (result) {
 				_this.isFocusMe = result.Data;
-				console.log(result);
+				// console.log(result);
 			}).catch(function (error) {
 				console.log(error);
 			});
 
 			// 如果没有用户信息就去获取
-			if (!this.$store.getters.getUserInfo) {
-				this.$store.dispatch("getUserInfo");
-			}
+			// if(!this.$store.getters.getUserInfo){
+			// 	this.$store.dispatch("getUserInfo");
+			// }
 			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
 				this.getCarData().then(function (result) {
@@ -37376,7 +37376,7 @@
 			var _this = this;
 
 			// 如果没有用户信息就去获取
-			if (!this.$store.getters.getUserInfo) {
+			if (!this.UserInfo) {
 				this.loading();
 				this.$store.dispatch("getUserInfo").then(function () {
 					// 再去获取发布的数据

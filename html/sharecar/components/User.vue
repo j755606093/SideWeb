@@ -177,7 +177,7 @@ export default {
 	},
 	created(){
 		// 如果没有用户信息就去获取
-		if(!this.$store.getters.getUserInfo){
+		if(!this.UserInfo){
 			this.loading();
 			this.$store.dispatch("getUserInfo").then(()=>{
 				// 再去获取发布的数据
