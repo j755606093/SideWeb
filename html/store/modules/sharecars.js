@@ -353,6 +353,30 @@ const actions = {
 				return result.Message;
 			}
 		})
+	},
+	/** 模糊搜索车主位置 */
+	searchCarAddress({ commit, state }, data) {
+		return postData("/api/CarPool/ListDre", data);
+	},
+	/** 模糊搜索乘客位置 */
+	searchPassengerAddress({ commit, state }, data) {
+		return postData("/api/CarPool/ListPassenger", data);
+	},
+	/** 计算行程距离 */
+	getDistance({ commit, state }, data) {
+		return fetch(`http://restapi.amap.com/v3/direction/driving?key=760ee992f02825b935228aa35a2c8be9&origin=${data.SpointLocation.X},${data.SpointLocation.Y}&destination=${data.EpointLocation.X},${data.EpointLocation.Y}&originid=&destinationid=&extensions=base&strategy=0&waypoints=&avoidpolygons=&avoidroad=`, {
+				method: 'GET',
+			})
+			.then(checkStatus)
+			.then(result => result.json())
+			.then(result => {
+				let distance = result.route.paths[0].distance;
+				let distanceTime = result.route.paths[0].duration;
+				return {
+					distance: distance,
+					distanceTime: distanceTime
+				}
+			})
 	}
 }
 

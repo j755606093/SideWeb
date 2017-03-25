@@ -13207,6 +13207,41 @@
 					return result.Message;
 				}
 			});
+		},
+
+		/** 模糊搜索车主位置 */
+		searchCarAddress: function searchCarAddress(_ref22, data) {
+			var commit = _ref22.commit,
+			    state = _ref22.state;
+
+			return postData("/api/CarPool/ListDre", data);
+		},
+
+		/** 模糊搜索乘客位置 */
+		searchPassengerAddress: function searchPassengerAddress(_ref23, data) {
+			var commit = _ref23.commit,
+			    state = _ref23.state;
+
+			return postData("/api/CarPool/ListPassenger", data);
+		},
+
+		/** 计算行程距离 */
+		getDistance: function getDistance(_ref24, data) {
+			var commit = _ref24.commit,
+			    state = _ref24.state;
+
+			return fetch("http://restapi.amap.com/v3/direction/driving?key=760ee992f02825b935228aa35a2c8be9&origin=" + data.SpointLocation.X + "," + data.SpointLocation.Y + "&destination=" + data.EpointLocation.X + "," + data.EpointLocation.Y + "&originid=&destinationid=&extensions=base&strategy=0&waypoints=&avoidpolygons=&avoidroad=", {
+				method: 'GET'
+			}).then(checkStatus).then(function (result) {
+				return result.json();
+			}).then(function (result) {
+				var distance = result.route.paths[0].distance;
+				var distanceTime = result.route.paths[0].duration;
+				return {
+					distance: distance,
+					distanceTime: distanceTime
+				};
+			});
 		}
 	};
 
@@ -28673,8 +28708,8 @@
 
 
 				this.$store.dispatch("setLocation", {
-					X: latitude,
-					Y: longitude
+					X: longitude,
+					Y: latitude
 				});
 			},
 
@@ -34808,7 +34843,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.tripdetail {\n  margin-top: 60px;\n}\n.trip__info {\n  width: 100%;\n  padding: 0 10px;\n}\n.trip__remark {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 10px 25px;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__remark > p {\n    line-height: 26px;\n    font-size: 14px;\n}\n.trip__tip {\n  text-align: center;\n  margin: 35px 20px;\n}\n.trip__tip > p {\n    font-size: 14px;\n    color: #c8c8c8;\n    line-height: 26px;\n}\n.trip__line {\n  background-color: #fff;\n  border-radius: 5px;\n  padding: 5px 25px;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__line > p {\n    line-height: 30px;\n    font-size: 14px;\n}\n.trip__contact {\n  height: 40px;\n  line-height: 40px;\n  width: 100%;\n  border-radius: 5px;\n  background-color: #fff;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.trip__contact div.trip--contact-way {\n    height: 40px;\n    width: 20px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.trip__contact div.trip--contact-way > img {\n      width: 12px;\n      height: 12px;\n}\n.trip__contact span {\n    height: 40px;\n    line-height: 40px;\n    color: #323232;\n    font-size: 15px;\n    margin-left: 5px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n", ""]);
 
 	// exports
 
@@ -34927,6 +34962,21 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -34935,8 +34985,10 @@
 				isReady: false,
 				types: -1,
 
-				tripData: {}
-			};
+				tripData: {},
+
+				distance: "", //距离
+				distanceTime: "" };
 		},
 		created: function created() {
 			var _this = this;
@@ -34949,11 +35001,22 @@
 				this.$store.dispatch("getTripDetail", this.tripId).then(function (result) {
 					if (result.Data) {
 						_this.tripData = result.Data;
-						_this.isReady = true; //开始显示
+
+						// 获取行程距离时间
+						_this.getDistance({
+							SpointLocation: _this.tripData.SpointLocation,
+							EpointLocation: _this.tripData.EpointLocation
+						}).then(function (distance) {
+							_this.isReady = true; //开始显示
+							_mintUi.Indicator.close();
+						}).catch(function (error) {
+							console.log(error);
+							_mintUi.Indicator.close();
+							_this.toast("获取行程失败...");
+						});
 					} else {
 						_this.toast(result.Message);
 					}
-					_mintUi.Indicator.close();
 				}).catch(function (error) {
 					_this.$router.push({ path: "/" });
 					_mintUi.Indicator.close();
@@ -34963,7 +35026,20 @@
 				this.$store.dispatch("getTripDetailPeople", this.tripId).then(function (result) {
 					if (result.Data) {
 						_this.tripData = result.Data;
-						_this.isReady = true; //开始显示
+
+						// 获取行程距离时间
+						_this.getDistance({
+							SpointLocation: _this.tripData.SpointLocation,
+							EpointLocation: _this.tripData.EpointLocation
+						}).then(function (distance) {
+							_this.isReady = true; //开始显示
+
+							_mintUi.Indicator.close();
+						}).catch(function (error) {
+							console.log(error);
+							_mintUi.Indicator.close();
+							_this.toast("获取行程失败...");
+						});
 					} else {
 						_this.toast(result.Message);
 					}
@@ -34984,6 +35060,14 @@
 					duration: 3000
 				});
 			},
+			getDistance: function getDistance(data) {
+				var _this2 = this;
+
+				return this.$store.dispatch("getDistance", data).then(function (result) {
+					_this2.distance = result.distance;
+					_this2.distanceTime = result.distanceTime;
+				});
+			},
 
 			/** 加载动画(需要手动关闭) */
 			loading: function loading() {
@@ -34992,7 +35076,16 @@
 				});
 			}
 		},
-		filters: {},
+		filters: {
+			formatDistance: function formatDistance(value) {
+				var distance = parseInt(value);
+				return parseFloat(distance / 1000).toFixed(2);
+			},
+			formatDistanceTime: function formatDistanceTime(value) {
+				var time = parseInt(value);
+				return parseFloat(time / 60 / 60).toFixed(2);
+			}
+		},
 		components: {
 			"my-list": _list2.default,
 			"my-header": _Header2.default
@@ -35262,7 +35355,9 @@
 	    }
 	  }), _vm._v(" "), _c('div', {
 	    staticClass: "trip__remark"
-	  }, [_c('p', [_vm._v("备注:" + _vm._s(_vm.tripData.Remark ? _vm.tripData.Remark : '无'))])]), _vm._v(" "), _c('a', {
+	  }, [_c('p', [_vm._v("备注:" + _vm._s(_vm.tripData.Remark ? _vm.tripData.Remark : '无'))])]), _vm._v(" "), _c('div', {
+	    staticClass: "trip__line"
+	  }, [_c('p', [_vm._v("行程距离约为:" + _vm._s(_vm._f("formatDistance")(_vm.distance)) + "km")]), _vm._v(" "), _c('p', [_vm._v("估算行程时间:" + _vm._s(_vm._f("formatDistanceTime")(_vm.distanceTime)) + "小时")])]), _vm._v(" "), _c('a', {
 	    staticClass: "trip__contact",
 	    attrs: {
 	      "href": 'tel:' + _vm.tripData.Phone
@@ -36216,7 +36311,7 @@
 				var date = new Date();
 				var hour = date.getHours(); //获取现在的小时
 
-				for (var i = hour; i < 24; i++) {
+				for (var i = hour + 1; i < 24; i++) {
 					this.datePicker[1].values.push(i + " \u70B9");
 				}
 			},
@@ -36275,10 +36370,25 @@
 			/** 隐藏显示选择人数 */
 			actionNumberPicker: function actionNumberPicker(action) {
 				this.numberPickerPageShow = action;
+				if (!this.submitResult.number) {
+					// 如果是需要改变
+					this.submitResult.number = 1;
+					this.numberPickerText = "1 人";
+				}
 			},
 
 			/** 下一步 */
 			nextStep: function nextStep() {
+				if (!this.submitResult.time) {
+					// 如果为空,说明选择是第一个
+					this.submitResult.time = this.datePicker[0].values[0].value;
+					var time = this.getDateValues(this.datePicker[1].values[0], this.datePicker[2].values[0]);
+
+					// console.log(this.datePicker[1].values[0])
+					this.submitResult.time.setHours(time.hour); //设置小时
+					this.submitResult.time.setMinutes(time.minute); //设置分钟
+					this.datePickerText = "\u4ECA\u5929 " + time.hour + "\u70B9 " + time.minute + "\u5206";
+				}
 				this.actionDatePicker(false);
 				this.actionNumberPicker(true);
 			},
@@ -37701,7 +37811,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.searchtrip {\n  margin-top: 50px;\n}\n.searchtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.searchtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.searchtrip .swtich-role > span.active {\n      color: #323232;\n}\n.searchtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 2px;\n}\n.search {\n  width: 100%;\n  position: relative;\n}\n.search .search__info {\n    width: 100%;\n    background-color: #fff;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.search .search__info > div {\n      float: left;\n      display: inline-block;\n}\n.search .search__info .search__info--left {\n      width: 80%;\n}\n.search .search__info .search__info--right {\n      width: 20%;\n      text-align: center;\n      height: 90px;\n      background-color: #fff;\n}\n.search .search__info .search__info--right > img {\n        width: 14px;\n        height: 14px;\n        margin-top: 35px;\n}\n.search .search__info--line {\n    padding-left: 20px;\n    height: 45px;\n    line-height: 45px;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n    position: relative;\n}\n.search .search__info--line > div {\n      float: left;\n      width: 10%;\n}\n.search .search__info--line input {\n      display: inline-block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 90%;\n      float: left;\n}\n.search .search__info--line div.line__left--dot {\n      height: 45px;\n      position: relative;\n}\n.search .search__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 18px;\n        left: 0;\n}\n.search .search__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n.hr {\n  background-color: #fff;\n  height: 0;\n  z-index: 10;\n  border: none;\n  border-top: 1px solid #c8c8c8;\n  margin-left: 20px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.box_shadow {\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.searchtrip {\n  margin-top: 50px;\n}\n.searchtrip .swtich-role {\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    height: 45px;\n    line-height: 45px;\n    background-color: #fff;\n    text-align: center;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.searchtrip .swtich-role > span {\n      flex: 1;\n      width: 50%;\n      height: 45px;\n      line-height: 45px;\n      color: #c8c8c8;\n      position: relative;\n      font-size: 14px;\n      font-weight: 900;\n}\n.searchtrip .swtich-role > span.active {\n      color: #323232;\n}\n.searchtrip .swtich-role > span.active:after {\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        left: 44%;\n        width: 20px;\n        background-color: #0074D9;\n        height: 2px;\n}\n.search {\n  width: 100%;\n  position: relative;\n  margin-top: 10px;\n}\n.search .search__info {\n    width: 100%;\n    background-color: #fff;\n    margin-bottom: 10px;\n    box-shadow: 0 3px 3px 3px #f5f5f5;\n    float: left;\n}\n.search .search__info > div {\n      float: left;\n      display: inline-block;\n}\n.search .search__info .search__info--left {\n      width: 80%;\n}\n.search .search__info .search__info--right {\n      width: 20%;\n      text-align: center;\n      height: 90px;\n      background-color: #fff;\n}\n.search .search__info .search__info--right > img {\n        width: 14px;\n        height: 14px;\n        margin-top: 35px;\n}\n.search .search__info--line {\n    padding-left: 20px;\n    height: 45px;\n    line-height: 45px;\n    justify-content: flex-start;\n    background-color: #fff;\n    width: 100%;\n    position: relative;\n}\n.search .search__info--line > div {\n      float: left;\n      width: 10%;\n}\n.search .search__info--line input {\n      display: inline-block;\n      border: none;\n      outline: none;\n      height: 45px;\n      font-size: 14px;\n      width: 90%;\n      float: left;\n}\n.search .search__info--line div.line__left--dot {\n      height: 45px;\n      position: relative;\n}\n.search .search__info--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 18px;\n        left: 0;\n}\n.search .search__info--line div.dot-red:after {\n      background-color: #f98080;\n}\n.search .search-list {\n    position: fixed;\n    top: 200px;\n    left: 0;\n    width: 100%;\n    height: 300px;\n    padding: 0 10px;\n    overflow: scroll;\n}\n.search .search-list > div.no-data {\n      height: 30px;\n      line-height: 30px;\n      text-align: center;\n}\n.search .search-list > div.no-data > p {\n        font-size: 12px;\n}\n.animated {\n  animation-duration: 0.4s;\n}\n.hr {\n  background-color: #fff;\n  height: 0;\n  z-index: 10;\n  border: none;\n  border-top: 1px solid #c8c8c8;\n  margin-left: 20px;\n}\n", ""]);
 
 	// exports
 
@@ -37885,6 +37995,37 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var _ = __webpack_require__(36);
 
@@ -37896,39 +38037,57 @@
 				searchStartText: "", //搜索的地址
 				searchEndText: "",
 
-				searchList: [], //开始搜索结果
-				searchIndex: 1, //页数
-				searchNoData: false, //没有数据
+				searchPassengerList: [], //开始搜索结果
+				searchPassengerIndex: 1, //页数
+				searchPassengerNoData: false, //没有数据
+
+				searchCarList: [], //搜索结果
+				searchCarIndex: 1, //页数
+				searchCarNoData: false, //没有数据
 
 				searchStartFunction: null, //搜索处理函数
-				searchEndFunction: null };
+				searchEndFunction: null, //搜索处理函数
+
+				searchResultHeight: 0 };
 		},
 		created: function created() {
 			var _this = this;
 
 			/** 定义按键函数使用 */
-			this.searchStartFunction = _.debounce(function () {
-				_this.$store.dispatch("getStartSearch", {
-					text: _this.searchStartText,
-					page: 1
-				}).then(function (result) {
-					_this.searchStartIndex = 2;
-					_this.searchStartList = result.pois;
-				});
-			}, 500);
-
-			/** 定义按键函数使用 */
-			this.searchEndFunction = _.debounce(function () {
-				_this.$store.dispatch("getEndSearch", {
-					text: _this.searchEndText,
-					page: 1
-				}).then(function (result) {
-					_this.searchEndIndex = 2;
-					_this.searchEndList = result.pois;
-				});
+			this.searchFunction = _.debounce(function () {
+				if (_this.Role === 1) {
+					_this.$store.dispatch("searchPassengerAddress", {
+						SpointFuzzy: _this.searchStartText,
+						EpointFuzzy: _this.searchEndText,
+						Index: 1,
+						Size: 10
+					}).then(function (result) {
+						if (!result.Data || result.Data.length < 10) {
+							_this.searchPassengerNoData = true;
+						}
+						_this.searchPassengerIndex = 2;
+						_this.searchPassengerList = result.Data;
+					});
+				} else {
+					_this.$store.dispatch("searchCarAddress", {
+						SpointFuzzy: _this.searchStartText,
+						EpointFuzzy: _this.searchEndText,
+						Index: 1,
+						Size: 10
+					}).then(function (result) {
+						if (!result.Data || result.Data.length < 10) {
+							_this.searchCarNoData = true;
+						}
+						_this.searchCarIndex = 2;
+						_this.searchCarList = result.Data;
+					});
+				}
 			}, 500);
 		},
 		mounted: function mounted() {
+			/** 计算结果页高度 */
+			this.searchResultHeight = window.screen.height - document.getElementById("search-list").offsetTop;
+
 			// 监听开始地址滚动
 			// document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
 			// 	if(this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
@@ -37950,7 +38109,16 @@
 			// }, 400, { leading: false }));
 		},
 
-		computed: {},
+		computed: {
+			// 返回显示的数据
+			searchResult: function searchResult() {
+				if (this.Role === 1) {
+					return this.searchPassengerList;
+				} else {
+					return this.searchCarList;
+				}
+			}
+		},
 		methods: {
 			formatJSON: function formatJSON(data) {
 				return JSON.parse((0, _stringify2.default)(data));
@@ -37975,21 +38143,18 @@
 				this.Role = index;
 			},
 			searchStartKeyup: function searchStartKeyup() {
-				this.showStartSearchResult = true; //显示搜索结果
-				this.showEndSearchResult = false; //隐藏另一个
 				if (this.searchStartText === "") return;
-				this.searchStartFunction();
+				this.searchFunction();
 			},
 			searchEndKeyup: function searchEndKeyup() {
-				this.showEndSearchResult = true; //显示搜索结果
-				this.showStartSearchResult = false; //隐藏另一个
 				if (this.searchEndText === "") return;
-				this.searchEndFunction();
+				this.searchFunction();
 			}
 		},
 		filters: {},
 		components: {
-			"my-header": _Header2.default
+			"my-header": _Header2.default,
+			"my-list": _list2.default
 		}
 	};
 
@@ -38029,7 +38194,7 @@
 	      }
 	    }
 	  }, [_vm._v("我是司机")])]), _vm._v(" "), _c('div', {
-	    staticClass: "search animated slideInUp"
+	    staticClass: "search"
 	  }, [_c('div', {
 	    staticClass: "search__info"
 	  }, [_c('div', {
@@ -38090,7 +38255,27 @@
 	        _vm.searchEndText = $event.target.value
 	      }
 	    }
-	  })])]), _vm._v(" "), _vm._m(0)])])], 1)
+	  })])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+	    staticClass: "search-list",
+	    style: ({
+	      height: _vm.searchResultHeight + 'px'
+	    }),
+	    attrs: {
+	      "id": "search-list"
+	    }
+	  }, [_vm._l((_vm.searchResult), function(item, index) {
+	    return [_c('my-list', {
+	      attrs: {
+	        "isShowRight": false,
+	        "types": item.Num ? 1 : 0,
+	        "list": item
+	      }
+	    })]
+	  }), _vm._v(" "), (_vm.Role === 1 && _vm.searchPassengerNoData) ? _c('div', {
+	    staticClass: "no-data"
+	  }, [_c('p', [_vm._v("没有更多数据")])]) : _vm._e(), _vm._v(" "), (_vm.Role === 0 && _vm.searchCarNoData) ? _c('div', {
+	    staticClass: "no-data"
+	  }, [_c('p', [_vm._v("没有更多数据")])]) : _vm._e()], 2)])], 1)
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: "search__info--right"

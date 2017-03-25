@@ -5,7 +5,7 @@
 			<span @click="switchRole(0)" :class="{active:Role===0}">我是乘客</span>
 			<span @click="switchRole(1)" :class="{active:Role===1}">我是司机</span>
 		</div>
-		<div class="search animated slideInUp">
+		<div class="search">
 			<div class="search__info">
 				<div class="search__info--left">
 					<div  class="search__info--line">
@@ -20,6 +20,17 @@
 				</div>
 				<div class="search__info--right">
 					<img src="../icon/seach_icon.png">
+				</div>
+			</div>
+			<div :style="{height:searchResultHeight+'px'}" id="search-list" class="search-list">
+				<template v-for="(item,index) in searchResult">
+					<my-list :isShowRight="false" :types="item.Num?1:0" :list="item"></my-list>
+				</template>
+				<div class="no-data" v-if="Role===1&&searchPassengerNoData">
+					<p>没有更多数据</p>
+				</div>
+				<div class="no-data" v-if="Role===0&&searchCarNoData">
+					<p>没有更多数据</p>
 				</div>
 			</div>
 		</div>
@@ -66,11 +77,13 @@
 .search{
 	width:100%;
 	position:relative;
+	margin-top:10px;
 	.search__info{
 		width:100%;
 		background-color: #fff;
 		margin-bottom: 10px;
 		box-shadow: 0 3px 3px 3px #f5f5f5;
+		float:left;
 		>div{
 			float:left;
 			display:inline-block;
@@ -133,6 +146,24 @@
 			}
 		}
 	}
+	// 搜索结果页
+	.search-list{
+		position:fixed;
+		top:200px;
+		left:0;
+		width:100%;
+		height:300px;
+		padding:0 10px;
+		overflow: scroll;
+		>div.no-data{
+			height:30px;
+			line-height:30px;
+			text-align:center;
+			>p{
+				font-size:12px;
+			}
+		}
+	}
 }
 .animated{
 	animation-duration: 0.4s;
@@ -162,38 +193,57 @@ export default {
 			searchStartText:"",//搜索的地址
 			searchEndText:"",
 
-			searchList:[],//开始搜索结果
-			searchIndex:1,//页数
-			searchNoData:false,//没有数据
+			searchPassengerList:[],//开始搜索结果
+			searchPassengerIndex:1,//页数
+			searchPassengerNoData:false,//没有数据
+
+			searchCarList:[],//搜索结果
+			searchCarIndex:1,//页数
+			searchCarNoData:false,//没有数据
 
 			searchStartFunction:null,//搜索处理函数
 			searchEndFunction:null,//搜索处理函数
+
+			searchResultHeight:0,//搜索结果页高度
 		}
 	},
 	created(){
 		/** 定义按键函数使用 */
-		this.searchStartFunction = _.debounce(()=>{
-			this.$store.dispatch("getStartSearch",{
-				text:this.searchStartText,
-				page:1
-			}).then(result=>{
-				this.searchStartIndex = 2;
-				this.searchStartList = result.pois;
-			});
-		},500);
-		
-		/** 定义按键函数使用 */
-		this.searchEndFunction = _.debounce(()=>{
-			this.$store.dispatch("getEndSearch",{
-				text:this.searchEndText,
-				page:1
-			}).then(result=>{
-				this.searchEndIndex = 2;
-				this.searchEndList = result.pois;
-			})
+		this.searchFunction = _.debounce(()=>{
+			if(this.Role===1){
+				this.$store.dispatch("searchPassengerAddress",{
+					SpointFuzzy:this.searchStartText,
+					EpointFuzzy:this.searchEndText,
+					Index:1,
+					Size:10
+				}).then(result=>{
+					if(!result.Data||result.Data.length<10){
+						this.searchPassengerNoData=true;
+					}
+					this.searchPassengerIndex = 2;
+					this.searchPassengerList = result.Data;
+				});
+			}
+			else{
+				this.$store.dispatch("searchCarAddress",{
+					SpointFuzzy:this.searchStartText,
+					EpointFuzzy:this.searchEndText,
+					Index:1,
+					Size:10
+				}).then(result=>{
+					if(!result.Data||result.Data.length<10){
+						this.searchCarNoData=true;
+					}
+					this.searchCarIndex = 2;
+					this.searchCarList = result.Data;
+				});
+			}
 		},500);
 	},
 	mounted(){
+		/** 计算结果页高度 */
+		this.searchResultHeight = window.screen.height-document.getElementById("search-list").offsetTop;
+
 		// 监听开始地址滚动
 		// document.getElementById("startSearchList").addEventListener('scroll', _.throttle(()=> {
 		// 	if(this.searchStartNoData)return;//列表不显示或者没有更多数据时候不执行
@@ -215,7 +265,15 @@ export default {
 		// }, 400, { leading: false }));
 	},
 	computed:{
-		
+		// 返回显示的数据
+		searchResult(){
+			if(this.Role===1){
+				return this.searchPassengerList;
+			}
+			else{
+				return this.searchCarList;
+			}
+		}
 	},
 	methods:{
 		formatJSON(data){
@@ -239,16 +297,12 @@ export default {
 			this.Role = index;
 		},
 		searchStartKeyup(){
-			this.showStartSearchResult = true;//显示搜索结果
-			this.showEndSearchResult = false;//隐藏另一个
 			if(this.searchStartText==="")return;
-			this.searchStartFunction();
+			this.searchFunction();
 		},
 		searchEndKeyup(){
-			this.showEndSearchResult = true;//显示搜索结果
-			this.showStartSearchResult = false;//隐藏另一个
 			if(this.searchEndText==="")return;
-			this.searchEndFunction();
+			this.searchFunction();
 		},
 	},
 	filters:{
@@ -256,6 +310,7 @@ export default {
 	},
 	components:{
 		"my-header":Header,
+		"my-list":List
 	}
 }
 </script>

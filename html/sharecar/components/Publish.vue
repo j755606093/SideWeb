@@ -609,7 +609,7 @@ export default {
 			let date = new Date();
 			let hour = date.getHours();//获取现在的小时
 
-			for(let i=hour;i<24;i++){
+			for(let i=hour+1;i<24;i++){
 				this.datePicker[1].values.push(`${i} 点`);
 			}
 		},
@@ -662,9 +662,24 @@ export default {
 		/** 隐藏显示选择人数 */
 		actionNumberPicker(action){
 			this.numberPickerPageShow = action;
+			if(!this.submitResult.number){
+				// 如果是需要改变
+				this.submitResult.number = 1;
+				this.numberPickerText = "1 人";
+			}
 		},
 		/** 下一步 */
 		nextStep(){
+			if(!this.submitResult.time){
+				// 如果为空,说明选择是第一个
+				this.submitResult.time = this.datePicker[0].values[0].value;
+				let time = this.getDateValues(this.datePicker[1].values[0],this.datePicker[2].values[0]);
+
+				// console.log(this.datePicker[1].values[0])
+				this.submitResult.time.setHours(time.hour);//设置小时
+				this.submitResult.time.setMinutes(time.minute);//设置分钟
+				this.datePickerText = `今天 ${time.hour}点 ${time.minute}分`;
+			}
 			this.actionDatePicker(false);
 			this.actionNumberPicker(true);
 		},

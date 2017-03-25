@@ -6,6 +6,10 @@
 			<div class="trip__remark">
 				<p>备注:{{tripData.Remark?tripData.Remark:'无'}}</p>
 			</div>
+			<div class="trip__line">
+				<p>行程距离约为:{{distance|formatDistance}}km</p>
+				<p>估算行程时间:{{distanceTime|formatDistanceTime}}小时</p>
+			</div>
 			<!-- <div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
 			</div> -->
@@ -55,6 +59,17 @@
 		line-height:26px;
 	}
 }
+.trip__line{
+	background-color: #fff;
+	border-radius: 5px;
+	padding:5px 25px;
+	margin-top:10px;
+	box-shadow: 0 3px 3px 3px #f5f5f5;
+	>p{
+		line-height: 30px;
+		font-size:14px;
+	}
+}
 .trip__contact{
 	height:40px;
 	line-height:40px;
@@ -100,6 +115,9 @@ export default {
 			types:-1,
 
 			tripData:{},
+
+			distance:"",//距离
+			distanceTime:"",//时间
 		}
 	},
 	created(){
@@ -111,12 +129,23 @@ export default {
 			this.$store.dispatch("getTripDetail",this.tripId).then(result=>{
 				if(result.Data){
 					this.tripData = result.Data;
-					this.isReady = true;//开始显示
+
+					// 获取行程距离时间
+					this.getDistance({
+						SpointLocation:this.tripData.SpointLocation,
+						EpointLocation:this.tripData.EpointLocation,
+					}).then(distance=>{			
+						this.isReady = true;//开始显示
+						Indicator.close();
+					}).catch(error=>{
+						console.log(error)
+						Indicator.close();
+						this.toast("获取行程失败...");
+					})
 				}
 				else{
 					this.toast(result.Message);
 				}
-				Indicator.close();
 			}).catch(error=>{
 				this.$router.push({path:"/"});
 				Indicator.close();
@@ -126,7 +155,20 @@ export default {
 			this.$store.dispatch("getTripDetailPeople",this.tripId).then(result=>{
 				if(result.Data){
 					this.tripData = result.Data;
-					this.isReady = true;//开始显示
+
+					// 获取行程距离时间
+					this.getDistance({
+						SpointLocation:this.tripData.SpointLocation,
+						EpointLocation:this.tripData.EpointLocation,
+					}).then(distance=>{
+						this.isReady = true;//开始显示
+
+						Indicator.close();
+					}).catch(error=>{
+						console.log(error)
+						Indicator.close();
+						this.toast("获取行程失败...");
+					})
 				}
 				else{
 					this.toast(result.Message);
@@ -149,6 +191,12 @@ export default {
 				duration: 3000
 			});
 		},
+		getDistance(data){
+			return this.$store.dispatch("getDistance",data).then(result=>{
+				this.distance = result.distance;
+				this.distanceTime = result.distanceTime;
+			})
+		},
 		/** 加载动画(需要手动关闭) */
 		loading() {
 			Indicator.open({
@@ -157,7 +205,14 @@ export default {
 		},
 	},
 	filters:{
-		
+		formatDistance(value){
+			let distance = parseInt(value);
+			return parseFloat(distance/1000).toFixed(2);
+		},
+		formatDistanceTime(value){
+			let time = parseInt(value);
+			return parseFloat(time/60/60).toFixed(2);
+		}
 	},
 	components:{
 		"my-list":List,

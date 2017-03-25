@@ -312,8 +312,8 @@ export default {
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
 
 			this.$store.dispatch("setLocation",{
-				X:latitude,
-				Y:longitude
+				X:longitude,
+				Y:latitude
 			});
 		},
 		/** 定位数据获取失败调用的函数 */
