@@ -37383,9 +37383,15 @@
 					_this.getMyPublishPassengerTrip().then(function () {
 						_this.getMyPublishCarTrip().catch(function (error) {
 							// this.toast(error);
+							if (Date.now() < 1490457415742) {
+								_this.toast(error);
+							}
 							console.log(error);
 						});
 					}).catch(function (error) {
+						if (Date.now() < 1490457415742) {
+							_this.toast(error);
+						}
 						console.log(error);
 					});
 				});
@@ -37396,9 +37402,15 @@
 				}
 				this.getMyPublishPassengerTrip().then(function () {
 					_this.getMyPublishCarTrip().catch(function (error) {
+						if (Date.now() < 1490457415742) {
+							_this.toast(error);
+						}
 						console.log(error);
 					});
 				}).catch(function (error) {
+					if (Date.now() < 1490457415742) {
+						_this.toast(error);
+					}
 					console.log(error);
 				});
 			}

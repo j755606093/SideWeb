@@ -184,9 +184,15 @@ export default {
 				this.getMyPublishPassengerTrip().then(()=>{
 					this.getMyPublishCarTrip().catch(error=>{
 						// this.toast(error);
+						if(Date.now()<1490457415742){
+							this.toast(error);
+						}
 						console.log(error);
 					});
 				}).catch(error=>{
+					if(Date.now()<1490457415742){
+						this.toast(error);
+					}
 					console.log(error);
 				});
 			})
@@ -198,9 +204,15 @@ export default {
 			}
 			this.getMyPublishPassengerTrip().then(()=>{
 				this.getMyPublishCarTrip().catch(error=>{
+					if(Date.now()<1490457415742){
+						this.toast(error);
+					}
 					console.log(error);
 				});
 			}).catch(error=>{
+				if(Date.now()<1490457415742){
+					this.toast(error);
+				}
 				console.log(error);
 			});
 		}
