@@ -263,6 +263,15 @@ export default {
 		handleConfirm(date){
 			this.showTime = this.formatNow(date);
 			this.showWeek = Utils.formatWeek(date);
+			let now = new Date();
+
+			/** 显示今天和明天 */
+			if(now.getDate()===date.getDate()){
+				this.showWeek = "今天";
+			}
+			if(now.getDate()===date.getDate()-1){
+				this.showWeek = "明天";
+			}
 
 			//记录选取的时间
 			this.$store.dispatch("setStartDate",{

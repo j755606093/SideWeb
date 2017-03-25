@@ -185,7 +185,7 @@ const actions = {
 					CarInfo: res,
 					isRefresh: data.isRefresh ? true : false
 				});
-				return data;
+				return res;
 			})
 	},
 	/** 倒叙数组 */
@@ -210,7 +210,7 @@ const actions = {
 					PeopleInfo: res,
 					isRefresh: data.isRefresh ? true : false
 				})
-				return data;
+				return res;
 			})
 	},
 	/** 倒叙数组 */

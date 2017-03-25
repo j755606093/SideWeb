@@ -12960,7 +12960,7 @@
 					CarInfo: res,
 					isRefresh: data.isRefresh ? true : false
 				});
-				return data;
+				return res;
 			});
 		},
 
@@ -12991,7 +12991,7 @@
 					PeopleInfo: res,
 					isRefresh: data.isRefresh ? true : false
 				});
-				return data;
+				return res;
 			});
 		},
 
@@ -28273,7 +28273,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #f5f5f5; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #f5f5f5; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n  .home__lists .no-more-data {\n    height: 40px;\n    text-align: center;\n    font-size: 14px;\n    color: #333; }\n    .home__lists .no-more-data > p {\n      margin-top: 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
 
 	// exports
 
@@ -28368,14 +28368,22 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 		data: function data() {
 			return {
 				CarInfoPage: 1, // 找车
 				CarNoMoreData: false, //没有更多数据
+				CarInterntUse: false, //正在使用
 				PeopleInfoPage: 1, //找人
 				PeopleNoMoreData: false, //没有更多数据
+				PeopleInterntUse: false, //正在使用
 				sortIndex: 0, //排序索引,0默认,1发车,2发布
 
 				onlineNumber: 0, //显示的在线人数
@@ -28385,6 +28393,8 @@
 				headerRealTopElement: null,
 				headerTopElement: null,
 				home__last: null, //底部元素,用来计算和顶部的距离
+				car__last: null, //第一页的底部元素
+				people__last: null, //第二页的底部元素
 
 				trip_detail_status: false, //旅程详情页显示
 
@@ -28400,27 +28410,10 @@
 			// 没有列表数据
 			if (this.$store.getters.getCarInfo.length === 0) {
 				this.loading();
-				this.$store.dispatch("getCarInfo", {
-					Index: this.CarInfoPage,
-					Size: 10,
-					OrderBy: this.sortIndex
-				}).then(function (result) {
+				this.getCarData().then(function (result) {
 					_mintUi.Indicator.close();
-					if (result.length < 10) {
-						// 没有更多数据
-						_this.CarNoMoreData = true;
-					}
 					if (_this.$store.getters.getPeopleInfo.length === 0) {
-						_this.$store.dispatch("getPeopleInfo", {
-							Index: _this.PeopleInfoPage,
-							Size: 10,
-							OrderBy: _this.sortIndex
-						}).then(function (items) {
-							if (items.length < 10) {
-								// 没有更多数据
-								_this.PeopleNoMoreData = true;
-							}
-						});
+						_this.getPeopleData();
 					}
 				}).catch(function (error) {
 					_this.toast("服务器错误,请稍后重试...");
@@ -28442,11 +28435,15 @@
 				autoplayDisableOnInteraction: false
 			});
 
+			//记录当然需要的元素
 			this.headerTopElement = document.getElementById("headertop");
 			this.headerRealTopElement = document.getElementById("header_block");
+			this.car__last = document.getElementById("car__last");
+			this.people__last = document.getElementById("people__last");
 
 			/** 保存地址,便于移除监听事件 */
 			this.scrollFunction = _.throttle(function () {
+				/** 头部tick到顶部 */
 				var status = _this2.headerTopElement.offsetTop - document.body.scrollTop;
 				var realTop = _this2.headerRealTopElement.offsetTop - document.body.scrollTop;
 
@@ -28457,7 +28454,22 @@
 				} else {
 					_this2.headerTopElement.style.position = "relative";
 				}
-			}, 100, { leading: false });
+				/** 监听第一页的距离 */
+				var indexOne = _this2.car__last.offsetTop - document.body.scrollTop;
+
+				if (_this2.pageIndex === 0 && indexOne < 700 && !_this2.CarNoMoreData && !_this2.CarInterntUse) {
+					// 当前页&&距离小于700&&还有数据&&没有请求
+					_this2.getCarData();
+				}
+
+				/** 监听第二页 */
+				var indexTwo = _this2.people__last.offsetTop - document.body.scrollTop;
+
+				if (_this2.pageIndex === 1 && indexTwo < 700 && !_this2.PeopleNoMoreData && !_this2.PeopleInterntUse) {
+					// 当前页&&距离小于700&&还有数据&&没有请求
+					_this2.getPeopleData();
+				}
+			}, 500, { leading: false });
 
 			/** 监听滚动 */
 			window.addEventListener('scroll', this.scrollFunction);
@@ -28561,6 +28573,10 @@
 				var _this4 = this;
 
 				this.loading();
+				this.CarNoMoreData = false;
+				this.PeopleNoMoreData = false;
+				this.PeopleInfoPage = 1;
+				this.CarInfoPage = 1;
 				if (this.pageIndex === 0) {
 					this.$store.dispatch("getCarInfo", {
 						Index: 1,
@@ -28570,6 +28586,8 @@
 					}).then(function (result) {
 						_mintUi.Indicator.close();
 						_this4.toast("刷新成功");
+					}).catch(function (e) {
+						_mintUi.Indicator.close();
 					});
 				} else {
 					this.$store.dispatch("getPeopleInfo", {
@@ -28580,6 +28598,8 @@
 					}).then(function (result) {
 						_mintUi.Indicator.close();
 						_this4.toast("刷新成功");
+					}).catch(function (e) {
+						_mintUi.Indicator.close();
 					});
 				}
 			},
@@ -28618,6 +28638,46 @@
 					}
 				}).catch(function (error) {
 					// this.locationLoad = false;//停止界面加载提示
+				});
+			},
+
+			/** 获取第一页数据 */
+			getCarData: function getCarData() {
+				var _this6 = this;
+
+				this.CarInterntUse = true; //正在使用
+				return this.$store.dispatch("getCarInfo", {
+					Index: this.CarInfoPage,
+					Size: 10,
+					OrderBy: this.sortIndex
+				}).then(function (result) {
+					if (result.length < 10) {
+						// 没有更多数据
+						_this6.CarNoMoreData = true;
+					}
+					_this6.CarInfoPage++;
+					_this6.CarInterntUse = false; //关掉使用
+					return result;
+				});
+			},
+
+			/** 获取第二页数据 */
+			getPeopleData: function getPeopleData() {
+				var _this7 = this;
+
+				this.PeopleInterntUse = true; //正在使用
+				return this.$store.dispatch("getPeopleInfo", {
+					Index: this.PeopleInfoPage,
+					Size: 10,
+					OrderBy: this.sortIndex
+				}).then(function (result) {
+					if (result.length < 10) {
+						// 没有更多数据
+						_this7.PeopleNoMoreData = true;
+					}
+					_this7.PeopleInfoPage++;
+					_this7.PeopleInterntUse = false; //关掉使用
+					return result;
 				});
 			}
 		},
@@ -34069,7 +34129,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.list__header {\n  height: 65px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n}\n.list__header div.header--info {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 80px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.list__body .list__body--line {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36px;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 17px;\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: relative;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.list__header {\n  height: 65px;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header > div {\n    float: left;\n    display: inline-block;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    text-align: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n      margin-top: 15px;\n}\n.list__header div.header--info {\n    height: 65px;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n      margin-top: 30px;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-top: 30px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 80px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  height: 110px;\n}\n.list__body .list__body--line {\n    flex: 1;\n    justify-content: flex-start;\n    width: 100%;\n    height: 36.6666px;\n    position: relative;\n}\n.list__body .list__body--line > div {\n      display: inline-block;\n      float: left;\n}\n.list__body .list__body--line div.line__left {\n      width: 65px;\n      height: 36.6666px;\n      text-align: center;\n      position: absolute;\n      top: 0;\n      left: 0;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line .line__right {\n      padding-left: 65px;\n      width: 100%;\n}\n.list__body .list__body--line .line__right .line-surplus {\n        margin-top: 10px;\n}\n.list__body .list__body--line span {\n      font-size: 14px;\n      margin-top: 8px;\n      display: inline-block;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      float: left;\n}\n.list__body .list__body--line span.line__start--address, .list__body .list__body--line span.line__end--address {\n      padding-left: 65px;\n      width: 100%;\n}\n.list__body .list__body--line span.line-surplus {\n      margin-left: 10px;\n      margin-top: 0;\n      color: #9e9e9e;\n      font-size: 12px;\n      float: left;\n      width: 20%;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 65px;\n      height: 36.6666px;\n      position: absolute;\n      top: 0;\n      left: 0;\n}\n.list__body .list__body--line div.line__left--dot:after {\n        content: \"\";\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        border-radius: 50%;\n        background-color: #60e7bf;\n        top: 13px;\n        left: 28px;\n}\n.list__body .list__body--line div.dot-red:after {\n      background-color: #f98080;\n}\n", ""]);
 
 	// exports
 
@@ -34105,7 +34165,12 @@
 			types: {
 				type: Number,
 				default: 0
-			} },
+			}, //类型,有乘客类型和车主类型
+			isShowRight: {
+				type: Boolean,
+				default: true
+			}
+		},
 		data: function data() {
 			return {};
 		},
@@ -34298,6 +34363,73 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 68 */
@@ -34331,7 +34463,7 @@
 	    }
 	  })]], 2), _vm._v(" "), (_vm.nogo !== 'true') ? _c('div', {
 	    staticClass: "header--active"
-	  }, [(_vm.types === 0) ? [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])], _vm._v(" "), _c('img', {
+	  }, [(_vm.isShowRight) ? [(_vm.types === 0) ? [(_vm.list.SDetail) ? [_c('span', [_vm._v(_vm._s(_vm.list.SDetail))])] : [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])]] : [(_vm.list.SDetail) ? [_c('span', [_vm._v(_vm._s(_vm.list.SDetail))])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])]]] : _vm._e(), _vm._v(" "), _c('img', {
 	    attrs: {
 	      "src": __webpack_require__(71)
 	    }
@@ -34339,19 +34471,21 @@
 	    staticClass: "list__body"
 	  }, [_c('div', {
 	    staticClass: "list__body--line"
-	  }, [_vm._m(0), _vm._v(" "), _c('span', {
+	  }, [_vm._m(0), _vm._v(" "), _c('div', {
+	    staticClass: "line__right"
+	  }, [_c('span', {
 	    staticClass: "line-time"
 	  }, [_vm._v(_vm._s(_vm._f("formatTime")(_vm.list.BoardTime)))]), _vm._v(" "), (_vm.types === 0) ? [_c('span', {
 	    staticClass: "line-surplus"
 	  }, [_vm._v("剩" + _vm._s(_vm.list.RemainingSeat) + "空座")])] : [_c('span', {
 	    staticClass: "line-surplus"
-	  }, [_vm._v("需要" + _vm._s(_vm.list.Num) + "个人座位")])]], 2), _vm._v(" "), _c('div', {
+	  }, [_vm._v("需要" + _vm._s(_vm.list.Num) + "个座位")])]], 2)]), _vm._v(" "), _c('div', {
 	    staticClass: "list__body--line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot"
 	  }), _vm._v(" "), _c('span', {
 	    staticClass: "line__start--address"
-	  }, [_vm._v(_vm._s(_vm.list.Spoint.split("省")[1] ? _vm.list.Spoint.split("省")[1] : _vm.list.Epoint))])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v(_vm._s(_vm.list.Spoint.split("省")[1] ? _vm.list.Spoint.split("省")[1] : _vm.list.Spoint))])]), _vm._v(" "), _c('div', {
 	    staticClass: "list__body--line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot dot-red"
@@ -35063,7 +35197,9 @@
 	        "list": item
 	      }
 	    })]
-	  }), _vm._v(" "), _c('div', {
+	  }), _vm._v(" "), (_vm.CarNoMoreData) ? _c('div', {
+	    staticClass: "no-more-data"
+	  }, [_c('p', [_vm._v("没有更多数据~")])]) : _vm._e(), _vm._v(" "), _c('div', {
 	    attrs: {
 	      "id": "car__last"
 	    }
@@ -35082,7 +35218,9 @@
 	        "list": item
 	      }
 	    })]
-	  }), _vm._v(" "), _c('div', {
+	  }), _vm._v(" "), (_vm.PeopleNoMoreData) ? _c('div', {
+	    staticClass: "no-more-data"
+	  }, [_c('p', [_vm._v("没有更多数据~")])]) : _vm._e(), _vm._v(" "), _c('div', {
 	    attrs: {
 	      "id": "people__last"
 	    }
@@ -36902,6 +37040,7 @@
 	  }, [_vm._l((_vm.myPublish), function(item, index) {
 	    return [_c('my-list', {
 	      attrs: {
+	        "isShowRight": false,
 	        "types": item.Num ? 1 : 0,
 	        "list": item
 	      }

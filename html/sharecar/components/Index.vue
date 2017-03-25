@@ -43,12 +43,18 @@
 			<template v-for="(item,index) in CarInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
+			<div class="no-more-data" v-if="CarNoMoreData">
+				<p>没有更多数据~</p>
+			</div>
 			<div id="car__last"></div>
 		</div>
 		<div v-show="pageIndex===1" class="home__lists">
 			<template v-for="(item,index) in PeopleInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
 			</template>
+			<div class="no-more-data" v-if="PeopleNoMoreData">
+				<p>没有更多数据~</p>
+			</div>
 			<div id="people__last"></div>
 		</div>
 	</div>
@@ -71,8 +77,10 @@ export default {
 		return {
 			CarInfoPage:1,// 找车
 			CarNoMoreData:false,//没有更多数据
+			CarInterntUse:false,//正在使用
 			PeopleInfoPage:1,//找人
 			PeopleNoMoreData:false,//没有更多数据
+			PeopleInterntUse:false,//正在使用
 			sortIndex:0,//排序索引,0默认,1发车,2发布
 
 			onlineNumber:0,//显示的在线人数
@@ -82,6 +90,8 @@ export default {
 			headerRealTopElement:null,
 			headerTopElement:null,
 			home__last:null,//底部元素,用来计算和顶部的距离
+			car__last:null,//第一页的底部元素
+			people__last:null,//第二页的底部元素
 
 			trip_detail_status:false,//旅程详情页显示
 
@@ -96,28 +106,11 @@ export default {
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
 			this.loading();
-			this.$store.dispatch("getCarInfo",{
-				Index:this.CarInfoPage,
-				Size:10,
-				OrderBy:this.sortIndex
-			})
+			this.getCarData()
 			.then(result=>{
 				Indicator.close();
-				if(result.length<10){
-					// 没有更多数据
-					this.CarNoMoreData = true;
-				}
 				if(this.$store.getters.getPeopleInfo.length===0){
-					this.$store.dispatch("getPeopleInfo",{
-						Index:this.PeopleInfoPage,
-						Size:10,
-						OrderBy:this.sortIndex
-					}).then(items=>{
-						if(items.length<10){
-							// 没有更多数据
-							this.PeopleNoMoreData = true;
-						}
-					})
+					this.getPeopleData()
 				}
 			})
 			.catch(error=>{
@@ -138,11 +131,15 @@ export default {
 	    autoplayDisableOnInteraction : false,
 	  });
 		
+		//记录当然需要的元素
 		this.headerTopElement = document.getElementById("headertop");
 		this.headerRealTopElement = document.getElementById("header_block");
+		this.car__last = document.getElementById("car__last");
+		this.people__last = document.getElementById("people__last");
 		
 		/** 保存地址,便于移除监听事件 */
 		this.scrollFunction = _.throttle(()=>{
+			/** 头部tick到顶部 */
 			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
 			let realTop = this.headerRealTopElement.offsetTop-document.body.scrollTop;
                                   
@@ -154,10 +151,25 @@ export default {
 			else{
 				this.headerTopElement.style.position = "relative";
 			}
-		},100,{leading: false});
+			/** 监听第一页的距离 */
+			let indexOne = this.car__last.offsetTop-document.body.scrollTop;
+			
+			if(this.pageIndex===0&&indexOne<700&&!this.CarNoMoreData&&!this.CarInterntUse){
+				// 当前页&&距离小于700&&还有数据&&没有请求
+				this.getCarData();
+			}
+
+			/** 监听第二页 */
+			let indexTwo = this.people__last.offsetTop-document.body.scrollTop;
+
+			if(this.pageIndex===1&&indexTwo<700&&!this.PeopleNoMoreData&&!this.PeopleInterntUse){
+				// 当前页&&距离小于700&&还有数据&&没有请求
+				this.getPeopleData();
+			}
+		},500,{leading: false});
 
 		/** 监听滚动 */
-		window.addEventListener('scroll',this.scrollFunction)
+		window.addEventListener('scroll',this.scrollFunction);
 	},
 	computed:{
 		CarInfo(){
@@ -250,6 +262,10 @@ export default {
 		/** 刷新信息 */
 		refresh(){
 			this.loading();
+			this.CarNoMoreData = false;
+			this.PeopleNoMoreData = false;
+			this.PeopleInfoPage = 1;
+			this.CarInfoPage = 1;
 			if(this.pageIndex===0){
 				this.$store.dispatch("getCarInfo",{
 					Index:1,
@@ -260,6 +276,9 @@ export default {
 				.then(result=>{
 					Indicator.close();
 					this.toast("刷新成功");
+				})
+				.catch((e)=>{
+					Indicator.close();
 				})
 			}
 			else{
@@ -272,6 +291,8 @@ export default {
 				.then(result=>{
 					Indicator.close();
 					this.toast("刷新成功");
+				}).catch((e)=>{
+					Indicator.close();
 				})
 			}
 		},
@@ -304,6 +325,40 @@ export default {
 				// this.locationLoad = false;//停止界面加载提示
 			})
 		},
+		/** 获取第一页数据 */
+		getCarData(){
+			this.CarInterntUse = true;//正在使用
+			return this.$store.dispatch("getCarInfo",{
+				Index:this.CarInfoPage,
+				Size:10,
+				OrderBy:this.sortIndex
+			}).then(result=>{
+				if(result.length<10){
+					// 没有更多数据
+					this.CarNoMoreData = true;
+				}
+				this.CarInfoPage++;
+				this.CarInterntUse = false;//关掉使用
+				return result;
+			})
+		},
+		/** 获取第二页数据 */
+		getPeopleData(){
+			this.PeopleInterntUse = true;//正在使用
+			return this.$store.dispatch("getPeopleInfo",{
+				Index:this.PeopleInfoPage,
+				Size:10,
+				OrderBy:this.sortIndex
+			}).then(result=>{
+				if(result.length<10){
+					// 没有更多数据
+					this.PeopleNoMoreData = true;
+				}
+				this.PeopleInfoPage++;
+				this.PeopleInterntUse = false;//关掉使用
+				return result;
+			})
+		}
 	},
 	activated(){
 		console.log("activated")

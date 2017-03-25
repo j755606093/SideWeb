@@ -172,6 +172,13 @@ body {
 .home__lists {
   width: 100%;
   padding: 0 10px; }
+  .home__lists .no-more-data {
+    height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #333; }
+    .home__lists .no-more-data > p {
+      margin-top: 10px; }
 
 .trip__detail {
   width: 100%;

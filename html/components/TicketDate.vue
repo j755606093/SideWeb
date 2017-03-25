@@ -175,7 +175,7 @@ export default {
 					this.twoMonth.push(i);
 				}
 			}
-			console.log(this.twoMonth)
+			// console.log(this.twoMonth)
 		},
 		/** 获取当前月最大天数 */
 		getMaxMonth(year,month){
@@ -238,7 +238,7 @@ export default {
 			if(typeof date==="string"){
 				date = new Date(date);
 			}
-			console.log(date)
+			// console.log(date)
 			let year = date.getYear()-100+2000;
 			let month = date.getMonth()+1;
 			let day = date.getDate();
