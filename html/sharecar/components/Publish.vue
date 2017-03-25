@@ -727,7 +727,8 @@ export default {
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
 			let endLocation = this.submitResult.end.location.split(",");
-			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.name;
+			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.name;// 详细地址
+			let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
 
 			//组装数据
 			let json = {
@@ -737,6 +738,8 @@ export default {
 				EPoint:this.searchEndText,
 				STime:this.submitResult.time,
 				Remark:this.submitResult.remark,
+				SDetail:startDetail,
+				EDetail:endDetail,
 				SpointLocation:{
 					X:startLocation[0],
 					Y:startLocation[1]

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 // import commentApp from "../components/commentApp.vue";
 import store from '../store/sharecar.js'; //导入状态库
 require("swiper/dist/css/swiper.min.css");
+import 'mint-ui/lib/style.css';
 
 // Vue.use(Vuex);
 Vue.use(VueRouter);
