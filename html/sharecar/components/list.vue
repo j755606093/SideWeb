@@ -415,6 +415,7 @@ export default {
 							Id:this.list.Id,
 							Status:0
 						}).then(result=>{
+							this.$store.dispatch("clearMyPublish",this.list.Id);
 							Indicator.close();
 							this.toast(result.Message);
 						})
@@ -424,7 +425,7 @@ export default {
 							Id:this.list.Id,
 							Status:0
 						}).then(result=>{
-							this.$store.dispatch("clearMyPublish",this.list.Id)
+							this.$store.dispatch("clearMyPublish",this.list.Id);
 							Indicator.close();
 							this.toast(result.Message);
 						})
@@ -433,6 +434,9 @@ export default {
 					Indicator.close();
 					console.log(error)
 				});
+			}
+			else{
+				this.goToTipDetail();
 			}
 		}
 	},

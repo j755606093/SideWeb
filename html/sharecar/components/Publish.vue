@@ -761,12 +761,20 @@ export default {
 				this.toast("手机号不正确!");
 				return;
 			}
-			
+			this.loading();
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
 			let endLocation = this.submitResult.end.location.split(",");
 			// let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.adname+this.submitResult.start.name;// 详细地址
 			// let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
+			let startAddress = "";
+			let endAdress = "";
+			if(typeof this.submitResult.start.address!=="object"){
+				startAddress = this.submitResult.start.address;
+			}
+			if(typeof this.submitResult.end.address!=="object"){
+				endAdress = this.submitResult.end.address;
+			}
 
 			//组装数据
 			let json = {
@@ -780,14 +788,14 @@ export default {
 					Province:this.submitResult.start.pname,
 					City:this.submitResult.start.cityname,
 					District:this.submitResult.start.adname,
-					Address:this.submitResult.start.address,
+					Address:startAddress,
 					Name:this.submitResult.start.name
 				},
 				EndDetail:{
 					Province:this.submitResult.end.pname,
 					City:this.submitResult.end.cityname,
 					District:this.submitResult.end.adname,
-					Address:this.submitResult.end.address,
+					Address:endAdress,
 					Name:this.submitResult.end.name
 				},
 				SpointLocation:{
@@ -805,6 +813,7 @@ export default {
 			/** 发送数据 */
 			if(this.Role===0){
 				this.$store.dispatch("publishPassengerTrip",json).then(result=>{
+					Indicator.close();
 					if(result.Code===200){
 						this.toast("发布成功");
 						this.$router.replace({ name: 'tripdetail', params: { types: 1,tripId:result.Data }});
@@ -816,6 +825,7 @@ export default {
 			}
 			else{
 				this.$store.dispatch("publishCarTrip",json).then(result=>{
+					Indicator.close();
 					if(result.Code===200){
 						this.toast("发布成功");
 						this.$router.replace({ name: 'tripdetail', params: { types: 0,tripId:result.Data }});

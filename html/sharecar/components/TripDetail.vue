@@ -8,7 +8,7 @@
 			</div>
 			<div class="trip__line">
 				<p>行程距离约为:{{distance|formatDistance}}km</p>
-				<p>估算行程时间:{{distanceTime|formatDistanceTime}}小时</p>
+				<p>估算行程时间:{{distanceTime|formatDistanceTime}}</p>
 			</div>
 			<!-- <div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
