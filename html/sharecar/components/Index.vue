@@ -353,6 +353,8 @@ export default {
 		},
 		/** 获取第一页数据 */
 		getCarData(){
+			this.autoShowPage();// 自动弹出
+
 			this.loading();
 			this.CarInterntUse = true;//正在使用
 			return this.$store.dispatch("getCarInfo",{
@@ -375,6 +377,8 @@ export default {
 		},
 		/** 获取第二页数据 */
 		getPeopleData(){
+			this.autoShowPage();// 自动弹出
+
 			this.loading();
 			this.PeopleInterntUse = true;//正在使用
 			return this.$store.dispatch("getPeopleInfo",{
@@ -398,6 +402,12 @@ export default {
 		/** 打开二维码 */
 		openCodePage(){
 			this.showCodePage = true;
+		},
+		autoShowPage(){
+			if(!this.isFocusMe&&(this.CarInfoPage===3||this.PeopleInfoPage===3)){
+				this.isFocusMe = true;
+				this.openCodePage();
+			}
 		}
 	},
 	activated(){

@@ -28761,6 +28761,8 @@
 			getCarData: function getCarData() {
 				var _this5 = this;
 
+				this.autoShowPage(); // 自动弹出
+
 				this.loading();
 				this.CarInterntUse = true; //正在使用
 				return this.$store.dispatch("getCarInfo", {
@@ -28786,6 +28788,8 @@
 			getPeopleData: function getPeopleData() {
 				var _this6 = this;
 
+				this.autoShowPage(); // 自动弹出
+
 				this.loading();
 				this.PeopleInterntUse = true; //正在使用
 				return this.$store.dispatch("getPeopleInfo", {
@@ -28810,6 +28814,12 @@
 			/** 打开二维码 */
 			openCodePage: function openCodePage() {
 				this.showCodePage = true;
+			},
+			autoShowPage: function autoShowPage() {
+				if (!this.isFocusMe && (this.CarInfoPage === 3 || this.PeopleInfoPage === 3)) {
+					this.isFocusMe = true;
+					this.openCodePage();
+				}
 			}
 		},
 		activated: function activated() {
