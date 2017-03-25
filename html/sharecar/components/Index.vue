@@ -34,6 +34,7 @@
 				</div>
 				<div class="header_message">
 					<span class="message--new">欢迎使用城市圈</span>
+					<span @click="openCodePage" v-if="!isFocusMe" style="color:#0074D9">关注我</span>
 					<!-- <span class="message--new">有43条新消息</span> -->
 					<div class="header_message--taxis">
 						<span @click="sort(2)" :class="{active:sortIndex===2}">最新发布</span>
@@ -60,6 +61,13 @@
 			</div>
 			<div id="people__last"></div>
 		</div>
+		<mt-popup
+		  v-model="showCodePage"
+		  class="mt_page">
+		  <slot>
+				
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -99,11 +107,21 @@ export default {
 			trip_detail_status:false,//旅程详情页显示
 
 			scrollFunction:null,//监听函数地址
+
+			isFocusMe:false,//默认没有关注
+			showCodePage:false,//默认不显示二维码
 		}
 	},
 	created(){
 		//获取用户地理位置
 		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+
+		this.$store.dispatch("getFocusMe").then(result=>{
+			this.isFocusMe = result.Data;
+			console.log(result);
+		}).catch(error=>{
+			console.log(error);
+		})
 
 		// 如果没有用户信息就去获取
 		if(!this.$store.getters.getUserInfo){
@@ -368,6 +386,10 @@ export default {
 			}).catch(error=>{
 				Indicator.close();
 			})
+		},
+		/** 打开二维码 */
+		openCodePage(){
+			this.showCodePage = true;
 		}
 	},
 	activated(){

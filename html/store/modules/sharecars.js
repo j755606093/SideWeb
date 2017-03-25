@@ -377,6 +377,10 @@ const actions = {
 					distanceTime: distanceTime
 				}
 			})
+	},
+	/** 是否关注我 */
+	getFocusMe({ commit, state }, data) {
+		return getData("/api/Member/IsUserSub")
 	}
 }
 
