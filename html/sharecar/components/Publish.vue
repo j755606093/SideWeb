@@ -727,6 +727,7 @@ export default {
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
 			let endLocation = this.submitResult.end.location.split(",");
+			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.name;
 
 			//组装数据
 			let json = {
