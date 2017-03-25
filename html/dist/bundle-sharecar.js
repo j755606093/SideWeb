@@ -28353,7 +28353,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 100; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #f5f5f5; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n  .home__lists .no-more-data {\n    height: 40px;\n    text-align: center;\n    font-size: 14px;\n    color: #333; }\n    .home__lists .no-more-data > p {\n      margin-top: 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black; }\n\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }\n\n.font-red {\n  color: #db3652; }\n\n.font-blue {\n  color: #0074D9; }\n\n.font-gray {\n  color: #2b2b2b; }\n\n.font-small {\n  font-size: 12px; }\n\n.bg-gray {\n  background-color: #AAAAAA; }\n\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis; }\n\n.btn {\n  border: 0;\n  outline: none; }\n\nbutton:active {\n  outline: none;\n  border: 0; }\n\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent; }\n\na:focus {\n  text-decoration: none; }\n\nhtml {\n  font-size: 12px; }\n\ninput {\n  outline: none;\n  border: none; }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fadeIn {\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n.fadeOut {\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both; }\n\nbody {\n  background-color: #fafafa; }\n\n/** 轮播图 */\n.home__swpier {\n  height: 160px;\n  width: 100%;\n  position: relative; }\n  .home__swpier .swiper-container {\n    height: 160px; }\n    .home__swpier .swiper-container img {\n      width: 100%;\n      height: 160px; }\n  .home__swpier .online--number {\n    position: absolute;\n    bottom: 10px;\n    right: 10px;\n    font-size: 14px;\n    color: #000;\n    font-weight: 900;\n    z-index: 10;\n    height: 40px; }\n    .home__swpier .online--number > img {\n      height: 40px;\n      width: 79px;\n      position: absolute;\n      top: 0;\n      right: 0;\n      z-index: -10; }\n    .home__swpier .online--number > p {\n      z-index: 10;\n      font-weight: 400;\n      font-size: 12px;\n      color: #fff;\n      z-index: 100;\n      height: 20px;\n      line-height: 20px;\n      font-weight: 900;\n      text-align: right;\n      margin-right: 10px; }\n\n.home__header {\n  height: 80px;\n  background-color: #fff;\n  width: 100%;\n  z-index: 100;\n  box-shadow: 0 3px 3px 3px #f5f5f5; }\n  .home__header .header_title {\n    height: 45px;\n    line-height: 45px;\n    padding: 0 10px;\n    border-bottom: 1px solid #fafafa; }\n    .home__header .header_title > span {\n      height: 45px;\n      line-height: 45px;\n      width: 60px;\n      text-align: center;\n      font-size: 15px;\n      font-weight: 900;\n      display: inline-block;\n      color: #c8c8c8;\n      position: relative; }\n      .home__header .header_title > span.active {\n        color: #000; }\n      .home__header .header_title > span.active:after {\n        background-color: #0074D9;\n        content: \"\";\n        position: absolute;\n        bottom: 5px;\n        height: 2px;\n        width: 14px;\n        left: 23px; }\n    .home__header .header_title .action--btn {\n      float: right;\n      height: 45px;\n      line-height: 45px;\n      padding: 0 10px;\n      width: 40px; }\n      .home__header .header_title .action--btn > img {\n        width: 14px;\n        height: 14px; }\n  .home__header .header_message {\n    height: 35px;\n    line-height: 35px;\n    padding: 0 10px; }\n    .home__header .header_message span.message--new {\n      font-size: 12px;\n      color: #1e1e1e;\n      margin-left: 10px; }\n    .home__header .header_message .header_message--taxis {\n      float: right; }\n      .home__header .header_message .header_message--taxis > span {\n        padding: 0 10px;\n        color: #c8c8c8; }\n      .home__header .header_message .header_message--taxis > span.active {\n        color: #1e1e1e; }\n\n.home__lists {\n  width: 100%;\n  padding: 0 10px; }\n  .home__lists .no-more-data {\n    height: 40px;\n    text-align: center;\n    font-size: 14px;\n    color: #333; }\n    .home__lists .no-more-data > p {\n      margin-top: 10px; }\n\n.trip__detail {\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%; }\n  .trip__detail .page {\n    width: 100%;\n    height: 100%; }\n", ""]);
 
 	// exports
 
@@ -28389,6 +28389,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ = __webpack_require__(36); //
+	//
+	//
+	//
 	//
 	//
 	//
@@ -34218,7 +34221,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n}\n.list__header {\n  height: 65px;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header > div {\n    float: left;\n    display: inline-block;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    text-align: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n      margin-top: 15px;\n}\n.list__header div.header--info {\n    height: 65px;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n      margin-top: 30px;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-top: 30px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 110px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  min-height: 110px;\n}\n.list__body .list__body--line {\n    width: 100%;\n    height: 36.6666px;\n    position: relative;\n}\n.list__body .list__body--line > div {\n      display: inline-block;\n      float: left;\n}\n.list__body .list__body--line div.line__left {\n      width: 50px;\n      height: 36.6666px;\n      text-align: center;\n      position: absolute;\n      top: 0;\n      left: 0;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        top: 13px;\n        left: 20px;\n}\n.list__body .list__body--line .line__right {\n      padding-left: 50px;\n      width: 100%;\n      position: relative;\n      height: 36.6666px;\n}\n.list__body .list__body--line .line__right span.line-time {\n        float: left;\n        font-size: 14px;\n        margin-top: 8px;\n        display: inline-block;\n}\n.list__body .list__body--line .line__right div.other--info {\n        position: absolute;\n        top: 0;\n        right: 10px;\n        width: 110px;\n        height: 36.6666px;\n        line-height: 40px;\n}\n.list__body .list__body--line .line__right div.other--info > img {\n          width: 10px;\n          height: 10px;\n          position: absolute;\n          top: 13px;\n          left: 10px;\n}\n.list__body .list__body--line .line__right div.other--info span.line-surplus {\n          position: absolute;\n          top: 0;\n          right: 0;\n          font-size: 14px;\n          margin-top: 0;\n          height: 36.6666px;\n          line-height: 36.6666px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 50px;\n      height: 36.6666px;\n      position: absolute;\n      top: 0;\n      left: 0;\n      text-align: center;\n      height: 60px;\n}\n.list__body .list__body--line div.line__left--dot > span {\n        color: #60e7bf;\n        font-size: 12px;\n        float: none;\n        line-height: 60px;\n        display: inline-block;\n}\n.list__body .list__body--line div.dot-red > span {\n      color: #f98080;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__right--address {\n      width: 100%;\n      height: 60px;\n      padding: 5px 0;\n      padding-left: 50px;\n}\n.list__body .list__body--line div.line__right--address > span {\n        display: block;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis;\n        height: 25px;\n        width: 100%;\n        font-size: 14px;\n        line-height: 25px;\n}\n.list__body .list__body--line div.line__right--address > span:last-child {\n          font-size: 12px;\n          color: #c8c8c8;\n}\n.list__body .list__line {\n    width: 100%;\n    height: 36.6666px;\n    position: relative;\n}\n.list__body .list__line > div {\n      display: inline-block;\n      float: left;\n}\n.list__body .list__line div.line__left--dot {\n      width: 50px;\n      height: 36.6666px;\n      text-align: center;\n      position: absolute;\n      top: 0;\n      left: 0;\n}\n.list__body .list__line div.line__left--dot > span.green {\n        color: #60e7bf;\n        font-size: 12px;\n        height: 36.6666px;\n        line-height: 36.6666px;\n}\n.list__body .list__line div.line__left--dot > span.red {\n        color: #f98080;\n        font-size: 12px;\n        height: 36.6666px;\n        line-height: 36.6666px;\n}\n.list__body .list__line .line__right--address {\n      padding-left: 50px;\n      width: 100%;\n      height: 36.6666px;\n      line-height: 36.6666px;\n}\n.list__body .list__line .line__right--address > span {\n        font-size: 14px;\n}\n.list__body .list__body--line.height {\n    height: 60px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.list {\n  background-color: #fff;\n  width: 100%;\n  margin-top: 10px;\n  border-radius: 5px;\n  box-shadow: 0 3px 3px 3px #f5f5f5;\n  padding-bottom: 10px;\n}\n.list__header {\n  height: 65px;\n  justify-content: flex-start;\n  border-bottom: 1px solid #fafafa;\n  width: 100%;\n  position: relative;\n}\n.list__header > div {\n    float: left;\n    display: inline-block;\n}\n.list__header .header--avatar {\n    width: 65px;\n    height: 65px;\n    text-align: center;\n}\n.list__header .header--avatar > img {\n      width: 35px;\n      height: 35px;\n      border-radius: 50px;\n      margin-top: 15px;\n}\n.list__header div.header--info {\n    height: 65px;\n}\n.list__header div.header--info span.header--name {\n      font-size: 15px;\n      color: #323232;\n      margin-top: 30px;\n}\n.list__header div.header--info > img {\n      width: 10px;\n      height: 10px;\n      margin-top: 30px;\n      margin-left: 5px;\n}\n.list__header div.header--active {\n    position: absolute;\n    top: 0;\n    right: 10px;\n    display: inline-block;\n    height: 65px;\n    line-height: 65px;\n    width: 110px;\n    text-align: right;\n}\n.list__header div.header--active > img {\n      width: 10px;\n      height: 10px;\n      margin-left: 5px;\n}\n.list__header div.header--active > span {\n      font-size: 15px;\n      color: #c8c8c8;\n}\n.list__body {\n  min-height: 110px;\n}\n.list__body .list__body--line {\n    width: 100%;\n    height: 36.6666px;\n    position: relative;\n}\n.list__body .list__body--line > div {\n      display: inline-block;\n      float: left;\n}\n.list__body .list__body--line div.line__left {\n      width: 50px;\n      height: 36.6666px;\n      text-align: center;\n      position: absolute;\n      top: 0;\n      left: 0;\n}\n.list__body .list__body--line div.line__left > img {\n        width: 10px;\n        height: 10px;\n        position: absolute;\n        width: 10px;\n        height: 10px;\n        top: 13px;\n        left: 20px;\n}\n.list__body .list__body--line .line__right {\n      padding-left: 50px;\n      width: 100%;\n      position: relative;\n      height: 36.6666px;\n}\n.list__body .list__body--line .line__right span.line-time {\n        float: left;\n        font-size: 14px;\n        margin-top: 8px;\n        display: inline-block;\n}\n.list__body .list__body--line .line__right div.other--info {\n        position: absolute;\n        top: 0;\n        right: 10px;\n        width: 60px;\n        height: 36.6666px;\n        line-height: 40px;\n}\n.list__body .list__body--line .line__right div.other--info > img {\n          width: 10px;\n          height: 10px;\n          position: absolute;\n          top: 13px;\n          left: 10px;\n}\n.list__body .list__body--line .line__right div.other--info span.line-surplus {\n          position: absolute;\n          top: 0;\n          right: 0;\n          font-size: 14px;\n          margin-top: 0;\n          height: 36.6666px;\n          line-height: 36.6666px;\n}\n.list__body .list__body--line div.line__left--dot {\n      width: 50px;\n      position: absolute;\n      top: 20%;\n      left: 0;\n      text-align: center;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__left--dot > span {\n        flex: 1;\n        color: #60e7bf;\n        font-size: 12px;\n        float: none;\n        display: inline-block;\n}\n.list__body .list__body--line div.dot-red > span {\n      color: #f98080;\n      font-size: 12px;\n}\n.list__body .list__body--line div.line__right--address {\n      width: 100%;\n      padding: 5px 0;\n      padding-left: 50px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__body--line div.line__right--address > span {\n        flex: 1;\n        display: block;\n        word-break: break-all;\n        width: 100%;\n        font-size: 14px;\n}\n.list__body .list__body--line div.line__right--address > span:last-child {\n          font-size: 12px;\n          color: #c8c8c8;\n}\n.list__body .list__line {\n    width: 100%;\n    height: 36.6666px;\n    position: relative;\n}\n.list__body .list__line > div {\n      display: inline-block;\n      float: left;\n}\n.list__body .list__line div.line__left--dot {\n      width: 50px;\n      text-align: center;\n      position: absolute;\n      top: 0;\n      left: 0;\n      height: 100%;\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center;\n}\n.list__body .list__line div.line__left--dot > span.green {\n        color: #60e7bf;\n        font-size: 12px;\n        height: 36.6666px;\n        line-height: 36.6666px;\n        font-weight: 900;\n}\n.list__body .list__line div.line__left--dot > span.red {\n        color: #f98080;\n        font-size: 12px;\n        height: 36.6666px;\n        line-height: 36.6666px;\n        font-weight: 900;\n}\n.list__body .list__line .line__right--address {\n      padding-left: 50px;\n      width: 100%;\n      height: 36.6666px;\n      line-height: 36.6666px;\n}\n.list__body .list__line .line__right--address > span {\n        font-size: 14px;\n}\n.list__body .list__body--line.height {\n    min-height: 60px;\n}\n", ""]);
 
 	// exports
 
@@ -34633,6 +34636,18 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 68 */
@@ -34686,25 +34701,29 @@
 	    }
 	  }), _vm._v(" "), (_vm.types === 0) ? [_c('span', {
 	    staticClass: "line-surplus"
-	  }, [_vm._v("剩" + _vm._s(_vm.list.RemainingSeat) + "空座")])] : [_c('span', {
+	  }, [_vm._v(_vm._s(_vm.list.RemainingSeat) + "空座")])] : [_c('span', {
 	    staticClass: "line-surplus"
-	  }, [_vm._v("需要" + _vm._s(_vm.list.Num) + "个座位")])]], 2)])]), _vm._v(" "), (_vm.isDetail) ? [_c('div', {
+	  }, [_vm._v(_vm._s(_vm.list.Num) + "个人")])]], 2)])]), _vm._v(" "), (_vm.isDetail) ? [_c('div', {
 	    staticClass: "list__body--line height"
 	  }, [_vm._m(1), _vm._v(" "), _c('div', {
 	    staticClass: "line__right--address"
 	  }, [_c('span', {
 	    staticClass: "line__start--address"
-	  }, [_vm._v(_vm._s(_vm.list.Spoint))]), _vm._v(" "), _c('span', {
+	  }, [_vm._v(_vm._s(_vm.list.StartDetail.Name))]), _vm._v(" "), _c('span', {
 	    staticClass: "line__start--address"
-	  }, [_vm._v(_vm._s(_vm.list.StartDetail.Province + _vm.list.StartDetail.City + _vm.list.StartDetail.City + _vm.list.StartDetail.Name))])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v(_vm._s(_vm.list.StartDetail.Province + _vm.list.StartDetail.City + _vm.list.StartDetail.District + _vm.list.StartDetail.Name + (_vm.list.StartDetail.Address ? _vm.list.StartDetail.Address : '')))])])]), _vm._v(" "), _c('div', {
 	    staticClass: "list__body--line height"
 	  }, [_vm._m(2), _vm._v(" "), _c('div', {
 	    staticClass: "line__right--address"
 	  }, [_c('span', {
-	    staticClass: "line__end--address"
-	  }, [_vm._v(_vm._s(_vm.list.Epoint))]), _vm._v(" "), _c('span', {
 	    staticClass: "line__start--address"
-	  }, [_vm._v(_vm._s(_vm.list.EndDetail.Province + _vm.list.EndDetail.City + _vm.list.EndDetail.City + _vm.list.EndDetail.Name))])])])] : [_c('div', {
+	  }, [_vm._v(_vm._s(_vm.list.EndDetail.Name))]), _vm._v(" "), _c('span', {
+	    staticClass: "line__start--address"
+	  }, [_vm._v(_vm._s(_vm.list.EndDetail.Province + _vm.list.EndDetail.City + _vm.list.EndDetail.District + _vm.list.EndDetail.Name + (_vm.list.EndDetail.Address ? _vm.list.EndDetail.Address : '')))])])]), _vm._v(" "), _c('div', {
+	    staticStyle: {
+	      "clear": "both"
+	    }
+	  })] : [_c('div', {
 	    staticClass: "list__line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot"
@@ -34712,7 +34731,7 @@
 	    staticClass: "green"
 	  }, [_vm._v("起点")])]), _vm._v(" "), _c('div', {
 	    staticClass: "line__right--address"
-	  }, [_c('span', [_vm._v(_vm._s(_vm.list.Spoint.split("省")[1] ? _vm.list.Spoint.split("省")[1] : _vm.list.Spoint))])])]), _vm._v(" "), _c('div', {
+	  }, [_c('span', [_vm._v(_vm._s(_vm.list.StartDetail.Province + _vm.list.StartDetail.City + _vm.list.StartDetail.District))])])]), _vm._v(" "), _c('div', {
 	    staticClass: "list__line"
 	  }, [_c('div', {
 	    staticClass: "line__left--dot dot-red"
@@ -34720,7 +34739,11 @@
 	    staticClass: "red"
 	  }, [_vm._v("终点")])]), _vm._v(" "), _c('div', {
 	    staticClass: "line__right--address"
-	  }, [_c('span', [_vm._v(_vm._s(_vm.list.Epoint.split("省")[1] ? _vm.list.Epoint.split("省")[1] : _vm.list.Epoint))])])])]], 2)])
+	  }, [_c('span', [_vm._v(_vm._s(_vm.list.EndDetail.Province + _vm.list.EndDetail.City + _vm.list.EndDetail.District))])])]), _vm._v(" "), _c('div', {
+	    staticStyle: {
+	      "clear": "both"
+	    }
+	  })]], 2)])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: "line__left"
@@ -35412,11 +35435,7 @@
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: "home"
-	  }, [_c('div', {
-	    staticClass: "home__swpier"
 	  }, [_vm._m(0), _vm._v(" "), _c('div', {
-	    staticClass: "online--number"
-	  }, [_c('span', [_vm._v("在线人数" + _vm._s(_vm.onlineNumber))])])]), _vm._v(" "), _c('div', {
 	    staticStyle: {
 	      "height": "80px",
 	      "width": "100%"
@@ -35471,18 +35490,9 @@
 	    staticClass: "header_message"
 	  }, [_c('span', {
 	    staticClass: "message--new"
-	  }, [_vm._v("有43条新消息")]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("欢迎使用城市圈")]), _vm._v(" "), _c('div', {
 	    staticClass: "header_message--taxis"
 	  }, [_c('span', {
-	    class: {
-	      active: _vm.sortIndex === 1
-	    },
-	    on: {
-	      "click": function($event) {
-	        _vm.sort(1)
-	      }
-	    }
-	  }, [_vm._v("发布时间 ↑")]), _vm._v(" "), _c('span', {
 	    class: {
 	      active: _vm.sortIndex === 2
 	    },
@@ -35491,7 +35501,16 @@
 	        _vm.sort(2)
 	      }
 	    }
-	  }, [_vm._v("发车时间 ↑")])])])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("最新发布")]), _vm._v(" "), _c('span', {
+	    class: {
+	      active: _vm.sortIndex === 1
+	    },
+	    on: {
+	      "click": function($event) {
+	        _vm.sort(1)
+	      }
+	    }
+	  }, [_vm._v("最近出发")])])])])]), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -35536,6 +35555,8 @@
 	  })], 2)])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
+	    staticClass: "home__swpier"
+	  }, [_c('div', {
 	    staticClass: "swiper-container"
 	  }, [_c('div', {
 	    staticClass: "swiper-wrapper"
@@ -35553,7 +35574,7 @@
 	    }
 	  })])]), _vm._v(" "), _c('div', {
 	    staticClass: "swiper-pagination"
-	  })])
+	  })])])
 	}]}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -36180,7 +36201,7 @@
 			this.datePickerText = "今天" + _utils2.default.formatWeek(new Date()); // 显示今天几号
 
 			this.initDatePickerDay(); //初始化日期
-			this.initDatePickerTime(); //初始化时间
+			this.datePicker[1].values = this.initDatePickerTime(); //初始化时间
 
 			/** 定义按键函数使用 */
 			this.searchStartFunction = _.debounce(function () {
@@ -36252,6 +36273,9 @@
 			/** 显示提交按钮 */
 			showSubmitBtn: function showSubmitBtn() {
 				return this.submitResult.start && this.submitResult.end && this.submitResult.number && this.submitResult.phone && this.submitResult.time;
+			},
+			isToday: function isToday() {
+				return this.datePickerText.slice(0, 2) === "今天";
 			}
 		},
 		methods: {
@@ -36310,15 +36334,27 @@
 			initDatePickerTime: function initDatePickerTime() {
 				var date = new Date();
 				var hour = date.getHours(); //获取现在的小时
+				var data = [];
 
 				for (var i = hour + 1; i < 24; i++) {
-					this.datePicker[1].values.push(i + " \u70B9");
+					data.push(i + " \u70B9");
 				}
+				return data;
+			},
+
+			/** 返回所有可选的时间 */
+			initAllDate: function initAllDate() {
+				var data = [];
+
+				for (var i = 0; i < 24; i++) {
+					data.push(i + " \u70B9");
+				}
+				return data;
 			},
 
 			/** 选择开始地点 */
 			startAddress: function startAddress(index) {
-				this.searchStartText = this.searchStartList[index].cityname + this.searchStartList[index].name;
+				this.searchStartText = this.searchStartList[index].cityname + this.searchStartList[index].adname + this.searchStartList[index].name;
 				this.submitResult.start = this.searchStartList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -36339,7 +36375,7 @@
 
 			/** 选择到达地点 */
 			endAdress: function endAdress(index) {
-				this.searchEndText = this.searchEndList[index].cityname + this.searchEndList[index].name;
+				this.searchEndText = this.searchEndList[index].cityname + this.searchEndList[index].adname + this.searchEndList[index].name;
 				this.submitResult.end = this.searchEndList[index]; //保存结果
 				this.searchBlur();
 			},
@@ -36405,7 +36441,12 @@
 					this.submitResult.time.setMinutes(time.minute); //设置分钟
 
 					this.datePickerText = values[0].title + " " + values[1] + values[2];
-					// console.log(this.submitResult.time);
+					if (this.isToday) {
+						console.log("dadfadf");
+						this.datePicker[1].values = this.initDatePickerTime();
+					} else {
+						this.datePicker[1].values = this.initAllDate();
+					}
 				}
 			},
 
@@ -36456,8 +36497,8 @@
 				// 获取开始和到达地理位置
 				var startLocation = this.submitResult.start.location.split(",");
 				var endLocation = this.submitResult.end.location.split(",");
-				var startDetail = this.submitResult.start.pname + this.submitResult.start.cityname + this.submitResult.start.adname + this.submitResult.start.name; // 详细地址
-				var endDetail = this.submitResult.end.pname + this.submitResult.end.cityname + this.submitResult.end.name; // 详细地址
+				// let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.adname+this.submitResult.start.name;// 详细地址
+				// let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
 
 				//组装数据
 				var json = {
@@ -36471,12 +36512,14 @@
 						Province: this.submitResult.start.pname,
 						City: this.submitResult.start.cityname,
 						District: this.submitResult.start.adname,
+						Address: this.submitResult.start.address,
 						Name: this.submitResult.start.name
 					},
 					EndDetail: {
 						Province: this.submitResult.end.pname,
 						City: this.submitResult.end.cityname,
 						District: this.submitResult.end.adname,
+						Address: this.submitResult.end.address,
 						Name: this.submitResult.end.name
 					},
 					SpointLocation: {
@@ -37323,6 +37366,8 @@
 					}
 					_this2.PassengerIndex++;
 					_mintUi.Indicator.close();
+				}).catch(function (error) {
+					_mintUi.Indicator.close();
 				});
 			},
 
@@ -37341,6 +37386,8 @@
 						_this3.CarNoData = true;
 					}
 					_this3.CarIndex++;
+					_mintUi.Indicator.close();
+				}).catch(function (error) {
 					_mintUi.Indicator.close();
 				});
 			},

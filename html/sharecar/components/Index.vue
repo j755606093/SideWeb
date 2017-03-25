@@ -14,9 +14,11 @@
 		    <!-- If we need pagination -->
 		    <div class="swiper-pagination"></div>
 			</div>
-			<div class="online--number">
-				<span>在线人数{{onlineNumber}}</span>
-			</div>
+			<!-- <div class="online--number">
+				<img src="../icon/juxing.png">
+				<p>在线人数</p>	
+				<p>{{onlineNumber}}</p>
+			</div> -->
 		</div>
 		<div id="header_block" style="height: 80px;width:100%;">
 			<div id="headertop" class="home__header">
@@ -31,10 +33,11 @@
 					</div>
 				</div>
 				<div class="header_message">
-					<span class="message--new">有43条新消息</span>
+					<span class="message--new">欢迎使用城市圈</span>
+					<!-- <span class="message--new">有43条新消息</span> -->
 					<div class="header_message--taxis">
-						<span @click="sort(1)" :class="{active:sortIndex===1}">发布时间 ↑</span>
-						<span @click="sort(2)" :class="{active:sortIndex===2}">发车时间 ↑</span>
+						<span @click="sort(2)" :class="{active:sortIndex===2}">最新发布</span>
+						<span @click="sort(1)" :class="{active:sortIndex===1}">最近出发</span>
 					</div>
 				</div>
 			</div>

@@ -485,7 +485,7 @@ export default {
 		this.datePickerText = "今天"+Utils.formatWeek(new Date());// 显示今天几号
 
 		this.initDatePickerDay();//初始化日期
-		this.initDatePickerTime();//初始化时间
+		this.datePicker[1].values = this.initDatePickerTime();//初始化时间
 
 		/** 定义按键函数使用 */
 		this.searchStartFunction = _.debounce(()=>{
@@ -554,6 +554,9 @@ export default {
 		/** 显示提交按钮 */
 		showSubmitBtn(){
 			return this.submitResult.start&&this.submitResult.end&&this.submitResult.number&&this.submitResult.phone&&this.submitResult.time;
+		},
+		isToday(){
+			return this.datePickerText.slice(0,2)==="今天";
 		}
 	},
 	methods:{
@@ -608,14 +611,25 @@ export default {
 		initDatePickerTime(){
 			let date = new Date();
 			let hour = date.getHours();//获取现在的小时
+			let data = [];
 
 			for(let i=hour+1;i<24;i++){
-				this.datePicker[1].values.push(`${i} 点`);
+				data.push(`${i} 点`);
 			}
+			return data;
+		},
+		/** 返回所有可选的时间 */
+		initAllDate(){
+			let data = [];
+
+			for(let i=0;i<24;i++){
+				data.push(`${i} 点`);
+			}
+			return data;
 		},
 		/** 选择开始地点 */
 		startAddress(index){
-			this.searchStartText = this.searchStartList[index].cityname+this.searchStartList[index].name;
+			this.searchStartText = this.searchStartList[index].cityname+this.searchStartList[index].adname+this.searchStartList[index].name;
 			this.submitResult.start = this.searchStartList[index];//保存结果
 			this.searchBlur();
 		},
@@ -634,7 +648,7 @@ export default {
 		},
 		/** 选择到达地点 */
 		endAdress(index){
-			this.searchEndText = this.searchEndList[index].cityname+this.searchEndList[index].name;
+			this.searchEndText = this.searchEndList[index].cityname+this.searchEndList[index].adname+this.searchEndList[index].name;
 			this.submitResult.end = this.searchEndList[index];//保存结果
 			this.searchBlur();
 		},
@@ -695,7 +709,13 @@ export default {
 				this.submitResult.time.setMinutes(time.minute);//设置分钟
 				
 				this.datePickerText = values[0].title+" "+values[1]+values[2];
-				// console.log(this.submitResult.time);
+				if(this.isToday){
+					console.log("dadfadf");
+					this.datePicker[1].values=this.initDatePickerTime();
+				}
+				else{
+					this.datePicker[1].values=this.initAllDate();
+				}
 			}
 		},
 		/** 格式化字符串提取时间 */
@@ -742,8 +762,8 @@ export default {
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
 			let endLocation = this.submitResult.end.location.split(",");
-			let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.adname+this.submitResult.start.name;// 详细地址
-			let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
+			// let startDetail = this.submitResult.start.pname+this.submitResult.start.cityname+this.submitResult.start.adname+this.submitResult.start.name;// 详细地址
+			// let endDetail = this.submitResult.end.pname+this.submitResult.end.cityname+this.submitResult.end.name;// 详细地址
 
 			//组装数据
 			let json = {
@@ -757,12 +777,14 @@ export default {
 					Province:this.submitResult.start.pname,
 					City:this.submitResult.start.cityname,
 					District:this.submitResult.start.adname,
+					Address:this.submitResult.start.address,
 					Name:this.submitResult.start.name
 				},
 				EndDetail:{
 					Province:this.submitResult.end.pname,
 					City:this.submitResult.end.cityname,
 					District:this.submitResult.end.adname,
+					Address:this.submitResult.end.address,
 					Name:this.submitResult.end.name
 				},
 				SpointLocation:{

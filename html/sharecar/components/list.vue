@@ -51,10 +51,10 @@
 					<div class="other--info">
 						<img src="../icon/me_grey_icon.png">
 						<template v-if="types===0">
-							<span class="line-surplus">剩{{list.RemainingSeat}}空座</span>
+							<span class="line-surplus">{{list.RemainingSeat}}空座</span>
 						</template>
 						<template v-else>
-							<span class="line-surplus">需要{{list.Num}}个座位</span>
+							<span class="line-surplus">{{list.Num}}个人</span>
 						</template>
 					</div>
 				</div>
@@ -68,8 +68,8 @@
 						<span>起点</span>
 					</div>
 					<div class="line__right--address">
-						<span class="line__start--address">{{list.Spoint}}</span>
-						<span class="line__start--address">{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.City+list.StartDetail.Name}}</span>
+						<span class="line__start--address">{{list.StartDetail.Name}}</span>
+						<span class="line__start--address">{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.District+list.StartDetail.Name+(list.StartDetail.Address?list.StartDetail.Address:'')}}</span>
 					</div>
 				</div>
 				<!-- 一行 -->
@@ -78,10 +78,11 @@
 						<span>终点</span>
 					</div>
 					<div class="line__right--address">
-						<span class="line__end--address">{{list.Epoint}}</span>
-						<span class="line__start--address">{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.City+list.EndDetail.Name}}</span>
+						<span class="line__start--address">{{list.EndDetail.Name}}</span>
+						<span class="line__start--address">{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.District+list.EndDetail.Name+(list.EndDetail.Address?list.EndDetail.Address:'')}}</span>
 					</div>
 				</div>
+				<div style="clear:both;"></div>
 			</template>
 			<template v-else>
 				<!-- 一行 -->
@@ -90,7 +91,7 @@
 						<span class="green">起点</span>
 					</div>
 					<div class="line__right--address">
-						<span>{{list.Spoint.split("省")[1]?list.Spoint.split("省")[1]:list.Spoint}}</span>
+						<span>{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.District}}</span>
 					</div>
 				</div>
 				<!-- 一行 -->
@@ -99,9 +100,10 @@
 						<span class="red">终点</span>
 					</div>
 					<div class="line__right--address">
-						<span>{{list.Epoint.split("省")[1]?list.Epoint.split("省")[1]:list.Epoint}}</span>
+						<span>{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.District}}</span>
 					</div>
 				</div>
+				<div style="clear:both;"></div>
 			</template>
 		</div>
 	</div>
@@ -116,6 +118,7 @@
 	margin-top:10px;
 	border-radius:5px;
 	box-shadow: 0 3px 3px 3px #f5f5f5;
+	padding-bottom: 10px;
 }
 .list__header{
 	height:65px;
@@ -219,7 +222,7 @@
 				position:absolute;
 				top:0;
 				right:10px;
-				width:110px;
+				width:60px;
 				height:36.6666px;
 				line-height:40px;
 				>img{
@@ -242,17 +245,18 @@
 		}
 		div.line__left--dot{
 			width:50px;
-			height:36.6666px;
 			position: absolute;
-			top:0;
+			top:20%;
 			left:0;
 			text-align:center;
-			height:60px;
+			@include display_flex('row');
+			// min-height:60px;
 			>span{
+				flex:1;
 				color:$my_green;
 				font-size:12px;
 				float:none;
-				line-height:60px;
+				// line-height:60px;
 				display:inline-block;
 			}
 		}
@@ -264,16 +268,19 @@
 		}
 		div.line__right--address{
 			width: 100%;
-			height:60px;
+			// min-height:60px;
 			padding:5px 0;
 			padding-left:50px;
+			@include display_flex('column');
 			>span{
+				flex:1;
 				display:block;
-				@include text_nowrap;
-				height:25px;
+				word-break:break-all;
+				// @include text_nowrap;
+				// height:25px;
 				width: 100%;
 				font-size: 14px;
-				line-height:25px;
+				// line-height:25px;
 				&:last-child{
 					font-size:12px;
 					color:#c8c8c8;
@@ -292,22 +299,26 @@
 		}
 		div.line__left--dot{
 			width:50px;
-			height:36.6666px;
+			// height:36.6666px;
 			text-align:center;
 			position: absolute;
 			top:0;
 			left:0;
+			height:100%;
+			@include display_flex('row');
 			>span.green{
 				color:$my_green;
 				font-size:12px;
 				height:36.6666px;
 				line-height:36.6666px;
+				font-weight: 900;
 			}
 			>span.red{
 				color:$my_red;
 				font-size:12px;
 				height:36.6666px;
 				line-height:36.6666px;
+				font-weight: 900;
 			}
 		}
 		.line__right--address{
@@ -321,7 +332,8 @@
 		}
 	}
 	.list__body--line.height{
-		height: 60px;
+		min-height: 60px;
+		// float: left;
 	}
 }
 </style>

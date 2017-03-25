@@ -240,6 +240,8 @@ export default {
 				}
 				this.PassengerIndex++;
 				Indicator.close();
+			}).catch(error=>{
+				Indicator.close();
 			})
 		},
 		/** 获取司机发布的数据 */
@@ -255,6 +257,8 @@ export default {
 					this.CarNoData = true;
 				}
 				this.CarIndex++;
+				Indicator.close();
+			}).catch(error=>{
 				Indicator.close();
 			})
 		},
