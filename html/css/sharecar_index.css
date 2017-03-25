@@ -208,3 +208,27 @@ body {
   .trip__detail .page {
     width: 100%;
     height: 100%; }
+
+.code__page {
+  width: 80%;
+  height: 300px; }
+  .code__page .code__page--body {
+    background-color: #fff;
+    text-align: center; }
+  .code__page .code__page--header {
+    height: 50px;
+    border-bottom: 0.5px solid #c8c8c8;
+    text-align: center; }
+    .code__page .code__page--header > p {
+      height: 50px;
+      font-size: 16px;
+      line-height: 20px;
+      padding: 5px 10px; }
+  .code__page .code__page--img > img {
+    height: 200px;
+    width: 200px; }
+  .code__page p.code__page-close-page {
+    font-size: 14px;
+    color: #c8c8c8;
+    text-align: center;
+    font-weight: 900; }

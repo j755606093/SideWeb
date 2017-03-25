@@ -34,7 +34,7 @@
 				</div>
 				<div class="header_message">
 					<span class="message--new">欢迎使用城市圈</span>
-					<span @click="openCodePage" v-if="!isFocusMe" style="color:#0074D9">关注我</span>
+					<!-- <span @click="openCodePage" v-if="!isFocusMe" style="color:#0074D9">关注我</span> -->
 					<!-- <span class="message--new">有43条新消息</span> -->
 					<div class="header_message--taxis">
 						<span @click="sort(2)" :class="{active:sortIndex===2}">最新发布</span>
@@ -63,9 +63,17 @@
 		</div>
 		<mt-popup
 		  v-model="showCodePage"
-		  class="mt_page">
+		  class="code__page">
 		  <slot>
-				
+				<div class="code__page--body">
+					<div class="code__page--header">
+						<p>长按关注 <span style="color:#60e7bf;font-weight: 900;">揭西城市圈拼车平台</span> 公众号</p>
+					</div>
+					<div class="code__page--img">
+						<img src="../icon/code.png">
+					</div>
+				</div>
+				<p class="code__page-close-page">点击灰色区域关闭弹窗~</p>
 		  </slot>
 		</mt-popup>
 	</div>
