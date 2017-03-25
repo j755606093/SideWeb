@@ -139,7 +139,8 @@ export default {
 		if(this.$store.getters.getCarInfo.length===0){
 			this.getCarData().then(result=>{
 				if(this.$store.getters.getPeopleInfo.length===0){
-					this.getPeopleData()
+					this.getPeopleData();
+					Indicator.close();
 				}
 			})
 			.catch(error=>{

@@ -182,7 +182,12 @@ export default {
 			this.$store.dispatch("getUserInfo").then(()=>{
 				// 再去获取发布的数据
 				this.getMyPublishPassengerTrip().then(()=>{
-					this.getMyPublishCarTrip();
+					this.getMyPublishCarTrip().catch(error=>{
+						// this.toast(error);
+						console.log(error);
+					});
+				}).catch(error=>{
+					console.log(error);
 				});
 			})
 		}
@@ -192,7 +197,11 @@ export default {
 				return;
 			}
 			this.getMyPublishPassengerTrip().then(()=>{
-				this.getMyPublishCarTrip();
+				this.getMyPublishCarTrip().catch(error=>{
+					console.log(error);
+				});
+			}).catch(error=>{
+				console.log(error);
 			});
 		}
 	},

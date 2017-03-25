@@ -28532,6 +28532,7 @@
 				this.getCarData().then(function (result) {
 					if (_this.$store.getters.getPeopleInfo.length === 0) {
 						_this.getPeopleData();
+						_mintUi.Indicator.close();
 					}
 				}).catch(function (error) {
 					_this.toast("服务器错误,请稍后重试...");
@@ -37380,7 +37381,12 @@
 				this.$store.dispatch("getUserInfo").then(function () {
 					// 再去获取发布的数据
 					_this.getMyPublishPassengerTrip().then(function () {
-						_this.getMyPublishCarTrip();
+						_this.getMyPublishCarTrip().catch(function (error) {
+							// this.toast(error);
+							console.log(error);
+						});
+					}).catch(function (error) {
+						console.log(error);
 					});
 				});
 			} else {
@@ -37389,7 +37395,11 @@
 					return;
 				}
 				this.getMyPublishPassengerTrip().then(function () {
-					_this.getMyPublishCarTrip();
+					_this.getMyPublishCarTrip().catch(function (error) {
+						console.log(error);
+					});
+				}).catch(function (error) {
+					console.log(error);
 				});
 			}
 		},
