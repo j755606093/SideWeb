@@ -13108,27 +13108,19 @@
 			var commit = _ref14.commit,
 			    state = _ref14.state;
 
-			return fetch("http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page + "&extensions=all", {
+			return fetch("https://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page + "&extensions=all", {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
 			});
 		},
 
-		// /** 再次获取详细的结果 */
-		// getStartSearchDetail({ commit, state }, data) {
-		// 	return fetch(`http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=广东&offset=20&keywords=${data.text}&page=${data.page}&extensions=all`, {
-		// 			method: 'GET',
-		// 		})
-		// 		.then(checkStatus)
-		// 		.then(result => result.json())
-		// },
 		/** 获取用户输入后搜索得到的信息 */
 		getEndSearch: function getEndSearch(_ref15, data) {
 			var commit = _ref15.commit,
 			    state = _ref15.state;
 
-			return fetch("http://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page, {
+			return fetch("https://restapi.amap.com/v3/place/text?key=760ee992f02825b935228aa35a2c8be9&children=1&city=\u5E7F\u4E1C&offset=20&keywords=" + data.text + "&page=" + data.page, {
 				method: 'GET'
 			}).then(checkStatus).then(function (result) {
 				return result.json();
