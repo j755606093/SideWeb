@@ -105,6 +105,11 @@ const state = {
 
 	myPublish: [], //我的发布
 	UserInfo: null, //用户信息
+
+	Location: {
+		X: "113.313707",
+		Y: "23.016158"
+	}, //用户位置
 }
 
 let postData = (url, data) => {
@@ -148,7 +153,8 @@ const getters = {
 	getVillage: state => state.Village,
 
 	getMyPublish: state => state.myPublish,
-	getUserInfo: state => state.UserInfo
+	getUserInfo: state => state.UserInfo,
+	getUserLocation: state => state.Location
 }
 
 // actions
@@ -338,7 +344,7 @@ const actions = {
 	},
 	/** 设置位置 */
 	setLocation({ commit, state }, data) {
-
+		commit(types.SET_LOCATION, data);
 	}
 }
 
@@ -347,6 +353,9 @@ const actions = {
 const mutations = {
 	[types.CHANGE_FOOTER](state, data) {
 		state.showFooter = data.showFooter;
+	},
+	[types.SET_LOCATION](state, data) {
+		state.Location = data;
 	},
 	[types.SET_USERINFO](state, data) {
 		state.UserInfo = data.UserInfo;

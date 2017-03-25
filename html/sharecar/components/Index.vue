@@ -23,9 +23,9 @@
 				<div class="header_title">
 					<span @click="switchPage(0)" :class="{active:pageIndex===0}">车找人</span>
 					<span @click="switchPage(1)" :class="{active:pageIndex===1}">人找车</span>
-					<div class="action--btn">
+					<router-link to="/search" class="action--btn">
 						<img src="../icon/seach_icon.png">
-					</div>
+					</router-link>
 					<div @click="refresh" class="action--btn">
 						<img src="../icon/Refresh_ICON.png">
 					</div>
@@ -99,16 +99,16 @@ export default {
 		}
 	},
 	created(){
+		//获取用户地理位置
+		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
+
 		// 如果没有用户信息就去获取
 		if(!this.$store.getters.getUserInfo){
 			this.$store.dispatch("getUserInfo");
 		}
 		// 没有列表数据
 		if(this.$store.getters.getCarInfo.length===0){
-			this.loading();
-			this.getCarData()
-			.then(result=>{
-				Indicator.close();
+			this.getCarData().then(result=>{
 				if(this.$store.getters.getPeopleInfo.length===0){
 					this.getPeopleData()
 				}
@@ -117,9 +117,6 @@ export default {
 				this.toast("服务器错误,请稍后重试...");
 			});
 		}
-
-		//获取用户地理位置
-		// navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 		
 		this.randomOnlineNumber();
 	},
@@ -181,6 +178,10 @@ export default {
 		// 页面索引
 		pageIndex(){
 			return this.$store.getters.getPageIndex;
+		},
+		//用户位置
+		Location(){
+			return this.$store.getters.getUserLocation;
 		}
 	},
 	methods:{
@@ -262,18 +263,21 @@ export default {
 		/** 刷新信息 */
 		refresh(){
 			this.loading();
-			this.CarNoMoreData = false;
-			this.PeopleNoMoreData = false;
-			this.PeopleInfoPage = 1;
-			this.CarInfoPage = 1;
 			if(this.pageIndex===0){
+				this.CarNoMoreData = false;
+				this.CarInfoPage = 2;
 				this.$store.dispatch("getCarInfo",{
 					Index:1,
 					Size:10,
 					OrderBy:this.sortIndex,
-					isRefresh:true
+					isRefresh:true,
+					Location:this.Location
 				})
 				.then(result=>{
+					if(result.length<10){
+						// 没有更多数据
+						this.CarNoMoreData = true;
+					}
 					Indicator.close();
 					this.toast("刷新成功");
 				})
@@ -282,13 +286,20 @@ export default {
 				})
 			}
 			else{
+				this.PeopleNoMoreData = false;
+				this.PeopleInfoPage = 2;
 				this.$store.dispatch("getPeopleInfo",{
 					Index:1,
 					Size:10,
 					OrderBy:this.sortIndex,
-					isRefresh:true
+					isRefresh:true,
+					Location:this.Location
 				})
 				.then(result=>{
+					if(result.length<10){
+						// 没有更多数据
+						this.PeopleNoMoreData = true;
+					}
 					Indicator.close();
 					this.toast("刷新成功");
 				}).catch((e)=>{
@@ -299,40 +310,29 @@ export default {
 		/** 接受浏览器返回的定位位置 */
 		showPosition(position){
 			let {latitude,longitude,accuracy,altitude,altitudeAccuracy} = position.coords;
-			// 返回定位位置给服务器判断最近上车点
+
 			this.$store.dispatch("setLocation",{
-				latitude:latitude,
-				longitude:longitude
-			}).then(data=>{
-				// this.locationLoad = false;//停止界面加载提示
-				if(data){
-					this.locationName = "最近上车点:"+data.Name;
-					this.$store.dispatch("setStartCity",{
-						Code:data.CityId,
-						Name:data.Name
-					});
-					Toast({
-					  message: "已为你切换到最近的出发点",
-					  position: 'bottom',
-					  duration: 3000,
-					});
-				}
-				else{
-					//没有数据
-					// this.locationName = "";
-				}
-			}).catch(error=>{
-				// this.locationLoad = false;//停止界面加载提示
-			})
+				X:latitude,
+				Y:longitude
+			});
+		},
+		/** 定位数据获取失败调用的函数 */
+		getPositionError(error){
+			if(error){
+				console.log(error);
+			}
 		},
 		/** 获取第一页数据 */
 		getCarData(){
+			this.loading();
 			this.CarInterntUse = true;//正在使用
 			return this.$store.dispatch("getCarInfo",{
 				Index:this.CarInfoPage,
 				Size:10,
-				OrderBy:this.sortIndex
+				OrderBy:this.sortIndex,
+				Location:this.Location
 			}).then(result=>{
+				Indicator.close();
 				if(result.length<10){
 					// 没有更多数据
 					this.CarNoMoreData = true;
@@ -344,12 +344,15 @@ export default {
 		},
 		/** 获取第二页数据 */
 		getPeopleData(){
+			this.loading();
 			this.PeopleInterntUse = true;//正在使用
 			return this.$store.dispatch("getPeopleInfo",{
 				Index:this.PeopleInfoPage,
 				Size:10,
-				OrderBy:this.sortIndex
+				OrderBy:this.sortIndex,
+				Location:this.Location
 			}).then(result=>{
+				Indicator.close();
 				if(result.length<10){
 					// 没有更多数据
 					this.PeopleNoMoreData = true;

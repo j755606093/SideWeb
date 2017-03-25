@@ -18,8 +18,8 @@
 				<template v-if="isShowRight">
 					<!-- 乘客 -->
 					<template v-if="types===0">
-						<template v-if="list.SDetail">
-							<span>{{list.SDetail}}</span>
+						<template v-if="list.Distance">
+							<span>{{list.Distance|formatDistance}}</span>
 						</template>
 						<template v-else>
 							<span>请{{list.UserInfo.Sex===1?'他':'她'}}接我</span>
@@ -27,8 +27,8 @@
 					</template>
 					<!-- 司机 -->
 					<template v-else>
-						<template v-if="list.SDetail">
-							<span>{{list.SDetail}}</span>
+						<template v-if="list.Distance">
+							<span>{{list.Distance|formatDistance}}</span>
 						</template>
 						<template v-else>
 							<span>去接{{list.UserInfo.Sex===1?'他':'她'}}</span>
@@ -120,7 +120,7 @@
 		display: inline-block;
 		height:65px;
 		line-height: 65px;
-		width:80px;
+		width:110px;
 		text-align:right;
 		>img{
 			width:10px;
@@ -285,6 +285,15 @@ export default {
 			text = `${text} (${Utils.formatWeek(formatDate)})`;
 			text = `${text} ${formatDate.getHours()}:${formatDate.getMinutes()>9?formatDate.getMinutes():"0"+formatDate.getMinutes()}`;
 			return text;
+		},
+		formatDistance(item){
+			let distance = parseFloat(item);
+			if(isNaN(distance)){
+				return "未知距离"
+			}
+			else{
+				return distance.toFixed(2)+"公里";
+			}
 		}
 	},
 }
