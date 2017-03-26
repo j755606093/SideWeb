@@ -438,6 +438,10 @@ export default {
 			else{
 				this.goToTipDetail();
 			}
+		},
+		formatWeek(date){
+			let week = ["日","一","二","三","四","五","六"];
+			return "周"+week[date.getUTCDate()];
 		}
 	},
 	filters:{
@@ -447,16 +451,16 @@ export default {
 
 			let text = ""
 
-			if(Today.getDate()===formatDate.getDate()&&formatDate.getMonth()===Today.getMonth()){
+			if(Today.getUTCDate()===formatDate.getUTCDate()&&formatDate.getUTCMonth()===Today.getUTCMonth()){
 				// 说明是今天
 				text = "今天";
 			}
 			else{
-				text = `${formatDate.getMonth()+1}月${formatDate.getDate()}号`;
+				text = `${formatDate.getUTCMonth()+1}月${formatDate.getUTCDate()}号`;
 			}
 
-			text = `${text} (${Utils.formatWeek(formatDate)})`;
-			text = `${text} ${formatDate.getHours()}:${formatDate.getMinutes()>9?formatDate.getMinutes():"0"+formatDate.getMinutes()}`;
+			text = `${text} (${this.formatWeek(formatDate)})`;
+			text = `${text} ${formatDate.getUTCHours()}:${formatDate.getUTCMinutes()>9?formatDate.getUTCMinutes():"0"+formatDate.getUTCMinutes()}`;
 			return text;
 		},
 		formatDistance(item){

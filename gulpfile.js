@@ -317,13 +317,13 @@ gulp.task('sharecar', function() {
 					'vue$': 'vue/dist/vue.js'
 				}
 			},
-			plugins: [new HtmlWebpackPlugin({
-				title: "揭西城市圈拼车平台",
-				filename: "sharecar.html",
-				hash: true,
-				template: "!!ejs!html/default.ejs",
-				inject: true
-			})]
+			// plugins: [new HtmlWebpackPlugin({
+			// 	title: "揭西城市圈拼车平台",
+			// 	filename: "sharecar.html",
+			// 	hash: true,
+			// 	template: "!!ejs!html/default.ejs",
+			// 	inject: true
+			// })]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		// .pipe(rev())

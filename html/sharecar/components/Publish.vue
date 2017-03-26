@@ -855,7 +855,7 @@ export default {
 			text = `${text} (${Utils.formatWeek(formatDate)})`;
 			text = `${text} ${formatDate.getHours()}:${formatDate.getMinutes()>9?formatDate.getMinutes():"0"+formatDate.getMinutes()}`;
 			return text;
-		}
+		},
 	},
 	components:{
 		"my-header":Header,
