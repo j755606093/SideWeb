@@ -459,7 +459,7 @@ export default {
 				text = `${formatDate.getUTCMonth()+1}月${formatDate.getUTCDate()}号`;
 			}
 
-			text = `${text} (${this.formatWeek(formatDate)})`;
+			text = `${text} (${Utils.formatWeek(formatDate)})`;
 			text = `${text} ${formatDate.getUTCHours()}:${formatDate.getUTCMinutes()>9?formatDate.getUTCMinutes():"0"+formatDate.getUTCMinutes()}`;
 			return text;
 		},

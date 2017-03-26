@@ -34852,7 +34852,7 @@
 					text = formatDate.getUTCMonth() + 1 + "\u6708" + formatDate.getUTCDate() + "\u53F7";
 				}
 
-				text = text + " (" + this.formatWeek(formatDate) + ")";
+				text = text + " (" + _utils2.default.formatWeek(formatDate) + ")";
 				text = text + " " + formatDate.getUTCHours() + ":" + (formatDate.getUTCMinutes() > 9 ? formatDate.getUTCMinutes() : "0" + formatDate.getUTCMinutes());
 				return text;
 			},
