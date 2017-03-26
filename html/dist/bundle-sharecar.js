@@ -34905,7 +34905,7 @@
 	        _vm.closeTrip($event)
 	      }
 	    }
-	  }, [(_vm.isShowRight) ? [(_vm.types === 0) ? [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])]] : [(_vm.list.Distance) ? [_c('span', [_vm._v(_vm._s(_vm._f("formatDistance")(_vm.list.Distance)))])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])]]] : _vm._e(), _vm._v(" "), (_vm.isMe) ? [_c('span', [_vm._v("关闭行程")])] : _vm._e(), _vm._v(" "), _c('img', {
+	  }, [(_vm.isShowRight) ? [(_vm.types === 0) ? [_c('span', [_vm._v("请" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她') + "接我")])] : [_c('span', [_vm._v("去接" + _vm._s(_vm.list.UserInfo.Sex === 1 ? '他' : '她'))])]] : _vm._e(), _vm._v(" "), (_vm.isMe) ? [_c('span', [_vm._v("关闭行程")])] : _vm._e(), _vm._v(" "), _c('img', {
 	    attrs: {
 	      "src": __webpack_require__(71)
 	    }

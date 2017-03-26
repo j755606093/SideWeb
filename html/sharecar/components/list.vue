@@ -19,21 +19,21 @@
 				<template v-if="isShowRight">
 					<!-- 乘客 -->
 					<template v-if="types===0">
-						<template v-if="list.Distance">
+						<!-- <template v-if="list.Distance">
 							<span>{{list.Distance|formatDistance}}</span>
-						</template>
-						<template v-else>
+						</template> -->
+						<!-- <template v-else> -->
 							<span>请{{list.UserInfo.Sex===1?'他':'她'}}接我</span>
-						</template>
+						<!-- </template> -->
 					</template>
 					<!-- 司机 -->
 					<template v-else>
-						<template v-if="list.Distance">
+						<!-- <template v-if="list.Distance">
 							<span>{{list.Distance|formatDistance}}</span>
 						</template>
-						<template v-else>
+						<template v-else> -->
 							<span>去接{{list.UserInfo.Sex===1?'他':'她'}}</span>
-						</template>
+						<!-- </template> -->
 					</template>
 				</template>
 				<template v-if="isMe">
