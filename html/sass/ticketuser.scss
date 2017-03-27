@@ -950,7 +950,7 @@ header {
         }
         .left {
           flex: 6;
-          width: 70%;
+          width: 65%;
           padding-left: 10px;
           p {
             font-size: 23px;
@@ -966,18 +966,19 @@ header {
             font-size: 12px;
             font-weight: 900;
             color: rgb(50, 50, 50);
+            @include text_nowrap;
           }
           .time {
             font-size: 12px;
             font-weight: 400;
             line-height: 12px;
             color: #c8c8c8;
-            margin-bottom: 8px;
+            margin: 4px 0;
           }
         }
         .right {
           flex: 4;
-          width: 30%;
+          width: 35%;
           a {
             color: #329be8;
             text-align: center;
