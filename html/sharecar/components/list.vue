@@ -448,6 +448,7 @@ export default {
 		formatTime(time){
 			const formatDate = new Date(time);//转换为DATE对象
 			const Today = new Date();
+			const week = ["日","一","二","三","四","五","六"];
 
 			let text = ""
 
@@ -459,7 +460,7 @@ export default {
 				text = `${formatDate.getUTCMonth()+1}月${formatDate.getUTCDate()}号`;
 			}
 
-			text = `${text} (${Utils.formatWeek(formatDate)})`;
+			text = `${text} (周${week[formatDate.getUTCDay()]})`;
 			text = `${text} ${formatDate.getUTCHours()}:${formatDate.getUTCMinutes()>9?formatDate.getUTCMinutes():"0"+formatDate.getUTCMinutes()}`;
 			return text;
 		},
