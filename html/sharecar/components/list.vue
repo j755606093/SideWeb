@@ -72,7 +72,7 @@
 					</div>
 					<div class="line__right--address">
 						<span class="line__start--address">{{list.StartDetail.Name}}</span>
-						<span class="line__start--address">{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.District+list.StartDetail.Name+(list.StartDetail.Address?list.StartDetail.Address:'')}}</span>
+						<span class="line__start--address">{{list.StartDetail.Province+list.StartDetail.City+list.StartDetail.District+(list.StartDetail.Address?list.StartDetail.Address:'')}}</span>
 					</div>
 				</div>
 				<!-- 一行 -->
@@ -82,7 +82,7 @@
 					</div>
 					<div class="line__right--address">
 						<span class="line__start--address">{{list.EndDetail.Name}}</span>
-						<span class="line__start--address">{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.District+list.EndDetail.Name+(list.EndDetail.Address?list.EndDetail.Address:'')}}</span>
+						<span class="line__start--address">{{list.EndDetail.Province+list.EndDetail.City+list.EndDetail.District+(list.EndDetail.Address?list.EndDetail.Address:'')}}</span>
 					</div>
 				</div>
 				<div style="clear:both;"></div>
