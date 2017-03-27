@@ -44,12 +44,17 @@
 	margin-top:50px;
 	.swtich-role{
 		width:100%;
-		@include display_flex('row');
+		// @include display_flex('row');
 		height:45px;
 		line-height:45px;
 		background-color:#fff;
 		text-align: center;
 		box-shadow: 0 3px 3px 3px #f5f5f5;
+		>span{
+			width:50%;
+			float:left;
+			display:inline-block;
+		}
 		>span{
 			flex:1;
 			width:50%;

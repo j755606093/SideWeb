@@ -76,13 +76,16 @@
 	width:100%;
 	border-radius:5px;
 	background-color:#fff;
-	@include display_flex("row");
+	display:block;
+	// @include display_flex("row");
 	margin-top:10px;
 	box-shadow: 0 3px 3px 3px #f5f5f5;
+	text-align:center;
 	div.trip--contact-way{
 		height:40px;
 		width:20px;
-		@include display_flex("row");
+		display: inline-block;
+		// @include display_flex("row");
 		>img{
 			width:12px;
 			height:12px;

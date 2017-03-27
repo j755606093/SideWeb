@@ -252,7 +252,7 @@
 			top:20%;
 			left:0;
 			text-align:center;
-			@include display_flex('row');
+			// @include display_flex('row');
 			// min-height:60px;
 			>span{
 				flex:1;
@@ -274,7 +274,7 @@
 			// min-height:60px;
 			padding:5px 0;
 			padding-left:50px;
-			@include display_flex('column');
+			// @include display_flex('column');
 			>span{
 				flex:1;
 				display:block;
@@ -308,7 +308,7 @@
 			top:0;
 			left:0;
 			height:100%;
-			@include display_flex('row');
+			// @include display_flex('row');
 			>span.green{
 				color:$my_green;
 				font-size:12px;

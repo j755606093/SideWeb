@@ -11,7 +11,9 @@
 		</router-link>
 		<router-link to="/publish" class="footer">
 			<div class="circle"></div>
-			<img class="center" src="../icon/add_up_icon.png">
+			<div class="img center">
+				<img src="../icon/add_up_icon.png">
+			</div>
 			<div class="clear"></div>
 			<p class="center">发布行程</p>
 		</router-link>
@@ -30,8 +32,8 @@
 <style lang="sass">
 @import "../../sass/utils.scss";
 footer{
-	display:flex;
-	flex-direction:row;
+	// display:flex;
+	// flex-direction:row;
 	position:fixed;
 	bottom:0;
 	left:0;
@@ -49,15 +51,19 @@ footer{
 	overflow:visible;
 	.footer{
 		flex:1;
-		display:flex;
-		flex-direction:column;
-		justify-content:center;
-		align-items:center;
+		// display:flex;
+		// flex-direction:column;
+		// justify-content:center;
+		// align-items:center;
 		width:33.3333%;
+		display:inline-block;
+		float:left;
 		color:$gray;
 		height: 50px;
 		line-height:50px;
 		position:relative;
+		text-align: center;
+		line-height:50px;
 		i{
 			font-size:1.8rem;
 		}
@@ -65,12 +71,22 @@ footer{
 			width:16px;
 			height:16px;
 		}
-		>img.center{
-			width:20px;
-			height:20px;
+		>div.center.img{
+			position:absolute;
+			top:0;
+			left:0;
 			display:inline-block;
-			z-index:106;
+			z-index:200;
+			width:100%;
+			height: 20px;
 			margin-top: -10px;
+			text-align:center;
+			>img{
+				display:inline-block;
+				width:20px;
+				height:20px;
+				z-index:200;
+			}
 		}
 		p{
 			font-size:12px;
@@ -78,11 +94,16 @@ footer{
 			height:20px;
 			line-height:20px;
 			font-weight: 900;
+			display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
 		}
 		p.center{
 			margin-top:5px;
 			color:#000;
-			z-index:110;
+			z-index:200;
 		}
 		div.circle{
 			position:absolute;
@@ -93,19 +114,19 @@ footer{
 			@include responsive("iphone5"){
 				left: 22%;
 			}
-			@include display_flex('row');
+			// @include display_flex('row');
 			z-index:101;
 			background-color:#fff;
 			border-radius: 50%;
 			box-shadow:0 -3px 3px 3px #fafafa;
 		}
-		.clear{
+		div.clear{
 			position:absolute;
 			top:0px;
 			height:50px;
 			left:0;
 			width:100%;
-			z-index:105;
+			z-index:150;
 			background-color:#fff;
 		}
 	}
