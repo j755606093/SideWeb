@@ -349,11 +349,6 @@
             <span class="gray" v-text="UserInfo.Nickname"></span>
             <div class="right"><img src="../picture/edit.png"></div>
           </div>
-          <!-- <div class="info-man-line info">
-            <span class="left">姓名:</span>
-            <span class="gray" v-text="UserInfo.Name?UserInfo.Name:'未设置'"></span>
-            <div @click="edit(1)" class="right"><i class="fa fa-edit"></i></div>
-          </div> -->
           <div @click="edit(2)" class="info-man-line info">
             <span class="left">绑定手机:</span>
             <span class="gray" v-text="UserInfo.Mobile?UserInfo.Mobile:'未设置'"></span>
@@ -363,6 +358,10 @@
             <span class="left">性别:</span>
             <span class="gray" v-text="UserInfo.Sex===1?'男':'女'"></span>
             <div class="right"><img src="../picture/edit.png"></div>
+          </div>
+          <div class="update--info">
+            <button @click="updateUserInfo">同步微信信息</button>
+            <p>若您最近更新了微信头像等信息,建议您同步最新数据以免显示不准确~</p>
           </div>
         </div>
       </div>

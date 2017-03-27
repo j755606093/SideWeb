@@ -111,7 +111,7 @@ header {
   -ms-flex-pack: center;
       justify-content: center;
   background-color: #329be8;
-  position: relative; }
+  position: fixed; }
   header .left {
     width: 50px;
     height: 50px;
@@ -1100,8 +1100,7 @@ header {
           flex: 1;
       width: 100%;
       -ms-flex-direction: column;
-          flex-direction: column;
-      border-bottom: 1px solid #dddddd; }
+          flex-direction: column; }
       .user-lists .lists .info-man .info-man-line {
         height: 50px;
         line-height: 50px;
@@ -1154,6 +1153,27 @@ header {
             margin-top: 15px; }
       .user-lists .lists .info-man span {
         font-size: 1.4rem; }
+      .user-lists .lists .info-man .update--info {
+        width: 100%;
+        height: 100px;
+        margin-top: 20px;
+        text-align: center; }
+        .user-lists .lists .info-man .update--info > button {
+          border: none;
+          outline: none;
+          width: 80%;
+          height: 40px;
+          margin-top: 5px;
+          background-color: #0074D9;
+          border-radius: 5px;
+          font-size: 16px;
+          color: #fff; }
+        .user-lists .lists .info-man .update--info > p {
+          color: #323232;
+          font-size: 12px;
+          text-align: center;
+          padding: 0 20%;
+          margin-top: 10px; }
 
 .my-modal {
   position: fixed;

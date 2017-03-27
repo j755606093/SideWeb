@@ -736,6 +736,21 @@ const Vue_User = new Vue({
 				this.helpContentShow = index;
 			}
 		},
+		/** 更新用户信息 */
+		updateUserInfo() {
+			this.loading();
+			fetch(config.serverUrl + "/api/Transport/UpdateUserInfoByWechat", {
+					method: 'POST',
+					headers: config.headers,
+					body: JSON.stringify({})
+				})
+				.then(checkStatus)
+				.then(result => result.json())
+				.then(result => {
+					Indicator.close();
+					this.toast(result.Message);
+				})
+		},
 		/** 半圆显示 */
 		canvas() {
 			let topbody = document.getElementsByClassName("canvas-top");
