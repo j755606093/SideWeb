@@ -149,6 +149,13 @@ gulp.task('compress_user', function() {
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
 
+gulp.task('compress_sharecar', function() {
+	return gulp.src('./html/dist/bundle-sharecar.js')
+		.pipe(uglify()) //生产的时候再启用压缩
+		.pipe(gulp.dest('html/dist'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
+
 gulp.task('app', function() {
 	return gulp.src('./html/js/commenting.js')
 		.pipe(webpack({
@@ -317,13 +324,24 @@ gulp.task('sharecar', function() {
 					'vue$': 'vue/dist/vue.js'
 				}
 			},
-			// plugins: [new HtmlWebpackPlugin({
-			// 	title: "揭西城市圈拼车平台",
-			// 	filename: "sharecar.html",
-			// 	hash: true,
-			// 	template: "!!ejs!html/default.ejs",
-			// 	inject: true
-			// })]
+			plugins: [new HtmlWebpackPlugin({
+					title: "揭西城市圈拼车平台",
+					filename: "sharecar.html",
+					hash: true,
+					template: "!!ejs!html/default.ejs",
+					inject: true
+				}),
+				// new wp.DefinePlugin({
+				// 	'process.env': {
+				// 		NODE_ENV: '"production"'
+				// 	}
+				// }),
+				// new wp.optimize.UglifyJsPlugin({
+				// 	compress: {
+				// 		warnings: false
+				// 	}
+				// })
+			]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
 		// .pipe(rev())

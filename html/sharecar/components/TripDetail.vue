@@ -6,7 +6,7 @@
 			<div class="trip__remark">
 				<p>备注:{{tripData.Remark?tripData.Remark:'无'}}</p>
 			</div>
-			<div class="trip__line">
+			<div v-if="isShowDistanceInfo" class="trip__line">
 				<p>行程距离约为:{{distance|formatDistance}}km</p>
 				<p>估算行程时间:{{distanceTime|formatDistanceTime}}</p>
 			</div>
@@ -118,6 +118,7 @@ export default {
 
 			distance:"",//距离
 			distanceTime:"",//时间
+			isShowDistanceInfo:false,//默认不显示
 		}
 	},
 	created(){
@@ -136,6 +137,7 @@ export default {
 						EpointLocation:this.tripData.EpointLocation,
 					}).then(distance=>{			
 						this.isReady = true;//开始显示
+						this.isShowDistanceInfo = true;//显示距离
 						Indicator.close();
 					}).catch(error=>{
 						this.isReady = true;//开始显示
@@ -163,7 +165,7 @@ export default {
 						EpointLocation:this.tripData.EpointLocation,
 					}).then(distance=>{
 						this.isReady = true;//开始显示
-
+						this.isShowDistanceInfo = true;//显示距离
 						Indicator.close();
 					}).catch(error=>{
 						this.isReady = true;//开始显示

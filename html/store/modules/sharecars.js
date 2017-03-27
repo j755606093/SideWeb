@@ -349,7 +349,23 @@ const actions = {
 	setUserPhone({ commit, state }, data) {
 		return postData("/api/Transport/UpdateUserInfo", data).then(result => {
 			if (result.Data) {
-				commit(types.SET_USERINFO_PHONE, data.Mobile);
+				commit(types.SET_USERINFO_PHONE, {
+					isPhone: true,
+					Mobile: data.Mobile
+				});
+				return result.Message;
+			} else {
+				return result.Message;
+			}
+		})
+	},
+	/** 修改用户昵称 */
+	setUserNickName({ commit, state }, data) {
+		return postData("/api/Transport/UpdateUserInfo", data).then(result => {
+			if (result.Data) {
+				commit(types.SET_USERINFO_PHONE, {
+					NickName: data.NickName
+				});
 				return result.Message;
 			} else {
 				return result.Message;
@@ -398,7 +414,11 @@ const actions = {
 			clear: true,
 			Id: id
 		});
-	}
+	},
+	/** 更新微信信息 */
+	updateUserInfo({ commit, state }, id) {
+		return postData("/api/Transport/UpdateUserInfoByWechat", {});
+	},
 }
 
 // mutations
@@ -462,7 +482,11 @@ const mutations = {
 		state.Village = data.Village;
 	},
 	[types.SET_USERINFO_PHONE](state, data) {
-		state.UserInfo.Mobile = data;
+		if (data.isPhone) {
+			state.UserInfo.Mobile = data.Mobile;
+		} else {
+			state.UserInfo.NickName = data.NickName;
+		}
 	},
 }
 

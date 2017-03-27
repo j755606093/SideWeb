@@ -99,7 +99,14 @@ export default {
 	},
 	methods:{
 		GoBack(){
-			this.$router.go(-1);
+			// 如果是分享链接直接进来的
+			if(history.length===1){
+				this.$router.push({path:"/"});
+			}
+			else{
+				this.$router.go(-1);
+			}
+			// console.log(history.length)
 		}
 	}
 }
