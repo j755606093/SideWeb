@@ -1,5 +1,5 @@
 import Vue from "vue";
-Vue.use(require('vue-resource')); //引用ajax库
+// Vue.use(require('vue-resource')); //引用ajax库
 require("../css/ticketorder.css");
 import "whatwg-fetch";
 const _ = require("underscore");

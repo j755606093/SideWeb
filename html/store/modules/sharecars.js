@@ -485,7 +485,7 @@ const mutations = {
 		if (data.isPhone) {
 			state.UserInfo.Mobile = data.Mobile;
 		} else {
-			state.UserInfo.NickName = data.NickName;
+			state.UserInfo.Nickname = data.NickName;
 		}
 	},
 }
