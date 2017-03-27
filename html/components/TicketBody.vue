@@ -11,7 +11,7 @@
 			<!-- <a href="#">
 				<img class="slider-item" src="../picture/slider1.png">
 			</a> -->
-			<a href="#">
+			<a href="https://ticket.samecity.com.cn/wx/sharecar.html">
 				<img class="slider-item" src="../picture/slider2.png">
 			</a>
 		</div>
