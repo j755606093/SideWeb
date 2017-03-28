@@ -367,13 +367,17 @@ const actions = {
 	},
 	/** 获取类型行程 */
 	getSimilar({ commit, state }, data) {
-		if (data.Types === 0) {
-			return postData("/api/CarPool/MatchDriver", {
-				PassId: data.PassId
+		if (data.Types === "driver") {
+			return postData("/api/CarPool/MatchPassenger", {
+				DriverId: data.Id,
+				Page: data.Page,
+				Size: data.Size
 			});
 		} else {
-			return postData("/api/CarPool/MatchPassenger", {
-				PassId: data.PassId
+			return postData("/api/CarPool/MatchDriver", {
+				PassId: data.Id,
+				Page: data.Page,
+				Size: data.Size
 			});
 		}
 	},

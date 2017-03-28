@@ -33,7 +33,7 @@
 		  position="center"
 		  class="phone_page">
 		  <slot>
-		  	<p>10秒绑定,即可发布</p>
+		  	<p>更换绑定手机号</p>
 		  	<div class="bind-phone">
 		  		<input v-model="inputPhone" maxlength="11" ref="inputphone" placeholder="输入手机号码" type="tel" name="phone">
 		  		<span @click="clearInputPhone">清空</span>
@@ -268,6 +268,8 @@ export default {
 		/** 选择下一步 */
 		nextStepPhone(){
 			if(this.codeTimeText!==60){
+				this.codePickerPageShow = true;
+				this.phonePickerPageShow = false;
 				return;
 			}
 			if(!/^1[23578][0-9]{9}/.test(this.inputPhone)){
@@ -284,7 +286,7 @@ export default {
 					}
 					else{
 						this.phonePickerPageShow = true;
-						this.inputPhone = "";
+						// this.inputPhone = "";
 						this.toast(result.Message);
 					}
 				})
@@ -314,11 +316,14 @@ export default {
 			}).then(result=>{
 				Indicator.close();
 				if(result.Data){
-					this.isBindPhone = true;
-					this.submitOrder();//自动提交表单
+					this.$store.dispatch("setUserPhoneDirection",this.inputPhone);//保存
+					this.toast("更换成功!");
+					clearInterval(this.setTimeText);//清理
+					this.codeTimeText = 60;//重置
 				}
 				else{
 					this.toast(result.Message);
+					this.codePickerPageShow = true;
 				}
 			})
 		},

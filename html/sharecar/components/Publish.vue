@@ -148,7 +148,7 @@
 		  position="center"
 		  class="phone_page">
 		  <slot>
-		  	<p>10秒绑定,即可发布</p>
+		  	<p>绑定手机号</p>
 		  	<div class="bind-phone">
 		  		<input v-model="inputPhone" maxlength="11" ref="inputphone" placeholder="输入手机号码" type="tel" name="phone">
 		  		<span @click="clearInputPhone">清空</span>
@@ -568,7 +568,7 @@ export default {
       inputCode:[],//输入的验证码
       codeTimeText:60,//倒计时
       setTimeText:null,//倒计时保存
-      isBindPhone:true,//默认没有绑定手机号
+      isBindPhone:false,//默认没有绑定手机号
 			
 			searchStartText:"",//搜索的地址
 			searchEndText:"",
@@ -637,9 +637,9 @@ export default {
 		},500);
 		
 		/** 查看是否绑定手机号 */
-		// this.$store.dispatch("verifyBindPhone").then(result=>{
-		// 	this.isBindPhone = result.Data===0?false:true;
-		// })
+		this.$store.dispatch("verifyBindPhone").then(result=>{
+			this.isBindPhone = result.Data===0?false:true;
+		})
 	},
 	mounted(){
 		// 监听开始地址滚动
@@ -835,10 +835,16 @@ export default {
 		},
 		/** 点击输入电话号码 */
 		readyInputPhone(){
-			// if(!this.isBindPhone){
-			// 	this.phonePickerPageShow = true;
-			// 	this.$refs.inputphone.focus();
-			// }
+			if(this.codeTimeText!==60){
+				// 说明是已经在倒计时,直接跳转过去
+				this.codePickerPageShow = true;
+				return;
+			}
+			// 如果没有绑定手机
+			if(!this.isBindPhone){
+				this.phonePickerPageShow = true;
+				this.$refs.inputphone.focus();
+			}
 		},
 		/** 下一步 */
 		nextStep(){
@@ -1018,7 +1024,7 @@ export default {
 					}
 					else{
 						this.phonePickerPageShow = true;
-						this.inputPhone = "";
+						// this.inputPhone = "";
 						this.toast(result.Message);
 					}
 				})

@@ -1,17 +1,24 @@
 <template type="x/template">
-	<div id="commend" class="commend">
+	<div ref="commend" id="commend" class="commend">
 		<my-header :showBack="true" headerTitle="匹配行程推荐"></my-header>
-		<div class="commend--lists">
+		<div ref="commend_list" id="commend_list" class="commend--lists">
 			<template v-for="(item,index) in ListData">
 				<my-list :types="item.Num?1:0" :list="item"></my-list>
 			</template>
+			<div id="last_bottom" ref="last_bottom"></div>
+			<div v-show="NoData" class="no-data">
+				<p>没有更多数据~</p>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style lang="sass">
 @import "../../sass/utils.scss";
-
+.commend--lists{
+	margin-top: 60px;
+	padding:0 10px;
+}
 </style>
 
 <script type="text/babel">
@@ -19,11 +26,12 @@ import Utils from "../../Utils/utils";
 import List from "./list.vue";
 import { Toast, Indicator, Popup } from 'mint-ui';
 import Header from "./Header.vue";
+const _ = require("underscore");
 
 export default {
 	data () {
 		return {
-			Index:1,// 页数
+			Page:1,// 页数
 			NoData:false,//没有数据
 			ListData:[],
 			tripId:"",
@@ -32,15 +40,21 @@ export default {
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
-		this.types = parseInt(this.$route.params.types);
+		this.types = this.$route.params.types;//driver,passenger
 
 		this.loading();
 		this.$store.dispatch("getSimilar",{
-			PassId:this.tripId,
-			Types:this.types
+			Id:this.tripId,
+			Types:this.types,
+			Page:this.Page,
+			Size:10
 		}).then(result=>{
+			this.Page++;
 			Indicator.close();
 			if(result.Data){
+				if(result.Data.length<10){
+					this.NoData = true;
+				}
 				this.ListData = result.Data;
 			}
 			else{
@@ -51,6 +65,14 @@ export default {
 			this.$router.push({path:"/"});
 			Indicator.close();
 		})
+	},
+	mounted(){
+		window.addEventListener("scroll",_.throttle(()=>{
+			let last = this.$refs.last_bottom.offsetTop - document.body.scrollTop;
+			if(last<800){
+				this.getMoreData();
+			}
+		},400,{leading:false}))
 	},
 	activated(){
 		
@@ -74,6 +96,33 @@ export default {
 				spinnerType: 'fading-circle'
 			});
 		},
+		getMoreData(){
+			if(this.NoData){
+				return;
+			}
+			this.loading();
+			this.$store.dispatch("getSimilar",{
+				Id:this.tripId,
+				Types:this.types,
+				Page:this.Page,
+				Size:10
+			}).then(result=>{
+				this.Page++;
+				Indicator.close();
+				if(result.Data){
+					if(result.Data.length<10){
+						this.NoData = true;
+					}
+					this.ListData = this.ListData.concat(result.Data);
+				}
+				else{
+					this.toast(result.Message);
+				}
+			}).catch(error=>{
+				this.$router.push({path:"/"});
+				Indicator.close();
+			})
+		}
 	},
 	filters:{
 		
