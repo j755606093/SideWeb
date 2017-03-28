@@ -13149,10 +13149,21 @@
 			});
 		},
 
-		/** 修改用户昵称 */
-		setUserNickName: function setUserNickName(_ref18, data) {
+		/** 直接修改用户手机号 */
+		setUserPhoneDirection: function setUserPhoneDirection(_ref18, data) {
 			var commit = _ref18.commit,
 			    state = _ref18.state;
+
+			commit(_ShareCarType2.default.SET_USERINFO_PHONE, {
+				isPhone: true,
+				Mobile: data
+			});
+		},
+
+		/** 修改用户昵称 */
+		setUserNickName: function setUserNickName(_ref19, data) {
+			var commit = _ref19.commit,
+			    state = _ref19.state;
 
 			return postData("/api/Transport/UpdateUserInfo", data).then(function (result) {
 				if (result.Data) {
@@ -13167,25 +13178,25 @@
 		},
 
 		/** 模糊搜索车主位置 */
-		searchCarAddress: function searchCarAddress(_ref19, data) {
-			var commit = _ref19.commit,
-			    state = _ref19.state;
+		searchCarAddress: function searchCarAddress(_ref20, data) {
+			var commit = _ref20.commit,
+			    state = _ref20.state;
 
 			return postData("/api/CarPool/ListDre", data);
 		},
 
 		/** 模糊搜索乘客位置 */
-		searchPassengerAddress: function searchPassengerAddress(_ref20, data) {
-			var commit = _ref20.commit,
-			    state = _ref20.state;
+		searchPassengerAddress: function searchPassengerAddress(_ref21, data) {
+			var commit = _ref21.commit,
+			    state = _ref21.state;
 
 			return postData("/api/CarPool/ListPassenger", data);
 		},
 
 		/** 计算行程距离 */
-		getDistance: function getDistance(_ref21, data) {
-			var commit = _ref21.commit,
-			    state = _ref21.state;
+		getDistance: function getDistance(_ref22, data) {
+			var commit = _ref22.commit,
+			    state = _ref22.state;
 
 			return fetch("https://restapi.amap.com/v3/direction/driving?key=760ee992f02825b935228aa35a2c8be9&origin=" + data.SpointLocation.X + "," + data.SpointLocation.Y + "&destination=" + data.EpointLocation.X + "," + data.EpointLocation.Y + "&originid=&destinationid=&extensions=base&strategy=0&waypoints=&avoidpolygons=&avoidroad=", {
 				method: 'GET'
@@ -13202,33 +13213,33 @@
 		},
 
 		/** 是否关注我 */
-		getFocusMe: function getFocusMe(_ref22, data) {
-			var commit = _ref22.commit,
-			    state = _ref22.state;
+		getFocusMe: function getFocusMe(_ref23, data) {
+			var commit = _ref23.commit,
+			    state = _ref23.state;
 
 			return getData("/api/Member/IsUserSub");
 		},
 
 		/** 删除 */
-		deletePassengerTrip: function deletePassengerTrip(_ref23, data) {
-			var commit = _ref23.commit,
-			    state = _ref23.state;
+		deletePassengerTrip: function deletePassengerTrip(_ref24, data) {
+			var commit = _ref24.commit,
+			    state = _ref24.state;
 
 			return postData("/api/CarPool/UpdateTravel", data);
 		},
 
 		/** 删除 */
-		deleteCarTrip: function deleteCarTrip(_ref24, data) {
-			var commit = _ref24.commit,
-			    state = _ref24.state;
+		deleteCarTrip: function deleteCarTrip(_ref25, data) {
+			var commit = _ref25.commit,
+			    state = _ref25.state;
 
 			return postData("/api/CarPool/UpdateRoute", data);
 		},
 
 		/** 清空个人发布的数据信息 */
-		clearMyPublish: function clearMyPublish(_ref25, id) {
-			var commit = _ref25.commit,
-			    state = _ref25.state;
+		clearMyPublish: function clearMyPublish(_ref26, id) {
+			var commit = _ref26.commit,
+			    state = _ref26.state;
 
 			commit(_ShareCarType2.default.SET_MYPUBLISH, {
 				clear: true,
@@ -13237,35 +13248,41 @@
 		},
 
 		/** 更新微信信息 */
-		updateUserInfo: function updateUserInfo(_ref26, id) {
-			var commit = _ref26.commit,
-			    state = _ref26.state;
+		updateUserInfo: function updateUserInfo(_ref27, id) {
+			var commit = _ref27.commit,
+			    state = _ref27.state;
 
 			return postData("/api/Transport/UpdateUserInfoByWechat", {});
 		},
 
 		/** 获取类型行程 */
-		getSimilar: function getSimilar(_ref27, data) {
-			var commit = _ref27.commit,
-			    state = _ref27.state;
+		getSimilar: function getSimilar(_ref28, data) {
+			var commit = _ref28.commit,
+			    state = _ref28.state;
 
-			return postData("/api/Transport/UpdateUserInfoByWechat", {
-				PassId: data.PassId
-			});
+			if (data.Types === 0) {
+				return postData("/api/CarPool/MatchDriver", {
+					PassId: data.PassId
+				});
+			} else {
+				return postData("/api/CarPool/MatchPassenger", {
+					PassId: data.PassId
+				});
+			}
 		},
 
 		/** 查看是否有绑定手机号 */
-		verifyBindPhone: function verifyBindPhone(_ref28, data) {
-			var commit = _ref28.commit,
-			    state = _ref28.state;
+		verifyBindPhone: function verifyBindPhone(_ref29, data) {
+			var commit = _ref29.commit,
+			    state = _ref29.state;
 
 			return getData("/api/Member/CheckUsrBind/0");
 		},
 
 		/** 发送验证码 */
-		sendPhoneCode: function sendPhoneCode(_ref29, data) {
-			var commit = _ref29.commit,
-			    state = _ref29.state;
+		sendPhoneCode: function sendPhoneCode(_ref30, data) {
+			var commit = _ref30.commit,
+			    state = _ref30.state;
 
 			return postData("/api/Member/SendMsg", {
 				Mobile: data
@@ -13273,9 +13290,9 @@
 		},
 
 		/** 验证码手机号 */
-		verifyCode: function verifyCode(_ref30, data) {
-			var commit = _ref30.commit,
-			    state = _ref30.state;
+		verifyCode: function verifyCode(_ref31, data) {
+			var commit = _ref31.commit,
+			    state = _ref31.state;
 
 			return postData("/api/Member/MobileBind", {
 				Mobile: data.Mobile,
@@ -36508,6 +36525,7 @@
 	//
 	//
 	//
+	//
 
 	exports.default = {
 		data: function data() {
@@ -36678,6 +36696,19 @@
 				return this.$store.getters.getUserInfo;
 			}
 		},
+		watch: {
+			// submitResult:{
+			// 	handler:function(val, oldVal){
+			// 		// 如果手机号没有绑定并且输入正确
+			// 		if(this.inspectPhone()&&!this.isBindPhone){
+			// 			this.inputPhone = val.phone;
+			// 			this.phonePickerPageShow = true;
+			// 			this.$refs.inputphone.focus();
+			// 		}
+			// 	},
+			// 	deep:true
+			// }
+		},
 		methods: {
 			formatJSON: function formatJSON(data) {
 				return JSON.parse((0, _stringify2.default)(data));
@@ -36816,6 +36847,14 @@
 				}
 			},
 
+			/** 点击输入电话号码 */
+			readyInputPhone: function readyInputPhone() {
+				if (!this.isBindPhone) {
+					this.phonePickerPageShow = true;
+					this.$refs.inputphone.focus();
+				}
+			},
+
 			/** 下一步 */
 			nextStep: function nextStep() {
 				if (!this.submitResult.time) {
@@ -36896,11 +36935,7 @@
 					this.toast("手机号不正确!");
 					return;
 				}
-				if (!this.isBindPhone) {
-					//没有绑定手机
-					this.phonePickerPageShow = true;
-					return;
-				}
+
 				this.loading();
 				// 获取开始和到达地理位置
 				var startLocation = this.submitResult.start.location.split(",");
@@ -36985,6 +37020,8 @@
 				var _this4 = this;
 
 				if (this.codeTimeText !== 60) {
+					this.codePickerPageShow = true;
+					this.phonePickerPageShow = false;
 					return;
 				}
 				if (!/^1[23578][0-9]{9}/.test(this.inputPhone)) {
@@ -37035,7 +37072,12 @@
 					_mintUi.Indicator.close();
 					if (result.Data) {
 						_this6.isBindPhone = true;
-						_this6.submitOrder(); //自动提交表单
+						_this6.$store.dispatch("setUserPhoneDirection", _this6.inputPhone); //保存
+						_this6.submitResult.phone = _this6.inputPhone; //加到表单里面去
+						_this6.toast("绑定成功!");
+						if (_this6.showSubmitBtn) {
+							_this6.submitOrder(); //自动提交表单
+						}
 					} else {
 						_this6.toast(result.Message);
 					}
@@ -38277,9 +38319,27 @@
 	  }, [_vm._v("默认1人")])] : [_c('span', [_vm._v(_vm._s(_vm.numberPickerText))])]] : [(_vm.numberPickerText === '默认1人') ? [_c('span', {
 	    staticClass: "line__span--gray"
 	  }, [_vm._v("默认1人座位")])] : [_c('span', [_vm._v(_vm._s(_vm.numberPickerText) + "座位")])]]], 2)]), _vm._v(" "), _c('div', {
-	    staticClass: "publish__info--line box_shadow"
-	  }, [_vm._m(2), _vm._v(" "), _c('input', {
+	    staticClass: "publish__info--line box_shadow",
+	    on: {
+	      "click": _vm.readyInputPhone
+	    }
+	  }, [_vm._m(2), _vm._v(" "), _c('span', {
 	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (!_vm.isBindPhone),
+	      expression: "!isBindPhone"
+	    }],
+	    staticStyle: {
+	      "color": "#c8c8c8"
+	    }
+	  }, [_vm._v("联系电话必填")]), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.isBindPhone),
+	      expression: "isBindPhone"
+	    }, {
 	      name: "model",
 	      rawName: "v-model",
 	      value: (_vm.submitResult.phone),
@@ -39818,123 +39878,13 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
+	var _vueInputCode = __webpack_require__(171);
+
+	var _vueInputCode2 = _interopRequireDefault(_vueInputCode);
+
 	var _mintUi = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 
 	exports.default = {
 		data: function data() {
@@ -39942,7 +39892,14 @@
 				Phone: "",
 				NickName: "",
 				Status: 0, //0 是更换前,1是更换后
-				StatusName: 0 };
+				StatusName: 0, //0 是更换前,1是更换后
+
+				phonePickerPageShow: false, //绑定手机号弹窗
+				inputPhone: "", //输入的手机号
+				codePickerPageShow: false, //输入验证码
+				inputCode: [], //输入的验证码
+				codeTimeText: 60, //倒计时
+				setTimeText: null };
 		},
 		created: function created() {
 			if (!this.UserInfo) {
@@ -39976,9 +39933,10 @@
 				});
 			},
 			changePhone: function changePhone() {
-				this.$refs.inputphone.focus(); //弹出键盘
-				this.Phone = ""; //清空 
-				this.Status = 1;
+				this.phonePickerPageShow = true;
+				// this.$refs.inputphone.focus();//弹出键盘
+				// this.Phone = "";//清空 
+				// this.Status = 1;
 			},
 			changeName: function changeName() {
 				this.$refs.inputname.focus(); //弹出键盘
@@ -40033,20 +39991,239 @@
 				return (/^1[23578][0-9]{9}/.test(this.Phone)
 				);
 			},
+
+			/** 更新微信用户信息 */
 			updateUserInfo: function updateUserInfo() {
 				var _this2 = this;
 
 				this.$store.dispatch("updateUserInfo").then(function (result) {
 					_this2.toast(result.Message);
 				});
+			},
+
+			/** 选择下一步 */
+			nextStepPhone: function nextStepPhone() {
+				var _this3 = this;
+
+				if (this.codeTimeText !== 60) {
+					return;
+				}
+				if (!/^1[23578][0-9]{9}/.test(this.inputPhone)) {
+					this.toast("手机号不正确!");
+				} else {
+					this.phonePickerPageShow = false;
+					this.loading();
+					this.$store.dispatch("sendPhoneCode", this.inputPhone).then(function (result) {
+						_mintUi.Indicator.close();
+						if (result.Data) {
+							_this3.codePickerPageShow = true;
+							_this3.startTimeText(); //开始倒计时
+						} else {
+							_this3.phonePickerPageShow = true;
+							_this3.inputPhone = "";
+							_this3.toast(result.Message);
+						}
+					});
+				}
+			},
+
+			/** 倒计时 */
+			startTimeText: function startTimeText() {
+				var _this4 = this;
+
+				// this.codeTimeText = 60;
+				this.setTimeText = setInterval(function () {
+					if (_this4.codeTimeText !== 0) {
+						_this4.codeTimeText--;
+					} else {
+						clearInterval(_this4.setTimeText);
+						_this4.setTimeText = null;
+						_this4.codeTimeText = 60;
+					}
+				}, 1000);
+			},
+
+			/** 输入完验证码的回调函数 */
+			InputCodeSuccess: function InputCodeSuccess(value) {
+				var _this5 = this;
+
+				this.loading();
+				this.codePickerPageShow = false;
+				this.$store.dispatch("verifyCode", {
+					Mobile: this.inputPhone,
+					Code: value
+				}).then(function (result) {
+					_mintUi.Indicator.close();
+					if (result.Data) {
+						_this5.isBindPhone = true;
+						_this5.submitOrder(); //自动提交表单
+					} else {
+						_this5.toast(result.Message);
+					}
+				});
+			},
+
+			/** 清除手机号输入 */
+			clearInputPhone: function clearInputPhone() {
+				this.inputPhone = "";
+				this.$refs.inputphone.focus();
 			}
 		},
 		filters: {},
 		components: {
 			"my-list": _list2.default,
-			"my-header": _Header2.default
+			"my-header": _Header2.default,
+			"mt-popup": _mintUi.Popup,
+			"vue-input-code": _vueInputCode2.default
 		}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 167 */
@@ -40171,7 +40348,79 @@
 	    on: {
 	      "click": _vm.updateUserInfo
 	    }
-	  }, [_vm._v("同步微信信息")]), _vm._v(" "), _c('p', [_vm._v("若您最近更新了微信头像等信息,建议您同步最新数据以免显示不准确~")])])], 1)
+	  }, [_vm._v("同步微信信息")]), _vm._v(" "), _c('p', [_vm._v("若您最近更新了微信头像等信息,建议您同步最新数据以免显示不准确~")])]), _vm._v(" "), _c('mt-popup', {
+	    staticClass: "phone_page",
+	    attrs: {
+	      "position": "center"
+	    },
+	    model: {
+	      value: (_vm.phonePickerPageShow),
+	      callback: function($$v) {
+	        _vm.phonePickerPageShow = $$v
+	      },
+	      expression: "phonePickerPageShow"
+	    }
+	  }, [_vm._t("default", [_c('p', [_vm._v("10秒绑定,即可发布")]), _vm._v(" "), _c('div', {
+	    staticClass: "bind-phone"
+	  }, [_c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.inputPhone),
+	      expression: "inputPhone"
+	    }],
+	    ref: "inputphone",
+	    attrs: {
+	      "maxlength": "11",
+	      "placeholder": "输入手机号码",
+	      "type": "tel",
+	      "name": "phone"
+	    },
+	    domProps: {
+	      "value": (_vm.inputPhone)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.inputPhone = $event.target.value
+	      }
+	    }
+	  }), _vm._v(" "), _c('span', {
+	    on: {
+	      "click": _vm.clearInputPhone
+	    }
+	  }, [_vm._v("清空")])]), _vm._v(" "), _c('button', {
+	    on: {
+	      "click": _vm.nextStepPhone
+	    }
+	  }, [_vm._v("下一步")]), _vm._v(" "), _c('p', {
+	    staticClass: "gray"
+	  }, [_vm._v("点击灰色区域退出")])])], 2), _vm._v(" "), _c('mt-popup', {
+	    staticClass: "phone_page",
+	    attrs: {
+	      "position": "center"
+	    },
+	    model: {
+	      value: (_vm.codePickerPageShow),
+	      callback: function($$v) {
+	        _vm.codePickerPageShow = $$v
+	      },
+	      expression: "codePickerPageShow"
+	    }
+	  }, [_vm._t("default", [_c('p', [_vm._v("请输入验证码")]), _vm._v(" "), _c('div', {
+	    staticClass: "bind-phone"
+	  }, [_c('p', [_vm._v(_vm._s(_vm.inputPhone) + " \n\t\t\t\t\t"), (_vm.codeTimeText === 60) ? [_c('span', {
+	    on: {
+	      "click": _vm.nextStepPhone
+	    }
+	  }, [_vm._v("重新发送")])] : [_c('span', [_vm._v(_vm._s(_vm.codeTimeText) + "秒")])]], 2)]), _vm._v(" "), _c('vue-input-code', {
+	    attrs: {
+	      "code": _vm.inputCode,
+	      "number": 6,
+	      "height": "50px",
+	      "success": _vm.InputCodeSuccess
+	    }
+	  })])], 2)], 1)
 	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -41026,10 +41275,12 @@
 				PassId: this.tripId,
 				Types: this.types
 			}).then(function (result) {
+				_mintUi.Indicator.close();
 				if (result.Data) {
-					_this.tripData = result.Data;
+					_this.ListData = result.Data;
 				} else {
 					_this.toast(result.Message);
+					_this.$router.push({ path: "/" });
 				}
 			}).catch(function (error) {
 				_this.$router.push({ path: "/" });

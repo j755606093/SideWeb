@@ -298,6 +298,13 @@ const actions = {
 			}
 		})
 	},
+	/** 直接修改用户手机号 */
+	setUserPhoneDirection({ commit, state }, data) {
+		commit(types.SET_USERINFO_PHONE, {
+			isPhone: true,
+			Mobile: data
+		});
+	},
 	/** 修改用户昵称 */
 	setUserNickName({ commit, state }, data) {
 		return postData("/api/Transport/UpdateUserInfo", data).then(result => {
@@ -360,9 +367,15 @@ const actions = {
 	},
 	/** 获取类型行程 */
 	getSimilar({ commit, state }, data) {
-		return postData("/api/Transport/UpdateUserInfoByWechat", {
-			PassId: data.PassId
-		});
+		if (data.Types === 0) {
+			return postData("/api/CarPool/MatchDriver", {
+				PassId: data.PassId
+			});
+		} else {
+			return postData("/api/CarPool/MatchPassenger", {
+				PassId: data.PassId
+			});
+		}
 	},
 	/** 查看是否有绑定手机号 */
 	verifyBindPhone({ commit, state }, data) {

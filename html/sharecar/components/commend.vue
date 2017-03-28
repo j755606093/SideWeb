@@ -39,11 +39,13 @@ export default {
 			PassId:this.tripId,
 			Types:this.types
 		}).then(result=>{
+			Indicator.close();
 			if(result.Data){
-				this.tripData = result.Data;
+				this.ListData = result.Data;
 			}
 			else{
 				this.toast(result.Message);
+				this.$router.push({path:"/"});
 			}
 		}).catch(error=>{
 			this.$router.push({path:"/"});

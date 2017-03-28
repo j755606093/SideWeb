@@ -60,11 +60,12 @@
 					</template>
 				</div>
 			</div>
-			<div class="publish__info--line box_shadow">
+			<div @click="readyInputPhone" class="publish__info--line box_shadow">
 				<div class="line__left">
 					<img src="../icon/phone_icon.png">
 				</div>
-				<input v-model="submitResult.phone" maxlength="11" class="phone" placeholder="联系电话必填" type="tel" name="phone">
+				<span style="color:#c8c8c8;" v-show="!isBindPhone">联系电话必填</span>
+				<input v-show="isBindPhone" v-model="submitResult.phone" maxlength="11" class="phone" placeholder="联系电话必填" type="tel" name="phone">
 			</div>
 			<div style="margin-top:10px;" class="publish__info--line box_shadow">
 				<div class="line__span">
@@ -567,7 +568,7 @@ export default {
       inputCode:[],//输入的验证码
       codeTimeText:60,//倒计时
       setTimeText:null,//倒计时保存
-      isBindPhone:false,//默认没有绑定手机号
+      isBindPhone:true,//默认没有绑定手机号
 			
 			searchStartText:"",//搜索的地址
 			searchEndText:"",
@@ -636,9 +637,9 @@ export default {
 		},500);
 		
 		/** 查看是否绑定手机号 */
-		this.$store.dispatch("verifyBindPhone").then(result=>{
-			this.isBindPhone = result.Data===0?false:true;
-		})
+		// this.$store.dispatch("verifyBindPhone").then(result=>{
+		// 	this.isBindPhone = result.Data===0?false:true;
+		// })
 	},
 	mounted(){
 		// 监听开始地址滚动
@@ -692,6 +693,19 @@ export default {
 		UserInfo(){
 			return this.$store.getters.getUserInfo;
 		}
+	},
+	watch:{
+		// submitResult:{
+		// 	handler:function(val, oldVal){
+		// 		// 如果手机号没有绑定并且输入正确
+		// 		if(this.inspectPhone()&&!this.isBindPhone){
+		// 			this.inputPhone = val.phone;
+		// 			this.phonePickerPageShow = true;
+		// 			this.$refs.inputphone.focus();
+		// 		}
+		// 	},
+		// 	deep:true
+		// }
 	},
 	methods:{
 		formatJSON(data){
@@ -819,6 +833,13 @@ export default {
 				this.numberPickerText = "1 人";
 			}
 		},
+		/** 点击输入电话号码 */
+		readyInputPhone(){
+			// if(!this.isBindPhone){
+			// 	this.phonePickerPageShow = true;
+			// 	this.$refs.inputphone.focus();
+			// }
+		},
 		/** 下一步 */
 		nextStep(){
 			if(!this.submitResult.time){
@@ -895,11 +916,7 @@ export default {
 				this.toast("手机号不正确!");
 				return;
 			}
-			// if(!this.isBindPhone){
-			// 	//没有绑定手机
-			// 	this.phonePickerPageShow = true;
-			// 	return;
-			// }
+			
 			this.loading();
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
@@ -983,6 +1000,8 @@ export default {
 		/** 选择下一步 */
 		nextStepPhone(){
 			if(this.codeTimeText!==60){
+				this.codePickerPageShow = true;
+				this.phonePickerPageShow = false;
 				return;
 			}
 			if(!/^1[23578][0-9]{9}/.test(this.inputPhone)){
@@ -1030,7 +1049,12 @@ export default {
 				Indicator.close();
 				if(result.Data){
 					this.isBindPhone = true;
-					this.submitOrder();//自动提交表单
+					this.$store.dispatch("setUserPhoneDirection",this.inputPhone);//保存
+					this.submitResult.phone = this.inputPhone;//加到表单里面去
+					this.toast("绑定成功!");
+					if(this.showSubmitBtn){
+						this.submitOrder();//自动提交表单
+					}
 				}
 				else{
 					this.toast(result.Message);
