@@ -141,6 +141,41 @@
 		  	<mt-picker :visibleItemCount="7" :slots="numberPicker" @change="numberValuesChange"></mt-picker>
 		  </slot>
 		</mt-popup>
+		<!-- 绑定手机号 -->
+		<mt-popup
+		  v-model="phonePickerPageShow"
+		  position="center"
+		  class="phone_page">
+		  <slot>
+		  	<p>10秒绑定,即可发布</p>
+		  	<div class="bind-phone">
+		  		<input v-model="inputPhone" maxlength="11" ref="inputphone" placeholder="输入手机号码" type="tel" name="phone">
+		  		<span @click="clearInputPhone">清空</span>
+		  	</div>
+				<button @click="nextStepPhone">下一步</button>
+				<p class="gray">点击灰色区域退出</p>
+		  </slot>
+		</mt-popup>
+		<!-- 输入验证码 -->
+		<mt-popup
+		  v-model="codePickerPageShow"
+		  position="center"
+		  class="phone_page">
+		  <slot>
+		  	<p>请输入验证码</p>
+		  	<div class="bind-phone">
+		  		<p>{{inputPhone}} 
+						<template v-if="codeTimeText===60">
+							<span @click="nextStepPhone">重新发送</span>
+						</template>
+						<template v-else>
+							<span>{{codeTimeText}}秒</span>
+						</template>
+		  		</p>
+		  	</div>
+				<vue-input-code :code="inputCode" :number="6" height="50px" :success="InputCodeSuccess"></vue-input-code>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -411,6 +446,72 @@
     }
   }
 }
+// 绑定手机
+.phone_page{
+	width: 80%;
+  height: 215px;
+  background-color:#fff;
+  padding:0 20px;
+  border-radius:5px;
+  p{
+		font-size:15px;
+		color:rgb(50,50,50);
+		text-align:center;
+		height:75px;
+		font-weight:900;
+		line-height:75px;
+  }
+  p.gray{
+  	font-size:12px;
+		color:#c8c8c8;
+		text-align:center;
+		height:20px;
+		font-weight:400;
+		line-height:20px;
+		margin-top:5px;
+  }
+  .bind-phone{
+  	position:relative;
+  	width:100%;
+		height:60px;
+		line-height:60px;
+		>input{
+			width:100%;
+			height:40px;
+			font-size:15px;
+		}
+		>span{
+			font-size:12px;
+			position:absolute;
+			top:0;
+			right:0;
+			width:50px;
+			color:#c8c8c8;
+			text-align:right;
+		}
+		>p{
+			font-size:15px;
+			height:30px;
+			font-weight:900;
+			line-height:30px;
+			color:rgb(50,50,50);
+			>span{
+				margin-left: 5px;
+				font-size:12px;
+			}
+		}
+  }
+  button{
+  	color:#fff;
+  	font-size:15px;
+  	height:40px;
+  	background-color:#515151;
+  	width:100%;
+  	border-radius: 5px;
+  	outline:none;
+  	border:none;
+  }
+}
 .animated{
 	animation-duration: 0.4s;
 }
@@ -424,6 +525,7 @@ import Utils from "../../Utils/utils";
 import List from "./list.vue";
 import Header from "./Header.vue";
 import { Toast, Indicator, Popup,Picker } from 'mint-ui';
+import VueInputCode from "vue-input-code";
 const _ = require("underscore");
 
 export default {
@@ -458,6 +560,14 @@ export default {
     		textAlign: 'center'
       }],
       numberPickerText:"默认1人",//人数
+
+      phonePickerPageShow:false,//绑定手机号弹窗
+      inputPhone:"",//输入的手机号
+      codePickerPageShow:false,//输入验证码
+      inputCode:[],//输入的验证码
+      codeTimeText:60,//倒计时
+      setTimeText:null,//倒计时保存
+      isBindPhone:false,//默认没有绑定手机号
 			
 			searchStartText:"",//搜索的地址
 			searchEndText:"",
@@ -489,6 +599,17 @@ export default {
 	created(){
 		this.datePickerText = "今天"+Utils.formatWeek(new Date());// 显示今天几号
 
+		// 如果有用户信息
+		if(this.UserInfo){
+			this.submitResult.phone = this.UserInfo.Mobile;
+		}
+		else{
+			// 没有就去获取
+			this.$store.dispatch("getUserInfo").then(result=>{
+				this.submitResult.phone = result.Mobile;
+			})
+		}
+
 		this.initDatePickerDay();//初始化日期
 		this.datePicker[1].values = this.initDatePickerTime();//初始化时间
 
@@ -513,6 +634,11 @@ export default {
 				this.searchEndList = result.pois;
 			})
 		},500);
+		
+		/** 查看是否绑定手机号 */
+		this.$store.dispatch("verifyBindPhone").then(result=>{
+			this.isBindPhone = result.Data===0?false:true;
+		})
 	},
 	mounted(){
 		// 监听开始地址滚动
@@ -562,6 +688,9 @@ export default {
 		},
 		isToday(){
 			return this.datePickerText.slice(0,2)==="今天";
+		},
+		UserInfo(){
+			return this.$store.getters.getUserInfo;
 		}
 	},
 	methods:{
@@ -718,7 +847,7 @@ export default {
 				
 				this.datePickerText = values[0].title+" "+values[1]+values[2];
 				if(this.isToday){
-					console.log("dadfadf");
+					// console.log("dadfadf");
 					this.datePicker[1].values=this.initDatePickerTime();
 				}
 				else{
@@ -766,6 +895,11 @@ export default {
 				this.toast("手机号不正确!");
 				return;
 			}
+			// if(!this.isBindPhone){
+			// 	//没有绑定手机
+			// 	this.phonePickerPageShow = true;
+			// 	return;
+			// }
 			this.loading();
 			// 获取开始和到达地理位置
 			let startLocation = this.submitResult.start.location.split(",");
@@ -840,6 +974,68 @@ export default {
 					}
 				})
 			}
+		},
+		/** 清除手机号输入 */
+		clearInputPhone(){
+			this.inputPhone = "";
+			this.$refs.inputphone.focus();
+		},
+		/** 选择下一步 */
+		nextStepPhone(){
+			if(this.codeTimeText!==60){
+				return;
+			}
+			if(!/^1[23578][0-9]{9}/.test(this.inputPhone)){
+				this.toast("手机号不正确!");
+			}
+			else{
+				this.phonePickerPageShow = false;
+				this.loading();
+				this.$store.dispatch("sendPhoneCode",this.inputPhone).then(result=>{
+					Indicator.close();
+					if(result.Data){
+						this.codePickerPageShow = true;
+						this.startTimeText();//开始倒计时
+					}
+					else{
+						this.phonePickerPageShow = true;
+						this.inputPhone = "";
+						this.toast(result.Message);
+					}
+				})
+			}
+		},
+		/** 倒计时 */
+		startTimeText(){
+			// this.codeTimeText = 60;
+			this.setTimeText = setInterval(()=>{
+				if(this.codeTimeText!==0){
+					this.codeTimeText--;
+				}
+				else{
+					clearInterval(this.setTimeText);
+					this.setTimeText = null;
+					this.codeTimeText = 60;
+				}
+			},1000)
+		},
+		/** 输入完验证码的回调函数 */
+		InputCodeSuccess(value){
+			this.loading();
+			this.codePickerPageShow = false;
+			this.$store.dispatch("verifyCode",{
+				Mobile:this.inputPhone,
+				Code:value
+			}).then(result=>{
+				Indicator.close();
+				if(result.Data){
+					this.isBindPhone = true;
+					this.submitOrder();//自动提交表单
+				}
+				else{
+					this.toast(result.Message);
+				}
+			})
 		}
 	},
 	filters:{
@@ -865,7 +1061,8 @@ export default {
 	components:{
 		"my-header":Header,
 		"mt-picker":Picker,
-		"mt-popup":Popup
+		"mt-popup":Popup,
+		"vue-input-code":VueInputCode
 	}
 }
 </script>

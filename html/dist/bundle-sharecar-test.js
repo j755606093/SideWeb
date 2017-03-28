@@ -36896,11 +36896,11 @@
 					this.toast("手机号不正确!");
 					return;
 				}
-				// if(!this.isBindPhone){
-				// 	//没有绑定手机
-				// 	this.phonePickerPageShow = true;
-				// 	return;
-				// }
+				if (!this.isBindPhone) {
+					//没有绑定手机
+					this.phonePickerPageShow = true;
+					return;
+				}
 				this.loading();
 				// 获取开始和到达地理位置
 				var startLocation = this.submitResult.start.location.split(",");

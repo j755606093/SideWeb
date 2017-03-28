@@ -13,25 +13,31 @@
 			<!-- <div class="trip__tip">
 				<p>平台需要统计车主座位数量情况，在初次交流15分钟后。我们会在微信平台发送信息让乘客与司机确定旅程情况~</p>
 			</div> -->
-			<a :href="'tel:'+tripData.Phone" class="trip__contact">
-				<div class="trip--contact-way">
-					<img src="../icon/phone_icon.png">
-				</div>
-				<span>电话联系</span>
-				<span>({{tripData.Phone}})</span>
-			</a>
-			<a :href="'sms:'+tripData.Phone" class="trip__contact">
-				<div class="trip--contact-way">
-					<img src="../icon/messnge_icon.png">
-				</div>
-				<span>短信联系</span>
-			</a>
+			<div class="tick_bottom">
+				<a :href="'tel:'+tripData.Phone" class="trip__contact">
+					<div class="trip--contact-way">
+						<img src="../icon/phone_icon.png">
+					</div>
+					<span>电话联系</span>
+					<span>({{tripData.Phone}})</span>
+				</a>
+				<a :href="'sms:'+tripData.Phone" class="trip__contact">
+					<div class="trip--contact-way">
+						<img src="../icon/messnge_icon.png">
+					</div>
+					<span>短信联系</span>
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style lang="sass">
 @import "../../sass/utils.scss";
+#app{
+	position: relative;
+	height:100%;
+}
 .tripdetail{
 	margin-top:60px;
 }
@@ -70,6 +76,13 @@
 		font-size:14px;
 	}
 }
+// .tick_bottom{
+// 	width:100%;
+// 	padding:0 10px;
+// 	position:fixed;
+// 	bottom:5px;
+// 	left:0;
+// }
 .trip__contact{
 	height:40px;
 	line-height:40px;

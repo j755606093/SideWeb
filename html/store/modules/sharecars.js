@@ -177,6 +177,7 @@ const actions = {
 			commit(types.SET_USERINFO, {
 				UserInfo: userinfo
 			});
+			return result.Data.Userinfo;
 			// window.localStorage.setItem("jgkj_UserInfo", JSON.stringify(userinfo));
 		})
 	},
@@ -237,68 +238,6 @@ const actions = {
 	/** 获取乘客发布的信息 */
 	getTripDetailPeople({ commit, state }, data) {
 		return getData("/api/CarPool/GetPassenger?id=" + data)
-	},
-	/** 获取全国省数据  */
-	getProvince({ commit, state }) {
-		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&keywords=中国&subdistrict=1', {
-				method: 'GET',
-			})
-			.then(checkStatus)
-			.then(result => result.json())
-			.then(result => {
-				let res = result.districts[0].districts;
-				commit(types.GET_PROVINCE, {
-					Province: res,
-				});
-			})
-	},
-	/** 获取省的市数据  */
-	getCity({ commit, state }, data) {
-		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
-				method: 'GET',
-			})
-			.then(checkStatus)
-			.then(result => result.json())
-			.then(result => {
-				if (result.districts.length !== 0) {
-					let res = result.districts[0].districts;
-					commit(types.GET_CITY, {
-						City: res,
-					});
-				}
-			})
-	},
-	/** 获取市的区数据  */
-	getDistrict({ commit, state }, data) {
-		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
-				method: 'GET',
-			})
-			.then(checkStatus)
-			.then(result => result.json())
-			.then(result => {
-				if (result.districts.length !== 0) {
-					let res = result.districts[0].districts;
-					commit(types.GET_DISTRICT, {
-						District: res,
-					});
-				}
-			})
-	},
-	/** 获取区数据  */
-	getVillage({ commit, state }, data) {
-		return fetch('http://restapi.amap.com/v3/config/district?key=b3940f216e45bcb33a0a50154c470fd6&subdistrict=1&keywords=' + data, {
-				method: 'GET',
-			})
-			.then(checkStatus)
-			.then(result => result.json())
-			.then(result => {
-				if (result.districts.length !== 0) {
-					let res = result.districts[0].districts;
-					commit(types.GET_VILLAGE, {
-						Village: res,
-					});
-				}
-			})
 	},
 	/** 获取用户输入后搜索得到的信息 */
 	getStartSearch({ commit, state }, data) {
@@ -419,6 +358,29 @@ const actions = {
 	updateUserInfo({ commit, state }, id) {
 		return postData("/api/Transport/UpdateUserInfoByWechat", {});
 	},
+	/** 获取类型行程 */
+	getSimilar({ commit, state }, data) {
+		return postData("/api/Transport/UpdateUserInfoByWechat", {
+			PassId: data.PassId
+		});
+	},
+	/** 查看是否有绑定手机号 */
+	verifyBindPhone({ commit, state }, data) {
+		return getData("/api/Member/CheckUsrBind/0")
+	},
+	/** 发送验证码 */
+	sendPhoneCode({ commit, state }, data) {
+		return postData("/api/Member/SendMsg", {
+			Mobile: data
+		})
+	},
+	/** 验证码手机号 */
+	verifyCode({ commit, state }, data) {
+		return postData("/api/Member/MobileBind", {
+			Mobile: data.Mobile,
+			Code: data.Code
+		});
+	}
 }
 
 // mutations
