@@ -488,7 +488,7 @@
       </div>
     </mt-popup>
     <!-- 绑定手机号 -->
-    <!-- <mt-popup v-model="phonePickerPageShow" position="center" class="phone_page">
+    <mt-popup v-model="phonePickerPageShow" position="center" class="phone_page">
       <slot>
         <p>绑定手机号</p>
         <div class="bind-phone">
@@ -498,9 +498,9 @@
         <button @click="nextStepPhone">下一步</button>
         <p class="gray">点击灰色区域退出</p>
       </slot>
-    </mt-popup> -->
+    </mt-popup>
     <!-- 输入验证码 -->
-    <!-- <mt-popup v-model="codePickerPageShow" position="center" class="phone_page">
+    <mt-popup v-model="codePickerPageShow" position="center" class="phone_page">
       <slot>
         <p>请输入验证码</p>
         <div class="bind-phone">
@@ -515,7 +515,7 @@
         </div>
         <vue-input-code :code="inputCode" :number="6" height="50px" :success="InputCodeSuccess"></vue-input-code>
       </slot>
-    </mt-popup> -->
+    </mt-popup>
     <div v-show="myModal" @click="quitModal" class="my-modal"></div>
     <footer>
       <a :href="'./ticket.html?datetime='+Date.now()" class="footer" class="footer">
