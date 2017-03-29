@@ -2,7 +2,7 @@
 	<div class="list" @click="goToTipDetail">
 		<!-- 头部 -->
 		<div class="list__header">
-			<div class="header--avatar">
+			<div @click.stop="showPicture" class="header--avatar">
 				<img :src="list.UserInfo.Headimgurl">
 			</div>
 			<div class="header--info">
@@ -442,6 +442,17 @@ export default {
 		formatWeek(date){
 			let week = ["日","一","二","三","四","五","六"];
 			return "周"+week[date.getUTCDay()];
+		},
+		/** 通知组件显示图片 */
+		showPicture(){
+			if(this.isMe){
+				// 是自己就不需要显示了
+				return;
+			}
+			this.$store.dispatch("showPicture",{
+				Headimgurl:this.list.UserInfo.Headimgurl,
+				isShow:true
+			})
 		}
 	},
 	filters:{

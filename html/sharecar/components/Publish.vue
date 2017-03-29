@@ -983,6 +983,8 @@ export default {
 					else{
 						this.toast(result.Message);
 					}
+				}).catch(error=>{
+					Indicator.close();
 				})
 			}
 			else{
@@ -995,6 +997,8 @@ export default {
 					else{
 						this.toast(result.Message);
 					}
+				}).catch(error=>{
+					Indicator.close();
 				})
 			}
 		},

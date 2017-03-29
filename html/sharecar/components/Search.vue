@@ -34,6 +34,20 @@
 				</div>
 			</div>
 		</div>
+		<!-- 显示头像 -->
+		<mt-popup
+			position="center"
+			:closeOnClickModal="false"
+		  v-model="Avatar.isShow"
+		  class="avatar__page">
+		  <slot>
+				<img class="avatar__page--img animated zoomIn" :src="Avatar.Headimgurl">
+				<div @click="closeAvatar" class="avatar__page--close animated zoomIn">
+					<!-- <img src="../icon/cancal_icon.png"> -->
+					<i class="fa fa-times"></i>
+				</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -181,6 +195,32 @@
 	border-top:1px solid #c8c8c8;
 	margin-left: 20px;
 }
+.avatar__page{
+	width:260px;
+	height:260px;
+	border-radius: 10px;
+	background-color: transparent;
+	.avatar__page--img{
+		width:100%;
+		height:100%;
+		border-radius: 10px;
+		border:none;
+	}
+	.avatar__page--close{
+		position:absolute;
+		top:0;
+		right:0;
+		z-index:4000;
+		width:20px;
+		height: 20px;
+		>i{
+			width:20px;
+			height:20px;
+			font-size: 24px;
+		}
+	}
+}
+
 </style>
 
 <script type="text/babel">
@@ -220,7 +260,8 @@ export default {
 					SpointFuzzy:this.searchStartText,
 					EpointFuzzy:this.searchEndText,
 					Index:1,
-					Size:10
+					Size:10,
+					OrderBy:1
 				}).then(result=>{
 					if(!result.Data||result.Data.length<10){
 						this.searchPassengerNoData=true;
@@ -234,7 +275,8 @@ export default {
 					SpointFuzzy:this.searchStartText,
 					EpointFuzzy:this.searchEndText,
 					Index:1,
-					Size:10
+					Size:10,
+					OrderBy:1
 				}).then(result=>{
 					if(!result.Data||result.Data.length<10){
 						this.searchCarNoData=true;
@@ -278,6 +320,10 @@ export default {
 			else{
 				return this.searchCarList;
 			}
+		},
+		// 需要显示的用户头像
+		Avatar(){
+			return this.$store.getters.getShowUserAvatar;
 		}
 	},
 	methods:{
@@ -309,12 +355,20 @@ export default {
 			if(this.searchEndText==="")return;
 			this.searchFunction();
 		},
+		//点击图片关闭
+		closeAvatar(){
+			this.$store.dispatch("showPicture",{
+				Headimgurl:"",
+				isShow:false
+			})
+		}
 	},
 	filters:{
 		
 	},
 	components:{
 		"my-header":Header,
+		"mt-popup": Popup,
 		"my-list":List
 	}
 }

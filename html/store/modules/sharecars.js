@@ -107,6 +107,11 @@ const state = {
 	UserInfo: null, //用户信息
 
 	Location: null, //用户位置
+
+	Avatar: {
+		Headimgurl: "",
+		isShow: false
+	}, //显示的用户图片
 }
 
 let postData = (url, data) => {
@@ -151,7 +156,9 @@ const getters = {
 
 	getMyPublish: state => state.myPublish,
 	getUserInfo: state => state.UserInfo,
-	getUserLocation: state => state.Location
+	getUserLocation: state => state.Location,
+
+	getShowUserAvatar: state => state.Avatar
 }
 
 // actions
@@ -397,6 +404,13 @@ const actions = {
 			Mobile: data.Mobile,
 			Code: data.Code
 		});
+	},
+	/** 显示发布人的头像 */
+	showPicture({ commit, state }, data) {
+		commit(types.SET_USER_AVATAR, {
+			Headimgurl: data.Headimgurl,
+			isShow: data.isShow
+		})
 	}
 }
 
@@ -467,6 +481,9 @@ const mutations = {
 			state.UserInfo.Nickname = data.NickName;
 		}
 	},
+	[types.SET_USER_AVATAR](state, data) {
+		state.Avatar = data;
+	}
 }
 
 export default {

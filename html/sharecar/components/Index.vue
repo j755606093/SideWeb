@@ -5,10 +5,10 @@
 		    <!-- Additional required wrapper -->
 		    <div class="swiper-wrapper">
 	        <div class="swiper-slide">
-						<img src="../icon/banner1.png">
+						<img src="../icon/slider-car1.png">
 	        </div>
 	        <div class="swiper-slide">
-	        	<img src="../icon/banner2.png">
+	        	<img src="../icon/slider-car2.png">
 	        </div>
 		    </div>
 		    <!-- If we need pagination -->
@@ -61,6 +61,7 @@
 			</div>
 			<div id="people__last"></div>
 		</div>
+		<!-- 关注二维码 -->
 		<mt-popup
 		  v-model="showCodePage"
 		  class="code__page">
@@ -76,11 +77,50 @@
 				<p class="code__page-close-page">点击灰色区域关闭弹窗~</p>
 		  </slot>
 		</mt-popup>
+		<!-- 显示头像 -->
+		<mt-popup
+			position="center"
+			:closeOnClickModal="false"
+		  v-model="Avatar.isShow"
+		  class="avatar__page">
+		  <slot>
+				<img class="avatar__page--img animated zoomIn" :src="Avatar.Headimgurl">
+				<div @click="closeAvatar" class="avatar__page--close animated zoomIn">
+					<!-- <img src="../icon/cancal_icon.png"> -->
+					<i class="fa fa-times"></i>
+				</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
 <style lang="css">
 @import "../../css/sharecar_index.css";
+.avatar__page{
+	width:260px;
+	height:260px;
+	border-radius: 10px;
+	background-color: transparent;
+}
+.avatar__page--img{
+	width:100%;
+	height:100%;
+	border-radius: 10px;
+	border:none;
+}
+.avatar__page--close{
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:4000;
+	width:20px;
+	height: 20px;
+}
+.avatar__page--close>i{
+	width:20px;
+	height:20px;
+	font-size: 24px;
+}
 </style>
 
 <script type="text/babel">
@@ -118,9 +158,12 @@ export default {
 
 			isFocusMe:false,//默认没有关注
 			showCodePage:false,//默认不显示二维码
+
+			canScroll:false,//是否可以滚动
 		}
 	},
 	created(){
+		this.canScroll = true;//可以滚动
 		//获取用户地理位置
 		navigator.geolocation.getCurrentPosition(this.showPosition,this.getPositionError);
 
@@ -161,6 +204,9 @@ export default {
 		
 		/** 保存地址,便于移除监听事件 */
 		this.scrollFunction = _.throttle(()=>{
+			if(!this.canScroll){
+				return;
+			}
 			/** 头部tick到顶部 */
 			let status = this.headerTopElement.offsetTop-document.body.scrollTop;
 			let realTop = this.headerRealTopElement.offsetTop-document.body.scrollTop;
@@ -188,7 +234,7 @@ export default {
 				// 当前页&&距离小于700&&还有数据&&没有请求
 				this.getPeopleData();
 			}
-		},500,{leading: false});
+		},200,{leading: false});
 
 		/** 监听滚动 */
 		window.addEventListener('scroll',this.scrollFunction);
@@ -207,6 +253,9 @@ export default {
 		//用户位置
 		Location(){
 			return this.$store.getters.getUserLocation;
+		},
+		Avatar(){
+			return this.$store.getters.getShowUserAvatar;
 		}
 	},
 	methods:{
@@ -407,6 +456,13 @@ export default {
 				this.isFocusMe = true;
 				this.openCodePage();
 			}
+		},
+		//点击图片关闭
+		closeAvatar(){
+			this.$store.dispatch("showPicture",{
+				Headimgurl:"",
+				isShow:false
+			})
 		}
 	},
 	activated(){
@@ -426,6 +482,7 @@ export default {
 	},
 	destroyed(){
 		window.removeEventListener("scroll", this.scrollFunction, false);
+		this.canScroll = false;//不可以滚动
 		clearInterval(this.onlineTimeContorl);
 	},
 	components:{

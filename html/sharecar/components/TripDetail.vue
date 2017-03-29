@@ -29,6 +29,20 @@
 				</a>
 			</div>
 		</div>
+		<!-- 显示头像 -->
+		<mt-popup
+			position="center"
+			:closeOnClickModal="false"
+		  v-model="Avatar.isShow"
+		  class="avatar__page">
+		  <slot>
+				<img class="avatar__page--img animated zoomIn" :src="Avatar.Headimgurl">
+				<div @click="closeAvatar" class="avatar__page--close animated zoomIn">
+					<!-- <img src="../icon/cancal_icon.png"> -->
+					<i class="fa fa-times"></i>
+				</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -76,13 +90,6 @@
 		font-size:14px;
 	}
 }
-// .tick_bottom{
-// 	width:100%;
-// 	padding:0 10px;
-// 	position:fixed;
-// 	bottom:5px;
-// 	left:0;
-// }
 .trip__contact{
 	height:40px;
 	line-height:40px;
@@ -110,6 +117,31 @@
 		color:rgb(50,50,50);
 		font-size:15px;
 		margin-left:5px;
+	}
+}
+.avatar__page{
+	width:260px;
+	height:260px;
+	border-radius: 10px;
+	background-color: transparent;
+	.avatar__page--img{
+		width:100%;
+		height:100%;
+		border-radius: 10px;
+		border:none;
+	}
+	.avatar__page--close{
+		position:absolute;
+		top:0;
+		right:0;
+		z-index:4000;
+		width:20px;
+		height: 20px;
+		>i{
+			width:20px;
+			height:20px;
+			font-size: 24px;
+		}
 	}
 }
 .animated{
@@ -201,7 +233,9 @@ export default {
 		}
 	},
 	computed:{
-		
+		Avatar(){
+			return this.$store.getters.getShowUserAvatar;
+		}
 	},
 	methods:{
 		toast(title) {
@@ -223,6 +257,13 @@ export default {
 				spinnerType: 'fading-circle'
 			});
 		},
+		//点击图片关闭
+		closeAvatar(){
+			this.$store.dispatch("showPicture",{
+				Headimgurl:"",
+				isShow:false
+			})
+		}
 	},
 	filters:{
 		formatDistance(value){
@@ -239,6 +280,7 @@ export default {
 	},
 	components:{
 		"my-list":List,
+		"mt-popup": Popup,
 		"my-header":Header,
 	}
 }

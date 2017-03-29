@@ -10,6 +10,20 @@
 				<p>没有更多数据~</p>
 			</div>
 		</div>
+		<!-- 显示头像 -->
+		<mt-popup
+			position="center"
+			:closeOnClickModal="false"
+		  v-model="Avatar.isShow"
+		  class="avatar__page">
+		  <slot>
+				<img class="avatar__page--img animated zoomIn" :src="Avatar.Headimgurl">
+				<div @click="closeAvatar" class="avatar__page--close animated zoomIn">
+					<!-- <img src="../icon/cancal_icon.png"> -->
+					<i class="fa fa-times"></i>
+				</div>
+		  </slot>
+		</mt-popup>
 	</div>
 </template>
 
@@ -18,6 +32,31 @@
 .commend--lists{
 	margin-top: 60px;
 	padding:0 10px;
+}
+.avatar__page{
+	width:260px;
+	height:260px;
+	border-radius: 10px;
+	background-color: transparent;
+	.avatar__page--img{
+		width:100%;
+		height:100%;
+		border-radius: 10px;
+		border:none;
+	}
+	.avatar__page--close{
+		position:absolute;
+		top:0;
+		right:0;
+		z-index:4000;
+		width:20px;
+		height: 20px;
+		>i{
+			width:20px;
+			height:20px;
+			font-size: 24px;
+		}
+	}
 }
 </style>
 
@@ -36,11 +75,14 @@ export default {
 			ListData:[],
 			tripId:"",
 			types:-1,
+			scrollFunction:null,
+			canScroll:false
 		}
 	},
 	created(){
 		this.tripId = this.$route.params.tripId;
 		this.types = this.$route.params.types;//driver,passenger
+		this.canScroll = true;//可以滚动
 
 		this.loading();
 		this.$store.dispatch("getSimilar",{
@@ -67,12 +109,21 @@ export default {
 		})
 	},
 	mounted(){
-		window.addEventListener("scroll",_.throttle(()=>{
-			let last = this.$refs.last_bottom.offsetTop - document.body.scrollTop;
+		this.scrollFunction = _.throttle(()=>{
+			if(!this.canScroll){
+				// 因为无法移除window的滚动监听事件,所以需要增加这个来判断是否当前页面
+				return;
+			}
+			let last = document.getElementById("last_bottom").offsetTop - document.body.scrollTop;
 			if(last<800){
 				this.getMoreData();
 			}
-		},400,{leading:false}))
+		},400,{leading:false})
+		window.addEventListener("scroll",this.scrollFunction,true)
+	},
+	destroyed(){
+		window.removeEventListener("scroll", this.scrollFunction, false);
+		this.canScroll = false;//不可以滚动
 	},
 	activated(){
 		
@@ -80,6 +131,10 @@ export default {
 	computed:{
 		UserInfo(){
 			return this.$store.getters.getUserInfo;
+		},
+		// 需要显示的用户头像
+		Avatar(){
+			return this.$store.getters.getShowUserAvatar;
 		}
 	},
 	methods:{
@@ -122,6 +177,13 @@ export default {
 				this.$router.push({path:"/"});
 				Indicator.close();
 			})
+		},
+		//点击图片关闭
+		closeAvatar(){
+			this.$store.dispatch("showPicture",{
+				Headimgurl:"",
+				isShow:false
+			})
 		}
 	},
 	filters:{
@@ -129,6 +191,7 @@ export default {
 	},
 	components:{
 		"my-list":List,
+		"mt-popup": Popup,
 		"my-header":Header,
 	}
 }
