@@ -223,16 +223,16 @@ gulp.task('ticketuser', function() {
 				}
 			},
 			plugins: [
-				new wp.DefinePlugin({
-					'process.env': {
-						NODE_ENV: '"production"'
-					}
-				}),
-				new wp.optimize.UglifyJsPlugin({
-					compress: {
-						warnings: false
-					}
-				})
+				// new wp.DefinePlugin({
+				// 	'process.env': {
+				// 		NODE_ENV: '"production"'
+				// 	}
+				// }),
+				// new wp.optimize.UglifyJsPlugin({
+				// 	compress: {
+				// 		warnings: false
+				// 	}
+				// })
 			]
 		}))
 		// .pipe(uglify())//生产的时候再启用压缩
