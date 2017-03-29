@@ -104,7 +104,13 @@ export default {
 				this.$router.push({path:"/"});
 			}
 			else{
-				this.$router.go(-1);
+				// 修复进入推荐页后查看行程再返回无法返回到首页的bug
+				if(this.$router.history.current.name==="commend"){
+					this.$router.push({path:"/"});
+				}
+				else{
+					this.$router.go(-1);
+				}
 			}
 			// console.log(history.length)
 		}
