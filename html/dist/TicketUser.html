@@ -349,7 +349,7 @@
             <span class="gray" v-text="UserInfo.Nickname"></span>
             <div class="right"><img src="../picture/edit.png"></div>
           </div>
-          <div @click="edit(2)" class="info-man-line info">
+          <div @click="showCodePage" class="info-man-line info">
             <span class="left">绑定手机:</span>
             <span class="gray" v-text="UserInfo.Mobile?UserInfo.Mobile:'未设置'"></span>
             <div class="right"><img src="../picture/edit.png"></div>
@@ -487,7 +487,36 @@
         </div>
       </div>
     </mt-popup>
-    <div v-show="myModal" class="my-modal"></div>
+    <!-- 绑定手机号 -->
+    <mt-popup v-model="phonePickerPageShow" position="center" class="phone_page">
+      <slot>
+        <p>绑定手机号</p>
+        <div class="bind-phone">
+          <input v-model="inputPhone" maxlength="11" ref="inputphone" placeholder="输入手机号码" type="tel" name="phone">
+          <span @click="clearInputPhone">清空</span>
+        </div>
+        <button @click="nextStepPhone">下一步</button>
+        <p class="gray">点击灰色区域退出</p>
+      </slot>
+    </mt-popup>
+    <!-- 输入验证码 -->
+    <mt-popup v-model="codePickerPageShow" position="center" class="phone_page">
+      <slot>
+        <p>请输入验证码</p>
+        <div class="bind-phone">
+          <p>{{inputPhone}}
+            <template v-if="codeTimeText===60">
+              <span @click="nextStepPhone">重新发送</span>
+            </template>
+            <template v-else>
+              <span>{{codeTimeText}}秒</span>
+            </template>
+          </p>
+        </div>
+        <vue-input-code :code="inputCode" :number="6" height="50px" :success="InputCodeSuccess"></vue-input-code>
+      </slot>
+    </mt-popup>
+    <div v-show="myModal" @click="quitModal" class="my-modal"></div>
     <footer>
       <a :href="'./ticket.html?datetime='+Date.now()" class="footer" class="footer">
         <!-- <i class="fa fa-home"></i> -->

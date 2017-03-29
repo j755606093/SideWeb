@@ -6,6 +6,7 @@ const _ = require("underscore");
 import { MessageBox, Toast, Indicator, Popup } from 'mint-ui';
 // import 'mint-ui/lib/style.css';
 import Utils from "../Utils/utils";
+import VueInputCode from "vue-input-code";
 
 const debug = (function() {
 	let debug = false;
@@ -88,6 +89,16 @@ const config = {
 	serverUrl: debug ? "http://192.168.31.80" : ""
 }
 
+let postData = (url, data) => {
+	return fetch(config.serverUrl + url, {
+			method: 'POST',
+			headers: config.headers,
+			body: JSON.stringify(data)
+		})
+		.then(checkStatus)
+		.then(result => result.json())
+}
+
 const Vue_User = new Vue({
 	el: "#app",
 	data: {
@@ -160,6 +171,13 @@ const Vue_User = new Vue({
 		moneyIndex: 1, //用户数据页数
 		moneyIsUse: false, //是否正在使用
 		moneyNoMoreData: false, //是否还有更多数据
+
+		phonePickerPageShow: false, //绑定手机号弹窗
+		inputPhone: "", //输入的手机号
+		codePickerPageShow: false, //输入验证码
+		inputCode: [], //输入的验证码
+		codeTimeText: 60, //倒计时
+		setTimeText: null, //倒计时保存
 	},
 	created() {
 		this.loading();
@@ -773,10 +791,98 @@ const Vue_User = new Vue({
 				content.stroke();
 				content.fill();
 			}
+		},
+		/** 显示手机号输入 */
+		showCodePage() {
+			this.myModal = true;
+			if (this.codeTimeText !== 60) {
+				// 说明是已经在倒计时,直接跳转过去
+				this.codePickerPageShow = true;
+				return;
+			} else {
+				this.phonePickerPageShow = true;
+			}
+		},
+		/** 关闭模板层 */
+		quitModal() {
+			// 只有这两个(验证码)页面显示的时候才可以响应
+			if (this.codePickerPageShow || this.phonePickerPageShow) {
+				this.myModal = false;
+				this.codePickerPageShow = false;
+				this.phonePickerPageShow = false;
+			}
+		},
+		/** 清除手机号输入 */
+		clearInputPhone() {
+			this.inputPhone = "";
+		},
+		/** 选择下一步 */
+		nextStepPhone() {
+			if (this.codeTimeText !== 60) {
+				this.codePickerPageShow = true;
+				this.phonePickerPageShow = false;
+				return;
+			}
+			if (!/^1[23578][0-9]{9}/.test(this.inputPhone)) {
+				this.toast("手机号不正确!");
+			} else {
+				this.phonePickerPageShow = false;
+				this.loading();
+				postData("/api/Member/SendMsg", {
+					Mobile: this.inputPhone
+				}).then(result => {
+					Indicator.close();
+					if (result.Data) {
+						this.codePickerPageShow = true;
+						this.startTimeText(); //开始倒计时
+					} else {
+						this.phonePickerPageShow = true;
+						// this.inputPhone = "";
+						this.toast(result.Message);
+					}
+				})
+			}
+		},
+		/** 倒计时 */
+		startTimeText() {
+			// this.codeTimeText = 60;
+			this.setTimeText = setInterval(() => {
+				if (this.codeTimeText !== 0) {
+					this.codeTimeText--;
+				} else {
+					clearInterval(this.setTimeText);
+					this.setTimeText = null;
+					this.codeTimeText = 60;
+				}
+			}, 1000)
+		},
+		/** 输入完验证码的回调函数 */
+		InputCodeSuccess(value) {
+			this.loading();
+			this.codePickerPageShow = false;
+			this.myModal = false;
+			postData("/api/Member/MobileBind", {
+				Mobile: this.inputPhone,
+				Code: value
+			}).then(result => {
+				Indicator.close();
+				if (result.Data) {
+					clearInterval(this.setTimeText);
+					this.codeTimeText = 60;
+					this.inputCode = [];
+					this.UserInfo.Mobile = this.inputPhone;
+					this.toast("绑定成功!");
+				} else {
+					this.toast(result.Message);
+					this.myModal = true;
+					this.codePickerPageShow = true;
+				}
+			})
 		}
 	},
 	components: {
 		"mt-popup": Popup,
+		"vue-input-code": VueInputCode
 	}
 });
 
