@@ -21,11 +21,11 @@ const debug = (function() {
 })();
 
 /** 如果是app */
-if (typeof window.jgkj !== "undefined") {
+if (typeof window.jgkj_getUserInfo !== "undefined") {
 	var datastring = "";
 
 	try {
-		datastring = window.jgkj.getUserInfo();
+		datastring = window.jgkj_getUserInfo();
 	} catch (e) {
 		alert(e)
 	}

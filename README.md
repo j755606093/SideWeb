@@ -24,7 +24,7 @@
 | getUserInfo | null | null | 获取用户信息 |
 | openWxPay | json | json(result:'success|fail',message:'') | 打开微信支付 |
 
-`使用:window.jgkj.loadPageUrl(url);`;
+`使用:window.jgkj_loadPageUrl(url);`;
 
 **如果返回值不是立即返回的,比如需要原生执行完成后才返回值,那么需要一个全局函数来接受这个数据和动作,因此做一下约定:**
 

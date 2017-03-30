@@ -1,0 +1,45 @@
+@import "./utils.scss";
+.video__list {
+  height: 285px;
+  width: 100%;
+  background-color: #eee;
+  div.video__body {
+    height: 210px;
+    width: 100%;
+  }
+  div.video__footer {
+    background-color: #fff;
+    height: 75px;
+    width: 100%;
+    padding: 0 10px;
+    .video__footer--title {
+      height: 40px;
+      line-height: 40px;
+      >p {
+        font-size: 18px;
+        color: rgb(50, 50, 50);
+        font-weight: 900;
+      }
+    }
+    .video__footer--info {
+      line-height: 35px;
+      height: 35px;
+      position: relative;
+      >span {
+        color: #c8c8c8;
+        font-size: 12px;
+        font-weight: 900;
+        margin-right: 10px;
+        >i {
+          margin-right: 5px;
+        }
+      }
+      >span.info--right {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        margin-right: 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+@charset "UTF-8";
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: #faffbd;
+  /* #FAFFBD; */
+  background-image: none;
+  color: black; }
+
+a,
+img,
+button,
+input,
+textarea,
+p,
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
+.font-red {
+  color: #db3652; }
+
+.font-blue {
+  color: #0074D9; }
+
+.font-gray {
+  color: #2b2b2b; }
+
+.font-small {
+  font-size: 12px; }
+
+.bg-gray {
+  background-color: #AAAAAA; }
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.btn {
+  border: 0;
+  outline: none; }
+
+button:active {
+  outline: none;
+  border: 0; }
+
+a,
+input {
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus {
+  text-decoration: none; }
+
+html {
+  font-size: 12px; }
+
+input {
+  outline: none;
+  border: none; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  /*禁止选中*/
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: both; }
+
+.video__list {
+  height: 285px;
+  width: 100%;
+  background-color: #eee; }
+  .video__list div.video__body {
+    height: 210px;
+    width: 100%; }
+  .video__list div.video__footer {
+    background-color: #fff;
+    height: 75px;
+    width: 100%;
+    padding: 0 10px; }
+    .video__list div.video__footer .video__footer--title {
+      height: 45px;
+      line-height: 45px; }
+      .video__list div.video__footer .video__footer--title > p {
+        font-size: 18px;
+        color: #323232;
+        font-weight: 900; }
+    .video__list div.video__footer .video__footer--info {
+      line-height: 30px;
+      height: 30px; }
+      .video__list div.video__footer .video__footer--info > span {
+        color: #c8c8c8;
+        font-size: 12px;
+        font-weight: 900; }

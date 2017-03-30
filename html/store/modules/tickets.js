@@ -44,8 +44,7 @@ try {
 		let info = window.localStorage.getItem("UserInfo");
 		if (info && info !== "undefined") {
 			// app中
-			let string = window.localStorage.getItem("UserInfo");
-			return "Bearer " + JSON.parse(string).Access_Token; //格式为json
+			return "Bearer " + JSON.parse(info).Access_Token; //格式为json
 		}
 		let cookie = document.cookie; //获取浏览器的token
 		if (cookie === "") {

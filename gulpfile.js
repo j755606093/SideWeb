@@ -350,3 +350,44 @@ gulp.task('sharecar', function() {
 		// .pipe(gulp.dest('html/dist/'))
 		.pipe(notify("<%= file.relative %> 成功生成!"));
 });
+
+gulp.task('video', function() {
+	return gulp.src('./html/src/video.js')
+		.pipe(webpack({
+			watch: true,
+			output: {
+				filename: 'bundle-video.js'
+			},
+			module: modules,
+			resolve: {
+				extensions: ['', '.js', '.jsx'],
+				alias: {
+					'vue$': 'vue/dist/vue.js'
+				}
+			},
+			plugins: [new HtmlWebpackPlugin({
+					title: "揭西城市圈视频",
+					filename: "video.html",
+					hash: true,
+					template: "!!ejs!html/video.ejs",
+					inject: true
+				}),
+				// new wp.DefinePlugin({
+				// 	'process.env': {
+				// 		NODE_ENV: '"production"'
+				// 	}
+				// }),
+				// new wp.optimize.UglifyJsPlugin({
+				// 	compress: {
+				// 		warnings: false
+				// 	}
+				// })
+			]
+		}))
+		// .pipe(uglify())//生产的时候再启用压缩
+		// .pipe(rev())
+		.pipe(gulp.dest('html/dist/'))
+		// .pipe(rev.manifest())
+		// .pipe(gulp.dest('html/dist/'))
+		.pipe(notify("<%= file.relative %> 成功生成!"));
+});
