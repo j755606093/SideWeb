@@ -26,6 +26,14 @@ class App {
 		}
 	}
 
+	/** 打印错误 */
+	printInfo(info) {
+		// 如果是调试模式
+		if (this.isDebug) {
+			alert(info)
+		}
+	}
+
 	/** 设置用户信息 */
 	setUserInfo(json) {
 		this.UserInfo = json;
@@ -34,9 +42,11 @@ class App {
 	/** 获取用户信息 */
 	getUserInfo() {
 		if (this.inApp) {
-			let info = window.jgkj_getUserInfo();
-			if (this.Debug) {
-				alert(info)
+			let info = "";
+			try {
+				info = window.jgkj_getUserInfo();
+			} catch (e) {
+				this.printInfo(e);
 			}
 			if (info && info !== "undefined") {
 				this.UserInfo = JSON.parse(info); //格式为json
@@ -47,21 +57,33 @@ class App {
 	/** 打开一个链接 */
 	loadPageUrl(url) {
 		if (this.inApp) {
-			window.jgke_loadPageUrl(url);
+			try {
+				window.jgke_loadPageUrl(url);
+			} catch (e) {
+				this.printInfo(e);
+			}
 		}
 	}
 
 	/** 打开一个原生界面 */
 	openNativePage(androidPageName, iosPageName, json) {
 		if (this.inApp) {
-			window.jgkj_openNativePage(androidPageName, iosPageName, json);
+			try {
+				window.jgkj_openNativePage(androidPageName, iosPageName, json);
+			} catch (e) {
+				this.printInfo(e);
+			}
 		}
 	}
 
 	/** 打开微信支付 */
 	openWxPay(json) {
 		if (this.inApp) {
-			window.jgkj_openWxPay(json);
+			try {
+				window.jgkj_openWxPay(json);
+			} catch (e) {
+				this.printInfo(e);
+			}
 		}
 	}
 }

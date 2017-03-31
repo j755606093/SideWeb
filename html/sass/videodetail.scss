@@ -39,12 +39,33 @@
     font-weight: 900;
     color: #c8c8c8;
     >p {
-      width: 30%;
-      float: left;
+      height: 40px;
+      line-height: 40px;
     }
-    >div.share__icon {
-      width: 70%;
-      float: left;
+    >.share__title {
+      height: 60px;
+      line-height: 60px;
+      >p {
+        width: 30%;
+        float: left;
+        text-align: right;
+        font-size: 14px;
+        color: rgb(50, 50, 50);
+        font-weight: 900;
+        padding-right: 10px;
+      }
+      >div.share__icon {
+        width: 70%;
+        float: left;
+        >i {
+          height: 60px;
+          line-height: 60px;
+          font-size: 22px;
+          color: rgb(50, 50, 50);
+          width: 33.33333%;
+          float: left;
+        }
+      }
     }
   }
 }

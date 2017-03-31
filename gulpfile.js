@@ -369,7 +369,7 @@ gulp.task('video', function() {
 					title: "揭西城市圈视频",
 					filename: "video.html",
 					hash: true,
-					template: "!!ejs!html/video.ejs",
+					template: "!!ejs!html/default.ejs",
 					inject: true
 				}),
 				// new wp.DefinePlugin({

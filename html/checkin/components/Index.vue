@@ -51,6 +51,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 赚钻石 -->
 	<div class="qd__task">
 		<div class="qd__task--header">
 			<p>赚钻石</p>
@@ -200,7 +201,24 @@ let Vue_App =  {
 		},
 		/** 打开原生界面 */
 		openNativePage(index){
-			console.log(this.TaskInfo[index]);
+			// 组装数据
+			// let urlData = this.TaskInfo[index].Url;
+			let urlData = "info,SMinePersonalCenterViewController,id=postid&age=12";
+			let json = {};
+			if(urlData){
+				let ArrayData = urlData.split(",");
+				json.androidPageName = ArrayData[0];
+				json.iosPageName = ArrayData[1];
+				if(ArrayData[2]!==""){
+					json.json = {};
+					let jsonData = ArrayData[2].split("&");
+					for(let i=0;i<jsonData.length;i++){
+						let lineData = jsonData[i].split("=");
+						json.json[lineData[0]] = lineData[1];
+					}
+				}
+				this.$store.dispatch("openNativePage",json);//调用原生打开页面
+			}
 		}
 	},
 	computed:{

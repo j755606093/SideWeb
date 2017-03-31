@@ -60,11 +60,11 @@
 
 	var _checkin2 = _interopRequireDefault(_checkin);
 
-	var _CheckIn = __webpack_require__(38);
+	var _CheckIn = __webpack_require__(40);
 
 	var _CheckIn2 = _interopRequireDefault(_CheckIn);
 
-	var _Index = __webpack_require__(48);
+	var _Index = __webpack_require__(50);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
@@ -13167,7 +13167,7 @@
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _CheckInType = __webpack_require__(55);
+	var _CheckInType = __webpack_require__(29);
 
 	var _CheckInType2 = _interopRequireDefault(_CheckInType);
 
@@ -13186,7 +13186,7 @@
 	 * 这里包含了几乎所有的网络操作,因为需要token
 	 * 并且包含了调用公司app用户的token操作
 	 */
-	var _ = __webpack_require__(37); //数据类型
+	var _ = __webpack_require__(39); //数据类型
 	//关于app的一些函数
 	var app = new _App2.default();
 
@@ -13308,6 +13308,14 @@
 			    state = _ref3.state;
 
 			return getData("/api/SignIn/GetPointTask/" + state.UserInfo.UserId);
+		},
+
+		/** 打开原生界面 */
+		openNativePage: function openNativePage(_ref4, data) {
+			var commit = _ref4.commit,
+			    state = _ref4.state;
+
+			app.openNativePage(data.androidPageName, data.iosPageName, data.json);
 		}
 	};
 
@@ -13633,7 +13641,17 @@
 	};
 
 /***/ },
-/* 29 */,
+/* 29 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {};
+
+/***/ },
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25187,11 +25205,11 @@
 		value: true
 	});
 
-	var _classCallCheck2 = __webpack_require__(53);
+	var _classCallCheck2 = __webpack_require__(37);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(54);
+	var _createClass2 = __webpack_require__(38);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
@@ -25234,6 +25252,17 @@
 				}
 			}
 
+			/** 打印错误 */
+
+		}, {
+			key: "printInfo",
+			value: function printInfo(info) {
+				// 如果是调试模式
+				if (this.isDebug) {
+					alert(info);
+				}
+			}
+
 			/** 设置用户信息 */
 
 		}, {
@@ -25248,9 +25277,11 @@
 			key: "getUserInfo",
 			value: function getUserInfo() {
 				if (this.inApp) {
-					var info = window.jgkj_getUserInfo();
-					if (this.Debug) {
-						alert(info);
+					var info = "";
+					try {
+						info = window.jgkj_getUserInfo();
+					} catch (e) {
+						this.printInfo(e);
 					}
 					if (info && info !== "undefined") {
 						this.UserInfo = JSON.parse(info); //格式为json
@@ -25264,7 +25295,11 @@
 			key: "loadPageUrl",
 			value: function loadPageUrl(url) {
 				if (this.inApp) {
-					window.jgke_loadPageUrl(url);
+					try {
+						window.jgke_loadPageUrl(url);
+					} catch (e) {
+						this.printInfo(e);
+					}
 				}
 			}
 
@@ -25274,7 +25309,11 @@
 			key: "openNativePage",
 			value: function openNativePage(androidPageName, iosPageName, json) {
 				if (this.inApp) {
-					window.jgkj_openNativePage(androidPageName, iosPageName, json);
+					try {
+						window.jgkj_openNativePage(androidPageName, iosPageName, json);
+					} catch (e) {
+						this.printInfo(e);
+					}
 				}
 			}
 
@@ -25284,7 +25323,11 @@
 			key: "openWxPay",
 			value: function openWxPay(json) {
 				if (this.inApp) {
-					window.jgkj_openWxPay(json);
+					try {
+						window.jgkj_openWxPay(json);
+					} catch (e) {
+						this.printInfo(e);
+					}
 				}
 			}
 		}]);
@@ -25295,6 +25338,52 @@
 
 /***/ },
 /* 37 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	exports.default = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _defineProperty = __webpack_require__(9);
+
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+	    }
+	  }
+
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
+	  };
+	}();
+
+/***/ },
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -26848,18 +26937,18 @@
 
 
 /***/ },
-/* 38 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(39)
+	__webpack_require__(41)
 
-	var Component = __webpack_require__(44)(
+	var Component = __webpack_require__(46)(
 	  /* script */
-	  __webpack_require__(45),
-	  /* template */
 	  __webpack_require__(47),
+	  /* template */
+	  __webpack_require__(49),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -26886,17 +26975,17 @@
 
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(40);
+	var content = __webpack_require__(42);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
-	var update = __webpack_require__(42)("d40df4e0", content, false);
+	var update = __webpack_require__(44)("d40df4e0", content, false);
 	// Hot Module Replacement
 	if(false) {
 	 // When the styles change, update the <style> tags
@@ -26912,10 +27001,10 @@
 	}
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(41)();
+	exports = module.exports = __webpack_require__(43)();
 	// imports
 
 
@@ -26926,7 +27015,7 @@
 
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports) {
 
 	/*
@@ -26982,7 +27071,7 @@
 
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -27001,7 +27090,7 @@
 	  ) }
 	}
 
-	var listToStyles = __webpack_require__(43)
+	var listToStyles = __webpack_require__(45)
 
 	/*
 	type StyleObject = {
@@ -27203,7 +27292,7 @@
 
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports) {
 
 	/**
@@ -27236,7 +27325,7 @@
 
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports) {
 
 	module.exports = function normalizeComponent (
@@ -27289,7 +27378,7 @@
 
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27298,7 +27387,7 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(46);
+	var _utils = __webpack_require__(48);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -27333,7 +27422,7 @@
 	//
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27528,7 +27617,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -27552,18 +27641,18 @@
 	}
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	/* styles */
-	__webpack_require__(49)
+	__webpack_require__(51)
 
-	var Component = __webpack_require__(44)(
+	var Component = __webpack_require__(46)(
 	  /* script */
-	  __webpack_require__(51),
+	  __webpack_require__(53),
 	  /* template */
-	  __webpack_require__(52),
+	  __webpack_require__(54),
 	  /* scopeId */
 	  null,
 	  /* cssModules */
@@ -27590,17 +27679,17 @@
 
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(50);
+	var content = __webpack_require__(52);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	if(content.locals) module.exports = content.locals;
 	// add the styles to the DOM
-	var update = __webpack_require__(42)("f801cc66", content, false);
+	var update = __webpack_require__(44)("f801cc66", content, false);
 	// Hot Module Replacement
 	if(false) {
 	 // When the styles change, update the <style> tags
@@ -27616,10 +27705,10 @@
 	}
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(41)();
+	exports = module.exports = __webpack_require__(43)();
 	// imports
 
 
@@ -27630,7 +27719,7 @@
 
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27639,7 +27728,7 @@
 		value: true
 	});
 
-	var _utils = __webpack_require__(46);
+	var _utils = __webpack_require__(48);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -27647,6 +27736,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
 	//
 	//
 	//
@@ -27854,7 +27944,24 @@
 
 			/** 打开原生界面 */
 			openNativePage: function openNativePage(index) {
-				console.log(this.TaskInfo[index]);
+				// 组装数据
+				// let urlData = this.TaskInfo[index].Url;
+				var urlData = "info,SMinePersonalCenterViewController,id=postid&age=12";
+				var json = {};
+				if (urlData) {
+					var ArrayData = urlData.split(",");
+					json.androidPageName = ArrayData[0];
+					json.iosPageName = ArrayData[1];
+					if (ArrayData[2] !== "") {
+						json.json = {};
+						var jsonData = ArrayData[2].split("&");
+						for (var i = 0; i < jsonData.length; i++) {
+							var lineData = jsonData[i].split("=");
+							json.json[lineData[0]] = lineData[1];
+						}
+					}
+					this.$store.dispatch("openNativePage", json); //调用原生打开页面
+				}
 			}
 		},
 		computed: {
@@ -27868,7 +27975,7 @@
 	exports.default = Vue_App;
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28089,63 +28196,6 @@
 	     require("vue-hot-reload-api").rerender("data-v-f596a6a2", module.exports)
 	  }
 	}
-
-/***/ },
-/* 53 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	exports.default = function (instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	};
-
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	var _defineProperty = __webpack_require__(9);
-
-	var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];
-	      descriptor.enumerable = descriptor.enumerable || false;
-	      descriptor.configurable = true;
-	      if ("value" in descriptor) descriptor.writable = true;
-	      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-	    }
-	  }
-
-	  return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-	    if (staticProps) defineProperties(Constructor, staticProps);
-	    return Constructor;
-	  };
-	}();
-
-/***/ },
-/* 55 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {};
 
 /***/ }
 /******/ ]);

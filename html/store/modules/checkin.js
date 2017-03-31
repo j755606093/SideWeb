@@ -115,6 +115,10 @@ const actions = {
 	getTaskInfo({ commit, state }) {
 		return getData("/api/SignIn/GetPointTask/" + state.UserInfo.UserId)
 	},
+	/** 打开原生界面 */
+	openNativePage({ commit, state }, data) {
+		app.openNativePage(data.androidPageName, data.iosPageName, data.json);
+	},
 }
 
 // mutations
