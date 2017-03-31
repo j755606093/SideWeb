@@ -27637,6 +27637,11 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 50 */
@@ -28292,7 +28297,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.video__detail {\n  width: 100%;\n}\n.video__detail .video__detail--video {\n    height: 210px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.video__detail {\n  width: 100%;\n}\n.video__detail .video__detail--video {\n    height: 210px;\n}\n.video__detail .video__detail--info {\n    height: 65px;\n    width: 100%;\n    padding: 0 10px;\n}\n.video__detail .video__detail--info .detail__title {\n      height: 30px;\n      line-height: 30px;\n      font-size: 17px;\n      font-weight: 900;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      margin-top: 5px;\n}\n.video__detail .detail__other-info {\n    height: 30px;\n    line-height: 30px;\n}\n.video__detail .detail__other-info > span {\n      color: #c8c8c8;\n      font-size: 12px;\n}\n.video__detail .detail__other-info > span.right {\n      float: right;\n}\n.video__detail .detail__other-info > span.right > i {\n        margin-right: 5px;\n}\n.video__detail .video__share {\n    height: 100px;\n    width: 100%;\n    text-align: center;\n    font-size: 12px;\n    font-weight: 900;\n    color: #c8c8c8;\n}\n.video__detail .video__share > p {\n      width: 30%;\n      float: left;\n}\n.video__detail .video__share > div.share__icon {\n      width: 70%;\n      float: left;\n}\n", ""]);
 
 	// exports
 
@@ -28315,6 +28320,24 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -28410,8 +28433,34 @@
 	      "poster": _vm.VideoDetail.Avatar,
 	      "src": _vm.VideoDetail.Url
 	    }
-	  })])]) : _vm._e()
-	},staticRenderFns: []}
+	  })]), _vm._v(" "), _c('div', {
+	    staticClass: "video__detail--info"
+	  }, [_c('p', {
+	    staticClass: "detail__title"
+	  }, [_vm._v(_vm._s(_vm.VideoDetail.Title))]), _vm._v(" "), _c('div', {
+	    staticClass: "detail__other-info"
+	  }, [_c('span', {
+	    staticClass: "left"
+	  }, [_vm._v(_vm._s(_vm._f("formatDate")(_vm.VideoDetail.CTime)))]), _vm._v(" "), _c('span', {
+	    staticClass: "right"
+	  }, [_c('i', {
+	    staticClass: "fa fa-eye"
+	  }), _vm._v(_vm._s(_vm.VideoDetail.ReadCount))])])]), _vm._v(" "), _vm._m(0)]) : _vm._e()
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "video__share"
+	  }, [_c('p', [_vm._v("分享,是人类的美德")]), _vm._v(" "), _c('div', {
+	    staticClass: "share__title"
+	  }, [_c('p', [_vm._v("分享至")]), _vm._v(" "), _c('div', {
+	    staticClass: "share__icon"
+	  }, [_c('i', {
+	    staticClass: "fa fa-qq"
+	  }), _vm._v(" "), _c('i', {
+	    staticClass: "fa fa-weixin"
+	  }), _vm._v(" "), _c('i', {
+	    staticClass: "fa fa-chrome"
+	  })])])])
+	}]}
 	module.exports.render._withStripped = true
 	if (false) {
 	  module.hot.accept()

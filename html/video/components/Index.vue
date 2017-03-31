@@ -1,5 +1,6 @@
 <template>
 <div id="video">
+	<!-- 标头 -->
 	<header>
 		<div @click="SwitchPage(0)" class="header__type">
 			<span :class="{'header__type--block':true, active:currentPage===0}">热门</span>
@@ -17,24 +18,28 @@
 			<img src="../icon/seach_icon.png" alt="搜索">
 		</div>
 	</header>
+	<!-- 热门列表 -->
 	<div v-show="currentPage===0" class="video__lists">
 		<template v-for="(item,index) in HotVideo">
 			<video-list :video="item"></video-list>
 		</template>
 		<p class="no-more-data" v-show="HotVideoNoMoreData">没有更多数据~</p>
 	</div>
+	<!-- 身边 -->
 	<div v-show="currentPage===1" class="video__lists">
 		<template v-for="(item,index) in SideVideo">
 			<video-list :video="item"></video-list>
 		</template>
 		<p class="no-more-data" v-show="SideVideoNoMoreData">没有更多数据~</p>
 	</div>
+	<!-- 搞笑 -->
 	<div v-show="currentPage===2" class="video__lists">
 		<template v-for="(item,index) in FunnyVideo">
 			<video-list :video="item"></video-list>
 		</template>
 		<p class="no-more-data" v-show="FunnyVideoNoMoreData">没有更多数据~</p>
 	</div>
+	<!-- 教育 -->
 	<div v-show="currentPage===3" class="video__lists">
 		<template v-for="(item,index) in EducateVideo">
 			<video-list :video="item"></video-list>

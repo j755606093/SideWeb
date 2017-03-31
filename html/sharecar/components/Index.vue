@@ -1,5 +1,7 @@
 <template type="x/template" id="index">
+	<!-- 首页 -->
 	<div class="home">
+		<!-- 轮播图 -->
 		<div class="home__swpier">
 			<div class="swiper-container">
 		    <!-- Additional required wrapper -->
@@ -20,6 +22,7 @@
 				<p>{{onlineNumber}}</p>
 			</div> -->
 		</div>
+		<!-- 标头信息 -->
 		<div id="header_block" style="height: 80px;width:100%;">
 			<div id="headertop" class="home__header">
 				<div class="header_title">
@@ -43,6 +46,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 车找人 -->
 		<div v-show="pageIndex===0" class="home__lists">
 			<template v-for="(item,index) in CarInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
@@ -52,6 +56,7 @@
 			</div>
 			<div id="car__last"></div>
 		</div>
+		<!-- 人找车 -->
 		<div v-show="pageIndex===1" class="home__lists">
 			<template v-for="(item,index) in PeopleInfo">
 				<my-list :types="pageIndex" :list="item"></my-list>
@@ -96,6 +101,7 @@
 
 <style lang="css">
 @import "../../css/sharecar_index.css";
+/*点击头像的样式控制*/
 .avatar__page{
 	width:260px;
 	height:260px;
@@ -240,6 +246,7 @@ export default {
 		window.addEventListener('scroll',this.scrollFunction);
 	},
 	computed:{
+		// 获取数据
 		CarInfo(){
 			return this.$store.getters.getCarInfo;
 		},
@@ -329,7 +336,7 @@ export default {
 			if(this.PeopleInfo.length===0){
 				this.getPeopleData();
 			}
-			this.$store.dispatch("setPageInfo",index);
+			this.$store.dispatch("setPageInfo",index);//记录页面索引
 		},
 		/** 打开详情页 */
 		openDetailPage(index){
@@ -363,7 +370,7 @@ export default {
 				})
 			}
 			else{
-				this.PeopleNoMoreData = false;
+				this.PeopleNoMoreData = false;//设置不为空
 				this.PeopleInfoPage = 2;
 				this.$store.dispatch("getPeopleInfo",{
 					Index:1,
@@ -403,7 +410,7 @@ export default {
 		getCarData(){
 			this.autoShowPage();// 自动弹出
 
-			this.loading();
+			this.loading();//加载
 			this.CarInterntUse = true;//正在使用
 			return this.$store.dispatch("getCarInfo",{
 				Index:this.CarInfoPage,
@@ -481,6 +488,7 @@ export default {
 		console.log("activated")
 	},
 	destroyed(){
+		// 销毁
 		window.removeEventListener("scroll", this.scrollFunction, false);
 		this.canScroll = false;//不可以滚动
 		clearInterval(this.onlineTimeContorl);

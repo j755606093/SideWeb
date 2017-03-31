@@ -766,6 +766,7 @@ const Vue_User = new Vue({
 				.then(result => {
 					Indicator.close();
 					this.toast(result.Message);
+					window.location.href = "./TicketUser.html"; //强制刷新
 				})
 		},
 		/** 半圆显示 */

@@ -4,4 +4,47 @@
   .video__detail--video {
     height: 210px;
   }
+  .video__detail--info {
+    height: 65px;
+    width: 100%;
+    padding: 0 10px;
+    .detail__title {
+      height: 30px;
+      line-height: 30px;
+      font-size: 17px;
+      font-weight: 900;
+      @include text_nowrap;
+      margin-top: 5px;
+    }
+  }
+  .detail__other-info {
+    height: 30px;
+    line-height: 30px;
+    >span {
+      color: #c8c8c8;
+      font-size: 12px;
+    }
+    >span.right {
+      float: right;
+      >i {
+        margin-right: 5px;
+      }
+    }
+  }
+  .video__share {
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900;
+    color: #c8c8c8;
+    >p {
+      width: 30%;
+      float: left;
+    }
+    >div.share__icon {
+      width: 70%;
+      float: left;
+    }
+  }
 }

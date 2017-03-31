@@ -95,3 +95,39 @@ input {
   width: 100%; }
   .video__detail .video__detail--video {
     height: 210px; }
+  .video__detail .video__detail--info {
+    height: 65px;
+    width: 100%;
+    padding: 0 10px; }
+    .video__detail .video__detail--info .detail__title {
+      height: 30px;
+      line-height: 30px;
+      font-size: 17px;
+      font-weight: 900;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-top: 5px; }
+  .video__detail .detail__other-info {
+    height: 30px;
+    line-height: 30px; }
+    .video__detail .detail__other-info > span {
+      color: #c8c8c8;
+      font-size: 12px; }
+    .video__detail .detail__other-info > span.right {
+      float: right; }
+      .video__detail .detail__other-info > span.right > i {
+        margin-right: 5px; }
+  .video__detail .video__share {
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900;
+    color: #c8c8c8; }
+    .video__detail .video__share > p {
+      width: 30%;
+      float: left; }
+    .video__detail .video__share > div.share__icon {
+      width: 70%;
+      float: left; }

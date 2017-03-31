@@ -266,7 +266,7 @@ export default {
 					if(!result.Data||result.Data.length<10){
 						this.searchPassengerNoData=true;
 					}
-					this.searchPassengerIndex = 2;
+					this.searchPassengerIndex = 2;//页数增加到2
 					this.searchPassengerList = result.Data;
 				});
 			}

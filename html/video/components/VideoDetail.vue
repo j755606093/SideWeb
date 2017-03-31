@@ -3,6 +3,24 @@
 		<div class="video__detail--video">
 			<video webkit-playsinline playsinline controls width="100%" height="100%" preload="none" :poster="VideoDetail.Avatar" :src="VideoDetail.Url" ></video>
 		</div>
+		<div class="video__detail--info">
+			<p class="detail__title">{{VideoDetail.Title}}</p>
+			<div class="detail__other-info">
+				<span class="left">{{VideoDetail.CTime|formatDate}}</span>
+				<span class="right"><i class="fa fa-eye"></i>{{VideoDetail.ReadCount}}</span>
+			</div>
+		</div>
+		<div class="video__share">
+			<p>分享,是人类的美德</p>
+			<div class="share__title">
+				<p>分享至</p>
+				<div class="share__icon">
+					<i class="fa fa-qq"></i>
+					<i class="fa fa-weixin"></i>
+					<i class="fa fa-chrome"></i>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -24,7 +42,7 @@ export default {
 	created(){
 		this.loading();
 		this.Id = this.$route.params.Id;
-		
+
 		if(!this.Id){
 			// 没有参数就返回主页
 			this.$router.replace({path:"/"});

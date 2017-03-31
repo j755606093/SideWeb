@@ -262,7 +262,8 @@ export default {
 		/** 更新微信用户信息 */
 		updateUserInfo(){
 			this.$store.dispatch("updateUserInfo").then(result=>{
-				this.toast(result.Message)
+				this.toast(result.Message);
+				window.location.reload(); //强制刷新
 			})
 		},
 		/** 选择下一步 */

@@ -1,8 +1,10 @@
 <template type="x/template">
+	<!-- 推荐页页面 -->
 	<div ref="commend" id="commend" class="commend">
 		<my-header :showBack="true" headerTitle="匹配行程推荐"></my-header>
 		<div ref="commend_list" id="commend_list" class="commend--lists">
 			<template v-for="(item,index) in ListData">
+				<!-- 有Num说明是多少个人,也就是乘客 -->
 				<my-list :types="item.Num?1:0" :list="item"></my-list>
 			</template>
 			<div id="last_bottom" ref="last_bottom"></div>
@@ -72,11 +74,11 @@ export default {
 		return {
 			Page:1,// 页数
 			NoData:false,//没有数据
-			ListData:[],
-			tripId:"",
-			types:-1,
-			scrollFunction:null,
-			canScroll:false
+			ListData:[],//列表数据
+			tripId:"",//获取的行程id
+			types:-1,//默认类型-1
+			scrollFunction:null,//滚动函数
+			canScroll:false//是否可以滚动
 		}
 	},
 	created(){
@@ -151,6 +153,7 @@ export default {
 				spinnerType: 'fading-circle'
 			});
 		},
+		/** 获取更多数据 */
 		getMoreData(){
 			if(this.NoData){
 				return;
