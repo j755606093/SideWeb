@@ -8,6 +8,7 @@ header {
   top: 0;
   left: 0;
   box-shadow: 0 3px 3px 3px #fafafa;
+  z-index: 100;
   div.header__type {
     float: left;
     display: inline-block;
@@ -51,4 +52,12 @@ header {
 
 .video__lists {
   margin-top: 50px;
+  >p {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: #c8c8c8;
+    text-align: center;
+    font-size: 14px;
+  }
 }

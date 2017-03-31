@@ -1,16 +1,19 @@
 <template>
-	<div class="video__list">
+	<div @click="goToPage" class="video__list">
 		<div class="video__body">
-			<video data-setup='{}' controls width="100%" height="100%" preload="none" poster="http://bpic.588ku.com/back_pic/00/04/76/955624f209d2f22.jpg" :src="videoUrl" ></video>
+			<img class="video-bg" :src="video.Avatar">
+			<div class="play">
+				<img src="../icon/play_icon.png">
+			</div>
 		</div>
 		<div class="video__footer">
 			<div class="video__footer--title">
-				<p>揭西人春节打麻将通知</p>
+				<p v-text="video.Title"></p>
 			</div>
 			<div class="video__footer--info">
-				<span>时长 02:00</span>
-				<span> <i class="fa fa-eye"></i>450</span>
-				<span class="info--right">2017-06-30</span>
+				<span>时长 {{video.Duration}}</span>
+				<span> <i class="fa fa-eye"></i>{{video.ReadCount}}</span>
+				<span class="info--right">{{video.CTime|formatDate}}</span>
 			</div>
 		</div>
 	</div>
@@ -21,13 +24,15 @@
 </style>
 
 <script type="text/babel">
-// import Utils from "../Utils/utils";
+import Utils from "../../Utils/utils";
 
 export default {
 	props:{
-		videoUrl:{
-			type:String,
-			default:""
+		video:{
+			type:Object,
+			default:function(){
+				return {}
+			}
 		}
 	},
 	data () {
@@ -39,10 +44,20 @@ export default {
 		
 	},
 	methods:{
-		
+		goToPage(){
+			// this.$store.dispatch("setVideoDetail",this.video);
+			this.$router.push({name:"detail",params:{
+				Id:this.video.Id
+			}});
+		}
 	},
 	computed:{
 		
+	},
+	filters:{
+		formatDate(value){
+			return Utils.formatDateTypeOne(value);
+		}
 	},
 	components:{
 	}

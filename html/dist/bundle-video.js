@@ -68,6 +68,10 @@
 
 	var _Index2 = _interopRequireDefault(_Index);
 
+	var _VideoDetail = __webpack_require__(60);
+
+	var _VideoDetail2 = _interopRequireDefault(_VideoDetail);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//导入状态库
@@ -91,6 +95,10 @@
 			component: _Index2.default,
 			mate: { keepAlive: true }
 		}]
+	}, {
+		path: "/detail/:Id",
+		name: "detail",
+		component: _VideoDetail2.default
 	}, {
 		path: "*",
 		name: "all",
@@ -13167,9 +13175,17 @@
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _ShareCarType = __webpack_require__(29);
+	var _mutations; /**
+	                 * 数据中心
+	                 * 这里包含了几乎所有的网络操作,因为需要token
+	                 * 并且包含了调用公司app用户的token操作
+	                 */
+	//数据类型
 
-	var _ShareCarType2 = _interopRequireDefault(_ShareCarType);
+
+	var _VideoType = __webpack_require__(59);
+
+	var _VideoType2 = _interopRequireDefault(_VideoType);
 
 	__webpack_require__(4);
 
@@ -13177,12 +13193,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * 数据中心
-	 * 这里包含了几乎所有的网络操作,因为需要token
-	 * 并且包含了调用公司app用户的token操作
-	 */
-	var _ = __webpack_require__(36); //数据类型
+	var _ = __webpack_require__(36);
 
 
 	/** 判断是本地测试还是线上生产环环境 */
@@ -13266,8 +13277,13 @@
 
 	// 初始化数据 state
 	var state = {
-		serverUrl: debug ? "http://192.168.31.80" : "", //服务器地址
-		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization
+		serverUrl: debug ? "http://192.168.31.86" : "", //服务器地址
+		Authorization: debug ? "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODQ1MzM3OTY3NDEiLCJqdGkiOiI4ZTEyMzcwMC1hZGMzLTQ5OTUtODU0Mi01MjIwODZjMjMyOGIiLCJpYXQiOjE0ODk4MDU4NTcsIk1lbWJlciI6Im5vcm1hbCIsIm5iZiI6MTQ4OTgwNTg1NywiZXhwIjoxNDkxMDE1NDU3LCJpc3MiOiJTdXBlckF3ZXNvbWVUb2tlblNlcnZlciIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MTc4My8ifQ.ESY_j0EAvWpoNRJP0ExHBVKnobeUtZzDn1uCwgar1lg" : Authorization,
+
+		HotVideo: [],
+		SideVideo: [],
+		FunnyVideo: [],
+		EducateVideo: []
 	};
 
 	var postData = function postData(url, data) {
@@ -13301,6 +13317,21 @@
 	var getters = {
 		Development: function Development(state) {
 			return state;
+		},
+		getHotVideo: function getHotVideo(state) {
+			return state.HotVideo;
+		},
+		getSideVideo: function getSideVideo(state) {
+			return state.SideVideo;
+		},
+		getFunnyVideo: function getFunnyVideo(state) {
+			return state.FunnyVideo;
+		},
+		getEducateVideo: function getEducateVideo(state) {
+			return state.EducateVideo;
+		},
+		getVideoDetail: function getVideoDetail(state) {
+			return state.VideoDetail;
 		}
 	};
 
@@ -13308,22 +13339,94 @@
 	// 调用方法:
 	// this.$store.dispatch("cancelOrder",数据)
 	var actions = {
-		/** 设置底部显示隐藏 */
-		setFooterStatus: function setFooterStatus(_ref, data) {
+		/** 获取热门视频列表 */
+		getHotVideoList: function getHotVideoList(_ref, data) {
 			var commit = _ref.commit,
 			    state = _ref.state;
 
-			commit(_ShareCarType2.default.CHANGE_FOOTER, {
-				showFooter: data
+			return postData("/api/SVideo/GetList", {
+				ClassifyId: 1,
+				Index: data.Index,
+				Size: 10
+			}).then(function (result) {
+				if (result.Data) {
+					commit(_VideoType2.default.ADD_HOT_VIDEO, result.Data);
+				}
+				return result;
 			});
+		},
+
+		/** 获取身边视频列表 */
+		getSideVideoList: function getSideVideoList(_ref2, data) {
+			var commit = _ref2.commit,
+			    state = _ref2.state;
+
+			return postData("/api/SVideo/GetList", {
+				ClassifyId: 2,
+				Index: data.Index,
+				Size: 10
+			}).then(function (result) {
+				if (result.Data) {
+					commit(_VideoType2.default.ADD_SIDE_VIDEO, result.Data);
+				}
+				return result;
+			});
+		},
+
+		/** 获取搞笑视频列表 */
+		getFunnyVideoList: function getFunnyVideoList(_ref3, data) {
+			var commit = _ref3.commit,
+			    state = _ref3.state;
+
+			return postData("/api/SVideo/GetList", {
+				ClassifyId: 3,
+				Index: data.Index,
+				Size: 10
+			}).then(function (result) {
+				if (result.Data) {
+					commit(_VideoType2.default.ADD_FUNNY_VIDEO, result.Data);
+				}
+				return result;
+			});
+		},
+
+		/** 获取教育视频列表 */
+		getEducateVideoList: function getEducateVideoList(_ref4, data) {
+			var commit = _ref4.commit,
+			    state = _ref4.state;
+
+			return postData("/api/SVideo/GetList", {
+				ClassifyId: 4,
+				Index: data.Index,
+				Size: 10
+			}).then(function (result) {
+				if (result.Data) {
+					commit(_VideoType2.default.ADD_EDUCATE_VIDEO, result.Data);
+				}
+				return result;
+			});
+		},
+
+		/** 获取视频详细信息 */
+		getVideoDetail: function getVideoDetail(_ref5, data) {
+			var commit = _ref5.commit,
+			    state = _ref5.state;
+
+			return postData("/api/SVideo/GetSVideoDetail", data);
 		}
 	};
 
 	// mutations
 	// 改变数据,每一个类型对应一个操作
-	var mutations = (0, _defineProperty3.default)({}, _ShareCarType2.default.CHANGE_FOOTER, function (state, data) {
-		state.showFooter = data.showFooter;
-	});
+	var mutations = (_mutations = {}, (0, _defineProperty3.default)(_mutations, _VideoType2.default.ADD_HOT_VIDEO, function (state, data) {
+		state.HotVideo = data;
+	}), (0, _defineProperty3.default)(_mutations, _VideoType2.default.ADD_SIDE_VIDEO, function (state, data) {
+		state.SideVideo = data;
+	}), (0, _defineProperty3.default)(_mutations, _VideoType2.default.ADD_FUNNY_VIDEO, function (state, data) {
+		state.FunnyVideo = data;
+	}), (0, _defineProperty3.default)(_mutations, _VideoType2.default.ADD_EDUCATE_VIDEO, function (state, data) {
+		state.EducateVideo = data;
+	}), _mutations);
 
 	exports.default = {
 		state: state,
@@ -13641,38 +13744,7 @@
 	};
 
 /***/ },
-/* 29 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = {
-		GET_CAR_INFO: "GET_CAR_INFO",
-		GET_PEOPLE_INFO: "GET_PEOPLE_INFO",
-		SET_PAGE_INDEX: "SET_PAGE_INDEX",
-
-		CHANGE_HEADER: "CHANGE_HEADER",
-		CHANGE_FOOTER: "CHANGE_FOOTER",
-
-		GET_PROVINCE: "GET_PROVINCE",
-		GET_CITY: "GET_CITY",
-		GET_DISTRICT: "GET_DISTRICT",
-		GET_VILLAGE: "GET_VILLAGE",
-
-		// REVERSE_CARINFO: "REVERSE_CARINFO",
-		// REVERSE_PEOPLEINFO: "REVERSE_PEOPLEINFO",
-
-		SET_USERINFO: "SET_USERINFO",
-		SET_MYPUBLISH: "SET_MYPUBLISH",
-
-		SET_LOCATION: "SET_LOCATION",
-		SET_USERINFO_PHONE: "SET_USERINFO_PHONE",
-		SET_USER_AVATAR: "SET_USER_AVATAR" };
-
-/***/ },
+/* 29 */,
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27343,7 +27415,7 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  width: 100%;\n  height: 45px;\n  background-color: #fff;\n  padding: 0 10px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  box-shadow: 0 3px 3px 3px #fafafa;\n}\nheader div.header__type {\n    float: left;\n    display: inline-block;\n    width: 50px;\n    text-align: center;\n    position: relative;\n}\nheader div.header__type span.header__type--block {\n      font-size: 15px;\n      color: #c8c8c8;\n      font-weight: 900;\n      line-height: 45px;\n      height: 45px;\n}\nheader div.header__type span.header__type--block.active {\n      color: #323232;\n}\nheader div.header__type span.header__type--block.active:after {\n        content: \"\";\n        position: absolute;\n        background-color: #ffe712;\n        height: 2px;\n        width: 20px;\n        bottom: 0px;\n        left: 30%;\n}\nheader .header__search {\n    height: 45px;\n    width: 50px;\n    position: absolute;\n    right: 0;\n    top: 0;\n    text-align: center;\n    line-height: 45px;\n}\nheader .header__search > img {\n      width: 14px;\n      height: 14px;\n}\n.video__lists {\n  margin-top: 50px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\nheader {\n  width: 100%;\n  height: 45px;\n  background-color: #fff;\n  padding: 0 10px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  box-shadow: 0 3px 3px 3px #fafafa;\n  z-index: 100;\n}\nheader div.header__type {\n    float: left;\n    display: inline-block;\n    width: 50px;\n    text-align: center;\n    position: relative;\n}\nheader div.header__type span.header__type--block {\n      font-size: 15px;\n      color: #c8c8c8;\n      font-weight: 900;\n      line-height: 45px;\n      height: 45px;\n}\nheader div.header__type span.header__type--block.active {\n      color: #323232;\n}\nheader div.header__type span.header__type--block.active:after {\n        content: \"\";\n        position: absolute;\n        background-color: #ffe712;\n        height: 2px;\n        width: 20px;\n        bottom: 0px;\n        left: 30%;\n}\nheader .header__search {\n    height: 45px;\n    width: 50px;\n    position: absolute;\n    right: 0;\n    top: 0;\n    text-align: center;\n    line-height: 45px;\n}\nheader .header__search > img {\n      width: 14px;\n      height: 14px;\n}\n.video__lists {\n  margin-top: 50px;\n}\n.video__lists > p {\n    width: 100%;\n    height: 40px;\n    line-height: 40px;\n    color: #c8c8c8;\n    text-align: center;\n    font-size: 14px;\n}\n", ""]);
 
 	// exports
 
@@ -27372,9 +27444,25 @@
 
 	exports.default = {
 		data: function data() {
-			return {};
+			return {
+				currentPage: 0, //默认第一页
+
+				HotVideoNoMoreData: false,
+				HotIndex: 1,
+
+				SideVideoNoMoreData: false,
+				SideIndex: 1,
+
+				FunnyVideoNoMoreData: false,
+				FunnyIndex: 1,
+
+				EducateVideoNoMoreData: false,
+				EducateIndex: 1
+			};
 		},
-		created: function created() {},
+		created: function created() {
+			this.getHotVideo();
+		},
 		mounted: function mounted() {},
 
 		methods: {
@@ -27389,13 +27477,141 @@
 					position: 'bottom',
 					duration: 3000
 				});
+			},
+
+			/** 切换页面 */
+			SwitchPage: function SwitchPage(index) {
+				if (index === this.currentPage) return;
+
+				this.currentPage = index;
+				switch (index) {
+					case 0:
+						this.getHotVideo();
+						break;
+					case 1:
+						this.getSideVideo();
+						break;
+					case 2:
+						this.getFunnyVideo();
+						break;
+					case 3:
+						this.getEducateVideo();
+						break;
+					default:
+						break;
+				}
+			},
+
+			/** 获取更多数据 */
+			getHotVideo: function getHotVideo() {
+				var _this = this;
+
+				if (this.HotVideoNoMoreData) return; //没有更多数据
+
+				this.$store.dispatch("getHotVideoList", {
+					Index: this.HotIndex
+				}).then(function (result) {
+					_this.HotIndex++;
+					if (!result.Data || result.Data.length < 10) {
+						_this.HotVideoNoMoreData = true;
+					} else {
+						_this.toast(result.Message);
+					}
+				});
+			},
+
+			/** 获取更多数据 */
+			getSideVideo: function getSideVideo() {
+				var _this2 = this;
+
+				if (this.SideVideoNoMoreData) return; //没有更多数据
+
+				this.$store.dispatch("getSideVideoList", {
+					Index: this.SideIndex
+				}).then(function (result) {
+					_this2.SideIndex++;
+					if (!result.Data || result.Data.length < 10) {
+						_this2.SideVideoNoMoreData = true;
+					} else {
+						_this2.toast(result.Message);
+					}
+				});
+			},
+
+			/** 获取更多数据 */
+			getFunnyVideo: function getFunnyVideo() {
+				var _this3 = this;
+
+				if (this.FunnyVideoNoMoreData) return; //没有更多数据
+
+				this.$store.dispatch("getFunnyVideoList", {
+					Index: this.FunnyIndex
+				}).then(function (result) {
+					_this3.FunnyIndex++;
+					if (!result.Data || result.Data.length < 10) {
+						_this3.FunnyVideoNoMoreData = true;
+					} else {
+						_this3.toast(result.Message);
+					}
+				});
+			},
+
+			/** 获取更多数据 */
+			getEducateVideo: function getEducateVideo() {
+				var _this4 = this;
+
+				if (this.EducateVideoNoMoreData) return; //没有更多数据
+
+				this.$store.dispatch("geSideVideoList", {
+					Index: this.EducateIndex
+				}).then(function (result) {
+					_this4.EducateIndex++;
+					if (!result.Data || result.Data.length < 10) {
+						_this4.EducateVideoNoMoreData = true;
+					} else {
+						_this4.toast(result.Message);
+					}
+				});
 			}
 		},
-		computed: {},
+		computed: {
+			HotVideo: function HotVideo() {
+				return this.$store.getters.getHotVideo;
+			},
+			SideVideo: function SideVideo() {
+				return this.$store.getters.getSideVideo;
+			},
+			FunnyVideo: function FunnyVideo() {
+				return this.$store.getters.getFunnyVideo;
+			},
+			EducateVideo: function EducateVideo() {
+				return this.$store.getters.getEducateVideo;
+			}
+		},
 		components: {
 			"video-list": _VideoList2.default
 		}
 	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//
 	//
@@ -27690,50 +27906,34 @@
 
 
 	// module
-	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.video__list {\n  height: 285px;\n  width: 100%;\n  background-color: #eee;\n}\n.video__list div.video__body {\n    height: 210px;\n    width: 100%;\n}\n.video__list div.video__footer {\n    background-color: #fff;\n    height: 75px;\n    width: 100%;\n    padding: 0 10px;\n}\n.video__list div.video__footer .video__footer--title {\n      height: 40px;\n      line-height: 40px;\n}\n.video__list div.video__footer .video__footer--title > p {\n        font-size: 18px;\n        color: #323232;\n        font-weight: 900;\n}\n.video__list div.video__footer .video__footer--info {\n      line-height: 35px;\n      height: 35px;\n      position: relative;\n}\n.video__list div.video__footer .video__footer--info > span {\n        color: #c8c8c8;\n        font-size: 12px;\n        font-weight: 900;\n        margin-right: 10px;\n}\n.video__list div.video__footer .video__footer--info > span > i {\n          margin-right: 5px;\n}\n.video__list div.video__footer .video__footer--info > span.info--right {\n        position: absolute;\n        top: 0;\n        right: 0px;\n        margin-right: 0px;\n}\n", ""]);
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.video__list {\n  height: 285px;\n  width: 100%;\n  background-color: #eee;\n}\n.video__list div.video__body {\n    height: 210px;\n    width: 100%;\n    text-align: center;\n    position: relative;\n}\n.video__list div.video__body > img.video-bg {\n      height: 100%;\n      width: 100%;\n}\n.video__list div.video__body > div.play {\n      z-index: 10;\n      position: absolute;\n      top: 80px;\n      left: 0;\n      width: 100%;\n}\n.video__list div.video__body > div.play > img {\n        width: 50px;\n        height: 50px;\n}\n.video__list div.video__footer {\n    background-color: #fff;\n    height: 75px;\n    width: 100%;\n    padding: 0 10px;\n}\n.video__list div.video__footer .video__footer--title {\n      height: 40px;\n      line-height: 40px;\n}\n.video__list div.video__footer .video__footer--title > p {\n        font-size: 18px;\n        color: #323232;\n        font-weight: 900;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis;\n}\n.video__list div.video__footer .video__footer--info {\n      line-height: 35px;\n      height: 35px;\n      position: relative;\n}\n.video__list div.video__footer .video__footer--info > span {\n        color: #c8c8c8;\n        font-size: 12px;\n        margin-right: 10px;\n}\n.video__list div.video__footer .video__footer--info > span > i {\n          margin-right: 5px;\n}\n.video__list div.video__footer .video__footer--info > span.info--right {\n        position: absolute;\n        top: 0;\n        right: 0px;\n        margin-right: 0px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
 /* 54 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 
-	// import Utils from "../Utils/utils";
+	var _utils = __webpack_require__(50);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
 		props: {
-			videoUrl: {
-				type: String,
-				default: ""
+			video: {
+				type: Object,
+				default: function _default() {
+					return {};
+				}
 			}
 		},
 		data: function data() {
@@ -27741,10 +27941,46 @@
 		},
 		created: function created() {},
 
-		methods: {},
+		methods: {
+			goToPage: function goToPage() {
+				// this.$store.dispatch("setVideoDetail",this.video);
+				this.$router.push({ name: "detail", params: {
+						Id: this.video.Id
+					} });
+			}
+		},
 		computed: {},
+		filters: {
+			formatDate: function formatDate(value) {
+				return _utils2.default.formatDateTypeOne(value);
+			}
+		},
 		components: {}
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 55 */
@@ -27752,32 +27988,40 @@
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
-	    staticClass: "video__list"
+	    staticClass: "video__list",
+	    on: {
+	      "click": _vm.goToPage
+	    }
 	  }, [_c('div', {
 	    staticClass: "video__body"
-	  }, [_c('video', {
+	  }, [_c('img', {
+	    staticClass: "video-bg",
 	    attrs: {
-	      "data-setup": "{}",
-	      "controls": "",
-	      "width": "100%",
-	      "height": "100%",
-	      "preload": "none",
-	      "poster": "http://bpic.588ku.com/back_pic/00/04/76/955624f209d2f22.jpg",
-	      "src": _vm.videoUrl
+	      "src": _vm.video.Avatar
 	    }
-	  })]), _vm._v(" "), _vm._m(0)])
-	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('div', {
+	  }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
 	    staticClass: "video__footer"
 	  }, [_c('div', {
 	    staticClass: "video__footer--title"
-	  }, [_c('p', [_vm._v("揭西人春节打麻将通知")])]), _vm._v(" "), _c('div', {
+	  }, [_c('p', {
+	    domProps: {
+	      "textContent": _vm._s(_vm.video.Title)
+	    }
+	  })]), _vm._v(" "), _c('div', {
 	    staticClass: "video__footer--info"
-	  }, [_c('span', [_vm._v("时长 02:00")]), _vm._v(" "), _c('span', [_c('i', {
+	  }, [_c('span', [_vm._v("时长 " + _vm._s(_vm.video.Duration))]), _vm._v(" "), _c('span', [_c('i', {
 	    staticClass: "fa fa-eye"
-	  }), _vm._v("450")]), _vm._v(" "), _c('span', {
+	  }), _vm._v(_vm._s(_vm.video.ReadCount))]), _vm._v(" "), _c('span', {
 	    staticClass: "info--right"
-	  }, [_vm._v("2017-06-30")])])])
+	  }, [_vm._v(_vm._s(_vm._f("formatDate")(_vm.video.CTime)))])])])])
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "play"
+	  }, [_c('img', {
+	    attrs: {
+	      "src": __webpack_require__(58)
+	    }
+	  })])
 	}]}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -27796,42 +28040,148 @@
 	    attrs: {
 	      "id": "video"
 	    }
-	  }, [_vm._m(0), _vm._v(" "), _c('div', {
-	    staticClass: "video__lists"
-	  }, [_c('video-list', {
-	    attrs: {
-	      "videoUrl": "http://192.168.31.116:3000/test_video.mp4"
+	  }, [_c('header', [_c('div', {
+	    staticClass: "header__type",
+	    on: {
+	      "click": function($event) {
+	        _vm.SwitchPage(0)
+	      }
 	    }
-	  }), _vm._v(" "), _c('video-list', {
-	    attrs: {
-	      "videoUrl": "http://192.168.31.116:3000/test_video.mp4"
-	    }
-	  })], 1)])
-	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('header', [_c('div', {
-	    staticClass: "header__type"
 	  }, [_c('span', {
-	    staticClass: "header__type--block active"
+	    class: {
+	      'header__type--block': true, active: _vm.currentPage === 0
+	    }
 	  }, [_vm._v("热门")])]), _vm._v(" "), _c('div', {
-	    staticClass: "header__type"
+	    staticClass: "header__type",
+	    on: {
+	      "click": function($event) {
+	        _vm.SwitchPage(1)
+	      }
+	    }
 	  }, [_c('span', {
-	    staticClass: "header__type--block"
+	    class: {
+	      'header__type--block': true, active: _vm.currentPage === 1
+	    }
 	  }, [_vm._v("身边")])]), _vm._v(" "), _c('div', {
-	    staticClass: "header__type"
+	    staticClass: "header__type",
+	    on: {
+	      "click": function($event) {
+	        _vm.SwitchPage(2)
+	      }
+	    }
 	  }, [_c('span', {
-	    staticClass: "header__type--block"
+	    class: {
+	      'header__type--block': true, active: _vm.currentPage === 2
+	    }
 	  }, [_vm._v("搞笑")])]), _vm._v(" "), _c('div', {
-	    staticClass: "header__type"
+	    staticClass: "header__type",
+	    on: {
+	      "click": function($event) {
+	        _vm.SwitchPage(3)
+	      }
+	    }
 	  }, [_c('span', {
-	    staticClass: "header__type--block"
-	  }, [_vm._v("教育")])]), _vm._v(" "), _c('div', {
+	    class: {
+	      'header__type--block': true, active: _vm.currentPage === 3
+	    }
+	  }, [_vm._v("教育")])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.currentPage === 0),
+	      expression: "currentPage===0"
+	    }],
+	    staticClass: "video__lists"
+	  }, [_vm._l((_vm.HotVideo), function(item, index) {
+	    return [_c('video-list', {
+	      attrs: {
+	        "video": item
+	      }
+	    })]
+	  }), _vm._v(" "), _c('p', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.HotVideoNoMoreData),
+	      expression: "HotVideoNoMoreData"
+	    }],
+	    staticClass: "no-more-data"
+	  }, [_vm._v("没有更多数据~")])], 2), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.currentPage === 1),
+	      expression: "currentPage===1"
+	    }],
+	    staticClass: "video__lists"
+	  }, [_vm._l((_vm.SideVideo), function(item, index) {
+	    return [_c('video-list', {
+	      attrs: {
+	        "video": item
+	      }
+	    })]
+	  }), _vm._v(" "), _c('p', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.SideVideoNoMoreData),
+	      expression: "SideVideoNoMoreData"
+	    }],
+	    staticClass: "no-more-data"
+	  }, [_vm._v("没有更多数据~")])], 2), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.currentPage === 2),
+	      expression: "currentPage===2"
+	    }],
+	    staticClass: "video__lists"
+	  }, [_vm._l((_vm.FunnyVideo), function(item, index) {
+	    return [_c('video-list', {
+	      attrs: {
+	        "video": item
+	      }
+	    })]
+	  }), _vm._v(" "), _c('p', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.FunnyVideoNoMoreData),
+	      expression: "FunnyVideoNoMoreData"
+	    }],
+	    staticClass: "no-more-data"
+	  }, [_vm._v("没有更多数据~")])], 2), _vm._v(" "), _c('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.currentPage === 3),
+	      expression: "currentPage===3"
+	    }],
+	    staticClass: "video__lists"
+	  }, [_vm._l((_vm.EducateVideo), function(item, index) {
+	    return [_c('video-list', {
+	      attrs: {
+	        "video": item
+	      }
+	    })]
+	  }), _vm._v(" "), _c('p', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.EducateVideoNoMoreData),
+	      expression: "EducateVideoNoMoreData"
+	    }],
+	    staticClass: "no-more-data"
+	  }, [_vm._v("没有更多数据~")])], 2)])
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
 	    staticClass: "header__search"
 	  }, [_c('img', {
 	    attrs: {
 	      "src": __webpack_require__(57),
 	      "alt": "搜索"
 	    }
-	  })])])
+	  })])
 	}]}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -27846,6 +28196,229 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "seach_icon.png?de1ae6d7a482e776a91319e1bf9fa131";
+
+/***/ },
+/* 58 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY1MjM1Rjc0MTVCRTExRTc4N0JBRkI0MTE1MkM4QTA0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY1MjM1Rjc1MTVCRTExRTc4N0JBRkI0MTE1MkM4QTA0Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NjUyMzVGNzIxNUJFMTFFNzg3QkFGQjQxMTUyQzhBMDQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NjUyMzVGNzMxNUJFMTFFNzg3QkFGQjQxMTUyQzhBMDQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7OvLvHAAAIjUlEQVR42uxd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"
+
+/***/ },
+/* 59 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = {
+		ADD_HOT_VIDEO: "ADD_HOT_VIDEO",
+		ADD_SIDE_VIDEO: "ADD_SIDE_VIDEO",
+		ADD_FUNNY_VIDEO: "ADD_FUNNY_VIDEO",
+		ADD_EDUCATE_VIDEO: "ADD_EDUCATE_VIDEO"
+	};
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/* styles */
+	__webpack_require__(61)
+
+	var Component = __webpack_require__(43)(
+	  /* script */
+	  __webpack_require__(63),
+	  /* template */
+	  __webpack_require__(64),
+	  /* scopeId */
+	  null,
+	  /* cssModules */
+	  null
+	)
+	Component.options.__file = "/Users/Macx/Desktop/wowo/SideWeb/html/video/components/VideoDetail.vue"
+	if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+	if (Component.options.functional) {console.error("[vue-loader] VideoDetail.vue: functional components are not supported with templates, they should use render functions.")}
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-b0110c8a", Component.options)
+	  } else {
+	    hotAPI.reload("data-v-b0110c8a", Component.options)
+	  }
+	})()}
+
+	module.exports = Component.exports
+
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(62);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	if(content.locals) module.exports = content.locals;
+	// add the styles to the DOM
+	var update = __webpack_require__(41)("7d8dd3bb", content, false);
+	// Hot Module Replacement
+	if(false) {
+	 // When the styles change, update the <style> tags
+	 if(!content.locals) {
+	   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-b0110c8a!../../../node_modules/sass-loader/index.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoDetail.vue", function() {
+	     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-b0110c8a!../../../node_modules/sass-loader/index.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoDetail.vue");
+	     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+	     update(newContent);
+	   });
+	 }
+	 // When the module is disposed, remove the <style> tags
+	 module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(40)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n@charset \"UTF-8\";\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  background-color: #faffbd;\n  /* #FAFFBD; */\n  background-image: none;\n  color: black;\n}\na,\nimg,\nbutton,\ninput,\ntextarea,\np,\ndiv {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n}\n.font-red {\n  color: #db3652;\n}\n.font-blue {\n  color: #0074D9;\n}\n.font-gray {\n  color: #2b2b2b;\n}\n.font-small {\n  font-size: 12px;\n}\n.bg-gray {\n  background-color: #AAAAAA;\n}\n.nowrap {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.btn {\n  border: 0;\n  outline: none;\n}\nbutton:active {\n  outline: none;\n  border: 0;\n}\na,\ninput {\n  text-decoration: none;\n  outline: none;\n  -webkit-tap-highlight-color: transparent;\n}\na:focus {\n  text-decoration: none;\n}\nhtml {\n  font-size: 12px;\n}\ninput {\n  outline: none;\n  border: none;\n}\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n  /*禁止选中*/\n  -webkit-font-smoothing: antialiased;\n  -webkit-overflow-scrolling: touch;\n}\n@keyframes fadeIn {\nfrom {\n    opacity: 0;\n}\nto {\n    opacity: 1;\n}\n}\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n@keyframes fadeOut {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n}\n}\n.fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n  animation-duration: 0.5s;\n  animation-fill-mode: both;\n}\n.video__detail {\n  width: 100%;\n}\n.video__detail .video__detail--video {\n    height: 210px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _utils = __webpack_require__(50);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _mintUi = __webpack_require__(30);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+		data: function data() {
+			return {
+				VideoDetail: {},
+				isReady: false
+			};
+		},
+		created: function created() {
+			var _this = this;
+
+			this.loading();
+			this.Id = this.$route.params.Id;
+
+			if (!this.Id) {
+				// 没有参数就返回主页
+				this.$router.replace({ path: "/" });
+				_mintUi.Indicator.close();
+				return;
+			}
+			this.$store.dispatch("getVideoDetail", {
+				Id: this.Id
+			}).then(function (result) {
+				_mintUi.Indicator.close();
+				if (result.Data) {
+					_this.VideoDetail = result.Data;
+					_this.isReady = true; //可以编译模板
+				} else {
+					_this.toast(result.Message);
+					_this.$router.replace({ path: "/" });
+				}
+			}).catch(function (error) {
+				_this.toast("服务器错误~");
+				_mintUi.Indicator.close();
+			});
+		},
+
+		methods: {
+			loading: function loading() {
+				_mintUi.Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+			},
+			toast: function toast(title) {
+				(0, _mintUi.Toast)({
+					message: title,
+					position: 'bottom',
+					duration: 3000
+				});
+			}
+		},
+		computed: {},
+		filters: {
+			formatDate: function formatDate(value) {
+				return _utils2.default.formatDateTypeOne(value);
+			}
+		},
+		components: {}
+	};
+
+/***/ },
+/* 64 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return (_vm.isReady) ? _c('div', {
+	    staticClass: "video__detail",
+	    attrs: {
+	      "id": "video_detail"
+	    }
+	  }, [_c('div', {
+	    staticClass: "video__detail--video"
+	  }, [_c('video', {
+	    attrs: {
+	      "webkit-playsinline": "",
+	      "playsinline": "",
+	      "controls": "",
+	      "width": "100%",
+	      "height": "100%",
+	      "preload": "none",
+	      "poster": _vm.VideoDetail.Avatar,
+	      "src": _vm.VideoDetail.Url
+	    }
+	  })])]) : _vm._e()
+	},staticRenderFns: []}
+	module.exports.render._withStripped = true
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-b0110c8a", module.exports)
+	  }
+	}
 
 /***/ }
 /******/ ]);

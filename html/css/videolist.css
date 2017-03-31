@@ -97,23 +97,48 @@ input {
   background-color: #eee; }
   .video__list div.video__body {
     height: 210px;
-    width: 100%; }
+    width: 100%;
+    text-align: center;
+    position: relative; }
+    .video__list div.video__body > img.video-bg {
+      height: 100%;
+      width: 100%; }
+    .video__list div.video__body > div.play {
+      z-index: 10;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%; }
+      .video__list div.video__body > div.play > img {
+        width: 50px;
+        height: 50px; }
   .video__list div.video__footer {
     background-color: #fff;
     height: 75px;
     width: 100%;
     padding: 0 10px; }
     .video__list div.video__footer .video__footer--title {
-      height: 45px;
-      line-height: 45px; }
+      height: 40px;
+      line-height: 40px; }
       .video__list div.video__footer .video__footer--title > p {
         font-size: 18px;
         color: #323232;
-        font-weight: 900; }
+        font-weight: 900;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
     .video__list div.video__footer .video__footer--info {
-      line-height: 30px;
-      height: 30px; }
+      line-height: 35px;
+      height: 35px;
+      position: relative; }
       .video__list div.video__footer .video__footer--info > span {
         color: #c8c8c8;
         font-size: 12px;
-        font-weight: 900; }
+        margin-right: 10px; }
+        .video__list div.video__footer .video__footer--info > span > i {
+          margin-right: 5px; }
+      .video__list div.video__footer .video__footer--info > span.info--right {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        margin-right: 0px; }

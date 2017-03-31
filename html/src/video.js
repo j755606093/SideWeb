@@ -11,6 +11,7 @@ Vue.use(VueRouter);
 
 import Video from "../video/Video.vue";
 import Index from "../video/components/Index.vue";
+import VideoDetail from "../video/components/VideoDetail.vue";
 
 const routes = [{
 	path: '/',
@@ -23,6 +24,10 @@ const routes = [{
 		component: Index,
 		mate: { keepAlive: true }
 	}]
+}, {
+	path: "/detail/:Id",
+	name: "detail",
+	component: VideoDetail,
 }, {
 	path: "*",
 	name: "all",
