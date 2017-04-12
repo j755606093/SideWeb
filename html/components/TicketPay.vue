@@ -509,6 +509,10 @@ export default {
 		this.$store.commit("SET_SHOWBACK",true);
 	},
 	created(){
+		if(window.location.hash==="#/home/ticketbody"){
+			history.replaceState({},"","#/ticketpay");
+		}
+		
 		this.startCity = this.$store.state.tickets.startCity;
 		this.endCity = this.$store.state.tickets.endCity;
 		this.$store.commit("SET_SHOWHEADER",false);
