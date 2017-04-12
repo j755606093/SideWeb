@@ -501,6 +501,7 @@ export default {
 	beforeCreate(){
 		if(this.$store.getters.getIsFirst){
 			//数据为空,一般是直接进入这个页面才会这样
+			window.location.href="./ticket.html";
 			this.$router.replace({path:"/home/ticketbody"});
 		}
 	},
@@ -509,8 +510,19 @@ export default {
 		this.$store.commit("SET_SHOWBACK",true);
 	},
 	created(){
-		if(window.location.hash==="#/home/ticketbody"){
-			history.replaceState({},"","#/ticketpay");
+		try{
+			if(this.getQueryString("debug")){
+				this.popupMessage(window.location.hash)
+			}
+			if(window.location.hash==="#/home/ticketbody"){
+				history.replaceState({},"","#/ticketpay");
+			}
+			if(this.getQueryString("debug")){
+				this.popupMessage(window.location.hash)
+			}
+		}
+		catch(error){
+			console.log(error);
 		}
 		
 		this.startCity = this.$store.state.tickets.startCity;
@@ -636,6 +648,14 @@ export default {
 		}
 	},
 	methods:{
+		getQueryString(name) {
+			let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+			let r = window.location.search.substr(1).match(reg);
+			if (r !== null) {
+				return unescape(r[2]);
+			}
+			return null;
+		},
 		/**
 		 * 格式化vue数据
 		 * @param  {[type]} data [description]
