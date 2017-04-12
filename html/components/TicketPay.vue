@@ -511,14 +511,12 @@ export default {
 	},
 	created(){
 		try{
+			// 我自己手机号才能测试
 			if(this.$store.getters.getPhone==="13871895108"){
-				this.popupMessage(window.location)
+				this.popupMessage(window.location.hash)
 			}
 			if(window.location.hash==="#/home/ticketbody"){
 				history.replaceState({},"","#/ticketpay");
-			}
-			if(this.$store.getters.getPhone==="13871895108"){
-				this.popupMessage(window.location)
 			}
 		}
 		catch(error){
