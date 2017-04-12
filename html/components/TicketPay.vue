@@ -511,14 +511,14 @@ export default {
 	},
 	created(){
 		try{
-			if(this.getQueryString("debug")){
-				this.popupMessage(window.location.hash)
+			if(this.$store.getters.getPhone==="13871895108"){
+				this.popupMessage(window.location)
 			}
 			if(window.location.hash==="#/home/ticketbody"){
 				history.replaceState({},"","#/ticketpay");
 			}
-			if(this.getQueryString("debug")){
-				this.popupMessage(window.location.hash)
+			if(this.$store.getters.getPhone==="13871895108"){
+				this.popupMessage(window.location)
 			}
 		}
 		catch(error){
